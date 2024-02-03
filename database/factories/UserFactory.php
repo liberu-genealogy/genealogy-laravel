@@ -2,39 +2,24 @@
 
 namespace Database\Factories;
 
-use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Str;
+use App\Models\Person;
+use App\Models\User;
+use LaravelLiberu\Roles\Models\Role;
+use LaravelLiberu\UserGroups\Models\UserGroup;
+use LaravelLiberu\Users\Database\Factories\UserFactory as CoreUserFactory;
 
-/**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\User>
- */
-class UserFactory extends Factory
+class UserFactory extends CoreUserFactory
 {
-    /**
-     * Define the model's default state.
-     *
-     * @return array<string, mixed>
-     */
-    public function definition(): array
+    protected $model = User::class;
+
+    public function definition()
     {
         return [
-            'name' => fake()->name(),
-            'email' => fake()->unique()->safeEmail(),
-            'email_verified_at' => now(),
-            'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
-            'remember_token' => Str::random(10),
+            'person_id' => Person::factory(),
+            'group_id' => UserGroup::factory(),
+            'email' => fn ($attributes) => Person::find($attributes['person_id'])->email,
+            'role_id' => Role::factory(),
+            'is_active' => $this->faker->boolean,
         ];
-    }
-
-    /**
-     * Indicate that the model's email address should be unverified.
-     *
-     * @return $this
-     */
-    public function unverified(): static
-    {
-        return $this->state(fn (array $attributes) => [
-            'email_verified_at' => null,
-        ]);
     }
 }

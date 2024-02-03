@@ -3,7 +3,7 @@
 namespace App\Models;
 
 //use App\Traits\ConnectionTrait;
-use App\Traits\TenantConnectionResolver;
+
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Support\Facades\Auth;
 use Laravel\Scout\Searchable;

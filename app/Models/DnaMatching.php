@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use LaravelLiberu\Tables\Traits\TableCache;
+
 
 class DnaMatching extends Model
 {

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "6c3889e83f6811b63af18cd5bf3b375d",
+    "content-hash": "9ab959be04b6f4fb82486c1ae9ff2760",
     "packages": [
         {
             "name": "anourvalar/eloquent-serialize",
@@ -345,6 +345,56 @@
                 }
             ],
             "time": "2023-12-11T17:09:12+00:00"
+        },
+        {
+            "name": "cgdprojects/php-gedcom",
+            "version": "v1.4.10",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/cgdprojects/php-gedcom.git",
+                "reference": "0ead94390d79f332aba222014f6651bfb01aadbc"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/cgdprojects/php-gedcom/zipball/0ead94390d79f332aba222014f6651bfb01aadbc",
+                "reference": "0ead94390d79f332aba222014f6651bfb01aadbc",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "9.*",
+                "rector/rector": "^0.11.49",
+                "squizlabs/php_codesniffer": "3.6.*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Gedcom\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "A GEDCOM file parser (read + write) for PHP 8.0+",
+            "homepage": "http://github.com/familytree365/php-gedcom",
+            "keywords": [
+                "gedcom",
+                "parser"
+            ],
+            "support": {
+                "issues": "https://github.com/cgdprojects/php-gedcom/issues",
+                "source": "https://github.com/cgdprojects/php-gedcom/tree/v1.4.10"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/familytree365",
+                    "type": "github"
+                }
+            ],
+            "time": "2021-11-28T12:13:02+00:00"
         },
         {
             "name": "danharrin/date-format-converter",
@@ -2202,6 +2252,58 @@
                 "source": "https://github.com/kirschbaum-development/eloquent-power-joins/tree/3.4.0"
             },
             "time": "2023-12-07T10:44:41+00:00"
+        },
+        {
+            "name": "laravel-liberu/laravel-gedcom",
+            "version": "v9.0.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/liberu-genealogy/laravel-gedcom.git",
+                "reference": "2b839a2a44e8349eb37e78d1649362aa01a21f64"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/liberu-genealogy/laravel-gedcom/zipball/2b839a2a44e8349eb37e78d1649362aa01a21f64",
+                "reference": "2b839a2a44e8349eb37e78d1649362aa01a21f64",
+                "shasum": ""
+            },
+            "require": {
+                "cgdprojects/php-gedcom": "^1.4",
+                "doctrine/dbal": "^2.8|^3.0",
+                "php": ">=8.0"
+            },
+            "require-dev": {
+                "rector/rector": "^0.11.49"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "FamilyTree365\\LaravelGedcom\\ServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "FamilyTree365\\LaravelGedcom\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "A package that converts gedcom files to Eloquent models",
+            "support": {
+                "issues": "https://github.com/liberu-genealogy/laravel-gedcom/issues",
+                "source": "https://github.com/liberu-genealogy/laravel-gedcom/tree/v9.0.3"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/laravel-liberu",
+                    "type": "github"
+                }
+            ],
+            "time": "2023-01-03T12:00:24+00:00"
         },
         {
             "name": "laravel/framework",
