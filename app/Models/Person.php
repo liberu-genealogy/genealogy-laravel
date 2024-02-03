@@ -6,15 +6,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Support\Facades\Auth;
-use Laravel\Scout\Searchable;
-use LaravelLiberu\People\Models\Person as CorePerson;
+//use Laravel\Scout\Searchable;
+//use LaravelLiberu\People\Models\Person as CorePerson;
 
-class Person extends CorePerson
+class Person
 {
     use HasFactory;
-    use TenantConnectionResolver;
-    use Searchable;
-
     // public function searchableAs()
     // {
     //     return 'name';
@@ -157,25 +154,4 @@ class Person extends CorePerson
         return $this->events->where('title', '=', 'DEAT')->first();
     }
 
-    public static function bootUpdatedBy()
-    {
-        self::creating(fn ($model) => $model->setUpdatedBy());
-
-        self::updating(fn ($model) => $model->setUpdatedBy());
-    }
-
-    public function setUpdatedBy()
-    {
-        if (! is_dir(storage_path('app/public'))) {
-            // dir doesn't exist, make it
-            \File::makeDirectory(storage_path().'/app/public', 0777, true);
-
-//            mkdir(storage_path('app/public/'), 0700);
-        }
-
-        file_put_contents(storage_path('app/public/file.txt'), $this->connection);
-        if ($this->connection !== 'tenant' && Auth::check()) {
-            $this->updated_by = Auth::id();
-        }
-    }
 }

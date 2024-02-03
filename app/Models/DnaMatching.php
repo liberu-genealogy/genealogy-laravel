@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class DnaMatching extends Model
 {
-    use TableCache;
+    
 
     protected $fillable = [
         'file1',

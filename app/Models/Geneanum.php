@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Model;
 class Geneanum extends Model
 {
     use HasFactory;
-    // use HasFactory, Searchable;
+    // use HasFactory;, Searchable;
 
     // protected $connection = 'landlord';
 

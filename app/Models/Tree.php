@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Tree extends Model
 {
-    use TableCache, HasFactory;
+    use HasFactory;
 
     /**
      * @var array
