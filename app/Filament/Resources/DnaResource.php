@@ -26,15 +26,13 @@ class DnaResource extends Resource
                 Forms\Components\TextInput::make('name')
                     ->required()
                     ->maxLength(255),
-                Forms\Components\TextInput::make('user_id')
+                FileUpload::make('attachment')
                     ->required()
-                    ->numeric(),
-                Forms\Components\TextInput::make('variable_name')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('file_name')
-                    ->required()
-                    ->maxLength(255),
+                    ->maxSize(100000)
+                    ->directory('dna-form-imports')
+                    ->visibility('private')
+                    ->afterStateUpdated(
+        ImportDna::dispatch($request->user(), $manager->storagePath($path), $state)
             ]);
     }
 
