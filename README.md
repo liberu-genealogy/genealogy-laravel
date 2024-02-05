@@ -1,41 +1,21 @@
-<p align="center"><a href="https://Liberu Genealogy.co.uk" target="_blank"><img src="https://raw.githubusercontent.com/Liberu Genealogy/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/Liberu Genealogy-logolockup-cmyk-red.svg" width="400" alt="Liberu Genealogy Logo"></a></p>
+### Description
+Liberu Genealogy is an innovative open source project built using Laravel 11, PHP 8.3, Filament 3.2 and Livewire 3  aimed at revolutionizing the field of genealogy and family history research. Our project combines the power of Laravel's robust framework with the latest features and advancements offered by PHP 8.3 to create a cutting-edge platform for exploring and preserving ancestral heritage.
 
-<p align="center">
-<a href="https://github.com/Liberu Genealogy/framework/actions"><img src="https://github.com/Liberu Genealogy/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/Liberu Genealogy/framework"><img src="https://img.shields.io/packagist/dt/Liberu Genealogy/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/Liberu Genealogy/framework"><img src="https://img.shields.io/packagist/v/Liberu Genealogy/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/Liberu Genealogy/framework"><img src="https://img.shields.io/packagist/l/Liberu Genealogy/framework" alt="License"></a>
-</p>
+At the core of our project is a sophisticated genealogy website built on Laravel 11, providing users with a seamless and intuitive experience as they delve into their family lineage. Leveraging Laravel's elegant syntax and comprehensive set of tools, we have developed a feature-rich application that enables users to create, manage, and explore their family trees with ease.
 
-## About Liberu Genealogy
+Moreover, the open source nature of our project encourages collaboration and innovation within the genealogy community. Developers can leverage the technologies used to extend the functionality of Liberu Genealogy, contribute enhancements, and customize the platform to suit their specific requirements. We actively support a thriving community of developers who utilize our open source code to create complementary tools and applications, fostering an ecosystem of continuous improvement and expansion.
 
-Liberu Genealogy is a web application framework based on Laravel 11 using Filament and Livewire. 
-With expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Liberu Genealogy takes the pain out of development by easing common tasks used in many web projects, such as:
+Creating your own family tree has never been easier. With our platform, you have two convenient options to get started. You can import data in various standard formats or manually enter the information yourself.
 
-- [Simple, fast routing engine](https://Liberu Genealogy.com/docs/routing).
-- [Powerful dependency injection container](https://Liberu Genealogy.com/docs/container).
-- Multiple back-ends for [session](https://Liberu Genealogy.com/docs/session) and [cache](https://Liberu Genealogy.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://Liberu Genealogy.com/docs/eloquent).
-- Database agnostic [schema migrations](https://Liberu Genealogy.com/docs/migrations).
-- [Robust background job processing](https://Liberu Genealogy.com/docs/queues).
-- [Real-time event broadcasting](https://Liberu Genealogy.com/docs/broadcasting).
+To ensure seamless integration with existing family tree databases and records, we provide robust API support. Our API allows you to import and export Gedcom data and DNA matching results effortlessly. Additionally, we are constantly innovating and will be introducing Smart Matching soon, which will enable you to connect easily with resources on other servers, expanding your research possibilities.
 
-Liberu Genealogy is accessible, powerful, and provides tools required for large, robust applications.
+We prioritize the security and privacy of your data. Rest assured that all your information is securely stored on our server and will never be shared without your explicit permission. We understand the sensitivity of personal data, and protecting your privacy is our utmost concern.
 
-## Learning Liberu Genealogy
+Our platform features user-friendly data tables that support comprehensive CRUD operations, empowering you to manage your family tree information with ease. Whether you need to create, read, update, or delete data entries, our intuitive interface ensures a seamless experience.
 
-## Liberu Genealogy Sponsors
+Customization is key, and our forms are designed to be easily modified to fit your specific needs. Tailor your family tree to reflect the unique nuances and details of your lineage. Our flexible forms empower you to capture the rich history and connections that make your family story truly special.
 
-We would like to extend our thanks to the following sponsors for funding Liberu Genealogy development. If you are interested in becoming a sponsor, please visit the Liberu Sponsors link.
+To get started install the application located at https://github.com/liberu-genealogy/genealogy-laravel
+Download and explore the user-friendly interface and unleash the power of creating and discovering your family's heritage with ease.
 
-## Code of Conduct
-
-In order to ensure that the Liberu Genealogy community is welcoming to all, please review and abide by the [Code of Conduct](https://Liberu Genealogy.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Liberu Genealogy, please send an e-mail to Taylor Otwell via [taylor@Liberu Genealogy.com](mailto:taylor@Liberu Genealogy.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Liberu Genealogy framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+Download our software today and embark on an enriching journey of tracing your roots and discovering the stories that connect generations.
