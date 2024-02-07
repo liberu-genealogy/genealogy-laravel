@@ -1,21 +1,23 @@
 ### Description
-Liberu Genealogy is an innovative open source project built using Laravel 11, PHP 8.3, Filament 3.2 and Livewire 3  aimed at revolutionizing the field of genealogy and family history research. Our project combines the power of Laravel's robust framework with the latest features and advancements offered by PHP 8.3 to create a cutting-edge platform for exploring and preserving ancestral heritage.
+Liberu Genealogy is an innovative open-source project, designed with Laravel 11, PHP 8.3, Filament 3.2, and Livewire 3 technologies, aiming to revolutionize genealogical research and family history exploration. Our initiative combines the power of the robust Laravel framework with the latest advancements in PHP 8.3, thus providing a cutting-edge platform to discover and preserve ancestral heritage.
 
-At the core of our project is a sophisticated genealogy website built on Laravel 11, providing users with a seamless and intuitive experience as they delve into their family lineage. Leveraging Laravel's elegant syntax and comprehensive set of tools, we have developed a feature-rich application that enables users to create, manage, and explore their family trees with ease.
+Our project is based on a sophisticated genealogy website built on Laravel 11, providing users with a smooth and intuitive experience as they explore their family history. By leveraging Laravel's elegant syntax and comprehensive range of tools, we have developed a comprehensive application that allows users to easily create, manage, and explore their family trees.
 
-Moreover, the open source nature of our project encourages collaboration and innovation within the genealogy community. Developers can leverage the technologies used to extend the functionality of Liberu Genealogy, contribute enhancements, and customize the platform to suit their specific requirements. We actively support a thriving community of developers who utilize our open source code to create complementary tools and applications, fostering an ecosystem of continuous improvement and expansion.
 
-Creating your own family tree has never been easier. With our platform, you have two convenient options to get started. You can import data in various standard formats or manually enter the information yourself.
+Furthermore, our project, being open source, fosters collaboration and innovation within the genealogy community. Developers can leverage the technologies used to enhance the functionalities of Liberu Genealogy, propose improvements, and tailor the platform to their specific needs. We actively encourage a vibrant community of developers who utilize our open-source code to develop complementary tools and applications, thus creating an environment conducive to continuous improvement and expansion.
 
-To ensure seamless integration with existing family tree databases and records, we provide robust API support. Our API allows you to import and export Gedcom data and DNA matching results effortlessly. Additionally, we are constantly innovating and will be introducing Smart Matching soon, which will enable you to connect easily with resources on other servers, expanding your research possibilities.
+Establishing your own family tree has never been easier. Our platform offers two convenient options to get started. You can import data in various standard formats or manually enter the information yourself.
 
-We prioritize the security and privacy of your data. Rest assured that all your information is securely stored on our server and will never be shared without your explicit permission. We understand the sensitivity of personal data, and protecting your privacy is our utmost concern.
+In order to ensure seamless integration with existing databases and records of family trees, we provide robust API support. Our API facilitates effortless import and export of Gedcom data and DNA matching results. Additionally, we are constantly innovating and will soon introduce Smart Matching, enabling easy connection with resources on other servers, thus expanding your research possibilities.
 
-Our platform features user-friendly data tables that support comprehensive CRUD operations, empowering you to manage your family tree information with ease. Whether you need to create, read, update, or delete data entries, our intuitive interface ensures a seamless experience.
+The security and confidentiality of your data are our top priorities. Your information is securely stored on our server and will never be shared without your explicit authorization. We understand the sensitivity of personal data, and we are committed to protecting your privacy.
 
-Customization is key, and our forms are designed to be easily modified to fit your specific needs. Tailor your family tree to reflect the unique nuances and details of your lineage. Our flexible forms empower you to capture the rich history and connections that make your family story truly special.
+On our platform you will find user-friendly data tables that provide comprehensive support for CRUD operations. This allows you to easily manage your family tree information. Whether you need to create, read, update or delete data entries, our intuitive interface ensures a seamless experience.
 
-To get started install the application located at https://github.com/liberu-genealogy/genealogy-laravel
-Download and explore the user-friendly interface and unleash the power of creating and discovering your family's heritage with ease.
+Customization is crucial, and our forms are designed to be easily editable to meet your specific needs. Customize your family tree to reflect the unique nuances and details of your lineage. Our flexible forms allow you to capture the rich history and connections that make your family history truly special.
+
+To get started, install the application available at https://github.com/liberu-genealogy/genealogy-laravel.
+
+Download it and explore its user-friendly interface, unleashing the power to easily create and discover your family's legacy.
 
 Download our software today and embark on an enriching journey of tracing your roots and discovering the stories that connect generations.
