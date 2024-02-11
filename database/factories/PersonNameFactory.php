@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\PersonName;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class PersonNameFactory extends Factory
@@ -22,10 +23,18 @@ class PersonNameFactory extends Factory
     public function definition()
     {
         return [
-            'group' => $this->faker->word(), 'gid' => $this->faker->randomElement('1', '2'),
-            'type' => $this->faker->word(), 'name' => $this->faker->name(),
-            'npfx' => $this->faker->word(), 'givn' => $this->faker->firstName(),
-            'nick' => $this->faker->userName(), 'spfx', 'surn' => $this->faker->lastName(), 'nsfx', 'created_at', 'updated_at',
+            'group' => $this->faker->word(),
+            'gid' => $this->faker->randomElement(['1', '2']),
+            'type' => $this->faker->word(),
+            'name' => $this->faker->name(),
+            'npfx' => $this->faker->word(),
+            'givn' => $this->faker->firstName(),
+            'nick' => $this->faker->userName(),
+            'spfx' => '',
+            'surn' => $this->faker->lastName(),
+            'nsfx' => '',
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now(),
         ];
     }
 }

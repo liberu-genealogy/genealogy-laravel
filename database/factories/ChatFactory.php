@@ -22,7 +22,8 @@ class ChatFactory extends Factory
     public function definition()
     {
         return [
-            'user_1' => $this->faker->randomElement(1, 2, 3, 4), 'user_2' => $this->faker->randomElement(1, 2, 3, 4),
+            'user_1' => $this->faker->randomElement([1, 2, 3, 4]),
+            'user_2' => $this->faker->randomElement([1, 2, 3, 4]),
         ];
     }
 }

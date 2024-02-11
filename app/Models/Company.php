@@ -3,11 +3,15 @@
 namespace App\Models;
 
 use App\Traits\CreatedBy;
-use LaravelLiberu\Companies\Models\Company as CoreCompany;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 
-class Company extends CoreCompany
+// use LaravelLiberu\Companies\Models\Company as CoreCompany;
+
+class Company extends Model
 {
-    use CreatedBy;
+    // use CreatedBy;
+    use HasFactory;
 
     protected $fillable = [
         'privacy',
@@ -15,5 +19,6 @@ class Company extends CoreCompany
         'email',
         'is_tenant',
         'status',
+        //TODO: add all the other fields from migration or verify that model exists on LaravelLiberu package
     ];
 }

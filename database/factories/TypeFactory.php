@@ -2,9 +2,9 @@
 
 namespace Database\Factories;
 
+use App\Models\Type;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
-use LaravelLiberu\Files\Models\Type;
 
 class TypeFactory extends Factory
 {
@@ -13,14 +13,15 @@ class TypeFactory extends Factory
     public function definition()
     {
         return [
-            'name' => null,
-            'folder' => 'null',
-            'model' => null,
-            'icon' => 'folder',
-            'endpoint' => null,
-            'description' => null,
-            'is_browsable' => false,
-            'is_system' => false,
+            'name' => $this->faker->text(20),
+            // 'folder' => 'null',
+            // 'model' => $this->faker->text(20),
+            // 'icon' => 'folder',
+            // 'endpoint' => null,
+            'description' => $this->faker->text(),
+            // 'is_browsable' => false,
+            // 'is_system' => false,
+            'is_active' => $this->faker->boolean(),
         ];
     }
 

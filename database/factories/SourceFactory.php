@@ -55,7 +55,7 @@ class SourceFactory extends Factory
             //              ])->id,
             'is_active' => $this->faker->randomDigit('0', '1'),
             'group' => $this->faker->word(),
-            'gid' => $this->faker->word(),
+            'gid' => $this->faker->randomDigit(),
             'quay' => $this->faker->word(),
             'page' => $this->faker->word(),
         ];

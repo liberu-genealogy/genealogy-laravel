@@ -2,7 +2,9 @@
 
 namespace Database\Factories;
 
-use App\Models\PersonDesi;
+// use App\Models\PersonDesi;
+use Carbon\Carbon;
+use FamilyTree365\LaravelGedcom\Models\PersonDesi;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class PersonDesiFactory extends Factory
@@ -22,8 +24,11 @@ class PersonDesiFactory extends Factory
     public function definition()
     {
         return [
-            'group' => $this->faker->word(), 'gid' => $this->faker->randomElement('1', '2'),
-            'desi' =>$this->faker->word(), , 'created_at', 'updated_at',
+            'group' => $this->faker->word(),
+            'gid' => $this->faker->randomElement(['1', '2']),
+            'rela' => $this->faker->word(),
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now()
         ];
     }
 }
