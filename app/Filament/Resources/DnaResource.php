@@ -21,19 +21,10 @@ class DnaResource extends Resource
 
     public static function form(Form $form): Form
     {
-        return $form
-            ->schema([
-                Forms\Components\TextInput::make('name')
-                    ->required()
-                    ->maxLength(255),
-                FileUpload::make('attachment')
-                    ->required()
-                    ->maxSize(100000)
-                    ->directory('dna-form-imports')
-                    ->visibility('private')
-                    ->afterStateUpdated(
-        ImportDna::dispatch($request->user(), $manager->storagePath($path), $state)
-            ]);
+        return $form->schema([
+                Forms\Components\TextInput::make('name')->required()->maxLength(255),
+                FileUpload::make('attachment')->required()->maxSize(100000)->directory('dna-form-imports')->visibility('private')->afterStateUpdated(ImportDna::dispatch($request->user(), $manager->storagePath($path), $state)),
+        ]);
     }
 
     public static function table(Table $table): Table
