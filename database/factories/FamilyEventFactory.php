@@ -38,8 +38,8 @@ class FamilyEventFactory extends Factory
             'phon' => $this->faker->phoneNumber(),
             'caus'  => $this->faker->word(),
             'age' => $this->faker->numberBetween(10, 79),
-            'husb' => $this->faker->word(),
-            'wife' => $this->faker->word(),
+            'husb' => $this->faker->numberBetween(1, 100),
+            'wife' => $this->faker->numberBetween(1, 100),
         ];
     }
 }

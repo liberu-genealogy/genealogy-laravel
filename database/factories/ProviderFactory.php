@@ -22,7 +22,10 @@ class ProviderFactory extends Factory
     public function definition()
     {
         return [
-            'provider' => $this->faker->domainWord, 'provider_id' => $this->faker->randomAscii(), 'user_id'=>'1', 'avatar',
+            'provider' => $this->faker->domainWord,
+            'provider_id' => $this->faker->randomAscii(),
+            'user_id'=> 1,
+            'avatar' => '',
         ];
     }
 }

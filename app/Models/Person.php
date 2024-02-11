@@ -5,13 +5,38 @@ namespace App\Models;
 //use App\Traits\ConnectionTrait;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 //use Laravel\Scout\Searchable;
 //use LaravelLiberu\People\Models\Person as CorePerson;
 
-class Person
+class Person extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'gid',
+        'givn',
+        'surn',
+        'sex',
+        'child_in_family_id',
+        'description',
+        'titl',
+        'name',
+        'appellative',
+        'email',
+        'phone',
+        'birthday',
+        'deathday',
+        'burial_day',
+        'bank',
+        'bank_account',
+        'chan',
+        'rin',
+        'resn',
+        'rfn',
+        'afn',
+    ];
     // public function searchableAs()
     // {
     //     return 'name';
@@ -43,16 +68,6 @@ class Person
 //        'deathday', 'burial_day', 'bank', 'bank_account',
 //        'uid', 'chan', 'rin', 'resn', 'rfn', 'afn',
 //    ];
-    protected $fillable = [
-        'gid',
-        'givn',
-        'surn',
-        'sex',
-        'child_in_family_id',
-        'description',
-        'titl', 'name', 'appellative', 'email', 'phone', 'birthday',
-        'deathday', 'burial_day', 'bank', 'bank_account', 'chan', 'rin', 'resn', 'rfn', 'afn',
-    ];
 
 //     public function __construct(array $attributes = [])
 //     {

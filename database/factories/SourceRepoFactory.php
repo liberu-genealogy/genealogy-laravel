@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use App\Models\Repository;
 use App\Models\SourceRepo;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class SourceRepoFactory extends Factory
@@ -24,10 +25,11 @@ class SourceRepoFactory extends Factory
     {
         return [
             'group' => $this->faker->word(),
-            'gid' => $this->faker->randomElement('1', '2'),
-            'repo_id' => Repository::factory(),
+            'gid' => $this->faker->randomElement(['1', '2']),
+            'repo_id' => Repository::where('id', 1)->first()->id,
             'caln' => $this->faker->word(),
-            'created_at', 'updated_at',
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now(),
         ];
     }
 }
