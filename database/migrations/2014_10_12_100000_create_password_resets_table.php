@@ -9,7 +9,8 @@ return new class extends Migration
     public function up()
     {
         Schema::create('password_resets', function (Blueprint $table) {
-            $table->string('email')->primary();
+            $table->bigIncrements('id');
+            $table->string('email');
             $table->string('token')->index();
             $table->timestamp('created_at')->nullable();
         });

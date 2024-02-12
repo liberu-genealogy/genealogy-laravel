@@ -14,11 +14,12 @@ class CreateTreesTable extends Migration
     public function up()
     {
         Schema::create('trees', function (Blueprint $table) {
-            $table->id();
-            $table->integer('user_id');
-            $table->integer('company_id');
+            $table->bigIncrements('id');
+            $table->foreignId('user_id')->constrained('users');
+            $table->foreignId('company_id')->constrained('companies');
             $table->string('name', 255);
             $table->text('description');
+
             $table->timestamps();
         });
     }

@@ -23,6 +23,7 @@ class CreatePersonLdsTable extends Migration
             $table->string('plac')->nullable();
             $table->string('temp')->nullable();
             $table->string('slac_famc')->nullable();
+
             $table->timestamps();
         });
     }

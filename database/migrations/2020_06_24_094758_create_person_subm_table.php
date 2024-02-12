@@ -14,10 +14,11 @@ class CreatePersonSubmTable extends Migration
     public function up()
     {
         Schema::create('person_subm', function (Blueprint $table) {
-            $table->id();
+            $table->bigIncrements('id');
             $table->string('group')->nullable();
             $table->integer('gid')->nullable();
             $table->string('subm')->nullable();
+
             $table->timestamps();
         });
     }

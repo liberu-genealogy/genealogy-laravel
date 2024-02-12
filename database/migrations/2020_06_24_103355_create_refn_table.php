@@ -14,11 +14,12 @@ class CreateRefnTable extends Migration
     public function up()
     {
         Schema::create('refn', function (Blueprint $table) {
-            $table->id();
+            $table->bigIncrements('id');
             $table->string('group')->nullable();
             $table->integer('gid')->nullable();
             $table->string('refn')->nullable();
             $table->string('type')->nullable();
+
             $table->timestamps();
         });
     }

@@ -9,8 +9,7 @@ class CreateImportTemplatesTable extends Migration
     public function up()
     {
         Schema::create('import_templates', function (Blueprint $table) {
-            $table->increments('id');
-
+            $table->bigIncrements('id');
             $table->string('type')->index();
 
             $table->timestamps();

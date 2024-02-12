@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddIndexKeyPersonEventTable extends Migration
+class CreatePersonsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,12 @@ class AddIndexKeyPersonEventTable extends Migration
      */
     public function up()
     {
-        Schema::table('person_events', function (Blueprint $table) {
-            $table->index(['id', 'person_id', 'addr_id']);
+        Schema::create('persons', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->string('first_name')->nullable();
+            $table->string('last_name')->nullable();
+
+            $table->timestamps();
         });
     }
 
@@ -25,8 +29,6 @@ class AddIndexKeyPersonEventTable extends Migration
      */
     public function down()
     {
-        Schema::table('person_events', function (Blueprint $table) {
-            $table->dropIndex(['id', 'person_id', 'addr_id']);
-        });
+        Schema::dropIfExists('persons');
     }
 }

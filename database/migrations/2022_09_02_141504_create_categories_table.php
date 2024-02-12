@@ -16,16 +16,14 @@ return new class extends Migration
     public function up()
     {
         Schema::create($this->table, function (Blueprint $table) {
-            $table->id();
+            $table->bigIncrements('id');
             $table->string('name', 50);
             $table->text('description');
             $table->string('slug', 20);
             $table->unsignedInteger('order')->default(0);
-            $table->unsignedBigInteger('user_id');
-            $table->timestamps();
+            $table->foreignId('user_id')->constrained('users')->onUpdate('cascade')->onDelete('cascade');
 
-            $table->foreign('user_id')->references('id')->on('users')
-                ->onUpdate('cascade')->onDelete('cascade');
+            $table->timestamps();
         });
     }
 

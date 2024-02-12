@@ -14,9 +14,10 @@ class CreateMediaObjectsFileTable extends Migration
     public function up()
     {
         Schema::create('media_objects_file', function (Blueprint $table) {
-            $table->id();
+            $table->bigIncrements('id');
             $table->string('form')->nullable();
             $table->string('medi')->nullable();
+
             $table->timestamps();
         });
     }

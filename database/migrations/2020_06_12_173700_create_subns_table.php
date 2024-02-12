@@ -14,7 +14,7 @@ class CreateSubnsTable extends Migration
     public function up()
     {
         Schema::create('subns', function (Blueprint $table) {
-            $table->id();
+            $table->bigIncrements('id');
             $table->string('subm')->nullable();
             $table->string('famf')->nullable();
             $table->string('temp')->nullable();

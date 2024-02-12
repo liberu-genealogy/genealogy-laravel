@@ -14,10 +14,11 @@ class CreateImportjobsTable extends Migration
     public function up()
     {
         Schema::create('importjobs', function (Blueprint $table) {
-            $table->id();
-            $table->unsignedBigInteger('user_id')->nullable();
+            $table->bigIncrements('id');
+            $table->foreignId('user_id')->constrained('users')->nullable();
             $table->string('slug')->nullable();
             $table->string('status')->nullable();
+
             $table->timestamps();
         });
     }

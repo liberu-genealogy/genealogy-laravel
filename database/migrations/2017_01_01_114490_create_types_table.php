@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddMicrosecondInColumnChanToPeopleTable extends Migration
+class CreateTypesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,13 @@ class AddMicrosecondInColumnChanToPeopleTable extends Migration
      */
     public function up()
     {
-        Schema::table('people', function (Blueprint $table) {
-            $table->string('chan')->nullable()->after('deleted_at');
+        Schema::create('types', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->string('name');
+            $table->string('description');
+            $table->integer('is_active');
+
+            $table->timestamps();
         });
     }
 
@@ -25,8 +30,6 @@ class AddMicrosecondInColumnChanToPeopleTable extends Migration
      */
     public function down()
     {
-        Schema::table('people', function (Blueprint $table) {
-            $table->dropColumn('chan');
-        });
+        Schema::dropIfExists('types');
     }
 }

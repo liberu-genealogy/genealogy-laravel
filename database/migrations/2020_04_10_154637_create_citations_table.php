@@ -14,7 +14,7 @@ class CreateCitationsTable extends Migration
     public function up()
     {
         Schema::create('citations', function (Blueprint $table) {
-            $table->increments('id');
+            $table->bigIncrements('id');
             $table->string('name');
             $table->text('description');
             $table->dateTime('date')->nullable();
@@ -22,7 +22,8 @@ class CreateCitationsTable extends Migration
             $table->integer('volume');
             $table->integer('page');
             $table->integer('confidence');
-            $table->integer('source_id')->references('id')->on('sources');
+            $table->integer('source_id'); // unknown table
+
             $table->timestamps();
         });
     }

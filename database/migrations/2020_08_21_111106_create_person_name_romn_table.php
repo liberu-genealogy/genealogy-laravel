@@ -14,7 +14,7 @@ class CreatePersonNameRomnTable extends Migration
     public function up()
     {
         Schema::create('person_name_romn', function (Blueprint $table) {
-            $table->id();
+            $table->bigIncrements('id');
             $table->string('group')->nullable();
             $table->integer('gid')->nullable();
             $table->string('name')->nullable();
@@ -25,6 +25,7 @@ class CreatePersonNameRomnTable extends Migration
             $table->string('spfx')->nullable();
             $table->string('surn')->nullable();
             $table->string('nsfx')->nullable();
+
             $table->timestamps();
         });
     }

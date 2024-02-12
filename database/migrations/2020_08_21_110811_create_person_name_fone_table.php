@@ -14,7 +14,7 @@ class CreatePersonNameFoneTable extends Migration
     public function up()
     {
         Schema::create('person_name_fone', function (Blueprint $table) {
-            $table->id();
+            $table->bigIncrements('id');
             $table->string('group')->nullable();
             $table->integer('gid')->nullable();
             $table->string('name')->nullable();
@@ -25,6 +25,7 @@ class CreatePersonNameFoneTable extends Migration
             $table->string('spfx')->nullable();
             $table->string('surn')->nullable();
             $table->string('nsfx')->nullable();
+
             $table->timestamps();
         });
     }

@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Note;
+use App\Models\Type;
 // use App\Models\Type;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -31,7 +32,7 @@ class NoteFactory extends Factory
             'date' => $this->faker->date(),
             'description' => $this->faker->text(50),
             'is_active' => $this->faker->randomDigit('0', '1'),
-            //            'type_id' => Type::create(['name' => $this->faker->name, 'description' => $this->faker->text])->id,
+            'type_id' => Type::where('id', $this->faker->randomElement([1,2,3,4]))->first()->id,
         ];
     }
 }

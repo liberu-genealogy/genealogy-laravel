@@ -14,13 +14,16 @@ return new class extends Migration
     public function up()
     {
         Schema::create('dna_matchings', function (Blueprint $table) {
-            $table->id();
-            $table->unsignedBigInteger('user_id');
+            $table->bigIncrements('id');
+            $table->foreignId('user_id')->constrained('users');
             $table->string('image');
             $table->string('file1');
             $table->string('file2');
             $table->string('total_shared_cm')->nullable();
             $table->string('largest_cm_segment')->nullable();
+            $table->foreignId('match_id')->nullable(); // unknown table
+            $table->string('match_name')->nullable();
+
             $table->timestamps();
         });
     }
