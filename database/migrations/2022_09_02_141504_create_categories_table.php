@@ -22,10 +22,9 @@ return new class extends Migration
             $table->string('slug', 20);
             $table->unsignedInteger('order')->default(0);
             $table->unsignedBigInteger('user_id');
-            $table->timestamps();
 
-            $table->foreign('user_id')->references('id')->on('users')
-                ->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('user_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade');
+            $table->timestamps();
         });
     }
 

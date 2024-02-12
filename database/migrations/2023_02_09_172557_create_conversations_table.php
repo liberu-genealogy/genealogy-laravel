@@ -18,6 +18,7 @@ return new class extends Migration
             $table->integer('user_one');
             $table->integer('user_two');
             $table->integer('status')->default(1);
+
             $table->timestamps();
         });
     }

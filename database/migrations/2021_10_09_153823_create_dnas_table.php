@@ -19,6 +19,7 @@ return new class extends Migration
             $table->unsignedBigInteger('user_id');
             $table->string('variable_name');
             $table->string('file_name');
+
             $table->timestamps();
         });
     }

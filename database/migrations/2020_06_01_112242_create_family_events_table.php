@@ -21,6 +21,19 @@ class CreateFamilyEventsTable extends Migration
             $table->string('title')->nullable();
             $table->text('description')->nullable();
             $table->string('converted_date')->nullable();
+            $table->integer('year')->nullable();
+            $table->integer('month')->nullable();
+            $table->integer('day')->nullable();
+            $table->string('type')->nullable();
+            $table->string('plac')->nullable();
+            $table->integer('addr_id')->nullable();
+            $table->string('phon')->nullable();
+            $table->text('caus')->nullable();
+            $table->string('age')->nullable();
+            $table->string('agnc')->nullable();
+            $table->integer('husb')->nullable();
+            $table->integer('wife')->nullable();
+
             $table->timestamps();
             $table->softDeletes();
         });

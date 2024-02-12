@@ -21,6 +21,7 @@ return new class extends Migration
             $table->integer('deleted_from_receiver')->default(0);
             $table->integer('user_id')->unsigned();
             $table->integer('conversation_id')->unsigned();
+
             $table->timestamps();
         });
     }

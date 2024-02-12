@@ -15,11 +15,12 @@ class CreatePaypalSubscriptionsTable extends Migration
     {
         Schema::create('paypal_subscriptions', function (Blueprint $table) {
             $table->id();
-            $table->string('paypal_subscription_id')->nullable();
+            $table->string('paypal_id')->unique()->nullable();
             $table->string('user_email')->nullable();
             $table->string('paypal_plan_id')->nullable();
             $table->string('status')->nullable();
             $table->dateTime('start_time')->nullable();
+
             $table->timestamps();
         });
     }

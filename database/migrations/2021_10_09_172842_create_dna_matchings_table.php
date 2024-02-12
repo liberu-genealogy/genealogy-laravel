@@ -21,6 +21,9 @@ return new class extends Migration
             $table->string('file2');
             $table->string('total_shared_cm')->nullable();
             $table->string('largest_cm_segment')->nullable();
+            $table->unsignedBigInteger('match_id')->nullable();
+            $table->string('match_name')->nullable();
+
             $table->timestamps();
         });
     }

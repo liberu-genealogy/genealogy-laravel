@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreatePlansTable extends Migration
+class CreatePaypalPlansTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,16 @@ class CreatePlansTable extends Migration
      */
     public function up()
     {
-        Schema::create('plans', function (Blueprint $table) {
+        Schema::create('paypal_plans', function (Blueprint $table) {
             $table->id();
-            $table->string('plan_id')->nullable();
+            $table->string('paypal_id')->unique()->nullable();
+            $table->string('paypal_product_id')->nullable();
+            $table->string('name')->nullable();
             $table->string('status')->nullable();
             $table->string('description')->nullable();
             $table->string('usage_type')->nullable();
             $table->dateTime('create_time')->nullable();
+
             $table->timestamps();
         });
     }
@@ -31,6 +34,6 @@ class CreatePlansTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('plans');
+        Schema::dropIfExists('paypal_plans');
     }
 }

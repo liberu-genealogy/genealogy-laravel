@@ -15,9 +15,8 @@ return new class extends Migration
     {
         Schema::create('tenant_people', function (Blueprint $table) {
             $table->id();
-            $table->integer('tenant_person_id');
-            $table->integer('tenant_id');
-
+            $table->integer('tenant_person_id')->unique();
+            $table->integer('tenant_id')->unique();
             $table->string('name')->nullable();
             $table->string('appellative', 191)->nullable();
             $table->string('nin', 191)->nullable();
@@ -65,8 +64,6 @@ return new class extends Migration
             $table->string('chr', 191)->nullable();
 
             $table->timestamps();
-
-            $table->unique(['tenant_id', 'tenant_person_id']);
         });
     }
 

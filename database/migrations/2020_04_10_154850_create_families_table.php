@@ -18,8 +18,12 @@ class CreateFamiliesTable extends Migration
             $table->text('description')->nullable();
             $table->integer('is_active')->nullable();
             $table->integer('type_id')->nullable();
-            $table->integer('husband_id')->references('id')->on('persons')->nullable();
-            $table->integer('wife_id')->references('id')->on('persons')->nullable();
+            $table->unsignedInteger('husband_id')->references('id')->on('persons')->nullable();
+            $table->unsignedInteger('wife_id')->references('id')->on('persons')->nullable();
+            $table->string('chan')->nullable();
+            $table->string('nchi')->nullable();
+            $table->string('rin')->nullable();
+
             $table->timestamps();
             $table->softDeletes();
         });
