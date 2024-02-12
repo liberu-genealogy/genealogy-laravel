@@ -14,10 +14,11 @@ class CreatePersonAnciTable extends Migration
     public function up()
     {
         Schema::create('person_anci', function (Blueprint $table) {
-            $table->id();
+            $table->bigIncrements('id');
             $table->string('group')->nullable();
             $table->integer('gid')->nullable();
             $table->string('anci')->nullable();
+
             $table->timestamps();
         });
     }

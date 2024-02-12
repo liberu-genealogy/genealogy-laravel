@@ -14,9 +14,9 @@ return new class extends Migration
     public function up()
     {
         Schema::create('tenant_people', function (Blueprint $table) {
-            $table->id();
-            $table->integer('tenant_person_id')->unique();
-            $table->integer('tenant_id')->unique();
+            $table->bigIncrements('id');
+            $table->integer('tenant_person_id')->unique(); // unknown table
+            $table->foreignId('tenant_id')->constrained('tenants')->unique();
             $table->string('name')->nullable();
             $table->string('appellative', 191)->nullable();
             $table->string('nin', 191)->nullable();
@@ -45,7 +45,7 @@ return new class extends Migration
             $table->string('nsfx', 191)->nullable();
             $table->char('sex', 1)->nullable();
             $table->text('description')->nullable();
-            $table->integer('child_in_family_id')->nullable();
+            // $table->foreignId('child_in_family_id')->nullable(); // unknown table
             $table->string('chan', 191)->nullable();
             $table->string('rin', 191)->nullable();
             $table->string('resn', 191)->nullable();

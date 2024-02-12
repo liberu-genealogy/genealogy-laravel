@@ -14,12 +14,13 @@ class CreateFamilySlgsTable extends Migration
     public function up()
     {
         Schema::create('family_slgs', function (Blueprint $table) {
-            $table->id();
-            $table->integer('family_id')->nullable();
+            $table->bigIncrements('id');
+            $table->integer('family_id'); // unknown table
             $table->string('stat')->nullable();
             $table->string('date')->nullable();
             $table->string('plac')->nullable();
             $table->string('temp')->nullable();
+
             $table->timestamps();
         });
     }

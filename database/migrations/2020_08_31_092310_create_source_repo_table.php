@@ -14,11 +14,12 @@ class CreateSourceRepoTable extends Migration
     public function up()
     {
         Schema::create('source_repo', function (Blueprint $table) {
-            $table->id();
+            $table->bigIncrements('id');
             $table->string('group');
             $table->integer('gid');
-            $table->string('repo_id');
+            $table->integer('repo_id'); // unknown table
             $table->text('caln');
+
             $table->timestamps();
         });
     }

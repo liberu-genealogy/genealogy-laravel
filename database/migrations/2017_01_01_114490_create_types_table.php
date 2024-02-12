@@ -1,24 +1,23 @@
 <?php
 
-declare(strict_types=1);
-
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateDomainsTable extends Migration
+class CreateTypesTable extends Migration
 {
     /**
      * Run the migrations.
      *
      * @return void
      */
-    public function up(): void
+    public function up()
     {
-        Schema::create('domains', function (Blueprint $table) {
+        Schema::create('types', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('domain', 255)->unique();
-            $table->foreignId('tenant_id')->constrained('tenants');
+            $table->string('name');
+            $table->string('description');
+            $table->integer('is_active');
 
             $table->timestamps();
         });
@@ -29,8 +28,8 @@ class CreateDomainsTable extends Migration
      *
      * @return void
      */
-    public function down(): void
+    public function down()
     {
-        Schema::dropIfExists('domains');
+        Schema::dropIfExists('types');
     }
 }

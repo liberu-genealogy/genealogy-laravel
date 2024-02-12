@@ -14,10 +14,11 @@ class CreatePersonDesiTable extends Migration
     public function up()
     {
         Schema::create('person_desi', function (Blueprint $table) {
-            $table->id();
+            $table->bigIncrements('id');
             $table->string('group')->nullable();
             $table->integer('gid')->nullable();
             $table->string('desi')->nullable();
+
             $table->timestamps();
         });
     }

@@ -10,18 +10,12 @@ class CreateDocumentsTable extends Migration
     public function up()
     {
         Schema::create('documents', function (Blueprint $table) {
-            $table->increments('id');
-
+            $table->bigIncrements('id');
             $table->morphs('documentable');
-
             $table->longText('text')->nullable();
 
             $table->timestamps();
         });
-
-        if (DB::getDriverName() === 'mysql') {
-            DB::statement('ALTER TABLE `documents` ADD FULLTEXT(`text`)');
-        }
     }
 
     public function down()

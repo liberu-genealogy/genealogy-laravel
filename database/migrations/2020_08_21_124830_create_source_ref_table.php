@@ -14,13 +14,14 @@ class CreateSourceRefTable extends Migration
     public function up()
     {
         Schema::create('source_ref', function (Blueprint $table) {
-            $table->id();
+            $table->bigIncrements('id');
             $table->string('group')->nullable();
             $table->integer('gid')->nullable();
             $table->integer('sour_id')->nullable();
             $table->string('text')->nullable();
             $table->string('quay')->nullable();
             $table->string('page')->nullable();
+
             $table->timestamps();
         });
     }

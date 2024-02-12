@@ -14,11 +14,12 @@ class CreatePersonAliaTable extends Migration
     public function up()
     {
         Schema::create('person_alia', function (Blueprint $table) {
-            $table->id();
+            $table->bigIncrements('id');
             $table->string('group')->nullable();
             $table->integer('gid')->nullable();
             $table->string('alia')->nullable();
             $table->integer('import_confirm')->default(0);
+
             $table->timestamps();
         });
     }

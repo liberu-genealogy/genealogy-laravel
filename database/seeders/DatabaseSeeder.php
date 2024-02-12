@@ -53,7 +53,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        User::factory(1)->create();
+        User::factory(2)->create();
         Addr::factory(1)->create();
         Author::factory(1)->create();
         // CalendarEvent::factory(1)->create();
@@ -65,7 +65,7 @@ class DatabaseSeeder extends Seeder
         // Dna::factory(1)->create();
         // DnaMatching::factory(1)->create();
         // Event::factory(1)->create();
-        Type::factory(1)->create();
+        Type::factory(4)->create();
         Person::factory(2)->create();
         FamilyEvent::factory(1)->create();
         Family::factory(1)->create();

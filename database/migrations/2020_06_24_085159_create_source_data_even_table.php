@@ -14,11 +14,12 @@ class CreateSourceDataEvenTable extends Migration
     public function up()
     {
         Schema::create('source_data_even', function (Blueprint $table) {
-            $table->id();
+            $table->bigIncrements('id');
             $table->string('group')->nullable();
             $table->string('gid')->nullable();
             $table->string('date')->nullable();
             $table->string('plac')->nullable();
+
             $table->timestamps();
         });
     }

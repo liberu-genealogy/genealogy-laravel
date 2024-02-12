@@ -14,11 +14,12 @@ class CreateChansTable extends Migration
     public function up()
     {
         Schema::create('chans', function (Blueprint $table) {
-            $table->id();
+            $table->bigIncrements('id');
             $table->string('group')->nullable();
             $table->integer('gid')->nullable();
             $table->string('date')->nullable();
             $table->string('time')->nullable();
+
             $table->timestamps();
         });
     }

@@ -14,10 +14,11 @@ class CreateActivationsTable extends Migration
     public function up()
     {
         Schema::create('activations', function (Blueprint $table) {
-            $table->id();
-            $table->unsignedBigInteger('user_id')->unsigned()->index();
+            $table->bigIncrements('id');
+            $table->foreignId('user_id')->constrained('users');
             $table->string('token');
             $table->ipAddress('ip_address')->nullable();
+
             $table->timestamps();
         });
     }

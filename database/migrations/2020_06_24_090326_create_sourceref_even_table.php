@@ -14,11 +14,12 @@ class CreateSourcerefEvenTable extends Migration
     public function up()
     {
         Schema::create('sourceref_even', function (Blueprint $table) {
-            $table->id();
+            $table->bigIncrements('id');
             $table->string('group')->nullable();
             $table->integer('gid')->nullable();
             $table->string('even')->nullable();
             $table->string('role')->nullable();
+
             $table->timestamps();
         });
     }

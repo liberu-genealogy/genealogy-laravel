@@ -9,9 +9,8 @@ class CreateRegionsTable extends Migration
     public function up()
     {
         Schema::create('regions', function (Blueprint $table) {
-            $table->increments('id');
-            $table->unsignedInteger('country_id')->index();
-            $table->foreign('country_id')->unique()->references('id')->on('countries')->onUpdate('restrict')->onDelete('restrict');
+            $table->bigIncrements('id');
+            $table->foreignId('country_id')->constrained('countries')->unique();
             $table->string('abbreviation', 2)->unique();
             $table->string('name');
             $table->boolean('is_active');

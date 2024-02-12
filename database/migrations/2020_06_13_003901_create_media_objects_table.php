@@ -14,12 +14,12 @@ class CreateMediaObjectsTable extends Migration
     public function up()
     {
         Schema::create('media_objects', function (Blueprint $table) {
-            $table->id();
+            $table->bigIncrements('id');
             $table->integer('gid')->nullable();
             $table->string('group')->nullable();
             $table->string('titl')->nullable();
-            $table->string('rin')->nullable();
-            $table->string('obje_id')->nullable();
+            // $table->string('rin')->nullable(); // duplicate??
+            $table->string('obje_id')->nullable(); // don't know what type must be
 
             $table->timestamps();
         });

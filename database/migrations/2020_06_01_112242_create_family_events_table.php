@@ -14,25 +14,25 @@ class CreateFamilyEventsTable extends Migration
     public function up()
     {
         Schema::create('family_events', function (Blueprint $table) {
-            $table->increments('id');
-            $table->integer('family_id')->references('id')->on('families');
-            $table->integer('places_id')->references('id')->on('places')->nullable();
+            $table->bigIncrements('id');
             $table->text('date')->nullable();
             $table->string('title')->nullable();
             $table->text('description')->nullable();
             $table->string('converted_date')->nullable();
-            $table->integer('year')->nullable();
-            $table->integer('month')->nullable();
-            $table->integer('day')->nullable();
-            $table->string('type')->nullable();
-            $table->string('plac')->nullable();
-            $table->integer('addr_id')->nullable();
-            $table->string('phon')->nullable();
-            $table->text('caus')->nullable();
-            $table->string('age')->nullable();
-            $table->string('agnc')->nullable();
-            $table->integer('husb')->nullable();
-            $table->integer('wife')->nullable();
+            // $table->integer('year')->nullable();
+            // $table->integer('month')->nullable();
+            // $table->integer('day')->nullable();
+            // $table->string('type')->nullable();
+            // $table->string('plac')->nullable();
+            // $table->string('phon')->nullable();
+            // $table->text('caus')->nullable();
+            // $table->string('age')->nullable();
+            // $table->string('agnc')->nullable();
+            // $table->integer('husb')->nullable();
+            // $table->integer('wife')->nullable();
+            // $table->foreignId('addr_id')->constrained('addrs')->nullable();
+            $table->integer('family_id')->nullable(); // unknown table
+            $table->foreignId('places_id')->constrained('places')->nullable();
 
             $table->timestamps();
             $table->softDeletes();
@@ -46,6 +46,6 @@ class CreateFamilyEventsTable extends Migration
      */
     public function down()
     {
-        Schema::drop('family_events');
+        Schema::dropIfExists('family_events');
     }
 }

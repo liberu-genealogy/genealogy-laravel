@@ -14,9 +14,9 @@ class CreatePaypalPlansTable extends Migration
     public function up()
     {
         Schema::create('paypal_plans', function (Blueprint $table) {
-            $table->id();
-            $table->string('paypal_id')->unique()->nullable();
-            $table->string('paypal_product_id')->nullable();
+            $table->bigIncrements('id');
+            $table->foreignId('paypal_id')->unique()->nullable();  // unknown table
+            $table->string('paypal_product_id')->constrained('paypal_products')->nullable();
             $table->string('name')->nullable();
             $table->string('status')->nullable();
             $table->string('description')->nullable();

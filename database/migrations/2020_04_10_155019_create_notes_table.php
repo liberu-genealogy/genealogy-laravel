@@ -14,16 +14,17 @@ class CreateNotesTable extends Migration
     public function up()
     {
         Schema::create('notes', function (Blueprint $table) {
-            $table->increments('id');
+            $table->bigIncrements('id');
             $table->string('name')->nullable();
             $table->text('description')->nullable();
             $table->dateTime('date')->nullable();
-            $table->integer('type_id')->nullable();
+            $table->foreignId('type_id')->constrained('types')->nullable();
             $table->integer('is_active')->nullable();
             $table->string('group')->nullable();
             $table->string('gid')->nullable();
             $table->longText('note')->nullable();
             $table->string('rin')->nullable();
+
             $table->timestamps();
         });
     }

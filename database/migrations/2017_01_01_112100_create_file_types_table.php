@@ -9,16 +9,13 @@ return new class extends Migration
     public function up()
     {
         Schema::create('file_types', function (Blueprint $table) {
-            $table->id();
-
+            $table->bigIncrements('id');
             $table->string('name')->unique();
             $table->string('model')->unique()->nullable();
             $table->string('folder')->nullable();
             $table->string('icon')->nullable();
             $table->string('endpoint')->nullable();
-
             $table->text('description')->nullable();
-
             $table->boolean('is_browsable');
             $table->boolean('is_system');
 
