@@ -15,6 +15,20 @@
 * https://github.com/liberu-maintenance/maintenance-laravel
 * https://github.com/liberu-real-estate/real-estate-laravel
 
+## Setup
+
+1. Download the project files from this github repo
+2. If you are on windows and you have Git Bash installed on your system you can open it in the project folder and just run the following command:
+
+```bash
+./setup.sh
+```
+
+and everything should be installed automatically if you are using Linux you just run the script as you normally run scripts in the terminal.
+
+NOTE 1: The script will ask you if you want to have your .env be overwritten by .env.example, in case you have already an .env configuration available please answer with "n" (No).
+
+NOTE 2: This script will run seeders, please make sure you are aware of this and don't run this script if you don't want this to happen.
 
 ### Description
 
