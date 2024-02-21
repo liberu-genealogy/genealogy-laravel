@@ -28,7 +28,6 @@ class CompanyFactory extends Factory
             'privacy' => $this->faker->word(),
             'name' => $this->faker->word(),
             'email' => $this->faker->email(),
-            'is_tenant' => $this->faker->boolean(),
             'status' => $this->faker->randomElement([1,2,3,4]),
             'created_by' => User::where('id', $this->faker->randomElement([1,2,3,4]))->first()->id,
             'updated_by' => User::where('id', $this->faker->randomElement([1,2,3,4]))->first()->id,

@@ -17,6 +17,11 @@ use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\AuthenticateSession;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
+use Althinect\FilamentSpatieRolesPermissions\FilamentSpatieRolesPermissionsPlugin;
+use App\Models\Team;
+use Maartenpaauw\Filament\Cashier\Stripe\BillingProvider;
+use App\Filament\Pages\Tenancy\RegisterTeam;
+use App\Filament\Pages\Tenancy\EditTeamProfile;
 
 class AdminPanelProvider extends PanelProvider
 {
@@ -40,6 +45,15 @@ class AdminPanelProvider extends PanelProvider
                 Widgets\AccountWidget::class,
                 Widgets\FilamentInfoWidget::class,
             ])
+	    ->plugin(FilamentSpatieRolesPermissionsPlugin::make())
+	    ->tenantRegistration(RegisterTeam::class)
+	    ->tenantProfile(EditTeamProfile::class)
+	    ->tenant(Team::class)
+	    ->tenantBillingProvider(new BillingProvider('basic'))
+	    ->requiresTenantSubscription()
+	    ->tenantMiddleware([
+             SyncSpatiePermissionsWithFilamentTenants::class,
+             ], isPersistent: true)
             ->middleware([
                 EncryptCookies::class,
                 AddQueuedCookiesToResponse::class,

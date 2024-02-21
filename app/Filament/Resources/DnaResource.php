@@ -15,6 +15,8 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class DnaResource extends Resource
 {
+    protected static bool $isScopedToTenant = false;
+
     protected static ?string $model = Dna::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
