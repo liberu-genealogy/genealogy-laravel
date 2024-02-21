@@ -22,7 +22,7 @@ use App\Models\Team;
 use Maartenpaauw\Filament\Cashier\Stripe\BillingProvider;
 use App\Filament\Pages\Tenancy\RegisterTeam;
 use App\Filament\Pages\Tenancy\EditTeamProfile;
-use App\Providers\Filament\SyncSpatiePermissionsWithFilamentTenants;
+//use App\Providers\Filament\SyncSpatiePermissionsWithFilamentTenants;
 
 class AdminPanelProvider extends PanelProvider
 {
@@ -52,9 +52,9 @@ class AdminPanelProvider extends PanelProvider
 	    ->tenant(Team::class)
 	    ->tenantBillingProvider(new BillingProvider('basic'))
 	    ->requiresTenantSubscription()
-	    ->tenantMiddleware([
-             SyncSpatiePermissionsWithFilamentTenants::class,
-             ], isPersistent: true)
+	   // ->tenantMiddleware([
+           //  SyncSpatiePermissionsWithFilamentTenants::class,
+           //  ], isPersistent: true)
             ->middleware([
                 EncryptCookies::class,
                 AddQueuedCookiesToResponse::class,
