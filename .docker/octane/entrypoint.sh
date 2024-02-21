@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/env bas
 set -e
 
 container_mode=${CONTAINER_MODE:-app}
