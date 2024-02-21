@@ -38,9 +38,9 @@ RUN if [ ${OCTANE_SERVER} = "roadrunner" ]; then \
 
 ###########################################
 
-FROM php:${PHP_VERSION}-cli-buster
+FROM php:${PHP_VERSION}-cli-bullseye
 
-LABEL maintainer="Curtis Delicata <curtis.delicata@familytree365.com>"
+LABEL maintainer="Curtis Delicata <curtis.delicata@liberu.co.uk>"
 
 ARG WWWUSER=1000
 ARG WWWGROUP=1000
@@ -314,20 +314,20 @@ RUN mkdir -p \
   bootstrap/cache \
   && chmod -R ug+rwx storage bootstrap/cache
 
-COPY deployment/octane/supervisord* /etc/supervisor/conf.d/
-COPY deployment/octane/php.ini /usr/local/etc/php/conf.d/octane.ini
-COPY deployment/octane/opcache.ini /usr/local/etc/php/conf.d/opcache.ini
-COPY deployment/octane/.rr.prod.yaml ./.rr.yaml
+COPY .docker/octane/supervisord* /etc/supervisor/conf.d/
+COPY .docker/octane/php.ini /usr/local/etc/php/conf.d/octane.ini
+COPY .docker/octane/opcache.ini /usr/local/etc/php/conf.d/opcache.ini
+COPY .docker/octane/.rr.prod.yaml ./.rr.yaml
 
-RUN chmod +x deployment/octane/entrypoint.sh
+RUN chmod +x .docker/octane/entrypoint.sh
 RUN if [ -f "rr" ]; then \
     chmod +x rr; \
   fi
-RUN cat deployment/octane/utilities.sh >> ~/.bashrc
+RUN cat .docker/octane/utilities.sh >> ~/.bashrc
 
 EXPOSE 9000
 EXPOSE 6001
 
-ENTRYPOINT ["deployment/octane/entrypoint.sh"]
+ENTRYPOINT [".docker/octane/entrypoint.sh"]
 
 HEALTHCHECK --start-period=5s --interval=2s --timeout=5s --retries=8 CMD php artisan octane:status || exit 1
