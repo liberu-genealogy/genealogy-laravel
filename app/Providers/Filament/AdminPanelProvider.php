@@ -22,6 +22,7 @@ use App\Models\Team;
 use Maartenpaauw\Filament\Cashier\Stripe\BillingProvider;
 use App\Filament\Pages\Tenancy\RegisterTeam;
 use App\Filament\Pages\Tenancy\EditTeamProfile;
+use App\Providers\Filament\SyncSpatiePermissionsWithFilamentTenants;
 
 class AdminPanelProvider extends PanelProvider
 {
