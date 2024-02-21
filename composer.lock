@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "71bbe403f762ccaf8706970eccb97e68",
+    "content-hash": "8ab5edeb6aba4058ab8b057ab7d2c6ae",
     "packages": [
         {
             "name": "anourvalar/eloquent-serialize",
@@ -345,56 +345,6 @@
                 }
             ],
             "time": "2023-12-11T17:09:12+00:00"
-        },
-        {
-            "name": "cgdprojects/php-gedcom",
-            "version": "v1.4.10",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/cgdprojects/php-gedcom.git",
-                "reference": "0ead94390d79f332aba222014f6651bfb01aadbc"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/cgdprojects/php-gedcom/zipball/0ead94390d79f332aba222014f6651bfb01aadbc",
-                "reference": "0ead94390d79f332aba222014f6651bfb01aadbc",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=8.0"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "9.*",
-                "rector/rector": "^0.11.49",
-                "squizlabs/php_codesniffer": "3.6.*"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Gedcom\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "description": "A GEDCOM file parser (read + write) for PHP 8.0+",
-            "homepage": "http://github.com/familytree365/php-gedcom",
-            "keywords": [
-                "gedcom",
-                "parser"
-            ],
-            "support": {
-                "issues": "https://github.com/cgdprojects/php-gedcom/issues",
-                "source": "https://github.com/cgdprojects/php-gedcom/tree/v1.4.10"
-            },
-            "funding": [
-                {
-                    "url": "https://github.com/familytree365",
-                    "type": "github"
-                }
-            ],
-            "time": "2021-11-28T12:13:02+00:00"
         },
         {
             "name": "danharrin/date-format-converter",
@@ -2254,26 +2204,112 @@
             "time": "2024-02-13T15:40:14+00:00"
         },
         {
-            "name": "laravel-liberu/laravel-gedcom",
-            "version": "v9.0.3",
+            "name": "laminas/laminas-diactoros",
+            "version": "3.3.1",
             "source": {
                 "type": "git",
-                "url": "https://github.com/liberu-genealogy/laravel-gedcom.git",
-                "reference": "2b839a2a44e8349eb37e78d1649362aa01a21f64"
+                "url": "https://github.com/laminas/laminas-diactoros.git",
+                "reference": "74cfb9a7522ffd2a161d1ebe10db2fc2abb9df45"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/liberu-genealogy/laravel-gedcom/zipball/2b839a2a44e8349eb37e78d1649362aa01a21f64",
-                "reference": "2b839a2a44e8349eb37e78d1649362aa01a21f64",
+                "url": "https://api.github.com/repos/laminas/laminas-diactoros/zipball/74cfb9a7522ffd2a161d1ebe10db2fc2abb9df45",
+                "reference": "74cfb9a7522ffd2a161d1ebe10db2fc2abb9df45",
                 "shasum": ""
             },
             "require": {
-                "cgdprojects/php-gedcom": "^1.4",
-                "doctrine/dbal": "^2.8|^3.0",
-                "php": ">=8.0"
+                "php": "~8.1.0 || ~8.2.0 || ~8.3.0",
+                "psr/http-factory": "^1.0.2",
+                "psr/http-message": "^1.1 || ^2.0"
+            },
+            "provide": {
+                "psr/http-factory-implementation": "^1.1 || ^2.0",
+                "psr/http-message-implementation": "^1.1 || ^2.0"
             },
             "require-dev": {
-                "rector/rector": "^0.11.49"
+                "ext-curl": "*",
+                "ext-dom": "*",
+                "ext-gd": "*",
+                "ext-libxml": "*",
+                "http-interop/http-factory-tests": "^0.9.0",
+                "laminas/laminas-coding-standard": "~2.5.0",
+                "php-http/psr7-integration-tests": "^1.3",
+                "phpunit/phpunit": "^9.6.16",
+                "psalm/plugin-phpunit": "^0.18.4",
+                "vimeo/psalm": "^5.22.1"
+            },
+            "type": "library",
+            "extra": {
+                "laminas": {
+                    "config-provider": "Laminas\\Diactoros\\ConfigProvider",
+                    "module": "Laminas\\Diactoros"
+                }
+            },
+            "autoload": {
+                "files": [
+                    "src/functions/create_uploaded_file.php",
+                    "src/functions/marshal_headers_from_sapi.php",
+                    "src/functions/marshal_method_from_sapi.php",
+                    "src/functions/marshal_protocol_version_from_sapi.php",
+                    "src/functions/normalize_server.php",
+                    "src/functions/normalize_uploaded_files.php",
+                    "src/functions/parse_cookie_header.php"
+                ],
+                "psr-4": {
+                    "Laminas\\Diactoros\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "description": "PSR HTTP Message implementations",
+            "homepage": "https://laminas.dev",
+            "keywords": [
+                "http",
+                "laminas",
+                "psr",
+                "psr-17",
+                "psr-7"
+            ],
+            "support": {
+                "chat": "https://laminas.dev/chat",
+                "docs": "https://docs.laminas.dev/laminas-diactoros/",
+                "forum": "https://discourse.laminas.dev",
+                "issues": "https://github.com/laminas/laminas-diactoros/issues",
+                "rss": "https://github.com/laminas/laminas-diactoros/releases.atom",
+                "source": "https://github.com/laminas/laminas-diactoros"
+            },
+            "funding": [
+                {
+                    "url": "https://funding.communitybridge.org/projects/laminas-project",
+                    "type": "community_bridge"
+                }
+            ],
+            "time": "2024-02-16T16:06:16+00:00"
+        },
+        {
+            "name": "laravel-liberu/laravel-gedcom",
+            "version": "v3.4.16",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/liberu-genealogy/laravel-gedcom.git",
+                "reference": "fdc94eabd85c33e0a6cfcb809945a9e37edec991"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/liberu-genealogy/laravel-gedcom/zipball/fdc94eabd85c33e0a6cfcb809945a9e37edec991",
+                "reference": "fdc94eabd85c33e0a6cfcb809945a9e37edec991",
+                "shasum": ""
+            },
+            "require": {
+                "doctrine/dbal": "^2.8|^3.0",
+                "laravel-liberu/php-gedcom": "^1.4",
+                "php": ">=8.2"
+            },
+            "require-dev": {
+                "driftingly/rector-laravel": "^0.25.0",
+                "rector/rector": "*"
             },
             "type": "library",
             "extra": {
@@ -2285,7 +2321,7 @@
             },
             "autoload": {
                 "psr-4": {
-                    "FamilyTree365\\LaravelGedcom\\": "src"
+                    "FamilyTree365\\LaravelGedcom\\": "src/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -2295,7 +2331,7 @@
             "description": "A package that converts gedcom files to Eloquent models",
             "support": {
                 "issues": "https://github.com/liberu-genealogy/laravel-gedcom/issues",
-                "source": "https://github.com/liberu-genealogy/laravel-gedcom/tree/v9.0.3"
+                "source": "https://github.com/liberu-genealogy/laravel-gedcom/tree/v3.4.16"
             },
             "funding": [
                 {
@@ -2303,7 +2339,57 @@
                     "type": "github"
                 }
             ],
-            "time": "2023-01-03T12:00:24+00:00"
+            "time": "2024-02-12T18:03:52+00:00"
+        },
+        {
+            "name": "laravel-liberu/php-gedcom",
+            "version": "v1.4.10",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/laravel-liberu/php-gedcom.git",
+                "reference": "0ead94390d79f332aba222014f6651bfb01aadbc"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/laravel-liberu/php-gedcom/zipball/0ead94390d79f332aba222014f6651bfb01aadbc",
+                "reference": "0ead94390d79f332aba222014f6651bfb01aadbc",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "9.*",
+                "rector/rector": "^0.11.49",
+                "squizlabs/php_codesniffer": "3.6.*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Gedcom\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "A GEDCOM file parser (read + write) for PHP 8.0+",
+            "homepage": "http://github.com/familytree365/php-gedcom",
+            "keywords": [
+                "gedcom",
+                "parser"
+            ],
+            "support": {
+                "issues": "https://github.com/laravel-liberu/php-gedcom/issues",
+                "source": "https://github.com/laravel-liberu/php-gedcom/tree/v1.4.10"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/familytree365",
+                    "type": "github"
+                }
+            ],
+            "time": "2021-11-28T12:13:02+00:00"
         },
         {
             "name": "laravel/framework",
@@ -2509,6 +2595,94 @@
                 "source": "https://github.com/laravel/framework"
             },
             "time": "2024-01-30T16:25:02+00:00"
+        },
+        {
+            "name": "laravel/octane",
+            "version": "v2.3.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/laravel/octane.git",
+                "reference": "8f9d0da559ba4366fecc5c106d1298abe6773396"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/laravel/octane/zipball/8f9d0da559ba4366fecc5c106d1298abe6773396",
+                "reference": "8f9d0da559ba4366fecc5c106d1298abe6773396",
+                "shasum": ""
+            },
+            "require": {
+                "laminas/laminas-diactoros": "^3.0",
+                "laravel/framework": "^10.10.1|^11.0",
+                "laravel/serializable-closure": "^1.3.0",
+                "nesbot/carbon": "^2.66.0|^3.0",
+                "php": "^8.1.0",
+                "symfony/psr-http-message-bridge": "^2.2.0|^6.4|^7.0"
+            },
+            "conflict": {
+                "spiral/roadrunner": "<2023.1.0",
+                "spiral/roadrunner-cli": "<2.6.0",
+                "spiral/roadrunner-http": "<3.3.0"
+            },
+            "require-dev": {
+                "guzzlehttp/guzzle": "^7.6.1",
+                "inertiajs/inertia-laravel": "^0.6.9|^1.0",
+                "laravel/scout": "^10.2.1",
+                "laravel/socialite": "^5.6.1",
+                "livewire/livewire": "^2.12.3|^3.0",
+                "mockery/mockery": "^1.5.1",
+                "nunomaduro/collision": "^6.4.0|^7.5.2|^8.0",
+                "orchestra/testbench": "^8.5.2|^9.0",
+                "phpstan/phpstan": "^1.10.15",
+                "phpunit/phpunit": "^10.4",
+                "spiral/roadrunner-cli": "^2.6.0",
+                "spiral/roadrunner-http": "^3.3.0"
+            },
+            "bin": [
+                "bin/roadrunner-worker",
+                "bin/swoole-server"
+            ],
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.x-dev"
+                },
+                "laravel": {
+                    "providers": [
+                        "Laravel\\Octane\\OctaneServiceProvider"
+                    ],
+                    "aliases": {
+                        "Octane": "Laravel\\Octane\\Facades\\Octane"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Laravel\\Octane\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Taylor Otwell",
+                    "email": "taylor@laravel.com"
+                }
+            ],
+            "description": "Supercharge your Laravel application's performance.",
+            "keywords": [
+                "frankenphp",
+                "laravel",
+                "octane",
+                "roadrunner",
+                "swoole"
+            ],
+            "support": {
+                "issues": "https://github.com/laravel/octane/issues",
+                "source": "https://github.com/laravel/octane"
+            },
+            "time": "2024-02-04T15:49:02+00:00"
         },
         {
             "name": "laravel/prompts",
@@ -6964,6 +7138,89 @@
             "time": "2024-01-23T14:51:35+00:00"
         },
         {
+            "name": "symfony/psr-http-message-bridge",
+            "version": "v7.0.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/psr-http-message-bridge.git",
+                "reference": "d9fadaf9541d7c01c307e48905d7ce1dbee6bf38"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/psr-http-message-bridge/zipball/d9fadaf9541d7c01c307e48905d7ce1dbee6bf38",
+                "reference": "d9fadaf9541d7c01c307e48905d7ce1dbee6bf38",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.2",
+                "psr/http-message": "^1.0|^2.0",
+                "symfony/http-foundation": "^6.4|^7.0"
+            },
+            "conflict": {
+                "php-http/discovery": "<1.15",
+                "symfony/http-kernel": "<6.4"
+            },
+            "require-dev": {
+                "nyholm/psr7": "^1.1",
+                "php-http/discovery": "^1.15",
+                "psr/log": "^1.1.4|^2|^3",
+                "symfony/browser-kit": "^6.4|^7.0",
+                "symfony/config": "^6.4|^7.0",
+                "symfony/event-dispatcher": "^6.4|^7.0",
+                "symfony/framework-bundle": "^6.4|^7.0",
+                "symfony/http-kernel": "^6.4|^7.0"
+            },
+            "type": "symfony-bridge",
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Bridge\\PsrHttpMessage\\": ""
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "PSR HTTP message bridge",
+            "homepage": "https://symfony.com",
+            "keywords": [
+                "http",
+                "http-message",
+                "psr-17",
+                "psr-7"
+            ],
+            "support": {
+                "source": "https://github.com/symfony/psr-http-message-bridge/tree/v7.0.3"
+            },
+            "funding": [
+                {
+                    "url": "https://symfony.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2024-01-23T15:02:46+00:00"
+        },
+        {
             "name": "symfony/routing",
             "version": "v6.4.3",
             "source": {
@@ -10262,5 +10519,5 @@
         "php": "^8.2"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.6.0"
+    "plugin-api-version": "2.2.0"
 }
