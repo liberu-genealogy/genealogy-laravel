@@ -27,7 +27,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '14'
-      - uses: borales/actions-yarn@v4
+      - uses: borales/actions-yarn@v5
         with:
           cmd: install
       - uses: shivammathur/setup-php@v2
@@ -41,7 +41,7 @@ jobs:
           sed -i 's/GOOGLE_ANALITICS_TOKEN/${{ secrets.GOOGLE_ANALITICS_TOKEN }}/g' resources/views/stubs/production-index.blade.stub
           sudo cp -f resources/views/stubs/production-index.blade.stub vendor/laravel-liberu/core/stubs
       - name: Archive production artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: resources
           path: |
@@ -140,7 +140,7 @@ jobs:
       -
         name: Extract metadata (tags, labels) for Docker
         id: meta
-        uses: docker/metadata-action@96383f45573cb7f253c731d3b3ab81c87ef81934
+        uses: docker/metadata-action@8e5442c4ef9f78752691e2d8f8d19755c6f78e81
         with:
           images: liberu/genealogy
 
@@ -151,7 +151,7 @@ jobs:
         uses: docker/setup-buildx-action@v3
 
       - name: Build and push Docker image
-        uses: docker/build-push-action@0565240e2d4ab88bba5387d719585280857ece09
+        uses: docker/build-push-action@4a13e500e55cf31b7a5d59a38ab2040ab0f42f56
         with:
           #       context: "{{defaultContext}}:.docker/prod/app/"
           file: Dockerfile
