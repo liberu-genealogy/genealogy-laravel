@@ -12,7 +12,7 @@
         "laravel-liberu/laravel-gedcom": "^3.4",
         "laravel/framework": "dev-master",
         "laravel/sanctum": "dev-master",
-        "laravel/tinker": "^2.9"
+        "laravel/tinker": "^2.9",
         "maartenpaauw/filament-cashier-billing-provider": "^1.2"
     },
     "require-dev": {
