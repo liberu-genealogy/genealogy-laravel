@@ -6,14 +6,14 @@
     "license": "MIT",
     "require": {
         "php": "^8.2",
-        "althinect/filament-spatie-roles-permissions": "^2.2",
+        "althinect/filament-spatie-roles-permissions": "dev-master",
         "filament/filament": "^3.2",
         "guzzlehttp/guzzle": "^7.8",
         "laravel-liberu/laravel-gedcom": "^3.4",
         "laravel/framework": "dev-master",
         "laravel/sanctum": "dev-master",
         "laravel/tinker": "^2.9",
-        "maartenpaauw/filament-cashier-billing-provider": "^1.2"
+        "maartenpaauw/filament-cashier-billing-provider": "dev-master"
     },
     "require-dev": {
         "fakerphp/faker": "^1.23",
