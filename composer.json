@@ -6,7 +6,7 @@
     "license": "MIT",
     "require": {
         "php": "^8.2",
-        "althinect/filament-spatie-roles-permissions": "^2.2",
+        "liberusoftware/filament-spatie-roles-permissions": "^2.3",
         "filament/filament": "^3.2",
         "guzzlehttp/guzzle": "^7.8",
         "laravel-liberu/laravel-gedcom": "^3.4",
