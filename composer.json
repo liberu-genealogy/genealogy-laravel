@@ -8,22 +8,21 @@
         "php": "^8.2",
         "althinect/filament-spatie-roles-permissions": "^2.2",
         "filament/filament": "^3.2",
-        "guzzlehttp/guzzle": "^7.2",
+        "guzzlehttp/guzzle": "^7.8",
         "laravel-liberu/laravel-gedcom": "^3.4",
-        "laravel/framework": "^10.0",
-        "laravel/octane": "^2.3",
-        "laravel/sanctum": "^3.2",
-        "laravel/tinker": "^2.8",
+        "laravel/framework": "dev-master",
+        "laravel/sanctum": "dev-master",
+        "laravel/tinker": "^2.9"
         "maartenpaauw/filament-cashier-billing-provider": "^1.2"
     },
     "require-dev": {
-        "fakerphp/faker": "^1.9.1",
-        "laravel/pint": "^1.0",
-        "laravel/sail": "^1.18",
-        "mockery/mockery": "^1.4.4",
-        "nunomaduro/collision": "^7.0",
+        "fakerphp/faker": "^1.23",
+        "laravel/pint": "^1.14",
+        "laravel/sail": "^1.28",
+        "mockery/mockery": "^1.6",
+        "nunomaduro/collision": "^8.0",
         "phpunit/phpunit": "^11.0",
-        "spatie/laravel-ignition": "^2.0"
+        "spatie/laravel-ignition": "^2.4"
     },
     "autoload": {
         "psr-4": {
