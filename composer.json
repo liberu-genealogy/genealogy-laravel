@@ -13,7 +13,7 @@
         "laravel/framework": "dev-master",
         "laravel/sanctum": "dev-master",
         "laravel/tinker": "^2.9",
-        "maartenpaauw/filament-cashier-billing-provider": "dev-master"
+        "maartenpaauw/filament-cashier-billing-provider": "dev-main"
     },
     "require-dev": {
         "fakerphp/faker": "^1.23",
