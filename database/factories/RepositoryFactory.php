@@ -24,8 +24,8 @@ class RepositoryFactory extends Factory
     public function definition()
     {
         return [
-            'repo' => $this->faker->word(),
-            'name' => $this->faker->word(),
+            'repo'    => $this->faker->word(),
+            'name'    => $this->faker->word(),
             'addr_id' => Addr::create([
                 'adr1' => $this->faker->address(30),
                 'adr2' => $this->faker->address(30),
@@ -34,13 +34,13 @@ class RepositoryFactory extends Factory
                 'post' => $this->faker->postcode(),
                 'ctry' => $this->faker->countryCode(),
             ])->id,
-            'date' => $this->faker->date(),
-            'rin' => $this->faker->word(),
-            'phon' => $this->faker->phoneNumber(),
-            'email' => $this->faker->email(),
-            'fax' => $this->faker->phoneNumber(),
-            'www' => $this->faker->url(),
-            'name' => $this->faker->name(),
+            'date'        => $this->faker->date(),
+            'rin'         => $this->faker->word(),
+            'phon'        => $this->faker->phoneNumber(),
+            'email'       => $this->faker->email(),
+            'fax'         => $this->faker->phoneNumber(),
+            'www'         => $this->faker->url(),
+            'name'        => $this->faker->name(),
             'description' => $this->faker->text(50),
             //  'type_id' => Type::create([
             //     'name' => $this->faker->word(),

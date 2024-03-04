@@ -23,9 +23,9 @@ class RefnFactory extends Factory
     {
         return [
             'group' => $this->faker->word(),
-            'gid' => $this->faker->randomDigit('1', '2'),
-            'refn' => $this->faker->word(),
-            'type' => $this->faker->word(),
+            'gid'   => $this->faker->randomDigit('1', '2'),
+            'refn'  => $this->faker->word(),
+            'type'  => $this->faker->word(),
         ];
     }
 }

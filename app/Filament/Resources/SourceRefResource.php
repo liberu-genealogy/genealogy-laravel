@@ -3,15 +3,12 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\SourceRefResource\Pages;
-use App\Filament\Resources\SourceRefResource\RelationManagers;
 use App\Models\SourceRef;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class SourceRefResource extends Resource
 {
@@ -88,9 +85,9 @@ class SourceRefResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListSourceRefs::route('/'),
+            'index'  => Pages\ListSourceRefs::route('/'),
             'create' => Pages\CreateSourceRef::route('/create'),
-            'edit' => Pages\EditSourceRef::route('/{record}/edit'),
+            'edit'   => Pages\EditSourceRef::route('/{record}/edit'),
         ];
     }
 }

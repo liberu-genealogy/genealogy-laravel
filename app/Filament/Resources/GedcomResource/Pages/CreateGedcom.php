@@ -3,7 +3,6 @@
 namespace App\Filament\Resources\GedcomResource\Pages;
 
 use App\Filament\Resources\GedcomResource;
-use Filament\Actions;
 use Filament\Resources\Pages\CreateRecord;
 
 class CreateGedcom extends CreateRecord

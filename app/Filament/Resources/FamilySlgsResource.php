@@ -3,15 +3,12 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\FamilySlgsResource\Pages;
-use App\Filament\Resources\FamilySlgsResource\RelationManagers;
 use App\Models\FamilySlgs;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class FamilySlgsResource extends Resource
 {
@@ -83,9 +80,9 @@ class FamilySlgsResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListFamilySlgs::route('/'),
+            'index'  => Pages\ListFamilySlgs::route('/'),
             'create' => Pages\CreateFamilySlgs::route('/create'),
-            'edit' => Pages\EditFamilySlgs::route('/{record}/edit'),
+            'edit'   => Pages\EditFamilySlgs::route('/{record}/edit'),
         ];
     }
 }

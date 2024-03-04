@@ -3,15 +3,12 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\PersonEventResource\Pages;
-use App\Filament\Resources\PersonEventResource\RelationManagers;
 use App\Models\PersonEvent;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class PersonEventResource extends Resource
 {
@@ -150,9 +147,9 @@ class PersonEventResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListPersonEvents::route('/'),
+            'index'  => Pages\ListPersonEvents::route('/'),
             'create' => Pages\CreatePersonEvent::route('/create'),
-            'edit' => Pages\EditPersonEvent::route('/{record}/edit'),
+            'edit'   => Pages\EditPersonEvent::route('/{record}/edit'),
         ];
     }
 }

@@ -24,11 +24,11 @@ class PersonDesiFactory extends Factory
     public function definition()
     {
         return [
-            'group' => $this->faker->word(),
-            'gid' => $this->faker->randomElement(['1', '2']),
-            'rela' => $this->faker->word(),
+            'group'      => $this->faker->word(),
+            'gid'        => $this->faker->randomElement(['1', '2']),
+            'rela'       => $this->faker->word(),
             'created_at' => Carbon::now(),
-            'updated_at' => Carbon::now()
+            'updated_at' => Carbon::now(),
         ];
     }
 }

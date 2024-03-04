@@ -24,10 +24,10 @@ class SourceRepoFactory extends Factory
     public function definition()
     {
         return [
-            'group' => $this->faker->word(),
-            'gid' => $this->faker->randomElement(['1', '2']),
-            'repo_id' => Repository::where('id', 1)->first()->id,
-            'caln' => $this->faker->word(),
+            'group'      => $this->faker->word(),
+            'gid'        => $this->faker->randomElement(['1', '2']),
+            'repo_id'    => Repository::where('id', 1)->first()->id,
+            'caln'       => $this->faker->word(),
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ];

@@ -23,17 +23,17 @@ class SubmFactory extends Factory
     public function definition()
     {
         return [
-            'group' => $this->faker->word(),
-            'gid' =>  $this->faker->randomDigit('1', '2'),
-            'name' => $this->faker->word(),
-            'addr_id' => Addr::create()->id,
-            'rin' => $this->faker->word(),
-            'rfn' => $this->faker->word(),
-            'lang' => $this->faker->languageCode(),
-            'phon' => $this->faker->phoneNumber(),
-            'email' => $this->faker->email(),
-            'fax' => $this->faker->word(),
-            'www' => $this->faker->url(),
+            'group'      => $this->faker->word(),
+            'gid'        => $this->faker->randomDigit('1', '2'),
+            'name'       => $this->faker->word(),
+            'addr_id'    => Addr::create()->id,
+            'rin'        => $this->faker->word(),
+            'rfn'        => $this->faker->word(),
+            'lang'       => $this->faker->languageCode(),
+            'phon'       => $this->faker->phoneNumber(),
+            'email'      => $this->faker->email(),
+            'fax'        => $this->faker->word(),
+            'www'        => $this->faker->url(),
             'created_at' => $this->faker->date(),
         ];
     }

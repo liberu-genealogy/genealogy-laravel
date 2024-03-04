@@ -4,7 +4,6 @@ namespace Database\Factories;
 
 use App\Models\Chan;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Str;
 
 class ChanFactory extends Factory
 {
@@ -23,10 +22,10 @@ class ChanFactory extends Factory
     public function definition(): array
     {
         return [
-            'gid' => $this->faker->randomDigit(1, 2),
+            'gid'   => $this->faker->randomDigit(1, 2),
             'group' => $this->faker->text(50),
-            'date' => $this->faker->date,
-            'time' => $this->faker->time,
+            'date'  => $this->faker->date,
+            'time'  => $this->faker->time,
         ];
     }
 }

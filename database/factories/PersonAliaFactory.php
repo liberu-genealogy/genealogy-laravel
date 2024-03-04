@@ -22,9 +22,9 @@ class PersonAliaFactory extends Factory
     public function definition()
     {
         return [
-            'group' => $this->faker->word(),
-            'gid' => $this->faker->randomDigit('1', '2'),
-            'alia' => $this->faker->word(),
+            'group'          => $this->faker->word(),
+            'gid'            => $this->faker->randomDigit('1', '2'),
+            'alia'           => $this->faker->word(),
             'import_confirm' => $this->faker->randomDigit('0', '1'),
         ];
     }

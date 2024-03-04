@@ -2,9 +2,8 @@
 
 namespace App\Policies;
 
-use Illuminate\Auth\Access\Response;
-use App\Models\UserSocial;
 use App\Models\User;
+use App\Models\UserSocial;
 
 class UserSocialPolicy
 {

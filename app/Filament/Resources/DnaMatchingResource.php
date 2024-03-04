@@ -3,15 +3,12 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\DnaMatchingResource\Pages;
-use App\Filament\Resources\DnaMatchingResource\RelationManagers;
 use App\Models\DnaMatching;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class DnaMatchingResource extends Resource
 {
@@ -101,9 +98,9 @@ class DnaMatchingResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListDnaMatchings::route('/'),
+            'index'  => Pages\ListDnaMatchings::route('/'),
             'create' => Pages\CreateDnaMatching::route('/create'),
-            'edit' => Pages\EditDnaMatching::route('/{record}/edit'),
+            'edit'   => Pages\EditDnaMatching::route('/{record}/edit'),
         ];
     }
 }

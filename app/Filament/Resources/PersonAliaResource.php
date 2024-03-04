@@ -3,15 +3,12 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\PersonAliaResource\Pages;
-use App\Filament\Resources\PersonAliaResource\RelationManagers;
 use App\Models\PersonAlia;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class PersonAliaResource extends Resource
 {
@@ -82,9 +79,9 @@ class PersonAliaResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListPersonAlias::route('/'),
+            'index'  => Pages\ListPersonAlias::route('/'),
             'create' => Pages\CreatePersonAlia::route('/create'),
-            'edit' => Pages\EditPersonAlia::route('/{record}/edit'),
+            'edit'   => Pages\EditPersonAlia::route('/{record}/edit'),
         ];
     }
 }

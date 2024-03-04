@@ -24,10 +24,10 @@ class FamilySlgsFactory extends Factory
     {
         return [
             'family_id' => Family::create()->id,
-            'stat' => $this->faker->word(),
-            'date' => $this->faker->date,
-            'plac' => $this->faker->word(),
-            'temp' => $this->faker->word(),
+            'stat'      => $this->faker->word(),
+            'date'      => $this->faker->date,
+            'plac'      => $this->faker->word(),
+            'temp'      => $this->faker->word(),
         ];
     }
 }

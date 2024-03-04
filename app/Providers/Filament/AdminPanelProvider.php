@@ -2,6 +2,10 @@
 
 namespace App\Providers\Filament;
 
+use Althinect\FilamentSpatieRolesPermissions\FilamentSpatieRolesPermissionsPlugin;
+use App\Filament\Pages\Tenancy\EditTeamProfile;
+use App\Filament\Pages\Tenancy\RegisterTeam;
+use App\Models\Team;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
@@ -17,11 +21,8 @@ use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\AuthenticateSession;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
-use Althinect\FilamentSpatieRolesPermissions\FilamentSpatieRolesPermissionsPlugin;
-use App\Models\Team;
 use Maartenpaauw\Filament\Cashier\Stripe\BillingProvider;
-use App\Filament\Pages\Tenancy\RegisterTeam;
-use App\Filament\Pages\Tenancy\EditTeamProfile;
+
 //use App\Providers\Filament\SyncSpatiePermissionsWithFilamentTenants;
 
 class AdminPanelProvider extends PanelProvider
@@ -36,7 +37,7 @@ class AdminPanelProvider extends PanelProvider
             ->registration()
             ->passwordReset()
             ->emailVerification()
-            ->profile()  
+            ->profile()
             ->colors([
                 'primary' => Color::Amber,
             ])
@@ -50,13 +51,13 @@ class AdminPanelProvider extends PanelProvider
                 Widgets\AccountWidget::class,
                 Widgets\FilamentInfoWidget::class,
             ])
-	    ->plugin(FilamentSpatieRolesPermissionsPlugin::make())
-	    ->tenantRegistration(RegisterTeam::class)
-	    ->tenantProfile(EditTeamProfile::class)
-	    ->tenant(Team::class)
-	    ->tenantBillingProvider(new BillingProvider('basic'))
-	    ->requiresTenantSubscription()
-	   // ->tenantMiddleware([
+        ->plugin(FilamentSpatieRolesPermissionsPlugin::make())
+        ->tenantRegistration(RegisterTeam::class)
+        ->tenantProfile(EditTeamProfile::class)
+        ->tenant(Team::class)
+        ->tenantBillingProvider(new BillingProvider('basic'))
+        ->requiresTenantSubscription()
+       // ->tenantMiddleware([
            //  SyncSpatiePermissionsWithFilamentTenants::class,
            //  ], isPersistent: true)
             ->middleware([

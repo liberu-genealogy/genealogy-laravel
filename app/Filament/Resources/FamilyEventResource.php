@@ -3,15 +3,12 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\FamilyEventResource\Pages;
-use App\Filament\Resources\FamilyEventResource\RelationManagers;
 use App\Models\FamilyEvent;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class FamilyEventResource extends Resource
 {
@@ -144,9 +141,9 @@ class FamilyEventResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListFamilyEvents::route('/'),
+            'index'  => Pages\ListFamilyEvents::route('/'),
             'create' => Pages\CreateFamilyEvent::route('/create'),
-            'edit' => Pages\EditFamilyEvent::route('/{record}/edit'),
+            'edit'   => Pages\EditFamilyEvent::route('/{record}/edit'),
         ];
     }
 }

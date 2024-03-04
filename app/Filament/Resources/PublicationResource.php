@@ -3,15 +3,12 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\PublicationResource\Pages;
-use App\Filament\Resources\PublicationResource\RelationManagers;
 use App\Models\Publication;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class PublicationResource extends Resource
 {
@@ -78,9 +75,9 @@ class PublicationResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListPublications::route('/'),
+            'index'  => Pages\ListPublications::route('/'),
             'create' => Pages\CreatePublication::route('/create'),
-            'edit' => Pages\EditPublication::route('/{record}/edit'),
+            'edit'   => Pages\EditPublication::route('/{record}/edit'),
         ];
     }
 }

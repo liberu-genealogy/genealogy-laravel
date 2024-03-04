@@ -3,15 +3,12 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\ChanResource\Pages;
-use App\Filament\Resources\ChanResource\RelationManagers;
 use App\Models\Chan;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class ChanResource extends Resource
 {
@@ -79,9 +76,9 @@ class ChanResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListChans::route('/'),
+            'index'  => Pages\ListChans::route('/'),
             'create' => Pages\CreateChan::route('/create'),
-            'edit' => Pages\EditChan::route('/{record}/edit'),
+            'edit'   => Pages\EditChan::route('/{record}/edit'),
         ];
     }
 }

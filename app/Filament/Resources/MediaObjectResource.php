@@ -3,15 +3,12 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\MediaObjectResource\Pages;
-use App\Filament\Resources\MediaObjectResource\RelationManagers;
 use App\Models\MediaObject;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class MediaObjectResource extends Resource
 {
@@ -83,9 +80,9 @@ class MediaObjectResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListMediaObjects::route('/'),
+            'index'  => Pages\ListMediaObjects::route('/'),
             'create' => Pages\CreateMediaObject::route('/create'),
-            'edit' => Pages\EditMediaObject::route('/{record}/edit'),
+            'edit'   => Pages\EditMediaObject::route('/{record}/edit'),
         ];
     }
 }

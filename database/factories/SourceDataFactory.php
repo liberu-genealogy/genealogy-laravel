@@ -23,10 +23,10 @@ class SourceDataFactory extends Factory
     {
         return [
             'group' => $this->faker->word(),
-            'gid' => $this->faker->randomDigit('1', '2'),
-            'date' => $this->faker->date(),
-            'text' => $this->faker->text(50),
-            'agnc' => $this->faker->word(),
+            'gid'   => $this->faker->randomDigit('1', '2'),
+            'date'  => $this->faker->date(),
+            'text'  => $this->faker->text(50),
+            'agnc'  => $this->faker->word(),
         ];
     }
 }

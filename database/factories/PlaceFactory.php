@@ -23,8 +23,8 @@ class PlaceFactory extends Factory
     {
         return [
             'description' => $this->faker->text(50),
-            'title' => $this->faker->word(),
-            'date' => $this->faker->date(),
+            'title'       => $this->faker->word(),
+            'date'        => $this->faker->date(),
         ];
     }
 }

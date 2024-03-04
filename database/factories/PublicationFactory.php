@@ -23,8 +23,8 @@ class PublicationFactory extends Factory
     {
         return [
             'description' => $this->faker->text(50),
-            'is_active' => $this->faker->randomDigit('0', '1'),
-            'name' => $this->faker->word(),
+            'is_active'   => $this->faker->randomDigit('0', '1'),
+            'name'        => $this->faker->word(),
         ];
     }
 }

@@ -3,15 +3,12 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\SubnResource\Pages;
-use App\Filament\Resources\SubnResource\RelationManagers;
 use App\Models\Subn;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class SubnResource extends Resource
 {
@@ -90,9 +87,9 @@ class SubnResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListSubns::route('/'),
+            'index'  => Pages\ListSubns::route('/'),
             'create' => Pages\CreateSubn::route('/create'),
-            'edit' => Pages\EditSubn::route('/{record}/edit'),
+            'edit'   => Pages\EditSubn::route('/{record}/edit'),
         ];
     }
 }

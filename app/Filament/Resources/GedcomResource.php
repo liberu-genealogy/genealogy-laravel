@@ -3,15 +3,11 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\GedcomResource\Pages;
-use App\Filament\Resources\GedcomResource\RelationManagers;
 use App\Models\Gedcom;
-use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class GedcomResource extends Resource
 {
@@ -28,12 +24,14 @@ class GedcomResource extends Resource
                 FileUpload::make('attachment')
                     ->required()
                     ->maxSize(100000)
-    		    ->directory('gedcom-form-imports')
-    		    ->visibility('private')
-		    ->afterStateUpdated(
-	ImportGedcom::dispatch($request->user(), $manager->storagePath($path), $state))
+                ->directory('gedcom-form-imports')
+                ->visibility('private')
+            ->afterStateUpdated(
+                ImportGedcom::dispatch($request->user(), $manager->storagePath($path), $state)
+            ),
             ]);
     }
+
     public static function table(Table $table): Table
     {
         return $table
@@ -64,15 +62,14 @@ class GedcomResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListGedcoms::route('/'),
+            'index'  => Pages\ListGedcoms::route('/'),
             'create' => Pages\CreateGedcom::route('/create'),
-            'view' => Pages\ViewGedcom::route('/{record}'),
-            'edit' => Pages\EditGedcom::route('/{record}/edit'),
+            'view'   => Pages\ViewGedcom::route('/{record}'),
+            'edit'   => Pages\EditGedcom::route('/{record}/edit'),
         ];
     }
 
     private static function import(): array
     {
     }
-
 }

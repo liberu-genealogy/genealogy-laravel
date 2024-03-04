@@ -24,12 +24,12 @@ class TreeFactory extends Factory
     public function definition()
     {
         return [
-            'user_id' => $this->faker->randomElement([1]),
-            'company_id' => Company::where('id', 1)->first()->id,
-            'name' => $this->faker->word(),
+            'user_id'     => $this->faker->randomElement([1]),
+            'company_id'  => Company::where('id', 1)->first()->id,
+            'name'        => $this->faker->word(),
             'description' => $this->faker->text(),
-            'created_at' => Carbon::now(),
-            'updated_at' => Carbon::now(),
+            'created_at'  => Carbon::now(),
+            'updated_at'  => Carbon::now(),
             // 'current_tenant' => $this->faker->randomElement(['1', '2']),
         ];
     }

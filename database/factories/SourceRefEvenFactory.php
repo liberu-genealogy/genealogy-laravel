@@ -2,7 +2,6 @@
 
 namespace Database\Factories;
 
-use App\Models\Role;
 use App\Models\SourceRefEven;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -24,9 +23,9 @@ class SourceRefEvenFactory extends Factory
     {
         return [
             'group' => $this->faker->word(),
-            'gid' => $this->faker->randomDigit('1', '2'),
-            'even' => $this->faker->word(),
-            'role' => $this->faker->word(),
+            'gid'   => $this->faker->randomDigit('1', '2'),
+            'even'  => $this->faker->word(),
+            'role'  => $this->faker->word(),
         ];
     }
 }
