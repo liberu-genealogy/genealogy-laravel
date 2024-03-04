@@ -14,6 +14,7 @@
 
 [![CodeFactor](https://www.codefactor.io/repository/github/familytree365/genealogy/badge/master)](https://www.codefactor.io/repository/github/familytree365/genealogy/overview/master)
 [![codebeat badge](https://codebeat.co/badges/911f9e33-212a-4dfa-a860-751cdbbacff7)](https://codebeat.co/projects/github-com-modulargenealogy-genealogy-master)
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/42a5f379686b4e9ebcfed6ddaa853185)](https://app.codacy.com/gh/liberu-genealogy/genealogy-laravel/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_grade)
 [![CircleCI](https://circleci.com/gh/liberu-genealogy/genealogy-laravel.svg?style=svg)](https://circleci.com/gh/liberu-genealogy/genealogy-laravel)
 
 
