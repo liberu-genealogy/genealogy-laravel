@@ -8,7 +8,6 @@ use App\Models\Addr;
 use App\Models\Author;
 use App\Models\Chan;
 use App\Models\Citation;
-use App\Models\Company;
 use App\Models\Dna;
 use App\Models\DnaMatching;
 use App\Models\Event;
@@ -61,7 +60,7 @@ class DatabaseSeeder extends Seeder
         // Chat::factory(1)->create();
         // ChatMessage::factory(1)->create();
         Citation::factory(1)->create();
-        Company::factory(1)->create();
+        // Company::factory(1)->create();
         // Dna::factory(1)->create();
         // DnaMatching::factory(1)->create();
         // Event::factory(1)->create();
