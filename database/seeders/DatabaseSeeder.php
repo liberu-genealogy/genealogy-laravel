@@ -53,10 +53,10 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         User::factory(1)->create();
-      //  Addr::factory(1)->create();
-       // Author::factory(1)->create();
+        //  Addr::factory(1)->create();
+        // Author::factory(1)->create();
         // CalendarEvent::factory(1)->create();
-       // Chan::factory(1)->create();
+        // Chan::factory(1)->create();
         // Chat::factory(1)->create();
         // ChatMessage::factory(1)->create();
         //Citation::factory(1)->create();
@@ -68,21 +68,21 @@ class DatabaseSeeder extends Seeder
         //Person::factory(2)->create();
         //FamilyEvent::factory(1)->create();
         //Family::factory(1)->create();
-       // FamilySlgs::factory(1)->create();
+        // FamilySlgs::factory(1)->create();
         // ForumCategory::factory(1)->create();
         // ForumPostComment::factory(1)->create();
         // ForumPost::factory(1)->create();
         // ForumTopic::factory(1)->create();
         // Geneanum::factory(1)->create(); // skipping because of missing migration
-       // ImportJob::factory(1)->create();
-       // MediaObject::factory(1)->create();
+        // ImportJob::factory(1)->create();
+        // MediaObject::factory(1)->create();
         // MediaObjectFile::factory(1)->create();
-      //  Note::factory(1)->create();
-       // PersonAlia::factory(1)->create();
-     //   PersonAnci::factory(1)->create();
-     //   PersonAsso::factory(1)->create();
+        //  Note::factory(1)->create();
+        // PersonAlia::factory(1)->create();
+        //   PersonAnci::factory(1)->create();
+        //   PersonAsso::factory(1)->create();
         // PersonDesi::factory(1)->create(); // missing model
-     //   PersonEvent::factory(1)->create();
+        //   PersonEvent::factory(1)->create();
     //    PersonLds::factory(1)->create();
     //    PersonName::factory(1)->create();
     //    PersonNameFone::factory(1)->create();
@@ -92,15 +92,15 @@ class DatabaseSeeder extends Seeder
         // Provider::factory(1)->create();
     //    Publication::factory(1)->create();
     //    Refn::factory(1)->create();
-     //   Repository::factory(1)->create();
+        //   Repository::factory(1)->create();
    //     SourceDataEven::factory(1)->create();
-     //   SourceData::factory(1)->create();
-     //   Source::factory(1)->create();
-      //  SourceRefEven::factory(1)->create();
-     //   SourceRef::factory(1)->create();
-     //   SourceRepo::factory(1)->create();
-     //   Subm::factory(1)->create();
+        //   SourceData::factory(1)->create();
+        //   Source::factory(1)->create();
+        //  SourceRefEven::factory(1)->create();
+        //   SourceRef::factory(1)->create();
+        //   SourceRepo::factory(1)->create();
+        //   Subm::factory(1)->create();
     //    Subn::factory(1)->create();
-     //   Tree::factory(1)->create();
+        //   Tree::factory(1)->create();
     }
 }

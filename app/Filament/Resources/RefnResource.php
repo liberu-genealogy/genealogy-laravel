@@ -3,15 +3,12 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\RefnResource\Pages;
-use App\Filament\Resources\RefnResource\RelationManagers;
 use App\Models\Refn;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class RefnResource extends Resource
 {
@@ -79,9 +76,9 @@ class RefnResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListRefns::route('/'),
+            'index'  => Pages\ListRefns::route('/'),
             'create' => Pages\CreateRefn::route('/create'),
-            'edit' => Pages\EditRefn::route('/{record}/edit'),
+            'edit'   => Pages\EditRefn::route('/{record}/edit'),
         ];
     }
 }

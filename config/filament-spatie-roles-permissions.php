@@ -9,7 +9,7 @@ return [
     'navigation_section_group' => 'filament-spatie-roles-permissions::filament-spatie.section.roles_and_permissions', // Default uses language constant
 
     'team_model' => \App\Models\Team::class,
-    
+
     'scope_to_tenant' => true,
 
     /*
@@ -17,7 +17,7 @@ return [
      */
     'should_register_on_navigation' => [
         'permissions' => true,
-        'roles' => true,
+        'roles'       => true,
     ],
 
     'guard_names' => [
@@ -44,7 +44,7 @@ return [
      * Icons to use for navigation
      */
     'icons' => [
-        'role_navigation' => 'heroicon-o-lock-closed',
+        'role_navigation'       => 'heroicon-o-lock-closed',
         'permission_navigation' => 'heroicon-o-lock-closed',
     ],
 
@@ -53,8 +53,8 @@ return [
      */
 
     'sort' => [
-        'role_navigation' => false,
-        'permission_navigation' => false
+        'role_navigation'       => false,
+        'permission_navigation' => false,
     ],
 
     'generator' => [
@@ -70,12 +70,12 @@ return [
              * Permissions Aligned with Policies.
              * DO NOT change the keys unless the genericPolicy.stub is published and altered accordingly
              */
-            'viewAnyPermission' => 'view-any',
-            'viewPermission' => 'view',
-            'createPermission' => 'create',
-            'updatePermission' => 'update',
-            'deletePermission' => 'delete',
-            'restorePermission' => 'restore',
+            'viewAnyPermission'     => 'view-any',
+            'viewPermission'        => 'view',
+            'createPermission'      => 'create',
+            'updatePermission'      => 'update',
+            'deletePermission'      => 'delete',
+            'restorePermission'     => 'restore',
             'forceDeletePermission' => 'force-delete',
 
             /*

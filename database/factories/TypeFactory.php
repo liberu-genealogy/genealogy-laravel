@@ -34,9 +34,9 @@ class TypeFactory extends Factory
             ->plural();
 
         return $this->state(fn () => [
-            'name' => $name,
-            'folder' => $name->camel(),
-            'model' => $model,
+            'name'        => $name,
+            'folder'      => $name->camel(),
+            'model'       => $model,
             'description' => "Liberu {$name}",
         ]);
     }

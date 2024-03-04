@@ -3,15 +3,12 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\DnaResource\Pages;
-use App\Filament\Resources\DnaResource\RelationManagers;
 use App\Models\Dna;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class DnaResource extends Resource
 {
@@ -24,8 +21,8 @@ class DnaResource extends Resource
     public static function form(Form $form): Form
     {
         return $form->schema([
-                Forms\Components\TextInput::make('name')->required()->maxLength(255),
-                FileUpload::make('attachment')->required()->maxSize(100000)->directory('dna-form-imports')->visibility('private')->afterStateUpdated(ImportDna::dispatch($request->user(), $manager->storagePath($path), $state)),
+            Forms\Components\TextInput::make('name')->required()->maxLength(255),
+            FileUpload::make('attachment')->required()->maxSize(100000)->directory('dna-form-imports')->visibility('private')->afterStateUpdated(ImportDna::dispatch($request->user(), $manager->storagePath($path), $state)),
         ]);
     }
 
@@ -74,9 +71,9 @@ class DnaResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListDnas::route('/'),
+            'index'  => Pages\ListDnas::route('/'),
             'create' => Pages\CreateDna::route('/create'),
-            'edit' => Pages\EditDna::route('/{record}/edit'),
+            'edit'   => Pages\EditDna::route('/{record}/edit'),
         ];
     }
 }

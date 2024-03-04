@@ -3,15 +3,12 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\PersonNameRomnResource\Pages;
-use App\Filament\Resources\PersonNameRomnResource\RelationManagers;
 use App\Models\PersonNameRomn;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class PersonNameRomnResource extends Resource
 {
@@ -103,9 +100,9 @@ class PersonNameRomnResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListPersonNameRomns::route('/'),
+            'index'  => Pages\ListPersonNameRomns::route('/'),
             'create' => Pages\CreatePersonNameRomn::route('/create'),
-            'edit' => Pages\EditPersonNameRomn::route('/{record}/edit'),
+            'edit'   => Pages\EditPersonNameRomn::route('/{record}/edit'),
         ];
     }
 }

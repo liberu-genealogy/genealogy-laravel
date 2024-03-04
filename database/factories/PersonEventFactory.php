@@ -25,28 +25,28 @@ class PersonEventFactory extends Factory
     {
         return [
             'person_id' => Person::create([
-                'name' => $this->faker->name(),
+                'name'  => $this->faker->name(),
                 'email' => $this->faker->email(),
                 'phone' => $this->faker->phoneNumber(),
             ])->id,
-            'title' => $this->faker->title(),
-            'type' => $this->faker->word(),
-            'attr' => $this->faker->text(),
-            'date' => $this->faker->date(),
-            'plac' => $this->faker->address(),
-            'phon' => $this->faker->phoneNumber(),
-            'caus' => $this->faker->text(),
-            'age' => $this->faker->randomDigit(1, 50),
-            'agnc' => $this->faker->word(),
+            'title'     => $this->faker->title(),
+            'type'      => $this->faker->word(),
+            'attr'      => $this->faker->text(),
+            'date'      => $this->faker->date(),
+            'plac'      => $this->faker->address(),
+            'phon'      => $this->faker->phoneNumber(),
+            'caus'      => $this->faker->text(),
+            'age'       => $this->faker->randomDigit(1, 50),
+            'agnc'      => $this->faker->word(),
             'places_id' => Place::create([
                 'description' => $this->faker->text(50),
-                'title' => $this->faker->word(),
-                'date' => $this->faker->date(),
+                'title'       => $this->faker->word(),
+                'date'        => $this->faker->date(),
             ])->id,
             'description' => $this->faker->text(50),
-            'year' => $this->faker->year(),
-            'month' => $this->faker->month(),
-            'day' => $this->faker->dayOfMonth(),
+            'year'        => $this->faker->year(),
+            'month'       => $this->faker->month(),
+            'day'         => $this->faker->dayOfMonth(),
         ];
     }
 }

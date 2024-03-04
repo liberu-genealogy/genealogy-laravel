@@ -6,7 +6,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Auth;
+
 //use Laravel\Scout\Searchable;
 //use LaravelLiberu\People\Models\Person as CorePerson;
 
@@ -49,10 +49,10 @@ class Person extends Model
      */
     protected $casts = [
         'deleted_at' => 'datetime',
-        'birthday' => 'datetime',
-        'deathday' => 'datetime',
+        'birthday'   => 'datetime',
+        'deathday'   => 'datetime',
         'burial_day' => 'datetime',
-        'chan' => 'datetime',
+        'chan'       => 'datetime',
     ];
 
     protected $guarded = ['id'];
@@ -127,11 +127,11 @@ class Person extends Model
         $event = PersonEvent::updateOrCreate(
             [
                 'person_id' => $this->id,
-                'title' => $title,
+                'title'     => $title,
             ],
             [
-                'person_id' => $this->id,
-                'title' => $title,
+                'person_id'   => $this->id,
+                'title'       => $title,
                 'description' => $description,
             ]
         );
@@ -147,11 +147,11 @@ class Person extends Model
         }
 
         // add birthyear to person table ( for form builder )
-        if ($title === 'BIRT' && ! empty($date)) {
+        if ($title === 'BIRT' && !empty($date)) {
             $this->birthday = date('Y-m-d', strtotime((string) $date));
         }
         // add deathyear to person table ( for form builder )
-        if ($title === 'DEAT' && ! empty($date)) {
+        if ($title === 'DEAT' && !empty($date)) {
             $this->deathday = date('Y-m-d', strtotime((string) $date));
         }
         $this->save();
@@ -168,5 +168,4 @@ class Person extends Model
     {
         return $this->events->where('title', '=', 'DEAT')->first();
     }
-
 }

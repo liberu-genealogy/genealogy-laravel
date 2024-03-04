@@ -3,7 +3,6 @@
 namespace App\Filament\Resources\SubnResource\Pages;
 
 use App\Filament\Resources\SubnResource;
-use Filament\Actions;
 use Filament\Resources\Pages\CreateRecord;
 
 class CreateSubn extends CreateRecord

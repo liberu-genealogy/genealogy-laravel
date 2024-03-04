@@ -23,9 +23,9 @@ class ImportJobFactory extends Factory
     public function definition()
     {
         return [
-            'user_id' => $this->faker->randomElement([1, 2]),
-            'slug' => $this->faker->word(),
-            'status' => $this->faker->word(),
+            'user_id'    => $this->faker->randomElement([1, 2]),
+            'slug'       => $this->faker->word(),
+            'status'     => $this->faker->word(),
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ];

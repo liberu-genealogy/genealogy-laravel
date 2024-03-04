@@ -22,11 +22,11 @@ class MediaObjectFactory extends Factory
     public function definition()
     {
         return [
-            'group' => $this->faker->word(),
-            'gid' => $this->faker->randomDigit('1', '2'),
-            'titl' => $this->faker->word(),
+            'group'   => $this->faker->word(),
+            'gid'     => $this->faker->randomDigit('1', '2'),
+            'titl'    => $this->faker->word(),
             'obje_id' => $this->faker->randomDigit('1', '2'),
-            'rin' => $this->faker->word(),
+            'rin'     => $this->faker->word(),
         ];
     }
 }

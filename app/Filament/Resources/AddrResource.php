@@ -3,15 +3,12 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\AddrResource\Pages;
-use App\Filament\Resources\AddrResource\RelationManagers;
 use App\Models\Addr;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class AddrResource extends Resource
 {
@@ -86,9 +83,9 @@ class AddrResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListAddrs::route('/'),
+            'index'  => Pages\ListAddrs::route('/'),
             'create' => Pages\CreateAddr::route('/create'),
-            'edit' => Pages\EditAddr::route('/{record}/edit'),
+            'edit'   => Pages\EditAddr::route('/{record}/edit'),
         ];
     }
 }

@@ -23,15 +23,15 @@ class CitationFactory extends Factory
     public function definition()
     {
         return [
-            'name' => $this->faker->word,
-            'date' => $this->faker->date,
+            'name'        => $this->faker->word,
+            'date'        => $this->faker->date,
             'description' => $this->faker->text(50),
             // 'repository_id' => Repository::create()->id,
-            'volume' => $this->faker->randomDigit(1, 2, 3, 4, 5),
-            'page' => $this->faker->randomDigit(500),
-            'is_active' =>$this->faker->randomDigit(0, 1),
+            'volume'     => $this->faker->randomDigit(1, 2, 3, 4, 5),
+            'page'       => $this->faker->randomDigit(500),
+            'is_active'  => $this->faker->randomDigit(0, 1),
             'confidence' => $this->faker->randomDigit(1, 2, 3, 4, 5),
-            'source_id' => Source::create()->id,
+            'source_id'  => Source::create()->id,
         ];
     }
 }

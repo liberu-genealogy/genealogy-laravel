@@ -26,14 +26,14 @@ class FamilyFactory extends Factory
     {
         return [
             'description' => $this->faker->text(),
-            'is_active' => $this->faker->randomDigit(0, 1),
-            'husband_id'=> $this->faker->randomDigit(1, 2),
-            'wife_id'=> $this->faker->randomDigit(1, 2),
+            'is_active'   => $this->faker->randomDigit(0, 1),
+            'husband_id'  => $this->faker->randomDigit(1, 2),
+            'wife_id'     => $this->faker->randomDigit(1, 2),
             // 'child_id'=> Person::create()->id,
             'type_id' => Type::where('id', 1)->first(),
-            'chan' => $this->faker->word(),
-            'nchi' => $this->faker->word(),
-            'rin' => $this->faker->word(),
+            'chan'    => $this->faker->word(),
+            'nchi'    => $this->faker->word(),
+            'rin'     => $this->faker->word(),
         ];
     }
 }

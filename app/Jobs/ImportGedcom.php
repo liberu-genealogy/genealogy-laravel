@@ -16,7 +16,10 @@ use Illuminate\Support\Str;
 
 class ImportGedcom implements ShouldQueue
 {
-    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
+    use Dispatchable;
+    use InteractsWithQueue;
+    use Queueable;
+    use SerializesModels;
 
     public int $timeout = 0;
     public int $tries = 1;
@@ -30,7 +33,7 @@ class ImportGedcom implements ShouldQueue
         throw_unless(File::isFile($this->filePath), \Exception::class, "{$this->filePath} does not exist.");
 
         $tenant = Manager::fromModel($this->user->company(), $this->user);
-        if (! $tenant->databaseExists()) {
+        if (!$tenant->databaseExists()) {
             //$tenant->dropDatabase();
             $tenant->createDatabase();
             $tenant->connect();
@@ -41,8 +44,8 @@ class ImportGedcom implements ShouldQueue
 
         $job = ImportJob::on($tenant->connectionName())->create([
             'user_id' => $this->user->getKey(),
-            'status' => 'queue',
-            'slug' => $slug,
+            'status'  => 'queue',
+            'slug'    => $slug,
         ]);
         $parser = new GedcomParser();
 

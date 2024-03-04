@@ -29,7 +29,7 @@ class SubnFactory extends Factory
             'ance' => $this->faker->word(),
             'desc' => $this->faker->randomDigit('0', '1'),
             'ordi' => $this->faker->word(),
-            'rin' => $this->faker->word(),
+            'rin'  => $this->faker->word(),
         ];
     }
 }

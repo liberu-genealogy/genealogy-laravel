@@ -3,15 +3,12 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\SourceRefEvenResource\Pages;
-use App\Filament\Resources\SourceRefEvenResource\RelationManagers;
 use App\Models\SourceRefEven;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class SourceRefEvenResource extends Resource
 {
@@ -79,9 +76,9 @@ class SourceRefEvenResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListSourceRefEvens::route('/'),
+            'index'  => Pages\ListSourceRefEvens::route('/'),
             'create' => Pages\CreateSourceRefEven::route('/create'),
-            'edit' => Pages\EditSourceRefEven::route('/{record}/edit'),
+            'edit'   => Pages\EditSourceRefEven::route('/{record}/edit'),
         ];
     }
 }

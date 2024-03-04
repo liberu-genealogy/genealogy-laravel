@@ -23,8 +23,8 @@ class PersonAnciFactory extends Factory
     {
         return [
             'group' => $this->faker->word(),
-            'gid' => $this->faker->randomDigit('1', '2'),
-            'anci' => $this->faker->word(),
+            'gid'   => $this->faker->randomDigit('1', '2'),
+            'anci'  => $this->faker->word(),
         ];
     }
 }

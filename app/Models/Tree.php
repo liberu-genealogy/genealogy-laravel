@@ -5,7 +5,6 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-
 class Tree extends Model
 {
     use HasFactory;
@@ -16,6 +15,6 @@ class Tree extends Model
     protected $fillable = [
         'user_id',
         'name',
-        'description'
+        'description',
     ];
 }

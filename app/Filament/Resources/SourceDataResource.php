@@ -3,15 +3,12 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\SourceDataResource\Pages;
-use App\Filament\Resources\SourceDataResource\RelationManagers;
 use App\Models\SourceData;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class SourceDataResource extends Resource
 {
@@ -83,9 +80,9 @@ class SourceDataResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListSourceData::route('/'),
+            'index'  => Pages\ListSourceData::route('/'),
             'create' => Pages\CreateSourceData::route('/create'),
-            'edit' => Pages\EditSourceData::route('/{record}/edit'),
+            'edit'   => Pages\EditSourceData::route('/{record}/edit'),
         ];
     }
 }

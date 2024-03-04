@@ -14,7 +14,10 @@ use Illuminate\Support\Facades\Log;
 
 class DnaMatching implements ShouldQueue
 {
-    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
+    use Dispatchable;
+    use InteractsWithQueue;
+    use Queueable;
+    use SerializesModels;
 
     public int $timeout = 0;
     public int $tries = 1;

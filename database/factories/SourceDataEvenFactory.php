@@ -23,9 +23,9 @@ class SourceDataEvenFactory extends Factory
     {
         return [
             'group' => $this->faker->word(),
-            'gid' => $this->faker->randomDigit('1', '2'),
-            'date' => $this->faker->date(),
-            'plac' => $this->faker->word(),
+            'gid'   => $this->faker->randomDigit('1', '2'),
+            'date'  => $this->faker->date(),
+            'plac'  => $this->faker->word(),
         ];
     }
 }

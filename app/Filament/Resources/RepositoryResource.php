@@ -3,15 +3,12 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\RepositoryResource\Pages;
-use App\Filament\Resources\RepositoryResource\RelationManagers;
 use App\Models\Repository;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class RepositoryResource extends Resource
 {
@@ -122,9 +119,9 @@ class RepositoryResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListRepositories::route('/'),
+            'index'  => Pages\ListRepositories::route('/'),
             'create' => Pages\CreateRepository::route('/create'),
-            'edit' => Pages\EditRepository::route('/{record}/edit'),
+            'edit'   => Pages\EditRepository::route('/{record}/edit'),
         ];
     }
 }

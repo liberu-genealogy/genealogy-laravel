@@ -3,15 +3,12 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\PersonAnciResource\Pages;
-use App\Filament\Resources\PersonAnciResource\RelationManagers;
 use App\Models\PersonAnci;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class PersonAnciResource extends Resource
 {
@@ -75,9 +72,9 @@ class PersonAnciResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListPersonAncis::route('/'),
+            'index'  => Pages\ListPersonAncis::route('/'),
             'create' => Pages\CreatePersonAnci::route('/create'),
-            'edit' => Pages\EditPersonAnci::route('/{record}/edit'),
+            'edit'   => Pages\EditPersonAnci::route('/{record}/edit'),
         ];
     }
 }

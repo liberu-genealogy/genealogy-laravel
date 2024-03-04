@@ -23,12 +23,12 @@ class SourceRefFactory extends Factory
     public function definition()
     {
         return [
-            'group' => $this->faker->word(),
-            'gid' => $this->faker->randomDigit('1', '2'),
+            'group'   => $this->faker->word(),
+            'gid'     => $this->faker->randomDigit('1', '2'),
             'sour_id' => Source::create()->id,
-            'text' => $this->faker->word(),
-            'quay' => $this->faker->word(),
-            'page' => $this->faker->word(),
+            'text'    => $this->faker->word(),
+            'quay'    => $this->faker->word(),
+            'page'    => $this->faker->word(),
         ];
     }
 }

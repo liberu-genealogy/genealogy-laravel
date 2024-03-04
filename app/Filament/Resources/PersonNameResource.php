@@ -3,15 +3,12 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\PersonNameResource\Pages;
-use App\Filament\Resources\PersonNameResource\RelationManagers;
 use App\Models\PersonName;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class PersonNameResource extends Resource
 {
@@ -103,9 +100,9 @@ class PersonNameResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListPersonNames::route('/'),
+            'index'  => Pages\ListPersonNames::route('/'),
             'create' => Pages\CreatePersonName::route('/create'),
-            'edit' => Pages\EditPersonName::route('/{record}/edit'),
+            'edit'   => Pages\EditPersonName::route('/{record}/edit'),
         ];
     }
 }
