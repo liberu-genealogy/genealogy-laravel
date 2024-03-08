@@ -32,7 +32,7 @@ class DnaResource extends Resource
                     ->directory('dna-form-imports')
                     ->visibility('private')
                     ->afterStateUpdated(
-        ImportDna::dispatch($request->user(), $manager->storagePath($path), $state)
+        ImportDna::dispatch($request->user(), $manager->storagePath($path), $state))
             ]);
     }
 

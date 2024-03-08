@@ -27,9 +27,8 @@ class SourceDataResource extends Resource
                     ->maxLength(255),
                 Forms\Components\TextInput::make('gid')
                     ->numeric(),
-                Forms\Components\TextInput::make('date')
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('text')
+                Forms\Components\DatePicker::make('date'),
+                Forms\Components\Textarea::make('text')
                     ->maxLength(255),
                 Forms\Components\TextInput::make('agnc')
                     ->maxLength(255),

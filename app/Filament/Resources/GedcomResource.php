@@ -17,7 +17,7 @@ class GedcomResource extends Resource
 {
     protected static ?string $model = Gedcom::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-user-group';
 
     public static function form(Form $form): Form
     {

@@ -17,7 +17,7 @@ class MediaObjectResource extends Resource
 {
     protected static ?string $model = MediaObject::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-film';
 
     public static function form(Form $form): Form
     {
