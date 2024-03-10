@@ -15,7 +15,12 @@ class PersonResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
-    public static function form(Form $form): Form
+    /**
+ * Get the form for creating/editing a person.
+ * @param Form $form The form object.
+ * @return Form The form object.
+ */
+public static function form(Form $form): Form
     {
         return $form
             ->schema([
