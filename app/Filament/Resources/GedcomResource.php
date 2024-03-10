@@ -12,7 +12,15 @@ use Filament\Tables\Table;
 use App\Jobs\ImportGedcom;
 use Illuminate\Support\Facades\Storage;
 
+/**
+ * This file contains the GedcomResource class, which is responsible for managing Gedcom resources.
+ * It defines the form fields and pages for the Gedcom resource.
+ */
 class GedcomResource extends Resource
+    /**
+     * This class represents the GedcomResource resource.
+     * It defines the form fields and pages for the Gedcom resource.
+     */
     /**
      * Class GedcomResource
      *
@@ -102,6 +110,11 @@ class GedcomResource extends Resource
         ];
     }
 
+        /**
+     * Perform the import functionality.
+     *
+     * @return array
+     */
         /**
      * Perform the import functionality.
      *
