@@ -15,4 +15,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('layouts.home');
+
+Route::post('/send-invitation', 'TeamInvitationController@sendInvitation')->name('send.invitation');
+Route::post('/accept-invitation/{token}', 'TeamInvitationController@acceptInvitation')->name('accept.invitation');
 });
