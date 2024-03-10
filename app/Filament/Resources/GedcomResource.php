@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Storage;
  * This file contains the GedcomResource class, which is responsible for managing Gedcom resources.
  * It defines the form fields and pages for the Gedcom resource.
  */
+ */
 class GedcomResource extends Resource
     /**
      * This class represents the GedcomResource resource.
@@ -36,6 +37,10 @@ class GedcomResource extends Resource
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
     
     public static function getPages(): array
+     *
+     * Get the pages for the Gedcom resource.
+     *
+     * @return array The pages for the Gedcom resource.
     {
         return [
             'index'  => Pages\ListGedcoms::route('/'),
