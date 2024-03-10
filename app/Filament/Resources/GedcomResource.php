@@ -14,12 +14,26 @@ use Illuminate\Support\Facades\Storage
     
 class GedcomResource extends Resource
 {
+    /**
+     * Class GedcomResource
+     *
+     * This class represents a resource for handling Gedcom data.
+     *
+     * @var bool Is this resource scoped to a tenant
+     */
+{
     protected static bool $isScopedToTenant = false;
 
     protected static ?string $model = Gedcom::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
+        /**
+     * Define the form fields for the resource.
+     *
+     * @param  Form  $form
+     * @return Form
+     */
     public static function form(Form $form): Form
     {
         return $form
@@ -76,6 +90,11 @@ class GedcomResource extends Resource
         ];
     }
 
+        /**
+     * Perform the import functionality.
+     *
+     * @return array
+     */
     private static function import(): array
     {
     }
