@@ -94,18 +94,6 @@ class GedcomResource extends Resource {
             ]);
     }
 
-    public static     /**
-     * Get the relations defined for the resource.
-     *
-     * @return array The defined relations.
-     */
-    public static function getRelations(): array
-    {
-        return [
-            //
-        ];
-    }
-
     public static function getPages(): array
     {
         return [
