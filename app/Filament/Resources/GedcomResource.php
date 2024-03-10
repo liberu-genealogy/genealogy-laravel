@@ -42,6 +42,34 @@ class GedcomResource extends Resource
      * @return Form The updated form.
      */
     public static function form(Form $form): Form
+    /**
+     * Get the pages defined for the resource.
+     *
+     * @return array The defined pages.
+     */
+    public static function getPages(): array
+    {
+        return [
+            'index'  => Pages\ListGedcoms::route('/'),
+            'create' => Pages\CreateGedcom::route('/create'),
+            'view'   => Pages\ViewGedcom::route('/{record}'),
+            'edit'   => Pages\EditGedcom::route('/{record}/edit'),
+        ];
+    }
+    /**
+     * Get the pages defined for the resource.
+     *
+     * @return array The defined pages.
+     */
+    public static function getPages(): array
+    {
+        return [
+            'index'  => Pages\ListGedcoms::route('/'),
+            'create' => Pages\CreateGedcom::route('/create'),
+            'view'   => Pages\ViewGedcom::route('/{record}'),
+            'edit'   => Pages\EditGedcom::route('/{record}/edit'),
+        ];
+    }
     {
         return $form
             ->schema([
