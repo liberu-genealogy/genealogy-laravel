@@ -15,4 +15,6 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('layouts.home');
+
+Route::get('/fan-chart', 'App\Http\Controllers\FanChartController@show');
 });
