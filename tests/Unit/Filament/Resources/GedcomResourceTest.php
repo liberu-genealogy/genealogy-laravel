@@ -60,6 +60,11 @@ class GedcomResourceTest extends TestCase
         // TODO: Add more assertions for the getPages method
     }
 
+    public function testImportGedcom()
+    {
+        // TODO: Write test logic to cover the import functionality in GedcomResource.php
+    }
+
     public function testAfterStateUpdatedEventHandler()
     {
         // TODO: Implement test for the afterStateUpdated event handler
