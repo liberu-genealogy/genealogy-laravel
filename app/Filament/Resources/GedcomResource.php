@@ -20,7 +20,6 @@ class GedcomResource extends Resource {
      *
      * @var bool Is this resource scoped to a tenant
      */
-{
     protected static bool $isScopedToTenant = false;
 
     protected static ?string $model = Gedcom::class;
