@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit\Filament\Resources;
+namespace Tests\Unit\Filament\Resources\Unit\Filament\Resources;
 
 use App\Filament\Resources\FamilyResource;
 use App\Models\Family;
