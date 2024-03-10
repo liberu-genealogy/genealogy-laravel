@@ -62,7 +62,26 @@ class GedcomResourceTest extends TestCase
 
     public function testImportGedcom()
     {
-        // TODO: Write test logic to cover the import functionality in GedcomResource.php
+        // Create a mock Gedcom instance
+        $gedcom = $this->getMockBuilder(Gedcom::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+    
+        // Create a mock Form instance
+        $form = $this->getMockBuilder(Form::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+    
+        // Set up the mock Form instance to return the mock Gedcom instance
+        $form->method('getModel')->willReturn($gedcom);
+    
+        // Call the form method of GedcomResource
+        $result = GedcomResource::form($form);
+    
+        // Assert that the result is an instance of Form
+        $this->assertInstanceOf(Form::class, $result);
+    
+        // TODO: Add more assertions for the form method
     }
 
     public function testAfterStateUpdatedEventHandler()
@@ -70,3 +89,5 @@ class GedcomResourceTest extends TestCase
         // TODO: Implement test for the afterStateUpdated event handler
     }
 }
+        // TODO: Write test logic to cover the import functionality in GedcomResource.php
+    }
