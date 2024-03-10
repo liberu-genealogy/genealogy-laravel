@@ -36,15 +36,13 @@ class PersonResource extends Resource
                 TextColumn::make('notes')->label('Notes'),
             ])
             ->filters([
-                //
+                Tables\Filters\Filter::make('name')->query(fn ($query, $data) => $query->where('name', 'like', "%{$data}%")),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                ]),
+                Tables\Actions\DeleteBulkAction::make(),
             ]);
     }
 
