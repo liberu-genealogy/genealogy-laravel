@@ -8,7 +8,7 @@
     @livewireStyles
 </head>
 <body>
-    @include('components.nav')
+    @include('components.header')
 
     <main>
         @include('components.home.manage')
