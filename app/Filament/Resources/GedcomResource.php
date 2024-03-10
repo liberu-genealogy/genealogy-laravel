@@ -56,7 +56,7 @@ class GedcomResource extends Resource {
      *
      * @return Form
      */
-    public static function form(Form $form): 
+    public static function form(Form $form): Form
     {
         return $form
             ->schema([
