@@ -1,4 +1,4 @@
-Gh<?php
+<?php
 
 namespace App\Filament\Resources;
 
@@ -26,40 +26,7 @@ class GedcomResource extends Resource {
     protected static ?string $model = Gedcom::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
-
-        /**
-     * Define the form fields for the resource.
-     *
-     * @param  Form  $form
-     * @return Form
-     */
     
-    /**
-     * Define the form fields for the resource.
-     *
-     * @param  Form  $form The form object to be defined.
-     * @return Form The updated form.
-     */
-    public static function form(Form $form): Form
-    /**
-     * Get the pages defined for the resource.
-     *
-     * @return array The defined pages.
-     */
-    public static function getPages(): array
-    {
-        return [
-            'index'  => Pages\ListGedcoms::route('/'),
-            'create' => Pages\CreateGedcom::route('/create'),
-            'view'   => Pages\ViewGedcom::route('/{record}'),
-            'edit'   => Pages\EditGedcom::route('/{record}/edit'),
-        ];
-    }
-    /**
-     * Get the pages defined for the resource.
-     *
-     * @return array The defined pages.
-     */
     public static function getPages(): array
     {
         return [
