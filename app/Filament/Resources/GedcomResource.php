@@ -155,7 +155,7 @@ class GedcomResource extends Resource
             ]);
     }
 
-    public static     /**
+    public static  \/\*\*\n    /**
      * Get the relations defined for the resource.
      *
      * @return array The defined relations.
