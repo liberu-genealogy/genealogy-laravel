@@ -85,7 +85,7 @@ use Filament\Forms\Form;
         // Assert that the result is an instance of Form
         $this->assertInstanceOf(Form::class, $result);
     
-        // TODO: Add more assertions for the form method
+        $this->assertEquals('pedigree-chart', route('pedigree-chart'));
     }
 
     public function testAfterStateUpdatedEventHandler()
