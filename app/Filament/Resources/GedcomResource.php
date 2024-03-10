@@ -17,7 +17,9 @@ use Illuminate\Support\Facades\Storage
     /**
      * Class GedcomResource
      *
-     * This class represents a resource for handling Gedcom data.
+     * Class GedcomResource
+ *
+ * This class represents a resource for handling Gedcom data.
      *
      * @var bool Is this resource scoped to a tenant
      */
@@ -47,6 +49,14 @@ class GedcomResource extends Resource
 
         /**
      * Define the form fields for the resource.
+ *
+ * @param  Form  $form The form object to be defined.
+ * @return Form The updated form.
+ *
+ * Define the form fields for the resource.
+ *
+ * @param  Form  $form The form object to be defined.
+ * @return Form The updated form.
      *
      * @param  Form  $form
      * @return Form
