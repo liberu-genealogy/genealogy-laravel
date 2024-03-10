@@ -42,7 +42,14 @@ class FamilyResourceTest extends TestCase
 
         $this->assertTrue($columns->pluck('name')->contains('is_active'));
         $this->assertTrue($columns->pluck('name')->contains('type_id'));
-        // Repeat for other columns: husband_id, wife_id, chan, nchi, rin, created_at, updated_at, deleted_at
+        $this->assertTrue($columns->pluck('name')->contains('husband_id'));
+        $this->assertTrue($columns->pluck('name')->contains('wife_id'));
+        $this->assertTrue($columns->pluck('name')->contains('created_at'));
+        $this->assertTrue($columns->pluck('name')->contains('updated_at'));
+        $this->assertTrue($columns->pluck('name')->contains('deleted_at'));
+        $this->assertTrue($columns->pluck('name')->contains('chan'));
+        $this->assertTrue($columns->pluck('name')->contains('nchi'));
+        $this->assertTrue($columns->pluck('name')->contains('rin'));
 
         $actions = collect($table->getActions());
         $this->assertTrue($actions->pluck('name')->contains(EditAction::class));
