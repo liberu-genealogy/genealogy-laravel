@@ -123,6 +123,38 @@ class GedcomResource extends Resource
             ]);
     }
 
+    /**
+     * Define the table columns, filters, actions, and bulk actions.
+     *
+     * @param  Table  $table The table object to be defined.
+     * @return Table The updated table.
+     */
+    public static function table(Table $table): Table
+    {
+        /**
+         * This method defines the table columns, filters, actions, and bulk actions.
+         *
+         * @param  Table  $table The table object to be defined.
+         * @return Table The updated table.
+         */
+        return $table
+            ->columns([
+                //
+            ])
+            ->filters([
+                //
+            ])
+            ->actions([
+                Tables\Actions\ViewAction::make(),
+                Tables\Actions\EditAction::make(),
+            ])
+            ->bulkActions([
+                Tables\Actions\BulkActionGroup::make([
+                    Tables\Actions\DeleteBulkAction::make(),
+                ]),
+            ]);
+    }
+
     public static     /**
      * Get the relations defined for the resource.
      *
