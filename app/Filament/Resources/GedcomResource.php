@@ -14,13 +14,62 @@ use Illuminate\Support\Facades\Storage
     
 class GedcomResource extends Resource
 {
+    /**
+     * Class GedcomResource
+     *
+     * This class represents a resource for handling Gedcom data.
+     *
+     * @var bool Is this resource scoped to a tenant
+     */
+{
     protected static bool $isScopedToTenant = false;
 
     protected static ?string $model = Gedcom::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
+        /**
+     * Define the form fields for the resource.
+     *
+     * @param  Form  $form
+     * @return Form
+     */
+    
+    /**
+     * Define the form fields for the resource.
+     *
+     * @param  Form  $form The form object to be defined.
+     * @return Form The updated form.
+     */
     public static function form(Form $form): Form
+    /**
+     * Get the pages defined for the resource.
+     *
+     * @return array The defined pages.
+     */
+    public static function getPages(): array
+    {
+        return [
+            'index'  => Pages\ListGedcoms::route('/'),
+            'create' => Pages\CreateGedcom::route('/create'),
+            'view'   => Pages\ViewGedcom::route('/{record}'),
+            'edit'   => Pages\EditGedcom::route('/{record}/edit'),
+        ];
+    }
+    /**
+     * Get the pages defined for the resource.
+     *
+     * @return array The defined pages.
+     */
+    public static function getPages(): array
+    {
+        return [
+            'index'  => Pages\ListGedcoms::route('/'),
+            'create' => Pages\CreateGedcom::route('/create'),
+            'view'   => Pages\ViewGedcom::route('/{record}'),
+            'edit'   => Pages\EditGedcom::route('/{record}/edit'),
+        ];
+    }
     {
         return $form
             ->schema([
@@ -39,6 +88,12 @@ class GedcomResource extends Resource
             ]);
     }
 
+        /**
+     * Define the table columns, filters, actions, and bulk actions.
+     *
+     * @param  Table  $table The table object to be defined.
+     * @return Table The updated table.
+     */
     public static function table(Table $table): Table
     {
         return $table
@@ -59,6 +114,11 @@ class GedcomResource extends Resource
             ]);
     }
 
+    public static     /**
+     * Get the relations defined for the resource.
+     *
+     * @return array The defined relations.
+     */
     public static function getRelations(): array
     {
         return [
@@ -76,6 +136,11 @@ class GedcomResource extends Resource
         ];
     }
 
+        /**
+     * Perform the import functionality.
+     *
+     * @return array
+     */
     private static function import(): array
     {
     }
