@@ -22,7 +22,7 @@ class DnaResource extends Resource
     {
         return $form->schema([
             Forms\Components\TextInput::make('name')->required()->maxLength(255),
-            FileUpload::make('attachment')->required()->maxSize(100000)->directory('dna-form-imports')->visibility('private')->afterStateUpdated(ImportDna::dispatch($request->user(), $manager->storagePath($path), $state)),
+            FileUpload::make('attachment')->required()->maxSize(100000)->directory('dna-form-imports')->visibility('private')->afterStateUpdated(DnaMatching::dispatch($request->user(), $manager->storagePath($path), $state)),
         ]);
     }
 
