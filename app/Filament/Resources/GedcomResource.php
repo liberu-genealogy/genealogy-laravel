@@ -12,6 +12,13 @@ use Filament\Tables\Table;
 use App\Jobs\ImportGedcom;
 use Illuminate\Support\Facades\Storage;
 
+    
+    /**
+     * Class GedcomResource
+     *
+     * This class represents a resource for handling Gedcom data.
+     */
+
 class GedcomResource extends Resource {
     /**
      * Class GedcomResource
