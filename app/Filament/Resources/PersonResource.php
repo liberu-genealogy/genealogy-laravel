@@ -19,7 +19,10 @@ class PersonResource extends Resource
     {
         return $form
             ->schema([
-                //
+                TextInput::make('name')->required()->label('Name'),
+                DatePicker::make('birth_date')->label('Birth Date'),
+                DatePicker::make('death_date')->label('Death Date'),
+                Textarea::make('notes')->label('Notes'),
             ]);
     }
 
@@ -27,18 +30,19 @@ class PersonResource extends Resource
     {
         return $table
             ->columns([
-                //
+                TextColumn::make('name')->sortable()->searchable()->label('Name'),
+                DateColumn::make('birth_date')->label('Birth Date'),
+                DateColumn::make('death_date')->label('Death Date'),
+                TextColumn::make('notes')->label('Notes'),
             ])
             ->filters([
-                //
+                Tables\Filters\Filter::make('name')->query(fn ($query, $data) => $query->where('name', 'like', "%{$data}%")),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                ]),
+                Tables\Actions\DeleteBulkAction::make(),
             ]);
     }
 
