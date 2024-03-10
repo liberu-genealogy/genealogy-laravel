@@ -11,10 +11,10 @@
     @include('components.header')
 
     <main>
-        @include('components.home.manage')
-        @include('components.home.products')
-        @include('components.home.whyUs')
+        @yield('content')
     </main>
+
+    @include('components.footer')
 
     <script src="{{ asset('js/app.js') }}"></script>
     @livewireScripts
