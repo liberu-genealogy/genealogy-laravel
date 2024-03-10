@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Models\TeamInvitation;
 
 class Team extends Model
 {
@@ -11,7 +12,6 @@ class Team extends Model
         'name',
     ];
 }
-use App\Models\TeamInvitation;
 
     public function invitations()
     {
