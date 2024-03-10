@@ -31,6 +31,9 @@ class FamilyResource extends Resource
                     ->numeric(),
                 Forms\Components\TextInput::make('wife_id')
                     ->numeric(),
+use App\Models\Type;
+use App\Models\Husband;
+use App\Models\Wife;
                 Forms\Components\TextInput::make('chan')
                     ->maxLength(255),
                 Forms\Components\TextInput::make('nchi')

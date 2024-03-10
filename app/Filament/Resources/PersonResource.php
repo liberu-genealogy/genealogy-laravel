@@ -19,10 +19,21 @@ class PersonResource extends Resource
     {
         return $form
             ->schema([
-                TextInput::make('name')->required()->label('Name'),
-                DatePicker::make('birth_date')->label('Birth Date'),
-                DatePicker::make('death_date')->label('Death Date'),
-                Textarea::make('notes')->label('Notes'),
+                TextInput::make('name')
+                    ->required()
+                    ->label('Name'),
+                DatePicker::make('birth_date')
+                    ->label('Birth Date'),
+                DatePicker::make('death_date')
+                    ->label('Death Date'),
+                SelectInput::make('father_id')
+                    ->relationship('father', 'name')
+                    ->label('Father'),
+                SelectInput::make('mother_id')
+                    ->relationship('mother', 'name')
+                    ->label('Mother'),
+                Textarea::make('notes')
+                    ->label('Notes'),
             ]);
     }
 
