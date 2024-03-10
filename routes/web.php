@@ -23,3 +23,4 @@ Route::post('/send-invitation', 'TeamInvitationController@sendInvitation')->name
 Route::post('/accept-invitation/{token}', 'TeamInvitationController@acceptInvitation')->name('accept.invitation');
 
 });
+Route::get('/descendant-chart', 'DescendantChartController@index')->name('descendant-chart');
