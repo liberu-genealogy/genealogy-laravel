@@ -2,10 +2,11 @@
 
 namespace Database\Factories;
 
+use Illuminate\Database\Eloquent\Factories\Factory;
+
 use App\Models\Family;
 use App\Models\FamilyEvent;
 use App\Models\Place;
-use Illuminate\Database\Eloquent\Factories\Factory;
 
 class FamilyEventFactory extends Factory
 {
