@@ -15,24 +15,53 @@ class PersonResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
-    public static function form(Form $form): Form
+    /**
+ * Get the form for creating/editing a person.
+ * @param Form $form The form object.
+ * @return Form The form object.
+ */
+public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                TextInput::make('name')
+                /**
+ * Name field.
+ * @var TextInput
+ */
+TextInput::make('name')
                     ->required()
                     ->label('Name'),
-                DatePicker::make('birth_date')
+                /**
+ * Birth Date field.
+ * @var DatePicker
+ */
+DatePicker::make('birth_date')
                     ->label('Birth Date'),
-                DatePicker::make('death_date')
+                /**
+ * Death Date field.
+ * @var DatePicker
+ */
+DatePicker::make('death_date')
                     ->label('Death Date'),
-                SelectInput::make('father_id')
+                /**
+ * Father field.
+ * @var SelectInput
+ */
+SelectInput::make('father_id')
                     ->relationship('father', 'name')
                     ->label('Father'),
-                SelectInput::make('mother_id')
+                /**
+ * Mother field.
+ * @var SelectInput
+ */
+SelectInput::make('mother_id')
                     ->relationship('mother', 'name')
                     ->label('Mother'),
-                Textarea::make('notes')
+                /**
+ * Notes field.
+ * @var Textarea
+ */
+Textarea::make('notes')
                     ->label('Notes'),
             ]);
     }

@@ -6,6 +6,12 @@
   },
   "resources/js/app.js": {
     "file": "assets/app-l0sNRNKZ.js",
+  },
+  "resources/css/tailwind.css": {
+    "file": "assets/tailwind-HASH_PLACEHOLDER.css",
+    "src": "resources/css/tailwind.css",
+    "isEntry": true
+  }
     "src": "resources/js/app.js",
     "isEntry": true
   }
