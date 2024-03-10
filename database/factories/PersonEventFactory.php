@@ -7,6 +7,7 @@ use App\Models\PersonEvent;
 use App\Models\Place;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
+
 class PersonEventFactory extends Factory
 {
     /**
