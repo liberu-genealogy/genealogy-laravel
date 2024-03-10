@@ -49,6 +49,21 @@ class GedcomResource extends Resource
             'edit'   => Pages\EditGedcom::route('/{record}/edit'),
         ];
     }
+
+
+
+ /**
+     * Define the form fields and behavior for the DnaResource.
+ *
+ * @param Form $form
+ *
+ * @return Form
+     *
+     * @param Form $form
+     *
+     * @return Form
+     */
+    public static function form(Form $form): 
     {
         return $form
             ->schema([
