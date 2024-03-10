@@ -25,12 +25,9 @@ class FamilyResource extends Resource
                     ->columnSpanFull(),
                 Forms\Components\TextInput::make('is_active')
                     ->numeric(),
-                Forms\Components\TextInput::make('type_id')
-                    ->numeric(),
-                Forms\Components\TextInput::make('husband_id')
-                    ->numeric(),
-                Forms\Components\TextInput::make('wife_id')
-                    ->numeric(),
+                Forms\Components\Select::make('type_id')->options(\App\Models\Type::all()->pluck('name', 'id')),
+                Forms\Components\Select::make('husband_id')->options(\App\Models\Husband::all()->pluck('name', 'id')),
+                Forms\Components\Select::make('wife_id')->options(\App\Models\Wife::all()->pluck('name', 'id')),
                 Forms\Components\TextInput::make('chan')
                     ->maxLength(255),
                 Forms\Components\TextInput::make('nchi')
