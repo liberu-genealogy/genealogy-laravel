@@ -30,7 +30,10 @@ class PersonResource extends Resource
     {
         return $table
             ->columns([
-                //
+                TextColumn::make('name')->sortable()->searchable()->label('Name'),
+                DateColumn::make('birth_date')->label('Birth Date'),
+                DateColumn::make('death_date')->label('Death Date'),
+                TextColumn::make('notes')->label('Notes'),
             ])
             ->filters([
                 //
