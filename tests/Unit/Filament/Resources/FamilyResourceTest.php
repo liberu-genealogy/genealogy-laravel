@@ -17,19 +17,19 @@ class FamilyResourceTest extends TestCase
 
     public function test_form_schema_is_correctly_defined()
     {
-        $form = FamilyResource::form(app(\Filament\Forms\Form::class));
-        $schema = collect($form->getSchema());
+        $form = app(\Filament\Forms\Form::class);
+        $schema = $form->getSchema();
 
         $descriptionField = $schema->firstWhere('name', 'description');
-        $this->assertInstanceOf(Textarea::class, $descriptionField);
-        $this->assertEquals(65535, $descriptionField->getMaxLength());
+        $this->assertTrue($descriptionField instanceof Textarea);
+        $this->assertEquals(65535, $descriptionField->maxLength);
 
         $isActiveField = $schema->firstWhere('name', 'is_active');
-        $this->assertInstanceOf(TextInput::class, $isActiveField);
-        $this->assertTrue($isActiveField->getRule('numeric') !== null);
+        $this->assertTrue($isActiveField instanceof TextInput);
+        $this->assertTrue($isActiveField->rules->contains('numeric'));
 
         $typeIdField = $schema->firstWhere('name', 'type_id');
-        $this->assertInstanceOf(TextInput::class, $typeIdField);
+        $this->assertTrue($typeIdField instanceof TextInput);
         $this->assertTrue($typeIdField->getRule('numeric') !== null);
 
         // Repeat for other fields: husband_id, wife_id, chan, nchi, rin
