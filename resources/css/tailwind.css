@@ -1,48 +1,63 @@
 /* Tailwind CSS converted from Vuetify's base.css */
+/* This class styles the body element */
 body {
   @apply bg-gray-100 text-gray-800;
 }
+/* This class styles anchor elements */
 a {
   @apply text-blue-600 hover:text-blue-700;
 }
+/* This class styles unordered lists */
 ul {
   @apply list-disc pl-5;
 }
+/* This class styles buttons */
 .btn {
   @apply px-4 py-2 bg-blue-500 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700;
 }
+/* This class styles form inputs */
 .form-input {
   @apply border-2 border-gray-300 p-3 rounded-lg focus:outline-none focus:border-blue-500;
+/* End of container styles */
 }
+./* This class styles the container element */
 .container {
   @apply max-w-6xl mx-auto px-4 sm:px-6 lg:px-8;
 }
+./* This class styles grid elements */
 .grid {
   @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6;
 }
-.card {
+./* This class styles card elements */
+card {
   @apply bg-white rounded-lg shadow-md overflow-hidden;
 }
-.card-header {
+./* This class styles the card header */
+card-header {
   @apply bg-gray-200 text-gray-700 font-bold py-2 px-4;
 }
 .card-body {
   @apply p-4;
+/* End of media queries */
 }
+/* Media query for container styles at 640px */
 @media (min-width: 640px) {
   .container {
     @apply max-w-xl;
   }
 }
+/* Media query for container styles at 768px */
 @media (min-width: 768px) {
   .container {
     @apply max-w-2xl;
   }
 }
+/* Media query for container styles at 1024px */
 @media (min-width: 1024px) {
   .container {
     @apply max-w-4xl;
   }
+/* End of media query for container styles at 1280px */
 }
 @media (min-width: 1280px) {
   .container {
