@@ -101,16 +101,6 @@ class GedcomResource extends Resource {
             ]);
     }
 
-    public static function getPages(): array
-    {
-        return [
-            'index'  => Pages\ListGedcoms::route('/'),
-            'create' => Pages\CreateGedcom::route('/create'),
-            'view'   => Pages\ViewGedcom::route('/{record}'),
-            'edit'   => Pages\EditGedcom::route('/{record}/edit'),
-        ];
-    }
-
         /**
      * Perform the import functionality.
      *
