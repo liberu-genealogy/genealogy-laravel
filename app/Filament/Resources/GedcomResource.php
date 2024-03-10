@@ -125,7 +125,13 @@ class GedcomResource extends Resource
     }
 
         /**
+         /**
      * Define the table columns, filters, actions, and bulk actions.
+     *
+     * @param  Table  $table The table object to be defined.
+     * @return Table The updated table.
+     */
+    public static function table(Table $table): Table
      *
      * @param  Table  $table The table object to be defined.
      * @return Table The updated table.
