@@ -198,6 +198,11 @@ public static function getRelations(): array
      *
      * @return array
      */
+        /**
+     * Perform the import functionality.
+     *
+     * @return array
+     */
     private static function import(): array
      *
      * @return array
