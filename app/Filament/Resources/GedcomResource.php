@@ -8,11 +8,11 @@ use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-
-class GedcomResource extends Resource
 use Filament\Forms\Components\FileUpload;
 use App\Jobs\ImportGedcom;
-use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Storage
+    
+class GedcomResource extends Resource
 {
     protected static bool $isScopedToTenant = false;
 
