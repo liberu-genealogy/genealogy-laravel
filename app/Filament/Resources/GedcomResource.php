@@ -1,5 +1,11 @@
 <?php
 
+/**
+ * File: GedcomResource.php
+ *
+ * This file contains the implementation of the GedcomResource class which represents a resource for handling Gedcom data.
+ */
+
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\GedcomResource\Pages;
@@ -15,7 +21,9 @@ use Illuminate\Support\Facades\Storage
     
     
     /**
-     * Class GedcomResource
+     * File: GedcomResource.php
+ *
+ * This file contains the implementation of the GedcomResource class which represents a resource for handling Gedcom data.
      *
      * Class GedcomResource
  *
