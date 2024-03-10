@@ -9,6 +9,9 @@ use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Filament\Forms\Components\FileUpload;
+use App\Jobs\ImportGedcom;
+use Illuminate\Support\Facades\Storage;
 
 class DnaResource extends Resource
 {
@@ -18,12 +21,24 @@ class DnaResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
+    
     public static function form(Form $form): Form
     {
-        return $form->schema([
-            Forms\Components\TextInput::make('name')->required()->maxLength(255),
-            FileUpload::make('attachment')->required()->maxSize(100000)->directory('dna-form-imports')->visibility('private')->afterStateUpdated(DnaMatching::dispatch($request->user(), $manager->storagePath($path), $state)),
-        ]);
+        return $form
+            ->schema([
+                FileUpload::make('attachment')
+                    ->required()
+                    ->maxSize(100000)
+                ->directory('gedcom-form-imports')
+                ->visibility('private')
+            ->afterStateUpdated(function ($state, $set, $livewire) {
+                if ($state === null) {
+                    return;
+                }
+                $path = $state->store('gedcom-form-imports', 'private');
+                ImportGedcom::dispatch($livewire->user(), Storage::path($path));
+            }),
+            ]);
     }
 
     public static function table(Table $table): Table
