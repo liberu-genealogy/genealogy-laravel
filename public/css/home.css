@@ -1,0 +1,54 @@
+/* Home Page Specific Styles */
+body {
+    font-family: 'Nunito', sans-serif;
+}
+
+.header {
+    background-color: #f8fafc;
+    padding: 1rem 0;
+    border-bottom: 1px solid #eaeaea;
+}
+
+.main {
+    padding: 2rem 0;
+}
+
+.info-card {
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    border-radius: 8px;
+    padding: 1.5rem;
+    text-align: center;
+}
+
+.info-card h2 {
+    color: #333;
+    margin-bottom: 0.5rem;
+}
+
+.info-card p {
+    color: #666;
+    font-size: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.btn-primary {
+    background-color: #3490dc;
+    color: #fff;
+    padding: 0.75rem 1.5rem;
+    border-radius: 4px;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.btn-primary:hover {
+    background-color: #2779bd;
+}
+
+.footer {
+    background-color: #f8fafc;
+    color: #636b6f;
+    text-align: center;
+    padding: 1rem 0;
+    border-top: 1px solid #eaeaea;
+}
