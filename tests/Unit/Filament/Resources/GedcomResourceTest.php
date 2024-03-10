@@ -88,7 +88,7 @@ use Filament\Forms\Form;
         $this->assertEquals('pedigree-chart', route('pedigree-chart'));
     }
 
-    public function testAfterStateUpdatedEventHandler()
+    public function testGetRelationsMethod()
     {
         // TODO: Implement test for the afterStateUpdated event handler
     }
