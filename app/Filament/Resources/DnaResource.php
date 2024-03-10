@@ -22,6 +22,12 @@ class DnaResource extends Resource
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
     
+    /**
+     * Define the form fields and behavior for the DnaResource.
+     *
+     * @param  Form  $form
+     * @return Form
+     */
     public static function form(Form $form): Form
     {
         return $form
