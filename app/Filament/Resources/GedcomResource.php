@@ -1,4 +1,4 @@
-<?php
+Gh<?php
 
 namespace App\Filament\Resources;
 
@@ -13,7 +13,6 @@ use App\Jobs\ImportGedcom;
 use Illuminate\Support\Facades\Storage;
 
 class GedcomResource extends Resource
-{
     /**
      * Class GedcomResource
      *
