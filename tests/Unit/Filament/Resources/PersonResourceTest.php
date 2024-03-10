@@ -3,10 +3,9 @@
 namespace Tests\Unit\Filament\Resources;
 
 use App\Filament\Resources\PersonResource;
-use App\Models\Person;
 use Filament\Forms\Components\TextInput;
-use Filament\Tables\Actions\EditAction;
 use Filament\Tables\Actions\DeleteBulkAction;
+use Filament\Tables\Actions\EditAction;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 

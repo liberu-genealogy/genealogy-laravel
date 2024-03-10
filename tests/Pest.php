@@ -16,7 +16,8 @@ uses(Tests\TestCase::class, RefreshDatabase::class, WithoutMiddleware::class)->i
 |
 */
 
-function loginUser() {
+function loginUser()
+{
     $user = \App\Models\User::factory()->create();
     \Illuminate\Support\Facades\Auth::login($user);
 
