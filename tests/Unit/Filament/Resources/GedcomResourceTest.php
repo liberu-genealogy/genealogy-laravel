@@ -2,6 +2,8 @@
 
 use Tests\TestCase;
 use App\Filament\Resources\GedcomResource;
+use Filament\Forms\Form;
+use App\Filament\Resources\GedcomResource;
 
 namespace Tests\Unit\Filament\Resources;
 
@@ -60,14 +62,15 @@ class GedcomResourceTest extends TestCase
         // TODO: Add more assertions for the getPages method
     }
 
-    public function testImportGedcom()
+    public function testImportMethod()
     {
-        // Create a mock Gedcom instance
+        // Create a mock GedcomResource instance
         $gedcom = $this->getMockBuilder(Gedcom::class)
             ->disableOriginalConstructor()
             ->getMock();
     
         // Create a mock Form instance
+use App\Filament\Resources\GedcomResource;
         $form = $this->getMockBuilder(Form::class)
             ->disableOriginalConstructor()
             ->getMock();
@@ -76,6 +79,7 @@ class GedcomResourceTest extends TestCase
         $form->method('getModel')->willReturn($gedcom);
     
         // Call the form method of GedcomResource
+use Filament\Forms\Form;
         $result = GedcomResource::form($form);
     
         // Assert that the result is an instance of Form
