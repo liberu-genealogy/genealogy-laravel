@@ -11,3 +11,9 @@ class Team extends Model
         'name',
     ];
 }
+use App\Models\TeamInvitation;
+
+    public function invitations()
+    {
+        return $this->hasMany(TeamInvitation::class);
+    }
