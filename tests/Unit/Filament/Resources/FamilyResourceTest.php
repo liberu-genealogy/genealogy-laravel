@@ -3,11 +3,10 @@
 namespace Tests\Unit\Filament\Resources;
 
 use App\Filament\Resources\FamilyResource;
-use App\Models\Family;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
-use Filament\Tables\Actions\EditAction;
 use Filament\Tables\Actions\DeleteBulkAction;
+use Filament\Tables\Actions\EditAction;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
