@@ -1,7 +1,8 @@
 <?php
 
-use App\Models\Publication;
 use App\Filament\Resources\PublicationResource;
+use App\Models\Publication;
+
 use function Pest\Laravel\get;
 
 test('PublicationResource form schema is correctly defined', function () {
@@ -44,9 +45,12 @@ test('PublicationResource interacts with the database correctly', function () {
     $publication = Publication::factory()->create(['name' => 'Test Publication', 'description' => 'Test Description', 'is_active' => 1]);
 
     get(route('publications.index'))
-        ->assertInertia(fn ($page) => $page
+        ->assertInertia(
+            fn ($page) => $page
             ->component('Publications/Index')
-            ->has('publications', fn ($page) => $page
+            ->has(
+                'publications',
+                fn ($page) => $page
                 ->where('name', 'Test Publication')
                 ->where('description', 'Test Description')
                 ->where('is_active', 1)
