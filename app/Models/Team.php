@@ -6,12 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 use App\Models\TeamInvitation;
 
 class Team extends Model
-{
+
     protected $fillable = [
         'id',
         'name',
     ];
-}
 
     public function invitations()
     {
