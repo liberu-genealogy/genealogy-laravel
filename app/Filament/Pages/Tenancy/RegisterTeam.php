@@ -19,6 +19,20 @@ class RegisterTeam extends RegisterTenant
         return $form
             ->schema([
                 TextInput::make('name'),
+                TextInput::make('email')
+                    ->label('Invite User by Email')
+                    ->email()
+                    ->required(false),
+                Button::make('Send Invitation')
+                    ->action(function (array $data) {
+                        $teamId = $this->record->id;
+                        $email = $data['email'];
+
+                        if (!empty($email) && !empty($teamId)) {
+                            resolve(TeamInvitationController::class)->sendInvitation(new Request(['email' => $email, 'team_id' => $teamId]));
+                        }
+                    })
+                    ->type('button')
             ]);
     }
 
