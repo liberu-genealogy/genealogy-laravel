@@ -1,5 +1,16 @@
 Gh<?php
 
+<?php
+
+/**
+ * This file is part of the Filament package.
+ *
+ * (c) Your Name <your-email@example.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\GedcomResource\Pages;
@@ -13,6 +24,10 @@ use App\Jobs\ImportGedcom;
 use Illuminate\Support\Facades\Storage;
 
 class GedcomResource extends Resource
+{
+    /**
+     * This class represents a resource for handling Gedcom data.
+     */
     /**
      * Class GedcomResource
      *
@@ -41,6 +56,14 @@ class GedcomResource extends Resource
      * @return Form The updated form.
      */
     public static function form(Form $form): Form
+    {
+        /**
+         * Define the form for creating a new Gedcom.
+         *
+         * @param  Form  $form The form to be defined.
+         * @return Form The updated form.
+         */
+    
     /**
      * Get the pages defined for the resource.
      *
@@ -70,6 +93,12 @@ class GedcomResource extends Resource
         ];
     }
     {
+        /**
+         * Define the schema for uploading a Gedcom.
+         *
+         * @param  Form  $form The form to be defined.
+         * @return mixed The result of the schema definition.
+         */
         return $form
             ->schema([
                 FileUpload::make('attachment')
@@ -114,6 +143,11 @@ class GedcomResource extends Resource
     }
 
     public static     /**
+     * Get the relations defined for the resource.
+     *
+     * @return array The defined relations.
+     */
+        /**
      * Get the relations defined for the resource.
      *
      * @return array The defined relations.
