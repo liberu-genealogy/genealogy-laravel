@@ -2,8 +2,6 @@
 
 namespace Tests\Unit;
 
-use App\Filament\Resources\GedcomResource;
-use App\Models\Gedcom;
 use Illuminate\Foundation\Testing\TestCase;
 
 class GedcomResourceTest extends TestCase
