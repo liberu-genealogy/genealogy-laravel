@@ -149,7 +149,6 @@ return [
      * By default wildcard permission lookups are disabled.
      * See documentation to understand supported syntax.
      */
-
     'enable_wildcard_permission' => false,
 
     /*
