@@ -94,12 +94,6 @@ class GedcomResource extends Resource {
             ]);
     }
 
-    {
-        return [
-            //
-        ];
-    }
-
     public static function getPages(): array
     {
         return [
