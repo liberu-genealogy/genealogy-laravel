@@ -10,6 +10,9 @@ use Filament\Tables;
 use Filament\Tables\Table;
 
 class GedcomResource extends Resource
+use Filament\Forms\Components\FileUpload;
+use App\Jobs\ImportGedcom;
+use Illuminate\Support\Facades\Storage;
 {
     protected static bool $isScopedToTenant = false;
 
@@ -26,9 +29,13 @@ class GedcomResource extends Resource
                     ->maxSize(100000)
                 ->directory('gedcom-form-imports')
                 ->visibility('private')
-            ->afterStateUpdated(
-                ImportGedcom::dispatch($request->user(), $manager->storagePath($path), $state)
-            ),
+            ->afterStateUpdated(function ($state, $set, $livewire) {
+                if ($state === null) {
+                    return;
+                }
+                $path = $state->store('gedcom-form-imports', 'private');
+                ImportGedcom::dispatch($livewire->user(), Storage::path($path));
+            }),
             ]);
     }
 
