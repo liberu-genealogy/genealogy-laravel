@@ -182,6 +182,11 @@ class GedcomResource extends Resource
      *
      * @return array
      */
+        /**
+     * Perform the import functionality.
+     *
+     * @return array The imported data.
+     */
     private static function import(): array
     {
     }
