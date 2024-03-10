@@ -12,10 +12,27 @@ use Filament\Forms\Components\FileUpload;
 use App\Jobs\ImportGedcom;
 use Illuminate\Support\Facades\Storage
     
+    
+    
+    /**
+     * Class GedcomResource
+     *
+     * This class represents a resource for handling Gedcom data.
+     *
+     * @var bool Is this resource scoped to a tenant
+     */
 class GedcomResource extends Resource
 {
     /**
-     * Class GedcomResource
+     *     
+    
+    /**
+     * Define the form fields for the resource.
+     *
+     * @param  Form  $form The form object to be defined.
+     * @return Form The updated form.
+     */
+    public static function form(Form $form): Form
      *
      * This class represents a resource for handling Gedcom data.
      *
@@ -57,7 +74,14 @@ class GedcomResource extends Resource
         ];
     }
     /**
+     *     
+    
+    /**
      * Get the pages defined for the resource.
+     *
+     * @return array The defined pages.
+     */
+    public static function getPages(): array
      *
      * @return array The defined pages.
      */
@@ -115,7 +139,14 @@ class GedcomResource extends Resource
     }
 
     public static     /**
+     *     
+    
+    /**
      * Get the relations defined for the resource.
+     *
+     * @return array The defined relations.
+     */
+    public static function getRelations(): array
      *
      * @return array The defined relations.
      */
@@ -137,7 +168,14 @@ class GedcomResource extends Resource
     }
 
         /**
+     *     
+    
+    /**
      * Perform the import functionality.
+     *
+     * @return array
+     */
+    private static function import(): array
      *
      * @return array
      */
