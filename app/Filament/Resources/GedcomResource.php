@@ -164,7 +164,12 @@ class GedcomResource extends Resource
      *
      * @return array The defined relations.
      */
-    public static function getRelations(): array
+    /**
+ * Get the relations defined for the resource.
+ *
+ * @return array The defined relations.
+ */
+public static function getRelations(): array
      *
      * @return array The defined relations.
      */
