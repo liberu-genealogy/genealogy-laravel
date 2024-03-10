@@ -22,6 +22,10 @@ class DnaResource extends Resource
 
     /**
      * Define the form fields and behavior for the DnaResource.
+ *
+ * @param Form $form
+ *
+ * @return Form
      *
      * @param Form $form
      *
