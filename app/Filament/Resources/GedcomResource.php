@@ -12,7 +12,7 @@ use Filament\Tables\Table;
 use App\Jobs\ImportGedcom;
 use Illuminate\Support\Facades\Storage;
 
-class GedcomResource extends Resource
+class GedcomResource extends Resource {
     /**
      * Class GedcomResource
      *
