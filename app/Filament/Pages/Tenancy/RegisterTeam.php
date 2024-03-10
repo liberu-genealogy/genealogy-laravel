@@ -28,6 +28,9 @@ class RegisterTeam extends RegisterTenant
 
         $team->members()->attach(auth()->user());
 
+        $stripeService = resolve(StripeSubscriptionService::class);
+        $stripeService->createTrialSubscription($team);
+
         return $team;
     }
 }
