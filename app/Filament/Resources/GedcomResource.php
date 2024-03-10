@@ -94,7 +94,12 @@ class GedcomResource extends Resource {
             ]);
     }
 
-    public static function getPages(): array
+        /**
+     * Get the relations defined for the resource.
+     *
+     * @return array The defined relations.
+     */
+    public static function getRelations(): array
     {
         return [
             'index'  => Pages\ListGedcoms::route('/'),
