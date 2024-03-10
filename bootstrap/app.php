@@ -53,3 +53,4 @@ $app->singleton(
 */
 
 return $app;
+$app->register(App\Providers\Filament\PublicPanelProvider::class);
