@@ -72,6 +72,8 @@ class GedcomResource extends Resource
     /**
      * Get the pages defined for the resource.
      *
+     * Get the pages defined for the resource.
+     *
      * @return array The defined pages.
      */
     public static function getPages(): array
