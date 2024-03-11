@@ -5,9 +5,7 @@ document.addEventListener('DOMContentLoaded', function() {
         .append('g')
         .attr('transform', 'translate(60,60)');
 
-    fetch('/api/people')
-        .then(response => response.json())
-        .then(data => {
+    const data = JSON.parse(document.getElementById('fanChartData').textContent);
             const root = d3.hierarchy(data, d => d.children);
             const fanChart = d3.cluster().size([2 * Math.PI, 250])(root);
 

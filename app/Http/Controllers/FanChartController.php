@@ -8,6 +8,6 @@ class FanChartController extends Controller
 {
     public function show()
     {
-        return livewire('fan-chart');
+        return \Livewire::render(FanChartComponent::class);
     }
 }
