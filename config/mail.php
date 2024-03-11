@@ -1,4 +1,11 @@
 <?php
+/**
+ * Mail Configuration for the Laravel application.
+ *
+ * This configuration file defines the default mailer, mailer configurations, and global "from" address settings.
+ * It supports a variety of mail "transport" drivers and allows for the customization of mail services used by
+ * the application.
+ */
 
 return [
 
