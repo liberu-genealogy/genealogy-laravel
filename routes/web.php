@@ -23,3 +23,9 @@ Route::post('/send-invitation', 'TeamInvitationController@sendInvitation')->name
 Route::post('/accept-invitation/{token}', 'TeamInvitationController@acceptInvitation')->name('accept.invitation');
 
 });
+Route::get('/privacy', function () {
+    return view('pages.privacy');
+})->name('privacy');
+Route::get('/terms-and-conditions', function () {
+    return view('pages.termsandconditions');
+})->name('terms.and.conditions');
