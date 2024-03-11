@@ -25,3 +25,14 @@ Route::post('/accept-invitation/{token}', 'TeamInvitationController@acceptInvita
 Route::get('/descendant-chart', \App\Http\Livewire\DescendantChartComponent::class);
 
 });
+
+Route::get('/privacy', function () {
+    return view('pages.privacy');
+})->name('privacy');
+Route::get('/terms-and-conditions', function () {
+    return view('pages.termsandconditions');
+})->name('terms.and.conditions');
+
+Route::get('/contact', function () { return view('contact'); });
+Route::post('/contact/send', 'App\Http\Controllers\ContactController@sendEmail');
+
