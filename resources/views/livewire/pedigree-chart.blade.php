@@ -32,6 +32,13 @@
 @endpush
 
 @once
+
+/**
+* File: pedigree-chart.blade.php
+*
+* This file contains the HTML template for rendering the pedigree chart components.
+* It also includes JavaScript for initializing and interacting with the pedigree chart using D3.js and Livewire events.
+*/
 @push('styles')
 <link rel="stylesheet" href="{{ asset('css/pedigree-chart.css') }}">
 @endpush
