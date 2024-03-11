@@ -11,9 +11,9 @@
     @include('components.header')
 
     <main>
-        @include('components.home.manage')
-        @include('components.home.products')
-        @include('components.home.whyUs')
+        @include('components.manage_section')
+        @include('components.products_section')
+        @include('components.why_us_section')
     </main>
 
     <script src="{{ asset('js/app.js') }}"></script>
