@@ -42,13 +42,3 @@
 .xl\:container {
   @apply max-w-6xl;
 }
-/* Refactored grid system to avoid circular dependencies and improve modularity */
-.grid-cols-1 {
-  @apply grid-cols-1;
-}
-.md\:grid-cols-2 {
-  @apply md:grid-cols-2;
-}
-.lg\:grid-cols-3 {
-  @apply lg:grid-cols-3;
-}
