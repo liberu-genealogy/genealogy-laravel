@@ -14,7 +14,7 @@
     <main>
         @include('components.manage_section')
        
-        @include('components.why_us_section')
+     
     </main>
 
     <script src="{{ asset('js/app.js') }}"></script>
