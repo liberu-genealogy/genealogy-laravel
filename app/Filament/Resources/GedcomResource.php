@@ -86,6 +86,9 @@ class GedcomResource extends Resource {
             ->actions([
                 Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\Action::make('export')
+                    ->action(fn () => static::exportGedcom())
+                    ->label('Export GEDCOM'),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
@@ -103,3 +106,14 @@ class GedcomResource extends Resource {
     {
     }
 }
+    /**
+     * Initiates the GEDCOM export process.
+     *
+     * @return void
+     */
+    public static function exportGedcom(): void
+    {
+        $user = auth()->user(); // Assuming the user is authenticated
+        $fileName = now()->format('Y-m-d_His') . '_family_tree.ged'; // Generating a unique file name
+        ExportGedCom::dispatch($fileName, $user);
+    }
