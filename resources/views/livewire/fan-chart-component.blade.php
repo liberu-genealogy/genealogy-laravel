@@ -1,3 +1,4 @@
+<!-- Blade template for the Livewire Fan Chart Component. Renders a container for the D3.js fan chart and includes necessary scripts. -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
