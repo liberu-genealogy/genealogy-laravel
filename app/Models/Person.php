@@ -81,19 +81,29 @@ class Person extends Model
         return $this->hasMany(PersonEvent::class);
     }
 
-    public function child_in_family()
+    public function childInFamily()
     {
         return $this->belongsTo(Family::class, 'child_in_family_id');
     }
 
-    public function husband_in_family()
+    public function familiesAsHusband()
     {
         return $this->hasMany(Family::class, 'husband_id');
     }
 
-    public function wife_in_family()
+    public function familiesAsWife()
     {
         return $this->hasMany(Family::class, 'wife_id');
+    }
+
+    public function parents()
+    {
+        return $this->childInFamily->parents();
+    }
+
+    public function children()
+    {
+        return $this->hasManyThrough(Person::class, Family::class, 'husband_id', 'child_in_family_id')->union($this->hasManyThrough(Person::class, Family::class, 'wife_id', 'child_in_family_id'));
     }
 
     public function fullname(): string
