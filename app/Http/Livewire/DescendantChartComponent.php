@@ -9,6 +9,9 @@ class DescendantChartComponent extends Component
 {
     public $descendantsData = [];
 
+        /**
+     * Mounts the component and retrieves the descendants data.
+     */
     public function mount()
     {
         $rawData = Person::all()->toArray();
