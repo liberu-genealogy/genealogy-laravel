@@ -8,12 +8,13 @@
     @livewireStyles
 </head>
 <body>
-    @include('components.header')
+    @include('components.home_header')
+    @include('components.home_navbar')
 
     <main>
-        @include('components.home.manage')
-        @include('components.home.products')
-        @include('components.home.whyUs')
+        @include('components.manage_section')
+       
+     
     </main>
 
     <script src="{{ asset('js/app.js') }}"></script>
