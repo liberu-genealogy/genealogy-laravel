@@ -21,6 +21,12 @@ class PedigreeChartResource extends Resource
 {
     protected static ?string $model = PedigreeChart::class;
 
+    /**
+     * Defines the form used for creating and editing Pedigree Charts.
+     * 
+     * @param Filament\Resources\Form $form The form instance.
+     * @return Filament\Resources\Form The modified form instance with the schema for Pedigree Charts.
+     */
     public static function form(Form $form): Form
     {
         return $form->schema([
@@ -36,6 +42,12 @@ class PedigreeChartResource extends Resource
         ]);
     }
 
+    public static function table(Table $table): Table
+     * Defines the table used for listing Pedigree Charts.
+     * 
+     * @param Filament\Resources\Table $table The table instance.
+     * @return Filament\Resources\Table The modified table instance with columns, filters, actions, and bulk actions for Pedigree Charts.
+     */
     public static function table(Table $table): Table
     {
         return $table->columns([
@@ -60,6 +72,11 @@ class PedigreeChartResource extends Resource
         ]);
     }
 
+    /**
+     * Retrieves the relations for the Pedigree Chart resource.
+     * 
+     * @return array An array of relations.
+     */
     public static function getRelations(): array
     {
         return [
@@ -71,6 +88,11 @@ class PedigreeChartResource extends Resource
     {
         return [
             'index' => Pages\ListPedigreeCharts::route('/'),
+            'create' => Pages\CreatePedigreeChart::route('/create'),
+            'edit' => Pages\EditPedigreeChart::route('/{record}/edit'),
+        ];
+    }
+}
             'create' => Pages\CreatePedigreeChart::route('/create'),
             'edit' => Pages\EditPedigreeChart::route('/{record}/edit'),
         ];
