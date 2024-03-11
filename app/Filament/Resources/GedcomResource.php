@@ -98,9 +98,18 @@ class GedcomResource extends Resource {
     }
 
         /**
-     * Perform the import functionality.
+     * Imports GEDCOM data into the application.
      *
-     * @return array
+     * This function reads a GEDCOM file, parses its contents, and stores the relevant genealogical data into the application's database. It handles the mapping of GEDCOM tags to the application's data model and ensures data integrity during the import process.
+     *
+     * Returns:
+     *    array: A summary of the import process, including counts of successfully imported entities (e.g., individuals, families) and any errors encountered.
+     *
+     * Side Effects:
+     *    Modifies the application's database by adding new records corresponding to the imported GEDCOM data. This operation is transactional and will roll back in case of errors to maintain data integrity.
+     *
+     * Note:
+     *    This function expects the GEDCOM file to be pre-validated and located in a specific directory accessible to the application.
      */
     private static function import(): array
     {
