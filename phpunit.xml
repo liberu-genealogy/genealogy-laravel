@@ -29,3 +29,6 @@
         <env name="TELESCOPE_ENABLED" value="false"/>
     </php>
 </phpunit>
+        <testsuite name="Filament Resources">
+            <directory suffix="Test.php">./tests/Unit/Filament/Resources</directory>
+        </testsuite>
