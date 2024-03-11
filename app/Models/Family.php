@@ -31,6 +31,6 @@ class Family extends \FamilyTree365\LaravelGedcom\Models\Family
      */
     public function children()
     {
-        return $this->hasMany(Person::class, 'child_in_family_id');
+        
     }
 }
