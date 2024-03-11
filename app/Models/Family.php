@@ -5,6 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use App\Models\Person;
 
+/**
+ * Class Family
+ *
+ * This class represents a family in the genealogy application.
+ */
 class Family extends \FamilyTree365\LaravelGedcom\Models\Family
 {
     use HasFactory;
