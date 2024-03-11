@@ -55,11 +55,11 @@ class AdminPanelProvider extends PanelProvider
         ->tenantRegistration(RegisterTeam::class)
         ->tenantProfile(EditTeamProfile::class)
         ->tenant(Team::class)
-        ->tenantBillingProvider(new BillingProvider(env('STRIPE_PLAN_ID')))
+        ->tenantBillingProvider(new BillingProvider(env('default'))
         ->requiresTenantSubscription()
-       // ->tenantMiddleware([
-           //  SyncSpatiePermissionsWithFilamentTenants::class,
-           //  ], isPersistent: true)
+        ->tenantMiddleware([
+            SyncSpatiePermissionsWithFilamentTenants::class,
+            ], isPersistent: true)
             ->middleware([
                 EncryptCookies::class,
                 AddQueuedCookiesToResponse::class,
