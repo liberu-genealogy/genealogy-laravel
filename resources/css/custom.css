@@ -50,8 +50,6 @@
 .card-header {
   @apply bg-gray-200 text-gray-700 font-bold py-2 px-4;
 }
-}
-}
 /* Responsive adjustments using Tailwind's responsive prefixes */
 .sm\:container {
   @apply max-w-xl;
