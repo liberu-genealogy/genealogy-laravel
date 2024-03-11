@@ -28,6 +28,14 @@ function createUser($name, $email, $password) {
     // Function code here
 }
 
-// ...
+/**
+ * Deletes the user with the given ID.
+ *
+ * @param int $userId The ID of the user to delete.
+ * @return void
+ */
+function deleteUser($userId) {
+    // Function code here
+}
 
 ?>
