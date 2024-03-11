@@ -18,7 +18,6 @@ ul {
 .form-input {
   @apply border-2 border-gray-300 p-3 rounded-lg focus:outline-none focus:border-blue-500;
 }
-@import 'custom.css';
 .card {
   @apply bg-white rounded-lg shadow-md overflow-hidden;
 }

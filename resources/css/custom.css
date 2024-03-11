@@ -12,6 +12,39 @@
   @apply grid gap-6;
 }
 .grid-cols-1 {
+  @apply grid-cols-[1];
+}
+.grid-cols-2 {
+  @apply grid-cols-2;
+}
+.grid-cols-3 {
+  @apply grid-cols-3;
+}
+.card {
+  @apply bg-white rounded-lg shadow-md overflow-hidden;
+}
+.card-header {
+  @apply bg-gray-200 text-gray-700 font-bold py-2 px-4;
+}
+.card-body {
+  @apply p-4;
+}
+.sm\:container {
+  @apply max-w-xl;
+}
+.md\:container {
+  @apply max-w-2xl;
+}
+.lg\:container {
+  @apply max-w-4xl;
+}
+.xl\:container {
+  @apply max-w-6xl;
+}
+.grid {
+  @apply grid gap-6;
+}
+.grid-cols-1 {
   @apply grid-cols-1;
 }
 .md\:grid-cols-2 {
@@ -28,6 +61,36 @@
 }
 .card-body {
   @apply p-4;
+}
+}
+.md\:grid-cols-2 {
+  @apply md:grid-cols-[2];
+}
+.lg\:grid-cols-3 {
+  @apply lg:grid-cols-[3];
+}
+.card {
+  @apply bg-white rounded-lg shadow-md overflow-hidden;
+}
+.card-header {
+  @apply bg-gray-200 text-gray-700 font-bold py-2 px-4;
+}
+.card-body {
+  @apply p-4;
+}
+/* Responsive adjustments using Tailwind's responsive prefixes */
+.sm\:container {
+  @apply max-w-xl;
+}
+.md\:container {
+  @apply max-w-2xl;
+}
+.lg\:container {
+  @apply max-w-4xl;
+}
+.xl\:container {
+  @apply max-w-6xl;
+}
 }
 /* Responsive adjustments using Tailwind's responsive prefixes */
 .sm\:container {
