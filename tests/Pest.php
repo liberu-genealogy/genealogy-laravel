@@ -34,7 +34,14 @@ function createUser($name, $email, $password) {
  * @param int $userId The ID of the user to delete.
  * @return void
  */
-function deleteUser($userId) {
+/**
+ * Updates the user with the given ID using the provided parameters.
+ *
+ * @param int $userId The ID of the user to update.
+ * @param array $data The updated user data.
+ * @return void
+ */
+function updateUser($userId, $data) {
     // Function code here
 }
 
