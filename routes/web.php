@@ -24,6 +24,8 @@ Route::post('/accept-invitation/{token}', 'TeamInvitationController@acceptInvita
 
 Route::get('/descendant-chart', \App\Http\Livewire\DescendantChartComponent::class);
 
+Route::get('/daboville-report', \App\Http\Livewire\DabovilleReport::class);
+
 });
 
 Route::get('/privacy', function () {
