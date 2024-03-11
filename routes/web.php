@@ -19,6 +19,8 @@ Route::get('/', function () {
 
 Route::get('/fan-chart', 'App\Http\Controllers\FanChartController@show');
 
+Route::get('/descendant-chart', [\App\Http\Controllers\DescendantChartController::class, 'index'])->name('descendant-chart');
+
 Route::post('/send-invitation', 'TeamInvitationController@sendInvitation')->name('send.invitation');
 Route::post('/accept-invitation/{token}', 'TeamInvitationController@acceptInvitation')->name('accept.invitation');
 
