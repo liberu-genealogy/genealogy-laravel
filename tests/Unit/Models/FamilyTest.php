@@ -7,5 +7,14 @@ use Tests\TestCase;
 
 class FamilyTest extends TestCase
 {
-    // Add your unit tests here
+        /**
+     * Test to cover the removed children() method.
+     *
+     * @test
+     * @return void
+     */
+    public function testRemovedChildrenMethod()
+    {
+        // Test scenario goes here
+    }
 }
