@@ -1,4 +1,4 @@
-Try/* Custom styles extracted from tailwind.css */
+/* Custom styles extracted from tailwind.css */
 .btn {
   @apply px-4 py-2 bg-blue-500 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700;
 }
@@ -90,6 +90,7 @@ Try/* Custom styles extracted from tailwind.css */
 }
 .xl\:container {
   @apply max-w-6xl;
+}
 }
 /* Responsive adjustments using Tailwind's responsive prefixes */
 .sm\:container {
