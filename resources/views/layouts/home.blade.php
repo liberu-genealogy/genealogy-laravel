@@ -8,7 +8,8 @@
     @livewireStyles
 </head>
 <body>
-    @include('components.header')
+    @include('components.home_header')
+    @include('components.home_navbar')
 
     <main>
         @include('components.manage_section')
