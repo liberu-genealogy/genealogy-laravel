@@ -19,6 +19,11 @@ class Family extends \FamilyTree365\LaravelGedcom\Models\Family
         return $this->belongsTo(Person::class, 'husband_id');
     }
 
+    /**
+     * Get the wife of the family.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function wife()
     {
         return $this->belongsTo(Person::class, 'wife_id');
