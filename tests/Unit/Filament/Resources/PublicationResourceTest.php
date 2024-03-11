@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Publication;
+use Filament\Http\Middleware\SyncSpatiePermissionsWithFilamentTenants;
 use App\Filament\Resources\PublicationResource;
 use function Pest\Laravel\get;
 
