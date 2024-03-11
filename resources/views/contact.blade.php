@@ -1,4 +1,4 @@
-@extends('layouts.app')
+{{-- Moved to `resources/views/components/contact-form.blade.php` and renamed to match Laravel component naming convention --}}
 
 @section('content')
 <div class="container">
