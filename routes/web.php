@@ -17,6 +17,7 @@ Route::get('/', function () {
     return view('layouts.home');
 
 
+// Route for displaying the fan chart page. Utilizes the FanChartController.
 Route::get('/fan-chart', [\App\Http\Controllers\FanChartController::class, 'show'])->middleware('web');
 
 Route::post('/send-invitation', 'TeamInvitationController@sendInvitation')->name('send.invitation');
