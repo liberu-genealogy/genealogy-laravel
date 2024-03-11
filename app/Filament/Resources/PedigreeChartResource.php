@@ -10,6 +10,11 @@ use Filament\Resources\Resource;
 use Filament\Resources\Table;
 use Filament\Tables;
 
+/**
+ * Class PedigreeChartResource
+ *
+ * This class represents the resource for managing pedigree charts.
+ */
 class PedigreeChartResource extends Resource
 {
     protected static ?string $model = Person::class;
