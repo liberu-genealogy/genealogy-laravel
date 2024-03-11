@@ -91,6 +91,7 @@
 .xl\:container {
   @apply max-w-6xl;
 }
+}
 /* Responsive adjustments using Tailwind's responsive prefixes */
 .sm\:container {
   @apply max-w-xl;
