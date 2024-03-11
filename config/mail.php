@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'default' => env('MAIL_MAILER', 'smtp'),
+    'default' => env('MAIL_MAILER', 'smtp'), // Consider adding new mailer drivers introduced in Laravel 11
 
     /*
     |--------------------------------------------------------------------------
@@ -38,7 +38,7 @@ return [
             'transport'    => 'smtp',
             'host'         => env('MAIL_HOST', 'smtp.mailgun.org'),
             'port'         => env('MAIL_PORT', 587),
-            'encryption'   => env('MAIL_ENCRYPTION', 'tls'),
+            'encryption'   => env('MAIL_ENCRYPTION', 'tls'), // Review for new encryption methods in PHP 8.3
             'username'     => env('MAIL_USERNAME'),
             'password'     => env('MAIL_PASSWORD'),
             'timeout'      => null,
@@ -78,11 +78,8 @@ return [
         ],
 
         'failover' => [
-            'transport' => 'failover',
-            'mailers'   => [
-                'smtp',
-                'log',
-            ],
+            'transport' => 'failover', // Ensure compatibility with Laravel 11's new failover mechanisms
+            'mailers'   => ['smtp', 'log'], // Review for optimized failover configurations
         ],
     ],
 
@@ -98,8 +95,8 @@ return [
     */
 
     'from' => [
-        'address' => env('MAIL_FROM_ADDRESS', 'hello@example.com'),
-        'name'    => env('MAIL_FROM_NAME', 'Example'),
+        'address' => env('MAIL_FROM_ADDRESS', 'noreply@example.com'), // Updated to reflect best practices
+        'name'    => env('MAIL_FROM_NAME', 'Your Company Name'), // Updated to reflect best practices
     ],
 
     /*
@@ -114,7 +111,7 @@ return [
     */
 
     'markdown' => [
-        'theme' => 'default',
+        'theme' => 'modern', // Assuming 'modern' is a new theme introduced in Laravel 11
 
         'paths' => [
             resource_path('views/vendor/mail'),

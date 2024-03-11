@@ -12,7 +12,7 @@
 */
 
 $app = new Illuminate\Foundation\Application(
-    $_ENV['APP_BASE_PATH'] ?? dirname(__DIR__)
+    realpath($_ENV['APP_BASE_PATH'] ?? dirname(__DIR__))
 );
 
 /*
@@ -54,3 +54,4 @@ $app->singleton(
 
 return $app;
 $app->register(App\Providers\Filament\PublicPanelProvider::class);
+$app->register(App\Providers\FilamentServiceProvider::class);
