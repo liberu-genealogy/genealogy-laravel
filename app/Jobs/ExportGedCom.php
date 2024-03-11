@@ -56,7 +56,13 @@ class ExportGedCom implements ShouldQueue
         // Storing the GEDCOM file
         $manager->storage()->put($this->file, $content);
         Log::info("GEDCOM file generated and stored: " . $this->file);
-
+/**
+ * Handles the process of exporting GEDCOM data.
+ * Establishes a tenant connection, fetches related data (people and families), generates GEDCOM content, and stores the file.
+ * Logs the process and handles potential errors.
+ *
+ * @return void
+ */
         $up_nest = 3;
         $down_nest = 3;
 
