@@ -18,11 +18,6 @@ class Family extends \FamilyTree365\LaravelGedcom\Models\Family
     {
         return $this->belongsTo(Person::class, 'wife_id');
     }
-
-    public function children()
-    {
-        return $this->hasMany(Person::class, 'child_in_family_id');
-    }
 }
     public function wife()
     {
