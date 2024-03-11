@@ -27,7 +27,7 @@ class ExportGedCom implements ShouldQueue
      *
      * @return void
      */
-    public function __construct(protected $file, protected User $user)
+    public function __construct(protected string $file, protected User $user)
     {
     }
 
@@ -38,25 +38,24 @@ class ExportGedCom implements ShouldQueue
      */
     public function handle()
     {
-        $p_id = $this->user->person_id; // person_id
-        $f_id = 0;                      // family_id
-
+        // Establishing tenant connection
         $tenant = Manager::fromModel($this->user->company(), $this->user);
         $tenant->connect();
 
-        $family = Family::where('husband_id', $this->user->id)
-                ->orWhere('wife_id', $this->user->id)
-                ->first();
-        $manager = Manager::fromModel($this->user->company(), $this->user);
-        if ($family == null) {
-            $person = Person::where('child_in_family_id', $this->user->id)->first();
+        // Fetching all people and families related to the user
+        $people = Person::all();
+        $families = Family::all();
 
-            $f_id = $person != null ? $person->child_in_family_id : 0;
-        } else {
-            $f_id = $family->id;
-        }
+        // Logging the count of people and families to be exported
+        Log::info("Exporting " . $people->count() . " people and " . $families->count() . " families.");
 
-        Log::info("Family Id => $f_id \n Person Id => $p_id");
+        // Generating GEDCOM content
+        $writer = new GedcomGenerator($people, $families);
+        $content = $writer->generate();
+
+        // Storing the GEDCOM file
+        $manager->storage()->put($this->file, $content);
+        Log::info("GEDCOM file generated and stored: " . $this->file);
 
         $up_nest = 3;
         $down_nest = 3;
@@ -70,7 +69,16 @@ class ExportGedCom implements ShouldQueue
  //       $filePath = 'public/' . $this->file;
 //        $filePath = $manager->storage()->path($filePath);
         //	chmod_r('/home/genealogia/domains/api.genealogia.co.uk/genealogy/storage/tenants/');
-        exec('chmod -R 0777 '.storage_path('/tenants/'));
+        // Setting permissions for the GEDCOM file
+        exec('chmod 0644 '. $manager->storage()->path($this->file));
+        Log::info("Permissions set for GEDCOM file.");
+        
+        // Handling errors and exceptions
+        try {
+            // Export logic here
+        } catch (\Exception $e) {
+            Log::error("Error during GEDCOM export: " . $e->getMessage());
+        }
         //exec ("find /home/genealogia/ap -type d -exec chmod 0750 {} +");
         //exec ("find /path/to/folder -type f -exec chmod 0644 {} +");
         // var_dump($path,'path');
