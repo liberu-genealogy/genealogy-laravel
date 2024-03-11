@@ -9,7 +9,13 @@ use App\Models\Family;
 /**
  * Class DabovilleReport extends Component
  *
+ * Class DabovilleReport extends Component
+ *
  * DabovilleReport - Class for generating a report based on a person's family tree.
+ *
+ * This class provides methods to generate a report based on a person's family tree.
+ *
+ *
  *
  * This class provides methods to generate a report based on a person's family tree.
  *
@@ -44,6 +50,12 @@ class DabovilleReport extends Component
      * @param int personId The ID of the person to generate the report for.
      * @return void
      */
+    /**
+     * Generates a report based on the provided person ID.
+     *
+     * @param int $personId The ID of the person to generate the report for.
+     * @return void
+     */
     public function generateReport($personId)
     {
         $this->selectedPersonId = $personId;
@@ -65,6 +77,17 @@ class DabovilleReport extends Component
      * @param string currentNumber The current number in the family tree.
      * @return void
      */
+    /**
+     * Traverses the family tree starting from the given person.
+ *
+ * @param Person $person The person to start the traversal from.
+ * @param string $currentNumber The current number in the family tree.
+ * @return void
+     *
+ * @param Person $person The person to start the traversal from.
+ * @param string $currentNumber The current number in the family tree.
+ * @return void
+ */
     private function traverseFamilyTree($person, $currentNumber)
     {
         $this->reportData[$person->id] = [
