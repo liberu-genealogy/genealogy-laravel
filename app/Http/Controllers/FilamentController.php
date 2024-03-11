@@ -7,5 +7,8 @@ use App\Http\Controllers\Controller;
 
 class FilamentController extends Controller
 {
-    // Implement any required functions or methods here
+    public function pedigreeChart()
+    {
+        // Add logic for pedigreeChart function
+    }
 }
