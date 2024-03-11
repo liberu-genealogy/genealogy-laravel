@@ -1,3 +1,7 @@
+<!--
+File: descendant-chart.blade.php
+Description: This file contains the descendant chart display and related functionality.
+-->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -15,7 +19,12 @@
         document.addEventListener('livewire:load', function () {
             const data = @json($descendantsData);
 
-            function renderDescendantChart(data) {
+            /**
+ * Renders the descendant chart using the provided data.
+ *
+ * @param {Array} data - The data used to render the chart.
+ */
+function renderDescendantChart(data) {
                 const container = d3.select('#descendant-chart-container');
                 const width = 960;
                 const height = 500;
