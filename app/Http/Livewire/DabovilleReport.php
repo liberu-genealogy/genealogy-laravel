@@ -11,6 +11,8 @@ use App\Models\Family;
  *
  * DabovilleReport - Class for generating a report based on a person's family tree.
  *
+ * This class provides methods to generate a report based on a person's family tree.
+ *
  * @var int selectedPersonId The ID of the selected person for the report.
  * @var array reportData Array to store the report data.
  */
@@ -21,6 +23,8 @@ class DabovilleReport extends Component
 
         /**
      * Renders the DabovilleReport component.
+ *
+ * @return view
      *
      * @return view
      */
@@ -31,6 +35,9 @@ class DabovilleReport extends Component
 
         /**
      * Generates a report based on the provided person ID.
+ *
+ * @param int personId The ID of the person to generate the report for.
+ * @return void
      *
      * @param int personId The ID of the person to generate the report for.
      * @return void
@@ -47,6 +54,10 @@ class DabovilleReport extends Component
 
         /**
      * Traverses the family tree starting from the given person.
+ *
+ * @param Person person The person to start the traversal from.
+ * @param string currentNumber The current number in the family tree.
+ * @return void
      *
      * @param Person person The person to start the traversal from.
      * @param string currentNumber The current number in the family tree.
