@@ -27,9 +27,26 @@ use Maartenpaauw\Filament\Cashier\Stripe\BillingProvider;
 
 class AdminPanelProvider extends PanelProvider
 {
+        /**
+     * Returns the panel for the admin panel.
+     *
+     * @param Panel $panel The panel instance.
+     * @return Panel The panel for the admin panel.
+     */
     public function panel(Panel $panel): Panel
     {
         return $panel
+            ->default()
+            ->id('admin')
+            ->path('admin')
+            ->login()
+            ->registration()
+            ->passwordReset()
+            ->emailVerification()
+            ->profile()
+            ->colors([
+                'primary' => Color::Amber,
+            ])
             ->default()
             ->id('admin')
             ->path('admin')
