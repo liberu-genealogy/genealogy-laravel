@@ -20,3 +20,4 @@
     @livewireScripts
 </body>
 </html>
+    @include('components.footer')
