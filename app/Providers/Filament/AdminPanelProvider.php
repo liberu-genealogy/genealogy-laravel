@@ -1,4 +1,4 @@
-<?php
+ <?php
 
 namespace App\Providers\Filament;
 
@@ -55,7 +55,7 @@ class AdminPanelProvider extends PanelProvider
         ->tenantRegistration(RegisterTeam::class)
         ->tenantProfile(EditTeamProfile::class)
         ->tenant(Team::class)
-        ->tenantBillingProvider(new BillingProvider(env('default'))
+        ->tenantBillingProvider(new BillingProvider('default')) 
         ->requiresTenantSubscription()
         ->tenantMiddleware([
             SyncSpatiePermissionsWithFilamentTenants::class,
