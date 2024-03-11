@@ -10,3 +10,4 @@ return [
         'collect_tax_ids' => false, // Optional
     ],
 ],
+] 
