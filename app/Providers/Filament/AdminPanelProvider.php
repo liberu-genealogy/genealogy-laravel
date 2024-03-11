@@ -1,5 +1,4 @@
- <?php
-
+<?php
 namespace App\Providers\Filament;
 
 use Althinect\FilamentSpatieRolesPermissions\FilamentSpatieRolesPermissionsPlugin;
