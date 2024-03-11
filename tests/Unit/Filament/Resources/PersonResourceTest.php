@@ -30,7 +30,7 @@ class PersonResourceTest extends TestCase
     }
 
     /** @test */
-    public function table_columns_and_actions_are_correctly_defined()
+    public function test_different_middleware_scenarios()
     {
         $table = PersonResource::table(app(\Filament\Tables\Table::class));
         $columns = collect($table->getColumns());
