@@ -31,7 +31,6 @@ class FamilyResourceTest extends TestCase
         $typeIdField = $schema->firstWhere('name', 'type_id');
         $this->assertInstanceOf(TextInput::class, $typeIdField);
         $this->assertTrue($typeIdField->getRule('numeric') !== null);
-
         // Repeat for other fields: husband_id, wife_id, chan, nchi, rin
     }
 
