@@ -62,9 +62,9 @@ class GedcomResourceTest extends TestCase
         // TODO: Add more assertions for the getPages method
     }
 
-    public function testImportMethod()
+    public function testTenantMiddlewareFunctionality()
     {
-        // Create a mock GedcomResource instance
+        // Create a mock HTTP request instance
         $gedcom = $this->getMockBuilder(Gedcom::class)
             ->disableOriginalConstructor()
             ->getMock();
