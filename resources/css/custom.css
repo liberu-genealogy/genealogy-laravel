@@ -12,13 +12,13 @@
   @apply grid gap-6;
 }
 .grid-cols-1 {
-  @apply grid-cols-1;
+  @apply grid-cols-[1];
 }
 .md\:grid-cols-2 {
-  @apply md:grid-cols-2;
+  @apply md:grid-cols-[2];
 }
 .lg\:grid-cols-3 {
-  @apply lg:grid-cols-3;
+  @apply lg:grid-cols-[3];
 }
 .card {
   @apply bg-white rounded-lg shadow-md overflow-hidden;
