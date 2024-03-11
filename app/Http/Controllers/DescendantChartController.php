@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use use App\\Models\\Person;\nIlluminate\Http\Request;
 use App\Models\Person;
 
 class DescendantChartController extends Controller
