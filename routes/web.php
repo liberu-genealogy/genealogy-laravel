@@ -17,10 +17,26 @@ Route::get('/', function () {
     return view('layouts.home');
 
 
-Route::get('/fan-chart', 'App\Http\Controllers\FanChartController@show');
+Route::get('/fan-chart', [\App\Http\Controllers\FanChartController::class, 'show'])->middleware('web');
 
 Route::post('/send-invitation', 'TeamInvitationController@sendInvitation')->name('send.invitation');
 Route::post('/accept-invitation/{token}', 'TeamInvitationController@acceptInvitation')->name('accept.invitation');
 
+Route::get('/descendant-chart', \App\Http\Livewire\DescendantChartComponent::class);
+
 });
+
 Route::get('/pedigree-chart', 'App\Http\Controllers\PedigreeChartController@index')->name('pedigree.chart');
+
+
+Route::get('/privacy', function () {
+    return view('pages.privacy');
+})->name('privacy');
+Route::get('/terms-and-conditions', function () {
+    return view('pages.termsandconditions');
+})->name('terms.and.conditions');
+
+Route::get('/contact', function () { return view('contact'); });
+Route::post('/contact/send', 'App\Http\Controllers\ContactController@sendEmail');
+
+

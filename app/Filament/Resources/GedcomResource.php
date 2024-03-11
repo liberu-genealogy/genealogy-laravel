@@ -105,7 +105,7 @@ class GedcomResource extends Resource {
     private static function import(): array
     {
     }
-}
+
     /**
      * Initiates the GEDCOM export process.
      *
@@ -117,3 +117,4 @@ class GedcomResource extends Resource {
         $fileName = now()->format('Y-m-d_His') . '_family_tree.ged'; // Generating a unique file name
         ExportGedCom::dispatch($fileName, $user);
     }
+} 
