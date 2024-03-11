@@ -9,7 +9,7 @@ class PedigreeChartTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function testPedigreeChartRoute()
+    public function testTenantMiddlewareFunctionality()
     {
         // Define the expected route name
         $expectedRouteName = 'pedigree-chart';
