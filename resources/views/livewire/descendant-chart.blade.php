@@ -24,6 +24,11 @@ Description: This file contains the descendant chart display and related functio
  *
  * @param {Array} data - The data used to render the chart.
  */
+/**
+ * Renders the descendant chart using the provided data.
+ *
+ * @param {Array} data - The data used to render the chart.
+ */
 function renderDescendantChart(data) {
                 const container = d3.select('#descendant-chart-container');
                 const width = 960;
