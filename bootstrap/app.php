@@ -1,4 +1,11 @@
 <?php
+/**
+ * Bootstrap the Laravel application.
+ *
+ * This file creates a new Laravel application instance, binds important interfaces into the container,
+ * and serves as the glue for all the components of Laravel. It is the entry point for the application's
+ * bootstrapping process.
+ */
 
 /*
 |--------------------------------------------------------------------------
@@ -35,7 +42,6 @@ $app->singleton(
     Illuminate\Contracts\Console\Kernel::class,
     App\Console\Kernel::class
 );
-
 $app->singleton(
     Illuminate\Contracts\Debug\ExceptionHandler::class,
     App\Exceptions\Handler::class
