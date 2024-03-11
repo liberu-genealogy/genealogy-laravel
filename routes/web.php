@@ -26,6 +26,9 @@ Route::get('/descendant-chart', \App\Http\Livewire\DescendantChartComponent::cla
 
 });
 
+Route::get('/pedigree-chart', 'App\Http\Controllers\PedigreeChartController@index')->name('pedigree.chart');
+
+
 Route::get('/privacy', function () {
     return view('pages.privacy');
 })->name('privacy');
@@ -35,4 +38,5 @@ Route::get('/terms-and-conditions', function () {
 
 Route::get('/contact', function () { return view('contact'); });
 Route::post('/contact/send', 'App\Http\Controllers\ContactController@sendEmail');
+
 
