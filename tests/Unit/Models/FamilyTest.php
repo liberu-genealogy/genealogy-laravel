@@ -15,6 +15,13 @@ class FamilyTest extends TestCase
      */
     public function testRemovedChildrenMethod()
     {
-        // Test scenario goes here
+            // Test if the children method returns the correct number of children
+    $family = Family::factory()->create();
+    $child1 = Person::factory()->create(['child_in_family_id' => $family->id]);
+    $child2 = Person::factory()->create(['child_in_family_id' => $family->id]);
+    $children = $family->children;
+    $this->assertCount(2, $children);
+    $this->assertTrue($children->contains($child1));
+    $this->assertTrue($children->contains($child2));
     }
 }
