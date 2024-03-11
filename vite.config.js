@@ -4,7 +4,7 @@ import laravel, { refreshPaths } from 'laravel-vite-plugin'
 export default defineConfig({
     plugins: [
         laravel({
-            input: ['resources/css/app.css', 'resources/js/app.js', 'resources/css/tailwind.css'],
+            input: ['resources/css/app.css', 'resources/js/app.js', 'resources/css/tailwind.css', 'resources/css/custom.css'],
             refresh: [
                 ...refreshPaths,
                 'app/Filament/**',
