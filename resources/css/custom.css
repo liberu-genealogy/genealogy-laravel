@@ -9,7 +9,16 @@
   @apply max-w-6xl mx-auto px-4 sm:px-6 lg:px-8;
 }
 .grid {
-  @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6;
+  @apply grid gap-6;
+}
+.grid-cols-1 {
+  @apply grid-cols-1;
+}
+.md\:grid-cols-2 {
+  @apply md:grid-cols-2;
+}
+.lg\:grid-cols-3 {
+  @apply lg:grid-cols-3;
 }
 .card {
   @apply bg-white rounded-lg shadow-md overflow-hidden;
@@ -32,4 +41,14 @@
 }
 .xl\:container {
   @apply max-w-6xl;
+}
+/* Refactored grid system to avoid circular dependencies and improve modularity */
+.grid-cols-1 {
+  @apply grid-cols-1;
+}
+.md\:grid-cols-2 {
+  @apply md:grid-cols-2;
+}
+.lg\:grid-cols-3 {
+  @apply lg:grid-cols-3;
 }
