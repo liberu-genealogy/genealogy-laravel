@@ -13,7 +13,7 @@
 
     <main>
         @include('components.manage_section')
-        @include('components.products_section')
+       
         @include('components.why_us_section')
     </main>
 
