@@ -1,3 +1,9 @@
+#!/bin/bash
+# Setup script for the genealogy-laravel project.
+#
+# This script prepares the project environment by copying the .env.example to .env (if necessary),
+# installing dependencies, generating application keys, running database migrations, seeding the database,
+# and executing Laravel optimization commands. It ensures the application is ready for development or production use.
 clear
 echo "=================================="
 echo "===== USER: [$(whoami)]"
