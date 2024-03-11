@@ -9,7 +9,14 @@
  * The tests cover different scenarios and edge cases to validate the behavior of the code.
  */
 
-// Existing code in "tests/Pest.php"
+/**
+ * Logs out the user and clears the session.
+ *
+ * @return void
+ */
+function logoutUser() {
+    // Function code here
+}
 
 // ...
 
