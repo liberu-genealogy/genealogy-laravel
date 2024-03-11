@@ -60,7 +60,7 @@ class AdminPanelProvider extends PanelProvider
         ->tenantRegistration(RegisterTeam::class)
         ->tenantProfile(EditTeamProfile::class)
         ->tenant(Team::class)
-        ->tenantBillingProvider(new BillingProvider('default'))
+        ->tenantBillingProvider(new BillingProvider('default')),
         ->requiresTenantSubscription()
         ->tenantMiddleware([
             SyncSpatiePermissionsWithFilamentTenants::class,
