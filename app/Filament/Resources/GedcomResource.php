@@ -111,7 +111,8 @@ class GedcomResource extends Resource {
      *
      * @return void
      */
-    public static function exportGedcom(): void
+    // Temporarily changing visibility for unit testing
+    public static function exportGedcom(): void // public for testing
     {
         $user = auth()->user(); // Assuming the user is authenticated
         $fileName = now()->format('Y-m-d_His') . '_family_tree.ged'; // Generating a unique file name
