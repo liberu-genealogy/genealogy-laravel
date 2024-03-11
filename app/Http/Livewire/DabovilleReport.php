@@ -25,6 +25,8 @@ class DabovilleReport extends Component
      * Renders the DabovilleReport component.
  *
  * @return view
+ *
+ * @return view
      *
      * @return view
      */
