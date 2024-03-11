@@ -9,7 +9,8 @@ class DescendantChartController extends Controller
 {
     public function index()
     {
-        $descendants = Person::all(); // Simplified fetch operation for example purposes
-        return view('filament.widgets.descendant-chart', ['descendants' => $descendants]);
+        // Since the Livewire component handles data fetching and processing, we don't need to fetch data here.
+        // Just return the view that includes the Livewire component.
+        return view('filament.pages.descendant-chart');
     }
 }

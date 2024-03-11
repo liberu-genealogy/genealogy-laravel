@@ -22,6 +22,8 @@ Route::get('/fan-chart', [\App\Http\Controllers\FanChartController::class, 'show
 Route::post('/send-invitation', 'TeamInvitationController@sendInvitation')->name('send.invitation');
 Route::post('/accept-invitation/{token}', 'TeamInvitationController@acceptInvitation')->name('accept.invitation');
 
+Route::get('/descendant-chart', \App\Http\Livewire\DescendantChartComponent::class);
+
 });
 
 Route::get('/privacy', function () {
