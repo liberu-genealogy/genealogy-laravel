@@ -19,7 +19,12 @@ Route::get('/', function () {
 
 Route::get('/fan-chart', 'App\Http\Controllers\FanChartController@show');
 
-Route::post('/send-invitation', 'TeamInvitationController@sendInvitation')->name('send.invitation');
+/**
+ * Display the descendant chart.
+ *
+ * @return \Illuminate\Contracts\View\View
+ */
+Route::get('/descendant-chart', 'DescendantChartController@index')->name('descendant-chart');
 Route::post('/accept-invitation/{token}', 'TeamInvitationController@acceptInvitation')->name('accept.invitation');
 
 });
