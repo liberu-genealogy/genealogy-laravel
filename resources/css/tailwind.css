@@ -1,3 +1,6 @@
+@tailwind base;
+@tailwind components;
+
 /* Tailwind CSS converted from Vuetify's base.css */
 body {
   @apply bg-gray-100 text-gray-800;
