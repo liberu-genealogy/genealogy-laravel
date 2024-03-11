@@ -88,6 +88,13 @@ class DabovilleReport extends Component
  * @param string $currentNumber The current number in the family tree.
  * @return void
  */
+        /**
+     * Traverses the family tree starting from the given person.
+     *
+     * @param Person $person The person to start the traversal from.
+     * @param string $currentNumber The current number in the family tree.
+     * @return void
+     */
     private function traverseFamilyTree($person, $currentNumber)
     {
         $this->reportData[$person->id] = [
