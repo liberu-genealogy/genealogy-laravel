@@ -62,7 +62,7 @@
 .card-body {
   @apply p-4;
 }
-}
+
 .md\:grid-cols-2 {
   @apply md:grid-cols-[2];
 }
