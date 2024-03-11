@@ -26,6 +26,12 @@ use Maartenpaauw\Filament\Cashier\Stripe\BillingProvider;
 
 class AdminPanelProvider extends PanelProvider
 {
+        /**
+     * Define the settings for the admin panel.
+     *
+     * @param Panel $panel
+     * @return Panel
+     */
     public function panel(Panel $panel): Panel
     {
         return $panel
@@ -54,7 +60,7 @@ class AdminPanelProvider extends PanelProvider
         ->tenantRegistration(RegisterTeam::class)
         ->tenantProfile(EditTeamProfile::class)
         ->tenant(Team::class)
-        ->tenantBillingProvider(new BillingProvider('default')) 
+        ->tenantBillingProvider(new BillingProvider('default'))
         ->requiresTenantSubscription()
         ->tenantMiddleware([
             SyncSpatiePermissionsWithFilamentTenants::class,
