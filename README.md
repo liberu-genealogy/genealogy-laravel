@@ -31,8 +31,10 @@
 
 ## Setup
 
-1. Download the project files from this github repo
-2. If you are on windows and you have Git Bash installed on your system you can open it in the project folder and just run the following command:
+1. Ensure your environment is set up with PHP 8.3 and Composer installed.
+2. Download the project files from this GitHub repository.
+3. Open a terminal in the project folder. If you are on Windows and have Git Bash installed, you can use it for the following steps.
+4. Run the following command:
 
 ```bash
 ./setup.sh
@@ -43,10 +45,17 @@ and everything should be installed automatically if you are using Linux you just
 NOTE 1: The script will ask you if you want to have your .env be overwritten by .env.example, in case you have already an .env configuration available please answer with "n" (No).
 
 NOTE 2: This script will run seeders, please make sure you are aware of this and don't run this script if you don't want this to happen.
+```bash
+composer install
+php artisan key:generate
+php artisan migrate --seed
+```
+This will install the necessary dependencies, generate an application key, and set up your database with initial data.
 
+NOTE 3: Ensure your `.env` file is correctly configured with your database connection details before running migrations.
 ### Description
 
-Liberu Genealogy is an innovative open-source project, designed with Laravel 11, PHP 8.3, Filament 3.2, and Livewire 3 technologies, aiming to revolutionize genealogical research and family history exploration. Our initiative combines the power of the robust Laravel framework with the latest advancements in PHP 8.3, thus providing a cutting-edge platform to discover and preserve ancestral heritage.
+Liberu Genealogy, now fully compatible with PHP 8.3 and Laravel 11, is an innovative open-source project that continues to revolutionize genealogical research and family history exploration. With the latest update, we've introduced new features and significant improvements, ensuring a more robust and efficient platform for our users. This update not only enhances performance but also brings new functionalities that leverage the full potential of PHP 8.3 and Laravel 11, providing a cutting-edge platform to discover and preserve ancestral heritage.
 
 Our project is based on a sophisticated genealogy website built on Laravel 11, providing users with a smooth and intuitive experience as they explore their family history. By leveraging Laravel's elegant syntax and comprehensive range of tools, we have developed a comprehensive application that allows users to easily create, manage, and explore their family trees.
 
