@@ -1,3 +1,7 @@
+/**
+ * This file contains the DAbovilleReportPage class, which is responsible for rendering the D'Aboville report page in the Filament admin panel.
+ * The D'Aboville report is a specific type of genealogical report used within the application.
+ */
 <?php
 
 namespace App\Filament\Pages;
