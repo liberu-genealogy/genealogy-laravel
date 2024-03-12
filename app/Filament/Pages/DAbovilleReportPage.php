@@ -7,6 +7,10 @@
 namespace App\Filament\Pages;
 
 use App\Filament\Pages\CustomFilamentBasePage;
+/**
+ * Renders the D'Aboville report page within the Filament admin panel.
+ * This class extends the CustomFilamentBasePage to inherit common properties and methods for custom Filament pages.
+ */
 class DAbovilleReportPage extends CustomFilamentBasePage
 {
     protected static string $view = 'livewire.daboville-report';
