@@ -8,6 +8,10 @@ namespace App\Filament\Pages;
 
 use Filament\Pages\Page;
 
+/**
+ * Provides common properties or methods for custom Filament pages.
+ * This base class is extended by specific page implementations to inherit common functionality.
+ */
 class CustomFilamentBasePage extends Page
 {
     // Common properties or methods for custom Filament pages
