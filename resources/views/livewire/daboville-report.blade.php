@@ -1,3 +1,7 @@
+{{-- 
+  View for displaying the d'Aboville Report form and results.
+  This template uses Livewire for interactive data handling and display.
+--}}
 <div>
     <form wire:submit.prevent="generateReport(selectedPersonId)">
         <div class="form-group">
