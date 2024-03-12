@@ -29,7 +29,7 @@ class DabovilleReport extends Component
         return view('livewire.daboville-report');
     }
 
-        /**
+    /**
      * Generates a report based on the provided person ID.
      *
      * @param int personId The ID of the person to generate the report for.
