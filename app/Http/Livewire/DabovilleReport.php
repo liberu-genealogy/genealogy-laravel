@@ -19,7 +19,7 @@ class DabovilleReport extends Component
     public $selectedPersonId;
     public $reportData = [];
 
-        /**
+     /**
      * Renders the DabovilleReport component.
      *
      * @return view
