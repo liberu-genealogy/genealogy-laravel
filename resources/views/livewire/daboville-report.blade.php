@@ -4,7 +4,7 @@
             <label for="personSelect">Select a Person:</label>
             <select id="personSelect" class="form-control" wire:model="selectedPersonId">
                 <option value="">--Choose--</option>
-                @foreach(App\Models\Person::all() as $person)
+                @foreach(\App\Models\Person::all() as $person)
                     <option value="{{ $person->id }}">{{ $person->name }}</option>
                 @endforeach
             </select>
