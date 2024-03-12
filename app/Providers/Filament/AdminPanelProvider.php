@@ -25,6 +25,9 @@ use Maartenpaauw\Filament\Cashier\Stripe\BillingProvider;
 //use App\Providers\Filament\SyncSpatiePermissionsWithFilamentTenants;
 
 class AdminPanelProvider extends PanelProvider
+use App\Filament\Pages\PedigreeChartPage;
+use App\Filament\Pages\FanChartPage;
+use App\Filament\Pages\DescendantChartPage;
 {
     public function panel(Panel $panel): Panel
     {
@@ -44,6 +47,9 @@ class AdminPanelProvider extends PanelProvider
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
             ->pages([
                 Pages\Dashboard::class,
+                PedigreeChartPage::class,
+                FanChartPage::class,
+                DescendantChartPage::class,
             ])
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
             ->widgets([
