@@ -17,18 +17,18 @@ Route::get('/', function () {
     return view('layouts.home');
 
 
-Route::get('/fan-chart', [\App\Http\Controllers\FanChartController::class, 'show'])->middleware('web');
+// Route::get('/fan-chart', [\App\Http\Controllers\FanChartController::class, 'show'])->middleware('web');
 
 Route::post('/send-invitation', 'TeamInvitationController@sendInvitation')->name('send.invitation');
 Route::post('/accept-invitation/{token}', 'TeamInvitationController@acceptInvitation')->name('accept.invitation');
 
-Route::get('/descendant-chart', \App\Http\Livewire\DescendantChartComponent::class);
+// Route::get('/descendant-chart', \App\Http\Livewire\DescendantChartComponent::class);
 
 Route::get('/daboville-report', \App\Http\Livewire\DabovilleReport::class);
 
 });
 
-Route::get('/pedigree-chart', 'App\Http\Controllers\PedigreeChartController@index')->name('pedigree.chart');
+// Route::get('/pedigree-chart', 'App\Http\Controllers\PedigreeChartController@index')->name('pedigree.chart');
 
 
 Route::get('/privacy', function () {
