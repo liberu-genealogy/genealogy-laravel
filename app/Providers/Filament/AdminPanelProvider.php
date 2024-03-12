@@ -1,4 +1,8 @@
 <?php
+/**
+ * Provider for configuring the Filament Admin Panel, including pages, resources, and widgets.
+ * This class sets up the admin panel's structure and behavior.
+ */
 namespace App\Providers\Filament;
 
 use Althinect\FilamentSpatieRolesPermissions\FilamentSpatieRolesPermissionsPlugin;
