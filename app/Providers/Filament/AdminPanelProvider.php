@@ -37,6 +37,7 @@ use App\Filament\Pages\DescendantChartPage;
             ->path('admin')
             ->login()
             ->registration()
+use App\Filament\Pages\DAbovilleReportPage;
             ->passwordReset()
             ->emailVerification()
             ->profile()
@@ -50,6 +51,7 @@ use App\Filament\Pages\DescendantChartPage;
                 PedigreeChartPage::class,
                 FanChartPage::class,
                 DescendantChartPage::class,
+                DAbovilleReportPage::class,
             ])
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
             ->widgets([
