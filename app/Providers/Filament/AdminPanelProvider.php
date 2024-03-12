@@ -1,4 +1,9 @@
 <?php
+
+/**
+ * AdminPanelProvider configures the admin panel's settings, including paths, pages, widgets, and middleware.
+ * It extends the PanelProvider to customize the admin panel's appearance and functionality for the genealogy-laravel application.
+ */
 namespace App\Providers\Filament;
 
 use Althinect\FilamentSpatieRolesPermissions\FilamentSpatieRolesPermissionsPlugin;
@@ -66,6 +71,12 @@ class AdminPanelProvider extends PanelProvider
         ->tenantMiddleware([
             SyncSpatiePermissionsWithFilamentTenants::class,
             ], isPersistent: true)
+    /**
+     * Configures the panel with default settings, paths, pages, widgets, and middleware for the admin panel.
+     * 
+     * @param Panel $panel The panel instance to configure.
+     * @return Panel The configured panel instance.
+     */
             ->middleware([
                 EncryptCookies::class,
                 AddQueuedCookiesToResponse::class,
