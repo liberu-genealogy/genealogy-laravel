@@ -82,3 +82,18 @@ class AdminPanelProvider extends PanelProvider
             ]);
     }
 }
+    /**
+     * Retrieve the list of registered pages.
+     *
+     * @return array
+     */
+    public function getRegisteredPages(): array
+    {
+        return [
+            Pages\Dashboard::class,
+            PedigreeChartPage::class,
+            FanChartPage::class,
+            DescendantChartPage::class,
+            DAbovilleReportPage::class,
+        ];
+    }
