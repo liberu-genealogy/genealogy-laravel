@@ -25,6 +25,7 @@ use Maartenpaauw\Filament\Cashier\Stripe\BillingProvider;
 use App\Filament\Pages\PedigreeChartPage;
 use App\Filament\Pages\FanChartPage;
 use App\Filament\Pages\DescendantChartPage;
+use App\Filament\Pages\DAbovilleReportPage;
 
 class AdminPanelProvider extends PanelProvider
 {
@@ -36,7 +37,6 @@ class AdminPanelProvider extends PanelProvider
             ->path('admin')
             ->login()
             ->registration()
-use App\Filament\Pages\DAbovilleReportPage;
             ->passwordReset()
             ->emailVerification()
             ->profile()
