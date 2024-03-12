@@ -12,12 +12,12 @@ class DAbovilleReportPage extends Page
 {
     protected static string $view = 'livewire.daboville-report';
 
-    public function render()
-    {
-        return view(static::$view);
-    }
-}
-    public function render()
+/**
+ * Renders the d'Aboville Report page view.
+ *
+ * @return \Illuminate\Contracts\View\View The view instance for the d'Aboville Report page.
+ */
+public function render()
     {
         return view(static::$view);
     }
