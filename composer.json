@@ -9,9 +9,9 @@
         "filament/filament": "^3.2",
         "guzzlehttp/guzzle": "^7.8",
         "laravel-liberu/laravel-gedcom": "^3.4",
-        "laravel/framework": "dev-master",
+        "laravel/framework": "^11.0",
         "laravel/octane": "^2.3",
-        "laravel/sanctum": "dev-master",
+        "laravel/sanctum": "^4.0",
         "laravel/tinker": "^2.9",
         "liberusoftware/filament-cashier-billing-provider": "^1.3",
         "liberusoftware/filament-spatie-roles-permissions": "^2.3"
