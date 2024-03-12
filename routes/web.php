@@ -1,4 +1,8 @@
 <?php
+/**
+ * Web routes for the genealogy-laravel application.
+ * Defines routes for the application's web interface.
+ */
 
 use Illuminate\Support\Facades\Route;
 
