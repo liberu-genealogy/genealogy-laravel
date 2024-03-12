@@ -20,9 +20,9 @@ class DAbovilleReportPage extends CustomFilamentBasePage
 }
 /**
  * Renders the D'Aboville report page.
- *
- * This function mounts the Livewire component associated with the D'Aboville report,
- * leveraging the defined view for display. It returns a renderable view.
- *
- * @return \Illuminate\Contracts\Support\Renderable The renderable view of the D'Aboville report.
+ * 
+ * This function mounts the Livewire component specified by the static `$view` property,
+ * facilitating the display of the D'Aboville report within the application.
+ * 
+ * @return \Illuminate\Contracts\Support\Renderable The rendered view of the D'Aboville report page.
  */
