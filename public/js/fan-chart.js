@@ -1,3 +1,6 @@
+/**
+ * Initializes and renders the fan chart using D3.js. Assumes the presence of a div with id 'fanChartContainer' and data in 'fanChartData'.
+ */
 document.addEventListener('DOMContentLoaded', function() {
     const svg = d3.select('#fanChartContainer').append('svg')
         .attr('width', '100%')
