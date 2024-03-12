@@ -25,13 +25,12 @@ use Illuminate\Session\Middleware\AuthenticateSession;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 use Maartenpaauw\Filament\Cashier\Stripe\BillingProvider;
-
 //use App\Providers\Filament\SyncSpatiePermissionsWithFilamentTenants;
-
-class AdminPanelProvider extends PanelProvider
 use App\Filament\Pages\PedigreeChartPage;
 use App\Filament\Pages\FanChartPage;
 use App\Filament\Pages\DescendantChartPage;
+
+class AdminPanelProvider extends PanelProvider
 {
     public function panel(Panel $panel): Panel
     {
