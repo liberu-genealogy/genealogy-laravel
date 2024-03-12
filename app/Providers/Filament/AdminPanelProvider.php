@@ -1,4 +1,7 @@
 <?php
+/**
+ * Configures the Filament admin panel, including pages, widgets, and plugins.
+ */
 namespace App\Providers\Filament;
 
 use Althinect\FilamentSpatieRolesPermissions\FilamentSpatieRolesPermissionsPlugin;
@@ -24,6 +27,12 @@ use Maartenpaauw\Filament\Cashier\Stripe\BillingProvider;
 
 //use App\Providers\Filament\SyncSpatiePermissionsWithFilamentTenants;
 
+/**
+ * Configures the Filament panel with pages, widgets, and middleware.
+ * 
+ * @param Panel $panel The Filament panel instance.
+ * @return Panel The configured panel instance.
+ */
 class AdminPanelProvider extends PanelProvider
 use App\Filament\Pages\PedigreeChartPage;
 use App\Filament\Pages\FanChartPage;

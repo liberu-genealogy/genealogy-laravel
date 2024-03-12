@@ -30,3 +30,9 @@ class FanChartPage extends Page
         Livewire::mount(\App\Http\Livewire\FanChart::class);
     }
 }
+/**
+ * Represents the page for displaying the fan chart in the Filament admin panel.
+ */
+        Livewire::mount(\App\Http\Livewire\FanChart::class);
+    }
+}
