@@ -1,5 +1,12 @@
 <?php
 
+/**
+ * Feature tests for the DAbovilleReportPage class.
+ * 
+ * This class tests the functionalities of the DAbovilleReportPage, ensuring that
+ * the render method behaves as expected under various scenarios.
+ */
+
 namespace Tests\Feature;
 
 use Tests\TestCase;
