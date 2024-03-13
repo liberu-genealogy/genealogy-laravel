@@ -20,10 +20,10 @@ class DAbovilleReportPage extends CustomFilamentBasePage
         return static::$navigationIcon;
     }
 
-//    public function render(): \Illuminate\Contracts\Support\Renderable
-//    {
-//        return \Livewire::mount(static::$view);
-//    }
+public function getAhnentafelReportPage(): AhnentafelReportPage
+{
+    return new AhnentafelReportPage();
+}
 
     public function mount(): void
     {
