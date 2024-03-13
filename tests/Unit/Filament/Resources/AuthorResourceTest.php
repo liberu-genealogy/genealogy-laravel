@@ -10,6 +10,9 @@ use Filament\Tables\Actions\EditAction;
 use Filament\Tables\Actions\DeleteBulkAction;
 
 class AuthorResourceTest extends TestCase
+/**
+ * This file contains tests for the AuthorResource class, ensuring that the form schema and table configuration are correctly defined.
+ */
 {
     public function test_form_schema_contains_expected_fields(): void
     {
@@ -51,6 +54,12 @@ class AuthorResourceTest extends TestCase
         $this->assertInstanceOf(EditAction::class, $editAction, "Edit action is not of type EditAction.");
 
         $deleteBulkAction = collect($bulkActions)->firstWhere('name', 'delete');
+        $this->assertNotNull($deleteBulkAction, "Delete bulk action does not exist.");
+        $this->assertInstanceOf(DeleteBulkAction::class, $deleteBulkAction, "Delete bulk action is not of type DeleteBulkAction.");
+    }
+    /**
+     * Tests whether the table configuration includes the correct columns and actions for the AuthorResource.
+     */
         $this->assertNotNull($deleteBulkAction, "Delete bulk action does not exist.");
         $this->assertInstanceOf(DeleteBulkAction::class, $deleteBulkAction, "Delete bulk action is not of type DeleteBulkAction.");
     }
