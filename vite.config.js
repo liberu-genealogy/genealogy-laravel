@@ -10,7 +10,7 @@ export default defineConfig({
                            targets: [
                                {
                                    src: 'resources/images/*',
-                                   dest: 'public/assets/images'
+                                   dest: 'images'
                                }
                            ]
                        }),
@@ -24,7 +24,7 @@ export default defineConfig({
         'resources/css/tailwind.css',
         'resources/css/custom.css',
     ],
+//    build: {
+//        outDir: '../public',
+//    },
 })
-    build: {
-        outDir: '../public',
-    },
