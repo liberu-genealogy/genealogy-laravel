@@ -1,4 +1,9 @@
 <?php
+<?php
+
+/**
+ * Configures the Filament admin panel, including widget registration, middleware setup, and tenant management.
+ */
 namespace App\Providers\Filament;
 
 use Althinect\FilamentSpatieRolesPermissions\FilamentSpatieRolesPermissionsPlugin;

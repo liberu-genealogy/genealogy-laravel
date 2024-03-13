@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * Defines web routes for the application, including views for the homepage, privacy policy, terms and conditions, and contact form submission.
+ */
 use Illuminate\Support\Facades\Route;
 
 /*
