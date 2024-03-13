@@ -4,8 +4,8 @@ namespace Tests\Filament\Resources;
 
 use App\Filament\Resources\SourceDataEvenResource;
 use App\Models\SourceDataEven;
-use Tests\TestCase;
 use Filament\Forms\Components\TextInput;
+use Tests\TestCase;
 
 /**
  * Tests the functionality and form schema of the SourceDataEvenResource class.
@@ -43,7 +43,7 @@ class SourceDataEvenResourceTest extends TestCase
         $columns = collect($table->getColumns());
 
         $expectedColumns = [
-            'group', 'gid', 'date', 'plac', 'created_at', 'updated_at'
+            'group', 'gid', 'date', 'plac', 'created_at', 'updated_at',
         ];
 
         foreach ($expectedColumns as $column) {

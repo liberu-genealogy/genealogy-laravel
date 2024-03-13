@@ -2,12 +2,12 @@
 
 namespace Tests\Filament\Resources;
 
-use Tests\TestCase;
-use App\Models\PersonNameFone;
 use App\Filament\Resources\PersonNameFoneResource;
-use Illuminate\Foundation\Testing\RefreshDatabase;
+use App\Models\PersonNameFone;
 use Filament\Forms\Components\TextInput;
 use Filament\Tables\Columns\TextColumn;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\TestCase;
 
 class PersonNameFoneResourceTest extends TestCase
 {

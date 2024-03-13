@@ -2,25 +2,26 @@
 
 namespace Tests\Filament\Resources;
 
-use Tests\TestCase;
 use App\Models\PersonLds;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Tests\TestCase;
 
 class PersonLdsResourceTest extends TestCase
 {
-    use RefreshDatabase, WithFaker;
+    use RefreshDatabase;
+    use WithFaker;
 
     public function testCreatePersonLds()
     {
         $data = [
-            'group' => $this->faker->word,
-            'gid' => $this->faker->randomNumber(),
-            'type' => $this->faker->word,
-            'stat' => $this->faker->word,
-            'date' => $this->faker->date,
-            'plac' => $this->faker->city,
-            'temp' => $this->faker->word,
+            'group'     => $this->faker->word,
+            'gid'       => $this->faker->randomNumber(),
+            'type'      => $this->faker->word,
+            'stat'      => $this->faker->word,
+            'date'      => $this->faker->date,
+            'plac'      => $this->faker->city,
+            'temp'      => $this->faker->word,
             'slac_famc' => $this->faker->word,
         ];
 
@@ -46,7 +47,7 @@ class PersonLdsResourceTest extends TestCase
 
         $updatedData = [
             'group' => 'Updated Group',
-            'type' => 'Updated Type',
+            'type'  => 'Updated Type',
         ];
 
         $response = $this->put(route('filament.resources.person-lds.update', $personLds), $updatedData);

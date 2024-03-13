@@ -5,10 +5,6 @@ namespace Tests\Filament\Resources;
 use App\Filament\Resources\RepositoryResource;
 use App\Models\Repository;
 use Tests\TestCase;
-use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\Textarea;
-use Filament\Forms\Components\DateTimePicker;
-use Filament\Tables\Columns\TextColumn;
 
 class RepositoryResourceTest extends TestCase
 /**
@@ -21,7 +17,7 @@ class RepositoryResourceTest extends TestCase
         $schema = collect($form->getSchema());
 
         $expectedFields = [
-            'group', 'gid', 'name', 'description', 'date', 'is_active', 'type_id', 'repo', 'addr_id', 'rin', 'phon', 'email', 'fax', 'www'
+            'group', 'gid', 'name', 'description', 'date', 'is_active', 'type_id', 'repo', 'addr_id', 'rin', 'phon', 'email', 'fax', 'www',
         ];
 
         foreach ($expectedFields as $field) {
@@ -38,7 +34,7 @@ class RepositoryResourceTest extends TestCase
         $columns = collect($table->getColumns());
 
         $expectedColumns = [
-            'group', 'gid', 'name', 'date', 'is_active', 'type_id', 'repo', 'addr_id', 'rin', 'phon', 'email', 'fax', 'www', 'created_at', 'updated_at'
+            'group', 'gid', 'name', 'date', 'is_active', 'type_id', 'repo', 'addr_id', 'rin', 'phon', 'email', 'fax', 'www', 'created_at', 'updated_at',
         ];
 
         foreach ($expectedColumns as $column) {

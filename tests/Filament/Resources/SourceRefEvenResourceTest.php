@@ -19,9 +19,9 @@ class SourceRefEvenResourceTest extends TestCase
 
         $expectedFields = [
             'group' => ['maxLength' => 255],
-            'gid' => ['numeric' => true],
-            'even' => ['maxLength' => 255],
-            'role' => ['maxLength' => 255],
+            'gid'   => ['numeric' => true],
+            'even'  => ['maxLength' => 255],
+            'role'  => ['maxLength' => 255],
         ];
 
         foreach ($expectedFields as $fieldName => $attributes) {

@@ -116,7 +116,7 @@ return [
 
         'emergency' => [
             'path' => storage_path('logs/laravel.log'),
-        ], 
+        ],
 
         'deprecations' => [
             'driver' => 'daily',
@@ -125,6 +125,6 @@ return [
             'days'   => 30,
         ],
 
-   ], 
+    ],
 
-   ];
+];

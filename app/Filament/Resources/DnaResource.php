@@ -22,13 +22,11 @@ class DnaResource extends Resource
 
     /**
      * Define the form fields and behavior for the DnaResource.
- *
- * @param Form $form
- *
- * @return Form
      *
      * @param Form $form
+     * @param Form $form
      *
+     * @return Form
      * @return Form
      */
     public static function form(Form $form): Form

@@ -2,22 +2,23 @@
 
 namespace Tests\Filament\Resources;
 
-use Tests\TestCase;
 use App\Models\PersonAsso;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Tests\TestCase;
 
 class PersonAssoResourceTest extends TestCase
 {
-    use RefreshDatabase, WithFaker;
+    use RefreshDatabase;
+    use WithFaker;
 
     public function testCreatePersonAsso()
     {
         $data = [
-            'group' => $this->faker->word,
-            'gid' => $this->faker->randomNumber(),
-            'indi' => $this->faker->word,
-            'rela' => $this->faker->word,
+            'group'          => $this->faker->word,
+            'gid'            => $this->faker->randomNumber(),
+            'indi'           => $this->faker->word,
+            'rela'           => $this->faker->word,
             'import_confirm' => 1,
         ];
 
@@ -42,10 +43,10 @@ class PersonAssoResourceTest extends TestCase
         $personAsso = PersonAsso::factory()->create();
 
         $updatedData = [
-            'group' => 'Updated Group',
-            'gid' => $personAsso->gid + 1,
-            'indi' => 'Updated Indi',
-            'rela' => 'Updated Rela',
+            'group'          => 'Updated Group',
+            'gid'            => $personAsso->gid + 1,
+            'indi'           => 'Updated Indi',
+            'rela'           => 'Updated Rela',
             'import_confirm' => 0,
         ];
 

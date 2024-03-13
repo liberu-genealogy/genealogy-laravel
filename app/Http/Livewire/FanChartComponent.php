@@ -2,8 +2,8 @@
 
 namespace App\Http\Livewire;
 
-use Livewire\Component;
 use App\Models\Person;
+use Livewire\Component;
 
 class FanChartComponent extends Component
 {
@@ -12,6 +12,7 @@ class FanChartComponent extends Component
     public function render()
     {
         $this->people = Person::all();
+
         return view('livewire.fan-chart-component', ['people' => $this->people]);
     }
 }

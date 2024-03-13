@@ -2,16 +2,16 @@
 
 namespace App\Http\Livewire;
 
-use Livewire\Component;
-use App\Models\Person;
 use App\Models\Family;
+use App\Models\Person;
+use Livewire\Component;
 
 /**
- * Class DabovilleReport extends Component
+ * Class DabovilleReport extends Component.
  *
  * DabovilleReport - Class for generating a report based on a person's family tree.
  *
- * @var int selectedPersonId The ID of the selected person for the report.
+ * @var int   selectedPersonId The ID of the selected person for the report.
  * @var array reportData Array to store the report data.
  */
 class DabovilleReport extends Component
@@ -19,7 +19,7 @@ class DabovilleReport extends Component
     public $selectedPersonId;
     public $reportData = [];
 
-     /**
+    /**
      * Renders the DabovilleReport component.
      *
      * @return view
@@ -33,6 +33,7 @@ class DabovilleReport extends Component
      * Generates a report based on the provided person ID.
      *
      * @param int personId The ID of the person to generate the report for.
+     *
      * @return void
      */
     public function generateReport($personId)
@@ -45,25 +46,26 @@ class DabovilleReport extends Component
         }
     }
 
-        /**
+    /**
      * Traverses the family tree starting from the given person.
      *
      * @param Person person The person to start the traversal from.
      * @param string currentNumber The current number in the family tree.
+     *
      * @return void
      */
     private function traverseFamilyTree($person, $currentNumber)
     {
         $this->reportData[$person->id] = [
             'number' => $currentNumber,
-            'name' => $person->fullname(),
-            'birth' => optional($person->birth())->date,
-            'death' => optional($person->death())->date,
+            'name'   => $person->fullname(),
+            'birth'  => optional($person->birth())->date,
+            'death'  => optional($person->death())->date,
         ];
 
         $childNumber = 1;
         foreach ($person->child_in_family as $child) {
-            $this->traverseFamilyTree($child, $currentNumber . '.' . $childNumber);
+            $this->traverseFamilyTree($child, $currentNumber.'.'.$childNumber);
             $childNumber++;
         }
     }
