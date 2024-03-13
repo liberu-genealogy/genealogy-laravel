@@ -21,3 +21,10 @@ class FanChartWidget extends Widget
         return view(static::$view, ['people' => $this->people]);
     }
 }
+    /**
+     * Renders the Fan Chart widget view.
+     * 
+     * This function prepares the data for the Fan Chart widget and returns the view to be rendered.
+     * 
+     * @return \Illuminate\Contracts\View\View The view instance for the Fan Chart widget.
+     */
