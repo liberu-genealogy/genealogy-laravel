@@ -24,12 +24,9 @@ class ChanResourceTest extends TestCase
         ];
 
         foreach ($expectedFields as $fieldName => $fieldClass) {
-            $field = collect($schema)->firstWhere('name', $fieldName);
-            $this->assertNotNull($field, "Field {$fieldName} does not exist.");
-            $this->assertInstanceOf($fieldClass, $field, "Field {$fieldName} is not of type {$fieldClass}.");
-            if ($fieldName !== 'gid') {
-                $this->assertEquals(255, $field->getMaxLength(), "Field {$fieldName} does not have the correct maxLength.");
-            }
+            $field = $this->assertFieldExists($schema, $fieldName);
+            $this->assertFieldType($field, $fieldClass, $fieldName);
+            $this->assertFieldAttributes($field, $fieldName, $fieldName === 'gid' ? null : 255);
         }
     }
 
@@ -56,3 +53,40 @@ class ChanResourceTest extends TestCase
         $this->assertInstanceOf(DeleteBulkAction::class, $deleteBulkAction, "Delete bulk action is not of type DeleteBulkAction.");
     }
 }
+    private function assertFieldExists($schema, $fieldName)
+    {
+        $field = collect($schema)->firstWhere('name', $fieldName);
+        $this->assertNotNull($field, "Field {$fieldName} does not exist.");
+        return $field;
+    }
+
+    private function assertFieldType($field, $fieldClass, $fieldName)
+    {
+        $this->assertInstanceOf($fieldClass, $field, "Field {$fieldName} is not of type {$fieldClass}.");
+    }
+
+    private function assertFieldAttributes($field, $fieldName, $expectedLength = null)
+    {
+        if ($expectedLength !== null) {
+            $this->assertEquals($expectedLength, $field->getMaxLength(), "Field {$fieldName} does not have the correct maxLength.");
+        }
+    }
+
+    private function assertColumnExists($columns, $columnName)
+    {
+        $column = collect($columns)->firstWhere('name', $columnName);
+        $this->assertNotNull($column, "Column {$columnName} does not exist.");
+        return $column;
+    }
+
+    private function assertColumnType($column, $columnName)
+    {
+        $this->assertInstanceOf(TextColumn::class, $column, "Column {$columnName} is not of type TextColumn.");
+    }
+
+    private function assertActionExists($actions, $actionName, $actionType)
+    {
+        $action = collect($actions)->firstWhere('name', $actionName);
+        $this->assertNotNull($action, "{$actionName} action does not exist.");
+        $this->assertInstanceOf($actionType, $action, "{$actionName} action is not of type {$actionType}.");
+    }
