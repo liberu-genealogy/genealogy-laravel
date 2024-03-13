@@ -3,13 +3,20 @@
 namespace Tests\Unit\Services;
 
 use App\Services\StripeSubscriptionService;
-use App\Services\StripeApiService;
 use App\Services\DatabaseUpdateService;
 use Tests\TestCase;
 use App\Services\DatabaseUpdateService;
 
 class StripeSubscriptionServiceTest extends TestCase
 {
+    /**
+     * Update an existing subscription.
+     *
+     * @param string $subscriptionId The ID of the subscription to update.
+     * @param string $newPlanId      The ID of the new plan.
+     *
+     * @return array An array containing the result of the operation.
+     */
     public function testUpdateSubscription()
     {
         // Test case 1: Valid subscription ID and new plan ID
@@ -46,6 +53,7 @@ class StripeSubscriptionServiceTest extends TestCase
         // Assert that the expected error message is returned
 
     // Test case 3: Stripe API error
+use App\Services\DatabaseUpdateService;
     // Mock the StripeApiService and DatabaseUpdateService
     // Call the cancelSubscription method and simulate a Stripe API error
     // Assert that the expected error message is returned
