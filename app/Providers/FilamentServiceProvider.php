@@ -1,5 +1,11 @@
 <?php
 
+/**
+ * Class FilamentServiceProvider
+ * 
+ * Extends Laravel's service provider to incorporate functionalities specific to the Filament admin panel.
+ * This includes registering custom views, components, and other necessary resources for the Filament admin panel.
+ */
 namespace App\Providers;
 
 use Filament\Panel;
