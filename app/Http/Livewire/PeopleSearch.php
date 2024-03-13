@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * Livewire component for searching through people entities.
+ * Allows users to input a search query and displays matching results from the people entities.
+ */
+
 namespace App\Http\Livewire;
 
 use Livewire\Component;
@@ -35,6 +40,17 @@ use Carbon\Carbon;
     public function render()
     {
         return view('livewire.people-search', [
+            'results' => $this->results,
+        ]);
+    }
+}
+        ]);
+    }
+}
+            'results' => $this->results,
+        ]);
+    }
+}
             'results' => $this->results,
         ]);
     }
