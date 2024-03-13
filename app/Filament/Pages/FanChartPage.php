@@ -20,7 +20,7 @@ class FanChartPage extends Page
         return static::$title;
     }
 
-    public function getNavigationIcon(): string
+    public static function getNavigationIcon(): string
     {
         return static::$navigationIcon;
     }
