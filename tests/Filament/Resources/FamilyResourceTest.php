@@ -7,10 +7,19 @@ use App\Models\Family;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
+/**
+ * This file contains tests for the Family resource in the genealogy-laravel application.
+ */
 class FamilyResourceTest extends TestCase
 {
     use RefreshDatabase;
 
+    /**
+     * Tests the form fields configuration for the Family resource.
+     * Ensures that all expected fields are present and correctly configured.
+     *
+     * @return void
+     */
     public function test_form_fields_configuration()
     {
         $form = FamilyResource::form(Form::make())->getSchema();
@@ -41,6 +50,12 @@ class FamilyResourceTest extends TestCase
         $table = FamilyResource::table(Table::make())->getColumns();
 
         $expectedColumns = [
+            'is_active' => ['sortable' => true, 'type' => 'numeric'],
+            'type_id' => ['sortable' => true, 'type' => 'numeric'],
+            'husband_id' => ['sortable' => true, 'type' => 'numeric'],
+            'wife_id' => ['sortable' => true, 'type' => 'numeric'],
+            'created_at' => ['sortable' => true, 'type' => 'dateTime'],
+            'updated_at' => ['sortable' => true, 'type' => 'dateTime'],
             'is_active' => ['sortable' => true, 'type' => 'numeric'],
             'type_id' => ['sortable' => true, 'type' => 'numeric'],
             'husband_id' => ['sortable' => true, 'type' => 'numeric'],
