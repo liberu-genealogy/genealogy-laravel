@@ -14,9 +14,6 @@ export default defineConfig({
                                }
                            ]
                        }),
-
-      hook: 'writeBundle' // Use the 'writeBundle' hook to copy files after the bundle is written
-    }),
     ],
     resolve: {
         alias: {
