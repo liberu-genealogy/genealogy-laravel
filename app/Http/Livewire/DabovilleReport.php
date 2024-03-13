@@ -47,6 +47,8 @@ class DabovilleReport extends Component
     }
 
     /**
+$this->numberingSystem = new MeurgeyNumberingSystem();
+public $numberingSystem;
      * Traverses the family tree starting from the given person.
      *
      * @param Person person The person to start the traversal from.
