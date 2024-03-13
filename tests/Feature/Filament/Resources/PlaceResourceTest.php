@@ -1,5 +1,12 @@
 <?php
 
+/**
+ * Tests for the Place Filament Resource.
+ * 
+ * This class tests the CRUD operations and any additional functionality
+ * provided by the PlaceResource.
+ */
+
 namespace Tests\Feature\Filament\Resources;
 
 use App\Filament\Resources\PlaceResource;
@@ -33,6 +40,16 @@ class PlaceResourceTest extends TestCase
         $this->assertNotNull($descriptionField);
         $this->assertEquals(65535, $descriptionField->getMaxLength());
         $this->assertTrue($descriptionField->getColumnSpan() === 'full');
+    /**
+     * Test the model association with Place.
+     *
+     * @return void
+     */
+    /**
+     * Test the form fields for Place.
+     *
+     * @return void
+     */
     }
 
     public function test_table_columns()
@@ -54,3 +71,8 @@ class PlaceResourceTest extends TestCase
         $this->assertTrue($updatedAtColumn->isToggleable());
     }
 }
+    /**
+     * Test the table columns for Place.
+     *
+     * @return void
+     */
