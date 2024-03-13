@@ -150,7 +150,7 @@ return [
 
     'tables' => [
         'example' => [
-            'size' => 1000,
+            'size'    => 1000,
             'columns' => [
                 'name'  => 'string:1000',
                 'votes' => 'int',

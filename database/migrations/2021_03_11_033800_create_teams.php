@@ -15,7 +15,7 @@ return new class() extends Migration {
         Schema::create('teams', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name')->nullable();
-            
+
             $table->timestamps();
         });
     }

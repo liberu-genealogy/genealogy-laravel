@@ -2,10 +2,10 @@
 
 namespace App\Providers;
 
+use App\Http\Livewire\AnotherComponent;
+use App\Http\Livewire\ExampleComponent;
 use Filament\Panel;
 use Illuminate\Support\ServiceProvider;
-use App\Http\Livewire\ExampleComponent;
-use App\Http\Livewire\AnotherComponent;
 
 class FilamentServiceProvider extends ServiceProvider
 {

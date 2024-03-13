@@ -2,14 +2,13 @@
 
 namespace Tests\Filament\Resources;
 
-use Tests\TestCase;
 use App\Filament\Resources\SourceRepoResource;
 use Filament\Forms;
-use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\TextInput;
 use Filament\Tables;
-use Filament\Tables\Columns\TextColumn;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\TestCase;
 
 class SourceRepoResourceTest extends TestCase
 {

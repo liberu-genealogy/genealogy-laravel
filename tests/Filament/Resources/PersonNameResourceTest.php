@@ -2,14 +2,14 @@
 
 namespace Tests\Filament\Resources;
 
-use Tests\TestCase;
-use App\Models\PersonName;
 use App\Filament\Resources\PersonNameResource;
-use Illuminate\Foundation\Testing\RefreshDatabase;
+use App\Models\PersonName;
 use Filament\Forms\Components\TextInput;
-use Filament\Tables\Columns\TextColumn;
 use Filament\Forms\Form;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\TestCase;
 
 class PersonNameResourceTest extends TestCase
 {
@@ -46,16 +46,16 @@ class PersonNameResourceTest extends TestCase
         foreach ($table as $index => $column) {
             $this->assertInstanceOf(TextColumn::class, $column);
             $expectedName = match ($index) {
-                0 => 'group',
-                1 => 'gid',
-                2 => 'name',
-                3 => 'type',
-                4 => 'npfx',
-                5 => 'givn',
-                6 => 'nick',
-                7 => 'spfx',
-                8 => 'surn',
-                9 => 'nsfx',
+                0  => 'group',
+                1  => 'gid',
+                2  => 'name',
+                3  => 'type',
+                4  => 'npfx',
+                5  => 'givn',
+                6  => 'nick',
+                7  => 'spfx',
+                8  => 'surn',
+                9  => 'nsfx',
                 10 => 'created_at',
                 11 => 'updated_at',
             };
