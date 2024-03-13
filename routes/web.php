@@ -32,7 +32,7 @@ use App\Http\Livewire\PedigreeChart;
 use Illuminate\Support\Facades\Route;
 use Livewire\Livewire;
 
-Route::get('/pedigree-chart', Livewire::component('pedigree-chart', PedigreeChart::class));
+Route::get('/pedigree-chart', [\Filament\Facades\Filament::class, 'renderWidget'])->name('pedigree-chart.widget');
 
 
 Route::get('/privacy', function () {
