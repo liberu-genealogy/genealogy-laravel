@@ -6,3 +6,8 @@
     <p class="text-gray-600 mb-4">This is the privacy policy page content.</p>
 </div>
 @endsection
+
+@section('sidebar')
+    @parent
+    <li><a href="{{ route('devilliers-pama-report') }}">DeVilliers/Pama Report</a></li>
+@endsection
