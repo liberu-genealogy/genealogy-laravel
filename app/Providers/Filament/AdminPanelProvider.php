@@ -51,6 +51,7 @@ class AdminPanelProvider extends PanelProvider
                 FanChartPage::class,
                 DescendantChartPage::class,
                 DAbovilleReportPage::class,
+                \App\Filament\Pages\PeopleDashboard::class,
             ])
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
             ->widgets([
