@@ -20,7 +20,7 @@ class DAbovilleReportPage extends CustomFilamentBasePage
     }
 }
     protected ?string $title = 'DAboville Report';
-    protected ?string $navigationIcon = 'heroicon-o-document-report';
+    protected static ?string $navigationIcon = 'heroicon-o-document-report';
 
     public function getTitle(): string
     {
