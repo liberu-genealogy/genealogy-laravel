@@ -2,8 +2,8 @@
 
 namespace App\Filament\Widgets;
 
-use Filament\Widgets\Widget;
 use App\Models\Person;
+use Filament\Widgets\Widget;
 
 class FanChartWidget extends Widget
 {

@@ -2,13 +2,12 @@
 
 namespace Tests\Filament\Resources;
 
-use Tests\TestCase;
-use App\Models\Person;
 use App\Filament\Resources\PersonResource;
-use Illuminate\Foundation\Testing\RefreshDatabase;
+use App\Models\Person;
 use Filament\Forms\Components\Select;
 use Filament\Tables\Actions\DeleteBulkAction;
-use Filament\Tables\Filters\Filter;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\TestCase;
 
 class PersonResourceTest extends TestCase
 {

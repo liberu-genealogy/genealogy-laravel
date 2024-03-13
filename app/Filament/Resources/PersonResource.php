@@ -16,53 +16,61 @@ class PersonResource extends Resource
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
     /**
- * Get the form for creating/editing a person.
- * @param Form $form The form object.
- * @return Form The form object.
- */
-public static function form(Form $form): Form
+     * Get the form for creating/editing a person.
+     *
+     * @param Form $form The form object.
+     *
+     * @return Form The form object.
+     */
+    public static function form(Form $form): Form
     {
         return $form
             ->schema([
                 /**
- * Name field.
- * @var TextInput
- */
-TextInput::make('name')
-                    ->required()
-                    ->label('Name'),
+                 * Name field.
+                 *
+                 * @var TextInput
+                 */
+                TextInput::make('name')
+                                    ->required()
+                                    ->label('Name'),
                 /**
- * Birth Date field.
- * @var DatePicker
- */
-DatePicker::make('birth_date')
-                    ->label('Birth Date'),
+                 * Birth Date field.
+                 *
+                 * @var DatePicker
+                 */
+                DatePicker::make('birth_date')
+                                    ->label('Birth Date'),
                 /**
- * Death Date field.
- * @var DatePicker
- */
-DatePicker::make('death_date')
-                    ->label('Death Date'),
+                 * Death Date field.
+                 *
+                 * @var DatePicker
+                 */
+                DatePicker::make('death_date')
+                                    ->label('Death Date'),
                 /**
- * Father field.
- * @var SelectInput
- */
-SelectInput::make('father_id')
-                    ->relationship('father', 'name')
-                    ->label('Father'),
+                 * Father field.
+                 *
+                 * @var SelectInput
+                 */
+                SelectInput::make('father_id')
+                                    ->relationship('father', 'name')
+                                    ->label('Father'),
                 /**
- * Mother field.
- * @var SelectInput
- */
-SelectInput::make('mother_id')
-                    ->relationship('mother', 'name')
-                    ->label('Mother'),
+                 * Mother field.
+                 *
+                 * @var SelectInput
+                 */
+                SelectInput::make('mother_id')
+                                    ->relationship('mother', 'name')
+                                    ->label('Mother'),
                 /**
- * Notes field.
- * @var Textarea
- */
-Textarea::make('notes')
-                    ->label('Notes'),
+                 * Notes field.
+                 *
+                 * @var Textarea
+                 */
+                Textarea::make('notes')
+                                    ->label('Notes'),
             ]);
     }
 

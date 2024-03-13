@@ -2,11 +2,10 @@
 
 namespace Tests\Filament\Resources;
 
-use Tests\TestCase;
 use App\Filament\Resources\SourceRefResource;
 use Filament\Forms\Components\TextInput;
-use Filament\Tables\Columns\TextColumn;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\TestCase;
 
 class SourceRefResourceTest extends TestCase
 {

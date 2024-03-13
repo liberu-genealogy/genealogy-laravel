@@ -3,7 +3,6 @@
 namespace Tests\Feature\Filament;
 
 use App\Filament\Resources\TypeResource;
-use App\Filament\Resources\TypeResource\Pages\CreateType;
 use App\Models\Type;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -25,15 +24,15 @@ class TypeResourceTest extends TestCase
     {
         $this->actingAsUser();
         $response = $this->post(route('filament.resources.types.create'), [
-            'name' => 'Test Type',
+            'name'        => 'Test Type',
             'description' => 'This is a test type description.',
-            'is_active' => 1,
+            'is_active'   => 1,
         ]);
         $response->assertRedirect();
         $this->assertDatabaseHas('types', [
-            'name' => 'Test Type',
+            'name'        => 'Test Type',
             'description' => 'This is a test type description.',
-            'is_active' => 1,
+            'is_active'   => 1,
         ]);
     }
 
@@ -41,9 +40,9 @@ class TypeResourceTest extends TestCase
     {
         $this->actingAsUser();
         $response = $this->post(route('filament.resources.types.create'), [
-            'name' => '',
+            'name'        => '',
             'description' => '',
-            'is_active' => 'invalid',
+            'is_active'   => 'invalid',
         ]);
         $response->assertSessionHasErrors(['name', 'description', 'is_active']);
     }
