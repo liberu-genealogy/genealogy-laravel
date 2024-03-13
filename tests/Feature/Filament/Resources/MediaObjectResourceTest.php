@@ -10,6 +10,9 @@ use App\Filament\Resources\MediaObjectResource;
 use Illuminate\Foundation\Testing\WithFaker;
 
 class MediaObjectResourceTest extends TestCase
+/**
+ * Tests the functionality of the MediaObjectResource, focusing on form schema correctness and table configuration.
+ */
 {
     use RefreshDatabase, WithFaker;
 
@@ -26,6 +29,9 @@ class MediaObjectResourceTest extends TestCase
     }
 
     public function test_table_configuration()
+    /**
+     * Tests that the form schema for MediaObjectResource contains the correct fields with appropriate configurations.
+     */
     {
         $table = MediaObjectResource::table(Livewire::mock());
         $columns = $table->getColumns();
@@ -45,3 +51,6 @@ class MediaObjectResourceTest extends TestCase
         $this->assertNotEmpty($bulkActions->firstWhere('name', 'delete'));
     }
 }
+    /**
+     * Tests the table configuration of MediaObjectResource, ensuring columns and actions are correctly defined.
+     */
