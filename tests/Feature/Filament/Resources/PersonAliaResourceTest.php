@@ -9,6 +9,9 @@ use App\Filament\Resources\PersonAliaResource;
 use App\Models\PersonAlia;
 
 class PersonAliaResourceTest extends TestCase
+/**
+ * Tests the functionality of the PersonAliaResource, focusing on form field definitions and table configuration.
+ */
 {
     use RefreshDatabase;
 
@@ -25,6 +28,9 @@ class PersonAliaResourceTest extends TestCase
     }
 
     public function test_table_configuration_is_correct()
+    /**
+     * Tests that the form fields for PersonAliaResource are correctly defined, including validations and default values.
+     */
     {
         $table = PersonAliaResource::table(Livewire::mock());
         $columns = $table->getColumns();
@@ -43,3 +49,6 @@ class PersonAliaResourceTest extends TestCase
         $this->assertNotEmpty($bulkActions->firstWhere('name', 'delete'));
     }
 }
+    /**
+     * Tests the table configuration of PersonAliaResource, ensuring columns, actions, and bulk actions are correctly defined.
+     */
