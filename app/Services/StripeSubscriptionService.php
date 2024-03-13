@@ -47,6 +47,9 @@ class StripeSubscriptionService
      */
     public function updateSubscription(string $subscriptionId, string $newPlanId): array
     {
+        /**
+         * TODO: Add docstring to describe the parameters, return type, and functionality of this function.
+         */
         try {
             $stripeService = new StripeApiService();
             $updateResult = $stripeService->updateStripeSubscription($subscriptionId, $newPlanId);
@@ -80,7 +83,6 @@ class StripeSubscriptionService
             }
             $databaseService = new DatabaseUpdateService();
             $dbCancelResult = $databaseService->cancelSubscriptionRecord($subscriptionId);
-
             return $dbCancelResult;
         } catch (\Exception $e) {
             return ['success' => false, 'message' => 'Error cancelling subscription: '.$e->getMessage()];
