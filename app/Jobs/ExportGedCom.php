@@ -42,20 +42,44 @@ class ExportGedCom implements ShouldQueue
         $tenant = Manager::fromModel($this->user->company(), $this->user);
         $tenant->connect();
 
-        // Fetching all people and families related to the user
-        $people = Person::all();
-        $families = Family::all();
+    // Fetching all people and families related to the user
+    $people = Person::all();
+    $families = Family::all();
 
-        // Logging the count of people and families to be exported
-        Log::info('Exporting '.$people->count().' people and '.$families->count().' families.');
+    // Logging the count of people and families to be exported
+    Log::info('Exporting '.$people->count().' people and '.$families->count().' families.');
 
-        // Generating GEDCOM content
-        $writer = new GedcomGenerator($people, $families);
-        $content = $writer->generate();
+    // Generating GEDCOM content
+    $writer = new GedcomGenerator($people, $families);
+    $content = $writer->generate();
 
-        // Storing the GEDCOM file
-        $manager->storage()->put($this->file, $content);
-        Log::info('GEDCOM file generated and stored: '.$this->file);
+    // Storing the GEDCOM file
+    $manager->storage()->put($this->file, $content);
+    Log::info('GEDCOM file generated and stored: '.$this->file);
+
+    // Fetching all people and families related to the user for the text report
+    $people = Person::all();
+    $families = Family::all();
+    $textReportContent = ''; // Initialize the text report content variable
+
+    // Generate the text report content using the fetched data
+    foreach ($people as $person) {
+        // Add person information to the text report content
+        $textReportContent .= 'Person: '.$person->name."\n";
+        // Add more information about the person to the text report content
+        // ...
+    }
+
+    foreach ($families as $family) {
+        // Add family information to the text report content
+        $textReportContent .= 'Family: '.$family->name."\n";
+        // Add more information about the family to the text report content
+        // ...
+    }
+
+    // Store the generated text report
+    $manager->storage()->put('text_report.txt', $textReportContent);
+    Log::info('Text report generated and stored: text_report.txt');
 
         $up_nest = 3;
         $down_nest = 3;
@@ -71,6 +95,27 @@ class ExportGedCom implements ShouldQueue
         //	chmod_r('/home/genealogia/domains/api.genealogia.co.uk/genealogy/storage/tenants/');
         // Setting permissions for the GEDCOM file
         exec('chmod 0644 '.$manager->storage()->path($this->file));
+
+        // Generate the text report content using the fetched data
+        $textReportContent = ''; // Initialize the text report content variable
+
+        foreach ($people as $person) {
+            // Add person information to the text report content
+            $textReportContent .= 'Person: '.$person->name."\n";
+            // Add more information about the person to the text report content
+            // ...
+        }
+
+        foreach ($families as $family) {
+            // Add family information to the text report content
+            $textReportContent .= 'Family: '.$family->name."\n";
+            // Add more information about the family to the text report content
+            // ...
+        }
+
+        // Store the generated text report
+        $manager->storage()->put('text_report.txt', $textReportContent);
+        Log::info('Text report generated and stored: text_report.txt');
         Log::info('Permissions set for GEDCOM file.');
 
         // Handling errors and exceptions
