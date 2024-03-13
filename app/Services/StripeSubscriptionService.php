@@ -63,18 +63,16 @@ class StripeSubscriptionService
     public function cancelSubscription(string $subscriptionId): array
     {
         try {
-            $this->stripeClient->subscriptions->cancel($subscriptionId);
+            $stripeService = new StripeApiService();
+            $cancelResult = $stripeService->cancelStripeSubscription($subscriptionId);
 
-            // Assuming there's a method in the Team model to handle subscription cancellation
-            $team = Team::whereHas('subscriptions', function ($query) use ($subscriptionId) {
-                $query->where('stripe_subscription_id', $subscriptionId);
-            })->first();
-
-            if ($team) {
-                $team->subscriptions()->where('stripe_subscription_id', $subscriptionId)->delete();
+            if (!$cancelResult) {
+                return ['success' => false, 'message' => 'Error cancelling subscription with Stripe.'];
             }
+            $databaseService = new DatabaseUpdateService();
+            $dbCancelResult = $databaseService->cancelSubscriptionRecord($subscriptionId);
 
-            return ['success' => true, 'message' => 'Subscription cancelled successfully.'];
+            return $dbCancelResult;
         } catch (\Exception $e) {
             return ['success' => false, 'message' => 'Error cancelling subscription: ' . $e->getMessage()];
         }
