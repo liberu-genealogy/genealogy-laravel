@@ -9,6 +9,10 @@ use Illuminate\Foundation\Testing\WithFaker;
 
 class PersonAssoResourceTest extends TestCase
 {
+/**
+ * Tests for the PersonAssoResource.
+ * This class provides automated tests for CRUD operations and resource visibility within the Filament admin panel.
+ */
     use RefreshDatabase, WithFaker;
 
     public function testCreatePersonAsso()
@@ -28,6 +32,9 @@ class PersonAssoResourceTest extends TestCase
     }
 
     public function testReadPersonAsso()
+    /**
+     * Test the creation of a PersonAsso resource.
+     */
     {
         $personAsso = PersonAsso::factory()->create();
 
@@ -38,6 +45,9 @@ class PersonAssoResourceTest extends TestCase
     }
 
     public function testUpdatePersonAsso()
+    /**
+     * Test the retrieval of a PersonAsso resource.
+     */
     {
         $personAsso = PersonAsso::factory()->create();
 
@@ -56,6 +66,9 @@ class PersonAssoResourceTest extends TestCase
     }
 
     public function testDeletePersonAsso()
+    /**
+     * Test the update functionality for a PersonAsso resource.
+     */
     {
         $personAsso = PersonAsso::factory()->create();
 
@@ -65,3 +78,6 @@ class PersonAssoResourceTest extends TestCase
         $this->assertSoftDeleted('person_assos', ['id' => $personAsso->id]);
     }
 }
+    /**
+     * Test the deletion of a PersonAsso resource.
+     */
