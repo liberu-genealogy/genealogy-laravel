@@ -19,6 +19,11 @@ class DescendantChartPage extends Page
     protected static ?string $title = 'Descendant Chart';
     protected ?string $navigationIcon = 'heroicon-o-chart-bar';
 
+    /**
+    * Retrieves the title of the Descendant Chart page.
+    * 
+    * @return string The title of the page.
+    */
     public function getTitle(): string
     {
         return $this->title;
@@ -29,6 +34,11 @@ class DescendantChartPage extends Page
         return $this->navigationIcon;
     }
 
+    public function mount(): void
+    {
+        Livewire::mount(\App\Http\Livewire\DescendantChartComponent::class);
+    }
+}
     public function mount(): void
     {
         Livewire::mount(\App\Http\Livewire\DescendantChartComponent::class);
