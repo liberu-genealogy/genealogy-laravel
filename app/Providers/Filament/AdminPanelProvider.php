@@ -37,6 +37,12 @@ class AdminPanelProvider extends PanelProvider
     {
         return $panel
             ->default()
+/**
+ * Configures the Filament admin panel, including pages, widgets, and middleware.
+ */
+    {
+        return $panel
+            ->default()
             ->id('admin')
             ->path('admin')
             ->login()
