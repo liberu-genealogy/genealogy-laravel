@@ -28,7 +28,11 @@ Route::get('/daboville-report', \App\Http\Livewire\DabovilleReport::class);
 
 });
 
-// Route::get('/pedigree-chart', 'App\Http\Controllers\PedigreeChartController@index')->name('pedigree.chart');
+use App\Http\Livewire\PedigreeChart;
+use Illuminate\Support\Facades\Route;
+use Livewire\Livewire;
+
+Route::get('/pedigree-chart', Livewire::component('pedigree-chart', PedigreeChart::class));
 
 
 Route::get('/privacy', function () {

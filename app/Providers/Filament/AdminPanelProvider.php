@@ -47,7 +47,7 @@ class AdminPanelProvider extends PanelProvider
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
             ->pages([
                 Pages\Dashboard::class,
-                PedigreeChartPage::class,
+                \Livewire\Livewire::component('pedigree-chart', PedigreeChart::class),
                 FanChartPage::class,
                 DescendantChartPage::class,
                 DAbovilleReportPage::class,
