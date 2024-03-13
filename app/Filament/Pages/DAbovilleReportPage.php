@@ -31,3 +31,12 @@ class DAbovilleReportPage extends CustomFilamentBasePage
         Livewire::mount(static::$view);
     }
 }
+/**
+ * Defines the DAboville Report page in the Filament admin panel.
+ */
+        Livewire::mount(static::$view);
+    }
+}
+        Livewire::mount(static::$view);
+    }
+}
