@@ -22,7 +22,7 @@ class FanChartPage extends Page
 
     public static function getNavigationIcon(): string
     {
-        return $this->navigationIcon;
+        return static::$navigationIcon;
     }
 
     public function mount(): void
