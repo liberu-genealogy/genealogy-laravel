@@ -7,10 +7,16 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Livewire\Livewire;
 use App\Filament\Resources\NoteResource;
 
+/**
+ * Tests the functionality of the NoteResource, ensuring that form fields are correctly defined and the table configuration is correct.
+ */
 class NoteResourceTest extends TestCase
 {
     use RefreshDatabase;
 
+    /**
+     * Tests that the form fields for NoteResource are correctly defined with the expected properties.
+     */
     public function test_form_fields_are_correctly_defined()
     {
         $form = NoteResource::form(Livewire::mock());
@@ -27,6 +33,9 @@ class NoteResourceTest extends TestCase
         $this->assertNotNull($schema->firstWhere('name', 'rin'));
     }
 
+    /**
+     * Tests the table configuration of NoteResource, ensuring columns and actions are correctly defined.
+     */
     public function test_table_configuration_is_correct()
     {
         $table = NoteResource::table(Livewire::mock());
