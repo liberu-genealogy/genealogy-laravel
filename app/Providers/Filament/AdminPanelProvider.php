@@ -29,6 +29,7 @@ use App\Filament\Pages\PedigreeChartPage;
 use App\Filament\Pages\FanChartPage;
 use App\Filament\Pages\DescendantChartPage;
 use App\Filament\Pages\DAbovilleReportPage;
+use App\Filament\Widgets\PedigreeChartWidget;
 
 class AdminPanelProvider extends PanelProvider
 {
@@ -37,7 +38,6 @@ class AdminPanelProvider extends PanelProvider
         return $panel
             ->default()
             ->id('admin')
-use App\Filament\Widgets\PedigreeChartWidget;
             ->path('admin')
             ->login()
             ->registration()
@@ -50,16 +50,11 @@ use App\Filament\Widgets\PedigreeChartWidget;
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
             ->pages([
-                Pages\Dashboard::class,
-                \Livewire\Livewire::component('pedigree-chart', PedigreeChart::class),
+                Pages\Dashboard::class,])
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
             ->widgets([
                 Widgets\AccountWidget::class,
                 Widgets\FilamentInfoWidget::class,
-                DabovilleReportWidget::class,
-                DescendantChartWidget::class,
-                FanChartWidget::class,
-                PedigreeChartWidget::class,
             ])
         ->plugin(FilamentSpatieRolesPermissionsPlugin::make())
         ->tenantRegistration(RegisterTeam::class)
