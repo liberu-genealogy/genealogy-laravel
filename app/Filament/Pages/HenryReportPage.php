@@ -6,7 +6,7 @@ use Filament\Pages\Page;
 
 class HenryReportPage extends CustomFilamentBasePage
 {
-    protected static string $view = 'livewire.henry-report';
+    protected static string $view = 'new-view-name';
     protected static ?string $title = 'Henry Report';
     protected static ?string $navigationIcon = 'heroicon-o-document-report';
 
