@@ -48,3 +48,15 @@ class DAbovilleReportPage extends CustomFilamentBasePage
     {
         return $this->navigationIcon;
     }
+/**
+ * Retrieves the title of the D'Aboville Report page.
+ * 
+ * @return string The title of the page.
+ */
+public function getTitle(): string
+/**
+ * Retrieves the navigation icon name for the D'Aboville Report page.
+ * 
+ * @return string The navigation icon name.
+ */
+public function getNavigationIcon(): string
