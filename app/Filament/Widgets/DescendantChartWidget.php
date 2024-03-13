@@ -27,6 +27,13 @@ class DescendantChartWidget extends Widget
         }, $data);
     }
 
+    /**
+     * Renders the Descendant Chart widget view.
+     * 
+     * This function prepares the data for the Descendant Chart widget and returns the view to be rendered.
+     * 
+     * @return \Illuminate\Contracts\View\View The view instance for the Descendant Chart widget.
+     */
     public function render(): \Illuminate\Contracts\View\View
     {
         return view(static::$view, ['descendantsData' => $this->descendantsData]);
