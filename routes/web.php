@@ -41,4 +41,6 @@ Route::get('/terms-and-conditions', function () {
 Route::get('/contact', function () { return view('contact'); });
 Route::post('/contact/send', 'App\Http\Controllers\ContactController@sendEmail');
 
+Route::get('/manage-subscription', [\App\Filament\Pages\ManageSubscription::class, 'mount'])->middleware('auth')->name('manage.subscription');
+
 
