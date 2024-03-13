@@ -2,10 +2,8 @@
 
 namespace App\Http\Livewire;
 
-use Livewire\Component;
 use App\Models\Person;
-use Carbon\Carbon;
-
+use Livewire\Component;
 
 class PeopleSearch extends Component
 {
@@ -21,8 +19,8 @@ class PeopleSearch extends Component
 
     public function searchPeople()
     {
-        $this->results = Person::where('givn', 'like', '%' . $this->query . '%')
-                               ->orWhere('surn', 'like', '%' . $this->query . '%')
+        $this->results = Person::where('givn', 'like', '%'.$this->query.'%')
+                               ->orWhere('surn', 'like', '%'.$this->query.'%')
                                ->get();
     }
 
