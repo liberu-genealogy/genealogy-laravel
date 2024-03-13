@@ -20,3 +20,7 @@ export default defineConfig({
     }),
     ],
 })
+    css: [
+        'resources/css/tailwind.css',
+        'resources/css/custom.css',
+    ],
