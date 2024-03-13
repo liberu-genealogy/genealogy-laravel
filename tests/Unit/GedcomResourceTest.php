@@ -25,6 +25,11 @@ namespace Tests\Unit;
     }
 }
 
+    /**
+     * Test case for exporting Gedcom without an authenticated user.
+     *
+     * @return void
+     */
     public function testExportGedcomFailsWithoutAuthenticatedUser(): void
     {
         Queue::fake();
@@ -33,4 +38,5 @@ namespace Tests\Unit;
         GedcomResource::exportGedcom();
         Queue::assertNotPushed(ExportGedCom::class);
     }
+}
 }
