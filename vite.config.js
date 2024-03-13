@@ -6,10 +6,15 @@ import copy from 'vite-plugin-copy';
 export default defineConfig({
     plugins: [
         laravel(['resources/css/app.css', 'resources/js/app.js']),
-    copy({
-      targets: [
-        { src: 'resources/images/*', dest: 'public/assets/images' }
-      ],
+        viteStaticCopy({
+                           targets: [
+                               {
+                                   src: 'resources/images/*',
+                                   dest: 'public/assets/images'
+                               }
+                           ]
+                       }),
+
       hook: 'writeBundle' // Use the 'writeBundle' hook to copy files after the bundle is written
     }),
     ],
