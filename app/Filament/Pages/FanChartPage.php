@@ -30,3 +30,19 @@ class FanChartPage extends Page
         Livewire::mount(\App\Http\Livewire\FanChart::class);
     }
 }
+/**
+ * FanChartPage Class
+ *
+ * Represents a Filament page for displaying fan charts within the genealogy application.
+ * Utilizes Livewire for dynamic data binding and updates.
+ */
+    /**
+     * Retrieves the title of the fan chart page.
+     *
+     * @return string The title of the page.
+     */
+    /**
+     * Retrieves the navigation icon class for the fan chart page.
+     *
+     * @return string The class name of the navigation icon.
+     */
