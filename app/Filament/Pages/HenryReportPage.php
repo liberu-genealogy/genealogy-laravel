@@ -8,7 +8,7 @@ class HenryReportPage extends CustomFilamentBasePage
 {
     protected static string $view = 'new-view-name';
     protected static ?string $title = 'Henry Report';
-    protected static ?string $navigationIcon = "'heroicon-o-document-report'";
+    protected static ?string $navigationIcon = "heroicon-o-document-report";
 
     public function getTitle(): string
     {
