@@ -11,10 +11,19 @@ use Filament\Resources\Table;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
+/**
+ * This file contains tests for the FamilySlgs resource in the genealogy-laravel application.
+ */
 class FamilySlgsResourceTest extends TestCase
 {
     use RefreshDatabase;
 
+    /**
+     * Tests the form fields configuration for the FamilySlgs resource.
+     * Ensures that all expected fields are present and correctly configured.
+     *
+     * @return void
+     */
     public function test_form_fields_configuration()
     {
         $form = FamilySlgsResource::form(Form::make())->getSchema();
@@ -42,6 +51,12 @@ class FamilySlgsResourceTest extends TestCase
         $table = FamilySlgsResource::table(Table::make())->getColumns();
 
         $expectedColumns = [
+            'family_id' => ['sortable' => true, 'type' => 'numeric'],
+            'stat' => ['searchable' => true, 'type' => 'text'],
+            'date' => ['searchable' => true, 'type' => 'text'],
+            'plac' => ['searchable' => true, 'type' => 'text'],
+            'temp' => ['searchable' => true, 'type' => 'text'],
+            'created_at' => ['sortable' => true, 'type' => 'dateTime', 'toggleable' => true],
             'family_id' => ['sortable' => true, 'type' => 'numeric'],
             'stat' => ['searchable' => true, 'type' => 'text'],
             'date' => ['searchable' => true, 'type' => 'text'],
