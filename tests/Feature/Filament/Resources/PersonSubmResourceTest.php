@@ -1,5 +1,12 @@
 <?php
 
+/**
+ * Tests for the Person Submission (PersonSubm) Filament Resource.
+ * 
+ * This class contains tests for the CRUD operations and any additional custom
+ * functionality provided by the PersonSubmResource.
+ */
+
 namespace Tests\Feature\Filament\Resources;
 
 use App\Filament\Resources\PersonSubmResource;
@@ -31,6 +38,18 @@ class PersonSubmResourceTest extends TestCase
     }
 
     public function test_table_columns()
+    /**
+     * Test description here.
+     *
+     * @return void
+     * @throws \Exception If something goes wrong.
+     */
+    /**
+     * Test description here.
+     *
+     * @return void
+     * @throws \Exception If something goes wrong.
+     */
     {
         $tableColumns = PersonSubmResource::table([])->getColumns();
 
@@ -52,3 +71,9 @@ class PersonSubmResourceTest extends TestCase
         $this->assertTrue($tableColumns['updated_at']->isToggleable());
     }
 }
+    /**
+     * Test description here.
+     *
+     * @return void
+     * @throws \Exception If something goes wrong.
+     */
