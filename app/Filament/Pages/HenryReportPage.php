@@ -6,9 +6,9 @@ use Filament\Pages\Page;
 
 class HenryReportPage extends CustomFilamentBasePage
 {
-    protected static string $view = 'new-view-name';
+    protected static string $view = 'livewire.henry-report';
     protected static ?string $title = 'Henry Report';
-    protected static ?string $navigationIcon = "heroicon-o-document-report";
+    protected static ?string $navigationIcon = 'heroicon-o-document-report';
 
     public function getTitle(): string
     {
@@ -27,6 +27,6 @@ class HenryReportPage extends CustomFilamentBasePage
 
     public function mount(): void
     {
-        \Livewire::mount(static::$view);
+        Livewire::mount(static::$view);
     }
 }
