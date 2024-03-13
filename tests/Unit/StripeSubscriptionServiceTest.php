@@ -4,6 +4,7 @@ namespace Tests\Unit;
 
 use App\Models\Team;
 use App\Services\StripeSubscriptionService;
+use App\Models\Team;
 use PHPUnit\Framework\TestCase;
 
 class StripeSubscriptionServiceTest extends TestCase
