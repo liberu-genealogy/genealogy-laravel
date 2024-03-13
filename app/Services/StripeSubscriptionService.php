@@ -18,7 +18,7 @@ class StripeSubscriptionService
     {
         $subscription = $this->stripeClient->subscriptions->create([
             'customer' => $team->stripe_customer_id,
-            'items' => [
+            'items'    => [
                 ['price' => env('STRIPE_PRICE_ID')],
             ],
             'trial_period_days' => 14,
@@ -26,14 +26,16 @@ class StripeSubscriptionService
 
         $team->subscriptions()->create([
             'stripe_subscription_id' => $subscription->id,
-            'trial_ends_at' => now()->addDays(14),
+            'trial_ends_at'          => now()->addDays(14),
         ]);
     }
+
     /**
      * Update an existing subscription.
      *
      * @param string $subscriptionId The ID of the subscription to update.
-     * @param string $newPlanId The ID of the new plan.
+     * @param string $newPlanId      The ID of the new plan.
+     *
      * @return array An array containing the result of the operation.
      */
     public function updateSubscription(string $subscriptionId, string $newPlanId): array
@@ -49,7 +51,7 @@ class StripeSubscriptionService
 
             return $dbUpdateResult;
         } catch (\Exception $e) {
-            return ['success' => false, 'message' => 'Error updating subscription: ' . $e->getMessage()];
+            return ['success' => false, 'message' => 'Error updating subscription: '.$e->getMessage()];
         }
     }
 
@@ -57,6 +59,7 @@ class StripeSubscriptionService
      * Cancel an existing subscription.
      *
      * @param string $subscriptionId The ID of the subscription to cancel.
+     *
      * @return array An array containing the result of the operation.
      */
     public function cancelSubscription(string $subscriptionId): array
@@ -73,7 +76,7 @@ class StripeSubscriptionService
 
             return $dbCancelResult;
         } catch (\Exception $e) {
-            return ['success' => false, 'message' => 'Error cancelling subscription: ' . $e->getMessage()];
+            return ['success' => false, 'message' => 'Error cancelling subscription: '.$e->getMessage()];
         }
     }
 }
