@@ -8,3 +8,4 @@ class CustomFilamentBasePage extends Page
 {
     // Common properties or methods for custom Filament pages
 }
+use App\Filament\Pages\AhnentafelReportPage;
