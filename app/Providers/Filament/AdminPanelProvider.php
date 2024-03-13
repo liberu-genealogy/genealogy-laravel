@@ -1,3 +1,9 @@
+/**
+ * Configures the Filament admin panel for the genealogy-laravel application.
+ *
+ * This provider sets up the panel's properties, discovers resources, pages, and widgets,
+ * and configures middleware and authentication for the Filament admin panel.
+ */
 <?php
 namespace App\Providers\Filament;
 
@@ -59,6 +65,12 @@ class AdminPanelProvider extends PanelProvider
                 Widgets\FilamentInfoWidget::class,
             ])
         ->plugin(FilamentSpatieRolesPermissionsPlugin::make())
+    /**
+     * Configures and returns the Filament admin panel instance.
+     *
+     * @param Panel $panel The Filament panel instance.
+     * @return Panel The configured panel instance.
+     */
         ->tenantRegistration(RegisterTeam::class)
         ->tenantProfile(EditTeamProfile::class)
         ->tenant(Team::class)
