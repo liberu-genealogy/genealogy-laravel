@@ -32,3 +32,17 @@ class DescendantChartWidget extends Widget
         return view(static::$view, ['descendantsData' => $this->descendantsData]);
     }
 }
+/**
+ * Defines the DescendantChartWidget class, responsible for processing and displaying descendant data in a chart format within the Filament admin panel.
+ */
+        return view(static::$view, ['descendantsData' => $this->descendantsData]);
+    }
+}
+    public function render()
+    {
+        return view(static::$view, ['descendantsData' => $this->descendantsData]);
+    }
+}
+        return view(static::$view, ['descendantsData' => $this->descendantsData]);
+    }
+}
