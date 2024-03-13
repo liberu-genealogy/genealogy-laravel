@@ -1,5 +1,5 @@
 import { defineConfig } from 'vite';
-import laravel, { refreshPaths } from 'laravel-vite-plugin';
+import laravel from 'laravel-vite-plugin';
 import path from 'path';
 import { viteStaticCopy } from 'vite-plugin-static-copy'
 
@@ -25,3 +25,6 @@ export default defineConfig({
         'resources/css/custom.css',
     ],
 })
+    build: {
+        outDir: '../public',
+    },
