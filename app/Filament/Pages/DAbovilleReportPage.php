@@ -2,6 +2,12 @@
 
 namespace App\Filament\Pages;
 
+/**
+ * Defines the DAbovilleReportPage class, extending CustomFilamentBasePage.
+ * This class is responsible for handling the rendering of the DAboville report within the genealogy application,
+ * leveraging Livewire for dynamic content management. It utilizes a specific Livewire component defined by the $view property.
+ */
+
 use App\Filament\Pages\CustomFilamentBasePage;
 use Livewire\Livewire;
 
