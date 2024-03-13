@@ -1,4 +1,3 @@
-import { defineConfig } from 'vite'
 import { defineConfig } from 'vite';
 import laravel, { refreshPaths } from 'laravel-vite-plugin';
 import path from 'path';
