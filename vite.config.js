@@ -10,16 +10,16 @@ export default defineConfig({
       targets: [
         { src: 'resources/images/*', dest: 'public/assets/images' }
       ],
-  resolve: {
-    alias: {
-      '@': path.resolve(__dirname, './resources')
-    }
-  },
       hook: 'writeBundle' // Use the 'writeBundle' hook to copy files after the bundle is written
     }),
     ],
-})
+    resolve: {
+        alias: {
+            '@': path.resolve(__dirname, './resources')
+        }
+    },
     css: [
         'resources/css/tailwind.css',
         'resources/css/custom.css',
     ],
+})
