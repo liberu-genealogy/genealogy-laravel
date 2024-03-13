@@ -3,18 +3,19 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\GedcomResource\Pages;
+use App\Jobs\ImportGedcom;
 use App\Models\Gedcom;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use App\Jobs\ImportGedcom;
 use Illuminate\Support\Facades\Storage;
 
-class GedcomResource extends Resource {
+class GedcomResource extends Resource
+{
     /**
-     * Class GedcomResource
+     * Class GedcomResource.
      *
      * This class represents a resource for handling Gedcom data.
      *
@@ -25,7 +26,7 @@ class GedcomResource extends Resource {
     protected static ?string $model = Gedcom::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
-    
+
     public static function getPages(): array
     {
         return [
@@ -36,17 +37,13 @@ class GedcomResource extends Resource {
         ];
     }
 
-
-
- /**
+    /**
      * Define the form fields and behavior for the DnaResource.
- *
- * @param Form $form
- *
- * @return Form
      *
      * @param Form $form
+     * @param Form $form
      *
+     * @return Form
      * @return Form
      */
     public static function form(Form $form): Form
@@ -68,10 +65,11 @@ class GedcomResource extends Resource {
             ]);
     }
 
-        /**
+    /**
      * Define the table columns, filters, actions, and bulk actions.
      *
-     * @param  Table  $table The table object to be defined.
+     * @param Table $table The table object to be defined.
+     *
      * @return Table The updated table.
      */
     public static function table(Table $table): Table
@@ -97,7 +95,7 @@ class GedcomResource extends Resource {
             ]);
     }
 
-        /**
+    /**
      * Perform the import functionality.
      *
      * @return array
@@ -114,7 +112,7 @@ class GedcomResource extends Resource {
     public static function exportGedcom(): void
     {
         $user = auth()->user(); // Assuming the user is authenticated
-        $fileName = now()->format('Y-m-d_His') . '_family_tree.ged'; // Generating a unique file name
+        $fileName = now()->format('Y-m-d_His').'_family_tree.ged'; // Generating a unique file name
         ExportGedCom::dispatch($fileName, $user);
     }
-} 
+}

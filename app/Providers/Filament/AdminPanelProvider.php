@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Providers\Filament;
 
 use Althinect\FilamentSpatieRolesPermissions\FilamentSpatieRolesPermissionsPlugin;
@@ -21,15 +22,8 @@ use Illuminate\Session\Middleware\AuthenticateSession;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 use Maartenpaauw\Filament\Cashier\Stripe\BillingProvider;
-use App\Filament\Widgets\DabovilleReportWidget;
-use App\Filament\Widgets\DescendantChartWidget;
-use App\Filament\Widgets\FanChartWidget;
+
 //use App\Providers\Filament\SyncSpatiePermissionsWithFilamentTenants;
-use App\Filament\Pages\PedigreeChartPage;
-use App\Filament\Pages\FanChartPage;
-use App\Filament\Pages\DescendantChartPage;
-use App\Filament\Pages\DAbovilleReportPage;
-use App\Filament\Widgets\PedigreeChartWidget;
 
 class AdminPanelProvider extends PanelProvider
 {
@@ -50,7 +44,7 @@ class AdminPanelProvider extends PanelProvider
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
             ->pages([
-                Pages\Dashboard::class,])
+                Pages\Dashboard::class, ])
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
             ->widgets([
                 Widgets\AccountWidget::class,
@@ -60,11 +54,11 @@ class AdminPanelProvider extends PanelProvider
         ->tenantRegistration(RegisterTeam::class)
         ->tenantProfile(EditTeamProfile::class)
         ->tenant(Team::class)
-        ->tenantBillingProvider(new BillingProvider('default')) 
+        ->tenantBillingProvider(new BillingProvider('default'))
         ->requiresTenantSubscription()
         ->tenantMiddleware([
             SyncSpatiePermissionsWithFilamentTenants::class,
-            ], isPersistent: true)
+        ], isPersistent: true)
             ->middleware([
                 EncryptCookies::class,
                 AddQueuedCookiesToResponse::class,

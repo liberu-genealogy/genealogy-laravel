@@ -56,14 +56,14 @@ class DnaMatchingResourceTest extends TestCase
     public function test_crud_operations()
     {
         $dnaMatchingData = [
-            'user_id' => 1,
-            'image' => 'test_image.png',
-            'file1' => 'file1.txt',
-            'file2' => 'file2.txt',
-            'total_shared_cm' => '100',
+            'user_id'            => 1,
+            'image'              => 'test_image.png',
+            'file1'              => 'file1.txt',
+            'file2'              => 'file2.txt',
+            'total_shared_cm'    => '100',
             'largest_cm_segment' => '50',
-            'match_id' => 2,
-            'match_name' => 'Test Match',
+            'match_id'           => 2,
+            'match_name'         => 'Test Match',
         ];
 
         $dnaMatching = DnaMatching::create($dnaMatchingData);

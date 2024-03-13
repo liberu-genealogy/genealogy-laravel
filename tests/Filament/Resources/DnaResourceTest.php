@@ -2,7 +2,6 @@
 
 namespace Tests\Filament\Resources;
 
-use App\Filament\Resources\DnaResource;
 use App\Jobs\ImportGedcom;
 use App\Models\Dna;
 use Illuminate\Foundation\Testing\RefreshDatabase;
