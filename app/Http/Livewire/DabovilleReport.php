@@ -14,7 +14,7 @@ use Livewire\Component;
  * @var int   selectedPersonId The ID of the selected person for the report.
  * @var array reportData Array to store the report data.
  */
-class DabovilleReport extends Component
+class AhnentafelReport extends Component
 {
     public $selectedPersonId;
     public $reportData = [];
