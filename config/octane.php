@@ -149,9 +149,12 @@ return [
     */
 
     'tables' => [
-        'example:1000' => [
-            'name'  => 'string:1000',
-            'votes' => 'int',
+        'example' => [
+            'size' => 1000,
+            'columns' => [
+                'name'  => 'string:1000',
+                'votes' => 'int',
+            ],
         ],
     ],
 

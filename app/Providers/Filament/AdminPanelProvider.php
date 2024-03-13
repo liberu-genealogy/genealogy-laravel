@@ -21,8 +21,11 @@ use Illuminate\Session\Middleware\AuthenticateSession;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 use Maartenpaauw\Filament\Cashier\Stripe\BillingProvider;
-
 //use App\Providers\Filament\SyncSpatiePermissionsWithFilamentTenants;
+use App\Filament\Pages\PedigreeChartPage;
+use App\Filament\Pages\FanChartPage;
+use App\Filament\Pages\DescendantChartPage;
+use App\Filament\Pages\DAbovilleReportPage;
 
 class AdminPanelProvider extends PanelProvider
 {
@@ -44,6 +47,11 @@ class AdminPanelProvider extends PanelProvider
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
             ->pages([
                 Pages\Dashboard::class,
+                \Livewire\Livewire::component('pedigree-chart', PedigreeChart::class),
+                FanChartPage::class,
+                DescendantChartPage::class,
+                DAbovilleReportPage::class,
+                \App\Filament\Pages\PeopleDashboard::class,
             ])
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
             ->widgets([

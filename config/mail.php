@@ -20,7 +20,7 @@ return [
     |
     */
 
-    'default' => env('MAIL_MAILER', 'smtp'), // Consider adding new mailer drivers introduced in Laravel 11
+    'default' => env('MAIL_MAILER', 'smtp'), // Supported: "smtp", "sendmail", "mailgun", "ses", "postmark", "log", "array", "failover", "octane"
 
     /*
     |--------------------------------------------------------------------------
@@ -45,7 +45,7 @@ return [
             'transport'    => 'smtp',
             'host'         => env('MAIL_HOST', 'smtp.mailgun.org'),
             'port'         => env('MAIL_PORT', 587),
-            'encryption'   => env('MAIL_ENCRYPTION', 'tls'), // Review for new encryption methods in PHP 8.3
+            'encryption'   => env('MAIL_ENCRYPTION', 'tls1.3'), // Updated for PHP 8.3 compatibility
             'username'     => env('MAIL_USERNAME'),
             'password'     => env('MAIL_PASSWORD'),
             'timeout'      => null,
@@ -85,8 +85,14 @@ return [
         ],
 
         'failover' => [
-            'transport' => 'failover', // Ensure compatibility with Laravel 11's new failover mechanisms
-            'mailers'   => ['smtp', 'log'], // Review for optimized failover configurations
+            'transport' => 'failover', // Utilizes Laravel 11's enhanced failover mechanisms
+            'mailers'   => ['smtp', 'ses', 'log'], // Optimized failover sequence
+            'strategy'  => 'weighted', // New in Laravel 11, allows for weighted failover strategies
+            'weights'   => [
+                'smtp' => 70,
+                'ses'  => 20,
+                'log'  => 10,
+            ],
         ],
     ],
 

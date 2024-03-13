@@ -1,19 +1,27 @@
-import { defineConfig } from 'vite'
-import laravel, { refreshPaths } from 'laravel-vite-plugin'
+import { defineConfig } from 'vite';
+import laravel, { refreshPaths } from 'laravel-vite-plugin';
+import path from 'path';
+import { viteStaticCopy } from 'vite-plugin-static-copy'
 
 export default defineConfig({
     plugins: [
-        laravel({
-            input: ['resources/css/app.css', 'resources/js/app.js'],
-            refresh: [
-                ...refreshPaths,
-                'app/Filament/**',
-                'app/Forms/Components/**',
-                'app/Livewire/**',
-                'app/Infolists/Components/**',
-                'app/Providers/Filament/**',
-                'app/Tables/Columns/**',
-            ],
-        }),
+        laravel(['resources/css/app.css', 'resources/js/app.js']),
+        viteStaticCopy({
+                           targets: [
+                               {
+                                   src: 'resources/images/*',
+                                   dest: 'public/assets/images'
+                               }
+                           ]
+                       }),
+    ],
+    resolve: {
+        alias: {
+            '@': path.resolve(__dirname, './resources')
+        }
+    },
+    css: [
+        'resources/css/tailwind.css',
+        'resources/css/custom.css',
     ],
 })

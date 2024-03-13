@@ -17,18 +17,22 @@ Route::get('/', function () {
     return view('layouts.home');
 
 
-Route::get('/fan-chart', [\App\Http\Controllers\FanChartController::class, 'show'])->middleware('web');
+// Route::get('/fan-chart', [\App\Http\Controllers\FanChartController::class, 'show'])->middleware('web');
 
 Route::post('/send-invitation', 'TeamInvitationController@sendInvitation')->name('send.invitation');
 Route::post('/accept-invitation/{token}', 'TeamInvitationController@acceptInvitation')->name('accept.invitation');
 
-Route::get('/descendant-chart', \App\Http\Livewire\DescendantChartComponent::class);
+// Route::get('/descendant-chart', \App\Http\Livewire\DescendantChartComponent::class);
 
 Route::get('/daboville-report', \App\Http\Livewire\DabovilleReport::class);
 
 });
 
-Route::get('/pedigree-chart', 'App\Http\Controllers\PedigreeChartController@index')->name('pedigree.chart');
+use App\Http\Livewire\PedigreeChart;
+use Illuminate\Support\Facades\Route;
+use Livewire\Livewire;
+
+Route::get('/pedigree-chart', Livewire::component('pedigree-chart', PedigreeChart::class));
 
 
 Route::get('/privacy', function () {
@@ -40,5 +44,7 @@ Route::get('/terms-and-conditions', function () {
 
 Route::get('/contact', function () { return view('contact'); });
 Route::post('/contact/send', 'App\Http\Controllers\ContactController@sendEmail');
+
+Route::get('/manage-subscription', [\App\Filament\Pages\ManageSubscription::class, 'mount'])->middleware('auth')->name('manage.subscription');
 
 

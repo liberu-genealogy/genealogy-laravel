@@ -31,8 +31,8 @@ return [
     */
 
     'deprecations' => [
-        'channel' => env('LOG_DEPRECATIONS_CHANNEL', 'null'),
-        'trace'   => false,
+        'channel' => env('LOG_DEPRECATIONS_CHANNEL', 'deprecations'),
+        'trace'   => true,
     ],
 
     /*
@@ -116,7 +116,15 @@ return [
 
         'emergency' => [
             'path' => storage_path('logs/laravel.log'),
-        ],
-    ],
+        ], 
 
-];
+        'deprecations' => [
+            'driver' => 'daily',
+            'path'   => storage_path('logs/deprecations.log'),
+            'level'  => 'warning',
+            'days'   => 30,
+        ],
+
+   ], 
+
+   ];
