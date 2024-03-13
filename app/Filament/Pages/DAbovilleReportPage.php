@@ -7,7 +7,7 @@ use Livewire\Livewire;
 
 class DAbovilleReportPage extends CustomFilamentBasePage
 {
-    protected static string $view = 'livewire.daboville-report';
+    protected string $view = 'livewire.daboville-report';
 
 //    public function render(): \Illuminate\Contracts\Support\Renderable
 //    {
@@ -19,3 +19,15 @@ class DAbovilleReportPage extends CustomFilamentBasePage
         Livewire::mount(static::$view);
     }
 }
+    protected ?string $title = 'DAboville Report';
+    protected ?string $navigationIcon = 'heroicon-o-document-report';
+
+    public function getTitle(): string
+    {
+        return $this->title;
+    }
+
+    public function getNavigationIcon(): string
+    {
+        return $this->navigationIcon;
+    }
