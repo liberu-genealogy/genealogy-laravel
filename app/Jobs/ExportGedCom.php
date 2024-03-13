@@ -55,21 +55,7 @@ class ExportGedCom implements ShouldQueue
 
         // Storing the GEDCOM file
         $manager->storage()->put($this->file, $content);
-        Log::info('GEDCOM file generated and stored: '.$this->file);
-
-        $up_nest = 3;
-        $down_nest = 3;
-
-        $writer = new GedcomGenerator($p_id, $f_id, $up_nest, $down_nest);
-        $content = $writer->getGedcomPerson();
-
-//        Log::info("content from getGedcomPerson function => \n $content");
-        // var_dump(\Storage::disk('public')->path($this->file), "job");
-        $manager->storage()->put($this->file, $content);
- //       $filePath = 'public/' . $this->file;
-//        $filePath = $manager->storage()->path($filePath);
-        //	chmod_r('/home/genealogia/domains/api.genealogia.co.uk/genealogy/storage/tenants/');
-        // Setting permissions for the GEDCOM file
+        // The GEDCOM file generating and storing logic has been removed.
         exec('chmod 0644 '.$manager->storage()->path($this->file));
         Log::info('Permissions set for GEDCOM file.');
 
