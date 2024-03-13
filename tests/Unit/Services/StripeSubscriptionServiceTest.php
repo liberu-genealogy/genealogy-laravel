@@ -4,6 +4,7 @@ namespace Tests\Unit\Services;
 
 use App\Services\StripeSubscriptionService;
 use App\Services\StripeApiService;
+use App\Services\DatabaseUpdateService;
 use Tests\TestCase;
 
 class StripeSubscriptionServiceTest extends TestCase
