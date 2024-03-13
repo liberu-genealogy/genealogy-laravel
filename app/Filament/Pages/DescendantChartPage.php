@@ -1,4 +1,11 @@
-&lt;?php
+<?php
+
+/**
+ * Class DescendantChartPage
+ * 
+ * Manages the presentation and functionality of the Descendant Chart page in the genealogy application.
+ * Utilizes Livewire for dynamic content rendering.
+ */
 
 namespace App\Filament\Pages;
 
