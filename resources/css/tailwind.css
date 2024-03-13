@@ -1,6 +1,6 @@
 @tailwind base;
 @tailwind components;
-@tailwind grid;
+@tailwind utilities;
 
 /* Tailwind CSS converted from Vuetify's base.css */
 body {
