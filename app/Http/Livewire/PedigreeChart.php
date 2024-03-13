@@ -2,9 +2,9 @@
 
 namespace App\Http\Livewire;
 
-use Livewire\Component;
 use App\Models\Person;
 use Illuminate\Support\Collection;
+use Livewire\Component;
 
 class PedigreeChart extends Component
 {
@@ -43,9 +43,9 @@ class PedigreeChart extends Component
     protected function getListeners()
     {
         return [
-            'zoomIn' => 'zoomIn',
+            'zoomIn'  => 'zoomIn',
             'zoomOut' => 'zoomOut',
-            'pan' => 'pan',
+            'pan'     => 'pan',
         ];
     }
 }

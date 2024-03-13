@@ -4,8 +4,8 @@ namespace Tests\Filament\Resources;
 
 use App\Filament\Resources\SourceDataResource;
 use App\Models\SourceData;
-use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\TestCase;
 
 class SourceDataResourceTest extends TestCase
 {
@@ -40,7 +40,7 @@ class SourceDataResourceTest extends TestCase
         $columns = collect($table->getColumns());
 
         $expectedColumns = [
-            'group', 'gid', 'date', 'text', 'agnc', 'created_at', 'updated_at'
+            'group', 'gid', 'date', 'text', 'agnc', 'created_at', 'updated_at',
         ];
 
         foreach ($expectedColumns as $column) {

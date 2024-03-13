@@ -2,12 +2,12 @@
 
 namespace Tests\Unit\Filament\Resources;
 
-use PHPUnit\Framework\TestCase;
 use App\Filament\Resources\AuthorResource;
 use Filament\Forms\Components\TextInput;
-use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Actions\EditAction;
 use Filament\Tables\Actions\DeleteBulkAction;
+use Filament\Tables\Actions\EditAction;
+use Filament\Tables\Columns\TextColumn;
+use PHPUnit\Framework\TestCase;
 
 class AuthorResourceTest extends TestCase
 {
@@ -17,9 +17,9 @@ class AuthorResourceTest extends TestCase
         $schema = $form->getSchema();
 
         $expectedFields = [
-            'name' => ['type' => TextInput::class, 'required' => true, 'maxLength' => 255],
+            'name'        => ['type' => TextInput::class, 'required' => true, 'maxLength' => 255],
             'description' => ['type' => TextInput::class, 'required' => true, 'maxLength' => 255],
-            'is_active' => ['type' => TextInput::class, 'required' => true, 'numeric' => true],
+            'is_active'   => ['type' => TextInput::class, 'required' => true, 'numeric' => true],
         ];
 
         foreach ($expectedFields as $fieldName => $fieldAttributes) {
@@ -47,11 +47,11 @@ class AuthorResourceTest extends TestCase
         }
 
         $editAction = collect($actions)->firstWhere('name', 'edit');
-        $this->assertNotNull($editAction, "Edit action does not exist.");
-        $this->assertInstanceOf(EditAction::class, $editAction, "Edit action is not of type EditAction.");
+        $this->assertNotNull($editAction, 'Edit action does not exist.');
+        $this->assertInstanceOf(EditAction::class, $editAction, 'Edit action is not of type EditAction.');
 
         $deleteBulkAction = collect($bulkActions)->firstWhere('name', 'delete');
-        $this->assertNotNull($deleteBulkAction, "Delete bulk action does not exist.");
-        $this->assertInstanceOf(DeleteBulkAction::class, $deleteBulkAction, "Delete bulk action is not of type DeleteBulkAction.");
+        $this->assertNotNull($deleteBulkAction, 'Delete bulk action does not exist.');
+        $this->assertInstanceOf(DeleteBulkAction::class, $deleteBulkAction, 'Delete bulk action is not of type DeleteBulkAction.');
     }
 }

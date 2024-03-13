@@ -44,9 +44,9 @@ class ChanResourceTest extends TestCase
     {
         $chanData = [
             'group' => 'Test Group',
-            'gid' => 123,
-            'date' => '2023-01-01',
-            'time' => '12:00:00',
+            'gid'   => 123,
+            'date'  => '2023-01-01',
+            'time'  => '12:00:00',
         ];
 
         // Create

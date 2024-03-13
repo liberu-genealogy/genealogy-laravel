@@ -52,9 +52,9 @@ class AuthorResourceTest extends TestCase
     public function test_crud_operations()
     {
         $authorData = [
-            'name' => 'John Doe',
+            'name'        => 'John Doe',
             'description' => 'An author',
-            'is_active' => 1,
+            'is_active'   => 1,
         ];
 
         // Create

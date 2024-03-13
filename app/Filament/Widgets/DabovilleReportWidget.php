@@ -2,8 +2,8 @@
 
 namespace App\Filament\Widgets;
 
-use Filament\Widgets\Widget;
 use App\Models\Person;
+use Filament\Widgets\Widget;
 
 class DabovilleReportWidget extends Widget
 {
@@ -31,21 +31,20 @@ class DabovilleReportWidget extends Widget
     {
         $this->reportData[$person->id] = [
             'number' => $currentNumber,
-            'name' => $person->fullname(),
-            'birth' => optional($person->birth())->date,
-            'death' => optional($person->death())->date,
+            'name'   => $person->fullname(),
+            'birth'  => optional($person->birth())->date,
+            'death'  => optional($person->death())->date,
         ];
 
         $childNumber = 1;
         foreach ($person->child_in_family as $child) {
-            $this->traverseFamilyTree($child, $currentNumber . '.' . $childNumber);
+            $this->traverseFamilyTree($child, $currentNumber.'.'.$childNumber);
             $childNumber++;
         }
     }
 
-	public function render(): \Illuminate\Contracts\View\View
-	{
-	    return view(static::$view, ['reportData' => $this->reportData, 'selectedPersonId' => $this->selectedPersonId]);
-	}
-
+    public function render(): \Illuminate\Contracts\View\View
+    {
+        return view(static::$view, ['reportData' => $this->reportData, 'selectedPersonId' => $this->selectedPersonId]);
+    }
 }

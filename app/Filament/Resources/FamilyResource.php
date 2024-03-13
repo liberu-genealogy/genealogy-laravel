@@ -9,9 +9,6 @@ use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use App\Models\Type;
-use App\Models\Husband;
-use App\Models\Wife;
 
 class FamilyResource extends Resource
 {
@@ -33,7 +30,7 @@ class FamilyResource extends Resource
                 Forms\Components\TextInput::make('husband_id')
                     ->numeric(),
                 Forms\Components\TextInput::make('wife_id')
-                    ->numeric(), 
+                    ->numeric(),
                 Forms\Components\TextInput::make('chan')
                     ->maxLength(255),
                 Forms\Components\TextInput::make('nchi')
