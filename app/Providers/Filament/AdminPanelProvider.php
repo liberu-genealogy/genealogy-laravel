@@ -21,6 +21,9 @@ use Illuminate\Session\Middleware\AuthenticateSession;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 use Maartenpaauw\Filament\Cashier\Stripe\BillingProvider;
+use App\Filament\Widgets\DabovilleReportWidget;
+use App\Filament\Widgets\DescendantChartWidget;
+use App\Filament\Widgets\FanChartWidget;
 //use App\Providers\Filament\SyncSpatiePermissionsWithFilamentTenants;
 use App\Filament\Pages\PedigreeChartPage;
 use App\Filament\Pages\FanChartPage;
@@ -48,15 +51,13 @@ class AdminPanelProvider extends PanelProvider
             ->pages([
                 Pages\Dashboard::class,
                 \Livewire\Livewire::component('pedigree-chart', PedigreeChart::class),
-                FanChartPage::class,
-                DescendantChartPage::class,
-                DAbovilleReportPage::class,
-                \App\Filament\Pages\PeopleDashboard::class,
-            ])
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
             ->widgets([
                 Widgets\AccountWidget::class,
                 Widgets\FilamentInfoWidget::class,
+                DabovilleReportWidget::class,
+                DescendantChartWidget::class,
+                FanChartWidget::class,
             ])
         ->plugin(FilamentSpatieRolesPermissionsPlugin::make())
         ->tenantRegistration(RegisterTeam::class)
