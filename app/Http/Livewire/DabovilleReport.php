@@ -54,6 +54,22 @@ class DabovilleReport extends Component
      *
      * @return void
      */
+    private function generateAhnentafel($person, $currentNumber)
+    {
+        $this->ahnentafelData[$person->id] = [
+            'number' => $currentNumber,
+            'name'   => $person->fullname(),
+            'birth'  => optional($person->birth())->date,
+            'death'  => optional($person->death())->date,
+        ];
+    
+        $childNumber = 1;
+        foreach ($person->child_in_family as $child) {
+            $this->generateAhnentafel($child, $currentNumber.'.'.$childNumber);
+            $childNumber++;
+        }
+    }
+    
     private function traverseFamilyTree($person, $currentNumber)
     {
         $this->reportData[$person->id] = [
@@ -62,10 +78,10 @@ class DabovilleReport extends Component
             'birth'  => optional($person->birth())->date,
             'death'  => optional($person->death())->date,
         ];
-
+    
         $childNumber = 1;
         foreach ($person->child_in_family as $child) {
-            $this->traverseFamilyTree($child, $currentNumber.'.'.$childNumber);
+            $this->generateAhnentafel($child, $currentNumber.'.'.$childNumber);
             $childNumber++;
         }
     }
