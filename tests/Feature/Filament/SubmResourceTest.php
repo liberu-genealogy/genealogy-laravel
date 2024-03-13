@@ -19,6 +19,11 @@ class SubmResourceTest extends TestCase
 {
     use RefreshDatabase;
 
+    /**
+     * Tests the configuration of the SubmResource.
+     *
+     * Ensures the model is correctly set and the form and table schemas have the expected number of fields and columns.
+     */
     /** @test */
     public function resource_is_correctly_configured()
     {
@@ -50,7 +55,6 @@ class SubmResourceTest extends TestCase
             // Add other fields accordingly
         ]);
     }
-
     /** @test */
     public function user_can_edit_subm()
     /**
