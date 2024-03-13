@@ -18,6 +18,11 @@ class TypeResourceTest extends TestCase
 {
     use RefreshDatabase;
 
+    /**
+     * Tests the configuration of the TypeResource.
+     *
+     * Ensures the model is correctly set and verifies the number of form fields and table columns.
+     */
     public function test_resource_configuration()
     {
         $this->assertEquals(Type::class, TypeResource::getModel());
