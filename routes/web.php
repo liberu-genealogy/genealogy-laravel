@@ -25,13 +25,6 @@ Route::post('/accept-invitation/{token}', 'TeamInvitationController@acceptInvita
 
 });
 
-use App\Http\Livewire\PedigreeChart;
-use Illuminate\Support\Facades\Route;
-use Livewire\Livewire;
-
-
-
-
 Route::get('/privacy', function () {
     return view('pages.privacy');
 })->name('privacy');
@@ -41,7 +34,4 @@ Route::get('/terms-and-conditions', function () {
 
 Route::get('/contact', function () { return view('contact'); });
 Route::post('/contact/send', 'App\Http\Controllers\ContactController@sendEmail');
-
-Route::get('/manage-subscription', [\App\Filament\Pages\ManageSubscription::class, 'mount'])->middleware('auth')->name('manage.subscription');
-
 
