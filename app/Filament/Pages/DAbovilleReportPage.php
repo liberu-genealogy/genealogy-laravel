@@ -20,10 +20,6 @@ class DAbovilleReportPage extends CustomFilamentBasePage
         return static::$navigationIcon;
     }
 
-//    public function render(): \Illuminate\Contracts\Support\Renderable
-//    {
-//        return \Livewire::mount(static::$view);
-//    }
 
     public function mount(): void
     {
