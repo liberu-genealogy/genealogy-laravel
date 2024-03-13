@@ -35,11 +35,9 @@ class FanChartPage extends Page
         return static::$navigationIcon;
     }
 
-    public function mount(): void
-    {
-        Livewire::mount(\App\Http\Livewire\FanChart::class);
-    }
-}
+    /**
+     * Mounts the Livewire component for the fan chart.
+     */
     public function mount(): void
     {
         Livewire::mount(\App\Http\Livewire\FanChart::class);
