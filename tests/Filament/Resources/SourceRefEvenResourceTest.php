@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * Tests the functionality and form schema of the SourceRefEvenResource class.
+ */
+
 namespace Tests\Filament\Resources;
 
 use App\Filament\Resources\SourceRefEvenResource;
@@ -30,6 +34,9 @@ class SourceRefEvenResourceTest extends TestCase
     }
 
     public function test_table_columns_are_correct()
+    }
+
+    public function test_table_columns_are_correct()
     {
         $table = SourceRefEvenResource::table(app(\Filament\Tables\Table::class));
         $columns = collect($table->getColumns());
@@ -41,9 +48,15 @@ class SourceRefEvenResourceTest extends TestCase
         }
     }
 
+    /**
+    * Tests if the navigation icon is set correctly.
+    */
     public function test_navigation_icon_is_correct()
     {
         $this->assertEquals('heroicon-o-rectangle-stack', SourceRefEvenResource::$navigationIcon);
+    }
+
+    public function test_model_binding_is_correct()
     }
 
     public function test_model_binding_is_correct()
@@ -57,6 +70,12 @@ class SourceRefEvenResourceTest extends TestCase
 
         $this->assertEquals('/', $pages['index']);
         $this->assertEquals('/create', $pages['create']);
+        $this->assertEquals('/{record}/edit', $pages['edit']);
+    }
+}
+        $this->assertEquals('/{record}/edit', $pages['edit']);
+    }
+}
         $this->assertEquals('/{record}/edit', $pages['edit']);
     }
 }
