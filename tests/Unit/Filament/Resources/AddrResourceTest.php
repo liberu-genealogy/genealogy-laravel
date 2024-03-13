@@ -10,6 +10,12 @@ use Filament\Tables\Actions\EditAction;
 use Filament\Tables\Actions\DeleteBulkAction;
 
 class AddrResourceTest extends TestCase
+/**
+ * This file contains tests for the AddrResource class, ensuring that the form schema and table configuration are correctly defined.
+ */
+ * Tests whether the form schema contains the expected fields with correct configurations for the AddrResource.
+ */
+class AddrResourceTest extends TestCase
 {
     public function test_form_schema_contains_expected_fields(): void
     {
@@ -43,6 +49,9 @@ class AddrResourceTest extends TestCase
         $expectedColumns = ['adr1', 'adr2', 'city', 'stae', 'post', 'ctry', 'created_at', 'updated_at'];
         foreach ($expectedColumns as $columnName) {
             $column = collect($columns)->firstWhere('name', $columnName);
+            $this->assertNotNull($column, "Column {$columnName} does not exist.");
+            $this->assertInstanceOf(TextColumn::class, $column, "Column {$columnName} is not of type TextColumn.");
+        }
             $this->assertNotNull($column, "Column {$columnName} does not exist.");
             $this->assertInstanceOf(TextColumn::class, $column, "Column {$columnName} is not of type TextColumn.");
         }
