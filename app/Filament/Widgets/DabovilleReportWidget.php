@@ -17,10 +17,22 @@ class DabovilleReportWidget extends Widget
         // Initial setup can be done here if needed
     }
 
+    /**
+     * Generates the Daboville report for a specified person.
+     * Parameters:
+     * - $personId: The ID of the person for whom to generate the report.
+     */
     public function generateReport($personId)
     {
         $this->selectedPersonId = $personId;
         $person = Person::find($personId);
+        if ($person) {
+            $this->reportData = [];
+            $this->traverseFamilyTree($person, '1');
+        }
+    }
+
+    private function traverseFamilyTree($person, $currentNumber)
         if ($person) {
             $this->reportData = [];
             $this->traverseFamilyTree($person, '1');
@@ -37,6 +49,12 @@ class DabovilleReportWidget extends Widget
         ];
 
         $childNumber = 1;
+        foreach ($person->child_in_family as $child) {
+            $this->traverseFamilyTree($child, $currentNumber . '.' . $childNumber);
+            $childNumber++;
+        }
+    }
+}
         foreach ($person->child_in_family as $child) {
             $this->traverseFamilyTree($child, $currentNumber . '.' . $childNumber);
             $childNumber++;
