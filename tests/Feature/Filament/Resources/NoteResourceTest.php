@@ -2,10 +2,10 @@
 
 namespace Tests\Feature\Filament\Resources;
 
-use Tests\TestCase;
+use App\Filament\Resources\NoteResource;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Livewire\Livewire;
-use App\Filament\Resources\NoteResource;
+use Tests\TestCase;
 
 /**
  * Tests the functionality of the NoteResource, ensuring that form fields are correctly defined and the table configuration is correct.

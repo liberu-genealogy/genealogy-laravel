@@ -2,19 +2,19 @@
 
 namespace Tests\Feature\Filament\Resources;
 
-use Tests\TestCase;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use App\Models\MediaObject;
-use Livewire\Livewire;
 use App\Filament\Resources\MediaObjectResource;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Livewire\Livewire;
+use Tests\TestCase;
 
 class MediaObjectResourceTest extends TestCase
 /**
  * Tests the functionality of the MediaObjectResource, focusing on form schema correctness and table configuration.
  */
 {
-    use RefreshDatabase, WithFaker;
+    use RefreshDatabase;
+    use WithFaker;
 
     public function test_form_schema_contains_correct_fields()
     {

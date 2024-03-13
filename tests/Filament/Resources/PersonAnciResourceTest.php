@@ -2,21 +2,22 @@
 
 namespace Tests\Filament\Resources;
 
-use Tests\TestCase;
 use App\Models\PersonAnci;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Tests\TestCase;
 
 class PersonAnciResourceTest extends TestCase
 {
-    use RefreshDatabase, WithFaker;
+    use RefreshDatabase;
+    use WithFaker;
 
     public function testCreatePersonAnci()
     {
         $data = [
             'group' => $this->faker->word,
-            'gid' => $this->faker->randomNumber(),
-            'anci' => $this->faker->word,
+            'gid'   => $this->faker->randomNumber(),
+            'anci'  => $this->faker->word,
         ];
 
         $response = $this->post(route('filament.resources.person-anci.store'), $data);
@@ -41,8 +42,8 @@ class PersonAnciResourceTest extends TestCase
 
         $updatedData = [
             'group' => 'Updated Group',
-            'gid' => $personAnci->gid + 1,
-            'anci' => 'Updated Anci',
+            'gid'   => $personAnci->gid + 1,
+            'anci'  => 'Updated Anci',
         ];
 
         $response = $this->put(route('filament.resources.person-anci.update', $personAnci), $updatedData);

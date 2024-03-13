@@ -2,11 +2,10 @@
 
 namespace Tests\Feature\Filament\Resources;
 
-use Tests\TestCase;
+use App\Filament\Resources\PersonAliaResource;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Livewire\Livewire;
-use App\Filament\Resources\PersonAliaResource;
-use App\Models\PersonAlia;
+use Tests\TestCase;
 
 class PersonAliaResourceTest extends TestCase
 /**
