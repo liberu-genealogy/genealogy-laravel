@@ -42,8 +42,10 @@ class DabovilleReportWidget extends Widget
             $childNumber++;
         }
     }
-}
-public function render(): \Illuminate\Contracts\View\View
-{
-    return view(static::$view, ['reportData' => $this->reportData, 'selectedPersonId' => $this->selectedPersonId]);
+
+	public function render(): \Illuminate\Contracts\View\View
+	{
+	    return view(static::$view, ['reportData' => $this->reportData, 'selectedPersonId' => $this->selectedPersonId]);
+	}
+
 }
