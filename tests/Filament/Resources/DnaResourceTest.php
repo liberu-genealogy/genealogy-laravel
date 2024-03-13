@@ -12,6 +12,9 @@ use Illuminate\Support\Facades\Storage;
 use Tests\TestCase;
 
 class DnaResourceTest extends TestCase
+/**
+ * This file contains tests for the DNA resource in the genealogy-laravel application.
+ */
 {
     use RefreshDatabase;
 
@@ -39,6 +42,12 @@ class DnaResourceTest extends TestCase
 
         Storage::disk('private')->assertExists("gedcom-form-imports/{$file->hashName()}");
     }
+    /**
+     * Tests the form configuration for the DNA resource.
+     * Ensures that the form accepts a file upload and queues the ImportGedcom job.
+     *
+     * @return void
+     */
 
     public function test_table_configuration()
     {
@@ -54,3 +63,9 @@ class DnaResourceTest extends TestCase
                  ->assertSeeText($dna->updated_at);
     }
 }
+    /**
+     * Tests the table configuration for the DNA resource.
+     * Ensures that the table displays correct information about DNA entries.
+     *
+     * @return void
+     */
