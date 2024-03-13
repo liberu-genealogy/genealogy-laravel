@@ -10,6 +10,7 @@
         <li>The content of the pages of this website is for your general information and use only. It is subject to change without notice.</li>
         <li>This website uses cookies to monitor browsing preferences. If you do allow cookies to be used, the following personal information may be stored by us for use by third parties.</li>
         <li>Neither we nor any third parties provide any warranty or guarantee as to the accuracy, timeliness, performance, completeness or suitability of the information and materials found or offered on this website for any particular purpose.</li>
+        <li>You can view a detailed Ahnentafel report of people and families in our database by visiting our <a href="/ahnentafel">Ahnentafel report page</a>.</li>
     </ul>
     <p class="text-gray-600 mb-4">Your use of any information or materials on this website is entirely at your own risk, for which we shall not be liable. It shall be your own responsibility to ensure that any products, services or information available through this website meet your specific requirements.</p>
     <p class="text-gray-600 mb-4">All trade marks reproduced in this website which are not the property of, or licensed to, the operator are acknowledged on the website.</p>
