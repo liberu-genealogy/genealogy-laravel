@@ -29,7 +29,6 @@ class StripeSubscriptionService
             'trial_ends_at' => now()->addDays(14),
         ]);
     }
-}
     /**
      * Update an existing subscription.
      *
@@ -77,3 +76,4 @@ class StripeSubscriptionService
             return ['success' => false, 'message' => 'Error cancelling subscription: ' . $e->getMessage()];
         }
     }
+}
