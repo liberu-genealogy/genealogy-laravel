@@ -15,6 +15,15 @@ use App\Http\Livewire\AnotherComponent;
 
 class FilamentServiceProvider extends ServiceProvider
 {
+    /**
+     * Registers custom Livewire components for the Filament admin panel.
+     *
+     * This method utilizes the Panel facade to register Livewire components, making them
+     * available for use within the Filament admin panel. It ensures that all necessary
+     * components are registered and accessible.
+     *
+     * @return void
+     */
     public function boot()
     {
         Panel::registerLivewireComponent('example-component', ExampleComponent::class);
