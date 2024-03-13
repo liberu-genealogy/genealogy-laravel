@@ -49,3 +49,18 @@ class FamilyEventResourceTest extends TestCase
         $this->assertTrue($table['title']->isSearchable(), "title column should be searchable.");
     }
 }
+/**
+ * This file contains tests for the FamilyEvent resource in the genealogy-laravel application.
+ */
+
+        // Example of asserting specific column properties
+        $this->assertTrue($table['family_id']->isSortable(), "family_id column should be sortable.");
+        $this->assertTrue($table['title']->isSearchable(), "title column should be searchable.");
+    }
+}
+
+        // Example of asserting specific column properties
+        $this->assertTrue($table['family_id']->isSortable(), "family_id column should be sortable.");
+        $this->assertTrue($table['title']->isSearchable(), "title column should be searchable.");
+    }
+}
