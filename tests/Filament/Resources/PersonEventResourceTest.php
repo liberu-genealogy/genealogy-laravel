@@ -2,38 +2,39 @@
 
 namespace Tests\Filament\Resources;
 
-use Tests\TestCase;
 use App\Models\PersonEvent;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Tests\TestCase;
 
 class PersonEventResourceTest extends TestCase
 {
-    use RefreshDatabase, WithFaker;
+    use RefreshDatabase;
+    use WithFaker;
 
     public function testCreatePersonEvent()
     {
         $data = [
             'converted_date' => $this->faker->date,
-            'year' => $this->faker->year,
-            'month' => $this->faker->month,
-            'day' => $this->faker->dayOfMonth,
-            'type' => $this->faker->word,
-            'attr' => $this->faker->sentence,
-            'plac' => $this->faker->city,
-            'addr_id' => $this->faker->randomNumber(),
-            'phon' => $this->faker->phoneNumber,
-            'caus' => $this->faker->sentence,
-            'age' => $this->faker->randomDigitNotNull,
-            'agnc' => $this->faker->company,
-            'adop' => $this->faker->word,
-            'adop_famc' => $this->faker->word,
-            'birt_famc' => $this->faker->word,
-            'person_id' => $this->faker->randomNumber(),
-            'title' => $this->faker->sentence,
-            'date' => $this->faker->date,
-            'description' => $this->faker->sentence,
-            'places_id' => $this->faker->randomNumber(),
+            'year'           => $this->faker->year,
+            'month'          => $this->faker->month,
+            'day'            => $this->faker->dayOfMonth,
+            'type'           => $this->faker->word,
+            'attr'           => $this->faker->sentence,
+            'plac'           => $this->faker->city,
+            'addr_id'        => $this->faker->randomNumber(),
+            'phon'           => $this->faker->phoneNumber,
+            'caus'           => $this->faker->sentence,
+            'age'            => $this->faker->randomDigitNotNull,
+            'agnc'           => $this->faker->company,
+            'adop'           => $this->faker->word,
+            'adop_famc'      => $this->faker->word,
+            'birt_famc'      => $this->faker->word,
+            'person_id'      => $this->faker->randomNumber(),
+            'title'          => $this->faker->sentence,
+            'date'           => $this->faker->date,
+            'description'    => $this->faker->sentence,
+            'places_id'      => $this->faker->randomNumber(),
         ];
 
         $response = $this->post(route('filament.resources.person-events.store'), $data);

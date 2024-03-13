@@ -1,9 +1,9 @@
-&lt;?php
+<?php
 
 namespace App\Filament\Widgets;
 
-use Filament\Widgets\Widget;
 use App\Models\Person;
+use Filament\Widgets\Widget;
 
 class DescendantChartWidget extends Widget
 {
@@ -21,7 +21,7 @@ class DescendantChartWidget extends Widget
     {
         return array_map(function ($item) {
             return [
-                'id' => $item['id'],
+                'id'   => $item['id'],
                 'name' => $item['name'],
             ];
         }, $data);

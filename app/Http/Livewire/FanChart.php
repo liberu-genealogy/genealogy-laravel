@@ -2,8 +2,8 @@
 
 namespace App\Http\Livewire;
 
-use Livewire\Component;
-use App\Models\Person; // Assuming there's a Person model to fetch genealogical data
+use App\Models\Person;
+use Livewire\Component; // Assuming there's a Person model to fetch genealogical data
 
 class FanChart extends Component
 {

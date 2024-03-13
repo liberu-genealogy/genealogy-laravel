@@ -2,14 +2,14 @@
 
 namespace App\Http\Livewire;
 
-use Livewire\Component;
 use App\Models\Person;
+use Livewire\Component;
 
 class DescendantChartComponent extends Component
 {
     public $descendantsData = [];
 
-        /**
+    /**
      * Mounts the component and retrieves the descendants data.
      */
     public function mount()
@@ -24,7 +24,7 @@ class DescendantChartComponent extends Component
         // This is a placeholder for the actual data processing logic
         return array_map(function ($item) {
             return [
-                'id' => $item['id'],
+                'id'   => $item['id'],
                 'name' => $item['name'],
                 // Additional processing as per D3.js requirements
             ];

@@ -16,13 +16,8 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('layouts.home');
 
-
-
-Route::post('/send-invitation', 'TeamInvitationController@sendInvitation')->name('send.invitation');
-Route::post('/accept-invitation/{token}', 'TeamInvitationController@acceptInvitation')->name('accept.invitation');
-
-
-
+    Route::post('/send-invitation', 'TeamInvitationController@sendInvitation')->name('send.invitation');
+    Route::post('/accept-invitation/{token}', 'TeamInvitationController@acceptInvitation')->name('accept.invitation');
 });
 
 Route::get('/privacy', function () {
@@ -34,4 +29,3 @@ Route::get('/terms-and-conditions', function () {
 
 Route::get('/contact', function () { return view('contact'); });
 Route::post('/contact/send', 'App\Http\Controllers\ContactController@sendEmail');
-

@@ -3,9 +3,6 @@
 namespace Tests\Feature\Filament;
 
 use App\Filament\Resources\SubmResource;
-use App\Filament\Resources\SubmResource\Pages\CreateSubm;
-use App\Filament\Resources\SubmResource\Pages\EditSubm;
-use App\Filament\Resources\SubmResource\Pages\ListSubms;
 use App\Models\Subm;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -30,8 +27,8 @@ class SubmResourceTest extends TestCase
         $this->actingAsUser();
         $response = $this->post(route('filament.resources.subms.create'), [
             'group' => 'Test Group',
-            'gid' => '123',
-            'name' => 'Test Name',
+            'gid'   => '123',
+            'name'  => 'Test Name',
             // Add other fields accordingly
         ]);
         $response->assertStatus(302);
@@ -52,7 +49,7 @@ class SubmResourceTest extends TestCase
         ]);
         $response->assertStatus(302);
         $this->assertDatabaseHas('subms', [
-            'id' => $subm->id,
+            'id'   => $subm->id,
             'name' => 'Updated Name',
             // Add other fields accordingly
         ]);

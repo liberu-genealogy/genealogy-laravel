@@ -32,7 +32,7 @@ class RegisterTeam extends RegisterTenant
                             resolve(TeamInvitationController::class)->sendInvitation(new Request(['email' => $email, 'team_id' => $teamId]));
                         }
                     })
-                    ->type('button')
+                    ->type('button'),
             ]);
     }
 

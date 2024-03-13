@@ -3,7 +3,6 @@
 namespace Tests\Filament\Resources;
 
 use App\Filament\Resources\FamilyResource;
-use App\Models\Family;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -26,13 +25,13 @@ class FamilyResourceTest extends TestCase
 
         $expectedFields = [
             'description' => ['type' => 'textarea', 'maxLength' => 65535],
-            'is_active' => ['type' => 'numeric'],
-            'type_id' => ['type' => 'numeric'],
-            'husband_id' => ['type' => 'numeric'],
-            'wife_id' => ['type' => 'numeric'],
-            'chan' => ['type' => 'text', 'maxLength' => 255],
-            'nchi' => ['type' => 'text', 'maxLength' => 255],
-            'rin' => ['type' => 'text', 'maxLength' => 255],
+            'is_active'   => ['type' => 'numeric'],
+            'type_id'     => ['type' => 'numeric'],
+            'husband_id'  => ['type' => 'numeric'],
+            'wife_id'     => ['type' => 'numeric'],
+            'chan'        => ['type' => 'text', 'maxLength' => 255],
+            'nchi'        => ['type' => 'text', 'maxLength' => 255],
+            'rin'         => ['type' => 'text', 'maxLength' => 255],
         ];
 
         foreach ($expectedFields as $fieldName => $details) {
@@ -50,10 +49,10 @@ class FamilyResourceTest extends TestCase
         $table = FamilyResource::table(Table::make())->getColumns();
 
         $expectedColumns = [
-            'is_active' => ['sortable' => true, 'type' => 'numeric'],
-            'type_id' => ['sortable' => true, 'type' => 'numeric'],
+            'is_active'  => ['sortable' => true, 'type' => 'numeric'],
+            'type_id'    => ['sortable' => true, 'type' => 'numeric'],
             'husband_id' => ['sortable' => true, 'type' => 'numeric'],
-            'wife_id' => ['sortable' => true, 'type' => 'numeric'],
+            'wife_id'    => ['sortable' => true, 'type' => 'numeric'],
             'created_at' => ['sortable' => true, 'type' => 'dateTime'],
             'updated_at' => ['sortable' => true, 'type' => 'dateTime'],
             'is_active' => ['sortable' => true, 'type' => 'numeric'],
@@ -63,9 +62,9 @@ class FamilyResourceTest extends TestCase
             'created_at' => ['sortable' => true, 'type' => 'dateTime'],
             'updated_at' => ['sortable' => true, 'type' => 'dateTime'],
             'deleted_at' => ['sortable' => true, 'type' => 'dateTime'],
-            'chan' => ['searchable' => true, 'type' => 'text'],
-            'nchi' => ['searchable' => true, 'type' => 'text'],
-            'rin' => ['searchable' => true, 'type' => 'text'],
+            'chan'       => ['searchable' => true, 'type' => 'text'],
+            'nchi'       => ['searchable' => true, 'type' => 'text'],
+            'rin'        => ['searchable' => true, 'type' => 'text'],
         ];
 
         foreach ($expectedColumns as $columnName => $details) {

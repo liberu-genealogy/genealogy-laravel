@@ -3,10 +3,7 @@
 namespace Tests\Filament\Resources;
 
 use App\Filament\Resources\FamilySlgsResource;
-use App\Models\FamilySlgs;
-use Filament\Forms;
 use Filament\Resources\Form;
-use Filament\Tables;
 use Filament\Resources\Table;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -30,10 +27,10 @@ class FamilySlgsResourceTest extends TestCase
 
         $expectedFields = [
             'family_id' => ['type' => 'numeric'],
-            'stat' => ['type' => 'text', 'maxLength' => 255],
-            'date' => ['type' => 'text', 'maxLength' => 255],
-            'plac' => ['type' => 'text', 'maxLength' => 255],
-            'temp' => ['type' => 'text', 'maxLength' => 255],
+            'stat'      => ['type' => 'text', 'maxLength' => 255],
+            'date'      => ['type' => 'text', 'maxLength' => 255],
+            'plac'      => ['type' => 'text', 'maxLength' => 255],
+            'temp'      => ['type' => 'text', 'maxLength' => 255],
         ];
 
         foreach ($expectedFields as $fieldName => $details) {
@@ -51,11 +48,11 @@ class FamilySlgsResourceTest extends TestCase
         $table = FamilySlgsResource::table(Table::make())->getColumns();
 
         $expectedColumns = [
-            'family_id' => ['sortable' => true, 'type' => 'numeric'],
-            'stat' => ['searchable' => true, 'type' => 'text'],
-            'date' => ['searchable' => true, 'type' => 'text'],
-            'plac' => ['searchable' => true, 'type' => 'text'],
-            'temp' => ['searchable' => true, 'type' => 'text'],
+            'family_id'  => ['sortable' => true, 'type' => 'numeric'],
+            'stat'       => ['searchable' => true, 'type' => 'text'],
+            'date'       => ['searchable' => true, 'type' => 'text'],
+            'plac'       => ['searchable' => true, 'type' => 'text'],
+            'temp'       => ['searchable' => true, 'type' => 'text'],
             'created_at' => ['sortable' => true, 'type' => 'dateTime', 'toggleable' => true],
             'family_id' => ['sortable' => true, 'type' => 'numeric'],
             'stat' => ['searchable' => true, 'type' => 'text'],
