@@ -4,6 +4,8 @@ namespace App\Http\Livewire;
 
 use Livewire\Component;
 use App\Models\Person;
+use Carbon\Carbon;
+
 
 class PeopleSearch extends Component
 {
@@ -24,14 +26,6 @@ class PeopleSearch extends Component
                                ->get();
     }
 
-    public function render()
-    {
-        return view('livewire.people-search', [
-            'results' => $this->results,
-        ]);
-    }
-}
-use Carbon\Carbon;
     public function render()
     {
         return view('livewire.people-search', [
