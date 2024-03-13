@@ -1,5 +1,11 @@
 <?php
 
+/**
+ * Tests for the Publication Filament Resource.
+ * 
+ * Contains tests for CRUD operations and any custom functionality of the PublicationResource.
+ */
+
 namespace Tests\Feature\Filament\Resources;
 
 use App\Filament\Resources\PublicationResource;
@@ -33,6 +39,16 @@ class PublicationResourceTest extends TestCase
         $isActiveField = collect($form)->firstWhere('name', 'is_active');
         $this->assertNotNull($isActiveField);
         $this->assertTrue($isActiveField->isRequired());
+    /**
+     * Test the model association with Publication.
+     *
+     * @return void
+     */
+    /**
+     * Test the form fields for Publication.
+     *
+     * @return void
+     */
         $this->assertTrue($isActiveField->isNumeric());
     }
 
@@ -59,3 +75,8 @@ class PublicationResourceTest extends TestCase
         $this->assertTrue($updatedAtColumn->isToggleable());
     }
 }
+    /**
+     * Test the table columns for Publication.
+     *
+     * @return void
+     */
