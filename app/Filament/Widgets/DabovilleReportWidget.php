@@ -47,3 +47,10 @@ public function render(): \Illuminate\Contracts\View\View
 {
     return view(static::$view, ['reportData' => $this->reportData, 'selectedPersonId' => $this->selectedPersonId]);
 }
+/**
+ * Renders the Daboville Report widget view.
+ * 
+ * This function prepares the data for the Daboville Report widget and returns the view to be rendered.
+ * 
+ * @return \Illuminate\Contracts\View\View The view instance for the Daboville Report widget.
+ */
