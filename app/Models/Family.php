@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use App\Models\Person;
 
 class Family extends \FamilyTree365\LaravelGedcom\Models\Family
 {
@@ -18,6 +17,7 @@ class Family extends \FamilyTree365\LaravelGedcom\Models\Family
     {
         return $this->belongsTo(Person::class, 'wife_id');
     }
+
     public function wife()
     {
         return $this->belongsTo(Person::class, 'wife_id');
