@@ -1,4 +1,4 @@
-&lt;?php
+<?php
 
 namespace App\Filament\Pages;
 
@@ -17,7 +17,7 @@ class DescendantChartPage extends Page
         return $this->title;
     }
 
-    public function getNavigationIcon(): string
+    public static function getNavigationIcon(): string
     {
         return $this->navigationIcon;
     }
