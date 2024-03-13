@@ -17,7 +17,7 @@ use Livewire\Component;
 class DabovilleReport extends Component
 {
     public $selectedPersonId;
-    public $reportData = [];
+    public $henryNumberingReportData = [];
 
     /**
      * Renders the DabovilleReport component.
@@ -47,7 +47,12 @@ class DabovilleReport extends Component
     }
 
     /**
-     * Traverses the family tree starting from the given person.
+        $this->traverseFamilyTreeHenryNumbering($person, '1');
+        }
+    }
+}
+    /**
+     * Traverses the family tree starting from the given person using the d'Aboville numbering system.
      *
      * @param Person person The person to start the traversal from.
      * @param string currentNumber The current number in the family tree.
@@ -56,12 +61,7 @@ class DabovilleReport extends Component
      */
     private function traverseFamilyTree($person, $currentNumber)
     {
-        $this->reportData[$person->id] = [
-            'number' => $currentNumber,
-            'name'   => $person->fullname(),
-            'birth'  => optional($person->birth())->date,
-            'death'  => optional($person->death())->date,
-        ];
+        $this->reportData[$person->id]['dAbovilleNumber'] = $currentNumber;
 
         $childNumber = 1;
         foreach ($person->child_in_family as $child) {
@@ -69,4 +69,39 @@ class DabovilleReport extends Component
             $childNumber++;
         }
     }
-}
+    /**
+     * Traverses the family tree starting from the given person using the d'Aboville numbering system.
+     *
+     * @param Person person The person to start the traversal from.
+     * @param string currentNumber The current number in the family tree.
+     *
+     * @return void
+     */
+    private function traverseFamilyTree($person, $currentNumber)
+    {
+        $this->reportData[$person->id]['dAbovilleNumber'] = $currentNumber;
+
+        $childNumber = 1;
+        foreach ($person->child_in_family as $child) {
+            $this->traverseFamilyTree($child, $currentNumber.'.'.$childNumber);
+            $childNumber++;
+        }
+    }
+    /**
+     * Traverses the family tree starting from the given person using the d'Aboville numbering system.
+     *
+     * @param Person person The person to start the traversal from.
+     * @param string currentNumber The current number in the family tree.
+     *
+     * @return void
+     */
+    private function traverseFamilyTree($person, $currentNumber)
+    {
+        $this->reportData[$person->id]['dAbovilleNumber'] = $currentNumber;
+
+        $childNumber = 1;
+        foreach ($person->child_in_family as $child) {
+            $this->traverseFamilyTree($child, $currentNumber.'.'.$childNumber);
+            $childNumber++;
+        }
+    }
