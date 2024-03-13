@@ -10,7 +10,7 @@ class DescendantChartPage extends Page
     protected static string $view = 'filament.pages.descendant-chart';
     protected static ?string $resource = null;
     protected static ?string $title = 'Descendant Chart';
-    protected ?string $navigationIcon = 'heroicon-o-chart-bar';
+    protected static ?string $navigationIcon = 'heroicon-o-chart-bar';
 
     public function getTitle(): string
     {
