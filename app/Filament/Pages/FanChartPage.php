@@ -11,7 +11,7 @@ class FanChartPage extends Page
 
     protected static ?string $resource = null;
 
-    protected static ?string $title = 'Fan Chart';
+    protected ?string $title = 'Fan Chart';
 
     protected static ?string $navigationIcon = 'heroicon-o-chart-pie';
 
@@ -22,7 +22,7 @@ class FanChartPage extends Page
 
     public static function getNavigationIcon(): string
     {
-        return $this->navigationIcon;
+        return static::$navigationIcon;
     }
 
     public function mount(): void
