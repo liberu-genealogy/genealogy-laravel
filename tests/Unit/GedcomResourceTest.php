@@ -5,6 +5,11 @@ namespace Tests\Unit;
 /**
  * Test case for GedcomResourceTest.
  */
+/**
+ * Test case for exporting Gedcom with an authenticated user.
+ *
+ * @return void
+ */
 {
     public function testExportGedcomDispatchesJobWithAuthenticatedUser(): void
     {
@@ -18,6 +23,7 @@ namespace Tests\Unit;
             return $job->user->id === $user->id && preg_match('/\d{4}-\d{2}-\d{2}_\d{6}_family_tree.ged/', $job->fileName);
         });
     }
+}
 
     public function testExportGedcomFailsWithoutAuthenticatedUser(): void
     {
