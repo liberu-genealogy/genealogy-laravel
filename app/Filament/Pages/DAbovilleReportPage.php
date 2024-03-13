@@ -9,8 +9,16 @@ class DAbovilleReportPage extends CustomFilamentBasePage
 {
     protected static string $view = 'livewire.daboville-report';
 
-//    public function render(): \Illuminate\Contracts\Support\Renderable
-//    {
+    /**
+     * Renders the Livewire component.
+     * 
+     * This function mounts the Livewire component specified by the static view variable
+     * and returns it for rendering.
+     */
+    public function render(): \Illuminate\Contracts\Support\Renderable
+    {
+        return \Livewire::mount(static::$view);
+    }
 //        return \Livewire::mount(static::$view);
 //    }
 
