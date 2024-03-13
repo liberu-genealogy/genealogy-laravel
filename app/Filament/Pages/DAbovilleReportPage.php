@@ -1,5 +1,12 @@
 <?php
 
+/**
+ * Class DAbovilleReportPage
+ * 
+ * Represents the page for displaying the D'Aboville Report within the genealogy application.
+ * Utilizes Livewire for dynamic content rendering and extends CustomFilamentBasePage for base functionalities.
+ */
+
 namespace App\Filament\Pages;
 
 use App\Filament\Pages\CustomFilamentBasePage;
@@ -27,6 +34,16 @@ class DAbovilleReportPage extends CustomFilamentBasePage
         return $this->title;
     }
 
+    public function getNavigationIcon(): string
+    {
+        return $this->navigationIcon;
+    }
+
+    public function getNavigationIcon(): string
+    {
+        return $this->navigationIcon;
+    }
+     */
     public function getNavigationIcon(): string
     {
         return $this->navigationIcon;
