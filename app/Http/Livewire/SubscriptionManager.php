@@ -1,3 +1,7 @@
+/**
+ * Livewire component for managing subscriptions from the user interface.
+ * Allows users to view their current subscription, select a new plan, and cancel their subscription.
+ */
 &lt;?php
 
 namespace App\Http\Livewire;
@@ -49,6 +53,23 @@ class SubscriptionManager extends Component
     {
         return view('livewire.subscription-manager', [
             'subscriptionDetails' => $this->subscriptionDetails,
+            'plans' => $this->plans,
+        ]);
+    }
+}
+            'plans' => $this->plans,
+        ]);
+    }
+}
+            'subscriptionDetails' => $this->subscriptionDetails,
+            'plans' => $this->plans,
+        ]);
+    }
+}
+            'plans' => $this->plans,
+        ]);
+    }
+}
             'plans' => $this->plans,
         ]);
     }
