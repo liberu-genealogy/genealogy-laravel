@@ -17,7 +17,7 @@ class DescendantChartPage extends Page
         return static::$title;
     }
 
-    public static function getNavigationIcon(): string
+    public function getNavigationIcon(): string
     {
         return static::$navigationIcon;
     }
