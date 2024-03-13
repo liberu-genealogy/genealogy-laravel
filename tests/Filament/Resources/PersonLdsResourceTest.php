@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * Tests for the PersonLdsResource.
+ * This class provides automated tests for CRUD operations and resource visibility within the Filament admin panel.
+ */
+
 namespace Tests\Filament\Resources;
 
 use Tests\TestCase;
@@ -31,6 +36,9 @@ class PersonLdsResourceTest extends TestCase
     }
 
     public function testReadPersonLds()
+    /**
+     * Test the creation of a PersonLds resource.
+     */
     {
         $personLds = PersonLds::factory()->create();
 
@@ -41,6 +49,9 @@ class PersonLdsResourceTest extends TestCase
     }
 
     public function testUpdatePersonLds()
+    /**
+     * Test the retrieval of a PersonLds resource.
+     */
     {
         $personLds = PersonLds::factory()->create();
 
@@ -56,6 +67,9 @@ class PersonLdsResourceTest extends TestCase
     }
 
     public function testDeletePersonLds()
+    /**
+     * Test the update functionality for a PersonLds resource.
+     */
     {
         $personLds = PersonLds::factory()->create();
 
@@ -65,3 +79,6 @@ class PersonLdsResourceTest extends TestCase
         $this->assertSoftDeleted('person_lds', ['id' => $personLds->id]);
     }
 }
+    /**
+     * Test the deletion of a PersonLds resource.
+     */
