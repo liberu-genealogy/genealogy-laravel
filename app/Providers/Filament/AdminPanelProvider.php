@@ -58,6 +58,7 @@ class AdminPanelProvider extends PanelProvider
                 DabovilleReportWidget::class,
                 DescendantChartWidget::class,
                 FanChartWidget::class,
+                \App\Filament\Widgets\PedigreeChartWidget::class,
             ])
         ->plugin(FilamentSpatieRolesPermissionsPlugin::make())
         ->tenantRegistration(RegisterTeam::class)
