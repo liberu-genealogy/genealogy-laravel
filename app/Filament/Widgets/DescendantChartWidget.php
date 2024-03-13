@@ -27,7 +27,7 @@ class DescendantChartWidget extends Widget
         }, $data);
     }
 
-    public function render()
+    public function render(): \Illuminate\Contracts\View\View
     {
         return view(static::$view, ['descendantsData' => $this->descendantsData]);
     }
