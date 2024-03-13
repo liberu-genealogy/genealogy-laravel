@@ -9,6 +9,13 @@ use PHPUnit\Framework\TestCase;
 
 class StripeSubscriptionServiceTest extends TestCase
 {
+    /**
+     * Test the creation of a trial subscription for a team within Stripe.
+     *
+     * This test verifies that a trial subscription can be successfully created
+     * for a given team using mocked Stripe and Team instances, ensuring that the
+     * Stripe Subscription is correctly set up with a 14-day trial period.
+     */
     public function testCreateTrialSubscription(): void
     {
         // Create a mock Team instance
