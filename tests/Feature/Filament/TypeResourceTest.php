@@ -1,5 +1,11 @@
 <?php
 
+/**
+ * This file contains tests for the TypeResource class.
+ *
+ * It includes tests for the creation and validation of types within the genealogy application.
+ */
+
 namespace Tests\Feature\Filament;
 
 use App\Filament\Resources\TypeResource;
