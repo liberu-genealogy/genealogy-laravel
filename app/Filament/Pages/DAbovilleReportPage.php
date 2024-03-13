@@ -14,8 +14,14 @@ class DAbovilleReportPage extends CustomFilamentBasePage
 //        return \Livewire::mount(static::$view);
 //    }
 
+    /**
+     * Mounts the Livewire component by setting the view.
+     */
     public function mount(): void
     {
+        Livewire::mount(static::$view);
+    }
+}
         Livewire::mount(static::$view);
     }
 }
