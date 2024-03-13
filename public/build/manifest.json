@@ -1,17 +1,11 @@
 {
   "resources/css/app.css": {
-    "file": "assets/app-CDx0vjMq.css",
+    "file": "assets/app-D7CSP_Vg.css",
     "src": "resources/css/app.css",
     "isEntry": true
   },
   "resources/js/app.js": {
     "file": "assets/app-l0sNRNKZ.js",
-  },
-  "resources/css/tailwind.css": {
-    "file": "assets/tailwind-HASH_PLACEHOLDER.css",
-    "src": "resources/css/tailwind.css",
-    "isEntry": true
-  }
     "src": "resources/js/app.js",
     "isEntry": true
   }
