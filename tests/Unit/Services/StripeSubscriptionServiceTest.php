@@ -38,7 +38,6 @@ class StripeSubscriptionServiceTest extends TestCase
         // Mock the StripeApiService and DatabaseUpdateService
         // Call the updateSubscription method and simulate a Stripe API error
         // Assert that the expected error message is returned
-
         // Test case 4: Stripe API error
         // Mock the StripeApiService and DatabaseUpdateService
         // Call the updateSubscription method and simulate a Stripe API error
