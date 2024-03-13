@@ -1,5 +1,11 @@
 <?php
 
+/**
+ * This file contains tests for the SubnResource class.
+ *
+ * It includes tests for the creation, editing, and listing of subns within the genealogy application.
+ */
+
 namespace Tests\Feature\Filament;
 
 use App\Filament\Resources\SubnResource;
