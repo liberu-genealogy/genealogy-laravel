@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * Service class for managing Stripe subscriptions.
+ * Includes functionality for creating trial subscriptions, updating subscriptions, and cancelling subscriptions.
+ */
 namespace App\Services;
 
 use App\Models\Team;
