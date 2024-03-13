@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Liberu Genealogy</title>
-    <link href="{{ mix('build/assets/app.css') }}" rel="stylesheet">
+    <link href="{{ URL::asset('build/assets/css/app.css'); }}" rel="stylesheet">
     @livewireStyles
 </head>
 <body>
