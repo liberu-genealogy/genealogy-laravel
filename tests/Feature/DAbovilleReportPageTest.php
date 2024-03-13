@@ -22,4 +22,12 @@ class DAbovilleReportPageTest extends TestCase
 
         $this->assertViewIs('livewire.daboville-report', $view);
     }
+
+    public function testRenderMethodReturnsRenderableInstance()
+    {
+        $page = new DAbovilleReportPage();
+        $renderable = $page->render();
+
+        $this->assertInstanceOf(\Illuminate\Contracts\Support\Renderable::class, $renderable);
+    }
 }
