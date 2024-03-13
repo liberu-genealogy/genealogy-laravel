@@ -2,13 +2,9 @@
 
 namespace Tests\Unit;
 
-use PHPUnit\Framework\TestCase;
-use App\Filament\Resources\GedcomResource;
-use Illuminate\Support\Facades\Queue;
-use Illuminate\Support\Facades\Auth;
-use App\Jobs\ExportGedCom;
-
-class GedcomResourceTest extends TestCase
+/**
+ * Test case for GedcomResourceTest.
+ */
 {
     public function testExportGedcomDispatchesJobWithAuthenticatedUser(): void
     {
@@ -29,7 +25,6 @@ class GedcomResourceTest extends TestCase
         Auth::shouldReceive('user')->andReturn(null);
 
         GedcomResource::exportGedcom();
-
         Queue::assertNotPushed(ExportGedCom::class);
     }
 }
