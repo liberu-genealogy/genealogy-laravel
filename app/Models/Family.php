@@ -4,6 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
+/**
+ * Represents a family unit in a genealogy context.
+ *
+ * This class extends the Family model from the LaravelGedcom package and provides relationships and functionality
+ * to work with husband, wife, and children within a family structure as defined in a genealogical dataset.
+ */
 class Family extends \FamilyTree365\LaravelGedcom\Models\Family
 {
     use HasFactory;
