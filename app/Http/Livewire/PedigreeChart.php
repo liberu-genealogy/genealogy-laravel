@@ -10,9 +10,9 @@ class PedigreeChart extends Component
 {
     public Collection $people;
 
-    public function mount()
+    public function mount($people)
     {
-        $this->people = Person::all(); // Simplified fetching logic for demonstration
+        $this->people = collect($people); // Adjusted to accept people data from the widget
     }
 
     public function render()
@@ -48,4 +48,6 @@ class PedigreeChart extends Component
             'pan' => 'pan',
         ];
     }
+}
+}
 }
