@@ -24,7 +24,7 @@ export default defineConfig({
         'resources/css/tailwind.css',
         'resources/css/custom.css',
     ],
+//    build: {
+//        outDir: '../public',
+//    },
 })
-    build: {
-        outDir: '../public',
-    },
