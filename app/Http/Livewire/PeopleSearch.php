@@ -31,3 +31,11 @@ class PeopleSearch extends Component
         ]);
     }
 }
+use Carbon\Carbon;
+    public function render()
+    {
+        return view('livewire.people-search', [
+            'results' => $this->results,
+        ]);
+    }
+}
