@@ -9,6 +9,9 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class SourceDataResourceTest extends TestCase
 {
+/**
+ * Tests the functionality and form schema of the SourceDataResource class.
+ */
     use RefreshDatabase;
 
     public function test_form_schema_is_correct()
@@ -25,6 +28,9 @@ class SourceDataResourceTest extends TestCase
         ];
 
         foreach ($expectedFields as $field) {
+/**
+ * Tests if the form schema contains all expected fields.
+ */
             $component = $schema->firstWhere('name', $field['name']);
             $this->assertNotNull($component, "{$field['name']} is missing in the form schema.");
             $this->assertEquals($field['type'], class_basename($component), "{$field['name']} is not of type {$field['type']}.");
@@ -33,6 +39,9 @@ class SourceDataResourceTest extends TestCase
             }
         }
     }
+/**
+ * Tests if the table columns contain all expected fields.
+ */
 
     public function test_table_columns_are_correct()
     {
@@ -54,6 +63,9 @@ class SourceDataResourceTest extends TestCase
     }
 
     public function test_model_binding_is_correct()
+/**
+ * Tests if the navigation icon is set correctly.
+ */
     {
         $this->assertEquals(SourceData::class, SourceDataResource::$model);
     }
@@ -67,3 +79,9 @@ class SourceDataResourceTest extends TestCase
         $this->assertEquals('/{record}/edit', $pages['edit']);
     }
 }
+/**
+ * Tests if the model binding is correctly set to the SourceData model.
+ */
+/**
+ * Tests if the page routes are correctly configured.
+ */
