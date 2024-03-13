@@ -12,9 +12,9 @@ class DescendantChartPage extends Page
     protected static ?string $title = 'Descendant Chart';
     protected static ?string $navigationIcon = 'heroicon-o-chart-bar';
 
-    public static function getTitle(): string
+    public function getTitle(): string
     {
-        return static::$title;
+        return $this->title;
     }
 
     public function getNavigationIcon(): string
