@@ -42,7 +42,7 @@ class DabovilleReport extends Component
         $person = Person::find($personId);
         if ($person) {
             $this->reportData = [];
-            $this->traverseFamilyTree($person, '1');
+            $this->traverseFamilyTree($person, '1', 1);
         }
     }
 
@@ -69,4 +69,29 @@ class DabovilleReport extends Component
             $childNumber++;
         }
     }
+}
+private function traverseFamilyTree($person, $currentNumber, $generation)
+{
+    $this->reportData[$person->id] = [
+        'number' => $currentNumber,
+        'name'   => $person->fullname(),
+        'birth'  => optional($person->birth())->date,
+        'death'  => optional($person->death())->date,
+        'henry'  => $this->generateHenryNumber($generation),
+    ];
+
+    $childNumber = 1;
+    foreach ($person->child_in_family as $child) {
+        $this->traverseFamilyTree($child, $currentNumber.'.'.$childNumber, $generation + 1);
+        $childNumber++;
+    }
+}
+
+private function generateHenryNumber($generation)
+{
+    $henryNumber = '';
+    for ($i = 1; $i <= $generation; $i++) {
+        $henryNumber .= $i . '.';
+    }
+    return rtrim($henryNumber, '.');
 }
