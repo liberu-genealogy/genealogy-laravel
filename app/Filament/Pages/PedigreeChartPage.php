@@ -2,7 +2,6 @@
 
 namespace App\Filament\Pages;
 
-use Filament\Resources\ResourcePage;
 use Filament\Pages\Page;
 
 class PedigreeChartPage extends Page

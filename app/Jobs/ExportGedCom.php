@@ -47,7 +47,7 @@ class ExportGedCom implements ShouldQueue
         $families = Family::all();
 
         // Logging the count of people and families to be exported
-        Log::info("Exporting " . $people->count() . " people and " . $families->count() . " families.");
+        Log::info('Exporting '.$people->count().' people and '.$families->count().' families.');
 
         // Generating GEDCOM content
         $writer = new GedcomGenerator($people, $families);
@@ -55,7 +55,7 @@ class ExportGedCom implements ShouldQueue
 
         // Storing the GEDCOM file
         $manager->storage()->put($this->file, $content);
-        Log::info("GEDCOM file generated and stored: " . $this->file);
+        Log::info('GEDCOM file generated and stored: '.$this->file);
 
         $up_nest = 3;
         $down_nest = 3;
@@ -70,14 +70,14 @@ class ExportGedCom implements ShouldQueue
 //        $filePath = $manager->storage()->path($filePath);
         //	chmod_r('/home/genealogia/domains/api.genealogia.co.uk/genealogy/storage/tenants/');
         // Setting permissions for the GEDCOM file
-        exec('chmod 0644 '. $manager->storage()->path($this->file));
-        Log::info("Permissions set for GEDCOM file.");
-        
+        exec('chmod 0644 '.$manager->storage()->path($this->file));
+        Log::info('Permissions set for GEDCOM file.');
+
         // Handling errors and exceptions
         try {
             // Export logic here
         } catch (\Exception $e) {
-            Log::error("Error during GEDCOM export: " . $e->getMessage());
+            Log::error('Error during GEDCOM export: '.$e->getMessage());
         }
         //exec ("find /home/genealogia/ap -type d -exec chmod 0750 {} +");
         //exec ("find /path/to/folder -type f -exec chmod 0644 {} +");

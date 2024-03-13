@@ -75,14 +75,14 @@ class CitationResourceTest extends TestCase
  */
     {
         $citationData = [
-            'name' => 'Test Citation',
+            'name'        => 'Test Citation',
             'description' => 'This is a test citation.',
-            'date' => now(),
-            'is_active' => 1,
-            'volume' => 10,
-            'page' => 100,
-            'confidence' => 5,
-            'source_id' => 1,
+            'date'        => now(),
+            'is_active'   => 1,
+            'volume'      => 10,
+            'page'        => 100,
+            'confidence'  => 5,
+            'source_id'   => 1,
         ];
 
         $citation = Citation::create($citationData);

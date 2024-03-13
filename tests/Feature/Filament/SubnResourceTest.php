@@ -3,9 +3,6 @@
 namespace Tests\Feature\Filament;
 
 use App\Filament\Resources\SubnResource;
-use App\Filament\Resources\SubnResource\Pages\CreateSubn;
-use App\Filament\Resources\SubnResource\Pages\EditSubn;
-use App\Filament\Resources\SubnResource\Pages\ListSubns;
 use App\Models\Subn;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -33,7 +30,7 @@ class SubnResourceTest extends TestCase
             'ance' => 'Test Ance',
             'desc' => 'Test Desc',
             'ordi' => 'Test Ordi',
-            'rin' => 'Test Rin',
+            'rin'  => 'Test Rin',
         ]);
         $response->assertStatus(302);
         $this->assertDatabaseHas('subns', [
@@ -53,7 +50,7 @@ class SubnResourceTest extends TestCase
         ]);
         $response->assertStatus(302);
         $this->assertDatabaseHas('subns', [
-            'id' => $subn->id,
+            'id'   => $subn->id,
             'subm' => 'Updated Subm',
             'famf' => 'Updated Famf',
         ]);
