@@ -16,7 +16,7 @@ class PedigreeChartWidget extends Widget
         $this->persons = Person::all();
     }
 
-    public function render()
+    public function render(): \Illuminate\Contracts\View\View
     {
         return view(static::$view, ['persons' => $this->persons]);
     }
