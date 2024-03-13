@@ -29,7 +29,7 @@ use App\Http\Livewire\PedigreeChart;
 use Illuminate\Support\Facades\Route;
 use Livewire\Livewire;
 
-// Route::get('/pedigree-chart', Livewire::component('pedigree-chart', PedigreeChart::class));
+
 
 
 Route::get('/privacy', function () {
