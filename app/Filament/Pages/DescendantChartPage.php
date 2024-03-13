@@ -27,3 +27,9 @@ class DescendantChartPage extends Page
         Livewire::mount(\App\Http\Livewire\DescendantChartComponent::class);
     }
 }
+/**
+ * Defines the Descendant Chart page in the Filament admin panel.
+ */
+        Livewire::mount(\App\Http\Livewire\DescendantChartComponent::class);
+    }
+}
