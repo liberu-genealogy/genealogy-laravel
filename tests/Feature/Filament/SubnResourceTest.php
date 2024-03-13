@@ -49,6 +49,11 @@ class SubnResourceTest extends TestCase
     }
 
     public function test_user_can_edit_subn()
+    /**
+     * Tests the configuration of the SubnResource.
+     *
+     * Verifies the correct model is set and counts the form fields and table columns to ensure they match expectations.
+     */
     {
         $user = User::factory()->create();
         $subn = Subn::factory()->create();
