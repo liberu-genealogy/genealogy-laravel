@@ -7,7 +7,13 @@ use App\Models\SourceDataEven;
 use Tests\TestCase;
 use Filament\Forms\Components\TextInput;
 
+/**
+ * Tests the functionality and form schema of the SourceDataEvenResource class.
+ */
 class SourceDataEvenResourceTest extends TestCase
+{
+ * Tests if the form schema contains all expected fields.
+ */
 {
     public function test_form_schema_is_correct()
     {
@@ -42,6 +48,9 @@ class SourceDataEvenResourceTest extends TestCase
 
         foreach ($expectedColumns as $column) {
             $this->assertTrue($columns->contains(fn ($component) => $component->getName() === $column), "{$column} is missing in the table columns.");
+
+        foreach ($expectedColumns as $column) {
+            $this->assertTrue($columns->contains(fn ($component) => $component->getName() === $column), "{$column} is missing in the table columns.");
         }
     }
 
@@ -51,6 +60,9 @@ class SourceDataEvenResourceTest extends TestCase
     }
 
     public function test_model_binding_is_correct()
+/**
+ * Tests if the navigation icon is set correctly.
+ */
     {
         $this->assertEquals(SourceDataEven::class, SourceDataEvenResource::$model);
     }
@@ -64,3 +76,9 @@ class SourceDataEvenResourceTest extends TestCase
         $this->assertEquals('/{record}/edit', $pages['edit']);
     }
 }
+/**
+ * Tests if the model binding is correctly set to the SourceDataEven model.
+ */
+/**
+ * Tests if the page routes are correctly configured.
+ */
