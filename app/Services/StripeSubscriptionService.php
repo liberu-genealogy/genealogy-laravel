@@ -14,6 +14,11 @@ class StripeSubscriptionService
         $this->stripeClient = new StripeClient(env('STRIPE_SECRET'));
     }
 
+    /**
+    * Creates a trial subscription for a team in Stripe and updates the database.
+    *
+    * @param Team $team The team for which to create the trial subscription.
+    */
     public function createTrialSubscription(Team $team)
     {
         $subscription = $this->stripeClient->subscriptions->create([
@@ -51,14 +56,18 @@ class StripeSubscriptionService
             return $dbUpdateResult;
         } catch (\Exception $e) {
             return ['success' => false, 'message' => 'Error updating subscription: ' . $e->getMessage()];
+/**
+ * Service for managing Stripe subscriptions.
+ * This includes creating trial subscriptions, updating subscriptions, and cancelling subscriptions.
+ */
         }
     }
 
     /**
-     * Cancel an existing subscription.
+     * Cancels an existing subscription both in Stripe and in the database.
      *
      * @param string $subscriptionId The ID of the subscription to cancel.
-     * @return array An array containing the result of the operation.
+     * @return array An array containing the result of the operation, including success status and message.
      */
     public function cancelSubscription(string $subscriptionId): array
     {
