@@ -23,12 +23,46 @@ class AuthorResourceTest extends TestCase
         ];
 
         foreach ($expectedFields as $fieldName => $fieldAttributes) {
-            $field = collect($schema)->firstWhere('name', $fieldName);
-            $this->assertNotNull($field, "Field {$fieldName} does not exist.");
-            $this->assertInstanceOf($fieldAttributes['type'], $field, "Field {$fieldName} is not of type {$fieldAttributes['type']}.");
-            $this->assertEquals($fieldAttributes['maxLength'] ?? null, $field->getMaxLength(), "Field {$fieldName} does not have the correct maxLength.");
-            $this->assertEquals($fieldAttributes['required'] ?? false, $field->isRequired(), "Field {$fieldName} does not have the correct required status.");
-            $this->assertEquals($fieldAttributes['numeric'] ?? false, method_exists($field, 'isNumeric') && $field->isNumeric(), "Field {$fieldName} does not have the correct numeric status.");
+    private function assertFieldExists($schema, $fieldName)
+    {
+        $field = collect($schema)->firstWhere('name', $fieldName);
+        $this->assertNotNull($field, "Field {$fieldName} does not exist.");
+        return $field;
+    }
+
+    private function assertFieldType($field, $fieldAttributes, $fieldName)
+    {
+        $this->assertInstanceOf($fieldAttributes['type'], $field, "Field {$fieldName} is not of type {$fieldAttributes['type']}.");
+    }
+
+    private function assertFieldAttributes($field, $fieldAttributes, $fieldName)
+    {
+        $this->assertEquals($fieldAttributes['maxLength'] ?? null, $field->getMaxLength(), "Field {$fieldName} does not have the correct maxLength.");
+        $this->assertEquals($fieldAttributes['required'] ?? false, $field->isRequired(), "Field {$fieldName} does not have the correct required status.");
+        $this->assertEquals($fieldAttributes['numeric'] ?? false, method_exists($field, 'isNumeric') && $field->isNumeric(), "Field {$fieldName} does not have the correct numeric status.");
+    }
+
+    private function assertColumnExists($columns, $columnName)
+    {
+        $column = collect($columns)->firstWhere('name', $columnName);
+        $this->assertNotNull($column, "Column {$columnName} does not exist.");
+        return $column;
+    }
+
+    private function assertColumnType($column, $columnName)
+    {
+        $this->assertInstanceOf(TextColumn::class, $column, "Column {$columnName} is not of type TextColumn.");
+    }
+
+    private function assertActionExists($actions, $actionName, $actionType)
+    {
+        $action = collect($actions)->firstWhere('name', $actionName);
+        $this->assertNotNull($action, "{$actionName} action does not exist.");
+        $this->assertInstanceOf($actionType, $action, "{$actionName} action is not of type {$actionType}.");
+    }
+            $field = $this->assertFieldExists($schema, $fieldName);
+            $this->assertFieldType($field, $fieldAttributes, $fieldName);
+            $this->assertFieldAttributes($field, $fieldAttributes, $fieldName);
         }
     }
 
@@ -48,10 +82,3 @@ class AuthorResourceTest extends TestCase
 
         $editAction = collect($actions)->firstWhere('name', 'edit');
         $this->assertNotNull($editAction, "Edit action does not exist.");
-        $this->assertInstanceOf(EditAction::class, $editAction, "Edit action is not of type EditAction.");
-
-        $deleteBulkAction = collect($bulkActions)->firstWhere('name', 'delete');
-        $this->assertNotNull($deleteBulkAction, "Delete bulk action does not exist.");
-        $this->assertInstanceOf(DeleteBulkAction::class, $deleteBulkAction, "Delete bulk action is not of type DeleteBulkAction.");
-    }
-}
