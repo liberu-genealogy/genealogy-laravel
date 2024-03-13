@@ -14,6 +14,13 @@ class StripeSubscriptionService
         $this->stripeClient = new StripeClient(env('STRIPE_SECRET'));
     }
 
+    /**
+     * Create a trial subscription for a team.
+     *
+     * @param Team $team The team for which to create the trial subscription.
+     *
+     * @return void
+     */
     public function createTrialSubscription(Team $team)
     {
         $subscription = $this->stripeClient->subscriptions->create([
