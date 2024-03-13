@@ -9,6 +9,14 @@ use PHPUnit\Framework\TestCase;
 
 class CitationResourceTest extends TestCase
 {
+/**
+ * Tests for the CitationResource class.
+ *
+ * Tests the CitationResource form and table schemas, and CRUD operations on the 
+ * Citation model.
+ *
+ * @package Tests\Filament\Resources
+ */
     use RefreshDatabase;
 
     public function test_form_schema_includes_all_fields_with_correct_configurations()
@@ -27,6 +35,14 @@ class CitationResourceTest extends TestCase
 
         $numericFields = ['is_active', 'volume', 'page', 'confidence', 'source_id'];
         foreach ($numericFields as $field) {
+/**
+ * Tests the form schema includes all fields with correct configurations.
+ *
+ * Verifies that all expected fields are present in the form schema with the correct 
+ * configurations, including required status and maximum length where applicable.
+ *
+ * @return void
+ */
             $this->assertArrayHasKey($field, $formFields);
             $this->assertTrue($formFields[$field]->isRequired());
             $this->assertTrue($formFields[$field]->isNumeric());
@@ -49,6 +65,14 @@ class CitationResourceTest extends TestCase
     }
 
     public function test_crud_operations()
+/**
+ * Tests the table schema includes all columns with correct configurations.
+ *
+ * Ensures that all expected columns are present in the table schema, are searchable or sortable 
+ * as appropriate, and have the correct configurations.
+ *
+ * @return void
+ */
     {
         $citationData = [
             'name' => 'Test Citation',
@@ -75,3 +99,10 @@ class CitationResourceTest extends TestCase
         $this->assertDatabaseMissing('citations', ['id' => $citation->id]);
     }
 }
+/**
+ * Tests CRUD operations on the Citation model.
+ *
+ * Ensures that create, read, update, and delete operations work as expected for the Citation model.
+ *
+ * @return void
+ */
