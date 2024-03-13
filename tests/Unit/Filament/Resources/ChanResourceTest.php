@@ -10,6 +10,12 @@ use Filament\Tables\Actions\EditAction;
 use Filament\Tables\Actions\DeleteBulkAction;
 
 class ChanResourceTest extends TestCase
+/**
+ * This file contains tests for the ChanResource class, ensuring that the form schema and table configuration are correctly defined.
+ */
+ * Tests whether the form schema contains the expected fields with correct configurations for the ChanResource.
+ */
+class ChanResourceTest extends TestCase
 {
     public function test_form_schema_contains_expected_fields(): void
     {
@@ -41,6 +47,9 @@ class ChanResourceTest extends TestCase
         $bulkActions = $table->getBulkActions();
 
         $expectedColumns = ['group', 'gid', 'date', 'time', 'created_at', 'updated_at'];
+        foreach ($expectedColumns as $columnName) {
+            $column = collect($columns)->firstWhere('name', $columnName);
+            $this->assertNotNull($column, "Column {$columnName} does not exist.");
         foreach ($expectedColumns as $columnName) {
             $column = collect($columns)->firstWhere('name', $columnName);
             $this->assertNotNull($column, "Column {$columnName} does not exist.");
