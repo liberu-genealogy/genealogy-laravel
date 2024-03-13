@@ -15,12 +15,12 @@ class PedigreeChartPage extends Page
 
     protected static ?string $navigationIcon = 'heroicon-o-chart-bar';
 
-    public static function getTitle(): string
+    public function getTitle(): string
     {
         return static::$title;
     }
 
-    public static function getNavigationIcon(): string
+    public function getNavigationIcon(): string
     {
         return static::$navigationIcon;
     }
