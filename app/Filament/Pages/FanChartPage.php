@@ -20,9 +20,14 @@ class FanChartPage extends Page
         return static::$title;
     }
 
+    /**
+     * Retrieves the navigation icon for the Fan Chart page.
+     *
+     * @return string The navigation icon.
+     */
     public static function getNavigationIcon(): string
     {
-        return $this->navigationIcon;
+        return self::$navigationIcon;
     }
 
     public function mount(): void

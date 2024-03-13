@@ -17,6 +17,11 @@ class DescendantChartPage extends Page
         return static::$title;
     }
 
+    /**
+     * Retrieves the navigation icon for the Descendant Chart page.
+     *
+     * @return string The navigation icon.
+     */
     public function getNavigationIcon(): string
     {
         return static::$navigationIcon;
