@@ -37,6 +37,7 @@ class AdminPanelProvider extends PanelProvider
         return $panel
             ->default()
             ->id('admin')
+use App\Filament\Widgets\PedigreeChartWidget;
             ->path('admin')
             ->login()
             ->registration()
@@ -58,6 +59,7 @@ class AdminPanelProvider extends PanelProvider
                 DabovilleReportWidget::class,
                 DescendantChartWidget::class,
                 FanChartWidget::class,
+                PedigreeChartWidget::class,
             ])
         ->plugin(FilamentSpatieRolesPermissionsPlugin::make())
         ->tenantRegistration(RegisterTeam::class)

@@ -16,7 +16,7 @@ class FanChartWidget extends Widget
         $this->people = Person::all();
     }
 
-    public function render()
+    public function render(): \Illuminate\Contracts\View\View
     {
         return view(static::$view, ['people' => $this->people]);
     }
