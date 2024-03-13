@@ -12,6 +12,9 @@ use Livewire\Livewire;
 use App\Filament\Resources\GedcomResource;
 
 class GedcomResourceTest extends TestCase
+/**
+ * Tests the functionality of the GedcomResource, ensuring that the form schema, table configuration, and file upload process work as expected.
+ */
 {
     use RefreshDatabase;
 
@@ -37,6 +40,9 @@ class GedcomResourceTest extends TestCase
     }
 
     public function test_table_configuration()
+    /**
+     * Tests that the form schema for GedcomResource contains the correct fields and validations.
+     */
     {
         $table = GedcomResource::table(Livewire::mock());
         $this->assertCount(0, $table->getColumns());
@@ -48,6 +54,9 @@ class GedcomResourceTest extends TestCase
     }
 
     public function test_file_upload_dispatches_import_gedcom_job()
+    /**
+     * Tests the table configuration for GedcomResource, ensuring proper setup.
+     */
     {
         Storage::fake('private');
         $file = UploadedFile::fake()->create('document.ged', 500);
@@ -61,3 +70,6 @@ class GedcomResourceTest extends TestCase
         $this->assertDatabaseHas('jobs', ['queue' => 'default']);
     }
 }
+    /**
+     * Tests the file upload process for GedcomResource, ensuring the ImportGedcom job is dispatched.
+     */
