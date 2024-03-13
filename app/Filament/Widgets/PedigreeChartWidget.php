@@ -15,20 +15,15 @@ class PedigreeChartWidget extends Widget
 
     public $persons;
 
+    /**
+     * The mount method is called upon the component's initialization. It is responsible for loading all Person models from the database and assigning them to the 'persons' property for use in the widget.
+     */
     public function mount()
     {
         $this->persons = Person::all();
     }
 
     public function render()
-    {
-        return view(static::$view, ['persons' => $this->persons]);
-    }
-}
-    {
-        return view(static::$view, ['persons' => $this->persons]);
-    }
-}
     {
         return view(static::$view, ['persons' => $this->persons]);
     }
