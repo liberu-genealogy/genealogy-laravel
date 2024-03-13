@@ -1,4 +1,11 @@
-&lt;?php
+<?php
+
+/**
+ * Class DescendantChartPage
+ * 
+ * Manages the presentation and functionality of the Descendant Chart page in the genealogy application.
+ * Utilizes Livewire for dynamic content rendering.
+ */
 
 namespace App\Filament\Pages;
 
@@ -12,6 +19,11 @@ class DescendantChartPage extends Page
     protected static ?string $title = 'Descendant Chart';
     protected static ?string $navigationIcon = 'heroicon-o-chart-bar';
 
+    /**
+    * Retrieves the title of the Descendant Chart page.
+    * 
+    * @return string The title of the page.
+    */
     public function getTitle(): string
     {
         return $this->title;
@@ -22,6 +34,11 @@ class DescendantChartPage extends Page
         return $this->navigationIcon;
     }
 
+    public function mount(): void
+    {
+        Livewire::mount(\App\Http\Livewire\DescendantChartComponent::class);
+    }
+}
     public function mount(): void
     {
         Livewire::mount(\App\Http\Livewire\DescendantChartComponent::class);
