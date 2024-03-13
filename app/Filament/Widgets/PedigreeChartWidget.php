@@ -23,6 +23,9 @@ class PedigreeChartWidget extends Widget
         $this->persons = Person::all();
     }
 
+    /**
+     * The render method is responsible for rendering the Livewire view associated with the PedigreeChartWidget. It passes the 'persons' property to the view for display.
+     */
     public function render()
     {
         return view(static::$view, ['persons' => $this->persons]);
