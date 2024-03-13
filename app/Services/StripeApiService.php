@@ -27,3 +27,20 @@ class StripeApiService
         return $this->stripeClient->subscriptions->cancel($subscriptionId);
     }
 }
+/**
+ * Service for interacting with the Stripe API.
+ * This includes operations such as updating and cancelling subscriptions directly through Stripe.
+ */
+    }
+
+    public function cancelStripeSubscription(string $subscriptionId)
+    {
+        return $this->stripeClient->subscriptions->cancel($subscriptionId);
+    }
+}
+    */
+    public function cancelStripeSubscription(string $subscriptionId)
+    {
+        return $this->stripeClient->subscriptions->cancel($subscriptionId);
+    }
+}
