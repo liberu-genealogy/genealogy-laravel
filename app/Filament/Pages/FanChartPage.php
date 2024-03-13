@@ -12,6 +12,12 @@ class FanChartPage extends Page
     protected static ?string $resource = null;
 
     protected ?string $title = 'Fan Chart';
+    
+    /**
+     * Retrieves the title of the fan chart page.
+     *
+     * @return string The title of the page.
+     */
 
     protected static ?string $navigationIcon = 'heroicon-o-chart-pie';
 
