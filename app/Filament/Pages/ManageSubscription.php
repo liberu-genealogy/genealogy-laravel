@@ -10,6 +10,10 @@ use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Select;
 
 class ManageSubscription extends CustomFilamentBasePage
+/**
+ * Manages subscription operations within the Filament admin panel.
+ * This includes viewing subscription details, updating subscriptions, and cancelling subscriptions.
+ */
 {
     protected static string $view = 'filament.pages.manage-subscription';
 
@@ -24,6 +28,10 @@ class ManageSubscription extends CustomFilamentBasePage
     }
 
     public function updateSubscription()
+    /**
+     * Updates the user's subscription plan based on the selected option.
+     * Validates the selected plan before proceeding with the update.
+     */
     {
         $this->validate([
             'selectedPlan' => 'required|string',
@@ -44,6 +52,14 @@ class ManageSubscription extends CustomFilamentBasePage
 
     protected function getFormSchema(): array
     {
+    /**
+     * Mounts the component, initializing subscription details and available plans.
+     * @param StripeSubscriptionService $stripeService The Stripe subscription service instance.
+     */
+    }
+
+    protected function getFormSchema(): array
+    {
         return [
             Select::make('selectedPlan')
                 ->label('Select Plan')
@@ -57,3 +73,8 @@ class ManageSubscription extends CustomFilamentBasePage
         ];
     }
 }
+    /**
+     * Defines the form schema for managing subscriptions.
+     * Includes a select input for plan selection and buttons for updating or cancelling the subscription.
+     * @return array The form schema as an array of Filament components.
+     */

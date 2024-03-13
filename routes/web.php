@@ -1,4 +1,8 @@
 <?php
+/**
+ * Web routes for the genealogy-laravel application.
+ * Includes routes for home, privacy, terms and conditions, contact, and various features like subscription management.
+ */
 
 use Illuminate\Support\Facades\Route;
 
