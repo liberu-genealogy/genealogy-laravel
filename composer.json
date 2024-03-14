@@ -1,14 +1,15 @@
 {
-    "name": "laravel/laravel",
+    "name": "liberu-genealogy/genealogy-laravel",
     "type": "project",
-    "description": "The Laravel Framework.",
+    "description": "The Genealogy Laravel Framework.",
     "keywords": ["framework", "laravel"],
     "license": "MIT",
     "require": {
-        "php": "^8.2",
+        "php": "^8.3",
         "filament/filament": "^3.2",
         "guzzlehttp/guzzle": "^7.8",
-        "laravel-liberu/laravel-gedcom": "^3.4",
+        "liberu-genealogy/laravel-gedcom": "^4.0",
+        "liberu-genealogy/laravel-dna": "^1.0",
         "laravel/framework": "^11.0",
         "laravel/octane": "^2.3",
         "laravel/sanctum": "^4.0",
@@ -22,7 +23,7 @@
         "laravel/sail": "^1.28",
         "mockery/mockery": "^1.6",
         "nunomaduro/collision": "^8.0",
-        "phpunit/phpunit": "^11.0",
+        "phpunit/phpunit": "^12.0",
         "spatie/laravel-ignition": "^2.4"
     },
     "autoload": {
