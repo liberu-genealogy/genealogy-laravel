@@ -1,4 +1,5 @@
 {{-- Home Page Layout --}}
+{{-- Home Page Layout --}}
 @extends('layouts.app')
 
 @section('content')
