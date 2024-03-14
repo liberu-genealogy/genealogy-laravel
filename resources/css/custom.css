@@ -7,6 +7,9 @@
 }
 .container {
   @apply max-w-6xl mx-auto px-4 sm:px-6 lg:px-8;
+  @media (max-width: 768px) {
+    max-width: 100%;
+  }
 }
 .card {
   @apply bg-white rounded-lg shadow-md overflow-hidden;
