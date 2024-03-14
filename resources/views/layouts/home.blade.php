@@ -3,7 +3,7 @@
 @section('content')
 
 @component('components.x-home-header')
-@include('components.home-navbar')
+@component('components.x-home-navbar')
  
     <main>
         @include('components.manage_section')
