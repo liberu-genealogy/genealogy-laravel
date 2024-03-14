@@ -17,7 +17,7 @@
      
     </main>
 
-    <script src="{{ asset('js/app.js') }}"></script>
+    <script src="{{ asset('build/assets/js/app.js') }}"></script>
     @livewireScripts
 </body>
 </html>
