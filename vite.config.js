@@ -22,7 +22,7 @@ export default defineConfig({
     },
     css: [
         'resources/css/tailwind.css',
-        'resources/css/custom.css',
+        'public/css/custom.css',
     ],
 //    build: {
 //        outDir: '../public',
