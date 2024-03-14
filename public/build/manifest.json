@@ -1,5 +1,6 @@
 {
   "resources/css/app.css": {
+    // "resources/css/app.css" serves as the main CSS file compiling all application-wide styles
     "file": "assets/app-6BW26Rwr.css",
     "src": "resources/css/app.css",
     "isEntry": true
