@@ -5,12 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Liberu Genealogy</title>
     @vite('resources/css/app.css')
-    @vite('resources/css/custom.css')
     @livewireStyles
 </head>
 <body>
-    @include('components.header')
-    @include('components.home-header')
+    @include('components.header') 
 
     <main>
         @yield('content')
@@ -22,18 +20,3 @@
     @livewireScripts
 </body>
 </html>
-</head>
-<body>
-    @include('components.header')
-
-    <main>
-        @yield('content')
-    </main>
-
-    @include('components.footer')
-
-    @vite('resources/js/app.js')
-    @livewireScripts
-</body>
-</html>
-@include('components.home-header')
