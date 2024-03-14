@@ -3,7 +3,7 @@
 
 @section('content')
     {{-- Corrected component references based on the actual component blade files present in the application --}}
-    <x-home-header></x-home-header>
+    <x-header></x-header>
     <x-hero-section></x-hero-section>
     <x-about-us></x-about-us>
     <x-services></x-services>
