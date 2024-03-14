@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Liberu Genealogy - Home</title>
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+        @vite('resources/css/app.css')
     @livewireStyles
 </head>
 <body>
@@ -30,7 +30,6 @@
                         <a class="nav-link" href="#">About</a>
                     </li>
                 </ul>
-                @include('components.buttons')
             </div>
         </div>
     </nav>
