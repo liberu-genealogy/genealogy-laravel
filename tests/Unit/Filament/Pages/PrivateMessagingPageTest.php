@@ -18,8 +18,10 @@ class PrivateMessagingPageTest extends TestCase
         // Create an instance of PrivateMessagingPage
         $page = new PrivateMessagingPage();
 
-        // Set up the necessary dependencies and data
-        // ...
+    // Set up the necessary dependencies and data
+    // ...
+    
+    // Add your test logic here
 
         // Call the mount method
         $page->mount();
@@ -33,8 +35,10 @@ class PrivateMessagingPageTest extends TestCase
         // Create an instance of PrivateMessagingPage
         $page = new PrivateMessagingPage();
 
-        // Set up the necessary dependencies and data
-        // ...
+    // Set up the necessary dependencies and data
+    // ...
+    
+    // Add your test logic here
 
         // Call the sendMessage method
         $response = $page->sendMessage();
