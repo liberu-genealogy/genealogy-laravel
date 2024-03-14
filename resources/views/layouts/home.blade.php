@@ -1,21 +1,14 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Liberu Genealogy</title>
-    @vite('resources/css/app.css')
-    @livewireStyles
-</head>
-<body>
-    @include('components.home_header')
-    @include('components.home_navbar')
+@extends('layouts.app')
+
+@section('content')
+    <x-home-header></x-home-header>
+    <x-home-navbar></x-home-navbar>
+    <x-contact-form></x-contact-form>
 
     <main>
         @include('components.manage_section')
-       
-     
     </main>
+@endsection
 
     @vite('resources/js/app.js')
     @livewireScripts
