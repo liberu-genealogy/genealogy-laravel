@@ -1,3 +1,4 @@
+/* Custom styles extracted from tailwind.css */
 body {
 background-image: url('/build/images/main-hero.png');
 color: #FFFFFF;
@@ -10,7 +11,6 @@ footer *
  color: #FFFFFF;
 }
 
-/* Custom styles extracted from tailwind.css */
 .btn {
   @apply px-4 py-2 bg-blue-500 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700;
 }
@@ -34,6 +34,8 @@ footer *
   
 }
 .sm\:container {
+  /* Add docstring at the beginning of the file */
+  /* This file contains custom CSS styles for the application */
   @apply max-w-xl;
 }
 .md\:container {
