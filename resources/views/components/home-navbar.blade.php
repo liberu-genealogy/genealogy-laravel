@@ -1,3 +1,7 @@
+/**
+ * This file contains the home navbar component.
+ * It consists of a responsive navigation bar with links to Home, Features, Pricing, and More pages.
+ */
 <div class="navbar navbar-expand-lg navbar-dark bg-primary">
     <div class="container-fluid">
         <a class="navbar-brand" href="/">
@@ -44,3 +48,4 @@ Family Tree 365
             @endif
         </div>
     </div>
+</div>
