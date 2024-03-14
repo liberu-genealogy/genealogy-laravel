@@ -25,3 +25,5 @@
 </div>
 @include('components.buttons')
 @include('components.buttons')
+@include('components.buttons')
+@include('components.buttons')
