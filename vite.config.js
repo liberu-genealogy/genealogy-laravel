@@ -28,3 +28,10 @@ export default defineConfig({
 //        outDir: '../public',
 //    },
 })
+/*
+File: vite.config.js
+Description: This configuration file is used to set up Vite for a Laravel application. It includes configurations for the Laravel Vite plugin, path resolution aliases, and copying static assets to the public directory. This setup enhances the development experience by streamlining asset management and build processes.
+*/
+    }),
+    ],
+})
