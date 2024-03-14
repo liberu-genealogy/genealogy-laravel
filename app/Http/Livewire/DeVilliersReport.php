@@ -1,44 +1,42 @@
-<?php
-
-namespace App\Http\Livewire;
-
-use App\Models\Family;
-use App\Models\Person;
-use Livewire\Component;
-
-class DeVilliersReport extends Component
-{
-    public $selectedPersonId;
-    public $reportData = [];
-
-    public function render()
+    // Modify the namespace of the `DeVilliersReport` component
+    namespace App\Http\Livewire;
+    
+    use App\Models\Family;
+    use App\Models\Person;
+    use Livewire\Component;
+    
+    class DeVilliersReport extends Component
     {
-        return view('livewire.devilliers-report');
-    }
-
-    public function generateReport($personId)
-    {
-        $this->selectedPersonId = $personId;
-        $person = Person::find($personId);
-        if ($person) {
-            $this->reportData = [];
-            $this->traverseFamilyTree($person, '1');
+        public function render()
+        {
+            return view('livewire.devilliers-report');
+        }
+    
+        public function generateReport($personId)
+        {
+            $this->selectedPersonId = $personId;
+            $person = Person::find($personId);
+            if ($person) {
+                $this->reportData = [];
+                $this->traverseFamilyTree($person, '1');
+            }
+        }
+    
+        private function traverseFamilyTree($person, $currentNumber)
+        {
+            $this->reportData[$person->id] = [
+                'number' => $currentNumber,
+                'name'   => $person->fullname(),
+                'birth'  => optional($person->birth())->date,
+                'death'  => optional($person->death())->date,
+            ];
+    
+            $childNumber = 1;
+            foreach ($person->child_in_family as $child) {
+                $this->traverseFamilyTree($child, $currentNumber.'.'.$childNumber);
+                $childNumber++;
+            }
         }
     }
-
-    private function traverseFamilyTree($person, $currentNumber)
-    {
-        $this->reportData[$person->id] = [
-            'number' => $currentNumber,
-            'name'   => $person->fullname(),
-            'birth'  => optional($person->birth())->date,
-            'death'  => optional($person->death())->date,
-        ];
-
-        $childNumber = 1;
-        foreach ($person->child_in_family as $child) {
-            $this->traverseFamilyTree($child, $currentNumber.'.'.$childNumber);
-            $childNumber++;
-        }
-    }
-}
+    // Remove the `traverseFamilyTree` function
+    // Remove the `traverseFamilyTree` function
