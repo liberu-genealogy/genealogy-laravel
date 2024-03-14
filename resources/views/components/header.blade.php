@@ -24,3 +24,4 @@
         </div>
     </nav>
 </div>
+@include('components.buttons')
