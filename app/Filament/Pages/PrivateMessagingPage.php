@@ -12,6 +12,13 @@ use App\Models\Message;
 
 class PrivateMessagingPage extends Page
 {
+    /**
+     * PrivateMessagingPage class.
+     *
+     * This class represents the private messaging page in the application.
+     * It handles the display of messages between authenticated users.
+     */
+{
     public function mount()
     {
         $selectedUserId = Request::get('user_id');
