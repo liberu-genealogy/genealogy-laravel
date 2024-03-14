@@ -30,7 +30,7 @@ footer *
   @apply bg-gray-200 text-gray-700 font-bold py-2 px-4;
 }
 .card-body {
-  @apply p-4;
+  @apply p-4 bg-gray-800;
   
 }
 .sm\:container {
@@ -76,7 +76,7 @@ footer *
   @apply bg-gray-200 text-gray-700 font-bold py-2 px-4;
 }
 .card-body {
-  @apply p-4;
+  @apply p-4 bg-gray-800;
   
 }
 .sm\:container {
@@ -98,7 +98,7 @@ footer *
   @apply bg-gray-200 text-gray-700 font-bold py-2 px-4;
 }
 .card-body {
-  @apply p-4;
+  @apply p-4 bg-gray-800;
   
 }
 /* Responsive adjustments using Tailwind's responsive prefixes */
@@ -121,7 +121,7 @@ footer *
   @apply bg-gray-200 text-gray-700 font-bold py-2 px-4;
 }
 .card-body {
-  @apply p-4;
+  @apply p-4 bg-gray-800;
 }
 .sm\:container {
   @apply max-w-xl;
@@ -155,7 +155,7 @@ footer *
   @apply max-w-6xl;
 }
 .card-body {
-  @apply p-4;
+  @apply p-4 bg-gray-800;
   @media (max-width: 768px) {
     padding: 20px;
   }
