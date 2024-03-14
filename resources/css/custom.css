@@ -24,7 +24,7 @@ footer *
   }
 }
 .card {
-  @apply bg-white rounded-lg shadow-md overflow-hidden;
+  @apply bg-gray-800 rounded-lg shadow-md overflow-hidden;
 }
 .card-header {
   @apply bg-gray-200 text-gray-700 font-bold py-2 px-4;
