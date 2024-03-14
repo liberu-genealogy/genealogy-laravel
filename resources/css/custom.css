@@ -1,3 +1,14 @@
+.container-fluid {
+background-image: url('/build/images/main-hero.png');
+}
+
+footer,
+footer *
+ {
+ background-color: green!important;
+ color: #FFFFFF;
+}
+
 /* Custom styles extracted from tailwind.css */
 .btn {
   @apply px-4 py-2 bg-blue-500 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700;
@@ -16,10 +27,10 @@
 }
 .card-header {
   @apply bg-gray-200 text-gray-700 font-bold py-2 px-4;
-  background-image: url('path/to/hero-main.png');
 }
 .card-body {
   @apply p-4;
+  
 }
 .sm\:container {
   @apply max-w-xl;
@@ -41,6 +52,7 @@
   .btn {
     font-size: 14px;
   }
+}
   .form-input {
     padding: 10px;
   }
@@ -61,10 +73,10 @@
 }
 .card-header {
   @apply bg-gray-200 text-gray-700 font-bold py-2 px-4;
-  background-image: url('path/to/hero-main.png');
 }
 .card-body {
   @apply p-4;
+  
 }
 .sm\:container {
   @apply max-w-xl;
@@ -83,11 +95,10 @@
 }
 .card-header {
   @apply bg-gray-200 text-gray-700 font-bold py-2 px-4;
-  background-image: url('build/assets/images/hero-main.png');
 }
 .card-body {
   @apply p-4;
-}
+  
 }
 /* Responsive adjustments using Tailwind's responsive prefixes */
 .sm\:container {
@@ -141,7 +152,6 @@
 }
 .xl\:container {
   @apply max-w-6xl;
-}
 }
 .card-body {
   @apply p-4;
@@ -169,11 +179,11 @@
 }
 @media (max-width: 768px) {
   .card-header {
-    background-image: url('path/to/hero-main-mobile.png');
   }
 }
 @media (max-width: 768px) {
   .card-body {
+    
     padding: 20px;
   }
 }
