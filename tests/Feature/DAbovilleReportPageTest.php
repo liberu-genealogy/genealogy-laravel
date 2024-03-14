@@ -23,6 +23,11 @@ class DAbovilleReportPageTest extends TestCase
         $this->assertViewIs('livewire.ahnentafel-report', $view);
     }
 
+    /**
+     * Test the generation of the Ahnentafel report.
+     *
+     * @return void
+     */
     public function testAhnentafelReportGeneration()
     {
         $page = new DAbovilleReportPage();
