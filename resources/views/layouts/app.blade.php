@@ -1,3 +1,8 @@
+/**
+ * File: app.blade.php
+ * Description: This file is the main layout file for the application.
+ * It includes the header, main content, and footer components.
+ */
 <!DOCTYPE html>
 <html lang="en">
 <head>
