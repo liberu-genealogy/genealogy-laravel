@@ -38,6 +38,9 @@
   .btn {
     font-size: 14px;
   }
+  .form-input {
+    padding: 10px;
+  }
 }
 @media (max-width: 768px) {
   .btn {
