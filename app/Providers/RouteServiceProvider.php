@@ -32,7 +32,10 @@ class RouteServiceProvider extends ServiceProvider
                 ->group(base_path('routes/api.php'));
 
             Route::middleware('web')
-                ->group(base_path('routes/web.php'));
+                ->group(function () {
+                    Route::get('/facebook-messenger', [\App\Filament\Pages\FacebookMessengerPage::class, 'mount']);
+                    Route::post('/facebook-messenger/send-message', [\App\Filament\Pages\FacebookMessengerPage::class, 'sendMessage']);
+                });
         });
     }
 
