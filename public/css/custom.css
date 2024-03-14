@@ -1,0 +1,6 @@
+/* public/css/custom.css */
+
+.main-div {
+    background-image: url('/path/to/main-hero.png');
+    /* Add any additional CSS styles for the main div here */
+}
