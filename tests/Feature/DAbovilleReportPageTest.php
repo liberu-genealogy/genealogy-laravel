@@ -20,6 +20,23 @@ class DAbovilleReportPageTest extends TestCase
         $page = new DAbovilleReportPage();
         $view = $page->render();
 
-        $this->assertViewIs('livewire.daboville-report', $view);
+        $this->assertViewIs('livewire.ahnentafel-report', $view);
+    }
+
+    public function testAhnentafelReportGeneration()
+    {
+        $page = new DAbovilleReportPage();
+        $component = new \App\Http\Livewire\AhnentafelReport();
+        $component->generateReport(1);
+
+        $this->assertEquals($expectedReportData, $component->reportData);
     }
 }
+    public function testAhnentafelReportGeneration()
+    {
+        $page = new DAbovilleReportPage();
+        $component = new \App\Http\Livewire\AhnentafelReport();
+        $component->generateReport(1);
+
+        $this->assertEquals($expectedReportData, $component->reportData);
+    }
