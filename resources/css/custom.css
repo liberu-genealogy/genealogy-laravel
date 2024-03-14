@@ -4,10 +4,10 @@ color: #FFFFFF;
 }
 
 footer,
-footer *
- {
- background-color: green!important;
- color: #FFFFFF;
+footer *,
+.navbar-nav {
+ background-color: rgba(0, 128, 0, 0.6) !important;
+ color: #FFFFFF !important;
 }
 
 /* Custom styles extracted from tailwind.css */
