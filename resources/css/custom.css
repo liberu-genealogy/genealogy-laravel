@@ -24,13 +24,13 @@ footer *,
   }
 }
 .card {
-  @apply bg-gray-800 rounded-lg shadow-md overflow-hidden;
+  @apply bg-green-500 bg-opacity-75 text-white rounded-lg shadow-md overflow-hidden;
 }
 .card-header {
-  @apply bg-gray-200 text-gray-700 font-bold py-2 px-4;
+  @apply text-gray-700 font-bold py-2 px-4;
 }
 .card-body {
-  @apply p-4 bg-gray-800;
+  @apply p-4 bg-green-500 bg-opacity-75;
   
 }
 .sm\:container {
@@ -111,7 +111,6 @@ footer *,
   @apply max-w-2xl;
 }
 .lg\:container {
-  @apply max-w-4xl;
 }
 .xl\:container {
   @apply max-w-6xl;
