@@ -1,3 +1,7 @@
+/**
+ * This file contains the template for the home header component.
+ * It includes the navigation bar and the site logo.
+ */
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
