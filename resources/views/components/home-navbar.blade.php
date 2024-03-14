@@ -45,3 +45,9 @@
         </div>
     </div>
 <link rel="stylesheet" href="{{ asset('css/navbar.css') }}">
+/**
+ * File header
+ *
+ * This file contains the home navbar component.
+ * It displays the navigation bar for the home page.
+ */
