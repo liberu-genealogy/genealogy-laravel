@@ -9,4 +9,7 @@
     <x-services></x-services>
     <x-contact-form></x-contact-form>
     <x-footer></x-footer>
+    <style>
+        /* Add responsive design CSS here */
+    </style>
 @endsection
