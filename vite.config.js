@@ -18,7 +18,7 @@ export default defineConfig({
     resolve: {
         alias: {
             '@': path.resolve(__dirname, './resources')
-        }
+        },
     css: [
         'resources/css/tailwind.css',
         'resources/css/custom.css',

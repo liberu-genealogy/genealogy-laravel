@@ -1,4 +1,4 @@
-<x-layouts.app>
+<div>
     <form action="/contact/send" method="POST">
         @csrf
         <div class="form-group">
@@ -24,4 +24,4 @@
         </div>
         <button type="submit" class="btn btn-primary">Send Message</button>
     </form>
-</x-layouts.app>
+</div>
