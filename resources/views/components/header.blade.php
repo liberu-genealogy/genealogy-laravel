@@ -6,9 +6,9 @@
                     <img class="h-10 w-auto" src="{{ asset('images/logo.svg') }}" alt="Liberu Genealogy">
                 </a>
                 <div class="hidden ml-10 space-x-8 lg:block">
-                    <a href="/about" class="text-base font-medium text-white hover:text-gray-300">About</a>
-                    <a href="/services" class="text-base font-medium text-white hover:text-gray-300">Services</a>
-                    <a href="/contact" class="text-base font-medium text-white hover:text-gray-300">Contact</a>
+                    <a href="/about" class="navbar-button">About</a>
+                    <a href="/services" class="navbar-button">Services</a>
+                    <a href="/contact" class="navbar-button">Contact</a>
                 </div>
             </div>
             <div class="ml-10 space-x-4">
@@ -25,3 +25,4 @@
 </div>
 @include('components.buttons')
 @include('components.buttons')
+<link rel="stylesheet" href="{{ asset('css/navbar.css') }}">
