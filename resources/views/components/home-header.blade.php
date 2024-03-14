@@ -1,3 +1,7 @@
+<!--
+This file contains the navigation bar component.
+It consists of a responsive navigation bar with links to Home, Features, Pricing, and About pages.
+-->
     <header>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container-fluid">
