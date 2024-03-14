@@ -48,9 +48,10 @@ class PrivateMessagingPage extends Page
 
         return redirect()->back();
     }
-
+/**
     public function render()
     {
         return view('filament.pages.private-messaging', $this->data());
     }
+**/
 }
