@@ -1,5 +1,12 @@
 <?php
 
+/**
+ * Tests for the Reference Number (Refn) Filament Resource.
+ * 
+ * This class includes tests for CRUD operations and any specific functionality
+ * provided by the RefnResource.
+ */
+
 namespace Tests\Feature\Filament\Resources;
 
 use App\Filament\Resources\RefnResource;
@@ -35,6 +42,16 @@ class RefnResourceTest extends TestCase
         $typeField = collect($formFields)->firstWhere('name', 'type');
         $this->assertNotNull($typeField);
         $this->assertEquals(255, $typeField->getMaxLength());
+    /**
+     * Test the model association with Refn.
+     *
+     * @return void
+     */
+    /**
+     * Test the form fields for Refn.
+     *
+     * @return void
+     */
     }
 
     public function test_table_columns()
@@ -49,3 +66,8 @@ class RefnResourceTest extends TestCase
         $this->assertTrue(collect($tableColumns)->firstWhere('name', 'updated_at')->isSortable()->isToggleable());
     }
 }
+    /**
+     * Test the table columns for Refn.
+     *
+     * @return void
+     */
