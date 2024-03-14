@@ -21,8 +21,33 @@
 
     <body class="antialiased">
         {{ $slot }}
+        
+        @filamentScripts
+        @vite('resources/js/app.js')
 
         @filamentScripts
         @vite('resources/js/app.js')
     </body>
 </html>
+<style>
+    .card {
+        @apply bg-green-500 bg-opacity-75 text-white rounded-lg shadow-md overflow-hidden;
+    }
+    .card-header {
+        @apply text-gray-700 font-bold py-2 px-4;
+    }
+    .card-body {
+        @apply p-4 bg-green-500 bg-opacity-75;
+    }
+</style>
+<style>
+    .card {
+        @apply bg-green-500 bg-opacity-75 text-white rounded-lg shadow-md overflow-hidden;
+    }
+    .card-header {
+        @apply text-gray-700 font-bold py-2 px-4;
+    }
+    .card-body {
+        @apply p-4 bg-green-500 bg-opacity-75;
+    }
+</style>
