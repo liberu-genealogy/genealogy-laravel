@@ -2,6 +2,14 @@
 
 use Illuminate\Support\Facades\Route;
 
+/**
+ * Web Routes
+ *
+ * This file is responsible for registering all the web routes for the application.
+ * Routes are loaded by the RouteServiceProvider within a group which
+ * contains the "web" middleware group. Now create something great!
+ */
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes

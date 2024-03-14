@@ -11,6 +11,15 @@ use Illuminate\Support\Str;
 
 class TeamInvitationController extends Controller
 {
+        /**
+     * Send an invitation to join the team.
+     *
+     * This method handles the creation and sending of an invitation to a prospective team member.
+     * 
+     * @param Request $request The request object containing the email and team details.
+     * @return Response Returns a response object indicating the success or failure of the operation.
+     * @throws Exception Throws an exception if the invitation could not be sent.
+     */
     public function sendInvitation(Request $request)
     {
         $request->validate([
@@ -32,6 +41,16 @@ class TeamInvitationController extends Controller
         return response()->json(['message' => 'Invitation sent successfully.']);
     }
 
+        /**
+     * Accept an invitation to join the team.
+     *
+     * This method allows a user to accept an invitation to join a team by validating the provided token.
+     * It adds the user as a team member upon successful validation.
+     * 
+     * @param Request $request The request object containing the invitation token.
+     * @return Response Returns a response object indicating the acceptance of the invitation and joining the team.
+     * @throws ValidationException If the provided token doesn't exist or is invalid.
+     */
     public function acceptInvitation(Request $request)
     {
         $request->validate([
