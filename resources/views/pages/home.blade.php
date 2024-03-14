@@ -1,3 +1,10 @@
+/**
+ * View file for the home page.
+ *
+ * This file renders the home page of the genealogy application.
+ * It extends the default layout and includes a content section
+ * that provides an overview of the application and its features.
+ */
 @extends('layouts.default')
 
 @section('content')
