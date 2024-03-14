@@ -1,5 +1,14 @@
 <?php
 
+/**
+ * Tests for the AuthorResource class.
+ *
+ * Provides tests for the AuthorResource form and table schemas, and CRUD operations 
+ * on the Author model.
+ *
+ * @package Tests\Filament\Resources
+ */
+
 namespace Tests\Filament\Resources;
 
 use App\Filament\Resources\AuthorResource;
@@ -9,6 +18,14 @@ use PHPUnit\Framework\TestCase;
 
 class AuthorResourceTest extends TestCase
 {
+    /**
+     * Tests the form schema includes all fields with correct configurations.
+     *
+     * Ensures that all expected fields are present in the form schema with the correct 
+     * maximum length and other configurations.
+     *
+     * @return void
+     */
     use RefreshDatabase;
 
     public function test_form_schema_includes_all_fields_with_correct_configurations()
@@ -27,6 +44,14 @@ class AuthorResourceTest extends TestCase
         $this->assertTrue($formFields['is_active']->isRequired());
         $this->assertTrue($formFields['is_active']->isNumeric());
     }
+    /**
+     * Tests the table schema includes all columns with correct configurations.
+     *
+     * Verifies that all expected columns are present in the table schema, are searchable or sortable 
+     * as appropriate, and have the correct configurations.
+     *
+     * @return void
+     */
 
     public function test_table_schema_includes_all_columns_with_correct_configurations()
     {
@@ -75,3 +100,10 @@ class AuthorResourceTest extends TestCase
         $this->assertDatabaseMissing('authors', ['id' => $author->id]);
     }
 }
+/**
+ * Tests CRUD operations on the Author model.
+ *
+ * Ensures that create, read, update, and delete operations work as expected for the Author model.
+ *
+ * @return void
+ */
