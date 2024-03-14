@@ -1,6 +1,7 @@
 <?php
 
-namespace App\Http\Livewire;
+use App\Http\Livewire\AhnentafelReport;
+use App\Models\Person;
 
 use App\Models\Person;
 use Livewire\Component;
@@ -13,6 +14,6 @@ class FanChartComponent extends Component
     {
         $this->people = Person::all();
 
-        return view('livewire.fan-chart-component', ['people' => $this->people]);
+        return view('livewire.fan-chart-component', ['people' => $this->people, 'ahnentafelReport' => $this->ahnentafelReport]);
     }
 }
