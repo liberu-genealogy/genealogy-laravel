@@ -8,9 +8,19 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 class SubmResourceTest extends TestCase
+/**
+ * This file contains tests for the SubmResource class.
+ *
+ * It includes tests for the creation, editing, and listing of subms within the genealogy application.
+ */
 {
     use RefreshDatabase;
 
+    /**
+     * Tests the configuration of the SubmResource.
+     *
+     * Ensures the model is correctly set and the form and table schemas have the expected number of fields and columns.
+     */
     /** @test */
     public function resource_is_correctly_configured()
     {
@@ -23,6 +33,11 @@ class SubmResourceTest extends TestCase
 
     /** @test */
     public function user_can_create_subm()
+    /**
+     * Tests the configuration of the SubmResource.
+     *
+     * This function checks if the SubmResource is correctly configured by comparing the model class and counting form fields and table columns.
+     */
     {
         $this->actingAsUser();
         $response = $this->post(route('filament.resources.subms.create'), [
@@ -37,9 +52,13 @@ class SubmResourceTest extends TestCase
             // Add other fields accordingly
         ]);
     }
-
     /** @test */
     public function user_can_edit_subm()
+    /**
+     * Tests whether a user can create a subm.
+     *
+     * This function simulates a user attempting to create a subm and checks whether the operation is successful.
+     */
     {
         $this->actingAsUser();
         $subm = Subm::factory()->create();
@@ -57,6 +76,11 @@ class SubmResourceTest extends TestCase
 
     /** @test */
     public function subms_are_listed_correctly()
+    /**
+     * Tests whether a user can edit a subm.
+     *
+     * This function simulates a user attempting to edit a subm and checks whether the operation is successful.
+     */
     {
         $this->actingAsUser();
         Subm::factory()->count(5)->create();
@@ -72,3 +96,8 @@ class SubmResourceTest extends TestCase
         $this->actingAs($user);
     }
 }
+    /**
+     * Tests the listing of subms.
+     *
+     * This function simulates a user viewing the list of subms and checks whether the subms are listed correctly.
+     */

@@ -1,5 +1,11 @@
 <?php
 
+/**
+ * This file contains tests for the SubnResource class.
+ *
+ * It includes tests for the creation, editing, and listing of subns within the genealogy application.
+ */
+
 namespace Tests\Feature\Filament;
 
 use App\Filament\Resources\SubnResource;
@@ -40,6 +46,11 @@ class SubnResourceTest extends TestCase
     }
 
     public function test_user_can_edit_subn()
+    /**
+     * Tests the configuration of the SubnResource.
+     *
+     * Verifies the correct model is set and counts the form fields and table columns to ensure they match expectations.
+     */
     {
         $user = User::factory()->create();
         $subn = Subn::factory()->create();
