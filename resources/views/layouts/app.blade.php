@@ -10,6 +10,7 @@
 </head>
 <body>
     @include('components.header')
+    @include('components.home-header')
 
     <main>
         @yield('content')
@@ -35,3 +36,4 @@
     @livewireScripts
 </body>
 </html>
+@include('components.home-header')
