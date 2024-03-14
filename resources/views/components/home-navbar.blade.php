@@ -1,6 +1,9 @@
 <div class="navbar navbar-expand-lg navbar-dark bg-primary">
     <div class="container-fluid">
-        <a class="navbar-brand" href="/">Liberu Genealogy</a>
+        <a class="navbar-brand" href="/">
+            <img src="/build/assets/images/logo1.svg" alt="Logo" style="height: 30px;">
+            Liberu Genealogy
+        </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
