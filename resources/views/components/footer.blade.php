@@ -37,3 +37,8 @@
         </div>
     </div>
 </footer>
+/**
+ * File: footer.blade.php
+ * Description: This file contains the HTML markup for the website footer.
+ * It includes the site logo, navigation links, and copyright information.
+ */
