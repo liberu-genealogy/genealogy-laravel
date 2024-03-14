@@ -7,6 +7,54 @@
 }
 .container {
   @apply max-w-6xl mx-auto px-4 sm:px-6 lg:px-8;
+  @media (max-width: 768px) {
+    max-width: 100%;
+  }
+}
+.card {
+  @apply bg-white rounded-lg shadow-md overflow-hidden;
+}
+.card-header {
+  @apply bg-gray-200 text-gray-700 font-bold py-2 px-4;
+  background-image: url('path/to/hero-main.png');
+}
+.card-body {
+  @apply p-4;
+}
+.sm\:container {
+  @apply max-w-xl;
+}
+.md\:container {
+  @apply max-w-2xl;
+}
+.lg\:container {
+  @apply max-w-4xl;
+}
+.xl\:container {
+  @apply max-w-6xl;
+}
+.card {
+  @apply bg-white rounded-lg shadow-md overflow-hidden;
+}
+.card-header {
+@media (max-width: 768px) {
+  .btn {
+    font-size: 14px;
+  }
+  .form-input {
+    padding: 10px;
+  }
+}
+@media (max-width: 768px) {
+  .btn {
+    font-size: 14px;
+  }
+}
+.form-input {
+  @apply border-2 border-gray-300 p-3 rounded-lg focus:outline-none focus:border-blue-500;
+}
+.container {
+  @apply max-w-6xl mx-auto px-4 sm:px-6 lg:px-8;
 }
 .card {
   @apply bg-white rounded-lg shadow-md overflow-hidden;
@@ -97,6 +145,9 @@
 }
 .card-body {
   @apply p-4;
+  @media (max-width: 768px) {
+    padding: 20px;
+  }
 }
 .sm\:container {
   @apply max-w-xl;
@@ -115,6 +166,16 @@
 }
 .card-header {
   @apply bg-gray-200 text-gray-700 font-bold py-2 px-4;
+}
+@media (max-width: 768px) {
+  .card-header {
+    background-image: url('path/to/hero-main-mobile.png');
+  }
+}
+@media (max-width: 768px) {
+  .card-body {
+    padding: 20px;
+  }
 }
 /* Responsive adjustments using Tailwind's responsive prefixes */
 .sm\:container {
