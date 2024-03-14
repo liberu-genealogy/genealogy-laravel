@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * Defines the Pedigree Chart page in the Filament admin panel.
+ */
+
 namespace App\Filament\Pages;
 
 use Filament\Pages\Page;
@@ -21,6 +25,9 @@ class PedigreeChartPage extends Page
 
     public static function getNavigationIcon(): string
     {
+        return static::$navigationIcon;
+    }
+}
         return static::$navigationIcon;
     }
 }

@@ -28,6 +28,9 @@ class DabovilleReportWidget extends Widget
     }
 
     private function traverseFamilyTree($person, $currentNumber)
+/**
+ * Defines the Daboville Report widget for displaying genealogy reports.
+ */
     {
         $this->reportData[$person->id] = [
             'number' => $currentNumber,
@@ -48,3 +51,6 @@ class DabovilleReportWidget extends Widget
         return view(static::$view, ['reportData' => $this->reportData, 'selectedPersonId' => $this->selectedPersonId]);
     }
 }
+    /**
+     * Renders the Daboville Report widget view with the necessary data.
+     */
