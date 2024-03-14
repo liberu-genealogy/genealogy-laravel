@@ -8,5 +8,6 @@
     <x-about-us></x-about-us>
     <x-services></x-services>
     <x-contact-form></x-contact-form>
+    <x-home_navbar></x-home_navbar>
     <x-footer></x-footer>
 @endsection
