@@ -9,7 +9,7 @@
 </head>
 <body>
     @include('components.header')
-    @include('components.home_navbar')
+    @include('components.navbar')
 
     <main>
         @include('components.manage_section')
