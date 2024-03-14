@@ -2,7 +2,7 @@
 
 @section('content')
 
-@include('components.home-header')
+@component('components.x-home-header')
 @include('components.home-navbar')
  
     <main>
