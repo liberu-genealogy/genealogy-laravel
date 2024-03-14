@@ -20,10 +20,6 @@ export default defineConfig({
             '@': path.resolve(__dirname, './resources')
         }
     },
-    css: [
-        'resources/css/tailwind.css',
-        'public/css/custom.css',
-    ],
 //    build: {
 //        outDir: '../public',
 //    },
