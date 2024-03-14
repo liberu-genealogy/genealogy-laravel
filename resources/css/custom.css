@@ -34,6 +34,18 @@ footer *,
   
 }
 .sm\:container {
+.bg-green-500 {
+  background-color: rgba(16, 185, 129, 0.75) !important;
+}
+.text-white {
+  color: #FFFFFF !important;
+}
+.bg-green-500 {
+  background-color: rgba(16, 185, 129, 0.75) !important;
+}
+.text-white {
+  color: #FFFFFF !important;
+}
   @apply max-w-xl;
 }
 .md\:container {
