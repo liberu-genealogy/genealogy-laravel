@@ -22,3 +22,4 @@
 </body>
 </html>
     @include('components.footer')
+    @include('components.footer')
