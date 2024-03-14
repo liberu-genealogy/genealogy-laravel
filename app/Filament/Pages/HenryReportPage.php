@@ -24,4 +24,14 @@ class HenryReportPage extends CustomFilamentBasePage
     {
         Livewire::mount(static::$view);
     }
+
+    /**
+     * Renders the HenryReportPage component.
+     *
+     * @return string
+     */
+    public function render(): string
+    {
+        return parent::render();
+    }
 }
