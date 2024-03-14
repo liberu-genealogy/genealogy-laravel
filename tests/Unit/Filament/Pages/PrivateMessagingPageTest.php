@@ -22,6 +22,7 @@ class PrivateMessagingPageTest extends TestCase
     // ...
     
     // Add your test logic here
+    // Assert that the data is as expected
 
         // Call the mount method
         $page->mount();
@@ -30,6 +31,8 @@ class PrivateMessagingPageTest extends TestCase
         // ...
     }
 
+    public function test_sendMessage()
+    {
     public function test_sendMessage()
     {
         // Create an instance of PrivateMessagingPage
