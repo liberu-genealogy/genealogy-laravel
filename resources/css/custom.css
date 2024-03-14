@@ -142,7 +142,6 @@
 .xl\:container {
   @apply max-w-6xl;
 }
-}
 .card-body {
   @apply p-4;
   @media (max-width: 768px) {
