@@ -45,7 +45,7 @@ return [
             'transport'    => 'smtp',
             'host'         => env('MAIL_HOST', 'smtp.mailgun.org'),
             'port'         => env('MAIL_PORT', 587),
-            'encryption'   => env('MAIL_ENCRYPTION', 'tls1.3'), // Updated for PHP 8.3 compatibility
+            'encryption'   => env('MAIL_ENCRYPTION', 'tls'), // Updated to standard TLS encryption
             'username'     => env('MAIL_USERNAME'),
             'password'     => env('MAIL_PASSWORD'),
             'timeout'      => null,
