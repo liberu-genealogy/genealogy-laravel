@@ -1,3 +1,4 @@
+@props(['logo'])
 <div>
     <!-- Converted Blade component code for HomeNavBar.vue -->
     <nav>
