@@ -1,3 +1,7 @@
+/**
+ * This file contains the contact form component.
+ * It displays a form for users to send messages.
+ */
 <div>
     <form action="/contact/send" method="POST">
         @csrf
