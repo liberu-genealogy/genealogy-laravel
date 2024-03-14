@@ -2,7 +2,7 @@
     <div class="container-fluid">
         <a class="navbar-brand" href="/">
             <img src="/build/images/logo1.svg" alt="Logo" style="height: 30px;">
-            Liberu Genealogy
+Family Tree 365
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
