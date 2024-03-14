@@ -3,11 +3,14 @@ background-image: url('/build/images/main-hero.png');
 color: #FFFFFF;
 }
 
+div {
+color: #FFFFFF;
+}
+
 footer,
 footer *,
 .navbar-nav {
- background-color: rgba(0, 128, 0, 0.6) !important;
- color: #FFFFFF !important;
+@apply bg-green-800 bg-opacity-75 text-white rounded-lg shadow-md overflow-hidden;
 }
 
 /* Custom styles extracted from tailwind.css */
@@ -23,16 +26,15 @@ footer *,
     max-width: 100%;
   }
 }
-.card {
-  @apply bg-green-500 bg-opacity-75 text-white rounded-lg shadow-md overflow-hidden;
-}
-.card-header {
-  @apply text-gray-700 font-bold py-2 px-4;
-}
-.card-body {
-  @apply p-4 bg-green-500 bg-opacity-75;
-  
-}
+    .card, card {
+        @apply bg-green-800 bg-opacity-75 text-white rounded-lg shadow-md overflow-hidden;
+    }
+    .card-header, card-header {
+        @apply text-white font-bold py-2 px-4 bg-green-800 bg-opacity-75;
+    }
+    .card-body, card-body {
+        @apply p-4 bg-green-800 bg-opacity-75;
+    }
 .sm\:container {
   @apply max-w-xl;
 }
@@ -45,19 +47,9 @@ footer *,
 .xl\:container {
   @apply max-w-6xl;
 }
-.card {
-  @apply bg-gray-800 rounded-lg shadow-md overflow-hidden;
-}
-.card-header {
-@media (max-width: 768px) {
-  .btn {
-    font-size: 14px;
-  }
-}
   .form-input {
     padding: 10px;
   }
-}
 @media (max-width: 768px) {
   .btn {
     font-size: 14px;
@@ -69,17 +61,15 @@ footer *,
 .container {
   @apply max-w-6xl mx-auto px-4 sm:px-6 lg:px-8;
 }
-.card {
-  @apply bg-gray-800 rounded-lg shadow-md overflow-hidden;
-}
-.card-header {
-  @apply bg-gray-200 text-gray-700 font-bold py-2 px-4;
-}
-.card-body {
-  @apply p-4 bg-gray-800;
-  
-}
-.sm\:container {
+    .card {
+        @apply bg-green-800 bg-opacity-75 text-white rounded-lg shadow-md overflow-hidden;
+    }
+    .card-header {
+        @apply bg-green-800 bg-opacity-75 text-white font-bold py-2 px-4;
+    }
+    .card-body {
+        @apply p-4 bg-green-800 bg-opacity-75;
+    }.sm\:container {
   @apply max-w-xl;
 }
 .md\:container {
@@ -90,16 +80,6 @@ footer *,
 }
 .xl\:container {
   @apply max-w-6xl;
-}
-.card {
-  @apply bg-gray-800 rounded-lg shadow-md overflow-hidden;
-}
-.card-header {
-  @apply bg-gray-200 text-gray-700 font-bold py-2 px-4;
-}
-.card-body {
-  @apply p-4 bg-gray-800;
-  
 }
 /* Responsive adjustments using Tailwind's responsive prefixes */
 .sm\:container {
@@ -113,15 +93,6 @@ footer *,
 .xl\:container {
   @apply max-w-6xl;
 }
-.card {
-  @apply bg-white rounded-lg shadow-md overflow-hidden;
-}
-.card-header {
-  @apply bg-gray-200 text-gray-700 font-bold py-2 px-4;
-}
-.card-body {
-  @apply p-4 bg-gray-800;
-}
 .sm\:container {
   @apply max-w-xl;
 }
@@ -133,12 +104,6 @@ footer *,
 }
 .xl\:container {
   @apply max-w-6xl;
-}
-.card {
-  @apply bg-white rounded-lg shadow-md overflow-hidden;
-}
-.card-header {
-  @apply bg-gray-200 text-gray-700 font-bold py-2 px-4;
 }
 /* Responsive adjustments using Tailwind's responsive prefixes */
 .sm\:container {
@@ -154,7 +119,7 @@ footer *,
   @apply max-w-6xl;
 }
 .card-body {
-  @apply p-4 bg-gray-800;
+  @apply p-4 bg-green-800 opacity-75;
   @media (max-width: 768px) {
     padding: 20px;
   }
@@ -172,10 +137,10 @@ footer *,
   @apply max-w-6xl;
 }
 .card {
-  @apply bg-white rounded-lg shadow-md overflow-hidden;
+  @apply bg-green-800 bg-opacity-75 rounded-lg shadow-md overflow-hidden;
 }
 .card-header {
-  @apply bg-gray-200 text-gray-700 font-bold py-2 px-4;
+  @apply bg-green-800 bg-opacity-75 text-white font-bold py-2 px-4;
 }
 @media (max-width: 768px) {
   .card-header {
