@@ -24,6 +24,13 @@ class PeopleSearch extends Component
                                ->get();
     }
 
+    /**
+    * Render the component view.
+    *
+    * This function is responsible for rendering the 'livewire.people-search' view and passing the search results to it.
+    *
+    * @return \Illuminate\Contracts\View\View The view instance.
+    */
     public function render()
     {
         return view('livewire.people-search', [
