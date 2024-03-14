@@ -1,3 +1,6 @@
+/**
+ * Configuration file for queue settings.
+ */
 <?php
 
 return [
