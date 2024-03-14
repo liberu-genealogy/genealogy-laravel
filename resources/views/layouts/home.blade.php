@@ -16,3 +16,24 @@
 </html>
     @include('components.footer')
     @include('components.footer')
+@include('components.home-header')
+@include('components.home-navbar')
+@include('components.footer')
+
+<section>
+    @yield('content')
+</section>
+@include('components.home-header')
+@include('components.home-navbar')
+@include('components.footer')
+
+<section>
+    @yield('content')
+</section>
+@include('components.home-header')
+@include('components.home-navbar')
+@include('components.footer')
+
+<section>
+    @yield('content')
+</section>
