@@ -9,6 +9,6 @@
         @include('components.manage_section')
     </main>
 
-@include('components.contact-form')
+@component('components.x-contact-form')
 @include('components.footer')
 @endsection
