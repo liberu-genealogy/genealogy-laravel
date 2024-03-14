@@ -1,6 +1,10 @@
 <div class="ml-10 space-x-4">
-    <a href="/login" class="inline-block bg-gray-500 py-2 px-4 border border-transparent rounded-md text-base font-medium text-white hover:bg-opacity-75">Log in</a>
-    <a href="/register" class="inline-block bg-blue-500 py-2 px-4 border border-transparent rounded-md text-base font-medium text-white hover:bg-opacity-75">Register</a>
-    <a href="/contact" class="inline-block bg-green-500 py-2 px-4 border border-transparent rounded-md text-base font-medium text-white hover:bg-opacity-75">Contact</a>
-    <a href="/about" class="inline-block bg-yellow-500 py-2 px-4 border border-transparent rounded-md text-base font-medium text-white hover:bg-opacity-75">About</a>
+    <x-button href="/login" class="bg-gray-500">Log in</x-button>
+    <x-button href="/register" class="bg-blue-500">Register</x-button>
+    <x-button href="/contact" class="bg-green-500">Contact</x-button>
+    <x-button href="/about" class="bg-yellow-500">About</x-button>
 </div>
+<x-button href="/login" class="bg-gray-500">Log in</x-button>
+<x-button href="/register" class="bg-blue-500">Register</x-button>
+<x-button href="/contact" class="bg-green-500">Contact</x-button>
+<x-button href="/about" class="bg-yellow-500">About</x-button>
