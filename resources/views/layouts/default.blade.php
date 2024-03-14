@@ -1,11 +1,9 @@
 @extends('layouts.app')
 
+@include('components.header')
+
 @section('content')
     @yield('content')
 @endsection
-@include('components.header')
-@include('components.footer')
 
-<section>
-    @yield('content')
-</section>
+@include('components.footer')
