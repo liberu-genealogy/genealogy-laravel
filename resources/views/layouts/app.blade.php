@@ -7,13 +7,10 @@
     @vite('resources/css/app.css')
 </head>
 <body>
-    @include('components.header') 
 
     <main>
         @yield('content')
     </main>
-
-    @include('components.footer')
 
     @vite('resources/js/app.js')
 </body>
