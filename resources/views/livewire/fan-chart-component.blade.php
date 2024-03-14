@@ -10,6 +10,7 @@
 <body>
     <div id="fanChartContainer"></div>
     <script src="{{ asset('js/fan-chart.js') }}"></script>
+    @livewire('ahnentafel-report')
     @livewireScripts
 </body>
 </html>
