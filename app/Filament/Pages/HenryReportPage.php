@@ -25,3 +25,6 @@ class HenryReportPage extends CustomFilamentBasePage
         Livewire::mount(static::$view);
     }
 }
+        Livewire::mount(static::$view);
+    }
+}
