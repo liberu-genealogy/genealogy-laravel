@@ -145,6 +145,9 @@
 }
 .card-body {
   @apply p-4;
+  @media (max-width: 768px) {
+    padding: 20px;
+  }
 }
 .sm\:container {
   @apply max-w-xl;
@@ -167,6 +170,11 @@
 @media (max-width: 768px) {
   .card-header {
     background-image: url('path/to/hero-main-mobile.png');
+  }
+}
+@media (max-width: 768px) {
+  .card-body {
+    padding: 20px;
   }
 }
 /* Responsive adjustments using Tailwind's responsive prefixes */
