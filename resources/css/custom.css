@@ -10,7 +10,7 @@ color: #FFFFFF;
 footer,
 footer *,
 .navbar-nav {
-@apply bg-green-800 bg-opacity-75 text-white rounded-lg shadow-md overflow-hidden;
+@apply bg-green-800 bg-opacity-75 text-white shadow-md;
 }
 
 /* Custom styles extracted from tailwind.css */
@@ -26,6 +26,11 @@ footer *,
     max-width: 100%;
   }
 }
+    .manage-section {
+        @apply bg-green-800 bg-opacity-75 text-white shadow-md overflow-hidden;
+    }
+
+
     .card, card {
         @apply bg-green-800 bg-opacity-75 text-white rounded-lg shadow-md overflow-hidden;
     }
