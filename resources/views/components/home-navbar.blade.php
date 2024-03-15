@@ -1,7 +1,7 @@
 <div class="navbar bg-gray-900">
     <div class="container mx-auto">
         <a class="navbar-brand flex items-center" href="/">
-            <img src="{{ asset('images/logo1.svg') }}" alt="Logo" class="h-8">
+            <img src="{{ asset('/build/images/logo1.svg') }}" alt="Logo" class="h-8">
             <span class="ml-2 text-white">{{ config('app.name') }}</span>
         </a>
         <button class="navbar-toggler" type="button" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
@@ -45,4 +45,3 @@
         </div>
     </div>
 </div>
-<link rel="stylesheet" href="{{ mix('css/app.css') }}">
