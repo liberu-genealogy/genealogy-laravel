@@ -1,25 +1,25 @@
-<div class="navbar navbar-expand-lg navbar-dark">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="/">
-            <img src="/build/images/logo1.svg" alt="Logo" style="height: 30px;">
-{{ config('app.name') }}
+<div class="navbar bg-gray-900">
+    <div class="container mx-auto">
+        <a class="navbar-brand flex items-center" href="/">
+            <img src="{{ asset('images/logo1.svg') }}" alt="Logo" class="h-8">
+            <span class="ml-2 text-white">{{ config('app.name') }}</span>
         </a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <button class="navbar-toggler" type="button" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse" id="navbarNavDropdown navbar">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <div class="navbar-collapse">
+            <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <a class="nav-link navbar-button" aria-current="page" href="/">Home</a>
+                    <a class="nav-link" href="/">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link navbar-button" href="#">Features</a>
+                    <a class="nav-link" href="#">Features</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link navbar-button" href="#">Pricing</a>
+                    <a class="nav-link" href="#">Pricing</a>
                 </li>
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" aria-expanded="false">
                         More
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
@@ -28,9 +28,9 @@
                     </ul>
                 </li>
             </ul>
-            @if(Auth::check())
-                <span class="navbar-text">
-                    Welcome, {{ Auth::user()->name }}
+            @if(auth()->check())
+                <span class="text-white">
+                    Welcome, {{ auth()->user()->name }}
                 </span>
             @else
                 <ul class="navbar-nav">
@@ -44,4 +44,5 @@
             @endif
         </div>
     </div>
-<link rel="stylesheet" href="{{ asset('css/navbar.css') }}">
+</div>
+<link rel="stylesheet" href="{{ mix('css/app.css') }}">
