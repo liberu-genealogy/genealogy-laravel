@@ -2,7 +2,6 @@
     <div class="container mx-auto flex justify-between items-center py-4">
         <a class="navbar-brand flex items-center" href="/">
             <img src="{{ asset('/build/images/logo1.svg') }}" alt="Logo" class="h-8">
-            <span class="ml-2 text-white">{{ config('app.name') }}</span>
         </a>
         <button class="navbar-toggler lg:hidden text-white focus:outline-none">
             <span class="navbar-toggler-icon"></span>
