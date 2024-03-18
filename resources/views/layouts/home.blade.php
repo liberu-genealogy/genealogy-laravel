@@ -1,12 +1,8 @@
 @extends('layouts.app')
-
-
 @include('components.home-navbar')
- 
-    <div class="mt-8">
-        @yield('content')
-        @include('components.manage_section')
-    </div>
+@include('components.home-header')
 
-@include('components.contact-form')
+<main>
+        @yield('content')
+</main>
 @include('components.footer')
