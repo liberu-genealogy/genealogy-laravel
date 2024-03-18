@@ -12,19 +12,7 @@
                     <a class="nav-link text-white hover:bg-transparent" href="/">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-white hover:bg-transparent" href="#">Features</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-white hover:bg-transparent" href="#">Pricing</a>
-                </li>
-                <li class="nav-item dropdown" id="moreDropdown">
-                    <a class="nav-link dropdown-toggle text-white hover:bg-transparent" href="#" id="navbarDropdownMenuLink" role="button" aria-expanded="false" onclick="toggleDropdown()">
-                        More
-                    </a>
-                    <ul class="dropdown-menu hidden" aria-labelledby="navbarDropdownMenuLink">
-                        <li><a class="dropdown-item" href="#">About Us</a></li>
-                        <li><a class="dropdown-item" href="/contact">Contact</a></li>
-                    </ul>
+                    <a class="nav-link text-white hover:bg-transparent" href="/contact">Contact</a>
                 </li>
                 @if(auth()->check())
                     <li class="nav-item">
