@@ -1,6 +1,6 @@
-<footer>
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-        <div class="flex justify-between items-center">
+<footer class="bg-opacity-70">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 bg-opacity-80">
+        <div class="flex justify-between items-center bg-opacity-80">
             <div>
                 <a href="/" class="text-lg font-semibold">{{ config('app.name') }}</a>
             </div>
@@ -13,7 +13,7 @@
                 </ul>
             </nav>
         </div>
-        <div class="text-center py-4">
+        <div class="text-center">
             <p>&copy; {{ date('Y') }} {{ config('app.name') }}. All rights reserved.</p>
         </div>
     </div>

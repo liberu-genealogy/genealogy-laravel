@@ -8,9 +8,13 @@ color: #FFFFFF;
 }
 
 footer,
-footer *,
+footer *
+{
+@apply bg-green-900 bg-opacity-75 text-white;
+}
+
 .navbar-nav {
-@apply bg-green-800 bg-opacity-75 text-white shadow-md;
+@apply bg-opacity-75 text-white shadow-md;
 }
 
 /* Custom styles extracted from tailwind.css */
