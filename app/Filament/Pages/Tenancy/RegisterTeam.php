@@ -4,8 +4,11 @@ namespace App\Filament\Pages\Tenancy;
 
 use App\Models\Team;
 use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Actions;
+use Filament\Forms\Components\ToggleButtons;
 use Filament\Forms\Form;
 use Filament\Pages\Tenancy\RegisterTenant;
+use App\Services\StripeSubscriptionService;
 
 class RegisterTeam extends RegisterTenant
 {
@@ -22,8 +25,9 @@ class RegisterTeam extends RegisterTenant
                 TextInput::make('email')
                     ->label('Invite User by Email')
                     ->email()
-                    ->required(false),
-                Button::make('Send Invitation')
+                    ->required(false)
+               /**
+ ToggleButtons::make('Send Invitation')
                     ->action(function (array $data) {
                         $teamId = $this->record->id;
                         $email = $data['email'];
@@ -33,14 +37,16 @@ class RegisterTeam extends RegisterTenant
                         }
                     })
                     ->type('button'),
+**/
             ]);
+
     }
 
     protected function handleRegistration(array $data): Team
     {
         $team = Team::create($data);
 
-        $team->members()->attach(auth()->user());
+//        $team->users()->attach(auth()->user());
 
         $stripeService = resolve(StripeSubscriptionService::class);
         $stripeService->createTrialSubscription($team);
