@@ -213,4 +213,32 @@ return [
         // 'ExampleClass' => App\Example\ExampleClass::class,
     ])->toArray(),
 
+    /*
+    |--------------------------------------------------------------------------
+    | Broadcasting Configuration
+    |--------------------------------------------------------------------------
+    |
+    | Here you may configure all of the broadcast drivers for your application.
+    | Out of the box, Laravel supports some of the most popular broadcasting
+    | solutions including Pusher, Redis, and a log driver for development.
+    |
+    */
+    'broadcasting' => [
+        'default' => env('BROADCAST_DRIVER', 'log'),
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Laravel Echo Configuration
+    |--------------------------------------------------------------------------
+    |
+    | This option registers the Echo namespace to be used when referencing
+    | Laravel Echo in your JavaScript. You may adjust this namespace as
+    | necessary.
+    |
+    */
+    'echo' => [
+        'namespace' => 'App\\Events'
+    ],
+
 ];
