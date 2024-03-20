@@ -16,6 +16,7 @@ use Filament\PanelProvider;
 use Filament\Support\Colors\Color;
 use Filament\Widgets;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
+use App\Filament\Middleware\EnsureSuperAdmin;
 use Illuminate\Cookie\Middleware\EncryptCookies;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Routing\Middleware\SubstituteBindings;
@@ -59,6 +60,7 @@ class AdminPanelProvider extends PanelProvider
         ->tenant(Team::class)
         ->tenantMiddleware([
             SyncSpatiePermissionsWithFilamentTenants::class,
+            EnsureSuperAdmin::class,
         ], isPersistent: true)
             ->middleware([
                 EncryptCookies::class,
