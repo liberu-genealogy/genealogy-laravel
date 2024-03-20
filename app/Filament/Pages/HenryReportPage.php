@@ -22,6 +22,6 @@ class HenryReportPage extends CustomFilamentBasePage
 
     public function mount(): void
     {
-        Livewire::mount(static::$view);
+        \Livewire\Livewire::mount(\App\Http\Livewire\HenryReport::class);
     }
 }
