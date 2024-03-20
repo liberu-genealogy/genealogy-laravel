@@ -29,3 +29,11 @@ Route::get('/terms-and-conditions', function () {
 
 Route::get('/contact', function () { return view('contact'); });
 Route::post('/contact/send', 'App\Http\Controllers\ContactController@sendEmail');
+
+// Placeholder Filament resource routes
+Route::get('/filament/authors', function () {
+    // Filament Authors list view logic here
+})->name('filament.resources.authors.index');
+Route::get('/filament/books', function () {
+    // Filament Books list view logic here
+})->name('filament.resources.books.index');
