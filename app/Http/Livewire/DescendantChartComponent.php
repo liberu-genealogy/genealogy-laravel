@@ -14,12 +14,19 @@ class DescendantChartComponent extends Component
      */
     public function mount()
     {
-        $rawData = Person::all()->toArray();
-        $this->descendantsData = $this->processDescendantData($rawData);
+        try {
+            $rawData = Person::all()->toArray();
+            $this->descendantsData = $this->processDescendantData($rawData);
+        } catch (\Exception $e) {
+            // Handle errors, such as logging or setting an error state
+            \Log::error('Failed to retrieve or process descendants data: ' . $e->getMessage());
+            $this->descendantsData = [];
+        }
     }
 
     private function processDescendantData($data)
     {
+
         $tree = [];
         foreach ($data as $item) {
             if (!isset($tree[$item['id']])) {
@@ -32,6 +39,18 @@ class DescendantChartComponent extends Component
         return array_filter($tree, function ($item) {
             return empty($item['parent_id']);
         });
+
+
+
+
+
+
+
+
+
+
+
+
     }
 
     public function render()
