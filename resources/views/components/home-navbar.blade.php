@@ -17,6 +17,7 @@
                             Welcome, {{ auth()->user()->name }}
                         </span>
                     </li>
+                    <button class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-full"><a href="/dashboard">Dashboard</a></button>
                 @else
     <button class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-full"><a href="/admin/login">Login</a></button>
     <button class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-full"><a href="/admin/register">Register</a></button>
