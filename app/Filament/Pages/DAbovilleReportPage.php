@@ -8,7 +8,7 @@ class DAbovilleReportPage extends CustomFilamentBasePage
 {
     protected static string $view = 'livewire.daboville-report';
     protected static ?string $title = 'DAboville Report';
-    protected static ?string $navigationIcon = 'heroicon-o-document-report';
+    protected static ?string $navigationIcon = 'heroicon-o-chart-bar';
 
     public function getTitle(): string
     {
