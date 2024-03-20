@@ -46,10 +46,10 @@ class RegisterTeam extends RegisterTenant
     {
         $team = Team::create($data);
 
-//        $team->users()->attach(auth()->user());
+        $team->users()->attach(auth()->user());
 
-        $stripeService = resolve(StripeSubscriptionService::class);
-        $stripeService->createTrialSubscription($team);
+//        $stripeService = resolve(StripeSubscriptionService::class);
+//        $stripeService->createTrialSubscription($team);
 
         return $team;
     }
