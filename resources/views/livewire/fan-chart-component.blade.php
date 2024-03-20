@@ -1,3 +1,4 @@
+@livewire('fan-chart-component')
 <!DOCTYPE html>
 <html lang="en">
 <head>
