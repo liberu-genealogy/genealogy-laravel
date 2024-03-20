@@ -11,6 +11,7 @@
 <body>
 
     <main>
+        @include('components.menu_tree')
     </main>
 
     @vite('resources/js/app.js')
