@@ -22,6 +22,8 @@ use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\AuthenticateSession;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
+use Filament\Navigation\NavigationItem;
+use Illuminate\Support\Facades\File;
 use Maartenpaauw\Filament\Cashier\Stripe\BillingProvider;
 
 //use App\Providers\Filament\SyncSpatiePermissionsWithFilamentTenants;
@@ -55,8 +57,6 @@ class AdminPanelProvider extends PanelProvider
         ->tenantRegistration(RegisterTeam::class)
         ->tenantProfile(EditTeamProfile::class)
         ->tenant(Team::class)
-//        ->tenantBillingProvider(new BillingProvider('default'))
-//        ->requiresTenantSubscription()
         ->tenantMiddleware([
             SyncSpatiePermissionsWithFilamentTenants::class,
         ], isPersistent: true)

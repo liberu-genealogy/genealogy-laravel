@@ -26,18 +26,16 @@ class RegisterTeam extends RegisterTenant
                     ->label('Invite User by Email')
                     ->email()
                     ->required(false)
-               /**
- ToggleButtons::make('Send Invitation')
-                    ->action(function (array $data) {
-                        $teamId = $this->record->id;
-                        $email = $data['email'];
+               // ToggleButtons::make('Send Invitation')
+                    // ->action(function (array $data) {
+                    //     $teamId = $this->record->id;
+                    //     $email = $data['email'];
 
-                        if (!empty($email) && !empty($teamId)) {
-                            resolve(TeamInvitationController::class)->sendInvitation(new Request(['email' => $email, 'team_id' => $teamId]));
-                        }
-                    })
-                    ->type('button'),
-**/
+                    //     if (!empty($email) && !empty($teamId)) {
+                    //         resolve(TeamInvitationController::class)->sendInvitation(new Request(['email' => $email, 'team_id' => $teamId]));
+                    //     }
+                    // })
+                    // ->type('button'),
             ]);
 
     }
