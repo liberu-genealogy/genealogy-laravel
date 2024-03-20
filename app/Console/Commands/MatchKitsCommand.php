@@ -6,7 +6,7 @@ use Illuminate\Console\Command;
 use App\Models\Dna;
 use App\Models\DnaMatching;
 
-class MatchKitsCommand extends Command
+class MatchKitsCommand extends BaseDnaMatchCommand
 {
     protected $signature = 'dna:match {varName1} {fileName1} {varName2} {fileName2}';
     protected $description = 'Matches two DNA kits and updates the database with the results.';
