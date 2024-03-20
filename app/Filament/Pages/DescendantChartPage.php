@@ -14,12 +14,12 @@ class DescendantChartPage extends Page
 
     public function getTitle(): string
     {
-        return $this->title;
+        return static::$title;
     }
 
     public static function getNavigationIcon(): string
     {
-        return $this->navigationIcon;
+        return static::$navigationIcon;
     }
 
     public function mount(): void
