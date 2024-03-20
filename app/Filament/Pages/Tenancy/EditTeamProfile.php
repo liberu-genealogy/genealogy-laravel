@@ -18,6 +18,10 @@ class EditTeamProfile extends EditTenantProfile
         return $form
             ->schema([
                 TextInput::make('name'),
+                TextInput::make('email')
+                    ->label('Team Email')
+                    ->email()
+                    ->required(),
             ]);
     }
 }
