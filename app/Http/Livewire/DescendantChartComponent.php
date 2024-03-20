@@ -26,16 +26,31 @@ class DescendantChartComponent extends Component
 
     private function processDescendantData($data)
     {
-        // Transforming data into a hierarchical structure for D3.js
-        $hierarchy = [];
-        foreach ($data as $person) {
-            $hierarchy[] = [ // Mocking up a simplified hierarchical structure
-                'id' => $person['id'],
-                'name' => $person['name'],
-                'children' => [] // Assuming children can be populated elsewhere
-            ];
+
+        $tree = [];
+        foreach ($data as $item) {
+            if (!isset($tree[$item['id']])) {
+                $tree[$item['id']] = ['id' => $item['id'], 'name' => $item['name'], 'children' => []];
+            }
+            if ($item['parent_id']) {
+                $tree[$item['parent_id']]['children'][] = &$tree[$item['id']];
+            }
         }
-        return $hierarchy;
+        return array_filter($tree, function ($item) {
+            return empty($item['parent_id']);
+        });
+
+
+
+
+
+
+
+
+
+
+
+
     }
 
     public function render()
