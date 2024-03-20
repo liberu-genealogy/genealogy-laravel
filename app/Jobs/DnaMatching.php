@@ -48,8 +48,13 @@ class DnaMatching implements ShouldQueue
             //            system('/usr/bin/python3 /home/genealogia/public_html/dna.py ' . $this->var_name . ' ' . $dna->variable_name . ' ' . '/home/genealogia/public_html/storage/app/dna/'. $this->file_name . ' ' . '/home/genealogia/public_html/storage/app/dna/'. $dna->file_name);
             // chdir('/home/familytree365/domains/api.familytree365.com/genealogy/app');
             chdir($mpath);
-            // exec('python dna.py '.$this->var_name.' '.$dna->variable_name.' '.$this->file_name.' '.$dna->file_name, $dna_output);
-            $result = exec('python3 dna.py '.$this->var_name.' '.$dna->variable_name.' '.$this->file_name.' '.$dna->file_name);
+            $result = \Illuminate\Support\Facades\Artisan::call('dna:match', [
+                'varName1' => $this->var_name,
+                'fileName1' => $this->file_name,
+                'varName2' => $dna->variable_name,
+                'fileName2' => $dna->file_name
+            ]);
+            $resultData = json_decode($result, true, 512, JSON_THROW_ON_ERROR);
 //            $resultData = json_decode($result, true, 512, JSON_THROW_ON_ERROR);
             $resultData = json_decode($result, true, 512, JSON_THROW_ON_ERROR);
             // chmod(storage_path('/app/public/dna/output/shared_dna_'.$this->var_name.'_'.$dna->variable_name.'_'.$this->file_name.'_'.$dna->file_name), 0777);
