@@ -74,7 +74,18 @@ if ! php artisan db:seed; then
     exit 1
 fi
 php artisan db:seed
+if ! php artisan db:seed; then
+    echo "Database seeding failed."
+    exit 1
+fi
+php artisan db:seed
 echo ""
+
+  echo "🎬 DEV ---> Running PHPUnit tests"
+  if ! ./vendor/bin/phpunit; then
+      echo "PHPUnit tests failed."
+      exit 1
+  fi
 echo ""
 echo "=================================="
 echo ""
