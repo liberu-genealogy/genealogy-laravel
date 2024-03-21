@@ -1,5 +1,6 @@
 @import 'custom.css';
-@import 'app.css';
+@import 'tailwind.css';
+@import 'navbar.css';
 @tailwind base;
 @tailwind components;
 @tailwind utilities;

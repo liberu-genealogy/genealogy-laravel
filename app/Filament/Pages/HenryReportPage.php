@@ -8,7 +8,7 @@ class HenryReportPage extends CustomFilamentBasePage
 {
     protected static string $view = 'livewire.henry-report';
     protected static ?string $title = 'Henry Report';
-    protected static ?string $navigationIcon = 'heroicon-o-document-report';
+    protected static ?string $navigationIcon = 'heroicon-o-chart-bar';
 
     public function getTitle(): string
     {
@@ -20,13 +20,8 @@ class HenryReportPage extends CustomFilamentBasePage
         return static::$navigationIcon;
     }
 
-    public function render(): \Illuminate\Contracts\Support\Renderable
-    {
-        return \Livewire::mount(static::$view);
-    }
-
     public function mount(): void
     {
-        Livewire::mount(static::$view);
+        \Livewire\Livewire::mount(\App\Http\Livewire\HenryReport::class);
     }
 }

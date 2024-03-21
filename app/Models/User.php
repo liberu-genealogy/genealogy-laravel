@@ -12,12 +12,14 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Collection;
 use Laravel\Sanctum\HasApiTokens;
+use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable implements FilamentUser, HasTenants
 {
     use HasApiTokens;
     use HasFactory;
     use Notifiable;
+    use HasRoles;
 
     /**
      * The attributes that are mass assignable.
@@ -69,6 +71,13 @@ class User extends Authenticatable implements FilamentUser, HasTenants
 
     public function canAccessPanel(Panel $panel): bool
     {
-        return $this->hasVerifiedEmail();
+//        return $this->hasVerifiedEmail();
+return true;
+    }
+
+    public function canAccessFilament(): bool
+    {
+//        return $this->hasVerifiedEmail();
+return true;
     }
 }

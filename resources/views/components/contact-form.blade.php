@@ -1,27 +1,27 @@
-<x-layouts.app>
+<div>
     <form action="/contact/send" method="POST">
         @csrf
-        <div class="form-group">
-            <label for="name">Name:</label>
-            <input type="text" class="form-control" id="name" name="name" value="{{ old('name') }}" required>
+        <div class="mb-4">
+            <label for="name" class="block text-gray-700 text-sm font-bold mb-2">Name:</label>
+            <input type="text" class="form-input rounded-md shadow-sm w-full" id="name" name="name" value="{{ old('name') }}" required>
             @error('name')
-                <div class="alert alert-danger">{{ $message }}</div>
+                <div class="text-red-500">{{ $message }}</div>
             @enderror
         </div>
-        <div class="form-group">
-            <label for="email">Email:</label>
-            <input type="email" class="form-control" id="email" name="email" value="{{ old('email') }}" required>
+        <div class="mb-4">
+            <label for="email" class="block text-gray-700 text-sm font-bold mb-2">Email:</label>
+            <input type="email" class="form-input rounded-md shadow-sm w-full" id="email" name="email" value="{{ old('email') }}" required>
             @error('email')
-                <div class="alert alert-danger">{{ $message }}</div>
+                <div class="text-red-500">{{ $message }}</div>
             @enderror
         </div>
-        <div class="form-group">
-            <label for="message">Message:</label>
-            <textarea class="form-control" id="message" name="message" rows="5" required>{{ old('message') }}</textarea>
+        <div class="mb-4">
+            <label for="message" class="block text-gray-700 text-sm font-bold mb-2">Message:</label>
+            <textarea class="form-textarea rounded-md shadow-sm w-full" id="message" name="message" rows="5" required>{{ old('message') }}</textarea>
             @error('message')
-                <div class="alert alert-danger">{{ $message }}</div>
+                <div class="text-red-500">{{ $message }}</div>
             @enderror
         </div>
-        <button type="submit" class="btn btn-primary">Send Message</button>
+        <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Send Message</button>
     </form>
-</x-layouts.app>
+</div>
