@@ -10,7 +10,7 @@ class PedigreeChartPage extends Page
 
     protected static ?string $resource = null;
 
-    protected static ?string $title = 'Pedigree Chart';
+    protected static ?string $title = ' Family Tree Report';
 
     protected static ?string $navigationIcon = 'heroicon-o-chart-bar';
 

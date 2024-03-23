@@ -30,7 +30,9 @@
         "psr-4": {
             "App\\": "app/",
             "Database\\Factories\\": "database/factories/",
-            "Database\\Seeders\\": "database/seeders/"
+            "Database\\Seeders\\": "database/seeders/",
+            "App\\Models\\": "app/Models/",
+            "App\\Http\\Livewire\\": "app/Http/Livewire/"
         }
     },
     "autoload-dev": {
