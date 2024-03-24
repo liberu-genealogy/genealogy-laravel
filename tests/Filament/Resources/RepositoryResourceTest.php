@@ -7,6 +7,9 @@ use App\Models\Repository;
 use Tests\TestCase;
 
 class RepositoryResourceTest extends TestCase
+/**
+ * Tests the functionality and form schema of the RepositoryResource class.
+ */
 {
     public function test_form_schema_is_correct()
     {
@@ -23,6 +26,9 @@ class RepositoryResourceTest extends TestCase
     }
 
     public function test_table_columns_are_correct()
+/**
+ * Tests if the form schema contains all expected fields.
+ */
     {
         $table = RepositoryResource::table(app(\Filament\Tables\Table::class));
         $columns = collect($table->getColumns());
@@ -37,6 +43,9 @@ class RepositoryResourceTest extends TestCase
     }
 
     public function test_navigation_icon_is_correct()
+/**
+ * Tests if the table columns contain all expected fields.
+ */
     {
         $this->assertEquals('heroicon-o-rectangle-stack', RepositoryResource::$navigationIcon);
     }
@@ -55,3 +64,9 @@ class RepositoryResourceTest extends TestCase
         $this->assertEquals('/{record}/edit', $pages['edit']);
     }
 }
+/**
+ * Tests if the model binding is correctly set to the Repository model.
+ */
+/**
+ * Tests if the page routes are correctly configured.
+ */
