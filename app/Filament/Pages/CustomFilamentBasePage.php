@@ -6,5 +6,9 @@ use Filament\Pages\Page;
 
 class CustomFilamentBasePage extends Page
 {
-    // Common properties or methods for custom Filament pages
+    protected static string $view = 'custom-filament-base-page';
+
+    // Other properties or methods for custom Filament pages
 }
+
+

@@ -27,5 +27,9 @@ Route::get('/terms-and-conditions', function () {
     return view('pages.termsandconditions');
 })->name('terms.and.conditions');
 
+Route::get('/about', function () {
+    return view('pages.aboutus');
+})->name('about');
+
 Route::get('/contact', function () { return view('contact'); });
 Route::post('/contact/send', 'App\Http\Controllers\ContactController@sendEmail');
