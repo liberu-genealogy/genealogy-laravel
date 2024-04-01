@@ -4,7 +4,7 @@
     <livewire:descendant-chart-component /> --}}
     {{-- <livewire:daboville-report /> --}}
 
-    <livewire:henry-report />
+    {{-- <livewire:henry-report /> --}}
 
     {{-- <livewire:descendant-chart-component /> --}}
 

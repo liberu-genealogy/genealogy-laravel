@@ -1,4 +1,4 @@
-{{-- <!--
+<!--
 File: descendant-chart.blade.php
 Description: This file contains the descendant chart display and related functionality.
 -->
@@ -53,11 +53,11 @@ function renderDescendantChart(data) {
         });
     </script>
 </body>
-</html> --}}
+</html>
 
 
 
-@livewire('descendant-chart-component')
+{{-- @livewire('descendant-chart-component')
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -72,4 +72,4 @@ function renderDescendantChart(data) {
     <script src="{{ asset('js/fan-chart.js') }}"></script>
     @livewireScripts
 </body>
-</html>
+</html> --}}

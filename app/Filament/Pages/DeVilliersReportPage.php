@@ -2,13 +2,24 @@
 
 namespace App\Filament\Pages;
 
+
+use Filament\Pages\Page;
 use Livewire\Livewire;
 use App\Filament\Pages\CustomFilamentBasePage;
+use App\Filament\Resources\GedcomResource as ResourcesGedcomResource;
+use App\Filament\Resources\MediaObjectResource as ResourcesMediaObjectResource;
+use App\Filament\Resources\NoteResource as ResourcesNoteResource;
+use App\Filament\Resources\PublicationResource as ResourcesPublicationResource;
+use App\Filament\Resources\RepositoryResource as ResourcesRepositoryResource;
+use App\Filament\Resources\SourceDataResource as ResourcesSourceDataResource;
+use App\Filament\Resources\TypeResource as ResourcesTypeResource;
 
-class DeVilliersReportPage extends CustomFilamentBasePage
+
+class DeVilliersReportPage extends Page
+
 {
-    protected static string $view = 'livewire.devilliers-report';
-    protected static ?string $title = 'People Report';
+    protected static string $view = 'de-villiers-report-page';
+    protected static ?string $title = 'Devilliers Report';
     protected static ?string $navigationIcon = 'heroicon-o-chart-bar';
 
     public function getTitle(): string
@@ -21,8 +32,29 @@ class DeVilliersReportPage extends CustomFilamentBasePage
         return static::$navigationIcon;
     }
 
-    public function mount(): void
+    //  public function mount(): void
+    // {
+    //     Livewire::mount('DeVilliersReportWidget');
+    // } 
+
+    public function resources(): array
     {
-        Livewire::mount('DeVilliersReportWidget');
+        return [
+            
+           
+            
+            ResourcesTypeResource::class,
+            // ResourcesGedcomResource::class,
+            ResourcesMediaObjectResource::class,
+            ResourcesNoteResource::class,
+            ResourcesRepositoryResource::class,
+            ResourcesPublicationResource::class,
+            ResourcesSourceDataResource::class,
+            ResourcesPublicationResource::class,
+
+
+
+
+        ];
     }
 }

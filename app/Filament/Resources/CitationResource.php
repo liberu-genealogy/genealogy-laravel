@@ -3,12 +3,15 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\CitationResource\Pages;
+use App\Filament\Resources\CitationResource\RelationManagers;
 use App\Models\Citation;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class CitationResource extends Resource
 {
@@ -25,7 +28,6 @@ class CitationResource extends Resource
                     ->maxLength(255),
                 Forms\Components\Textarea::make('description')
                     ->required()
-                    ->maxLength(65535)
                     ->columnSpanFull(),
                 Forms\Components\DateTimePicker::make('date'),
                 Forms\Components\TextInput::make('is_active')
@@ -102,9 +104,9 @@ class CitationResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index'  => Pages\ListCitations::route('/'),
+            'index' => Pages\ListCitations::route('/'),
             'create' => Pages\CreateCitation::route('/create'),
-            'edit'   => Pages\EditCitation::route('/{record}/edit'),
+            'edit' => Pages\EditCitation::route('/{record}/edit'),
         ];
     }
 }
