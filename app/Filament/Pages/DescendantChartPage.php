@@ -7,7 +7,7 @@ use Livewire\Livewire;
 
 class DescendantChartPage extends Page
 {
-    protected static string $view = 'filament.pages.descendant-chart';
+    protected static string $view = 'descendant-chart-page';
     protected static ?string $resource = null;
     protected static ?string $title = 'Descendant Chart';
     protected static ?string $navigationIcon = 'heroicon-o-chart-bar';

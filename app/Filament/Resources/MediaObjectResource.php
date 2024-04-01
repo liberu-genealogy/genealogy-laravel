@@ -16,6 +16,16 @@ class MediaObjectResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
+     /**
+     * Get the title of the resource.
+     *
+     * @return string
+     */
+    public static function title(): string
+    {
+        return __('Media Objects');
+    }
+
     public static function form(Form $form): Form
     {
         return $form

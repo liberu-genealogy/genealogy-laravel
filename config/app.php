@@ -196,7 +196,27 @@ return [
         App\Providers\Filament\AdminPanelProvider::class,
         App\Providers\RouteServiceProvider::class,
 
+
+
+
+        /*
+    * Livewire Service Provider
+    */
+      Livewire\LivewireServiceProvider::class, // Add this line
+
+
+
     ],
+
+
+
+
+
+    
+  
+
+
+
 
     /*
     |--------------------------------------------------------------------------

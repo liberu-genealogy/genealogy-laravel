@@ -5,12 +5,17 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\DnaResource\Pages;
 use App\Jobs\ImportGedcom;
 use App\Models\Dna;
+use Filament\Forms;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Support\Facades\Storage;
+use App\Filament\Resources\DnaResource\RelationManagers;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\SoftDeletingScope;
+
 
 class DnaResource extends Resource
 {
@@ -19,6 +24,8 @@ class DnaResource extends Resource
     protected static ?string $model = Dna::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+
+    
 
     /**
      * Define the form fields and behavior for the DnaResource.
@@ -97,5 +104,11 @@ class DnaResource extends Resource
             'create' => Pages\CreateDna::route('/create'),
             'edit'   => Pages\EditDna::route('/{record}/edit'),
         ];
+    }
+
+
+    public static function visibility(): bool
+    {
+        return true; // Set to true to make the resource visible in the sidebar
     }
 }

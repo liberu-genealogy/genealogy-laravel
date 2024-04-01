@@ -37,10 +37,3 @@
         </table>
     @endif
 </div>
-@extends('layouts.app')
-
-@section('content')
-<div>
-    <!-- The content of the view goes here, following the structure above -->
-</div>
-@endsection
