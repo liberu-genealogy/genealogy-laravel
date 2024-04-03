@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "701fc7889aae4bfa36d9b8dfd7251924",
+    "content-hash": "4171fff82697ffe49c885d50dbbbd191",
     "packages": [
         {
             "name": "althinect/filament-spatie-roles-permissions",
@@ -2490,16 +2490,16 @@
         },
         {
             "name": "laravel/framework",
-            "version": "v11.1.0",
+            "version": "v11.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "4a9195f68b529b20fe01e24864f99991459c48d4"
+                "reference": "a1750156b671f37cba702380107e2d22161c31e3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/4a9195f68b529b20fe01e24864f99991459c48d4",
-                "reference": "4a9195f68b529b20fe01e24864f99991459c48d4",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/a1750156b671f37cba702380107e2d22161c31e3",
+                "reference": "a1750156b671f37cba702380107e2d22161c31e3",
                 "shasum": ""
             },
             "require": {
@@ -2691,7 +2691,7 @@
                 "issues": "https://github.com/laravel/framework/issues",
                 "source": "https://github.com/laravel/framework"
             },
-            "time": "2024-03-26T15:17:39+00:00"
+            "time": "2024-04-02T14:01:33+00:00"
         },
         {
             "name": "laravel/octane",
@@ -4217,16 +4217,16 @@
         },
         {
             "name": "nesbot/carbon",
-            "version": "3.2.1",
+            "version": "3.2.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/briannesbitt/Carbon.git",
-                "reference": "b4272c2e78d30f9085b079aedb692b2da879b313"
+                "reference": "4d599a6e2351d6b6bf21737accdfe1a4ce3fdbb1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/briannesbitt/Carbon/zipball/b4272c2e78d30f9085b079aedb692b2da879b313",
-                "reference": "b4272c2e78d30f9085b079aedb692b2da879b313",
+                "url": "https://api.github.com/repos/briannesbitt/Carbon/zipball/4d599a6e2351d6b6bf21737accdfe1a4ce3fdbb1",
+                "reference": "4d599a6e2351d6b6bf21737accdfe1a4ce3fdbb1",
                 "shasum": ""
             },
             "require": {
@@ -4319,7 +4319,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2024-03-27T21:37:24+00:00"
+            "time": "2024-03-30T18:22:00+00:00"
         },
         {
             "name": "nette/schema",
@@ -11363,7 +11363,7 @@
         }
     ],
     "aliases": [],
-    "minimum-stability": "stable",
+    "minimum-stability": "dev",
     "stability-flags": [],
     "prefer-stable": true,
     "prefer-lowest": false,
@@ -11371,5 +11371,5 @@
         "php": "^8.3"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.3.0"
+    "plugin-api-version": "2.6.0"
 }
