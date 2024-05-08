@@ -14,6 +14,9 @@ class AddrResource extends Resource
 {
     protected static ?string $model = Addr::class;
 
+    // protected static ?string $navigationLabel = 'heroicon-o-rectangle-stack';
+
+
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
     public static function form(Form $form): Form

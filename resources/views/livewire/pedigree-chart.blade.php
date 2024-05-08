@@ -1,3 +1,4 @@
+@livewire('pedigree-chart')
 <div id="pedigree-chart-container">
     <!-- Chart will be rendered inside this div -->
 </div>

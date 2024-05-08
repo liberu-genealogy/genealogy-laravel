@@ -14,21 +14,43 @@ class DescendantChartComponent extends Component
      */
     public function mount()
     {
-        $rawData = Person::all()->toArray();
-        $this->descendantsData = $this->processDescendantData($rawData);
+        try {
+            $rawData = Person::all()->toArray();
+            $this->descendantsData = $this->processDescendantData($rawData);
+        } catch (\Exception $e) {
+            // Handle errors, such as logging or setting an error state
+            \Log::error('Failed to retrieve or process descendants data: ' . $e->getMessage());
+            $this->descendantsData = [];
+        }
     }
 
     private function processDescendantData($data)
     {
-        // Assuming a structure transformation for D3.js
-        // This is a placeholder for the actual data processing logic
-        return array_map(function ($item) {
-            return [
-                'id'   => $item['id'],
-                'name' => $item['name'],
-                // Additional processing as per D3.js requirements
-            ];
-        }, $data);
+
+        $tree = [];
+        foreach ($data as $item) {
+            if (!isset($tree[$item['id']])) {
+                $tree[$item['id']] = ['id' => $item['id'], 'name' => $item['name'], 'children' => []];
+            }
+            if ($item['parent_id']) {
+                $tree[$item['parent_id']]['children'][] = &$tree[$item['id']];
+            }
+        }
+        return array_filter($tree, function ($item) {
+            return empty($item['parent_id']);
+        });
+
+
+
+
+
+
+
+
+
+
+
+
     }
 
     public function render()

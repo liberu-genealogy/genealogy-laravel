@@ -80,6 +80,14 @@ jobs:
     # The resource_class feature allows configuring CPU and RAM resources for each job. Different resource classes are available for different executors. https://circleci.com/docs/2.0/configuration-reference/#resourceclass
     resource_class: large
 
+  node_build:
+    docker:
+      - image: cimg/node:latest
+    steps:
+      - checkout
+      - run: npm install
+      - run: npm run build
+
 #    - run: mkdir -p ~/phpunit
 #    - run: vendor/bin/phpunit --log-junit ~/phpunit/junit.xml tests
 # store_test_results:

@@ -15,7 +15,7 @@ return [
     |
     */
 
-    'name' => env('APP_NAME', 'Laravel'),
+    'name' => env('APP_NAME', 'Genealogy Laravel Application'),
 
     /*
     |--------------------------------------------------------------------------
@@ -196,7 +196,27 @@ return [
         App\Providers\Filament\AdminPanelProvider::class,
         App\Providers\RouteServiceProvider::class,
 
+
+
+
+        /*
+    * Livewire Service Provider
+    */
+      Livewire\LivewireServiceProvider::class, // Add this line
+
+
+
     ],
+
+
+
+
+
+    
+  
+
+
+
 
     /*
     |--------------------------------------------------------------------------
