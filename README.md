@@ -79,6 +79,7 @@ Download our software today and embark on an enriching journey of tracing your r
 
 ## Contributors
 
-<a href="https://github.com/liberu-genealogy/genealogy-laravel/graphs/contributors">
-  <img src="https://opencollective.com/genealogy/contributors.svg?width=890&button=false" />
+
+<a href = "https://github.com/liberu-genealogy/genealogy-laravel/graphs/contributors">
+  <img src = "https://contrib.rocks/image?repo=liberu-genealogy/genealogy-laravel"/>
 </a>
