@@ -32,31 +32,31 @@ class ImportGedcom implements ShouldQueue
     {
         throw_unless(File::isFile($this->filePath), \Exception::class, "{$this->filePath} does not exist.");
 
-        $tenant = Manager::fromModel($this->user->company(), $this->user);
-        if (!$tenant->databaseExists()) {
-            //$tenant->dropDatabase();
-            $tenant->createDatabase();
-            $tenant->connect();
-            $tenant->migrateDatabase();
-        }
-        $tenant->connect();
+        // $tenant = Manager::fromModel($this->user->company(), $this->user);
+        // if (!$tenant->databaseExists()) {
+        //     //$tenant->dropDatabase();
+        //     $tenant->createDatabase();
+        //     $tenant->connect();
+        //     $tenant->migrateDatabase();
+        // }
+        // $tenant->connect();
         $slug = $this->slug ?? Str::uuid();
 
-        $job = ImportJob::on($tenant->connectionName())->create([
+        $job = ImportJob::create([
             'user_id' => $this->user->getKey(),
             'status'  => 'queue',
             'slug'    => $slug,
         ]);
         $parser = new GedcomParser();
 
-        $parser->parse($tenant->connectionName(), $this->filePath, $slug, true);
+        $parser->parse($this->filePath, $slug, true);
         // with(new GedcomParser())->parse($tenant->connectionName(), $this->filePath, $slug, true);
 
         File::delete($this->filePath);
 
         $job->update(['status' => 'complete']);
 
-        $tenant->disconnect();
+        // $tenant->disconnect();
 
         return 0;
     }
