@@ -15,6 +15,7 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Jobs\ImportGedcom;
 use App\Models\Dna;
 use Filament\Forms\Components\FileUpload;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
 class NewDnaResource extends Resource
@@ -34,17 +35,17 @@ class NewDnaResource extends Resource
         return $form
             ->schema([
                 FileUpload::make('attachment')
-                ->required()
-                ->maxSize(100000)
-            ->directory('gedcom-form-imports')
-            ->visibility('private')
-        ->afterStateUpdated(function ($state, $set, $livewire) {
-            if ($state === null) {
-                return;
-            }
-            $path = $state->store('gedcom-form-imports', 'private');
-            ImportGedcom::dispatch($livewire->user(), Storage::path($path));
-        }),
+                    ->required()
+                    ->maxSize(100000)
+                    ->directory('gedcom-form-imports')
+                    ->visibility('private')
+                    ->afterStateUpdated(function ($state, $set, $livewire) {
+                        if ($state === null) {
+                            return;
+                        }
+                        $path = $state->store('gedcom-form-imports', 'private');
+                        ImportGedcom::dispatch(Auth::user(), Storage::disk('private')->path($path));
+                    }),
             ]);
     }
 
@@ -53,22 +54,22 @@ class NewDnaResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('name')
-                ->searchable(),
-            Tables\Columns\TextColumn::make('user_id')
-                ->numeric()
-                ->sortable(),
-            Tables\Columns\TextColumn::make('variable_name')
-                ->searchable(),
-            Tables\Columns\TextColumn::make('file_name')
-                ->searchable(),
-            Tables\Columns\TextColumn::make('created_at')
-                ->dateTime()
-                ->sortable()
-                ->toggleable(isToggledHiddenByDefault: true),
-            Tables\Columns\TextColumn::make('updated_at')
-                ->dateTime()
-                ->sortable()
-                ->toggleable(isToggledHiddenByDefault: true),
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('user_id')
+                    ->numeric()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('variable_name')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('file_name')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('created_at')
+                    ->dateTime()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+                Tables\Columns\TextColumn::make('updated_at')
+                    ->dateTime()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
                 //
