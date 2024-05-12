@@ -29,8 +29,8 @@
                 @foreach($reportData as $data)
                     <tr>
                         <td>{{ $data['name'] }}</td>
-                        <td>{{ $data['birth'] }}</td>
-                        <td>{{ $data['death'] }}</td>
+                        <td>{{ $data['birth'] ?? 'N/A' }}</td>
+                        <td>{{ $data['death'] ?? 'N/A' }}</td>
                     </tr>
                 @endforeach
             </tbody>

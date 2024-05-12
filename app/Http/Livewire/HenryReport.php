@@ -18,7 +18,7 @@ class HenryReport extends Component
     public function generateReport($personId)
     {
         $this->selectedPersonId = $personId;
-        $person = Person::find($personId);
+        $person = Person::with('child_in_family.birth', 'child_in_family.death')->find($personId);
         if ($person) {
             $this->reportData = [];
             $this->processHenryReportData($person);
