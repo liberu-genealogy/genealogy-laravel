@@ -15,10 +15,10 @@ class DescendantChartComponent extends Component
     public function mount()
     {
         try {
-            $rawData = Person::all()->toArray();
+            $rawData = Person::with('children')->get()->toArray();
             $this->descendantsData = $this->processDescendantData($rawData);
         } catch (\Exception $e) {
-            // Handle errors, such as logging or setting an error state
+            // Handle errors, such as logging or setting an error state  
             \Log::error('Failed to retrieve or process descendants data: ' . $e->getMessage());
             $this->descendantsData = [];
         }
@@ -26,31 +26,23 @@ class DescendantChartComponent extends Component
 
     private function processDescendantData($data)
     {
-
         $tree = [];
         foreach ($data as $item) {
             if (!isset($tree[$item['id']])) {
-                $tree[$item['id']] = ['id' => $item['id'], 'name' => $item['name'], 'children' => []];
+                $tree[$item['id']] = [
+                    'id' => $item['id'], 
+                    'name' => $item['name'], 
+                    'children' => []
+                ];
             }
-            if ($item['parent_id']) {
-                $tree[$item['parent_id']]['children'][] = &$tree[$item['id']];
+            foreach ($item['children'] as $child) {
+                $tree[$item['id']]['children'][] = $child['id'];
             }
         }
+        
         return array_filter($tree, function ($item) {
-            return empty($item['parent_id']);
+            return !isset($item['parent_id']);
         });
-
-
-
-
-
-
-
-
-
-
-
-
     }
 
     public function render()

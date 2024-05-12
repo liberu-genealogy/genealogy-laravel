@@ -11,22 +11,33 @@
             const peopleData = JSON.parse(event.detail.people);
             initializePedigreeChart(peopleData);
         });
-
+    
         function initializePedigreeChart(peopleData) {
-            // D3.js chart initialization and rendering logic goes here
-            // Use `peopleData` to dynamically generate the chart
+            const container = d3.select('#pedigree-chart-container');
+            const width = 800;
+            const height = 600;
+    
+            const svg = container.append('svg')
+                .attr('width', width)
+                .attr('height', height);
+    
+            // Render pedigree chart using peopleData
+            // ...
         }
-
+    
         @this.on('zoomIn', () => {
-            // Zoom in logic
+            // Implement zoom in logic
+            // ...
         });
-
+    
         @this.on('zoomOut', () => {
-            // Zoom out logic
+            // Implement zoom out logic
+            // ...
         });
-
+    
         @this.on('pan', direction => {
-            // Pan logic based on `direction`
+            // Implement panning logic based on direction
+            // ...  
         });
     });
 </script>

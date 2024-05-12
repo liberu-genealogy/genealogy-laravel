@@ -24,11 +24,6 @@ Description: This file contains the descendant chart display and related functio
  *
  * @param {Array} data - The data used to render the chart.
  */
-/**
- * Renders the descendant chart using the provided data.
- *
- * @param {Array} data - The data used to render the chart.
- */
 function renderDescendantChart(data) {
                 const container = d3.select('#descendant-chart-container');
                 const width = 960;
@@ -39,14 +34,19 @@ function renderDescendantChart(data) {
                     .attr('height', height)
                     .attr('class', 'shadow-lg');
 
-                svg.selectAll('circle')
+                const nodes = svg.selectAll('circle')
                     .data(data)
                     .enter()
-                    .append('circle')
-                    .attr('cx', (d, i) => i * 100 + 50)
-                    .attr('cy', height / 2)
+                    .append('g')
+                    .attr('transform', (d, i) => `translate(${i * 100 + 50}, ${height / 2})`);
+
+                nodes.append('circle')
                     .attr('r', 40)
                     .attr('class', 'fill-current text-blue-500');
+                
+                nodes.append('text')
+                    .attr('dy', 5)
+                    .text(d => d.name);
             }
 
             renderDescendantChart(data);

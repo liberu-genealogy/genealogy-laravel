@@ -12,8 +12,8 @@ class PedigreeChart extends Component
 
     public function mount()
     {
-        $this->people = Person::all(); // Simplified fetching logic for demonstration
-    }
+        $this->people = Person::with('parents')->get();
+    }  
 
     public function render()
     {
