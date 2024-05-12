@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class New_Source extends Model
+class Source extends Model
 {
     use HasFactory;
 
@@ -22,7 +22,7 @@ class New_Source extends Model
 
     protected $casts = ['is_active' => 'boolean'];
 
-    public function repositories()
+    public function repository()
     {
         return $this->belongsTo(Repository::class);
     }
