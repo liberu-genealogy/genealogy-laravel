@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class NewPersonAnci extends Model
+class PersonAnci extends Model
 {
     use HasFactory;
 
@@ -14,7 +14,7 @@ class NewPersonAnci extends Model
      *
      * @var string
      */
-    protected $table = 'new_person_anci';
+    protected $table = 'person_anci';
 
     /**
      * The "type" of the auto-incrementing ID.
