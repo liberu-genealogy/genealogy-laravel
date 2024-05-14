@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Storage;
 use App\Filament\Resources\DnaResource\RelationManagers;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
-
+use Illuminate\Support\Facades\Auth;
 
 class DnaResource extends Resource
 {
@@ -23,19 +23,12 @@ class DnaResource extends Resource
 
     protected static ?string $model = Dna::class;
 
+    protected static ?string $navigationLabel = 'DNA';
+
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
-    
+    protected static ?string $navigationGroup = 'Dna Matching';
 
-    /**
-     * Define the form fields and behavior for the DnaResource.
-     *
-     * @param Form $form
-     * @param Form $form
-     *
-     * @return Form
-     * @return Form
-     */
     public static function form(Form $form): Form
     {
         return $form
@@ -43,15 +36,15 @@ class DnaResource extends Resource
                 FileUpload::make('attachment')
                     ->required()
                     ->maxSize(100000)
-                ->directory('gedcom-form-imports')
-                ->visibility('private')
-            ->afterStateUpdated(function ($state, $set, $livewire) {
-                if ($state === null) {
-                    return;
-                }
-                $path = $state->store('gedcom-form-imports', 'private');
-                ImportGedcom::dispatch($livewire->user(), Storage::path($path));
-            }),
+                    ->directory('gedcom-form-imports')
+                    ->visibility('private')
+                    ->afterStateUpdated(function ($state, $set, $livewire) {
+                        if ($state === null) {
+                            return;
+                        }
+                        $path = $state->store('gedcom-form-imports', 'private');
+                        ImportGedcom::dispatch(Auth::user(), Storage::disk('private')->path($path));
+                    }),
             ]);
     }
 
@@ -100,12 +93,11 @@ class DnaResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index'  => Pages\ListDnas::route('/'),
+            'index' => Pages\ListDnas::route('/'),
             'create' => Pages\CreateDna::route('/create'),
-            'edit'   => Pages\EditDna::route('/{record}/edit'),
+            'edit' => Pages\EditDna::route('/{record}/edit'),
         ];
     }
-
 
     public static function visibility(): bool
     {

@@ -16,6 +16,10 @@ class NoteResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
+    protected static ?string $navigationLabel = 'Add Notes';
+
+    protected static ?string $navigationGroup = 'Family';
+
     public static function form(Form $form): Form
     {
         return $form
@@ -46,30 +50,30 @@ class NoteResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('name')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('date')
-                    ->dateTime()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('type_id')
-                    ->numeric()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('is_active')
-                    ->numeric()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('group')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('gid')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('rin')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('updated_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
+                ->searchable(),
+            Tables\Columns\TextColumn::make('date')
+                ->dateTime()
+                ->sortable(),
+            Tables\Columns\TextColumn::make('type_id')
+                ->numeric()
+                ->sortable(),
+            Tables\Columns\TextColumn::make('is_active')
+                ->numeric()
+                ->sortable(),
+            Tables\Columns\TextColumn::make('group')
+                ->searchable(),
+            Tables\Columns\TextColumn::make('gid')
+                ->searchable(),
+            Tables\Columns\TextColumn::make('rin')
+                ->searchable(),
+            Tables\Columns\TextColumn::make('created_at')
+                ->dateTime()
+                ->sortable()
+                ->toggleable(isToggledHiddenByDefault: true),
+            Tables\Columns\TextColumn::make('updated_at')
+                ->dateTime()
+                ->sortable()
+                ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
                 //

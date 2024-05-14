@@ -16,6 +16,10 @@ class PersonAssoResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
+    protected static ?string $navigationLabel = 'Person Associations';
+
+    protected static ?string $navigationGroup = 'Person';
+
     public static function form(Form $form): Form
     {
         return $form

@@ -16,30 +16,25 @@ class MediaObjectResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
-     /**
-     * Get the title of the resource.
-     *
-     * @return string
-     */
-    public static function title(): string
-    {
-        return __('Media Objects');
-    }
+    protected static ?string $navigationLabel = 'Media Objects';
+
+    protected static ?string $navigationGroup = 'Media Objects';
+    
 
     public static function form(Form $form): Form
     {
         return $form
-            ->schema([
-                Forms\Components\TextInput::make('gid')
-                    ->numeric(),
-                Forms\Components\TextInput::make('group')
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('titl')
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('obje_id')
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('rin')
-                    ->maxLength(255),
+                ->schema([
+                    Forms\Components\TextInput::make('gid')
+                        ->numeric(),
+                    Forms\Components\TextInput::make('group')
+                        ->maxLength(255),
+                    Forms\Components\TextInput::make('titl')
+                        ->maxLength(255),
+                    Forms\Components\TextInput::make('obje_id')
+                        ->maxLength(255),
+                    Forms\Components\TextInput::make('rin')
+                        ->maxLength(255),
             ]);
     }
 

@@ -16,6 +16,10 @@ class FamilySlgsResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
+    protected static ?string $navigationLabel = 'Family Slugs';
+
+    protected static ?string $navigationGroup = 'Family';
+
     public static function form(Form $form): Form
     {
         return $form
@@ -38,24 +42,24 @@ class FamilySlgsResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('family_id')
-                    ->numeric()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('stat')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('date')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('plac')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('temp')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('updated_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
+                ->numeric()
+                ->sortable(),
+            Tables\Columns\TextColumn::make('stat')
+                ->searchable(),
+            Tables\Columns\TextColumn::make('date')
+                ->searchable(),
+            Tables\Columns\TextColumn::make('plac')
+                ->searchable(),
+            Tables\Columns\TextColumn::make('temp')
+                ->searchable(),
+            Tables\Columns\TextColumn::make('created_at')
+                ->dateTime()
+                ->sortable()
+                ->toggleable(isToggledHiddenByDefault: true),
+            Tables\Columns\TextColumn::make('updated_at')
+                ->dateTime()
+                ->sortable()
+                ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
                 //

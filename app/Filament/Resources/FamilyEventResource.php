@@ -14,52 +14,56 @@ class FamilyEventResource extends Resource
 {
     protected static ?string $model = FamilyEvent::class;
 
+    protected static ?string $navigationLabel = 'Family Events';
+
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+
+    protected static ?string $navigationGroup = 'Family';
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
                 Forms\Components\TextInput::make('family_id')
-                    ->required()
-                    ->numeric(),
-                Forms\Components\TextInput::make('places_id')
-                    ->numeric(),
-                Forms\Components\Textarea::make('date')
-                    ->maxLength(65535)
-                    ->columnSpanFull(),
-                Forms\Components\TextInput::make('title')
-                    ->maxLength(255),
-                Forms\Components\Textarea::make('description')
-                    ->maxLength(65535)
-                    ->columnSpanFull(),
-                Forms\Components\TextInput::make('converted_date')
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('year')
-                    ->numeric(),
-                Forms\Components\TextInput::make('month')
-                    ->numeric(),
-                Forms\Components\TextInput::make('day')
-                    ->numeric(),
-                Forms\Components\TextInput::make('type')
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('plac')
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('addr_id')
-                    ->numeric(),
-                Forms\Components\TextInput::make('phon')
-                    ->maxLength(255),
-                Forms\Components\Textarea::make('caus')
-                    ->maxLength(65535)
-                    ->columnSpanFull(),
-                Forms\Components\TextInput::make('age')
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('agnc')
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('husb')
-                    ->numeric(),
-                Forms\Components\TextInput::make('wife')
-                    ->numeric(),
+                ->required()
+                ->numeric(),
+            Forms\Components\TextInput::make('places_id')
+                ->numeric(),
+            Forms\Components\Textarea::make('date')
+                ->maxLength(65535)
+                ->columnSpanFull(),
+            Forms\Components\TextInput::make('title')
+                ->maxLength(255),
+            Forms\Components\Textarea::make('description')
+                ->maxLength(65535)
+                ->columnSpanFull(),
+            Forms\Components\TextInput::make('converted_date')
+                ->maxLength(255),
+            Forms\Components\TextInput::make('year')
+                ->numeric(),
+            Forms\Components\TextInput::make('month')
+                ->numeric(),
+            Forms\Components\TextInput::make('day')
+                ->numeric(),
+            Forms\Components\TextInput::make('type')
+                ->maxLength(255),
+            Forms\Components\TextInput::make('plac')
+                ->maxLength(255),
+            Forms\Components\TextInput::make('addr_id')
+                ->numeric(),
+            Forms\Components\TextInput::make('phon')
+                ->maxLength(255),
+            Forms\Components\Textarea::make('caus')
+                ->maxLength(65535)
+                ->columnSpanFull(),
+            Forms\Components\TextInput::make('age')
+                ->maxLength(255),
+            Forms\Components\TextInput::make('agnc')
+                ->maxLength(255),
+            Forms\Components\TextInput::make('husb')
+                ->numeric(),
+            Forms\Components\TextInput::make('wife')
+                ->numeric(),
             ]);
     }
 

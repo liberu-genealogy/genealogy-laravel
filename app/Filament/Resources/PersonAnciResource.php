@@ -16,16 +16,20 @@ class PersonAnciResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
+    protected static ?string $navigationLabel = 'Person Anci';
+
+    protected static ?string $navigationGroup = 'Person';
+
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
                 Forms\Components\TextInput::make('group')
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('gid')
-                    ->numeric(),
-                Forms\Components\TextInput::make('anci')
-                    ->maxLength(255),
+                ->maxLength(255),
+            Forms\Components\TextInput::make('gid')
+                ->numeric(),
+            Forms\Components\TextInput::make('anci')
+                ->maxLength(255),
             ]);
     }
 
@@ -62,12 +66,6 @@ class PersonAnciResource extends Resource
             ]);
     }
 
-    public static function getRelations(): array
-    {
-        return [
-            //
-        ];
-    }
 
     public static function getPages(): array
     {

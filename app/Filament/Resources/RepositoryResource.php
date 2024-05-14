@@ -14,6 +14,10 @@ class RepositoryResource extends Resource
 {
     protected static ?string $model = Repository::class;
 
+    protected static ?string $navigationLabel = 'Repository';
+
+    protected static ?string $navigationGroup = 'Author';
+
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
     public static function form(Form $form): Form
@@ -21,34 +25,34 @@ class RepositoryResource extends Resource
         return $form
             ->schema([
                 Forms\Components\TextInput::make('group')
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('gid')
-                    ->numeric(),
-                Forms\Components\TextInput::make('name')
-                    ->maxLength(255),
-                Forms\Components\Textarea::make('description')
-                    ->maxLength(65535)
-                    ->columnSpanFull(),
-                Forms\Components\DateTimePicker::make('date'),
-                Forms\Components\TextInput::make('is_active')
-                    ->numeric(),
-                Forms\Components\TextInput::make('type_id')
-                    ->numeric(),
-                Forms\Components\TextInput::make('repo')
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('addr_id')
-                    ->numeric(),
-                Forms\Components\TextInput::make('rin')
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('phon')
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('email')
-                    ->email()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('fax')
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('www')
-                    ->maxLength(255),
+                ->maxLength(255),
+            Forms\Components\TextInput::make('gid')
+                ->numeric(),
+            Forms\Components\TextInput::make('name')
+                ->maxLength(255),
+            Forms\Components\Textarea::make('description')
+                ->maxLength(65535)
+                ->columnSpanFull(),
+            Forms\Components\DateTimePicker::make('date'),
+            Forms\Components\TextInput::make('is_active')
+                ->numeric(),
+            Forms\Components\TextInput::make('type_id')
+                ->numeric(),
+            Forms\Components\TextInput::make('repo')
+                ->maxLength(255),
+            Forms\Components\TextInput::make('addr_id')
+                ->numeric(),
+            Forms\Components\TextInput::make('rin')
+                ->maxLength(255),
+            Forms\Components\TextInput::make('phon')
+                ->maxLength(255),
+            Forms\Components\TextInput::make('email')
+                ->email()
+                ->maxLength(255),
+            Forms\Components\TextInput::make('fax')
+                ->maxLength(255),
+            Forms\Components\TextInput::make('www')
+                ->maxLength(255),
             ]);
     }
 
@@ -115,7 +119,7 @@ class RepositoryResource extends Resource
             //
         ];
     }
-
+    
     public static function getPages(): array
     {
         return [
