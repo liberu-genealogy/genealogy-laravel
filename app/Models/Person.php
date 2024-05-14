@@ -178,4 +178,9 @@ class Person extends Model
     {
         return $this->events->where('title', '=', 'DEAT')->first();
     }
+
+    public function team()
+    {
+        return $this->belongsTo(Team::class);
+    }
 }
