@@ -102,5 +102,7 @@ class DatabaseSeeder extends Seeder
         //   Subm::factory(1)->create();
     //    Subn::factory(1)->create();
         //   Tree::factory(1)->create();
+        
+        $this->call(PermissionsSeeder::class);
     }
 }
