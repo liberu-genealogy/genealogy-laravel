@@ -80,4 +80,11 @@ return true;
 //        return $this->hasVerifiedEmail();
 return true;
     }
+
+    // protected static function booted(): void
+    // {
+    //     static::created(function (User $user) {
+    //         $user->assignRole('admin');
+    //     });
+    // }
 }
