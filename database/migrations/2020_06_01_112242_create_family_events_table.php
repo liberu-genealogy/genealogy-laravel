@@ -32,7 +32,7 @@ class CreateFamilyEventsTable extends Migration
             // $table->integer('wife')->nullable();
             // $table->foreignId('addr_id')->constrained('addrs')->nullable();
             $table->integer('family_id')->nullable(); // unknown table
-            $table->foreignId('places_id')->constrained('places')->nullable();
+            $table->foreignId('places_id')->nullable()->constrained('places');
 
             $table->timestamps();
             $table->softDeletes();

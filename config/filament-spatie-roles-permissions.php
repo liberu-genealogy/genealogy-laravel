@@ -10,13 +10,13 @@ return [
 
     'team_model' => \App\Models\Team::class,
 
-    'scope_to_tenant' => true,
+    'scope_to_tenant' => false,
 
     /*
      * Set as false to remove from navigation.
      */
     'should_register_on_navigation' => [
-        'permissions' => true,
+        'permissions' => false,
         'roles'       => true,
     ],
 
@@ -34,7 +34,7 @@ return [
         ],
     ],
 
-    'default_guard_name' => null,
+    'default_guard_name' => "web",
 
     'model_filter_key' => 'return \'%\'.$value;', // Eg: 'return \'%\'.$key.'\%\';'
 

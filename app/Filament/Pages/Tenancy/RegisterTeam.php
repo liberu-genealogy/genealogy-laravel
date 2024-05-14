@@ -46,6 +46,9 @@ class RegisterTeam extends RegisterTenant
 
         $team->users()->attach(auth()->user());
 
+        setPermissionsTeamId($team->id);
+        auth()->user()->assignRole('admin');
+
 //        $stripeService = resolve(StripeSubscriptionService::class);
 //        $stripeService->createTrialSubscription($team);
 

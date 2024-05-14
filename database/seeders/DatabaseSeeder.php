@@ -52,7 +52,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        User::factory(1)->create();
+        // User::factory(1)->create();
         //  Addr::factory(1)->create();
         // Author::factory(1)->create();
         // CalendarEvent::factory(1)->create();
@@ -102,5 +102,8 @@ class DatabaseSeeder extends Seeder
         //   Subm::factory(1)->create();
     //    Subn::factory(1)->create();
         //   Tree::factory(1)->create();
+        
+        $this->call(PermissionsSeeder::class);
+        $this->call(RolesSeeder::class);
     }
 }

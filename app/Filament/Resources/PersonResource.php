@@ -3,11 +3,15 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\PersonResource\Pages;
+use App\Filament\Resources\NewPersonResource\RelationManagers;
 use App\Models\Person;
+use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class PersonResource extends Resource
 {
@@ -15,62 +19,39 @@ class PersonResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
-    /**
-     * Get the form for creating/editing a person.
-     *
-     * @param Form $form The form object.
-     *
-     * @return Form The form object.
-     */
+    protected static ?string $navigationLabel = ' Add A Person';
+
+    protected static ?string $navigationGroup = 'Person';
+
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                /**
-                 * Name field.
-                 *
-                 * @var TextInput
-                 */
-                TextInput::make('name')
-                                    ->required()
-                                    ->label('Name'),
-                /**
-                 * Birth Date field.
-                 *
-                 * @var DatePicker
-                 */
-                DatePicker::make('birth_date')
-                                    ->label('Birth Date'),
-                /**
-                 * Death Date field.
-                 *
-                 * @var DatePicker
-                 */
-                DatePicker::make('death_date')
-                                    ->label('Death Date'),
-                /**
-                 * Father field.
-                 *
-                 * @var SelectInput
-                 */
-                SelectInput::make('father_id')
-                                    ->relationship('father', 'name')
-                                    ->label('Father'),
-                /**
-                 * Mother field.
-                 *
-                 * @var SelectInput
-                 */
-                SelectInput::make('mother_id')
-                                    ->relationship('mother', 'name')
-                                    ->label('Mother'),
-                /**
-                 * Notes field.
-                 *
-                 * @var Textarea
-                 */
-                Textarea::make('notes')
-                                    ->label('Notes'),
+                Forms\Components\TextInput::make('givn')->label('First Name'),
+                Forms\Components\TextInput::make('surn')->label('Last Name'),
+                Forms\Components\Select::make('sex')
+                    ->options([
+                        'M' => 'Male',
+                        'F' => 'Female',
+                    ])
+                    ->label('Sex'),
+                Forms\Components\TextInput::make('child_in_family_id')->label('Child In Family ID'),
+                Forms\Components\TextInput::make('description')->label('Description'),
+                Forms\Components\TextInput::make('titl')->label('Title'),
+                Forms\Components\TextInput::make('name')->label('Name'),
+                Forms\Components\TextInput::make('appellative')->label('Appellative'),
+                Forms\Components\TextInput::make('email')->label('Email'),
+                Forms\Components\TextInput::make('phone')->label('Phone'),
+                Forms\Components\DateTimePicker::make('birthday')->label('Birthday'),
+                Forms\Components\DateTimePicker::make('deathday')->label('Deathday'),
+                Forms\Components\DateTimePicker::make('burial_day')->label('Burial Day'),
+                Forms\Components\TextInput::make('bank')->label('Bank'),
+                Forms\Components\TextInput::make('bank_account')->label('Bank Account'),
+                Forms\Components\TextInput::make('chan')->label('Chan'),
+                Forms\Components\TextInput::make('rin')->label('Rin'),
+                Forms\Components\TextInput::make('resn')->label('Resn'),
+                Forms\Components\TextInput::make('rfn')->label('Rfn'),
+                Forms\Components\TextInput::make('afn')->label('Afn'),
             ]);
     }
 
@@ -78,19 +59,40 @@ class PersonResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('name')->sortable()->searchable()->label('Name'),
-                DateColumn::make('birth_date')->label('Birth Date'),
-                DateColumn::make('death_date')->label('Death Date'),
-                TextColumn::make('notes')->label('Notes'),
+                Tables\Columns\TextColumn::make('givn')->label('First Name'),
+                Tables\Columns\TextColumn::make('surn')->label('Last Name'),
+                Tables\Columns\TextColumn::make('sex')->label('Sex'),
+                Tables\Columns\TextColumn::make('child_in_family_id')->label('Child In Family ID'),
+                Tables\Columns\TextColumn::make('description')->label('Description'),
+                Tables\Columns\TextColumn::make('titl')->label('Title'),
+                Tables\Columns\TextColumn::make('name')->label('Name'),
+                Tables\Columns\TextColumn::make('appellative')->label('Appellative'),
+                Tables\Columns\TextColumn::make('email')->label('Email'),
+                Tables\Columns\TextColumn::make('phone')->label('Phone'),
+                Tables\Columns\TextColumn::make('birthday')->label('Birthday'),
+                Tables\Columns\TextColumn::make('deathday')->label('Deathday'),
+                Tables\Columns\TextColumn::make('burial_day')->label('Burial Day'),
+                Tables\Columns\TextColumn::make('bank')->label('Bank'),
+                Tables\Columns\TextColumn::make('bank_account')->label('Bank Account'),
+                Tables\Columns\TextColumn::make('chan')->label('Chan'),
+                Tables\Columns\TextColumn::make('rin')->label('Rin'),
+                Tables\Columns\TextColumn::make('resn')->label('Resn'),
+                Tables\Columns\TextColumn::make('rfn')->label('Rfn'),
+                Tables\Columns\TextColumn::make('afn')->label('Afn'),
+                Tables\Columns\TextColumn::make('created_at')->label('Created At')->sortable(),
+                Tables\Columns\TextColumn::make('updated_at')->label('Updated At')->sortable(),
+              
             ])
             ->filters([
-                Tables\Filters\Filter::make('name')->query(fn ($query, $data) => $query->where('name', 'like', "%{$data}%")),
+                //
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
-                Tables\Actions\DeleteBulkAction::make(),
+                Tables\Actions\BulkActionGroup::make([
+                    Tables\Actions\DeleteBulkAction::make(),
+                ]),
             ]);
     }
 
@@ -104,9 +106,9 @@ class PersonResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index'  => Pages\ListPeople::route('/'),
+            'index' => Pages\ListPeople::route('/'),
             'create' => Pages\CreatePerson::route('/create'),
-            'edit'   => Pages\EditPerson::route('/{record}/edit'),
+            'edit' => Pages\EditPerson::route('/{record}/edit'),
         ];
     }
 }

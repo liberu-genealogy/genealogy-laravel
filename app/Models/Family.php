@@ -3,28 +3,19 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Family extends \FamilyTree365\LaravelGedcom\Models\Family
 {
     use HasFactory;
 
-    public function husband()
+    public function user(): BelongsTo
     {
-        return $this->belongsTo(Person::class, 'husband_id');
+        return $this->belongsTo(User::class, 'user_id', 'id');
     }
 
-    public function wife()
+    public function team()
     {
-        return $this->belongsTo(Person::class, 'wife_id');
-    }
-
-    /**
-     * Get the children of the family.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function children()
-    {
-        return $this->hasMany(Person::class, 'child_in_family_id');
+        return $this->belongsTo(Team::class);
     }
 }

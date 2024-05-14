@@ -19,67 +19,72 @@ class CitationResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
+    protected static ?string $navigationLabel = 'Citation';
+
+    protected static ?string $navigationGroup = 'Author';
+
     public static function form(Form $form): Form
     {
         return $form
-            ->schema([
-                Forms\Components\TextInput::make('name')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\Textarea::make('description')
-                    ->required()
-                    ->columnSpanFull(),
-                Forms\Components\DateTimePicker::make('date'),
-                Forms\Components\TextInput::make('is_active')
-                    ->required()
-                    ->numeric(),
-                Forms\Components\TextInput::make('volume')
-                    ->required()
-                    ->numeric(),
-                Forms\Components\TextInput::make('page')
-                    ->required()
-                    ->numeric(),
-                Forms\Components\TextInput::make('confidence')
-                    ->required()
-                    ->numeric(),
-                Forms\Components\TextInput::make('source_id')
-                    ->required()
-                    ->numeric(),
+        ->schema([
+            Forms\Components\TextInput::make('name')
+                ->required()
+                ->maxLength(255),
+            Forms\Components\Textarea::make('description')
+                ->required()
+                ->columnSpanFull(),
+            Forms\Components\DateTimePicker::make('date'),
+            Forms\Components\TextInput::make('is_active')
+                ->required()
+                ->numeric(),
+            Forms\Components\TextInput::make('volume')
+                ->required()
+                ->numeric(),
+            Forms\Components\TextInput::make('page')
+                ->required()
+                ->numeric(),
+            Forms\Components\TextInput::make('confidence')
+                ->required()
+                ->numeric(),
+            Forms\Components\TextInput::make('source_id')
+                ->required()
+                ->numeric(),
+    
             ]);
     }
 
     public static function table(Table $table): Table
     {
         return $table
-            ->columns([
-                Tables\Columns\TextColumn::make('name')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('date')
-                    ->dateTime()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('is_active')
-                    ->numeric()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('volume')
-                    ->numeric()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('page')
-                    ->numeric()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('confidence')
-                    ->numeric()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('source_id')
-                    ->numeric()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('updated_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
+        ->columns([
+            Tables\Columns\TextColumn::make('name')
+                ->searchable(),
+            Tables\Columns\TextColumn::make('date')
+                ->dateTime()
+                ->sortable(),
+            Tables\Columns\TextColumn::make('is_active')
+                ->numeric()
+                ->sortable(),
+            Tables\Columns\TextColumn::make('volume')
+                ->numeric()
+                ->sortable(),
+            Tables\Columns\TextColumn::make('page')
+                ->numeric()
+                ->sortable(),
+            Tables\Columns\TextColumn::make('confidence')
+                ->numeric()
+                ->sortable(),
+            Tables\Columns\TextColumn::make('source_id')
+                ->numeric()
+                ->sortable(),
+            Tables\Columns\TextColumn::make('created_at')
+                ->dateTime()
+                ->sortable()
+                ->toggleable(isToggledHiddenByDefault: true),
+            Tables\Columns\TextColumn::make('updated_at')
+                ->dateTime()
+                ->sortable()
+                ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
                 //
@@ -93,7 +98,7 @@ class CitationResource extends Resource
                 ]),
             ]);
     }
-
+    
     public static function getRelations(): array
     {
         return [
