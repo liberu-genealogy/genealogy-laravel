@@ -3675,16 +3675,16 @@
         },
         {
             "name": "liberu-genealogy/laravel-gedcom",
-            "version": "v4.1.0",
+            "version": "v4.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/liberu-genealogy/laravel-gedcom.git",
-                "reference": "d20bc91ab46b4b99a3bb0da84738821b98db3261"
+                "reference": "dbc274f6265cbd267a08badb3ad49544bf23e44f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/liberu-genealogy/laravel-gedcom/zipball/d20bc91ab46b4b99a3bb0da84738821b98db3261",
-                "reference": "d20bc91ab46b4b99a3bb0da84738821b98db3261",
+                "url": "https://api.github.com/repos/liberu-genealogy/laravel-gedcom/zipball/dbc274f6265cbd267a08badb3ad49544bf23e44f",
+                "reference": "dbc274f6265cbd267a08badb3ad49544bf23e44f",
                 "shasum": ""
             },
             "require": {
@@ -3692,9 +3692,10 @@
                 "php": ">=8.3"
             },
             "require-dev": {
-                "driftingly/rector-laravel": "^0.26.0",
-                "phpunit/phpunit": "^12.0",
-                "rector/rector": "^0.14.0"
+                "driftingly/rector-laravel": "^1.2.0",
+                "laravel/framework": "^11.0",
+                "phpunit/phpunit": "^10.0||^11.0||^12.0",
+                "rector/rector": "^1.0.0"
             },
             "type": "library",
             "extra": {
@@ -3716,7 +3717,7 @@
             "description": "A package that converts gedcom files to Eloquent models",
             "support": {
                 "issues": "https://github.com/liberu-genealogy/laravel-gedcom/issues",
-                "source": "https://github.com/liberu-genealogy/laravel-gedcom/tree/v4.1.0"
+                "source": "https://github.com/liberu-genealogy/laravel-gedcom/tree/v4.1.1"
             },
             "funding": [
                 {
@@ -3724,7 +3725,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2024-05-07T22:25:59+00:00"
+            "time": "2024-05-13T12:38:13+00:00"
         },
         {
             "name": "liberu-genealogy/php-dna",
@@ -3781,16 +3782,16 @@
         },
         {
             "name": "liberu-genealogy/php-gedcom",
-            "version": "v2.0.0",
+            "version": "v2.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/liberu-genealogy/php-gedcom.git",
-                "reference": "eb93a94eaf9ccd01f74f7dbbf382235f98c1a9cb"
+                "reference": "f0b5110e394b9d1eea3366487d4f9d6a170e92e6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/liberu-genealogy/php-gedcom/zipball/eb93a94eaf9ccd01f74f7dbbf382235f98c1a9cb",
-                "reference": "eb93a94eaf9ccd01f74f7dbbf382235f98c1a9cb",
+                "url": "https://api.github.com/repos/liberu-genealogy/php-gedcom/zipball/f0b5110e394b9d1eea3366487d4f9d6a170e92e6",
+                "reference": "f0b5110e394b9d1eea3366487d4f9d6a170e92e6",
                 "shasum": ""
             },
             "require": {
@@ -3820,15 +3821,15 @@
             ],
             "support": {
                 "issues": "https://github.com/liberu-genealogy/php-gedcom/issues",
-                "source": "https://github.com/liberu-genealogy/php-gedcom/tree/v2.0.0"
+                "source": "https://github.com/liberu-genealogy/php-gedcom/tree/v2.0.1"
             },
             "funding": [
                 {
-                    "url": "https://github.com/laravel-liberu",
+                    "url": "https://github.com/liberu-genealogy",
                     "type": "github"
                 }
             ],
-            "time": "2024-03-12T21:26:00+00:00"
+            "time": "2024-05-11T19:10:06+00:00"
         },
         {
             "name": "liberusoftware/filament-cashier-billing-provider",
@@ -11386,5 +11387,5 @@
         "php": "^8.3"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.3.0"
+    "plugin-api-version": "2.6.0"
 }
