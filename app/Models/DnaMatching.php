@@ -2,13 +2,14 @@
 
 namespace App\Models;
 
+use App\Traits\BelongsToTenant;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class DnaMatching extends Model
 {
-    use HasFactory;
+    use HasFactory, BelongsToTenant;
 
     protected $fillable = [
         'file1',
@@ -24,9 +25,4 @@ class DnaMatching extends Model
         return $this->belongsTo(User::class, 'user_id', 'id');
     }
 
-    
-    public function team()
-    {
-        return $this->belongsTo(Team::class);
-    }
 }
