@@ -49,7 +49,7 @@ class ImportGedcom implements ShouldQueue
         ]);
         $parser = new GedcomParser();
 
-        $parser->parse($job->getConnectionName(), $this->filePath, $slug, true);
+        $parser->parse($job->getConnectionName(), $this->filePath, $slug, false);
         // with(new GedcomParser())->parse($tenant->connectionName(), $this->filePath, $slug, true);
 
         File::delete($this->filePath);
