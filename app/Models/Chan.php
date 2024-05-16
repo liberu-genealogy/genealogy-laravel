@@ -2,13 +2,14 @@
 
 namespace App\Models;
 
+use App\Traits\BelongsToTenant;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Chan extends Model
 {
-    use HasFactory;
+    use HasFactory, BelongsToTenant;
 
 
     
@@ -31,8 +32,4 @@ class Chan extends Model
         }
     
         
-        public function team()
-        {
-            return $this->belongsTo(Team::class);
-        }
 }
