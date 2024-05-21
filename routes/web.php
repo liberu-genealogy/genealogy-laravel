@@ -21,7 +21,7 @@ Route::post('/send-invitation', 'TeamInvitationController@sendInvitation')->name
 Route::post('/accept-invitation/{token}', 'TeamInvitationController@acceptInvitation')->name('accept.invitation');
 
 // Admin Panel Routes
-Route::group(['prefix' => 'admin', 'middleware' => ['web']], function () {
+Route::group(['prefix' => 'admin', 'middleware' => ['web', 'verified']], function () {
     // Jetstream Authentication Routes
     Route::group(['middleware' => ['guest:admin']], function () {
         Route::get('/login', [AdminLoginController::class, 'showLoginForm'])->name('admin.login');
