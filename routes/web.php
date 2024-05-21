@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Foundation\Auth\EmailVerificationRequest;
+use Illuminate\Http\Request;
 
 /*
 |--------------------------------------------------------------------------
@@ -36,15 +38,22 @@ Route::group(['prefix' => 'admin', 'middleware' => ['web']], function () {
 
     Route::group(['middleware' => ['auth:admin']], function () {
         Route::post('/logout', [AdminLoginController::class, 'logout'])->name('admin.logout');
+
         // Jetstream Email Verification Routes
-        Route::get('/email/verify', [EmailVerificationPromptController::class, '__invoke'])
-            ->name('verification.notice');
-        Route::get('/email/verify/{id}/{hash}', [VerifyEmailController::class, '__invoke'])
-            ->middleware(['signed', 'throttle:6,1'])
-            ->name('verification.verify');
-        Route::post('/email/verification-notification', [EmailVerificationNotificationController::class, 'store'])
-            ->middleware('throttle:6,1')
-            ->name('verification.send');
+        Route::get('/email/verify', function () {
+            return view('auth.verify-email');
+        })->name('verification.notice');
+
+        Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
+            $request->fulfill();
+            return redirect('/admin');
+        })->middleware(['signed', 'throttle:6,1'])->name('verification.verify');
+
+        Route::post('/email/verification-notification', function (Request $request) {
+            $request->user()->sendEmailVerificationNotification();
+            return back()->with('message', 'Verification link sent!');
+        })->middleware(['auth:admin', 'throttle:6,1'])->name('verification.send');
+
         // Other admin panel routes...
     });
 });
