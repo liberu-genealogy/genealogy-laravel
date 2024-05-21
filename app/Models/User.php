@@ -69,17 +69,7 @@ class User extends Authenticatable implements FilamentUser, HasTenants
         return $this->teams->contains($tenant);
     }
 
-    public function canAccessPanel(Panel $panel): bool
-    {
-//        return $this->hasVerifiedEmail();
-return true;
-    }
 
-    public function canAccessFilament(): bool
-    {
-//        return $this->hasVerifiedEmail();
-return true;
-    }
 
     // protected static function booted(): void
     // {
