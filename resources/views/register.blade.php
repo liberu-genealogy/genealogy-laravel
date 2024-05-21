@@ -2,40 +2,34 @@
 
 @section('content')
     <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-gray-100">
-        <div class="w-full sm:max-w-md mt-6 px-6 py-4 bg-white shadow-md overflow-hidden sm:rounded-lg">
-            <div class="mb-4 text-sm text-gray-600">
-                {{ __('Register a new admin account.') }}
-            </div>
+        <div>
+            <a href="/">
+                <x-application-logo class="w-20 h-20 fill-current text-gray-500" />
+            </a>
+        </div>
 
+        <div class="w-full sm:max-w-md mt-6 px-6 py-4 bg-white shadow-md overflow-hidden sm:rounded-lg">
             <form method="POST" action="{{ route('admin.register.submit') }}">
                 @csrf
 
                 <div>
-                    <label class="block font-medium text-sm text-gray-700" for="name">
-                        {{ __('Name') }}
-                    </label>
-                    <input class="border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm block mt-1 w-full" id="name" type="text" name="name" required="required" autofocus="autofocus">
+                    <x-label for="name" value="{{ __('Name') }}" />
+                    <x-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus />
                 </div>
 
                 <div class="mt-4">
-                    <label class="block font-medium text-sm text-gray-700" for="email">
-                        {{ __('Email') }}
-                    </label>
-                    <input class="border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm block mt-1 w-full" id="email" type="email" name="email" required="required">
+                    <x-label for="email" value="{{ __('Email') }}" />
+                    <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required />
                 </div>
 
                 <div class="mt-4">
-                    <label class="block font-medium text-sm text-gray-700" for="password">
-                        {{ __('Password') }}
-                    </label>
-                    <input class="border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm block mt-1 w-full" id="password" type="password" name="password" required="required" autocomplete="new-password">
+                    <x-label for="password" value="{{ __('Password') }}" />
+                    <x-input id="password" class="block mt-1 w-full" type="password" name="password" required autocomplete="new-password" />
                 </div>
 
                 <div class="mt-4">
-                    <label class="block font-medium text-sm text-gray-700" for="password_confirmation">
-                        {{ __('Confirm Password') }}
-                    </label>
-                    <input class="border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm block mt-1 w-full" id="password_confirmation" type="password" name="password_confirmation" required="required" autocomplete="new-password">
+                    <x-label for="password_confirmation" value="{{ __('Confirm Password') }}" />
+                    <x-input id="password_confirmation" class="block mt-1 w-full" type="password" name="password_confirmation" required />
                 </div>
 
                 <div class="flex items-center justify-end mt-4">
@@ -43,9 +37,9 @@
                         {{ __('Already registered?') }}
                     </a>
 
-                    <button type="submit" class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring ring-gray-300 disabled:opacity-25 transition ease-in-out duration-150 ml-4">
+                    <x-button class="ml-4">
                         {{ __('Register') }}
-                    </button>
+                    </x-button>
                 </div>
             </form>
         </div>
