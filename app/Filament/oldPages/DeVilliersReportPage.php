@@ -2,7 +2,6 @@
 
 namespace App\Filament\Pages;
 
-
 use Filament\Pages\Page;
 use Livewire\Livewire;
 use App\Filament\Pages\CustomFilamentBasePage;
@@ -14,9 +13,7 @@ use App\Filament\Resources\RepositoryResource as ResourcesRepositoryResource;
 use App\Filament\Resources\SourceDataResource as ResourcesSourceDataResource;
 use App\Filament\Resources\TypeResource as ResourcesTypeResource;
 
-
 class DeVilliersReportPage extends Page
-
 {
     protected static string $view = 'de-villiers-report-page';
     protected static ?string $title = 'Devilliers Report';
@@ -35,14 +32,11 @@ class DeVilliersReportPage extends Page
     //  public function mount(): void
     // {
     //     Livewire::mount('DeVilliersReportWidget');
-    // } 
+    // }
 
     public function resources(): array
     {
         return [
-            
-           
-            
             ResourcesTypeResource::class,
             // ResourcesGedcomResource::class,
             ResourcesMediaObjectResource::class,
@@ -51,10 +45,6 @@ class DeVilliersReportPage extends Page
             ResourcesPublicationResource::class,
             ResourcesSourceDataResource::class,
             ResourcesPublicationResource::class,
-
-
-
-
         ];
     }
 }
