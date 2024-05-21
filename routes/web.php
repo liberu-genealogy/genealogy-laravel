@@ -15,9 +15,23 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('home');
+});
 
-    Route::post('/send-invitation', 'TeamInvitationController@sendInvitation')->name('send.invitation');
-    Route::post('/accept-invitation/{token}', 'TeamInvitationController@acceptInvitation')->name('accept.invitation');
+Route::post('/send-invitation', 'TeamInvitationController@sendInvitation')->name('send.invitation');
+Route::post('/accept-invitation/{token}', 'TeamInvitationController@acceptInvitation')->name('accept.invitation');
+
+// Admin Panel Routes
+Route::group(['prefix' => 'admin', 'middleware' => ['web']], function () {
+    // Jetstream Authentication Routes
+    Route::group(['middleware' => ['guest:admin']], function () {
+        Route::get('/login', [AdminLoginController::class, 'showLoginForm'])->name('admin.login');
+        Route::post('/login', [AdminLoginController::class, 'login'])->name('admin.login.submit');
+    });
+
+    Route::group(['middleware' => ['auth:admin']], function () {
+        Route::post('/logout', [AdminLoginController::class, 'logout'])->name('admin.logout');
+        // Other admin panel routes...
+    });
 });
 
 Route::get('/privacy', function () {
