@@ -26,6 +26,10 @@ Route::group(['prefix' => 'admin', 'middleware' => ['web']], function () {
     Route::group(['middleware' => ['guest:admin']], function () {
         Route::get('/login', [AdminLoginController::class, 'showLoginForm'])->name('admin.login');
         Route::post('/login', [AdminLoginController::class, 'login'])->name('admin.login.submit');
+
+        // Jetstream Registration Routes
+        Route::get('/register', [AdminRegistrationController::class, 'showRegistrationForm'])->name('admin.register');
+        Route::post('/register', [AdminRegistrationController::class, 'register'])->name('admin.register.submit');
     });
 
     Route::group(['middleware' => ['auth:admin']], function () {
