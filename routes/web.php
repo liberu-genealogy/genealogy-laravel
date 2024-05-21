@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Admin\AdminForgotPasswordController;
+use App\Http\Controllers\Admin\AdminResetPasswordController;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,6 +28,12 @@ Route::group(['prefix' => 'admin', 'middleware' => ['web']], function () {
     Route::group(['middleware' => ['guest:admin']], function () {
         Route::get('/login', [AdminLoginController::class, 'showLoginForm'])->name('admin.login');
         Route::post('/login', [AdminLoginController::class, 'login'])->name('admin.login.submit');
+
+        // Password Reset Routes
+        Route::get('/forgot-password', [AdminForgotPasswordController::class, 'showLinkRequestForm'])->name('admin.password.request');
+        Route::post('/forgot-password', [AdminForgotPasswordController::class, 'sendResetLinkEmail'])->name('admin.password.email');
+        Route::get('/reset-password/{token}', [AdminResetPasswordController::class, 'showResetForm'])->name('admin.password.reset');
+        Route::post('/reset-password', [AdminResetPasswordController::class, 'reset'])->name('admin.password.update');
     });
 
     Route::group(['middleware' => ['auth:admin']], function () {
