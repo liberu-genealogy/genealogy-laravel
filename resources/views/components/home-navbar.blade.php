@@ -32,9 +32,9 @@
                         <a href="{{ route('filament.admin.tenant')}}" class="btn-nav">Dashboard</a>
                     </div>
                 @else
-                    <a href="/admin/login" class="btn-nav">Connexion</a>
+                    <a href="/login" class="btn-nav">Login</a>
                     <span class="mx-2"></span>
-                    <a href="/admin/register" class="btn-nav">Inscription</a>
+                    <a href="/register" class="btn-nav">Register</a>
                 @endif
             </div>
         </div>
