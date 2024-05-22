@@ -196,6 +196,8 @@ return [
         App\Providers\Filament\AdminPanelProvider::class,
         App\Providers\RouteServiceProvider::class,
         App\Providers\TeamServiceProvider::class,
+        App\Providers\JetstreamServiceProvider::class,
+        App\Providers\FortifyServiceProvider::class,
 
         /*
          * Livewire Service Provider

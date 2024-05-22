@@ -2,28 +2,28 @@
 
 namespace App\Filament\Pages;
 
+use App\Filament\Widgets\FanChartWidget;
 use Filament\Pages\Page;
-use Livewire\Livewire;
 
 class FanChartPage extends Page
 {
-    protected static string $view = 'filament.pages.fan-chart';
-
     protected static ?string $navigationIcon = 'heroicon-o-chart-pie';
 
     protected static ?string $navigationGroup = 'Reports';
 
     protected static ?int $navigationSort = 0;
 
-    protected static string $title = 'Fan Chart';
-
-    public function mount(): void
-    {
-        Livewire::mount(\App\Http\Livewire\FanChart::class);
-    }
+    protected static string $view = 'filament.pages.fan-chart';
 
     protected function getHeading(): string
     {
-        return static::$title;
+        return 'Fan Chart';
+    }
+
+    protected function getWidgets(): array
+    {
+        return [
+            FanChartWidget::class,
+        ];
     }
 }

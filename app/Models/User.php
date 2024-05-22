@@ -11,6 +11,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Collection;
+use Laravel\Fortify\TwoFactorAuthenticatable;
+use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
 
@@ -18,7 +20,9 @@ class User extends Authenticatable implements MustVerifyEmail, HasTenants
 {
     use HasApiTokens;
     use HasFactory;
+    use HasProfilePhoto;
     use Notifiable;
+    use TwoFactorAuthenticatable;
     use HasRoles;
 
     /**
@@ -41,6 +45,8 @@ class User extends Authenticatable implements MustVerifyEmail, HasTenants
     protected $hidden = [
         'password',
         'remember_token',
+        'two_factor_recovery_codes',
+        'two_factor_secret',
     ];
 
     /**
@@ -52,6 +58,15 @@ class User extends Authenticatable implements MustVerifyEmail, HasTenants
         'email_verified_at' => 'datetime',
         'created_at'        => 'datetime',
         'updated_at'        => 'datetime',
+    ];
+
+    /**
+     * The accessors to append to the model's array form.
+     *
+     * @var array<int, string>
+     */
+    protected $appends = [
+        'profile_photo_url',
     ];
 
     public function getTenants(Panel $panel): Collection
