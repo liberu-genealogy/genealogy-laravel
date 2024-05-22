@@ -41,7 +41,7 @@ class ApiTokensPage extends Page
         return static::$title;
     }
 
-    protected static function shouldRegisterNavigation(): bool
+    public static function shouldRegisterNavigation(): bool
     {
         return config('filament-jetstream.show_api_token_page');
     }
