@@ -52,7 +52,7 @@ class EditProfile extends Page
         Filament::notify('success', 'Your profile has been updated.');
     }
 
-    protected function getBreadcrumbs(): array
+    public function getBreadcrumbs(): array
     {
         return [
             url()->current() => 'Edit Profile',
