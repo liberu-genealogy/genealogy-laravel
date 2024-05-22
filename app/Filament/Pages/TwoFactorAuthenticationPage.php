@@ -46,7 +46,7 @@ class TwoFactorAuthenticationPage extends Page
         $this->user->regenerateRecoveryCodes();
     }
 
-    protected function getHeading(): string
+    public function getHeading(): string
     {
         return static::$title;
     }
