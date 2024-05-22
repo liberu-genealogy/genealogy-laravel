@@ -16,7 +16,7 @@ class UpdateProfileInformationPage extends Page
 
     protected static ?int $navigationSort = 0;
 
-    protected static string $title = 'Profile';
+    protected static ?string $title = 'Profile';
 
     public $name;
 
