@@ -7,26 +7,23 @@ use Livewire\Livewire;
 
 class FanChartPage extends Page
 {
-    protected static string $view = 'livewire.fan-chart';
-
-    protected static ?string $resource = null;
-
-    protected static ?string $title = ' Fan Charts';
+    protected static string $view = 'filament.pages.fan-chart';
 
     protected static ?string $navigationIcon = 'heroicon-o-chart-pie';
 
-    public function getTitle(): string
-    {
-        return static::$title;
-    }
+    protected static ?string $navigationGroup = 'Reports';
 
-    public static function getNavigationIcon(): string
-    {
-        return static::$navigationIcon;
-    }
+    protected static ?int $navigationSort = 0;
+
+    protected static string $title = 'Fan Chart';
 
     public function mount(): void
     {
         Livewire::mount(\App\Http\Livewire\FanChart::class);
+    }
+
+    protected function getHeading(): string
+    {
+        return static::$title;
     }
 }
