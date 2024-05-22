@@ -27,15 +27,9 @@ use Filament\Navigation\NavigationItem;
 use Filament\Navigation\UserMenuItem;
 use Filament\Support\Facades\Package;
 use App\Http\Livewire\Auth\Login;
-use Filament\Navigation\NavigationItem;
-use Filament\Navigation\UserMenuItem;
 use Filament\Support\Components\ViewComponent;
-use Filament\Support\Facades\Package;
-use App\Http\Livewire\Auth\Login;
 
-//use App\Providers\Filament\SyncSpatiePermissionsWithFilamentTenants;
-
-use Filament\PluginServiceProvider;
+//use App\Providers\Filament\SyncSpatiePermissionsWithFilamentTenants
 
 class AdminPanelProvider extends PluginServiceProvider
 {
