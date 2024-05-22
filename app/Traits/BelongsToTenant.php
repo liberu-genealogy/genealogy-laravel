@@ -29,8 +29,7 @@ trait BelongsToTenant
 
     private static function getTenantId()
     {
-        $tenant = Filament::getTenant();
-        return isset($tenant) ? $tenant->id : null;
+        return auth()->user()->currentTeam->id ?? null;
     }
 
 }
