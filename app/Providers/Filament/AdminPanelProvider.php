@@ -33,14 +33,14 @@ use Laravel\Fortify\Fortify;
 use Laravel\Jetstream\Features;
 use Laravel\Jetstream\Jetstream;
 
-class AppPanelProvider extends PanelProvider
+class AdminPanelProvider extends PanelProvider
 {
     public function panel(Panel $panel): Panel
     {
         $panel
             ->default()
-            ->id('app')
-            ->path('app')
+            ->id('admin')
+            ->path('admin')
             ->login()
             ->registration()
             ->passwordReset()
