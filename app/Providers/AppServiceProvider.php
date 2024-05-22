@@ -10,8 +10,9 @@ use App\Http\Livewire\PedigreeChart;
 use App\Http\Livewire\PeopleSearch;
 use Filament\Facades\Filament;
 use Illuminate\Database\Eloquent\Builder;
-
- // Add this line to import the Livewire component
+use App\Http\Livewire\ApiTokenManager;
+use App\Http\Livewire\CreateTeam;
+use App\Http\Livewire\EditProfile;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -31,9 +32,10 @@ class AppServiceProvider extends ServiceProvider
         // Register Livewire components here
         Livewire::component('devilliers-report', DevilliersReport::class);
         Livewire::component('descendant-chart-component', DescendantChartComponent::class);
-        Livewire::component('people-search', PeopleSearch::class) ; // Register the new Livewire component
-        Livewire::component('pedigree-chart', PedigreeChart::class) ;
-
-        
+        Livewire::component('people-search', PeopleSearch::class);
+        Livewire::component('pedigree-chart', PedigreeChart::class);
+        Livewire::component('api-token-manager', ApiTokenManager::class);
+        Livewire::component('create-team', CreateTeam::class);
+        Livewire::component('edit-profile', EditProfile::class);
     }
 }
