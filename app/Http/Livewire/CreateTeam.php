@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use App\Actions\Jetstream\CreateTeam;
 use Illuminate\Support\Facades\Auth;
 use Laravel\Jetstream\Http\Livewire\CreateTeamForm;
 
@@ -16,13 +17,11 @@ class CreateTeam extends CreateTeamForm
     {
         $this->validate();
 
-        $user = Auth::user();
+        $team = app(CreateTeam::class)->create(
+            Auth::user(),
+            ['name' => $this->state['name']]
+        );
 
-        $user->ownedTeams()->create([
-            'name' => $this->state['name'],
-            'personal_team' => false,
-        ]);
-
-        return redirect()->route('teams.show', ['team' => $user->currentTeam]);
+        return redirect()->route('filament.pages.edit-team', ['team' => $team]);
     }
 }
