@@ -9,7 +9,7 @@ use Livewire\Livewire;
 
 class TwoFactorAuthenticationPage extends Page
 {
-    protected static ?string $view = 'filament.pages.profile.two-factor-authentication';
+    protected static string $view = 'filament.pages.profile.two-factor-authentication';
 
     protected static ?string $navigationIcon = 'heroicon-o-key';
 
