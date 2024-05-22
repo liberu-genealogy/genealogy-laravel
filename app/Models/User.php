@@ -58,6 +58,7 @@ class User extends Authenticatable implements MustVerifyEmail, HasTenants
         'email_verified_at' => 'datetime',
         'created_at'        => 'datetime',
         'updated_at'        => 'datetime',
+        'team_id'           => 'integer',
     ];
 
     /**
