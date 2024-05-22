@@ -9,7 +9,7 @@ use Livewire\Livewire;
 
 class PersonalAccessTokensPage extends Page
 {
-    protected static string $view = 'filament.pages.profile.personal-access-tokens';
+    protected static ?string $view = 'filament.pages.profile.personal-access-tokens';
 
     protected static ?string $navigationIcon = 'heroicon-o-key';
 
@@ -17,7 +17,7 @@ class PersonalAccessTokensPage extends Page
 
     protected static ?int $navigationSort = 3;
 
-    protected static string $title = 'Personal Access Tokens';
+    protected static ?string $title = 'Personal Access Tokens';
 
     public User $user;
 
