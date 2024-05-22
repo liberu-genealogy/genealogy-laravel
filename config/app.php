@@ -197,15 +197,10 @@ return [
         App\Providers\RouteServiceProvider::class,
         App\Providers\TeamServiceProvider::class,
 
-
-
-
         /*
-    * Livewire Service Provider
-    */
-      Livewire\LivewireServiceProvider::class, // Add this line
-
-
+         * Livewire Service Provider
+         */
+        Livewire\LivewireServiceProvider::class,
 
     ],
 
