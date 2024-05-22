@@ -17,7 +17,7 @@ class ApiTokensPage extends Page
 
     protected static ?int $navigationSort = 2;
 
-    protected static string $title = 'API Tokens';
+    protected static ?string $title = 'API Tokens';
 
     public User $user;
 
