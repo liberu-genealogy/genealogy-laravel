@@ -13,45 +13,56 @@ Description: This file contains the descendant chart display and related functio
 <body>
     <div id="descendant-chart-container"></div>
 
-    @livewire('descendant-chart-component')
+<x-filament::widget class="filament-descendant-chart-widget">
+    <x-filament::card>
+        <div id="descendant-chart-container"></div>
+    </x-filament::card>
 
-    <script>
-        document.addEventListener('livewire:load', function () {
-            const data = @json($descendantsData);
+    @push('scripts')
+        <script src="https://d3js.org/d3.v6.min.js"></script>
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                const data = @json($descendantsData);
 
-            /**
- * Renders the descendant chart using the provided data.
- *
- * @param {Array} data - The data used to render the chart.
- */
-function renderDescendantChart(data) {
-                const container = d3.select('#descendant-chart-container');
-                const width = 960;
-                const height = 500;
+                /**
+                 * Renders the descendant chart using the provided data.
+                 *
+                 * @param {Array} data - The data used to render the chart.
+                 */
+                function renderDescendantChart(data) {
+                    const container = d3.select('#descendant-chart-container');
+                    const width = 960;
+                    const height = 500;
 
-                const svg = container.append('svg')
-                    .attr('width', width)
-                    .attr('height', height)
-                    .attr('class', 'shadow-lg');
+                    const svg = container.append('svg')
+                        .attr('width', width)
+                        .attr('height', height)
+                        .attr('class', 'shadow-lg');
 
-                const nodes = svg.selectAll('circle')
-                    .data(data)
-                    .enter()
-                    .append('g')
-                    .attr('transform', (d, i) => `translate(${i * 100 + 50}, ${height / 2})`);
+                    const nodes = svg.selectAll('circle')
+                        .data(data)
+                        .enter()
+                        .append('g')
+                        .attr('transform', (d, i) => `translate(${i * 100 + 50}, ${height / 2})`);
 
-                nodes.append('circle')
-                    .attr('r', 40)
-                    .attr('class', 'fill-current text-blue-500');
-                
-                nodes.append('text')
-                    .attr('dy', 5)
-                    .text(d => d.name);
-            }
+                    nodes.append('circle')
+                        .attr('r', 40)
+                        .attr('class', 'fill-current text-blue-500');
 
-            renderDescendantChart(data);
-        });
-    </script>
+                    nodes.append('text')
+                        .attr('dy', 5)
+                        .text(d => d.name);
+                }
+
+                if (data && data.length > 0) {
+                    renderDescendantChart(data);
+                } else {
+                    console.warn('No data available to render the descendant chart.');
+                }
+            });
+        </script>
+    @endpush
+</x-filament::widget>
 </body>
 </html>
 

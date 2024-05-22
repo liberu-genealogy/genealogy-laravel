@@ -1,22 +1,22 @@
 <?php
 
 namespace App\Filament\Widgets;
-// namespace App\Http\Livewire;
 
 use App\Models\Person;
 use Filament\Widgets\Widget;
-// use Livewire\Livewire;
 
 class DescendantChartWidget extends Widget
 {
-    protected static string $view = 'livewire.descendant-chart-component';
+    protected static string $view = 'filament.widgets.descendant-chart-widget';
 
-    public $descendantsData = [];
-
-    public function mount()
+    public function getData(): array
     {
         $rawData = Person::all()->toArray();
-        $this->descendantsData = $this->processDescendantData($rawData);
+        $descendantsData = $this->processDescendantData($rawData);
+
+        return [
+            'descendantsData' => $descendantsData,
+        ];
     }
 
     private function processDescendantData($data)
@@ -31,6 +31,6 @@ class DescendantChartWidget extends Widget
 
     public function render(): \Illuminate\Contracts\View\View
     {
-        return view(static::$view, ['descendantsData' => $this->descendantsData]);
+        return view(static::$view, $this->getData());
     }
 }

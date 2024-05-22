@@ -1,28 +1,29 @@
 <?php
 
-namespace App\Http\Livewire;
+namespace App\Filament\Widgets;
 
 use App\Models\Person;
-use Illuminate\Support\Collection;
-use Livewire\Component;
+use Filament\Widgets\Widget;
 
-class PedigreeChart extends Component
+class PedigreeChartWidget extends Widget
 {
-    public Collection $people;
+    protected static string $view = 'filament.widgets.pedigree-chart-widget';
 
-    public function mount()
+    public function getData(): array
     {
-        $this->people = Person::with('parents')->get();
-    }  
+        return [
+            'people' => Person::with('parents')->get(),
+        ];
+    }
 
-    public function render()
+    public function render(): \Illuminate\Contracts\View\View
     {
-        return view('livewire.pedigree-chart');
+        return view(static::$view, $this->getData());
     }
 
     public function initializeChart()
     {
-        $this->dispatchBrowserEvent('initializeChart', ['people' => $this->people->toJson()]);
+        $this->dispatchBrowserEvent('initializeChart', ['people' => $this->getData()['people']->toJson()]);
     }
 
     public function zoomIn()

@@ -1,16 +1,23 @@
 <?php
 
-namespace App\Http\Livewire;
+namespace App\Filament\Widgets;
 
 use App\Models\Person;
-use Livewire\Component; // Assuming there's a Person model to fetch genealogical data
+use Filament\Widgets\Widget;
 
-class FanChart extends Component
+class FanChartWidget extends Widget
 {
-    public function render()
-    {
-        $people = Person::all(); // Fetch all people/person data. Adjust query as needed for performance or specific requirements.
+    protected static string $view = 'filament.widgets.fan-chart-widget';
 
-        return view('livewire.fan-chart', ['people' => $people]);
+    public function getData(): array
+    {
+        return [
+            'people' => Person::all(), // Fetch all people/person data. Adjust query as needed for performance or specific requirements.
+        ];
+    }
+
+    public function render(): \Illuminate\Contracts\View\View
+    {
+        return view(static::$view, $this->getData());
     }
 }
