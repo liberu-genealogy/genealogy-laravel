@@ -2,13 +2,24 @@
 
 namespace App\Providers\Filament;
 
-use App\Filament\Pages\Tenancy\EditTeamProfile;
-use App\Filament\Pages\Tenancy\RegisterTeam;
+use App\Filament\Pages\ApiTokens;
+use App\Filament\Pages\CreateTeam;
+use App\Filament\Pages\EditProfile;
+use App\Filament\Pages\EditTeam;
+use App\Listeners\CreatePersonalTeam;
+use App\Listeners\SwitchTeam;
 use App\Models\Team;
+use Filament\Events\Auth\Registered;
+use Filament\Events\TenantSet;
+use Filament\Facades\Filament;
 use Filament\Http\Middleware\Authenticate;
+use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
+use Filament\Navigation\MenuItem;
 use Filament\Pages;
-use Filament\Resources;
+use Filament\Panel;
+use Filament\PanelProvider;
+use Filament\Support\Colors\Color;
 use Filament\Widgets;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
 use Illuminate\Cookie\Middleware\EncryptCookies;
@@ -16,123 +27,123 @@ use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\AuthenticateSession;
 use Illuminate\Session\Middleware\StartSession;
-use Illuminate\View\Middleware\ShareErrorsFromSession;
-use Filament\Facades\Filament;
-use Filament\PluginServiceProvider;
 use Illuminate\Support\Facades\Event;
-use JeffGreco13\FilamentBreezy\FilamentBreezy;
-use Livewire\Livewire;
-use Filament\Navigation\NavigationGroup;
-use Filament\Navigation\NavigationItem;
-use Filament\Navigation\UserMenuItem;
-use Filament\Support\Facades\Package;
-use App\Http\Livewire\Auth\Login;
-use Filament\Support\Components\ViewComponent;
+use Illuminate\View\Middleware\ShareErrorsFromSession;
+use Laravel\Fortify\Fortify;
+use Laravel\Jetstream\Features;
+use Laravel\Jetstream\Jetstream;
 
-//use App\Providers\Filament\SyncSpatiePermissionsWithFilamentTenants
-
-class AdminPanelProvider extends PluginServiceProvider
+class AppPanelProvider extends PanelProvider
 {
-    public function configurePackage(Package $package): void
+    public function panel(Panel $panel): Panel
     {
-        $package
-            ->name('admin')
-            ->path('admin');
-    }
-
-    protected function getPages(): array
-    {
-        return [
-            Pages\Dashboard::class,
-        ];
-    }
-
-    protected function getResources(): array
-    {
-        return [];
-    }
-
-    protected function getWidgets(): array
-    {
-        return [
-            Widgets\AccountWidget::class,
-            Widgets\FilamentInfoWidget::class,
-        ];
-    }
-
-    public function packageRegistered(): void
-    {
-        parent::packageRegistered();
-
-        Filament::registerPages($this->getPages());
-        Filament::registerResources($this->getResources());
-        Filament::registerWidgets($this->getWidgets());
-
-        Filament::registerStyles([
-            'https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css',
-        ]);
-
-        Filament::registerScripts([
-            asset('js/app.js'),
-        ]);
-
-        Filament::serving(function () {
-            Filament::registerTheme(mix('css/app.css'));
-        });
-
-        Filament::registerUserMenuItems([
-            'account' => UserMenuItem::make()->url(route('filament.pages.profile')),
-            'logout' => UserMenuItem::make()->url(route('filament.auth.logout')),
-        ]);
-
-        Filament::registerNavigationGroups([
-            NavigationGroup::make()
-                ->label('Shop')
-                ->icon('heroicon-s-shopping-cart'),
-        ]);
-
-        Filament::registerNavigationItems([
-            NavigationItem::make('Dashboard')
-                ->icon('heroicon-o-home')
-                ->activeIcon('heroicon-s-home')
-                ->isActiveWhen(fn (): bool => request()->routeIs('filament.pages.dashboard'))
-                ->url(route('filament.pages.dashboard')),
-        ]);
-
-        Filament::serving(function () {
-            Filament::registerMiddleware([
+        $panel
+            ->default()
+            ->id('app')
+            ->path('app')
+            ->login()
+            ->registration()
+            ->passwordReset()
+            ->emailVerification()
+            ->viteTheme('resources/css/app.css')
+            ->colors([
+                'primary' => Color::Gray,
+            ])
+            ->userMenuItems([
+                MenuItem::make()
+                    ->label('Profile')
+                    ->icon('heroicon-o-user-circle')
+                    ->url(fn () => $this->shouldRegisterMenuItem()
+                        ? url(EditProfile::getUrl())
+                        : url($panel->getPath())),
+            ])
+            ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
+            ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
+            ->pages([
+                Pages\Dashboard::class,
+                EditProfile::class,
+                ApiTokens::class,
+            ])
+            ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
+            ->widgets([
+                Widgets\AccountWidget::class,
+                Widgets\FilamentInfoWidget::class,
+            ])
+            ->middleware([
                 EncryptCookies::class,
                 AddQueuedCookiesToResponse::class,
                 StartSession::class,
+                AuthenticateSession::class,
                 ShareErrorsFromSession::class,
                 VerifyCsrfToken::class,
                 SubstituteBindings::class,
+                DisableBladeIconComponents::class,
                 DispatchServingFilamentEvent::class,
+            ])
+            ->authMiddleware([
+                Authenticate::class,
             ]);
-        });
 
-        Filament::auth(function (Authenticate $auth) {
-            $auth
-                ->guard('web')
-                ->redirect('/')
-                ->authenticate();
-        });
+        if (Features::hasApiFeatures()) {
+            $panel->userMenuItems([
+                MenuItem::make()
+                    ->label('API Tokens')
+                    ->icon('heroicon-o-key')
+                    ->url(fn () => $this->shouldRegisterMenuItem()
+                        ? url(ApiTokens::getUrl())
+                        : url($panel->getPath())),
+            ]);
+        }
 
-        Filament::registerRenderHook(
-            'head.start',
-            fn (): string => '<!-- Render hook content -->'
+        if (Features::hasTeamFeatures()) {
+            $panel
+                ->tenant(Team::class)
+                ->tenantRegistration(CreateTeam::class)
+                ->tenantProfile(EditTeam::class)
+                ->userMenuItems([
+                    MenuItem::make()
+                        ->label('Team Settings')
+                        ->icon('heroicon-o-cog-6-tooth')
+                        ->url(fn () => $this->shouldRegisterMenuItem()
+                            ? url(EditTeam::getUrl())
+                            : url($panel->getPath())),
+                ]);
+        }
+
+        return $panel;
+    }
+
+    public function boot()
+    {
+        /**
+         * Disable Fortify routes
+         */
+        Fortify::$registersRoutes = false;
+
+        /**
+         * Disable Jetstream routes
+         */
+        Jetstream::$registersRoutes = false;
+
+        /**
+         * Listen and create personal team for new accounts
+         */
+        Event::listen(
+            Registered::class,
+            CreatePersonalTeam::class,
+        );
+
+        /**
+         * Listen and switch team if tenant was changed
+         */
+        Event::listen(
+            TenantSet::class,
+            SwitchTeam::class,
         );
     }
 
-    public function packageBooted(): void
+    public function shouldRegisterMenuItem(): bool
     {
-        parent::packageBooted();
-
-        Livewire::component('filament.core.auth.login', Http\Livewire\Auth\Login::class);
-        Livewire::component('filament.core.pages.dashboard', Http\Livewire\Pages\Dashboard::class);
-
-        FilamentBreezy::setTenantModel(Team::class);
-        FilamentBreezy::setTenantRegistrationPage(RegisterTeam::class);
-        FilamentBreezy::setTenantProfilePage(EditTeamProfile::class);
+        return auth()->user()?->hasVerifiedEmail() && Filament::hasTenancy() && Filament::getTenant();
     }
 }

@@ -7,8 +7,9 @@
     "require": {
         "php": "^8.3",
         "althinect/filament-spatie-roles-permissions": "^2.2",
-        "filament/filament": "^3.2",
+        "filament/filament": "^3.2-stable",
         "guzzlehttp/guzzle": "^7.8",
+        "jeffgreco13/filament-breezy": "*",
         "laravel/framework": "^11.0",
         "laravel/jetstream": "*",
         "laravel/octane": "^2.3",
