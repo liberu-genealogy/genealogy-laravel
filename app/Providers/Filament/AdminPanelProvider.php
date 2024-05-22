@@ -25,6 +25,8 @@ use Livewire\Livewire;
 
 //use App\Providers\Filament\SyncSpatiePermissionsWithFilamentTenants;
 
+use Filament\PluginServiceProvider;
+
 class AdminPanelProvider extends PluginServiceProvider
 {
     public function configurePackage(Package $package): void
