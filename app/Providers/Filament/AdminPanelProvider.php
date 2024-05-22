@@ -22,6 +22,16 @@ use Filament\PluginServiceProvider;
 use Illuminate\Support\Facades\Event;
 use JeffGreco13\FilamentBreezy\FilamentBreezy;
 use Livewire\Livewire;
+use Filament\Navigation\NavigationGroup;
+use Filament\Navigation\NavigationItem;
+use Filament\Navigation\UserMenuItem;
+use Filament\Support\Facades\Package;
+use App\Http\Livewire\Auth\Login;
+use Filament\Navigation\NavigationItem;
+use Filament\Navigation\UserMenuItem;
+use Filament\Support\Components\ViewComponent;
+use Filament\Support\Facades\Package;
+use App\Http\Livewire\Auth\Login;
 
 //use App\Providers\Filament\SyncSpatiePermissionsWithFilamentTenants;
 
