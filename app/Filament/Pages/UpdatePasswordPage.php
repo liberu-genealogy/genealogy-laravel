@@ -67,7 +67,7 @@ class UpdatePasswordPage extends Page
         session()->flash('status', 'Your password has been updated.');
     }
 
-    protected function getHeading(): string
+    public function getHeading(): string
     {
         return static::$title;
     }
