@@ -1,8 +1,8 @@
-<x-filament-panels::page>
-    {{-- <livewire:pedigree-chart />
-    <livewire:fan-chart-component />
-    <livewire:descendant-chart-component /> --}}
-    {{-- <livewire:daboville-report /> --}}
-
-    <livewire:descendant-chart-component />
-</x-filament-panels::page>
+<x-filament::page>
+    <x-filament::widgets :widgets="[
+        \App\Filament\Widgets\PedigreeChartWidget::class,
+        \App\Filament\Widgets\FanChartWidget::class,
+        \App\Filament\Widgets\DescendantChartWidget::class,
+    ]">
+    </x-filament::widgets>
+</x-filament::page>
