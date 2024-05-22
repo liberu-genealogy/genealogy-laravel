@@ -36,7 +36,7 @@ class ApiTokensPage extends Page
         $this->user->tokens()->where('name', $name)->first()->delete();
     }
 
-    protected function getHeading(): string
+    public function getHeading(): string
     {
         return static::$title;
     }
