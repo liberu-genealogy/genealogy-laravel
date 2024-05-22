@@ -51,7 +51,7 @@ class TwoFactorAuthenticationPage extends Page
         return static::$title;
     }
 
-    protected static function shouldRegisterNavigation(): bool
+    public static function shouldRegisterNavigation(): bool
     {
         return config('filament-jetstream.show_two_factor_authentication_page');
     }
