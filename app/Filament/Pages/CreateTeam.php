@@ -47,7 +47,7 @@ class CreateTeam extends Page
         return redirect()->route('filament.pages.edit-team', ['team' => $team]);
     }
 
-    protected function getBreadcrumbs(): array
+    public function getBreadcrumbs(): array
     {
         return [
             url()->current() => 'Create Team',
