@@ -10,7 +10,7 @@ use Illuminate\Validation\Rules\Password;
 
 class UpdatePasswordPage extends Page
 {
-    protected static ?string $view = 'filament.pages.profile.update-password';
+    protected static string $view = 'filament.pages.profile.update-password';
 
     protected static ?string $navigationIcon = 'heroicon-o-lock-closed';
 
