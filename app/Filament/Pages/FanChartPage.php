@@ -15,7 +15,7 @@ class FanChartPage extends Page
 
     protected static string $view = 'filament.pages.fan-chart';
 
-    protected function getHeading(): string
+    public function getHeading(): string
     {
         return 'Fan Chart';
     }
