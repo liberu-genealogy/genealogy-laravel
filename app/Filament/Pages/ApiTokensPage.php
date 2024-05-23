@@ -29,11 +29,13 @@ class ApiTokensPage extends Page
     public function createApiToken(string $name, array $permissions): void
     {
         $this->user->createToken($name, $permissions);
+        $this->notify('success', 'API token created successfully.');
     }
 
     public function deleteApiToken(string $name): void
     {
         $this->user->tokens()->where('name', $name)->first()->delete();
+        $this->notify('success', 'API token deleted successfully.');
     }
 
     public function getHeading(): string
