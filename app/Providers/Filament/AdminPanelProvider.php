@@ -2,7 +2,7 @@
 
 namespace App\Providers\Filament;
 
-use App\Filament\Pages\ApiTokenManager;
+use App\Filament\Pages\ApiTokenManagerPage;
 use App\Filament\Pages\CreateTeam;
 use App\Filament\Pages\EditProfile;
 use App\Filament\Pages\EditTeam;
@@ -61,8 +61,8 @@ class AdminPanelProvider extends PanelProvider
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
             ->pages([
                 Pages\Dashboard::class,
-                EditProfile::class,
-                ApiTokenManager::class,
+                Pages\EditProfile::class,
+                Pages\ApiTokenManagerPage::class,
             ])
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
             ->widgets([
@@ -90,7 +90,7 @@ class AdminPanelProvider extends PanelProvider
                     ->label('API Tokens')
                     ->icon('heroicon-o-key')
                     ->url(fn () => $this->shouldRegisterMenuItem()
-                        ? url(ApiTokenManager::getUrl())
+                        ? url(Pages\ApiTokenManagerPage::getUrl())
                         : url($panel->getPath())),
             ]);
         }
@@ -98,14 +98,14 @@ class AdminPanelProvider extends PanelProvider
         if (Features::hasTeamFeatures()) {
             $panel
                 ->tenant(Team::class)
-                ->tenantRegistration(CreateTeam::class)
-                ->tenantProfile(EditTeam::class)
+                ->tenantRegistration(Pages\CreateTeam::class)
+                ->tenantProfile(Pages\EditTeam::class)
                 ->userMenuItems([
                     MenuItem::make()
                         ->label('Team Settings')
                         ->icon('heroicon-o-cog-6-tooth')
                         ->url(fn () => $this->shouldRegisterMenuItem()
-                            ? url(EditTeam::getUrl())
+                            ? url(Pages\EditTeam::getUrl())
                             : url($panel->getPath())),
                 ]);
         }
