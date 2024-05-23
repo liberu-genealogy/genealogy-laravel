@@ -4,10 +4,8 @@
 
 namespace App\Providers;
 
-use App\Http\Livewire\AnotherComponent;
 use App\Http\Livewire\DescendantChartComponent;
-use App\Http\Livewire\DabovilleReport; // Add this line
-use App\Http\Livewire\ExampleComponent;
+use App\Http\Livewire\DabovilleReport;
 use App\Http\Livewire\HenryReport;
 use App\Http\Livewire\PedigreeChart;
 use App\Http\Livewire\PeopleSearch;

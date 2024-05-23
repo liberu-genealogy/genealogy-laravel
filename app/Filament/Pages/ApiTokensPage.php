@@ -9,7 +9,7 @@ use Livewire\Livewire;
 
 class ApiTokensPage extends Page
 {
-    protected static string $view = 'filament.pages.api.api-tokens';
+    protected static string $view = 'filament.pages.api-tokens';
 
     protected static ?string $navigationIcon = 'heroicon-o-key';
 
