@@ -6,12 +6,9 @@ use App\Models\User;
 use Filament\Pages\Page;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Livewire;
-use Filament\Notifications\HasNotifications;
 
 class ApiTokenManagerPage extends Page
 {
-    use HasNotifications;
-
     protected static string $view = 'filament.pages.api-token-manager';
 
     protected static ?string $navigationIcon = 'heroicon-o-key';
