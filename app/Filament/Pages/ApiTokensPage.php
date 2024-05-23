@@ -7,9 +7,9 @@ use Filament\Pages\Page;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Livewire;
 
-class ApiTokensPage extends Page
+class ApiTokenManagerPage extends Page
 {
-    protected static string $view = 'filament.pages.api-tokens';
+    protected static string $view = 'filament.pages.api-token-manager';
 
     protected static ?string $navigationIcon = 'heroicon-o-key';
 

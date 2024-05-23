@@ -62,7 +62,7 @@ class AdminPanelProvider extends PanelProvider
             ->pages([
                 Pages\Dashboard::class,
                 EditProfile::class,
-                ApiTokens::class,
+                ApiTokenManager::class,
             ])
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
             ->widgets([
@@ -90,7 +90,7 @@ class AdminPanelProvider extends PanelProvider
                     ->label('API Tokens')
                     ->icon('heroicon-o-key')
                     ->url(fn () => $this->shouldRegisterMenuItem()
-                        ? url(ApiTokens::getUrl())
+                        ? url(ApiTokenManager::getUrl())
                         : url($panel->getPath())),
             ]);
         }
