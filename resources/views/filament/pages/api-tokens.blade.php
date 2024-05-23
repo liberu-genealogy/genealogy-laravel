@@ -1,3 +1,3 @@
-<x-filament::page>
-    @livewire('profile.api-token-manager')
-</x-filament::page>
+<x-filament-panels::page>
+    @livewire(Laravel\Jetstream\Http\Livewire\ApiTokenManager::class)
+</x-filament-panels::page>
