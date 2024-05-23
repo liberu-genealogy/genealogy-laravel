@@ -34,6 +34,5 @@ class AppServiceProvider extends ServiceProvider
         Livewire::component('people-search', PeopleSearch::class);
         Livewire::component('pedigree-chart', PedigreeChart::class);
         Livewire::component('create-team', CreateTeam::class);
-        Livewire::component('edit-profile', EditProfile::class);
     }
 }
