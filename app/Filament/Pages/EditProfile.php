@@ -6,20 +6,17 @@ use App\Models\User;
 use Filament\Facades\Filament;
 use Filament\Forms\Components\TextInput;
 use Filament\Pages\Page;
-use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
 
 class EditProfile extends Page
 {
     protected static string $view = 'filament.pages.edit-profile';
 
     public User $user;
-
-    public $name = '';
-    public $email = '';
-
+    
     public function mount()
     {
-        $this->user = Filament::auth()->user();
+        $this->user = Auth::user();
         $this->form->fill([
             'name' => $this->user->name,
             'email' => $this->user->email,
@@ -43,12 +40,14 @@ class EditProfile extends Page
     public function submit()
     {
         $this->validate();
-
+    
+        $state = $this->form->getState();
+    
         $this->user->forceFill([
-            'name' => $this->name,
-            'email' => $this->email,
+            'name' => $state['name'],
+            'email' => $state['email'],
         ])->save();
-
+    
         Filament::notify('success', 'Your profile has been updated.');
     }
 
