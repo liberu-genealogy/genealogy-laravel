@@ -7,22 +7,18 @@ export default defineConfig({
     plugins: [
         laravel(['resources/css/app.css', 'resources/js/app.js']),
         viteStaticCopy({
-                           targets: [
-                               {
-                                   src: 'resources/images/*',
-                                   dest: 'images'
-                               }
-                           ]
-                       }),
+            targets: [
+                {
+                    src: 'resources/images/*',
+                    dest: 'images'
+                }
+            ]
+        }),
     ],
     resolve: {
         alias: {
             '@': path.resolve(__dirname, './resources')
         },
-    css: [
-        'resources/css/tailwind.css',
-        'resources/css/custom.css',
-    ],
     },
 //    build: {
 //        outDir: '../public',

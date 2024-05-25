@@ -2,28 +2,23 @@
 
 namespace App\Models;
 
-use Filament\Models\Contracts\HasTenants;
-use Filament\Panel;
-use Illuminate\Contracts\Auth\MustVerifyEmail;
+// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Support\Collection;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
+use Laravel\Jetstream\HasTeams;
 use Laravel\Sanctum\HasApiTokens;
-use Spatie\Permission\Traits\HasRoles;
 
-class User extends Authenticatable implements MustVerifyEmail, HasTenants
+class User extends Authenticatable
 {
     use HasApiTokens;
     use HasFactory;
     use HasProfilePhoto;
+    use HasTeams;
     use Notifiable;
     use TwoFactorAuthenticatable;
-    use HasRoles;
 
     /**
      * The attributes that are mass assignable.
@@ -34,7 +29,6 @@ class User extends Authenticatable implements MustVerifyEmail, HasTenants
         'name',
         'email',
         'password',
-        'team_id',
     ];
 
     /**
@@ -50,18 +44,6 @@ class User extends Authenticatable implements MustVerifyEmail, HasTenants
     ];
 
     /**
-     * The attributes that should be cast.
-     *
-     * @var array<string, string>
-     */
-    protected $casts = [
-        'email_verified_at' => 'datetime',
-        'created_at'        => 'datetime',
-        'updated_at'        => 'datetime',
-        'team_id'           => 'integer',
-    ];
-
-    /**
      * The accessors to append to the model's array form.
      *
      * @var array<int, string>
@@ -70,27 +52,16 @@ class User extends Authenticatable implements MustVerifyEmail, HasTenants
         'profile_photo_url',
     ];
 
-    public function getTenants(Panel $panel): Collection
+    /**
+     * Get the attributes that should be cast.
+     *
+     * @return array<string, string>
+     */
+    protected function casts(): array
     {
-        return $this->teams;
+        return [
+            'email_verified_at' => 'datetime',
+            'password' => 'hashed',
+        ];
     }
-
-    public function teams(): BelongsToMany
-    {
-        return $this->belongsToMany(Team::class);
-    }
-
-    public function canAccessTenant(Model $tenant): bool
-    {
-        return $this->teams->contains($tenant);
-    }
-
-
-
-    // protected static function booted(): void
-    // {
-    //     static::created(function (User $user) {
-    //         $user->assignRole('admin');
-    //     });
-    // }
 }
