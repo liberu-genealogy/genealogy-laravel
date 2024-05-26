@@ -27,7 +27,8 @@ class CreateNewUser implements CreatesNewUsers
             'password' => $this->passwordRules(),
             'terms' => Jetstream::hasTermsAndPrivacyPolicyFeature() ? ['accepted', 'required'] : '',
         ])->validate();
-
+            
+        // dd($input);
         return DB::transaction(function () use ($input) {
             return tap(User::create([
                 'name' => $input['name'],
@@ -37,6 +38,7 @@ class CreateNewUser implements CreatesNewUsers
                 $this->createTeam($user);
             });
         });
+        
     }
 
     /**

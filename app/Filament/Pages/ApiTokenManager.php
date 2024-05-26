@@ -45,6 +45,6 @@ class ApiTokenManagerPage extends Page
 
     public static function shouldRegisterNavigation(): bool
     {
-        return config('filament-jetstream.show_api_token_page');
+        return true; //config('filament-jetstream.show_api_token_page');
     }
 }

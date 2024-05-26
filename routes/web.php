@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminLoginController;
+use App\Http\Controllers\TeamInvitationController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
@@ -20,10 +21,10 @@ Route::get('/', function () {
     return view('home');
 });
 
-Route::post('/send-invitation', 'TeamInvitationController@sendInvitation')->name('send.invitation');
-Route::post('/accept-invitation/{token}', 'TeamInvitationController@acceptInvitation')->name('accept.invitation');
+Route::post('/send-invitation', [TeamInvitationController::class, 'sendInvitation'])->name('send.invitation');
+Route::post('/accept-invitation/{token}', [TeamInvitationController::class, 'acceptInvitation'])->name('accept.invitation');
 
-
+// Route::redirect('/register', '/admin/register')->name('register');
 
 Route::get('/privacy', function () {
     return view('pages.privacy');

@@ -6,9 +6,9 @@
 body {
   @apply bg-gray-100 text-gray-800;
 }
-a {
+/* a {
   @apply text-blue-600 hover:text-blue-700;
-}
+} */
 ul {
   @apply list-disc pl-5;
 

@@ -65,6 +65,6 @@ class UpdateProfileInformationPage extends Page
 
     public static function shouldRegisterNavigation(): bool
     {
-        return config('filament-jetstream.show_update_profile_information_page');
+        return true; //config('filament-jetstream.show_update_profile_information_page');
     }
 }

@@ -7,18 +7,25 @@ use App\Models\User;
 use Filament\Facades\Filament;
 use Filament\Forms\Components\TextInput;
 use Filament\Pages\Page;
+use Filament\Pages\Tenancy\RegisterTenant;
+use Filament\Support\Enums\MaxWidth;
+use Filament\Support\Facades\FilamentView;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
-class CreateTeam extends Page
+use function Filament\Support\is_app_url;
+
+class CreateTeam extends RegisterTenant
 {
     protected static string $view = 'filament.pages.create-team';
 
     public $name = '';
 
+    protected ?string $maxWidth = '2xl';
+
     public function mount(): void
     {
-        abort_unless(Filament::auth()->user()->canCreateTeams(), 403);
+        // abort_unless(Filament::auth()->user()->canCreateTeams(), 403);
     }
 
     protected function getFormSchema(): array
@@ -31,20 +38,9 @@ class CreateTeam extends Page
         ];
     }
 
-    public function submit()
+    protected function handleRegistration(array $data): Team
     {
-        $this->validate();
-
-        $team = Team::forceCreate([
-            'user_id' => Filament::auth()->id(),
-            'name' => $this->name,
-            'personal_team' => false,
-        ]);
-
-        Filament::auth()->user()->teams()->attach($team, ['role' => 'admin']);
-        Filament::auth()->user()->switchTeam($team);
-
-        return redirect()->route('filament.pages.edit-team', ['team' => $team]);
+        return app(\App\Actions\Jetstream\CreateTeam::class)->create(auth()->user(), $data);
     }
 
     public function getBreadcrumbs(): array
@@ -53,4 +49,10 @@ class CreateTeam extends Page
             url()->current() => 'Create Team',
         ];
     }
+
+    public static function getLabel(): string
+    {
+        return 'Create Team';
+    }
+
 }

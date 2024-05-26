@@ -20,6 +20,6 @@ class SwitchTeam
      */
     public function handle(object $event): void
     {
-        //
+        // dd($event);
     }
 }

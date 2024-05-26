@@ -20,8 +20,9 @@
                 <a href="/contact" class="btn-nav">Contact</a>
                 <span class="mx-2"></span>
                 <a href="/about" class="btn-nav">About</a>
+                <span class="mx-2"></span>
                 @if(auth()->check())
-                    <div class="relative inline-block text-left ml-3">
+                    <div class="relative inline-block text-left">
                         <button onclick="toggleDropdown()" class="btn-nav">
                             <span class="text-white">
                                 <strong>Welcome, {{ auth()->user()->name }}</strong>

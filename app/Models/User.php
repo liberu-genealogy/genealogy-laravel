@@ -3,15 +3,21 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+
+use Filament\Models\Contracts\HasDefaultTenant;
+use Filament\Panel;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Jetstream\HasTeams;
 use Laravel\Sanctum\HasApiTokens;
+use Spatie\Permission\Traits\HasRoles;
 
-class User extends Authenticatable
+class User extends Authenticatable implements HasDefaultTenant
 {
     use HasApiTokens;
     use HasFactory;
@@ -19,6 +25,7 @@ class User extends Authenticatable
     use HasTeams;
     use Notifiable;
     use TwoFactorAuthenticatable;
+    use HasRoles;
 
     /**
      * The attributes that are mass assignable.
@@ -61,7 +68,44 @@ class User extends Authenticatable
     {
         return [
             'email_verified_at' => 'datetime',
+            'created_at'        => 'datetime',
+            'updated_at'        => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+
+
+    public function getTenants(Panel $panel)
+    {
+        return $this->ownedTeams;
+    }
+
+
+    public function canAccessTenant(Model $tenant): bool
+    {
+        return true;//$this->ownedTeams->contains($tenant);
+    }
+
+    public function canAccessPanel(Panel $panel): bool
+    {
+        //        return $this->hasVerifiedEmail();
+        return true;
+    }
+
+    public function canAccessFilament(): bool
+    {
+        //        return $this->hasVerifiedEmail();
+        return true;
+    }
+
+    public function getDefaultTenant(Panel $panel): ?Model
+    {
+        return $this->latestTeam;
+    }
+ 
+    public function latestTeam(): BelongsTo
+    {
+        return $this->belongsTo(Team::class, 'current_team_id');
     }
 }
