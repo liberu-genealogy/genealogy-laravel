@@ -74,6 +74,6 @@ class UpdatePasswordPage extends Page
 
     public static function shouldRegisterNavigation(): bool
     {
-        return config('filament-jetstream.show_update_password_page');
+        return true; //config('filament-jetstream.show_update_password_page');
     }
 }

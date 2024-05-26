@@ -18,7 +18,7 @@
         "liberu-genealogy/laravel-dna": "^1.0",
         "liberu-genealogy/laravel-gedcom": "^4.1",
         "liberusoftware/filament-cashier-billing-provider": "^1.3",
-        "livewire/livewire": "^3.4"
+        "livewire/livewire": "^3.0"
     },
     "require-dev": {
         "fakerphp/faker": "^1.23",

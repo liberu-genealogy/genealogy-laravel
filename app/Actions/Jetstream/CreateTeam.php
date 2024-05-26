@@ -29,7 +29,7 @@ class CreateTeam implements CreatesTeams
 
         $user->switchTeam($team = $user->ownedTeams()->create([
             'name' => $input['name'],
-            'personal_team' => false,
+            'personal_team' => true,
         ]));
 
         return $team;

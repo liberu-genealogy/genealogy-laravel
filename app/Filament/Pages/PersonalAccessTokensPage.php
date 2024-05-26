@@ -43,6 +43,6 @@ class PersonalAccessTokensPage extends Page
 
     public static function shouldRegisterNavigation(): bool
     {
-        return config('filament-jetstream.show_personal_access_tokens_page');
+        return true;
     }
 }

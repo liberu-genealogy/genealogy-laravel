@@ -145,6 +145,6 @@ class AdminPanelProvider extends PanelProvider
 
     public function shouldRegisterMenuItem(): bool
     {
-        return auth()->user()?->hasVerifiedEmail() && Filament::hasTenancy() && Filament::getTenant();
+        return true;//auth()->user()?->hasVerifiedEmail() && Filament::hasTenancy() && Filament::getTenant();
     }
 }
