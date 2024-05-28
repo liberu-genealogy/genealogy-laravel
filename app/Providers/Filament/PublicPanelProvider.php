@@ -26,6 +26,7 @@ class PublicPanelProvider extends PanelProvider
             ->path('')
             ->login()
             ->registration()
+            ->viteTheme('resources/css/site.css')
             ->passwordReset()
             ->emailVerification()
             ->colors([
