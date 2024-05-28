@@ -7,14 +7,20 @@ use App\Models\User;
 use Filament\Facades\Filament;
 use Filament\Forms\Components\TextInput;
 use Filament\Pages\Page;
+use Filament\Pages\Tenancy\EditTenantProfile;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
-class EditTeam extends Page
+class EditTeam extends EditTenantProfile
 {
     protected static string $view = 'filament.pages.edit-team';
 
     public $name = '';
+
+    public static function getLabel(): string
+    {
+        return 'Edit Team';
+    }
 
     public function mount(): void
     {

@@ -31,6 +31,8 @@ use Illuminate\Session\Middleware\StartSession;
 use Illuminate\Support\Facades\Event;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 use Laravel\Fortify\Fortify;
+use Laravel\Fortify\Http\Controllers\AuthenticatedSessionController;
+use Laravel\Fortify\Http\Controllers\RegisteredUserController;
 use Laravel\Jetstream\Features;
 use Laravel\Jetstream\Jetstream;
 
@@ -42,11 +44,11 @@ class AdminPanelProvider extends PanelProvider
             ->default()
             ->id('admin')
             ->path('admin')
-            ->login()
-            ->registration()
+            ->login([AuthenticatedSessionController::class, 'create'])
+            ->registration([RegisteredUserController::class, 'create'])
             ->passwordReset()
             ->emailVerification()
-            ->viteTheme('resources/css/app.css')
+            ->viteTheme('resources/css/dashboard.css')
             ->colors([
                 'primary' => Color::Gray,
             ])
@@ -65,7 +67,7 @@ class AdminPanelProvider extends PanelProvider
                 Pages\EditProfile::class,
                 Pages\ApiTokenManagerPage::class,
             ])
-            ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
+            ->discoverWidgets(in: app_path('Filament/Widgets/Home'), for: 'App\\Filament\\Widgets\\Home')
             ->widgets([
                 Widgets\AccountWidget::class,
                 Widgets\FilamentInfoWidget::class,
