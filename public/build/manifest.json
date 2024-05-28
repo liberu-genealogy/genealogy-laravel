@@ -1,12 +1,12 @@
 {
   "resources/css/app.css": {
-    "file": "assets/app-DzaluNhu.css",
+    "file": "assets/app-B1Sc5icm.css",
     "src": "resources/css/app.css",
     "isEntry": true
   },
-  "resources/css/site.css": {
-    "file": "assets/site-jKUFSe9I.css",
-    "src": "resources/css/site.css",
+  "resources/css/dashboard.css": {
+    "file": "assets/dashboard-DMhRf7NT.css",
+    "src": "resources/css/dashboard.css",
     "isEntry": true
   },
   "resources/js/app.js": {
