@@ -4,7 +4,7 @@ namespace App\Filament\Pages;
 
 use Filament\Pages\Page;
 
-class HenryReportPage extends CustomFilamentBasePage
+class HenryReportPage extends Page
 {
     protected static string $view = 'henry-report-page';
     protected static ?string $title = 'Henry Report';

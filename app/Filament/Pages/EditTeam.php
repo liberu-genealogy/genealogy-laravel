@@ -24,7 +24,7 @@ class EditTeam extends EditTenantProfile
 
     public function mount(): void
     {
-        abort_unless(Filament::auth()->user()->canCreateTeams(), 403);
+        abort_unless($this->user()->canCreateTeams(), 403);
     }
 
     protected function getFormSchema(): array
@@ -47,8 +47,8 @@ class EditTeam extends EditTenantProfile
             'personal_team' => false,
         ]);
 
-        Filament::auth()->user()->teams()->attach($team, ['role' => 'admin']);
-        Filament::auth()->user()->switchTeam($team);
+        $this->user()->teams()->attach($team, ['role' => 'admin']);
+        $this->user()->switchTeam($team);
 
         return redirect()->route('filament.pages.edit-team', ['team' => $team]);
     }
@@ -59,4 +59,9 @@ class EditTeam extends EditTenantProfile
             url()->current() => 'Create Team',
         ];
     }
+
+    private function user(): User
+    {
+        return Filament::auth()->user();
+    } 
 }

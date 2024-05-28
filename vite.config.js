@@ -7,7 +7,7 @@ export default defineConfig({
     plugins: [
         laravel([
             "resources/css/app.css",
-            "resources/css/site.css",
+            "resources/css/dashboard.css",
             "resources/js/app.js",
         ]),
         viteStaticCopy({

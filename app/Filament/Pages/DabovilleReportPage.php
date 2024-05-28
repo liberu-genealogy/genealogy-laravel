@@ -2,9 +2,10 @@
 
 namespace App\Filament\Pages;
 
+use Filament\Pages\Page;
 use Livewire\Livewire;
 
-class DabovilleReportPage extends CustomFilamentBasePage
+class DabovilleReportPage extends Page
 {
     protected static string $view = 'livewire.daboville-report';
     protected static ?string $title = 'DAboville Report';
