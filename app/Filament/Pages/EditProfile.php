@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Auth;
 class EditProfile extends Page
 {
     protected static string $view = 'filament.pages.edit-profile';
+    protected static ?string $navigationIcon = 'heroicon-o-chart-bar';
 
     public User $user;
     

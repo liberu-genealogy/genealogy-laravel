@@ -20,6 +20,8 @@ class ChanResource extends Resource
 
     protected static ?string $navigationLabel = ' Chan';
 
+    // protected static ?string $tenantRelationshipName = 'team';
+
     
     public static function form(Form $form): Form
     {

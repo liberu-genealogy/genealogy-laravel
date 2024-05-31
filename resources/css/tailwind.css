@@ -2,17 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Tailwind CSS converted from Vuetify's base.css */
-body {
-  @apply bg-gray-100 text-gray-800;
-}
 
-input[type=text],input[type=email] select, textarea{
-@apply text-black;
-}
-.btn {
-  @apply px-4 py-2 bg-blue-500 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700;
-}
 .form-input {
   @apply border-2 border-gray-300 p-3 rounded-lg focus:outline-none focus:border-blue-500;
 
