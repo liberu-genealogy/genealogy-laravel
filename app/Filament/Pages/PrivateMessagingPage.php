@@ -12,6 +12,8 @@ use App\Models\Message;
 
 class PrivateMessagingPage extends Page
 {
+    protected static ?string $navigationIcon = 'heroicon-o-chart-bar';
+
     public function mount()
     {
         $selectedUserId = Request::get('user_id');

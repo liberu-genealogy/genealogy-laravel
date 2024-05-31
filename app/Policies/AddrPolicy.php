@@ -12,6 +12,7 @@ class AddrPolicy
      */
     public function viewAny(User $user): bool
     {
+        // dd($user->getAllPermissions());
         return $user->checkPermissionTo('view-any Addr');
     }
 
@@ -54,6 +55,7 @@ class AddrPolicy
     {
         return $user->checkPermissionTo('restore Addr');
     }
+
 
     /**
      * Determine whether the user can permanently delete the model.

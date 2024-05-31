@@ -1,12 +1,17 @@
 {
   "resources/css/app.css": {
-    "file": "assets/app-B1Sc5icm.css",
+    "file": "assets/app-CHCscIA2.css",
     "src": "resources/css/app.css",
     "isEntry": true
   },
   "resources/css/dashboard.css": {
-    "file": "assets/dashboard-DMhRf7NT.css",
+    "file": "assets/dashboard-B__tG-oB.css",
     "src": "resources/css/dashboard.css",
+    "isEntry": true
+  },
+  "resources/css/filament/admin/theme.css": {
+    "file": "assets/theme-Ccxgf7lL.css",
+    "src": "resources/css/filament/admin/theme.css",
     "isEntry": true
   },
   "resources/js/app.js": {

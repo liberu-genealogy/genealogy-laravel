@@ -17,6 +17,7 @@ use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
 use Filament\Navigation\MenuItem;
 use App\Filament\Pages;
+use App\Http\Middleware\TeamsPermission;
 use Filament\Pages as FilamentPage;
 use Filament\Panel;
 use Filament\PanelProvider;
@@ -48,7 +49,7 @@ class AdminPanelProvider extends PanelProvider
             ->registration([RegisteredUserController::class, 'create'])
             ->passwordReset()
             ->emailVerification()
-            ->viteTheme('resources/css/dashboard.css')
+            ->viteTheme('resources/css/filament/admin/theme.css')
             ->colors([
                 'primary' => Color::Gray,
             ])
@@ -85,6 +86,7 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->authMiddleware([
                 Authenticate::class,
+                TeamsPermission::class,
             ]);
 
         if (Features::hasApiFeatures()) {
@@ -100,7 +102,7 @@ class AdminPanelProvider extends PanelProvider
 
         if (Features::hasTeamFeatures()) {
             $panel
-                ->tenant(Team::class)
+                ->tenant(Team::class, ownershipRelationship: 'team')
                 ->tenantRegistration(Pages\CreateTeam::class)
                 ->tenantProfile(Pages\EditTeam::class)
                 ->userMenuItems([
