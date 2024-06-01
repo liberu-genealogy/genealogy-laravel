@@ -59,10 +59,20 @@ class GedcomResource extends Resource
     {
         return $table
             ->columns([
-                Table::columns('file')->label('File'),
-               
-                //
+                Tables\Columns\TextColumn::make('name')
+                    ->searchable(), 
+                Tables\Columns\TextColumn::make('file_name')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('created_at')
+                    ->dateTime()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+                Tables\Columns\TextColumn::make('updated_at')
+                    ->dateTime()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
             ])
+                      
             ->filters([
                 //
             ])
