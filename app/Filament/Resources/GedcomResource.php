@@ -20,9 +20,11 @@ class GedcomResource extends Resource
 
     protected static ?string $model = Gedcom::class;
 
+    protected static ?string $navigationLabel = 'Gedcom';
+
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
-    protected static bool $shouldRegisterNavigation = false;
+    protected static bool $shouldRegisterNavigation = true;
 
     public static function getPages(): array
     {
