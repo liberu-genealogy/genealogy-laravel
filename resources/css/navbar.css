@@ -2,3 +2,13 @@
   background-color: rgba(0, 128, 0, 0.75) !important;
   color: #FFFFFF !important;
 }
+
+.mobile-menu-container {
+  max-width: 320px;
+  width: 100%;
+  transition: all .8s ease-in-out;
+} 
+
+.mobile-menu-container a {
+  color: #FFFFFF;
+}
