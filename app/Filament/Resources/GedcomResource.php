@@ -44,13 +44,13 @@ class GedcomResource extends Resource
                     ->required()
                     ->maxSize(100000)
                     ->directory('gedcom-form-imports')
-                    ->visibility('disks')
+                    ->visibility('private')
                     ->afterStateUpdated(function ($state, $set, $livewire) {
                         if ($state === null) {
                             return;
                         }
-                        $path = $state->store('gedcom-form-imports', 'public');
-                        ImportGedcom::dispatch($livewire->user(), Storage::path($path));
+                        $path = $state->store('gedcom-form-imports', 'private');
+                        ImportGedcom::dispatch(Auth::user(), Storage::disk('private')->path($path));
                     }),
             ]);
     }
