@@ -42,6 +42,22 @@
                 <div class="mobile-menu-content">
                     <!-- Navigation Links -->
                     <a href="/home" class="block px-4 py-2 text-sm leading-5 text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out">Home</a>
+                    @if(auth()->check())
+                    <div class="relative inline-block text-left">
+                        <button onclick="toggleDropdown()" class="btn-nav">
+                            <span class="text-white">
+                                <strong>Welcome, {{ auth()->user()->name }}</strong>
+                            </span>
+                        </button>
+                        <div class="ml-3 absolute hidden" id="moreDropdown">
+                            <a href="{{ route('filament.admin.tenant')}}" class="btn-nav">Dashboard</a>
+                        </div>
+                    </div>
+                @else
+                    <a href="/login" class="btn-nav">Login</a>
+                    <span class="mx-2"></span>
+                    <a href="/register" class="btn-nav">Register</a>
+                @endif
                     <a href="/about" class="block px-4 py-2 text-sm leading-5 text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out">About</a>
                     <a href="/contact" class="block px-4 py-2 text-sm leading-5 text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out">Contact</a>
                 </div>
