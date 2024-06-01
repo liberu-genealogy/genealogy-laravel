@@ -59,7 +59,7 @@ class GedcomResource extends Resource
     {
         return $table
             ->columns([
-                Table::column('file')->label('File'),
+                Table::column('file_name')->label('File'),
                
                 //
             ])
