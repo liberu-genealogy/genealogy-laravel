@@ -50,7 +50,8 @@ class GedcomResource extends Resource
                             return;
                         }
                         $path = $state->store('gedcom-form-imports', 'private');
-                        ImportGedcom::dispatch(Auth::user(), Storage::disk('private')->path($path));
+                        $conn = Auth::user()->company()->database_name; // Get the tenant's database connection name
+                        ImportGedcom::dispatch(Auth::user(), Storage::disk('private')->path($path), $conn);
                     }),
             ]);
     }
