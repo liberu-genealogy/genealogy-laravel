@@ -24,8 +24,11 @@ class ImportGedcom implements ShouldQueue
     public int $timeout = 0;
     public int $tries = 1;
 
-    public function __construct(protected User $user, protected string $filePath, protected ?string $slug = null)
+    protected string $conn;
+
+    public function __construct(protected User $user, protected string $filePath, protected string $conn, protected ?string $slug = null)
     {
+        $this->conn = $conn;
     }
 
     public function handle(): int
@@ -49,7 +52,7 @@ class ImportGedcom implements ShouldQueue
         ]);
         $parser = new GedcomParser();
 
-        $parser->parse($job->getConnectionName(), $this->filePath, $slug, false);
+        $parser->parse($this->conn, $this->filePath, $slug, false);
         // with(new GedcomParser())->parse($tenant->connectionName(), $this->filePath, $slug, true);
 
         File::delete($this->filePath);
