@@ -29,23 +29,23 @@ class DnaMatchingResource extends Resource
                 Forms\Components\TextInput::make('user_id')
                 ->required()
                 ->numeric(),
-            Forms\Components\FileUpload::make('image')
-                ->image()
-                ->required(),
-            Forms\Components\TextInput::make('file1')
-                ->required()
-                ->maxLength(255),
-            Forms\Components\TextInput::make('file2')
-                ->required()
-                ->maxLength(255),
-            Forms\Components\TextInput::make('total_shared_cm')
-                ->maxLength(255),
-            Forms\Components\TextInput::make('largest_cm_segment')
-                ->maxLength(255),
-            Forms\Components\TextInput::make('match_id')
-                ->numeric(),
-            Forms\Components\TextInput::make('match_name')
-                ->maxLength(255),
+                Forms\Components\FileUpload::make('image')
+                    ->image()
+                    ->required(),
+                Forms\Components\TextInput::make('file1')
+                    ->required()
+                    ->maxLength(255),
+                Forms\Components\TextInput::make('file2')
+                    ->required()
+                    ->maxLength(255),
+                Forms\Components\TextInput::make('total_shared_cm')
+                    ->maxLength(255),
+                Forms\Components\TextInput::make('largest_cm_segment')
+                    ->maxLength(255),
+                Forms\Components\TextInput::make('match_id')
+                    ->numeric(),
+                Forms\Components\TextInput::make('match_name')
+                    ->maxLength(255),
             ]);
     }
 
@@ -102,9 +102,9 @@ class DnaMatchingResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListDnaMatchings::route('/'),
+            'index'  => Pages\ListDnaMatchings::route('/'),
             'create' => Pages\CreateDnaMatching::route('/create'),
-            'edit' => Pages\EditDnaMatching::route('/{record}/edit'),
+            'edit'   => Pages\EditDnaMatching::route('/{record}/edit'),
         ];
     }
 }

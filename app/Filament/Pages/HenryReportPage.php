@@ -23,6 +23,5 @@ class HenryReportPage extends Page
     public function mount(): void
     {
         \Livewire\Livewire::mount(\App\Http\Livewire\HenryReport::class);
-        
     }
 }

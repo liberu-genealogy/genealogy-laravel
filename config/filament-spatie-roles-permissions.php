@@ -34,7 +34,7 @@ return [
         ],
     ],
 
-    'default_guard_name' => "web",
+    'default_guard_name' => 'web',
 
     'model_filter_key' => 'return \'%\'.$value;', // Eg: 'return \'%\'.$key.'\%\';'
 

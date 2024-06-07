@@ -8,9 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Repository extends Model
 {
-    use HasFactory, BelongsToTenant;
+    use HasFactory;
+    use BelongsToTenant;
 
-       /**
+    /**
      * The "type" of the auto-incrementing ID.
      *
      * @var string
@@ -27,5 +28,4 @@ class Repository extends Model
     {
         return $this->hasMany(Source::class);
     }
-
 }

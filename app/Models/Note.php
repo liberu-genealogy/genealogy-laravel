@@ -7,5 +7,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Note extends \FamilyTree365\LaravelGedcom\Models\Note
 {
-    use HasFactory, BelongsToTenant;
+    use HasFactory;
+    use BelongsToTenant;
 }

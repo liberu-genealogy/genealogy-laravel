@@ -2,11 +2,11 @@
 
 namespace Tests\Feature\Livewire;
 
-use Tests\TestCase;
-use Livewire\Livewire;
-use App\Models\Person;
 use App\Http\Livewire\FanChartComponent;
+use App\Models\Person;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Livewire\Livewire;
+use Tests\TestCase;
 
 class FanChartComponentTest extends TestCase
 {

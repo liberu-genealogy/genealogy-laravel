@@ -1,7 +1,7 @@
 <?php
 
-use Filament\Resources;
 use Filament\Pages\Auth\Register;
+use Filament\Resources;
 
 return [
 
@@ -33,13 +33,13 @@ return [
 
     ],
 
-//    'resources' => [
-//     'namespace'  => 'App\\Filament\\Resources',
-//     'path' => app_path('Filament/Resources'),
-//     'register' => [
-//         Resources\DnaResource::class
-//     ],
-// ],
+    //    'resources' => [
+    //     'namespace'  => 'App\\Filament\\Resources',
+    //     'path' => app_path('Filament/Resources'),
+    //     'register' => [
+    //         Resources\DnaResource::class
+    //     ],
+    // ],
 
     /*
     |--------------------------------------------------------------------------

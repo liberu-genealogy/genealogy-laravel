@@ -26,20 +26,20 @@ class FamilyResource extends Resource
                 Forms\Components\Textarea::make('description')
                 ->maxLength(65535)
                 ->columnSpanFull(),
-            Forms\Components\TextInput::make('is_active')
-                ->numeric(),
-            Forms\Components\TextInput::make('type_id')
-                ->numeric(),
-            Forms\Components\TextInput::make('husband_id')
-                ->numeric(),
-            Forms\Components\TextInput::make('wife_id')
-                ->numeric(),
-            Forms\Components\TextInput::make('chan')
-                ->maxLength(255),
-            Forms\Components\TextInput::make('nchi')
-                ->maxLength(255),
-            Forms\Components\TextInput::make('rin')
-                ->maxLength(255),
+                Forms\Components\TextInput::make('is_active')
+                    ->numeric(),
+                Forms\Components\TextInput::make('type_id')
+                    ->numeric(),
+                Forms\Components\TextInput::make('husband_id')
+                    ->numeric(),
+                Forms\Components\TextInput::make('wife_id')
+                    ->numeric(),
+                Forms\Components\TextInput::make('chan')
+                    ->maxLength(255),
+                Forms\Components\TextInput::make('nchi')
+                    ->maxLength(255),
+                Forms\Components\TextInput::make('rin')
+                    ->maxLength(255),
             ]);
     }
 
@@ -50,33 +50,33 @@ class FamilyResource extends Resource
                 Tables\Columns\TextColumn::make('is_active')
                 ->numeric()
                 ->sortable(),
-            Tables\Columns\TextColumn::make('type_id')
-                ->numeric()
-                ->sortable(),
-            Tables\Columns\TextColumn::make('husband_id')
-                ->numeric()
-                ->sortable(),
-            Tables\Columns\TextColumn::make('wife_id')
-                ->numeric()
-                ->sortable(),
-            Tables\Columns\TextColumn::make('created_at')
-                ->dateTime()
-                ->sortable()
-                ->toggleable(isToggledHiddenByDefault: true),
-            Tables\Columns\TextColumn::make('updated_at')
-                ->dateTime()
-                ->sortable()
-                ->toggleable(isToggledHiddenByDefault: true),
-            Tables\Columns\TextColumn::make('deleted_at')
-                ->dateTime()
-                ->sortable()
-                ->toggleable(isToggledHiddenByDefault: true),
-            Tables\Columns\TextColumn::make('chan')
-                ->searchable(),
-            Tables\Columns\TextColumn::make('nchi')
-                ->searchable(),
-            Tables\Columns\TextColumn::make('rin')
-                ->searchable(),
+                Tables\Columns\TextColumn::make('type_id')
+                    ->numeric()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('husband_id')
+                    ->numeric()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('wife_id')
+                    ->numeric()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('created_at')
+                    ->dateTime()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+                Tables\Columns\TextColumn::make('updated_at')
+                    ->dateTime()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+                Tables\Columns\TextColumn::make('deleted_at')
+                    ->dateTime()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+                Tables\Columns\TextColumn::make('chan')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('nchi')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('rin')
+                    ->searchable(),
             ])
             ->filters([
                 //

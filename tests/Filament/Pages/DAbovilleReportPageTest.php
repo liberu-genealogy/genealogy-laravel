@@ -2,8 +2,8 @@
 
 namespace Tests\Filament\Pages;
 
-use PHPUnit\Framework\TestCase;
 use App\Filament\Pages\DAbovilleReportPage;
+use PHPUnit\Framework\TestCase;
 
 class DAbovilleReportPageTest extends TestCase
 {

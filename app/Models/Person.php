@@ -13,7 +13,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Person extends Model
 {
-    use HasFactory, BelongsToTenant;
+    use HasFactory;
+    use BelongsToTenant;
 
     protected $fillable = [
         'gid',
@@ -179,5 +180,4 @@ class Person extends Model
     {
         return $this->events->where('title', '=', 'DEAT')->first();
     }
-
 }

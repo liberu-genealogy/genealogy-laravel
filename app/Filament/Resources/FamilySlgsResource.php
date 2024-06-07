@@ -44,22 +44,22 @@ class FamilySlgsResource extends Resource
                 Tables\Columns\TextColumn::make('family_id')
                 ->numeric()
                 ->sortable(),
-            Tables\Columns\TextColumn::make('stat')
-                ->searchable(),
-            Tables\Columns\TextColumn::make('date')
-                ->searchable(),
-            Tables\Columns\TextColumn::make('plac')
-                ->searchable(),
-            Tables\Columns\TextColumn::make('temp')
-                ->searchable(),
-            Tables\Columns\TextColumn::make('created_at')
-                ->dateTime()
-                ->sortable()
-                ->toggleable(isToggledHiddenByDefault: true),
-            Tables\Columns\TextColumn::make('updated_at')
-                ->dateTime()
-                ->sortable()
-                ->toggleable(isToggledHiddenByDefault: true),
+                Tables\Columns\TextColumn::make('stat')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('date')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('plac')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('temp')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('created_at')
+                    ->dateTime()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+                Tables\Columns\TextColumn::make('updated_at')
+                    ->dateTime()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
                 //

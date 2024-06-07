@@ -9,8 +9,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Dna extends Model
 {
-    use HasFactory, BelongsToTenant;
-
+    use HasFactory;
+    use BelongsToTenant;
 
     protected $fillable = [
         'name',
@@ -23,5 +23,4 @@ class Dna extends Model
     {
         return $this->belongsTo(User::class, 'user_id', 'id');
     }
-
 }

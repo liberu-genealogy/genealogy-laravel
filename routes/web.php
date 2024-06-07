@@ -1,10 +1,7 @@
 <?php
 
-use App\Http\Controllers\AdminLoginController;
 use App\Http\Controllers\TeamInvitationController;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Foundation\Auth\EmailVerificationRequest;
-use Illuminate\Http\Request;
 
 /*
 |--------------------------------------------------------------------------

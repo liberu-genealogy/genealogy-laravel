@@ -3,15 +3,12 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\PersonResource\Pages;
-use App\Filament\Resources\NewPersonResource\RelationManagers;
 use App\Models\Person;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class PersonResource extends Resource
 {
@@ -83,7 +80,7 @@ class PersonResource extends Resource
                 Tables\Columns\TextColumn::make('afn')->label('Afn'),
                 Tables\Columns\TextColumn::make('created_at')->label('Created At')->sortable(),
                 Tables\Columns\TextColumn::make('updated_at')->label('Updated At')->sortable(),
-              
+
             ])
             ->filters([
                 //
@@ -108,9 +105,9 @@ class PersonResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListPeople::route('/'),
+            'index'  => Pages\ListPeople::route('/'),
             'create' => Pages\CreatePerson::route('/create'),
-            'edit' => Pages\EditPerson::route('/{record}/edit'),
+            'edit'   => Pages\EditPerson::route('/{record}/edit'),
         ];
     }
 }

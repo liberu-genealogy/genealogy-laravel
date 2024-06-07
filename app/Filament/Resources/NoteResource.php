@@ -51,29 +51,29 @@ class NoteResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('name')
                 ->searchable(),
-            Tables\Columns\TextColumn::make('date')
-                ->dateTime()
-                ->sortable(),
-            Tables\Columns\TextColumn::make('type_id')
-                ->numeric()
-                ->sortable(),
-            Tables\Columns\TextColumn::make('is_active')
-                ->numeric()
-                ->sortable(),
-            Tables\Columns\TextColumn::make('group')
-                ->searchable(),
-            Tables\Columns\TextColumn::make('gid')
-                ->searchable(),
-            Tables\Columns\TextColumn::make('rin')
-                ->searchable(),
-            Tables\Columns\TextColumn::make('created_at')
-                ->dateTime()
-                ->sortable()
-                ->toggleable(isToggledHiddenByDefault: true),
-            Tables\Columns\TextColumn::make('updated_at')
-                ->dateTime()
-                ->sortable()
-                ->toggleable(isToggledHiddenByDefault: true),
+                Tables\Columns\TextColumn::make('date')
+                    ->dateTime()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('type_id')
+                    ->numeric()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('is_active')
+                    ->numeric()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('group')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('gid')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('rin')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('created_at')
+                    ->dateTime()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+                Tables\Columns\TextColumn::make('updated_at')
+                    ->dateTime()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
                 //

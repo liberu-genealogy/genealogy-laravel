@@ -49,10 +49,10 @@ class DnaMatching implements ShouldQueue
             // chdir('/home/familytree365/domains/api.familytree365.com/genealogy/app');
             chdir($mpath);
             $result = \Illuminate\Support\Facades\Artisan::call('dna:match', [
-                'varName1' => $this->var_name,
+                'varName1'  => $this->var_name,
                 'fileName1' => $this->file_name,
-                'varName2' => $dna->variable_name,
-                'fileName2' => $dna->file_name
+                'varName2'  => $dna->variable_name,
+                'fileName2' => $dna->file_name,
             ]);
             $resultData = json_decode($result, true, 512, JSON_THROW_ON_ERROR);
 //            $resultData = json_decode($result, true, 512, JSON_THROW_ON_ERROR);

@@ -26,14 +26,14 @@ class PersonAliaResource extends Resource
             ->schema([
                 Forms\Components\TextInput::make('group')
                 ->maxLength(255),
-            Forms\Components\TextInput::make('gid')
-                ->numeric(),
-            Forms\Components\TextInput::make('alia')
-                ->maxLength(255),
-            Forms\Components\TextInput::make('import_confirm')
-                ->required()
-                ->numeric()
-                ->default(0),
+                Forms\Components\TextInput::make('gid')
+                    ->numeric(),
+                Forms\Components\TextInput::make('alia')
+                    ->maxLength(255),
+                Forms\Components\TextInput::make('import_confirm')
+                    ->required()
+                    ->numeric()
+                    ->default(0),
             ]);
     }
 
@@ -43,22 +43,22 @@ class PersonAliaResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('group')
                 ->searchable(),
-            Tables\Columns\TextColumn::make('gid')
-                ->numeric()
-                ->sortable(),
-            Tables\Columns\TextColumn::make('alia')
-                ->searchable(),
-            Tables\Columns\TextColumn::make('import_confirm')
-                ->numeric()
-                ->sortable(),
-            Tables\Columns\TextColumn::make('created_at')
-                ->dateTime()
-                ->sortable()
-                ->toggleable(isToggledHiddenByDefault: true),
-            Tables\Columns\TextColumn::make('updated_at')
-                ->dateTime()
-                ->sortable()
-                ->toggleable(isToggledHiddenByDefault: true),
+                Tables\Columns\TextColumn::make('gid')
+                    ->numeric()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('alia')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('import_confirm')
+                    ->numeric()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('created_at')
+                    ->dateTime()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+                Tables\Columns\TextColumn::make('updated_at')
+                    ->dateTime()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
                 //
@@ -72,7 +72,7 @@ class PersonAliaResource extends Resource
                 ]),
             ]);
     }
-    
+
     public static function getRelations(): array
     {
         return [

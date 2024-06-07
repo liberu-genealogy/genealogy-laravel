@@ -3,11 +3,8 @@
 namespace App\Models;
 
 use Filament\Facades\Filament;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class BatchData extends \FamilyTree365\LaravelGedcom\Utils\BatchData 
+class BatchData extends \FamilyTree365\LaravelGedcom\Utils\BatchData
 {
     public static function upsert($modelClass, $conn, array $values, array $uniqueBy, array $update = [])
     {

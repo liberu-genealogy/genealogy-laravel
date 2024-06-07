@@ -73,22 +73,21 @@ class User extends Authenticatable implements HasDefaultTenant, HasTenants, Fila
             'email_verified_at' => 'datetime',
             'created_at'        => 'datetime',
             'updated_at'        => 'datetime',
-            'password' => 'hashed',
+            'password'          => 'hashed',
         ];
     }
 
     /**
      * @return array<Model> | Collection
      */
-    public function getTenants(Panel $panel): array | Collection
+    public function getTenants(Panel $panel): array|Collection
     {
         return $this->ownedTeams;
     }
 
-
     public function canAccessTenant(Model $tenant): bool
     {
-        return true;//$this->ownedTeams->contains($tenant);
+        return true; //$this->ownedTeams->contains($tenant);
     }
 
     public function canAccessPanel(Panel $panel): bool
@@ -107,7 +106,7 @@ class User extends Authenticatable implements HasDefaultTenant, HasTenants, Fila
     {
         return $this->latestTeam;
     }
- 
+
     public function latestTeam(): BelongsTo
     {
         return $this->belongsTo(Team::class, 'current_team_id');

@@ -16,15 +16,15 @@ class ApiTokenPermissionsTest extends TestCase
 
     public function test_api_token_permissions_can_be_updated(): void
     {
-        if (! Features::hasApiFeatures()) {
+        if (!Features::hasApiFeatures()) {
             $this->markTestSkipped('API support is not enabled.');
         }
 
         $this->actingAs($user = User::factory()->withPersonalTeam()->create());
 
         $token = $user->tokens()->create([
-            'name' => 'Test Token',
-            'token' => Str::random(40),
+            'name'      => 'Test Token',
+            'token'     => Str::random(40),
             'abilities' => ['create', 'read'],
         ]);
 

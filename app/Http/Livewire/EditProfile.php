@@ -11,8 +11,8 @@ class EditProfile extends Component
     public $email;
 
     protected $rules = [
-        'name' => 'required|string|max:255',
-        'email' => 'required|email|max:255|unique:users,email,' . Auth::id(),
+        'name'  => 'required|string|max:255',
+        'email' => 'required|email|max:255|unique:users,email,'.Auth::id(),
     ];
 
     public function mount()
@@ -28,7 +28,7 @@ class EditProfile extends Component
 
         try {
             Auth::user()->update([
-                'name' => $this->name,
+                'name'  => $this->name,
                 'email' => $this->email,
             ]);
 

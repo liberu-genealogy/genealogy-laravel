@@ -3,8 +3,8 @@
 namespace Tests\Unit;
 
 use App\Models\Team;
-use App\Services\StripeSubscriptionService;
 use App\Models\Team;
+use App\Services\StripeSubscriptionService;
 use PHPUnit\Framework\TestCase;
 
 class StripeSubscriptionServiceTest extends TestCase
@@ -33,7 +33,7 @@ class StripeSubscriptionServiceTest extends TestCase
             ->method('create')
             ->with([
                 'customer' => $team->stripe_customer_id,
-                'items' => [
+                'items'    => [
                     ['price' => env('STRIPE_PRICE_ID')],
                 ],
                 'trial_period_days' => 14,
@@ -43,10 +43,10 @@ class StripeSubscriptionServiceTest extends TestCase
         $stripeSubscriptionService->expects($this->once())
             ->method('createTrialSubscription')
             ->with($team)
-            ->willReturnCallback(function ($team) use ($stripeClientMock) {
+            ->willReturnCallback(function ($team) {
                 $team->subscriptions()->create([
                     'stripe_subscription_id' => 'subscription_id',
-                    'trial_ends_at' => now()->addDays(14),
+                    'trial_ends_at'          => now()->addDays(14),
                 ]);
             });
 

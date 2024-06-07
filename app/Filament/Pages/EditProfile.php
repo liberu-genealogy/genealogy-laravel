@@ -14,12 +14,12 @@ class EditProfile extends Page
     protected static ?string $navigationIcon = 'heroicon-o-chart-bar';
 
     public User $user;
-    
+
     public function mount()
     {
         $this->user = Auth::user();
         $this->form->fill([
-            'name' => $this->user->name,
+            'name'  => $this->user->name,
             'email' => $this->user->email,
         ]);
     }
@@ -41,14 +41,14 @@ class EditProfile extends Page
     public function submit()
     {
         $this->validate();
-    
+
         $state = $this->form->getState();
-    
+
         $this->user->forceFill([
-            'name' => $state['name'],
+            'name'  => $state['name'],
             'email' => $state['email'],
         ])->save();
-    
+
         Filament::notify('success', 'Your profile has been updated.');
     }
 

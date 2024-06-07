@@ -5,7 +5,6 @@ namespace App\Filament\Pages;
 use App\Models\User;
 use Filament\Pages\Page;
 use Illuminate\Support\Facades\Auth;
-use Livewire\Livewire;
 
 class ApiTokenManagerPage extends Page
 {
