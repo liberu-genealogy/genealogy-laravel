@@ -2,16 +2,14 @@
 
 namespace App\Providers;
 
-use Illuminate\Support\ServiceProvider;
-use Livewire\Livewire;
+use App\Http\Livewire\CreateTeam;
+use App\Http\Livewire\DescendantChartComponent;
 use App\Http\Livewire\DevilliersReport;
-use \App\Http\Livewire\DescendantChartComponent;
+use App\Http\Livewire\EditProfile;
 use App\Http\Livewire\PedigreeChart;
 use App\Http\Livewire\PeopleSearch;
-use App\Http\Livewire\CreateTeam;
-use App\Http\Livewire\EditProfile;
-use Filament\Facades\Filament;
-use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\ServiceProvider;
+use Livewire\Livewire;
 
 class AppServiceProvider extends ServiceProvider
 {

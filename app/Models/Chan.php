@@ -9,9 +9,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Chan extends Model
 {
-    use HasFactory, BelongsToTenant;
-
-
+    use HasFactory;
+    use BelongsToTenant;
 
     /**
      * The "type" of the auto-incrementing ID.
@@ -24,7 +23,6 @@ class Chan extends Model
      * @var array
      */
     protected $fillable = ['group', 'gid', 'date', 'time', 'created_at', 'updated_at'];
-
 
     public function user(): BelongsTo
     {

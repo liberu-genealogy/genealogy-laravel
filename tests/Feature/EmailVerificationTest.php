@@ -16,7 +16,7 @@ class EmailVerificationTest extends TestCase
 
     public function test_email_verification_screen_can_be_rendered(): void
     {
-        if (! Features::enabled(Features::emailVerification())) {
+        if (!Features::enabled(Features::emailVerification())) {
             $this->markTestSkipped('Email verification not enabled.');
         }
 
@@ -29,7 +29,7 @@ class EmailVerificationTest extends TestCase
 
     public function test_email_can_be_verified(): void
     {
-        if (! Features::enabled(Features::emailVerification())) {
+        if (!Features::enabled(Features::emailVerification())) {
             $this->markTestSkipped('Email verification not enabled.');
         }
 
@@ -53,7 +53,7 @@ class EmailVerificationTest extends TestCase
 
     public function test_email_can_not_verified_with_invalid_hash(): void
     {
-        if (! Features::enabled(Features::emailVerification())) {
+        if (!Features::enabled(Features::emailVerification())) {
             $this->markTestSkipped('Email verification not enabled.');
         }
 

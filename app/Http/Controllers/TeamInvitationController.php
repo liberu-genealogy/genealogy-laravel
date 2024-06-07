@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
+use App\Mail\TeamInvitation;
 use App\Models\Team;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
-use App\Mail\TeamInvitation;
 use Illuminate\Support\Str;
 
 class TeamInvitationController extends Controller
@@ -14,7 +14,7 @@ class TeamInvitationController extends Controller
     public function sendInvitation(Request $request)
     {
         $request->validate([
-            'email' => 'required|email',
+            'email'   => 'required|email',
             'team_id' => 'required|exists:teams,id',
         ]);
 
@@ -24,7 +24,7 @@ class TeamInvitationController extends Controller
         $invitationToken = Str::random(32);
         $user->invitations()->create([
             'team_id' => $team->id,
-            'token' => $invitationToken,
+            'token'   => $invitationToken,
         ]);
 
         Mail::to($request->email)->send(new TeamInvitation($user, $team, $invitationToken));

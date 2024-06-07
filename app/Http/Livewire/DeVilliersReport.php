@@ -2,7 +2,6 @@
 
 namespace App\Http\Livewire;
 
-use App\Models\Family;
 use App\Models\Person;
 use Livewire\Component;
 

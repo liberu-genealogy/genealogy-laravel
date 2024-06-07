@@ -11,5 +11,4 @@ class PeopleDashboard extends Page
     protected static ?string $title = 'People Dashboard';
 
     protected static ?string $navigationIcon = 'heroicon-o-chart-bar';
-
 }

@@ -27,12 +27,12 @@ class AuthorResource extends Resource
                 Forms\Components\TextInput::make('name')
                 ->required()
                 ->maxLength(255),
-            Forms\Components\TextInput::make('description')
-                ->required()
-                ->maxLength(255),
-            Forms\Components\TextInput::make('is_active')
-                ->required()
-                ->numeric(),
+                Forms\Components\TextInput::make('description')
+                    ->required()
+                    ->maxLength(255),
+                Forms\Components\TextInput::make('is_active')
+                    ->required()
+                    ->numeric(),
             ]);
     }
 
@@ -55,7 +55,7 @@ class AuthorResource extends Resource
                 ->dateTime()
                 ->sortable()
                 ->toggleable(isToggledHiddenByDefault: true),
-            ])
+        ])
             ->filters([
                 //
             ])
@@ -79,9 +79,9 @@ class AuthorResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListAuthors::route('/'),
+            'index'  => Pages\ListAuthors::route('/'),
             'create' => Pages\CreateAuthor::route('/create'),
-            'edit' => Pages\EditAuthor::route('/{record}/edit'),
+            'edit'   => Pages\EditAuthor::route('/{record}/edit'),
         ];
     }
 }

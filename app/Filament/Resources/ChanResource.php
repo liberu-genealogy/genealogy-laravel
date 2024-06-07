@@ -22,7 +22,6 @@ class ChanResource extends Resource
 
     // protected static ?string $tenantRelationshipName = 'team';
 
-    
     public static function form(Form $form): Form
     {
         return $form
@@ -35,7 +34,7 @@ class ChanResource extends Resource
                 ->maxLength(255),
             Forms\Components\TextInput::make('time')
                 ->maxLength(255),
-            ]);
+        ]);
     }
 
     public static function table(Table $table): Table
@@ -59,7 +58,7 @@ class ChanResource extends Resource
                 ->dateTime()
                 ->sortable()
                 ->toggleable(isToggledHiddenByDefault: true),
-            ])
+        ])
             ->filters([
                 //
             ])

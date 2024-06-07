@@ -18,8 +18,8 @@ class DescendantChartComponent extends Component
             $rawData = Person::with('children')->get()->toArray();
             $this->descendantsData = $this->processDescendantData($rawData);
         } catch (\Exception $e) {
-            // Handle errors, such as logging or setting an error state  
-            \Log::error('Failed to retrieve or process descendants data: ' . $e->getMessage());
+            // Handle errors, such as logging or setting an error state
+            \Log::error('Failed to retrieve or process descendants data: '.$e->getMessage());
             $this->descendantsData = [];
         }
     }
@@ -30,16 +30,16 @@ class DescendantChartComponent extends Component
         foreach ($data as $item) {
             if (!isset($tree[$item['id']])) {
                 $tree[$item['id']] = [
-                    'id' => $item['id'], 
-                    'name' => $item['name'], 
-                    'children' => []
+                    'id'       => $item['id'],
+                    'name'     => $item['name'],
+                    'children' => [],
                 ];
             }
             foreach ($item['children'] as $child) {
                 $tree[$item['id']]['children'][] = $child['id'];
             }
         }
-        
+
         return array_filter($tree, function ($item) {
             return !isset($item['parent_id']);
         });

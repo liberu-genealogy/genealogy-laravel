@@ -2,9 +2,9 @@
 
 namespace App\Console\Commands;
 
-use Illuminate\Console\Command;
 use App\Models\Dna;
 use App\Models\DnaMatching;
+use Illuminate\Console\Command;
 
 class MatchKitsCommand extends Command
 {
@@ -23,6 +23,7 @@ class MatchKitsCommand extends Command
 
         if (!$dna1 || !$dna2) {
             $this->error('One or both DNA kits not found.');
+
             return;
         }
 
@@ -30,12 +31,12 @@ class MatchKitsCommand extends Command
         $largestCmSegment = rand(1, $totalSharedCm); // Simulated DNA match result
 
         DnaMatching::create([
-            'file1' => $fileName1,
-            'file2' => $fileName2,
-            'image' => 'path/to/match/image.png', // Simulated path to match image
-            'total_shared_cm' => $totalSharedCm,
+            'file1'              => $fileName1,
+            'file2'              => $fileName2,
+            'image'              => 'path/to/match/image.png', // Simulated path to match image
+            'total_shared_cm'    => $totalSharedCm,
             'largest_cm_segment' => $largestCmSegment,
-            'match_id' => $dna2->user_id,
+            'match_id'           => $dna2->user_id,
         ]);
 
         $this->info('DNA kits matched successfully.');

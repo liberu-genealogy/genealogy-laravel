@@ -6,10 +6,7 @@ use App\Models\Team;
 use App\Models\User;
 use Filament\Facades\Filament;
 use Filament\Forms\Components\TextInput;
-use Filament\Pages\Page;
 use Filament\Pages\Tenancy\EditTenantProfile;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
 
 class EditTeam extends EditTenantProfile
 {
@@ -42,8 +39,8 @@ class EditTeam extends EditTenantProfile
         $this->validate();
 
         $team = Team::forceCreate([
-            'user_id' => Filament::auth()->id(),
-            'name' => $this->name,
+            'user_id'       => Filament::auth()->id(),
+            'name'          => $this->name,
             'personal_team' => false,
         ]);
 
@@ -63,5 +60,5 @@ class EditTeam extends EditTenantProfile
     private function user(): User
     {
         return Filament::auth()->user();
-    } 
+    }
 }

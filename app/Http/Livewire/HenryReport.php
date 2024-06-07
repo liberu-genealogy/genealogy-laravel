@@ -2,8 +2,8 @@
 
 namespace App\Http\Livewire;
 
-use Livewire\Component;
 use App\Models\Person;
+use Livewire\Component;
 
 class HenryReport extends Component
 {
@@ -28,7 +28,7 @@ class HenryReport extends Component
     private function processHenryReportData($person)
     {
         $this->reportData[$person->id] = [
-            'name' => $person->fullname(),
+            'name'  => $person->fullname(),
             'birth' => optional($person->birth())->date,
             'death' => optional($person->death())->date,
         ];

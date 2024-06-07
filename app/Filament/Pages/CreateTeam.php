@@ -6,14 +6,8 @@ use App\Models\Team;
 use App\Models\User;
 use Filament\Facades\Filament;
 use Filament\Forms\Components\TextInput;
-use Filament\Pages\Page;
 use Filament\Pages\Tenancy\RegisterTenant;
-use Filament\Support\Enums\MaxWidth;
-use Filament\Support\Facades\FilamentView;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
-
-use function Filament\Support\is_app_url;
 
 class CreateTeam extends RegisterTenant
 {
@@ -54,5 +48,4 @@ class CreateTeam extends RegisterTenant
     {
         return 'Create Team';
     }
-
 }

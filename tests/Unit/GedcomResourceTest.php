@@ -2,11 +2,11 @@
 
 namespace Tests\Unit;
 
-use PHPUnit\Framework\TestCase;
 use App\Filament\Resources\GedcomResource;
-use Illuminate\Support\Facades\Queue;
-use Illuminate\Support\Facades\Auth;
 use App\Jobs\ExportGedCom;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Queue;
+use PHPUnit\Framework\TestCase;
 
 class GedcomResourceTest extends TestCase
 {

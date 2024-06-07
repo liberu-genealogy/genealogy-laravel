@@ -3,12 +3,10 @@
 namespace App\Traits;
 
 use App\Models\Team;
-use Filament\Facades\Filament;
 use Illuminate\Database\Eloquent\Builder;
 
 trait BelongsToTenant
 {
-    
     protected static function booted(): void
     {
         static::addGlobalScope('team', function (Builder $query) {
@@ -31,5 +29,4 @@ trait BelongsToTenant
     {
         return auth()->user()->currentTeam->id ?? null;
     }
-
 }

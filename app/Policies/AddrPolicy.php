@@ -56,7 +56,6 @@ class AddrPolicy
         return $user->checkPermissionTo('restore Addr');
     }
 
-
     /**
      * Determine whether the user can permanently delete the model.
      */

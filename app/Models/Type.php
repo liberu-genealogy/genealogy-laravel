@@ -8,13 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class Type extends Model
 {
-    use HasFactory, BelongsToTenant;
+    use HasFactory;
+    use BelongsToTenant;
 
     protected $fillable = ['name', 'description', 'is_active'];
 
     protected $attributes = ['is_active' => false];
 
     protected $casts = ['is_active' => 'boolean'];
-
-
 }

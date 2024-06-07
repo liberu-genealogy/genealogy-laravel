@@ -19,7 +19,6 @@ class MediaObjectResource extends Resource
     protected static ?string $navigationLabel = 'Media Objects';
 
     protected static ?string $navigationGroup = 'Media Objects';
-    
 
     public static function form(Form $form): Form
     {
@@ -35,7 +34,7 @@ class MediaObjectResource extends Resource
                         ->maxLength(255),
                     Forms\Components\TextInput::make('rin')
                         ->maxLength(255),
-            ]);
+                ]);
     }
 
     public static function table(Table $table): Table

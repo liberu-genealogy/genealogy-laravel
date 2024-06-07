@@ -46,172 +46,172 @@ class Team extends JetstreamTeam
         ];
     }
 
-    public function addrs() : HasMany
+    public function addrs(): HasMany
     {
         return $this->hasMany(Addr::class);
     }
 
-    public function authors() : HasMany
+    public function authors(): HasMany
     {
         return $this->hasMany(Author::class);
     }
 
-    public function categories() : HasMany
+    public function categories(): HasMany
     {
         return $this->hasMany(Category::class);
     }
 
-    public function chans() : HasMany
+    public function chans(): HasMany
     {
         return $this->hasMany(Chan::class);
     }
 
-    public function citations() : HasMany
+    public function citations(): HasMany
     {
         return $this->hasMany(Citation::class);
     }
 
-    public function companies() : HasMany
+    public function companies(): HasMany
     {
         return $this->hasMany(Company::class);
     }
 
-    public function conversations() : HasMany
+    public function conversations(): HasMany
     {
         return $this->hasMany(Conversation::class);
     }
 
-    public function dnas() : HasMany
+    public function dnas(): HasMany
     {
         return $this->hasMany(Dna::class);
     }
 
-    public function dna_matchings() : HasMany
+    public function dna_matchings(): HasMany
     {
         return $this->hasMany(DnaMatching::class);
     }
 
-    public function families() : HasMany
+    public function families(): HasMany
     {
         return $this->hasMany(Family::class);
     }
 
-    public function family_events() : HasMany
+    public function family_events(): HasMany
     {
         return $this->hasMany(FamilyEvent::class);
     }
 
-    public function family_slgs() : HasMany
+    public function family_slgs(): HasMany
     {
         return $this->hasMany(FamilySlgs::class);
     }
 
-    public function gedcoms() : HasMany
+    public function gedcoms(): HasMany
     {
         return $this->hasMany(Gedcom::class);
     }
 
-    public function geneanums() : HasMany
+    public function geneanums(): HasMany
     {
         return $this->hasMany(Geneanum::class);
     }
 
-    public function messages() : HasMany
+    public function messages(): HasMany
     {
         return $this->hasMany(Message::class);
     }
 
-    public function notes() : HasMany
+    public function notes(): HasMany
     {
         return $this->hasMany(Note::class);
     }
 
-    public function persons() : HasMany
+    public function persons(): HasMany
     {
         return $this->hasMany(Person::class);
     }
 
-    public function person_alias() : HasMany
+    public function person_alias(): HasMany
     {
         return $this->hasMany(PersonAlia::class);
     }
 
-    public function person_ancis() : HasMany
+    public function person_ancis(): HasMany
     {
         return $this->hasMany(PersonAnci::class);
     }
 
-    public function person_assos() : HasMany
+    public function person_assos(): HasMany
     {
         return $this->hasMany(PersonAsso::class);
     }
 
-    public function person_events() : HasMany
+    public function person_events(): HasMany
     {
         return $this->hasMany(PersonEvent::class);
     }
 
-    public function person_lds() : HasMany
+    public function person_lds(): HasMany
     {
         return $this->hasMany(PersonLds::class);
     }
 
-    public function person_names() : HasMany
+    public function person_names(): HasMany
     {
         return $this->hasMany(PersonName::class);
     }
 
-    public function person_name_fones() : HasMany
+    public function person_name_fones(): HasMany
     {
         return $this->hasMany(PersonNameFone::class);
     }
 
-    public function person_subms() : HasMany
+    public function person_subms(): HasMany
     {
         return $this->hasMany(PersonSubm::class);
     }
 
-    public function places() : HasMany
+    public function places(): HasMany
     {
         return $this->hasMany(Place::class);
     }
 
-    public function publications() : HasMany
+    public function publications(): HasMany
     {
         return $this->hasMany(Publication::class);
     }
 
-    public function refns() : HasMany
+    public function refns(): HasMany
     {
         return $this->hasMany(Refn::class);
     }
 
-    public function repositories() : HasMany
+    public function repositories(): HasMany
     {
         return $this->hasMany(Repository::class);
     }
 
-    public function sources() : HasMany
+    public function sources(): HasMany
     {
         return $this->hasMany(Source::class);
     }
 
-    public function source_data() : HasMany
+    public function source_data(): HasMany
     {
         return $this->hasMany(SourceData::class);
     }
 
-    public function subms() : HasMany
+    public function subms(): HasMany
     {
         return $this->hasMany(Subm::class);
     }
 
-    public function subns() : HasMany
+    public function subns(): HasMany
     {
         return $this->hasMany(Subn::class);
     }
 
-    public function trees() : HasMany
+    public function trees(): HasMany
     {
         return $this->hasMany(Tree::class);
     }

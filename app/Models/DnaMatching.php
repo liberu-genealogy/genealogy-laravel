@@ -9,7 +9,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class DnaMatching extends Model
 {
-    use HasFactory, BelongsToTenant;
+    use HasFactory;
+    use BelongsToTenant;
 
     protected $fillable = [
         'file1',
@@ -24,6 +25,4 @@ class DnaMatching extends Model
     {
         return $this->belongsTo(User::class, 'user_id', 'id');
     }
-
-    
 }

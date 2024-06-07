@@ -26,16 +26,16 @@ class AddrResource extends Resource
             ->schema([
                 Forms\Components\TextInput::make('adr1')
                 ->maxLength(255),
-            Forms\Components\TextInput::make('adr2')
-                ->maxLength(255),
-            Forms\Components\TextInput::make('city')
-                ->maxLength(255),
-            Forms\Components\TextInput::make('stae')
-                ->maxLength(255),
-            Forms\Components\TextInput::make('post')
-                ->maxLength(255),
-            Forms\Components\TextInput::make('ctry')
-                ->maxLength(255),
+                Forms\Components\TextInput::make('adr2')
+                    ->maxLength(255),
+                Forms\Components\TextInput::make('city')
+                    ->maxLength(255),
+                Forms\Components\TextInput::make('stae')
+                    ->maxLength(255),
+                Forms\Components\TextInput::make('post')
+                    ->maxLength(255),
+                Forms\Components\TextInput::make('ctry')
+                    ->maxLength(255),
             ]);
     }
 
@@ -87,9 +87,9 @@ class AddrResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListAddrs::route('/'),
+            'index'  => Pages\ListAddrs::route('/'),
             'create' => Pages\CreateAddr::route('/create'),
-            'edit' => Pages\EditAddr::route('/{record}/edit'),
+            'edit'   => Pages\EditAddr::route('/{record}/edit'),
         ];
     }
 }

@@ -25,7 +25,7 @@ class UpdateProfileInformationPage extends Page
     public function mount(): void
     {
         $this->form->fill([
-            'name' => Auth::user()->name,
+            'name'  => Auth::user()->name,
             'email' => Auth::user()->email,
         ]);
     }
@@ -47,7 +47,7 @@ class UpdateProfileInformationPage extends Page
         $this->form->getState();
 
         $state = array_filter([
-            'name' => $this->name,
+            'name'  => $this->name,
             'email' => $this->email,
         ]);
 

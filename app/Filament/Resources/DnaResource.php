@@ -5,17 +5,13 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\DnaResource\Pages;
 use App\Jobs\ImportGedcom;
 use App\Models\Dna;
-use Filament\Forms;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Support\Facades\Storage;
-use App\Filament\Resources\DnaResource\RelationManagers;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class DnaResource extends Resource
 {
@@ -93,9 +89,9 @@ class DnaResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListDnas::route('/'),
+            'index'  => Pages\ListDnas::route('/'),
             'create' => Pages\CreateDna::route('/create'),
-            'edit' => Pages\EditDna::route('/{record}/edit'),
+            'edit'   => Pages\EditDna::route('/{record}/edit'),
         ];
     }
 

@@ -2,8 +2,8 @@
 
 namespace Tests\Filament\Pages;
 
-use PHPUnit\Framework\TestCase;
 use App\Filament\Pages\DescendantChartPage;
+use PHPUnit\Framework\TestCase;
 
 class DescendantChartPageTest extends TestCase
 {

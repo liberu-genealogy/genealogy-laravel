@@ -2,13 +2,12 @@
 
 namespace App\Filament\Pages;
 
+use App\Models\Message;
+use App\Models\User;
 use Filament\Pages\Page;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Validator;
-use App\Models\User;
-use App\Models\Message;
 
 class PrivateMessagingPage extends Page
 {
@@ -19,8 +18,8 @@ class PrivateMessagingPage extends Page
         $selectedUserId = Request::get('user_id');
 
         $this->data([
-            'user' => Auth::user(),
-            'users' => User::where('id', '!=', Auth::id())->get(),
+            'user'     => Auth::user(),
+            'users'    => User::where('id', '!=', Auth::id())->get(),
             'messages' => Message::where(function ($query) use ($selectedUserId) {
                 $query->where('from_user_id', Auth::id())
                     ->where('to_user_id', $selectedUserId);
@@ -34,7 +33,7 @@ class PrivateMessagingPage extends Page
     public function sendMessage()
     {
         $validator = Validator::make(Request::all(), [
-            'message' => 'required|string',
+            'message'    => 'required|string',
             'to_user_id' => 'required|exists:users,id',
         ]);
 
@@ -50,10 +49,10 @@ class PrivateMessagingPage extends Page
 
         return redirect()->back();
     }
-/**
-    public function render()
-    {
-        return view('filament.pages.private-messaging', $this->data());
-    }
-**/
+    /**
+     * public function render()
+     * {
+     * return view('filament.pages.private-messaging', $this->data());
+     * }.
+     **/
 }

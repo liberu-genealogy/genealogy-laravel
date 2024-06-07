@@ -3,15 +3,14 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\GedcomResource\Pages;
-use App\Jobs\ImportGedcom;
 use App\Jobs\ExportGedcom;
+use App\Jobs\ImportGedcom;
 use App\Models\Gedcom;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-
 use Illuminate\Support\Facades\Storage;
 
 class GedcomResource extends Resource
@@ -61,7 +60,7 @@ class GedcomResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('name')
-                    ->searchable(), 
+                    ->searchable(),
                 Tables\Columns\TextColumn::make('file_name')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('created_at')
@@ -73,7 +72,7 @@ class GedcomResource extends Resource
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
-                      
+
             ->filters([
                 //
             ])

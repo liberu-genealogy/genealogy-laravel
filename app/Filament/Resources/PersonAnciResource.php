@@ -26,10 +26,10 @@ class PersonAnciResource extends Resource
             ->schema([
                 Forms\Components\TextInput::make('group')
                 ->maxLength(255),
-            Forms\Components\TextInput::make('gid')
-                ->numeric(),
-            Forms\Components\TextInput::make('anci')
-                ->maxLength(255),
+                Forms\Components\TextInput::make('gid')
+                    ->numeric(),
+                Forms\Components\TextInput::make('anci')
+                    ->maxLength(255),
             ]);
     }
 
@@ -65,7 +65,6 @@ class PersonAnciResource extends Resource
                 ]),
             ]);
     }
-
 
     public static function getPages(): array
     {

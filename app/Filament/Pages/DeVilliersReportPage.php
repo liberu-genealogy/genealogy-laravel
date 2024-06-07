@@ -2,9 +2,6 @@
 
 namespace App\Filament\Pages;
 
-use Filament\Pages\Page;
-use Livewire\Livewire;
-use App\Filament\Pages\CustomFilamentBasePage;
 use App\Filament\Resources\GedcomResource as ResourcesGedcomResource;
 use App\Filament\Resources\MediaObjectResource as ResourcesMediaObjectResource;
 use App\Filament\Resources\NoteResource as ResourcesNoteResource;
@@ -12,6 +9,8 @@ use App\Filament\Resources\PublicationResource as ResourcesPublicationResource;
 use App\Filament\Resources\RepositoryResource as ResourcesRepositoryResource;
 use App\Filament\Resources\SourceDataResource as ResourcesSourceDataResource;
 use App\Filament\Resources\TypeResource as ResourcesTypeResource;
+use Filament\Pages\Page;
+use Livewire\Livewire;
 
 class DeVilliersReportPage extends Page
 {

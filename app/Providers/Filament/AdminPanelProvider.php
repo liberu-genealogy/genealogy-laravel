@@ -2,10 +2,9 @@
 
 namespace App\Providers\Filament;
 
-use App\Filament\Pages\ApiTokenManagerPage;
-use App\Filament\Pages\CreateTeam;
+use App\Filament\Pages;
 use App\Filament\Pages\EditProfile;
-use App\Filament\Pages\EditTeam;
+use App\Http\Middleware\TeamsPermission;
 use App\Listeners\CreatePersonalTeam;
 use App\Listeners\SwitchTeam;
 use App\Models\Team;
@@ -16,8 +15,6 @@ use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
 use Filament\Navigation\MenuItem;
-use App\Filament\Pages;
-use App\Http\Middleware\TeamsPermission;
 use Filament\Pages as FilamentPage;
 use Filament\Panel;
 use Filament\PanelProvider;
@@ -121,17 +118,17 @@ class AdminPanelProvider extends PanelProvider
     public function boot()
     {
         /**
-         * Disable Fortify routes
+         * Disable Fortify routes.
          */
         Fortify::$registersRoutes = false;
 
         /**
-         * Disable Jetstream routes
+         * Disable Jetstream routes.
          */
         Jetstream::$registersRoutes = false;
 
         /**
-         * Listen and create personal team for new accounts
+         * Listen and create personal team for new accounts.
          */
         Event::listen(
             Registered::class,
@@ -139,7 +136,7 @@ class AdminPanelProvider extends PanelProvider
         );
 
         /**
-         * Listen and switch team if tenant was changed
+         * Listen and switch team if tenant was changed.
          */
         Event::listen(
             TenantSet::class,
@@ -149,6 +146,6 @@ class AdminPanelProvider extends PanelProvider
 
     public function shouldRegisterMenuItem(): bool
     {
-        return true;//auth()->user()?->hasVerifiedEmail() && Filament::hasTenancy() && Filament::getTenant();
+        return true; //auth()->user()?->hasVerifiedEmail() && Filament::hasTenancy() && Filament::getTenant();
     }
 }

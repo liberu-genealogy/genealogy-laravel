@@ -9,7 +9,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Addr extends Model
 {
-    use HasFactory, BelongsToTenant;
+    use HasFactory;
+    use BelongsToTenant;
 
     protected $fillable = [
         'adr1',
@@ -24,6 +25,4 @@ class Addr extends Model
     {
         return $this->belongsTo(User::class, 'user_id', 'id');
     }
-
-
 }

@@ -1,11 +1,11 @@
 <?php
 
 namespace App\Filament\Widgets;
+
 namespace App\Http\Livewire;
 
 use App\Models\Person;
 use Filament\Widgets\Widget;
-use Livewire\Livewire;
 
 class FanChartWidget extends Widget
 {
