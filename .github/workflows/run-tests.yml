@@ -20,8 +20,8 @@ jobs:
         php-version: '8.3'
         extensions: mbstring, dom, fileinfo, mysql, bcmath, zip
         
-    - name: Copy .env
-      run: php -r "file_exists('.env') || copy('.env.example', '.env');"
+    - name: Copy env.testing
+      run: php -r "file_exists('.env.testing') || copy('env.testing', '.env.testing');"
         
     - name: Install Dependencies
       run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
