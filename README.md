@@ -72,6 +72,36 @@ On our platform you will find user-friendly data tables that provide comprehensi
 
 Customization is crucial, and our forms are designed to be easily editable to meet your specific needs. Customize your family tree to reflect the unique nuances and details of your lineage. Our flexible forms allow you to capture the rich history and connections that make your family history truly special.
 
+## Building the Dockerfile
+
+To build the Dockerfile and create a Docker image for the project, follow these steps:
+
+1. Open a terminal and navigate to the project directory.
+2. Run the following command to build the Docker image:
+   ```
+   docker build -t genealogy-laravel .
+   ```
+3. Once the build process is complete, you can run the Docker container using the following command:
+   ```
+   docker run -p 8000:8000 genealogy-laravel
+   ```
+4. Access the application in your web browser at `http://localhost:8000`.
+
+## Using Laravel Sail
+
+Laravel Sail provides a convenient way to run the project using Docker containers. To use Laravel Sail, follow these steps:
+
+1. Make sure you have Docker installed on your system.
+2. Open a terminal and navigate to the project directory.
+3. Run the following command to start the Laravel Sail containers:
+   ```
+   ./vendor/bin/sail up
+   ```
+4. Once the containers are up and running, you can access the application in your web browser at `http://localhost`.
+5. To stop the containers, press `Ctrl+C` in the terminal.
+
+For more information on using Laravel Sail, refer to the official documentation: [Laravel Sail Documentation](https://laravel.com/docs/sail)
+
 To get started, install the application available at https://github.com/liberu-genealogy/genealogy-laravel.
 
 Download it and explore its user-friendly interface, unleashing the power to easily create and discover your family's legacy.
