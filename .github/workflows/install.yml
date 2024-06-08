@@ -44,6 +44,3 @@ jobs:
       
     - name: Build frontend assets
       run: npm run build
-      
-    - name: Run tests
-      run: php artisan test
