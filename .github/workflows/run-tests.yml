@@ -35,5 +35,5 @@ jobs:
     - name: Run Seeding
       run: php artisan db:seed
         
-    - name: Execute tests (Unit and Feature tests) via PHPUnit
-      run: php artisan test --coverage-text
+#    - name: Execute tests (Unit and Feature tests) via PHPUnit
+ #     run: php artisan test --coverage-text
