@@ -15,10 +15,14 @@
             <directory suffix="Test.php">./tests/Unit/Filament/Resources</directory>
         </testsuite>
     </testsuites>
-    <coverage>
+    <coverage processUncoveredFiles="true" includeUncoveredFiles="true">
         <include>
             <directory suffix=".php">./app</directory>
         </include>
+        <report>
+            <clover outputFile="./coverage.xml"/>
+            <html outputDirectory="./coverage/html"/>
+        </report>
     </coverage>
     <php>
         <env name="APP_ENV" value="testing"/>
