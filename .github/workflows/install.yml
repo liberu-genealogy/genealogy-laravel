@@ -8,7 +8,7 @@ on:
 
 jobs:
 
-  test:
+  install:
     runs-on: ubuntu-latest
     
     steps:
@@ -23,7 +23,14 @@ jobs:
       uses: actions/setup-node@v3
       with:
         node-version: '20'
-        
+
+    
+    - name: Start database
+      run: sudo /etc/init.d/mysql start
+
+    - name: Create database
+      run: mysql -e "CREATE DATABASE IF NOT EXISTS liberu;" -uroot -proot
+      
     - name: Copy environment file
       run: cp .env.testing .env
       
