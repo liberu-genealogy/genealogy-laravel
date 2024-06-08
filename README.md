@@ -54,6 +54,38 @@ php artisan migrate --seed
 This will install the necessary dependencies, generate an application key, and set up your database with initial data.
 
 NOTE 3: Ensure your `.env` file is correctly configured with your database connection details before running migrations.
+
+## Building with Docker
+
+Alternatively, you can build and run the project using Docker. To build the Dockerfile, follow these steps:
+
+1. Ensure you have Docker installed on your system.
+2. Open a terminal in the project folder.
+3. Run the following command to build the Docker image:
+   ```
+   docker build -t genealogy-laravel .
+   ```
+4. Once the image is built, you can run the container with:
+   ```
+   docker run -p 8000:8000 genealogy-laravel
+   ```
+
+NOTE 3: Ensure your `.env` file is correctly configured with your database connection details before running migrations.
+
+### Using Laravel Sail
+
+This project also includes support for Laravel Sail, which provides a Docker-based development environment. To use Laravel Sail, follow these steps:
+
+1. Ensure you have Docker installed on your system.
+2. Open a terminal in the project folder.
+3. Run the following command to start the Laravel Sail environment:
+   ```
+   ./vendor/bin/sail up
+   ```
+4. Once the containers are running, you can access the application at `http://localhost`.
+5. To stop the Sail environment, press `Ctrl+C` in the terminal.
+
+For more information on using Laravel Sail, refer to the [official documentation](https://laravel.com/docs/sail).
 ### Description
 
 Liberu Genealogy, now fully compatible with PHP 8.3 and Laravel 11, is an innovative open-source project that continues to revolutionize genealogical research and family history exploration. With the latest update, we've introduced new features and significant improvements, ensuring a more robust and efficient platform for our users. This update not only enhances performance but also brings new functionalities that leverage the full potential of PHP 8.3 and Laravel 11, providing a cutting-edge platform to discover and preserve ancestral heritage.
