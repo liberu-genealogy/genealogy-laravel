@@ -10,8 +10,13 @@ jobs:
 
   test:
     runs-on: ubuntu-latest
-    
-    steps:
+
+    strategy:
+      matrix:
+        node-version: [14.x, 16.x]
+        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+
+steps:
     - uses: actions/checkout@v3
 
     - name: Setup PHP
@@ -19,21 +24,27 @@ jobs:
       with:
         php-version: '8.3'
         extensions: mbstring, dom, fileinfo, mysql, bcmath, zip
-        
+
     - name: Copy .env
       run: php -r "file_exists('.env') || copy('.env.example', '.env');"
-        
+
     - name: Install Dependencies
       run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
-        
+
     - name: Generate key
       run: php artisan key:generate
-        
+
     - name: Run Migrations
       run: php artisan migrate
-        
+
     - name: Run Seeding
       run: php artisan db:seed
-        
+
+    - name: Install Node.js dependencies
+      run: npm install
+
+    - name: Build the project
+      run: npm run build
+
     - name: Execute tests (Unit and Feature tests) via PHPUnit
       run: php artisan test --coverage-text
