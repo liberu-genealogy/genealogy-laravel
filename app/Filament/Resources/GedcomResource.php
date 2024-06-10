@@ -11,6 +11,7 @@ use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
 class GedcomResource extends Resource
@@ -49,8 +50,7 @@ class GedcomResource extends Resource
                             return;
                         }
                         $path = $state->store('gedcom-form-imports', 'private');
-                        $conn = Auth::user()->company()->database_name; // Get the tenant's database connection name
-                        ImportGedcom::dispatch(Auth::user(), Storage::disk('private')->path($path), $conn);
+                        ImportGedcom::dispatch(Auth::user(), Storage::disk('private')->path($path));
                     }),
             ]);
     }
