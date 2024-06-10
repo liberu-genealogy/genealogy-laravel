@@ -7,8 +7,20 @@
   max-width: 320px;
   width: 100%;
   transition: all .8s ease-in-out;
-} 
+}
 
 .mobile-menu-container a {
   color: #FFFFFF;
+}
+
+.mobile-menu-container .admin-link {
+  display: block;
+  padding: 0.5rem 1rem;
+  color: #FFFFFF;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+}
+
+.mobile-menu-container .admin-link:hover {
+  background-color: rgba(255, 255, 255, 0.1);
 }
