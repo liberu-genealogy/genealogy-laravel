@@ -7,27 +7,16 @@ use Livewire\Livewire;
 
 class DabovilleReportPage extends Page
 {
-    protected static string $view = 'livewire.daboville-report';
+    protected static string $view = 'd-aboville-report-page';
+
     protected static ?string $title = 'DAboville Report';
+
     protected static ?string $navigationIcon = 'heroicon-o-chart-bar';
 
-    public function getTitle(): string
-    {
-        return static::$title;
-    }
-
-    public static function getNavigationIcon(): string
-    {
-        return static::$navigationIcon;
-    }
-
-//    public function render(): \Illuminate\Contracts\Support\Renderable
-//    {
-//        return \Livewire::mount(static::$view);
-//    }
+    protected static ?string $navigationGroup = 'Reports';
 
     public function mount(): void
     {
-        Livewire::mount(static::$view);
+        // Livewire::mount(static::$view);
     }
 }

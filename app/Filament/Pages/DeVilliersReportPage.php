@@ -15,18 +15,12 @@ use Livewire\Livewire;
 class DeVilliersReportPage extends Page
 {
     protected static string $view = 'de-villiers-report-page';
+
     protected static ?string $title = 'Devilliers Report';
+    
     protected static ?string $navigationIcon = 'heroicon-o-chart-bar';
 
-    public function getTitle(): string
-    {
-        return static::$title;
-    }
-
-    public static function getNavigationIcon(): string
-    {
-        return static::$navigationIcon;
-    }
+    protected static ?string $navigationGroup = 'Reports';
 
     //  public function mount(): void
     // {
