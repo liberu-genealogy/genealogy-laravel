@@ -1,3 +1,3 @@
 <x-filament-panels::page>
-    <livewire:daboville-report />
+    {{-- <livewire:pedigree-chart /> --}}
 </x-filament-panels::page>

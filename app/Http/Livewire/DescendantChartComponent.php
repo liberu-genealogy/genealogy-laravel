@@ -3,6 +3,7 @@
 namespace App\Http\Livewire;
 
 use App\Models\Person;
+use Illuminate\Support\Facades\Log;
 use Livewire\Component;
 
 class DescendantChartComponent extends Component
@@ -19,7 +20,7 @@ class DescendantChartComponent extends Component
             $this->descendantsData = $this->processDescendantData($rawData);
         } catch (\Exception $e) {
             // Handle errors, such as logging or setting an error state
-            \Log::error('Failed to retrieve or process descendants data: '.$e->getMessage());
+            Log::error('Failed to retrieve or process descendants data: '.$e->getMessage());
             $this->descendantsData = [];
         }
     }
@@ -47,6 +48,6 @@ class DescendantChartComponent extends Component
 
     public function render()
     {
-        return view('livewire.descendant-chart-component', ['descendantsData' => $this->descendantsData]);
+        return view('livewire.descendant-chart-component');
     }
 }

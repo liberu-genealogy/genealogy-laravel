@@ -1,15 +1,9 @@
 <div>
-    <form wire:submit.prevent="generateReport(selectedPersonId)">
-        <div class="form-group">
-            <label for="personSelect">Select a Person:</label>
-            <select id="personSelect" class="form-control" wire:model="selectedPersonId">
-                <option value="">--Choose--</option>
-                @foreach(\App\Models\Person::all() as $person)
-                    <option value="{{ $person->id }}">{{ $person->name }}</option>
-                @endforeach
-            </select>
+    <form wire:submit.prevent="generateReport">
+        <div class="flex">
+            {{ $this->form }}
+            <button type="submit" class="btn btn-primary">Generate Report</button>
         </div>
-        <button type="submit" class="btn btn-primary">Generate Report</button>
     </form>
 
     <div wire:loading>

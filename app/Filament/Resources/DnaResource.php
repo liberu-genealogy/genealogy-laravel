@@ -3,6 +3,7 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\DnaResource\Pages;
+use App\Jobs\DnaMatching;
 use App\Jobs\ImportGedcom;
 use App\Models\Dna;
 use Filament\Forms\Components\FileUpload;
@@ -12,6 +13,7 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class DnaResource extends Resource
 {
@@ -32,14 +34,62 @@ class DnaResource extends Resource
                 FileUpload::make('attachment')
                     ->required()
                     ->maxSize(100000)
-                    ->directory('gedcom-form-imports')
+                    ->directory('dna-form-imports')
                     ->visibility('private')
                     ->afterStateUpdated(function ($state, $set, $livewire) {
                         if ($state === null) {
                             return;
                         }
-                        $path = $state->store('gedcom-form-imports', 'private');
-                        ImportGedcom::dispatch(Auth::user(), Storage::disk('private')->path($path));
+                        $allowed = null;
+                        $role = Auth::user()->role_id;
+                        $user_id = Auth::user()->id;
+                        $dna = Dna::where('user_id', '=', $user_id)->count();
+                        if (in_array($role, [1, 2, 9, 10])) {
+                            $allowed = true;
+                        }
+                        if (in_array($role, [4, 5, 6]) && $dna < 1) {
+                            $allowed = true;
+                        }
+
+                        if (in_array($role, [7, 8]) && $dna < 5) {
+                            $allowed = true;
+                        }
+                        if ($allowed === true) {
+
+
+                            try {
+                                $currentUser = Auth::user();
+
+                                $random_string = Str::random(5);
+                                while (Dna::where('name', $random_string)->exists()) {
+                                    $random_string = Str::random(5);
+                                }
+
+                                $var_name = 'var_' . $random_string;
+                                $file_name = $state->store('dna-form-imports', 'private');
+                                $filename = Storage::disk('private')->path($file_name);
+                                $user_id = $currentUser->id;
+
+                                $dna = new Dna();
+                                $dna->name = 'DNA Kit for user ' . $user_id;
+                                $dna->user_id = $user_id;
+                                $dna->variable_name = $var_name;
+                                $dna->file_name = $file_name;
+
+                                $dna->save();
+                                DnaMatching::dispatch($currentUser, $var_name, $file_name);
+
+                                return [
+                                    'message' => __('The dna was successfully created'),
+                                    'redirect' => 'dna.edit',
+                                    'param' => ['dna' => $dna->id],
+                                ];
+                            } catch (\Exception $e) {
+                                return $e->getMessage();
+                            }
+
+                            return response()->json(['Not uploaded'], 422);
+                        }
                     }),
             ]);
     }
