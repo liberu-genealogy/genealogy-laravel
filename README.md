@@ -20,15 +20,22 @@
 [![Tests](https://github.com/liberu-genealogy/genealogy-laravel/actions/workflows/tests.yml/badge.svg)](https://github.com/liberu-genealogy/genealogy-laravel/actions/workflows/tests.yml)
 
 
+## Our Projects
 
-### Other active projects
 * https://github.com/liberu-accounting/accounting-laravel
 * https://github.com/liberu-automation/automation-laravel
+* https://github.com/liberu-billing/billing-laravel
+* https://github.com/liberusoftware/boilerplate
+* https://github.com/liberu-browser-game/browser-game-laravel
 * https://github.com/liberu-cms/cms-laravel
+* https://github.com/liberu-control-panel/control-panel-laravel
 * https://github.com/liberu-crm/crm-laravel
 * https://github.com/liberu-ecommerce/ecommerce-laravel
+* https://github.com/liberu-genealogy/genealogy-laravel
 * https://github.com/liberu-maintenance/maintenance-laravel
 * https://github.com/liberu-real-estate/real-estate-laravel
+* https://github.com/liberu-social-network/social-network-laravel
+
 
 ## Setup
 
@@ -113,6 +120,8 @@ Download our software today and embark on an enriching journey of tracing your r
 ## Contributors
 
 
-<a href = "https://github.com/liberu-genealogy/genealogy-laravel/graphs/contributors">
-  <img src = "https://contrib.rocks/image?repo=liberu-genealogy/genealogy-laravel"/>
+<a href =
+ "https://github.com/liberu-genealogy/genealogy-laravel/graphs/contributors">
+  <img src =
+ "https://contrib.rocks/image?repo=liberu-genealogy/genealogy-laravel"/>
 </a>
