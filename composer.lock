@@ -1340,7 +1340,7 @@
         },
         {
             "name": "filament/actions",
-            "version": "v3.2.87",
+            "version": "v3.2.88",
             "source": {
                 "type": "git",
                 "url": "https://github.com/filamentphp/actions.git",
@@ -1393,7 +1393,7 @@
         },
         {
             "name": "filament/filament",
-            "version": "v3.2.87",
+            "version": "v3.2.88",
             "source": {
                 "type": "git",
                 "url": "https://github.com/filamentphp/panels.git",
@@ -1458,7 +1458,7 @@
         },
         {
             "name": "filament/forms",
-            "version": "v3.2.87",
+            "version": "v3.2.88",
             "source": {
                 "type": "git",
                 "url": "https://github.com/filamentphp/forms.git",
@@ -1514,7 +1514,7 @@
         },
         {
             "name": "filament/infolists",
-            "version": "v3.2.87",
+            "version": "v3.2.88",
             "source": {
                 "type": "git",
                 "url": "https://github.com/filamentphp/infolists.git",
@@ -1565,7 +1565,7 @@
         },
         {
             "name": "filament/notifications",
-            "version": "v3.2.87",
+            "version": "v3.2.88",
             "source": {
                 "type": "git",
                 "url": "https://github.com/filamentphp/notifications.git",
@@ -1617,7 +1617,7 @@
         },
         {
             "name": "filament/support",
-            "version": "v3.2.87",
+            "version": "v3.2.88",
             "source": {
                 "type": "git",
                 "url": "https://github.com/filamentphp/support.git",
@@ -1675,16 +1675,16 @@
         },
         {
             "name": "filament/tables",
-            "version": "v3.2.87",
+            "version": "v3.2.88",
             "source": {
                 "type": "git",
                 "url": "https://github.com/filamentphp/tables.git",
-                "reference": "4debcc2b5dca501e6061a39c30565692c156ecd1"
+                "reference": "53a7074f6d86957923e4c8be8599788ad66127d3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/filamentphp/tables/zipball/4debcc2b5dca501e6061a39c30565692c156ecd1",
-                "reference": "4debcc2b5dca501e6061a39c30565692c156ecd1",
+                "url": "https://api.github.com/repos/filamentphp/tables/zipball/53a7074f6d86957923e4c8be8599788ad66127d3",
+                "reference": "53a7074f6d86957923e4c8be8599788ad66127d3",
                 "shasum": ""
             },
             "require": {
@@ -1724,11 +1724,11 @@
                 "issues": "https://github.com/filamentphp/filament/issues",
                 "source": "https://github.com/filamentphp/filament"
             },
-            "time": "2024-06-10T12:07:59+00:00"
+            "time": "2024-06-11T07:03:06+00:00"
         },
         {
             "name": "filament/widgets",
-            "version": "v3.2.87",
+            "version": "v3.2.88",
             "source": {
                 "type": "git",
                 "url": "https://github.com/filamentphp/widgets.git",
@@ -9951,16 +9951,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "11.2.0",
+            "version": "11.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "705eba0190afe04bc057f565ad843267717cf109"
+                "reference": "1b8775732e9c401bda32df3ffbdf90dec7533ceb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/705eba0190afe04bc057f565ad843267717cf109",
-                "reference": "705eba0190afe04bc057f565ad843267717cf109",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/1b8775732e9c401bda32df3ffbdf90dec7533ceb",
+                "reference": "1b8775732e9c401bda32df3ffbdf90dec7533ceb",
                 "shasum": ""
             },
             "require": {
@@ -10031,7 +10031,7 @@
             "support": {
                 "issues": "https://github.com/sebastianbergmann/phpunit/issues",
                 "security": "https://github.com/sebastianbergmann/phpunit/security/policy",
-                "source": "https://github.com/sebastianbergmann/phpunit/tree/11.2.0"
+                "source": "https://github.com/sebastianbergmann/phpunit/tree/11.2.1"
             },
             "funding": [
                 {
@@ -10047,7 +10047,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2024-06-07T04:48:50+00:00"
+            "time": "2024-06-11T07:30:35+00:00"
         },
         {
             "name": "sebastian/cli-parser",
