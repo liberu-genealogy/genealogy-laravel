@@ -6,17 +6,19 @@
     "license": "MIT",
     "require": {
         "php": "^8.3",
-        "filament/filament": "^3.2-stable",
-        "althinect/filament-spatie-roles-permissions" :"^2.2", 
+        "althinect/filament-spatie-roles-permissions": "^2.2",
+        "filament/filament": "^3.2",
         "guzzlehttp/guzzle": "^7.8",
+        "joelbutcher/socialstream": "^6.0",
         "laravel/framework": "^11.0",
-        "laravel/jetstream": "*",
+        "laravel/jetstream": "^5.1",
         "laravel/octane": "^2.3",
         "laravel/sanctum": "^4.0",
         "laravel/tinker": "^2.9",
         "liberu-genealogy/laravel-dna": "^1.0",
         "liberu-genealogy/laravel-gedcom": "^4.1",
-        "livewire/livewire": "^3.5"
+        "livewire/livewire": "^3.5",
+        "stephenjude/filament-jetstream": "^0.0.11"
     },
     "require-dev": {
         "fakerphp/faker": "^1.23",

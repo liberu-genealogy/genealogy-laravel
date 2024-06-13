@@ -185,6 +185,7 @@ return [
         /*
          * Package Service Providers...
          */
+        JoelButcher\Socialstream\Filament\SocialstreamPanelProvider::class,
 
         /*
          * Application Service Providers...
