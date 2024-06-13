@@ -63,7 +63,6 @@ class AdminPanelProvider extends PanelProvider
             ->pages([
                 FilamentPage\Dashboard::class,
                 Pages\EditProfile::class,
-                Pages\ApiTokenManagerPage::class,
             ])
             ->discoverWidgets(in: app_path('Filament/Widgets/Home'), for: 'App\\Filament\\Widgets\\Home')
             ->widgets([
