@@ -3,19 +3,18 @@
 namespace App\Livewire;
 
 use App\Models\Person;
+use Filament\Actions\Action;
 use Filament\Actions\Concerns\InteractsWithActions;
 use Filament\Actions\Contracts\HasActions;
-use Filament\Actions\Action;
 use Filament\Forms\Components\Select;
-use Filament\Forms\Components\TextInput;
-use Livewire\Component;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Forms\Form;
-use Illuminate\Contracts\View\View;
+use Livewire\Component;
 
-class DabovilleReport extends Component implements HasForms, HasActions
+class DevillierReport extends Component implements HasForms, HasActions
 {
+
     use InteractsWithForms;
     use InteractsWithActions;
 
@@ -33,9 +32,16 @@ class DabovilleReport extends Component implements HasForms, HasActions
                 Select::make('person')
                     ->hiddenLabel()
                     ->options(Person::all()->pluck('name', 'id'))
-                    ->placeholder('Select a Person:'),
+                    ->placeholder('Select a Person:')
+                    ->native(false),
+                Select::make('generation')
+                    ->hiddenLabel()
+                    ->placeholder('Select Generation')
+                    ->options([1, 2, 3, 4, 5])
+                    ->native(false)
             ])
-            ->statePath('data');
+            ->statePath('data')
+            ;
     }
 
     public function generateAction(): Action
@@ -49,8 +55,8 @@ class DabovilleReport extends Component implements HasForms, HasActions
         dd($this->form->getState());
     }
 
-    public function render(): View
+    public function render()
     {
-        return view('livewire.daboville-report');
+        return view('livewire.devilliers-report');
     }
 }

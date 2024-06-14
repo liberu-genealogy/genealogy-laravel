@@ -131,6 +131,11 @@ class Team extends JetstreamTeam
         return $this->hasMany(Person::class);
     }
 
+    public function people(): HasMany
+    {
+        return $this->hasMany(Person::class);
+    }
+
     public function person_alias(): HasMany
     {
         return $this->hasMany(PersonAlia::class);

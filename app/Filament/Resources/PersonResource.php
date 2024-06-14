@@ -20,7 +20,7 @@ class PersonResource extends Resource
 
     protected static ?string $navigationGroup = 'Person';
 
-    protected static ?string $tenantRelationshipName = 'People';
+    // protected static ?string $tenantRelationshipName = 'People';
 
     public static function form(Form $form): Form
     {
