@@ -46,10 +46,10 @@ jobs:
     
     - name: Upload coverage to Codecov
       uses: codecov/codecov-action@v3
-       with:
+         with:
          token: ${{ secrets.CODECOV_TOKEN }}
-          files: ./coverage.xml
-          flags: unittests
-          name: codecov-umbrella
-          fail_ci_if_error: true
+         files: ./coverage.xml
+         flags: unittests
+         name: codecov-umbrella
+         fail_ci_if_error: true
       run: vendor/bin/phpunit --coverage-clover=coverage.xml
