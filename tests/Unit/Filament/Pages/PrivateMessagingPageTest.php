@@ -30,9 +30,6 @@ class PrivateMessagingPageTest extends TestCase
         // Assert that the data is as expected
         // ...
     }
-
-    public function test_sendMessage()
-    {
     public function test_sendMessage()
     {
         // Create an instance of PrivateMessagingPage
