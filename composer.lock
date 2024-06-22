@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "1cc4f420e46d8ca23709a2edd4ecc922",
+    "content-hash": "fdac8c945faf27f3fb477ef5d8c0bf90",
     "packages": [
         {
             "name": "althinect/filament-spatie-roles-permissions",
@@ -6513,16 +6513,16 @@
         },
         {
             "name": "stephenjude/filament-jetstream",
-            "version": "0.0.11",
+            "version": "0.0.12",
             "source": {
                 "type": "git",
                 "url": "https://github.com/stephenjude/filament-jetstream.git",
-                "reference": "567ec4bb5d1f0b79ad8ee7c55ce9e4649918dca9"
+                "reference": "9b062ce787cdccaeab6ce2c0bb8068fc2a951975"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/stephenjude/filament-jetstream/zipball/567ec4bb5d1f0b79ad8ee7c55ce9e4649918dca9",
-                "reference": "567ec4bb5d1f0b79ad8ee7c55ce9e4649918dca9",
+                "url": "https://api.github.com/repos/stephenjude/filament-jetstream/zipball/9b062ce787cdccaeab6ce2c0bb8068fc2a951975",
+                "reference": "9b062ce787cdccaeab6ce2c0bb8068fc2a951975",
                 "shasum": ""
             },
             "require": {
@@ -6585,7 +6585,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2024-06-12T12:45:20+00:00"
+            "time": "2024-06-20T09:20:26+00:00"
         },
         {
             "name": "symfony/clock",

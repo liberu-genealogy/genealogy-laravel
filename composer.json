@@ -18,7 +18,7 @@
         "liberu-genealogy/laravel-dna": "^1.0",
         "liberu-genealogy/laravel-gedcom": "^4.1",
         "livewire/livewire": "^3.5",
-        "stephenjude/filament-jetstream": "^0.0.11"
+        "stephenjude/filament-jetstream": "^0.0.12"
     },
     "require-dev": {
         "fakerphp/faker": "^1.23",
