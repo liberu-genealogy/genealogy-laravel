@@ -7,6 +7,7 @@
     "require": {
         "php": "^8.3",
         "althinect/filament-spatie-roles-permissions": "^2.2",
+        "bezhansalleh/filament-shield": "^3.2",
         "filament/filament": "^3.2",
         "guzzlehttp/guzzle": "^7.8",
         "joelbutcher/socialstream": "^6.0",
