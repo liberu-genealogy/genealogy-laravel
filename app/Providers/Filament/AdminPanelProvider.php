@@ -83,7 +83,10 @@ class AdminPanelProvider extends PanelProvider
             ->authMiddleware([
                 Authenticate::class,
                 TeamsPermission::class,
-            ]);
+            ])
+ ->plugins([
+            \BezhanSalleh\FilamentShield\FilamentShieldPlugin::make()
+        ]);
 
         if (Features::hasApiFeatures()) {
             $panel->userMenuItems([
