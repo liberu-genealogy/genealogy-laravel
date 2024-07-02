@@ -2,7 +2,7 @@
 
 namespace App\Providers\Filament;
 
-use App\Filament\Admin\Pages;
+use App\Filament\App\Pages;
 use App\Http\Middleware\TeamsPermission;
 use App\Listeners\CreatePersonalTeam;
 use App\Listeners\SwitchTeam;
@@ -44,16 +44,20 @@ class AdminPanelProvider extends PanelProvider
             ->login([AuthenticatedSessionController::class, 'create'])
             ->passwordReset()
             ->emailVerification()
-            ->viteTheme('resources/css/Filament/Admin/theme.css')
+            ->viteTheme('resources/css/filament/admin/theme.css')
             ->colors([
                 'primary' => Color::Gray,
             ])
-            ->discoverResources(in: app_path('Filament/Admin/Resources'), for: 'App\\Filament\\Admin\\Resources')
+            ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
             ->discoverPages(in: app_path('Filament/Admin/Pages'), for: 'App\\Filament\\Admin\\Pages')
             ->discoverWidgets(in: app_path('Filament/Admin/Widgets/Home'), for: 'App\\Filament\\Admin\\Widgets\\Home')
-            ->widgets([
+            ->pages([
+                FilamentPage\Dashboard::class,
+                Pages\EditProfile::class,
+                // Pages\ApiTokenManagerPage::class,
+            ])->widgets([
                 Widgets\AccountWidget::class,
-                Widgets\FilamentInfoWidget::class,
+                // Widgets\FilamentInfoWidget::class,
             ])
             ->middleware([
                 EncryptCookies::class,
@@ -68,10 +72,34 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->authMiddleware([
                 Authenticate::class,
-            ])
- ->plugins([
-            \BezhanSalleh\FilamentShield\FilamentShieldPlugin::make()
+                TeamsPermission::class,
         ]);
+
+        // if (Features::hasApiFeatures()) {
+        //     $panel->userMenuItems([
+        //         MenuItem::make()
+        //             ->label('API Tokens')
+        //             ->icon('heroicon-o-key')
+        //             ->url(fn () => $this->shouldRegisterMenuItem()
+        //                 ? url(Pages\ApiTokenManagerPage::getUrl())
+        //                 : url($panel->getPath())),
+        //     ]);
+        // }
+
+        if (Features::hasTeamFeatures()) {
+            $panel
+                ->tenant(Team::class, ownershipRelationship: 'team')
+                ->tenantRegistration(Pages\CreateTeam::class)
+                ->tenantProfile(Pages\EditTeam::class)
+                ->userMenuItems([
+                    MenuItem::make()
+                        ->label('Team Settings')
+                        ->icon('heroicon-o-cog-6-tooth')
+                        ->url(fn () => $this->shouldRegisterMenuItem()
+                            ? url(Pages\EditTeam::getUrl())
+                            : url($panel->getPath())),
+                ]);
+        }
 
         return $panel;
     }

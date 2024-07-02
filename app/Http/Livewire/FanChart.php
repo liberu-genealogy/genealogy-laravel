@@ -5,7 +5,7 @@ namespace App\Filament\Widgets;
 use App\Models\Person;
 use Filament\Widgets\Widget;
 
-class FanChartWidget extends Widget
+class FanChart extends Widget
 {
     protected static string $view = 'filament.widgets.fan-chart-widget';
 
