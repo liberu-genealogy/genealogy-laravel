@@ -43,7 +43,7 @@ class AppPanelProvider extends PanelProvider
             ->id('app')
             ->path('app')
             ->login([AuthenticatedSessionController::class, 'create'])
-            ->registration([RegisteredUserController::class, 'create'])
+            ->registration()
             ->passwordReset()
             ->emailVerification()
             ->viteTheme('resources/css/Filament/App/admin/theme.css')
@@ -87,16 +87,16 @@ class AppPanelProvider extends PanelProvider
             \BezhanSalleh\FilamentShield\FilamentShieldPlugin::make()
         ]);
 
-        if (Features::hasApiFeatures()) {
-            $panel->userMenuItems([
-                MenuItem::make()
-                    ->label('API Tokens')
-                    ->icon('heroicon-o-key')
-                    ->url(fn () => $this->shouldRegisterMenuItem()
-                        ? url(Pages\ApiTokenManagerPage::getUrl())
-                        : url($panel->getPath())),
-            ]);
-        }
+        // if (Features::hasApiFeatures()) {
+        //     $panel->userMenuItems([
+        //         MenuItem::make()
+        //             ->label('API Tokens')
+        //             ->icon('heroicon-o-key')
+        //             ->url(fn () => $this->shouldRegisterMenuItem()
+        //                 ? url(Pages\ApiTokenManagerPage::getUrl())
+        //                 : url($panel->getPath())),
+        //     ]);
+        // }
 
         if (Features::hasTeamFeatures()) {
             $panel

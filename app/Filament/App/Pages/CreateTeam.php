@@ -7,6 +7,7 @@ use App\Models\User;
 use Filament\Facades\Filament;
 use Filament\Forms\Components\TextInput;
 use Filament\Pages\Tenancy\RegisterTenant;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 
 class CreateTeam extends RegisterTenant
@@ -32,7 +33,7 @@ class CreateTeam extends RegisterTenant
         ];
     }
 
-    protected function handleRegistration(array $data): Team
+    protected function handleRegistration(array $data): Model
     {
         return app(\App\Actions\Jetstream\CreateTeam::class)->create(auth()->user(), $data);
     }
