@@ -29,7 +29,7 @@
                             </span>
                         </button>
                         <div class="ml-3 absolute hidden" id="moreDropdown">
-                            <a href="{{ route('filament.admin.tenant')}}" class="btn-nav">Dashboard</a>
+                            <a href="{{ route('filament.app.tenant')}}" class="btn-nav">Dashboard</a>
                         </div>
                     </div>
                 @else
@@ -50,7 +50,7 @@
                             </span>
                         </button>
                         <div class="ml-3 absolute hidden" id="moreDropdown">
-                            <a href="{{ route('filament.admin.tenant')}}" class="btn-nav">Dashboard</a>
+                            <a href="{{ route('filament.app.tenant')}}" class="btn-nav">Dashboard</a>
                         </div>
                     </div>
                 @else
