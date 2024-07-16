@@ -8,8 +8,7 @@ div {
 color: #FFFFFF;
 }
 
-footer,
-footer *
+footer
 {
 @apply bg-green-900 bg-opacity-75 text-white;
 }
