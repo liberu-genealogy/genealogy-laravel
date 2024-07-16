@@ -1,8 +1,7 @@
 @extends('layouts.app')
 @include('components.home-navbar')
-@include('components.home-header')
 
-<main>
+<main class="flex-1 mt-[64px] pt-6">
         @yield('content')
 </main>
 @include('components.footer')

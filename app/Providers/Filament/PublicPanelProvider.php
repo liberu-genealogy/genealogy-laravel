@@ -24,11 +24,7 @@ class PublicPanelProvider extends PanelProvider
             ->default()
             ->id('public')
             ->path('')
-            ->login()
-            ->registration()
             ->viteTheme('resources/css/site.css')
-            ->passwordReset()
-            ->emailVerification()
             ->colors([
                 'primary' => Color::Amber,
             ])
@@ -49,8 +45,8 @@ class PublicPanelProvider extends PanelProvider
             ->authMiddleware([
                 Authenticate::class,
             ])
- ->plugins([
-            \BezhanSalleh\FilamentShield\FilamentShieldPlugin::make()
-        ]);
+            ->plugins([
+                \BezhanSalleh\FilamentShield\FilamentShieldPlugin::make()
+            ]);
     }
 }
