@@ -17,7 +17,6 @@ class FanChartPage extends Page
 
     protected static bool $shouldRegisterNavigation = false;
 
-
     public function getHeading(): string
     {
         return 'Fan Chart';

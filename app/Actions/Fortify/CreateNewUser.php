@@ -17,12 +17,12 @@ class CreateNewUser implements CreatesNewUsers
     /**
      * Validate and create a newly registered user.
      *
-     * @param  array<string, string>  $input
+     * @param array<string, string> $input
      */
     public function create(array $input): User
     {
         Validator::make($input, [
-            'name' => ['required', 'string', 'max:255'],
+            'name'  => ['required', 'string', 'max:255'],
             'email' => [
                 'required',
                 'string',
@@ -53,8 +53,8 @@ class CreateNewUser implements CreatesNewUsers
     protected function createTeam(User $user)
     {
         return $user->ownedTeams()->save(Team::forceCreate([
-            'user_id' => $user->id,
-            'name' => explode(' ', $user->name, 2)[0]."'s Team",
+            'user_id'       => $user->id,
+            'name'          => explode(' ', $user->name, 2)[0]."'s Team",
             'personal_team' => true,
         ]));
     }

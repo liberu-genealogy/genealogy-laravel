@@ -3,15 +3,11 @@
 namespace App\Filament\App\Resources;
 
 use App\Filament\App\Resources\DatabaseResource\Pages;
-use App\Filament\App\Resources\DatabaseResource\RelationManagers;
 use App\Models\Database;
-use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class DatabaseResource extends Resource
 {
@@ -56,9 +52,9 @@ class DatabaseResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListDatabases::route('/'),
+            'index'  => Pages\ListDatabases::route('/'),
             'create' => Pages\CreateDatabase::route('/create'),
-            'edit' => Pages\EditDatabase::route('/{record}/edit'),
+            'edit'   => Pages\EditDatabase::route('/{record}/edit'),
         ];
     }
 }

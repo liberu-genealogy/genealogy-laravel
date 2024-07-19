@@ -2,7 +2,6 @@
 
 namespace App\Filament\App\Pages;
 
-use App\Models\Team;
 use App\Models\User;
 use Filament\Facades\Filament;
 use Filament\Forms\Components\TextInput;

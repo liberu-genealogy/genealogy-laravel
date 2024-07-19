@@ -17,7 +17,7 @@ class DeVilliersReportPage extends Page
     protected static string $view = 'de-villiers-report-page';
 
     protected static ?string $title = 'Devilliers Report';
-    
+
     protected static ?string $navigationIcon = 'heroicon-o-chart-bar';
 
     protected static ?string $navigationGroup = 'Reports';
