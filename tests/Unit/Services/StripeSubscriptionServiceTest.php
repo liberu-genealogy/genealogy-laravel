@@ -2,10 +2,10 @@
 
 namespace Tests\Unit\Services;
 
+use App\Services\DatabaseUpdateService;
+use App\Services\DatabaseUpdateService;
 use App\Services\StripeApiService;
-use App\Services\DatabaseUpdateService;
 use Tests\TestCase;
-use App\Services\DatabaseUpdateService;
 
 class StripeSubscriptionServiceTest extends TestCase
 {
@@ -56,10 +56,10 @@ class StripeSubscriptionServiceTest extends TestCase
         // Call the cancelSubscription method with an invalid subscription ID
         // Assert that the expected error message is returned
 
-    // Test case 3: Stripe API error
-    // Mock the StripeApiService and DatabaseUpdateService
-    // Call the cancelSubscription method and simulate a Stripe API error
-    // Assert that the expected error message is returned
+        // Test case 3: Stripe API error
+        // Mock the StripeApiService and DatabaseUpdateService
+        // Call the cancelSubscription method and simulate a Stripe API error
+        // Assert that the expected error message is returned
         // Mock the StripeApiService and DatabaseUpdateService
         // Call the cancelSubscription method and simulate a Stripe API error
         // Assert that the expected error message is returned

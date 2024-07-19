@@ -4,7 +4,6 @@ namespace App\Filament\App\Resources;
 
 use App\Filament\App\Resources\DnaResource\Pages;
 use App\Jobs\DnaMatching;
-use App\Jobs\ImportGedcom;
 use App\Models\Dna;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Form;
@@ -55,8 +54,6 @@ class DnaResource extends Resource
                             $allowed = true;
                         }
                         if ($allowed === true) {
-
-
                             try {
                                 $currentUser = Auth::user();
 
@@ -65,13 +62,13 @@ class DnaResource extends Resource
                                     $random_string = Str::random(5);
                                 }
 
-                                $var_name = 'var_' . $random_string;
+                                $var_name = 'var_'.$random_string;
                                 $file_name = $state->store('dna-form-imports', 'private');
                                 $filename = Storage::disk('private')->path($file_name);
                                 $user_id = $currentUser->id;
 
                                 $dna = new Dna();
-                                $dna->name = 'DNA Kit for user ' . $user_id;
+                                $dna->name = 'DNA Kit for user '.$user_id;
                                 $dna->user_id = $user_id;
                                 $dna->variable_name = $var_name;
                                 $dna->file_name = $file_name;
@@ -80,9 +77,9 @@ class DnaResource extends Resource
                                 DnaMatching::dispatch($currentUser, $var_name, $file_name);
 
                                 return [
-                                    'message' => __('The dna was successfully created'),
+                                    'message'  => __('The dna was successfully created'),
                                     'redirect' => 'dna.edit',
-                                    'param' => ['dna' => $dna->id],
+                                    'param'    => ['dna' => $dna->id],
                                 ];
                             } catch (\Exception $e) {
                                 return $e->getMessage();

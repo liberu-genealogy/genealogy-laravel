@@ -17,9 +17,9 @@ class ConnectedAccountFactory extends Factory
     public function definition(): array
     {
         return [
-            'provider' => $this->faker->randomElement(Providers::all()),
-            'provider_id' => $this->faker->numerify('########'),
-            'token' => Str::random(432),
+            'provider'      => $this->faker->randomElement(Providers::all()),
+            'provider_id'   => $this->faker->numerify('########'),
+            'token'         => Str::random(432),
             'refresh_token' => Str::random(432),
         ];
     }

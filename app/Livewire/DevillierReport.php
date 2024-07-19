@@ -14,7 +14,6 @@ use Livewire\Component;
 
 class DevillierReport extends Component implements HasForms, HasActions
 {
-
     use InteractsWithForms;
     use InteractsWithActions;
 
@@ -38,10 +37,9 @@ class DevillierReport extends Component implements HasForms, HasActions
                     ->hiddenLabel()
                     ->placeholder('Select Generation')
                     ->options([1, 2, 3, 4, 5])
-                    ->native(false)
+                    ->native(false),
             ])
-            ->statePath('data')
-            ;
+            ->statePath('data');
     }
 
     public function generateAction(): Action

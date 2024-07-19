@@ -2,14 +2,9 @@
 
 namespace Tests\Unit\Filament\Pages;
 
-use PHPUnit\Framework\TestCase;
 use App\Filament\Pages\PrivateMessagingPage;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Request;
-use Illuminate\Support\Facades\Validator;
-use App\Models\User;
 use App\Models\Message;
+use PHPUnit\Framework\TestCase;
 
 class PrivateMessagingPageTest extends TestCase
 {
@@ -18,11 +13,11 @@ class PrivateMessagingPageTest extends TestCase
         // Create an instance of PrivateMessagingPage
         $page = new PrivateMessagingPage();
 
-    // Set up the necessary dependencies and data
-    // ...
-    
-    // Add your test logic here
-    // Assert that the data is as expected
+        // Set up the necessary dependencies and data
+        // ...
+
+        // Add your test logic here
+        // Assert that the data is as expected
 
         // Call the mount method
         $page->mount();
@@ -30,15 +25,16 @@ class PrivateMessagingPageTest extends TestCase
         // Assert that the data is as expected
         // ...
     }
+
     public function test_sendMessage()
     {
         // Create an instance of PrivateMessagingPage
         $page = new PrivateMessagingPage();
 
-    // Set up the necessary dependencies and data
-    // ...
-    
-    // Add your test logic here
+        // Set up the necessary dependencies and data
+        // ...
+
+        // Add your test logic here
 
         // Call the sendMessage method
         $response = $page->sendMessage();
@@ -53,4 +49,3 @@ class PrivateMessagingPageTest extends TestCase
     // Add additional test methods to cover edge cases and different scenarios
     // ...
 }
-

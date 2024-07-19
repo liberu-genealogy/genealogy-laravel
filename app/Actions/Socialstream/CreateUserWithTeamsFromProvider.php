@@ -32,7 +32,7 @@ class CreateUserFromProvider implements CreatesUserFromProvider
     {
         return DB::transaction(function () use ($provider, $providerUser) {
             return tap(User::create([
-                'name' => $providerUser->getName(),
+                'name'  => $providerUser->getName(),
                 'email' => $providerUser->getEmail(),
             ]), function (User $user) use ($provider, $providerUser) {
                 $user->markEmailAsVerified();
@@ -54,8 +54,8 @@ class CreateUserFromProvider implements CreatesUserFromProvider
     protected function createTeam(User $user): void
     {
         $user->ownedTeams()->save(Team::forceCreate([
-            'user_id' => $user->id,
-            'name' => explode(' ', $user->name, 2)[0]."'s Team",
+            'user_id'       => $user->id,
+            'name'          => explode(' ', $user->name, 2)[0]."'s Team",
             'personal_team' => true,
         ]));
     }
