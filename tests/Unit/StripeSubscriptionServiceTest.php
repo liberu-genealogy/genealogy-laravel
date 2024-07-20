@@ -3,7 +3,6 @@
 namespace Tests\Unit;
 
 use App\Models\Team;
-use App\Models\Team;
 use App\Services\StripeSubscriptionService;
 use PHPUnit\Framework\TestCase;
 
