@@ -1,3 +1,3 @@
 <?php
 
-namespace App\Filament\Pages\Tenancy;
+namespace App\Filament\App\Pages\Tenancy;
