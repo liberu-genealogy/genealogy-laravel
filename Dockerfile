@@ -110,6 +110,7 @@ RUN composer install \
     --no-scripts \
     --audit
 
+
 COPY  --chown=${USER}:${USER} . .
 
 RUN mkdir -p \
@@ -134,8 +135,8 @@ RUN composer install \
     && composer clear-cache
 
 # Ensure .env file is created and has correct permissions
-COPY .env.example ./.env
-RUN chmod 644 ./.env
+COPY --chmod=755 --chown${USER:${USER} .env.example ./.env
+
 
 # Verify Laravel can bootstrap and add error handling for key generation
 RUN php artisan --version && \
