@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Filament\Pages;
+namespace App\Filament\App\Pages;
 
 use App\Filament\Resources\GedcomResource as ResourcesGedcomResource;
 use App\Filament\Resources\MediaObjectResource as ResourcesMediaObjectResource;

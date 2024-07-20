@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Filament\Pages;
+namespace App\Filament\App\Pages;
 
 use App\Filament\Widgets\FanChartWidget;
 use Filament\Pages\Page;
