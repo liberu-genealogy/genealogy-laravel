@@ -3,7 +3,6 @@
 namespace Tests\Unit\Services;
 
 use App\Services\DatabaseUpdateService;
-use App\Services\DatabaseUpdateService;
 use App\Services\StripeApiService;
 use Tests\TestCase;
 
