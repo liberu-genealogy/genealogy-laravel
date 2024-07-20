@@ -135,7 +135,7 @@ RUN composer install \
     && composer clear-cache
 
 # Ensure .env file is created and has correct permissions
-COPY --chmod=755 --chown=${USER:${USER} .env.example ./.env
+COPY --chmod=755 --chown=${USER}:${USER} .env.example ./.env
 
 
 # Verify Laravel can bootstrap and add error handling for key generation
