@@ -133,9 +133,16 @@ RUN composer install \
     --no-dev \
     && composer clear-cache
 
+# Ensure .env file is created and has correct permissions
 COPY .env.example ./.env
+RUN chmod 644 ./.env
 
-RUN php artisan key:generate
+# Verify Laravel can bootstrap and add error handling for key generation
+RUN php artisan --version && \
+    php artisan key:generate --show --verbose || \
+    (echo "Key generation failed. Debugging information:" && \
+     cat storage/logs/laravel.log && \
+     exit 1)
 
 RUN chmod +x /usr/local/bin/start-container
 
