@@ -2,7 +2,7 @@
 
 namespace App\Filament\App\Pages;
 
-use App\Filament\Widgets\FanChartWidget;
+use App\Filament\App\Widgets\FanChartWidget;
 use Filament\Pages\Page;
 
 class FanChartPage extends Page

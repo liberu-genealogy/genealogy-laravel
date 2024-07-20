@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Filament\Widgets;
+namespace App\Filament\App\Widgets;
 
 use App\Models\Person;
 use Filament\Widgets\Widget;
