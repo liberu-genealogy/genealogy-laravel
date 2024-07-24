@@ -24,6 +24,9 @@
 [![Docker](https://github.com/liberu-genealogy/genealogy-laravel/actions/workflows/main.yml/badge.svg)](https://github.com/liberu-genealogy/genealogy-laravel/actions/workflows/main.yml)
 
 
+## [Hosted application packages](https://liberu.co.uk/order/main/packages/applications/?group_id=3)
+
+
 ## Our Projects
 
 * https://github.com/liberu-accounting/accounting-laravel
