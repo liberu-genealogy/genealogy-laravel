@@ -1,20 +1,19 @@
 <?php
 
-namespace App\Filament\App\Pages;
+namespace App\Filament\Admin\Pages;
 
-use App\Models\Team;
-use App\Models\User;
 use Filament\Facades\Filament;
-use Filament\Forms\Components\TextInput;
 use Filament\Pages\Tenancy\EditTenantProfile;
 
 class EditTeam extends EditTenantProfile
 {
     protected static string $view = 'filament.pages.edit-team';
 
+    protected static ?int $navigationSort = 2;
+
     public static function getLabel(): string
     {
-        return 'Edit Team';
+        return 'Team Settings';
     }
 
     protected function getViewData(): array

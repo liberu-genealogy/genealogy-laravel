@@ -2,7 +2,9 @@
 
 namespace App\Providers\Filament;
 
-use App\Filament\App\Pages;
+use App\Filament\Admin\Pages\CreateTeam;
+use App\Filament\Admin\Pages\EditProfile;
+use App\Filament\Admin\Pages\EditTeam;
 use App\Http\Middleware\TeamsPermission;
 use App\Models\Team;
 use Filament\Facades\Filament;
@@ -42,12 +44,20 @@ class AdminPanelProvider extends PanelProvider
             ->colors([
                 'primary' => Color::Gray,
             ])
+            ->userMenuItems([
+                MenuItem::make()
+                    ->label('Profile')
+                    ->icon('heroicon-o-user-circle')
+                    ->url(fn () => $this->shouldRegisterMenuItem()
+                        ? url(EditProfile::getUrl())
+                        : url($panel->getPath())),
+            ])
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
             ->discoverPages(in: app_path('Filament/Admin/Pages'), for: 'App\\Filament\\Admin\\Pages')
             ->discoverWidgets(in: app_path('Filament/Admin/Widgets/Home'), for: 'App\\Filament\\Admin\\Widgets\\Home')
             ->pages([
                 FilamentPage\Dashboard::class,
-                Pages\EditProfile::class,
+                EditProfile::class
                 // Pages\ApiTokenManagerPage::class,
             ])->widgets([
                 Widgets\AccountWidget::class,
@@ -83,14 +93,14 @@ class AdminPanelProvider extends PanelProvider
         if (Features::hasTeamFeatures()) {
             $panel
                 ->tenant(Team::class, ownershipRelationship: 'team')
-                ->tenantRegistration(Pages\CreateTeam::class)
-                ->tenantProfile(Pages\EditTeam::class)
+                ->tenantRegistration(CreateTeam::class)
+                ->tenantProfile(EditTeam::class)
                 ->userMenuItems([
                     MenuItem::make()
                         ->label('Team Settings')
                         ->icon('heroicon-o-cog-6-tooth')
                         ->url(fn () => $this->shouldRegisterMenuItem()
-                            ? url(Pages\EditTeam::getUrl())
+                            ? url(EditTeam::getUrl())
                             : url($panel->getPath())),
                 ]);
         }
@@ -113,6 +123,10 @@ class AdminPanelProvider extends PanelProvider
 
     public function shouldRegisterMenuItem(): bool
     {
-        return true; //auth()->user()?->hasVerifiedEmail() && Filament::hasTenancy() && Filament::getTenant();
+        $hasVerifiedEmail = is_null(auth()->user()) ? false : true;//?->hasVerifiedEmail();
+
+        return Filament::hasTenancy()
+            ? $hasVerifiedEmail && Filament::getTenant()
+            : $hasVerifiedEmail;
     }
 }

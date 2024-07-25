@@ -1,12 +1,8 @@
 <?php
 
-namespace App\Filament\App\Pages;
+namespace App\Filament\Admin\Pages;
 
-use App\Models\User;
-use Filament\Facades\Filament;
-use Filament\Forms\Components\TextInput;
 use Filament\Pages\Page;
-use Illuminate\Support\Facades\Auth;
 
 class EditProfile extends Page
 {
