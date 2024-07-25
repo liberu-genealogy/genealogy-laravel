@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Filament\Pages;
+namespace App\Filament\Admin\Pages;
 
 use Filament\Facades\Filament;
 use Filament\Pages\Tenancy\EditTenantProfile;

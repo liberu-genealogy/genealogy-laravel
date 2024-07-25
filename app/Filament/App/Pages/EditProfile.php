@@ -10,52 +10,19 @@ use Illuminate\Support\Facades\Auth;
 
 class EditProfile extends Page
 {
+    protected static ?string $navigationIcon = 'heroicon-o-user-circle';
+
     protected static string $view = 'filament.pages.edit-profile';
-    protected static ?string $navigationIcon = 'heroicon-o-chart-bar';
 
-    public User $user;
+    protected static ?string $navigationLabel = 'Profile';
 
-    public function mount()
+    public static function shouldRegisterNavigation(): bool
     {
-        $this->user = Auth::user();
-        $this->form->fill([
-            'name'  => $this->user->name,
-            'email' => $this->user->email,
-        ]);
+        return false;
     }
 
-    protected function getFormSchema(): array
+    public static function getNavigationSort(): ?int
     {
-        return [
-            TextInput::make('name')
-                ->label('Name')
-                ->required()
-                ->maxLength(255),
-            TextInput::make('email')
-                ->label('Email Address')
-                ->required()
-                ->maxLength(255),
-        ];
-    }
-
-    public function submit()
-    {
-        $this->validate();
-
-        $state = $this->form->getState();
-
-        $this->user->forceFill([
-            'name'  => $state['name'],
-            'email' => $state['email'],
-        ])->save();
-
-        Filament::notify('success', 'Your profile has been updated.');
-    }
-
-    public function getBreadcrumbs(): array
-    {
-        return [
-            url()->current() => 'Edit Profile',
-        ];
+        return 1;
     }
 }
