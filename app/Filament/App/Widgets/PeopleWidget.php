@@ -6,12 +6,18 @@ use App\Models\Person;
 use Filament\Tables;
 use Filament\Widgets\TableWidget as BaseWidget;
 use Illuminate\Database\Eloquent\Builder;
+use Carbon\Carbon;
 
 class PeopleWidget extends BaseWidget
 {
     protected function getTableQuery(): Builder
     {
-        return Person::query()->latest();
+        $hundredYearsAgo = Carbon::now()->subYears(100)->toDateString();
+
+        return Person::query()
+            ->where('birthday', '<=', $hundredYearsAgo)
+            ->withoutGlobalScope('team')
+            ->latest();
     }
 
     protected function getTableColumns(): array
@@ -26,6 +32,10 @@ class PeopleWidget extends BaseWidget
             Tables\Columns\TextColumn::make('birthday')
                 ->date()
                 ->sortable(),
+            Tables\Columns\TextColumn::make('deathday')
+                ->date()
+                ->sortable()
+                ->label('Death Date'),
         ];
     }
 

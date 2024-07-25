@@ -4,6 +4,7 @@ namespace App\Http\Livewire;
 
 use App\Models\Person;
 use Livewire\Component;
+use Carbon\Carbon;
 
 class PeopleSearch extends Component
 {
@@ -19,9 +20,15 @@ class PeopleSearch extends Component
 
     public function searchPeople()
     {
-        $this->results = Person::where('givn', 'like', '%'.$this->query.'%')
-                               ->orWhere('surn', 'like', '%'.$this->query.'%')
-                               ->get();
+        $hundredYearsAgo = Carbon::now()->subYears(100)->toDateString();
+
+        $this->results = Person::where(function ($query) {
+                                $query->where('givn', 'like', '%'.$this->query.'%')
+                                      ->orWhere('surn', 'like', '%'.$this->query.'%');
+                            })
+                            ->where('birthday', '<=', $hundredYearsAgo)
+                            ->withoutGlobalScope('team')
+                            ->get();
     }
 
     public function render()
