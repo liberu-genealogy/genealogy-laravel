@@ -12,53 +12,41 @@ class EditTeam extends EditTenantProfile
 {
     protected static string $view = 'filament.pages.edit-team';
 
-    public $name = '';
-
     public static function getLabel(): string
     {
         return 'Edit Team';
     }
 
-    public function mount(): void
-    {
-        abort_unless($this->user()->canCreateTeams(), 403);
-    }
+    // protected function getFormSchema(): array
+    // {
+    //     return [
+    //         TextInput::make('name')
+    //             ->label('Team Name')
+    //             ->required()
+    //             ->maxLength(255),
+    //     ];
+    // }
 
-    protected function getFormSchema(): array
-    {
-        return [
-            TextInput::make('name')
-                ->label('Team Name')
-                ->required()
-                ->maxLength(255),
-        ];
-    }
+    // public function submit()
+    // {
+    //     $this->validate();
 
-    public function submit()
-    {
-        $this->validate();
+    //     $team = Team::forceCreate([
+    //         'user_id'       => Filament::auth()->id(),
+    //         'name'          => $this->name,
+    //         'personal_team' => false,
+    //     ]);
 
-        $team = Team::forceCreate([
-            'user_id'       => Filament::auth()->id(),
-            'name'          => $this->name,
-            'personal_team' => false,
-        ]);
+    //     $this->user()->teams()->attach($team, ['role' => 'admin']);
+    //     $this->user()->switchTeam($team);
 
-        $this->user()->teams()->attach($team, ['role' => 'admin']);
-        $this->user()->switchTeam($team);
+    //     return redirect()->route('filament.pages.edit-team', ['team' => $team]);
+    // }
 
-        return redirect()->route('filament.pages.edit-team', ['team' => $team]);
-    }
-
-    public function getBreadcrumbs(): array
+    protected function getViewData(): array
     {
         return [
-            url()->current() => 'Create Team',
+            'team' => Filament::getTenant(),
         ];
-    }
-
-    private function user(): User
-    {
-        return Filament::auth()->user();
     }
 }

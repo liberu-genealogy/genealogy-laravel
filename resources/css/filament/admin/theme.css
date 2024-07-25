@@ -1,5 +1,4 @@
-@import '/vendor/filament/filament/resources/css/theme.css';
-
+@import '../../tailwind.css';
 @config 'tailwind.config.js';
 
 /* .fi-body {
