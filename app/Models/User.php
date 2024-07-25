@@ -104,8 +104,7 @@ class User extends Authenticatable implements HasDefaultTenant, HasTenants, Fila
 
     public function canAccessPanel(Panel $panel): bool
     {
-        //        return $this->hasVerifiedEmail();
-        return true;
+        return $this->hasRole('admin');
     }
 
     public function canAccessFilament(): bool

@@ -77,6 +77,7 @@ class AdminPanelProvider extends PanelProvider
             ->authMiddleware([
                 Authenticate::class,
                 TeamsPermission::class,
+                \App\Http\Middleware\EnsureUserHasAdminRole::class,
             ]);
 
         // if (Features::hasApiFeatures()) {
