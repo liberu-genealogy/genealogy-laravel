@@ -17,6 +17,27 @@ class EditTeam extends EditTenantProfile
         return 'Edit Team';
     }
 
+    use Filament\Forms\Components\Section;
+    use Filament\Forms\Components\Placeholder;
+    use App\Services\SubscriptionService;
+    
+    public function form(Form $form): Form
+    {
+        $team = Filament::getTenant();
+        $subscriptionService = app(SubscriptionService::class);
+    
+        return $form
+            ->schema([
+                Section::make('Subscription')
+                    ->schema([
+                        Placeholder::make('status')
+                            ->label('Subscription Status')
+                            ->content($subscriptionService->getSubscriptionStatus($team)),
+                        // Add more subscription-related fields here
+                    ]),
+            ]);
+    }
+    
     protected function getViewData(): array
     {
         return [
