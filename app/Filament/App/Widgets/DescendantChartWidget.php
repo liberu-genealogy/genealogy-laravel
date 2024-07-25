@@ -11,9 +11,9 @@ class DescendantChartWidget extends Widget
 
     public function getData(): array
     {
-        $rawData = Person::all()->toArray();
+        $rawData = Person::withBasicInfo()->get()->toArray();
         $descendantsData = $this->processDescendantData($rawData);
-
+    
         return [
             'descendantsData' => $descendantsData,
         ];
