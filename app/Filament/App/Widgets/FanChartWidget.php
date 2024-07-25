@@ -2,8 +2,6 @@
 
 namespace App\Filament\App\Widgets;
 
-namespace App\Http\Livewire;
-
 use App\Models\Person;
 use Filament\Widgets\Widget;
 
