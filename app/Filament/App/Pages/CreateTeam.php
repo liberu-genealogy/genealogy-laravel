@@ -13,15 +13,33 @@ use Illuminate\Support\Facades\Auth;
 class CreateTeam extends RegisterTenant
 {
 
+    use Filament\Forms\Components\Checkbox;
+    use App\Services\SubscriptionService;
+    
     public function form(Form $form): Form
     {
         return $form
             ->schema([
-            TextInput::make('name')
-                ->label('Team Name')
-                ->required()
-                ->maxLength(255),
-        ]);
+                TextInput::make('name')
+                    ->label('Team Name')
+                    ->required()
+                    ->maxLength(255),
+                Checkbox::make('premium_membership')
+                    ->label('Subscribe to Premium Membership')
+                    ->helperText('14-day free trial, then $9.99/month'),
+            ]);
+    }
+    
+    protected function handleRegistration(array $data): Model
+    {
+        $team = app(\App\Actions\Jetstream\CreateTeam::class)->create(auth()->user(), $data);
+    
+        if ($data['premium_membership']) {
+            $subscriptionService = app(SubscriptionService::class);
+            $subscriptionService->createTrialSubscription($team);
+        }
+    
+        return $team;
     }
 
     protected function handleRegistration(array $data): Model
