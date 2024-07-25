@@ -5,17 +5,16 @@ namespace App\Filament\App\Pages;
 use App\Models\User;
 use Filament\Facades\Filament;
 use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Checkbox;
 use Filament\Forms\Form;
 use Filament\Pages\Tenancy\RegisterTenant;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
+use App\Services\SubscriptionService;
 
 class CreateTeam extends RegisterTenant
 {
 
-    use Filament\Forms\Components\Checkbox;
-    use App\Services\SubscriptionService;
-    
     public function form(Form $form): Form
     {
         return $form
@@ -40,11 +39,6 @@ class CreateTeam extends RegisterTenant
         }
     
         return $team;
-    }
-
-    protected function handleRegistration(array $data): Model
-    {
-        return app(\App\Actions\Jetstream\CreateTeam::class)->create(auth()->user(), $data);
     }
 
     // public function getBreadcrumbs(): array

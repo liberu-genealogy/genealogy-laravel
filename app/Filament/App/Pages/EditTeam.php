@@ -7,6 +7,10 @@ use App\Models\User;
 use Filament\Facades\Filament;
 use Filament\Forms\Components\TextInput;
 use Filament\Pages\Tenancy\EditTenantProfile;
+use Filament\Forms\Components\Section;
+use Filament\Forms\Components\Placeholder;
+use Filament\Forms\Form;
+use App\Services\SubscriptionService;
 
 class EditTeam extends EditTenantProfile
 {
@@ -17,15 +21,10 @@ class EditTeam extends EditTenantProfile
         return 'Edit Team';
     }
 
-    use Filament\Forms\Components\Section;
-    use Filament\Forms\Components\Placeholder;
-    use App\Services\SubscriptionService;
-    
     public function form(Form $form): Form
     {
         $team = Filament::getTenant();
         $subscriptionService = app(SubscriptionService::class);
-    
         return $form
             ->schema([
                 Section::make('Subscription')
