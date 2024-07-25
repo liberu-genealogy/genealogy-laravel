@@ -17,32 +17,6 @@ class EditTeam extends EditTenantProfile
         return 'Edit Team';
     }
 
-    // protected function getFormSchema(): array
-    // {
-    //     return [
-    //         TextInput::make('name')
-    //             ->label('Team Name')
-    //             ->required()
-    //             ->maxLength(255),
-    //     ];
-    // }
-
-    // public function submit()
-    // {
-    //     $this->validate();
-
-    //     $team = Team::forceCreate([
-    //         'user_id'       => Filament::auth()->id(),
-    //         'name'          => $this->name,
-    //         'personal_team' => false,
-    //     ]);
-
-    //     $this->user()->teams()->attach($team, ['role' => 'admin']);
-    //     $this->user()->switchTeam($team);
-
-    //     return redirect()->route('filament.pages.edit-team', ['team' => $team]);
-    // }
-
     protected function getViewData(): array
     {
         return [
