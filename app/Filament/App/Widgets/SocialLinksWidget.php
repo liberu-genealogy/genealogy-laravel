@@ -8,7 +8,7 @@ class SocialLinksWidget extends Widget
 {
     protected static string $view = 'filament.app.widgets.social-links-widget';
 
-    public function render()
+ public function render(): \Illuminate\Contracts\View\View
     {
         return view(static::$view, [
             'links' => [
