@@ -80,12 +80,12 @@ class Person extends Model
 
     public function events()
     {
-        return $this->hasMany(PersonEvent::class);
+        return $this->hasMany(PersonEvent::class)->select(['id', 'person_id', 'title', 'date', 'places_id']);
     }
 
     public function childInFamily()
     {
-        return $this->belongsTo(Family::class, 'child_in_family_id');
+        return $this->belongsTo(Family::class, 'child_in_family_id')->select(['id', 'husband_id', 'wife_id']);
     }
 
     public function familiesAsHusband()
@@ -179,5 +179,31 @@ class Person extends Model
     public function death()
     {
         return $this->events->where('title', '=', 'DEAT')->first();
+    }
+
+    public function scopeWithBasicInfo($query)
+    {
+        return $query->select(['id', 'givn', 'surn', 'sex', 'child_in_family_id', 'birthday', 'deathday']);
+    }
+
+    public static function getListOptimized()
+    {
+        return self::withBasicInfo()->get()->mapWithKeys(function ($person) {
+            return [$person->id => $person->fullname()];
+        });
+    }
+
+    public static function getListCached()
+    {
+        return cache()->remember('person_list', now()->addHours(1), function () {
+            return self::getListOptimized();
+        });
+    }
+
+    public static function getBasicInfoCached($id)
+    {
+        return cache()->remember("person_basic_info_{$id}", now()->addHours(1), function () use ($id) {
+            return self::withBasicInfo()->find($id);
+        });
     }
 }

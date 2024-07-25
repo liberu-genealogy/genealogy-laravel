@@ -26,6 +26,16 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        if (config('app.debug')) {
+            \DB::listen(function ($query) {
+                \Log::info(
+                    $query->sql,
+                    $query->bindings,
+                    $query->time
+                );
+            });
+        }
+
         // Register Livewire components here
         // Livewire::component('devilliers-report', DevilliersReport::class);
         // Livewire::component('descendant-chart-component', DescendantChartComponent::class);
