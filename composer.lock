@@ -8,16 +8,16 @@
     "packages": [
         {
             "name": "althinect/filament-spatie-roles-permissions",
-            "version": "v2.2.30",
+            "version": "v2.2.31",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Althinect/filament-spatie-roles-permissions.git",
-                "reference": "0fb1a3ebe79b8a2e101317afd8f1c4a93082adbf"
+                "reference": "d68c574c864b0acb57c32b3801790d81dfdd90f1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Althinect/filament-spatie-roles-permissions/zipball/0fb1a3ebe79b8a2e101317afd8f1c4a93082adbf",
-                "reference": "0fb1a3ebe79b8a2e101317afd8f1c4a93082adbf",
+                "url": "https://api.github.com/repos/Althinect/filament-spatie-roles-permissions/zipball/d68c574c864b0acb57c32b3801790d81dfdd90f1",
+                "reference": "d68c574c864b0acb57c32b3801790d81dfdd90f1",
                 "shasum": ""
             },
             "require": {
@@ -65,9 +65,9 @@
             ],
             "support": {
                 "issues": "https://github.com/Althinect/filament-spatie-roles-permissions/issues",
-                "source": "https://github.com/Althinect/filament-spatie-roles-permissions/tree/v2.2.30"
+                "source": "https://github.com/Althinect/filament-spatie-roles-permissions/tree/v2.2.31"
             },
-            "time": "2024-08-07T05:08:48+00:00"
+            "time": "2024-08-17T15:46:10+00:00"
         },
         {
             "name": "anourvalar/eloquent-serialize",
@@ -1237,7 +1237,7 @@
         },
         {
             "name": "filament/actions",
-            "version": "v3.2.101",
+            "version": "v3.2.102",
             "source": {
                 "type": "git",
                 "url": "https://github.com/filamentphp/actions.git",
@@ -1290,7 +1290,7 @@
         },
         {
             "name": "filament/filament",
-            "version": "v3.2.101",
+            "version": "v3.2.102",
             "source": {
                 "type": "git",
                 "url": "https://github.com/filamentphp/panels.git",
@@ -1355,16 +1355,16 @@
         },
         {
             "name": "filament/forms",
-            "version": "v3.2.101",
+            "version": "v3.2.102",
             "source": {
                 "type": "git",
                 "url": "https://github.com/filamentphp/forms.git",
-                "reference": "7fc0e90e115248a2bfae440a36bddf8185c2040b"
+                "reference": "32ef8b049ac3c4577407cdc10e576082863f7e47"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/filamentphp/forms/zipball/7fc0e90e115248a2bfae440a36bddf8185c2040b",
-                "reference": "7fc0e90e115248a2bfae440a36bddf8185c2040b",
+                "url": "https://api.github.com/repos/filamentphp/forms/zipball/32ef8b049ac3c4577407cdc10e576082863f7e47",
+                "reference": "32ef8b049ac3c4577407cdc10e576082863f7e47",
                 "shasum": ""
             },
             "require": {
@@ -1407,11 +1407,11 @@
                 "issues": "https://github.com/filamentphp/filament/issues",
                 "source": "https://github.com/filamentphp/filament"
             },
-            "time": "2024-08-13T12:35:49+00:00"
+            "time": "2024-08-15T19:37:09+00:00"
         },
         {
             "name": "filament/infolists",
-            "version": "v3.2.101",
+            "version": "v3.2.102",
             "source": {
                 "type": "git",
                 "url": "https://github.com/filamentphp/infolists.git",
@@ -1462,7 +1462,7 @@
         },
         {
             "name": "filament/notifications",
-            "version": "v3.2.101",
+            "version": "v3.2.102",
             "source": {
                 "type": "git",
                 "url": "https://github.com/filamentphp/notifications.git",
@@ -1514,7 +1514,7 @@
         },
         {
             "name": "filament/support",
-            "version": "v3.2.101",
+            "version": "v3.2.102",
             "source": {
                 "type": "git",
                 "url": "https://github.com/filamentphp/support.git",
@@ -1573,7 +1573,7 @@
         },
         {
             "name": "filament/tables",
-            "version": "v3.2.101",
+            "version": "v3.2.102",
             "source": {
                 "type": "git",
                 "url": "https://github.com/filamentphp/tables.git",
@@ -1625,7 +1625,7 @@
         },
         {
             "name": "filament/widgets",
-            "version": "v3.2.101",
+            "version": "v3.2.102",
             "source": {
                 "type": "git",
                 "url": "https://github.com/filamentphp/widgets.git",
@@ -3341,16 +3341,16 @@
         },
         {
             "name": "league/commonmark",
-            "version": "2.5.2",
+            "version": "2.5.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/commonmark.git",
-                "reference": "df09d5b6a4188f8f3c3ab2e43a109076a5eeb767"
+                "reference": "b650144166dfa7703e62a22e493b853b58d874b0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/commonmark/zipball/df09d5b6a4188f8f3c3ab2e43a109076a5eeb767",
-                "reference": "df09d5b6a4188f8f3c3ab2e43a109076a5eeb767",
+                "url": "https://api.github.com/repos/thephpleague/commonmark/zipball/b650144166dfa7703e62a22e493b853b58d874b0",
+                "reference": "b650144166dfa7703e62a22e493b853b58d874b0",
                 "shasum": ""
             },
             "require": {
@@ -3363,8 +3363,8 @@
             },
             "require-dev": {
                 "cebe/markdown": "^1.0",
-                "commonmark/cmark": "0.31.0",
-                "commonmark/commonmark.js": "0.31.0",
+                "commonmark/cmark": "0.31.1",
+                "commonmark/commonmark.js": "0.31.1",
                 "composer/package-versions-deprecated": "^1.8",
                 "embed/embed": "^4.4",
                 "erusev/parsedown": "^1.0",
@@ -3443,7 +3443,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2024-08-14T10:56:57+00:00"
+            "time": "2024-08-16T11:46:16+00:00"
         },
         {
             "name": "league/config",
@@ -4192,16 +4192,16 @@
         },
         {
             "name": "liberu-genealogy/php-gedcom",
-            "version": "v2.0.2",
+            "version": "v2.0.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/liberu-genealogy/php-gedcom.git",
-                "reference": "720daa51f73008c6a1aedf07eca9d30824d57663"
+                "reference": "9c2ba2aefc91d95ed72eefa0b425b4619da3b4bb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/liberu-genealogy/php-gedcom/zipball/720daa51f73008c6a1aedf07eca9d30824d57663",
-                "reference": "720daa51f73008c6a1aedf07eca9d30824d57663",
+                "url": "https://api.github.com/repos/liberu-genealogy/php-gedcom/zipball/9c2ba2aefc91d95ed72eefa0b425b4619da3b4bb",
+                "reference": "9c2ba2aefc91d95ed72eefa0b425b4619da3b4bb",
                 "shasum": ""
             },
             "require": {
@@ -4231,7 +4231,7 @@
             ],
             "support": {
                 "issues": "https://github.com/liberu-genealogy/php-gedcom/issues",
-                "source": "https://github.com/liberu-genealogy/php-gedcom/tree/v2.0.2"
+                "source": "https://github.com/liberu-genealogy/php-gedcom/tree/v2.0.4"
             },
             "funding": [
                 {
@@ -4239,7 +4239,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2024-05-17T21:02:53+00:00"
+            "time": "2024-08-18T11:03:05+00:00"
         },
         {
             "name": "livewire/livewire",
