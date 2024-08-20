@@ -2,17 +2,20 @@
 
 namespace App\Policies;
 
-use App\Models\Author;
 use App\Models\User;
+use App\Models\Author;
+use Illuminate\Auth\Access\HandlesAuthorization;
 
 class AuthorPolicy
 {
+    use HandlesAuthorization;
+
     /**
      * Determine whether the user can view any models.
      */
     public function viewAny(User $user): bool
     {
-        return $user->checkPermissionTo('view-any Author');
+        return $user->can('view_any_author');
     }
 
     /**
@@ -20,7 +23,7 @@ class AuthorPolicy
      */
     public function view(User $user, Author $author): bool
     {
-        return $user->checkPermissionTo('view Author');
+        return $user->can('view_author');
     }
 
     /**
@@ -28,7 +31,7 @@ class AuthorPolicy
      */
     public function create(User $user): bool
     {
-        return $user->checkPermissionTo('create Author');
+        return $user->can('create_author');
     }
 
     /**
@@ -36,7 +39,7 @@ class AuthorPolicy
      */
     public function update(User $user, Author $author): bool
     {
-        return $user->checkPermissionTo('update Author');
+        return $user->can('update_author');
     }
 
     /**
@@ -44,22 +47,62 @@ class AuthorPolicy
      */
     public function delete(User $user, Author $author): bool
     {
-        return $user->checkPermissionTo('delete Author');
+        return $user->can('delete_author');
     }
 
     /**
-     * Determine whether the user can restore the model.
+     * Determine whether the user can bulk delete.
      */
-    public function restore(User $user, Author $author): bool
+    public function deleteAny(User $user): bool
     {
-        return $user->checkPermissionTo('restore Author');
+        return $user->can('delete_any_author');
     }
 
     /**
-     * Determine whether the user can permanently delete the model.
+     * Determine whether the user can permanently delete.
      */
     public function forceDelete(User $user, Author $author): bool
     {
-        return $user->checkPermissionTo('force-delete Author');
+        return $user->can('force_delete_author');
+    }
+
+    /**
+     * Determine whether the user can permanently bulk delete.
+     */
+    public function forceDeleteAny(User $user): bool
+    {
+        return $user->can('force_delete_any_author');
+    }
+
+    /**
+     * Determine whether the user can restore.
+     */
+    public function restore(User $user, Author $author): bool
+    {
+        return $user->can('restore_author');
+    }
+
+    /**
+     * Determine whether the user can bulk restore.
+     */
+    public function restoreAny(User $user): bool
+    {
+        return $user->can('restore_any_author');
+    }
+
+    /**
+     * Determine whether the user can replicate.
+     */
+    public function replicate(User $user, Author $author): bool
+    {
+        return $user->can('replicate_author');
+    }
+
+    /**
+     * Determine whether the user can reorder.
+     */
+    public function reorder(User $user): bool
+    {
+        return $user->can('reorder_author');
     }
 }

@@ -2,25 +2,28 @@
 
 namespace App\Policies;
 
-use App\Models\FamilyEvent;
 use App\Models\User;
+use App\Models\FamilyEvent;
+use Illuminate\Auth\Access\HandlesAuthorization;
 
 class FamilyEventPolicy
 {
+    use HandlesAuthorization;
+
     /**
      * Determine whether the user can view any models.
      */
     public function viewAny(User $user): bool
     {
-        return $user->checkPermissionTo('view-any FamilyEvent');
+        return $user->can('view_any_family::event');
     }
 
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, FamilyEvent $familyevent): bool
+    public function view(User $user, FamilyEvent $familyEvent): bool
     {
-        return $user->checkPermissionTo('view FamilyEvent');
+        return $user->can('view_family::event');
     }
 
     /**
@@ -28,38 +31,78 @@ class FamilyEventPolicy
      */
     public function create(User $user): bool
     {
-        return $user->checkPermissionTo('create FamilyEvent');
+        return $user->can('create_family::event');
     }
 
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, FamilyEvent $familyevent): bool
+    public function update(User $user, FamilyEvent $familyEvent): bool
     {
-        return $user->checkPermissionTo('update FamilyEvent');
+        return $user->can('update_family::event');
     }
 
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user, FamilyEvent $familyevent): bool
+    public function delete(User $user, FamilyEvent $familyEvent): bool
     {
-        return $user->checkPermissionTo('delete FamilyEvent');
+        return $user->can('delete_family::event');
     }
 
     /**
-     * Determine whether the user can restore the model.
+     * Determine whether the user can bulk delete.
      */
-    public function restore(User $user, FamilyEvent $familyevent): bool
+    public function deleteAny(User $user): bool
     {
-        return $user->checkPermissionTo('restore FamilyEvent');
+        return $user->can('delete_any_family::event');
     }
 
     /**
-     * Determine whether the user can permanently delete the model.
+     * Determine whether the user can permanently delete.
      */
-    public function forceDelete(User $user, FamilyEvent $familyevent): bool
+    public function forceDelete(User $user, FamilyEvent $familyEvent): bool
     {
-        return $user->checkPermissionTo('force-delete FamilyEvent');
+        return $user->can('force_delete_family::event');
+    }
+
+    /**
+     * Determine whether the user can permanently bulk delete.
+     */
+    public function forceDeleteAny(User $user): bool
+    {
+        return $user->can('force_delete_any_family::event');
+    }
+
+    /**
+     * Determine whether the user can restore.
+     */
+    public function restore(User $user, FamilyEvent $familyEvent): bool
+    {
+        return $user->can('restore_family::event');
+    }
+
+    /**
+     * Determine whether the user can bulk restore.
+     */
+    public function restoreAny(User $user): bool
+    {
+        return $user->can('restore_any_family::event');
+    }
+
+    /**
+     * Determine whether the user can replicate.
+     */
+    public function replicate(User $user, FamilyEvent $familyEvent): bool
+    {
+        return $user->can('replicate_family::event');
+    }
+
+    /**
+     * Determine whether the user can reorder.
+     */
+    public function reorder(User $user): bool
+    {
+        return $user->can('reorder_family::event');
     }
 }

@@ -2,18 +2,20 @@
 
 namespace App\Policies;
 
-use App\Models\Addr;
 use App\Models\User;
+use App\Models\Addr;
+use Illuminate\Auth\Access\HandlesAuthorization;
 
 class AddrPolicy
 {
+    use HandlesAuthorization;
+
     /**
      * Determine whether the user can view any models.
      */
     public function viewAny(User $user): bool
     {
-        // dd($user->getAllPermissions());
-        return $user->checkPermissionTo('view-any Addr');
+        return $user->can('view_any_addr');
     }
 
     /**
@@ -21,7 +23,7 @@ class AddrPolicy
      */
     public function view(User $user, Addr $addr): bool
     {
-        return $user->checkPermissionTo('view Addr');
+        return $user->can('view_addr');
     }
 
     /**
@@ -29,7 +31,7 @@ class AddrPolicy
      */
     public function create(User $user): bool
     {
-        return $user->checkPermissionTo('create Addr');
+        return $user->can('create_addr');
     }
 
     /**
@@ -37,7 +39,7 @@ class AddrPolicy
      */
     public function update(User $user, Addr $addr): bool
     {
-        return $user->checkPermissionTo('update Addr');
+        return $user->can('update_addr');
     }
 
     /**
@@ -45,22 +47,62 @@ class AddrPolicy
      */
     public function delete(User $user, Addr $addr): bool
     {
-        return $user->checkPermissionTo('delete Addr');
+        return $user->can('delete_addr');
     }
 
     /**
-     * Determine whether the user can restore the model.
+     * Determine whether the user can bulk delete.
      */
-    public function restore(User $user, Addr $addr): bool
+    public function deleteAny(User $user): bool
     {
-        return $user->checkPermissionTo('restore Addr');
+        return $user->can('delete_any_addr');
     }
 
     /**
-     * Determine whether the user can permanently delete the model.
+     * Determine whether the user can permanently delete.
      */
     public function forceDelete(User $user, Addr $addr): bool
     {
-        return $user->checkPermissionTo('force-delete Addr');
+        return $user->can('force_delete_addr');
+    }
+
+    /**
+     * Determine whether the user can permanently bulk delete.
+     */
+    public function forceDeleteAny(User $user): bool
+    {
+        return $user->can('force_delete_any_addr');
+    }
+
+    /**
+     * Determine whether the user can restore.
+     */
+    public function restore(User $user, Addr $addr): bool
+    {
+        return $user->can('restore_addr');
+    }
+
+    /**
+     * Determine whether the user can bulk restore.
+     */
+    public function restoreAny(User $user): bool
+    {
+        return $user->can('restore_any_addr');
+    }
+
+    /**
+     * Determine whether the user can replicate.
+     */
+    public function replicate(User $user, Addr $addr): bool
+    {
+        return $user->can('replicate_addr');
+    }
+
+    /**
+     * Determine whether the user can reorder.
+     */
+    public function reorder(User $user): bool
+    {
+        return $user->can('reorder_addr');
     }
 }

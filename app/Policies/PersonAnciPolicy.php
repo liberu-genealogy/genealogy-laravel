@@ -2,25 +2,28 @@
 
 namespace App\Policies;
 
-use App\Models\PersonAnci;
 use App\Models\User;
+use App\Models\PersonAnci;
+use Illuminate\Auth\Access\HandlesAuthorization;
 
 class PersonAnciPolicy
 {
+    use HandlesAuthorization;
+
     /**
      * Determine whether the user can view any models.
      */
     public function viewAny(User $user): bool
     {
-        return $user->checkPermissionTo('view-any PersonAnci');
+        return $user->can('view_any_person::anci');
     }
 
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, PersonAnci $personanci): bool
+    public function view(User $user, PersonAnci $personAnci): bool
     {
-        return $user->checkPermissionTo('view PersonAnci');
+        return $user->can('view_person::anci');
     }
 
     /**
@@ -28,38 +31,78 @@ class PersonAnciPolicy
      */
     public function create(User $user): bool
     {
-        return $user->checkPermissionTo('create PersonAnci');
+        return $user->can('create_person::anci');
     }
 
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, PersonAnci $personanci): bool
+    public function update(User $user, PersonAnci $personAnci): bool
     {
-        return $user->checkPermissionTo('update PersonAnci');
+        return $user->can('update_person::anci');
     }
 
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user, PersonAnci $personanci): bool
+    public function delete(User $user, PersonAnci $personAnci): bool
     {
-        return $user->checkPermissionTo('delete PersonAnci');
+        return $user->can('delete_person::anci');
     }
 
     /**
-     * Determine whether the user can restore the model.
+     * Determine whether the user can bulk delete.
      */
-    public function restore(User $user, PersonAnci $personanci): bool
+    public function deleteAny(User $user): bool
     {
-        return $user->checkPermissionTo('restore PersonAnci');
+        return $user->can('delete_any_person::anci');
     }
 
     /**
-     * Determine whether the user can permanently delete the model.
+     * Determine whether the user can permanently delete.
      */
-    public function forceDelete(User $user, PersonAnci $personanci): bool
+    public function forceDelete(User $user, PersonAnci $personAnci): bool
     {
-        return $user->checkPermissionTo('force-delete PersonAnci');
+        return $user->can('force_delete_person::anci');
+    }
+
+    /**
+     * Determine whether the user can permanently bulk delete.
+     */
+    public function forceDeleteAny(User $user): bool
+    {
+        return $user->can('force_delete_any_person::anci');
+    }
+
+    /**
+     * Determine whether the user can restore.
+     */
+    public function restore(User $user, PersonAnci $personAnci): bool
+    {
+        return $user->can('restore_person::anci');
+    }
+
+    /**
+     * Determine whether the user can bulk restore.
+     */
+    public function restoreAny(User $user): bool
+    {
+        return $user->can('restore_any_person::anci');
+    }
+
+    /**
+     * Determine whether the user can replicate.
+     */
+    public function replicate(User $user, PersonAnci $personAnci): bool
+    {
+        return $user->can('replicate_person::anci');
+    }
+
+    /**
+     * Determine whether the user can reorder.
+     */
+    public function reorder(User $user): bool
+    {
+        return $user->can('reorder_person::anci');
     }
 }

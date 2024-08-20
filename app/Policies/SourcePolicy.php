@@ -2,17 +2,20 @@
 
 namespace App\Policies;
 
-use App\Models\Source;
 use App\Models\User;
+use App\Models\Source;
+use Illuminate\Auth\Access\HandlesAuthorization;
 
 class SourcePolicy
 {
+    use HandlesAuthorization;
+
     /**
      * Determine whether the user can view any models.
      */
     public function viewAny(User $user): bool
     {
-        return $user->checkPermissionTo('view-any Source');
+        return $user->can('view_any_source');
     }
 
     /**
@@ -20,7 +23,7 @@ class SourcePolicy
      */
     public function view(User $user, Source $source): bool
     {
-        return $user->checkPermissionTo('view Source');
+        return $user->can('view_source');
     }
 
     /**
@@ -28,7 +31,7 @@ class SourcePolicy
      */
     public function create(User $user): bool
     {
-        return $user->checkPermissionTo('create Source');
+        return $user->can('create_source');
     }
 
     /**
@@ -36,7 +39,7 @@ class SourcePolicy
      */
     public function update(User $user, Source $source): bool
     {
-        return $user->checkPermissionTo('update Source');
+        return $user->can('update_source');
     }
 
     /**
@@ -44,22 +47,62 @@ class SourcePolicy
      */
     public function delete(User $user, Source $source): bool
     {
-        return $user->checkPermissionTo('delete Source');
+        return $user->can('delete_source');
     }
 
     /**
-     * Determine whether the user can restore the model.
+     * Determine whether the user can bulk delete.
      */
-    public function restore(User $user, Source $source): bool
+    public function deleteAny(User $user): bool
     {
-        return $user->checkPermissionTo('restore Source');
+        return $user->can('delete_any_source');
     }
 
     /**
-     * Determine whether the user can permanently delete the model.
+     * Determine whether the user can permanently delete.
      */
     public function forceDelete(User $user, Source $source): bool
     {
-        return $user->checkPermissionTo('force-delete Source');
+        return $user->can('force_delete_source');
+    }
+
+    /**
+     * Determine whether the user can permanently bulk delete.
+     */
+    public function forceDeleteAny(User $user): bool
+    {
+        return $user->can('force_delete_any_source');
+    }
+
+    /**
+     * Determine whether the user can restore.
+     */
+    public function restore(User $user, Source $source): bool
+    {
+        return $user->can('restore_source');
+    }
+
+    /**
+     * Determine whether the user can bulk restore.
+     */
+    public function restoreAny(User $user): bool
+    {
+        return $user->can('restore_any_source');
+    }
+
+    /**
+     * Determine whether the user can replicate.
+     */
+    public function replicate(User $user, Source $source): bool
+    {
+        return $user->can('replicate_source');
+    }
+
+    /**
+     * Determine whether the user can reorder.
+     */
+    public function reorder(User $user): bool
+    {
+        return $user->can('reorder_source');
     }
 }

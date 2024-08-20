@@ -2,17 +2,20 @@
 
 namespace App\Policies;
 
-use App\Models\Chan;
 use App\Models\User;
+use App\Models\Chan;
+use Illuminate\Auth\Access\HandlesAuthorization;
 
 class ChanPolicy
 {
+    use HandlesAuthorization;
+
     /**
      * Determine whether the user can view any models.
      */
     public function viewAny(User $user): bool
     {
-        return $user->checkPermissionTo('view-any Chan');
+        return $user->can('view_any_chan');
     }
 
     /**
@@ -20,7 +23,7 @@ class ChanPolicy
      */
     public function view(User $user, Chan $chan): bool
     {
-        return $user->checkPermissionTo('view Chan');
+        return $user->can('view_chan');
     }
 
     /**
@@ -28,7 +31,7 @@ class ChanPolicy
      */
     public function create(User $user): bool
     {
-        return $user->checkPermissionTo('create Chan');
+        return $user->can('create_chan');
     }
 
     /**
@@ -36,7 +39,7 @@ class ChanPolicy
      */
     public function update(User $user, Chan $chan): bool
     {
-        return $user->checkPermissionTo('update Chan');
+        return $user->can('update_chan');
     }
 
     /**
@@ -44,22 +47,62 @@ class ChanPolicy
      */
     public function delete(User $user, Chan $chan): bool
     {
-        return $user->checkPermissionTo('delete Chan');
+        return $user->can('delete_chan');
     }
 
     /**
-     * Determine whether the user can restore the model.
+     * Determine whether the user can bulk delete.
      */
-    public function restore(User $user, Chan $chan): bool
+    public function deleteAny(User $user): bool
     {
-        return $user->checkPermissionTo('restore Chan');
+        return $user->can('delete_any_chan');
     }
 
     /**
-     * Determine whether the user can permanently delete the model.
+     * Determine whether the user can permanently delete.
      */
     public function forceDelete(User $user, Chan $chan): bool
     {
-        return $user->checkPermissionTo('force-delete Chan');
+        return $user->can('force_delete_chan');
+    }
+
+    /**
+     * Determine whether the user can permanently bulk delete.
+     */
+    public function forceDeleteAny(User $user): bool
+    {
+        return $user->can('force_delete_any_chan');
+    }
+
+    /**
+     * Determine whether the user can restore.
+     */
+    public function restore(User $user, Chan $chan): bool
+    {
+        return $user->can('restore_chan');
+    }
+
+    /**
+     * Determine whether the user can bulk restore.
+     */
+    public function restoreAny(User $user): bool
+    {
+        return $user->can('restore_any_chan');
+    }
+
+    /**
+     * Determine whether the user can replicate.
+     */
+    public function replicate(User $user, Chan $chan): bool
+    {
+        return $user->can('replicate_chan');
+    }
+
+    /**
+     * Determine whether the user can reorder.
+     */
+    public function reorder(User $user): bool
+    {
+        return $user->can('reorder_chan');
     }
 }

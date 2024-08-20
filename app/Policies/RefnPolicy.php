@@ -2,17 +2,20 @@
 
 namespace App\Policies;
 
-use App\Models\Refn;
 use App\Models\User;
+use App\Models\Refn;
+use Illuminate\Auth\Access\HandlesAuthorization;
 
 class RefnPolicy
 {
+    use HandlesAuthorization;
+
     /**
      * Determine whether the user can view any models.
      */
     public function viewAny(User $user): bool
     {
-        return $user->checkPermissionTo('view-any Refn');
+        return $user->can('view_any_refn');
     }
 
     /**
@@ -20,7 +23,7 @@ class RefnPolicy
      */
     public function view(User $user, Refn $refn): bool
     {
-        return $user->checkPermissionTo('view Refn');
+        return $user->can('view_refn');
     }
 
     /**
@@ -28,7 +31,7 @@ class RefnPolicy
      */
     public function create(User $user): bool
     {
-        return $user->checkPermissionTo('create Refn');
+        return $user->can('create_refn');
     }
 
     /**
@@ -36,7 +39,7 @@ class RefnPolicy
      */
     public function update(User $user, Refn $refn): bool
     {
-        return $user->checkPermissionTo('update Refn');
+        return $user->can('update_refn');
     }
 
     /**
@@ -44,22 +47,62 @@ class RefnPolicy
      */
     public function delete(User $user, Refn $refn): bool
     {
-        return $user->checkPermissionTo('delete Refn');
+        return $user->can('delete_refn');
     }
 
     /**
-     * Determine whether the user can restore the model.
+     * Determine whether the user can bulk delete.
      */
-    public function restore(User $user, Refn $refn): bool
+    public function deleteAny(User $user): bool
     {
-        return $user->checkPermissionTo('restore Refn');
+        return $user->can('delete_any_refn');
     }
 
     /**
-     * Determine whether the user can permanently delete the model.
+     * Determine whether the user can permanently delete.
      */
     public function forceDelete(User $user, Refn $refn): bool
     {
-        return $user->checkPermissionTo('force-delete Refn');
+        return $user->can('force_delete_refn');
+    }
+
+    /**
+     * Determine whether the user can permanently bulk delete.
+     */
+    public function forceDeleteAny(User $user): bool
+    {
+        return $user->can('force_delete_any_refn');
+    }
+
+    /**
+     * Determine whether the user can restore.
+     */
+    public function restore(User $user, Refn $refn): bool
+    {
+        return $user->can('restore_refn');
+    }
+
+    /**
+     * Determine whether the user can bulk restore.
+     */
+    public function restoreAny(User $user): bool
+    {
+        return $user->can('restore_any_refn');
+    }
+
+    /**
+     * Determine whether the user can replicate.
+     */
+    public function replicate(User $user, Refn $refn): bool
+    {
+        return $user->can('replicate_refn');
+    }
+
+    /**
+     * Determine whether the user can reorder.
+     */
+    public function reorder(User $user): bool
+    {
+        return $user->can('reorder_refn');
     }
 }

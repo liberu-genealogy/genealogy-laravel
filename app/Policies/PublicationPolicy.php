@@ -2,17 +2,20 @@
 
 namespace App\Policies;
 
-use App\Models\Publication;
 use App\Models\User;
+use App\Models\Publication;
+use Illuminate\Auth\Access\HandlesAuthorization;
 
 class PublicationPolicy
 {
+    use HandlesAuthorization;
+
     /**
      * Determine whether the user can view any models.
      */
     public function viewAny(User $user): bool
     {
-        return $user->checkPermissionTo('view-any Publication');
+        return $user->can('view_any_publication');
     }
 
     /**
@@ -20,7 +23,7 @@ class PublicationPolicy
      */
     public function view(User $user, Publication $publication): bool
     {
-        return $user->checkPermissionTo('view Publication');
+        return $user->can('view_publication');
     }
 
     /**
@@ -28,7 +31,7 @@ class PublicationPolicy
      */
     public function create(User $user): bool
     {
-        return $user->checkPermissionTo('create Publication');
+        return $user->can('create_publication');
     }
 
     /**
@@ -36,7 +39,7 @@ class PublicationPolicy
      */
     public function update(User $user, Publication $publication): bool
     {
-        return $user->checkPermissionTo('update Publication');
+        return $user->can('update_publication');
     }
 
     /**
@@ -44,22 +47,62 @@ class PublicationPolicy
      */
     public function delete(User $user, Publication $publication): bool
     {
-        return $user->checkPermissionTo('delete Publication');
+        return $user->can('delete_publication');
     }
 
     /**
-     * Determine whether the user can restore the model.
+     * Determine whether the user can bulk delete.
      */
-    public function restore(User $user, Publication $publication): bool
+    public function deleteAny(User $user): bool
     {
-        return $user->checkPermissionTo('restore Publication');
+        return $user->can('delete_any_publication');
     }
 
     /**
-     * Determine whether the user can permanently delete the model.
+     * Determine whether the user can permanently delete.
      */
     public function forceDelete(User $user, Publication $publication): bool
     {
-        return $user->checkPermissionTo('force-delete Publication');
+        return $user->can('force_delete_publication');
+    }
+
+    /**
+     * Determine whether the user can permanently bulk delete.
+     */
+    public function forceDeleteAny(User $user): bool
+    {
+        return $user->can('force_delete_any_publication');
+    }
+
+    /**
+     * Determine whether the user can restore.
+     */
+    public function restore(User $user, Publication $publication): bool
+    {
+        return $user->can('restore_publication');
+    }
+
+    /**
+     * Determine whether the user can bulk restore.
+     */
+    public function restoreAny(User $user): bool
+    {
+        return $user->can('restore_any_publication');
+    }
+
+    /**
+     * Determine whether the user can replicate.
+     */
+    public function replicate(User $user, Publication $publication): bool
+    {
+        return $user->can('replicate_publication');
+    }
+
+    /**
+     * Determine whether the user can reorder.
+     */
+    public function reorder(User $user): bool
+    {
+        return $user->can('reorder_publication');
     }
 }
