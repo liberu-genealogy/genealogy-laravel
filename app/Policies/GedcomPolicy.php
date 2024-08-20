@@ -3,10 +3,10 @@
 namespace App\Policies;
 
 use App\Models\User;
-use App\Models\SourceData;
+use App\Models\Gedcom;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class SourceDataPolicy
+class GedcomPolicy
 {
     use HandlesAuthorization;
 
@@ -15,15 +15,15 @@ class SourceDataPolicy
      */
     public function viewAny(User $user): bool
     {
-        return $user->can('view_any_source::data');
+        return $user->can('view_any_gedcom');
     }
 
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, SourceData $sourceData): bool
+    public function view(User $user, Gedcom $gedcom): bool
     {
-        return $user->can('view_source::data');
+        return $user->can('view_gedcom');
     }
 
     /**
@@ -31,23 +31,23 @@ class SourceDataPolicy
      */
     public function create(User $user): bool
     {
-        return $user->can('create_source::data');
+        return $user->can('create_gedcom');
     }
 
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, SourceData $sourceData): bool
+    public function update(User $user, Gedcom $gedcom): bool
     {
-        return $user->can('update_source::data');
+        return $user->can('update_gedcom');
     }
 
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user, SourceData $sourceData): bool
+    public function delete(User $user, Gedcom $gedcom): bool
     {
-        return $user->can('delete_source::data');
+        return $user->can('delete_gedcom');
     }
 
     /**
@@ -55,15 +55,15 @@ class SourceDataPolicy
      */
     public function deleteAny(User $user): bool
     {
-        return $user->can('delete_any_source::data');
+        return $user->can('delete_any_gedcom');
     }
 
     /**
      * Determine whether the user can permanently delete.
      */
-    public function forceDelete(User $user, SourceData $sourceData): bool
+    public function forceDelete(User $user, Gedcom $gedcom): bool
     {
-        return $user->can('force_delete_source::data');
+        return $user->can('force_delete_gedcom');
     }
 
     /**
@@ -71,15 +71,15 @@ class SourceDataPolicy
      */
     public function forceDeleteAny(User $user): bool
     {
-        return $user->can('force_delete_any_source::data');
+        return $user->can('force_delete_any_gedcom');
     }
 
     /**
      * Determine whether the user can restore.
      */
-    public function restore(User $user, SourceData $sourceData): bool
+    public function restore(User $user, Gedcom $gedcom): bool
     {
-        return $user->can('restore_source::data');
+        return $user->can('restore_gedcom');
     }
 
     /**
@@ -87,15 +87,15 @@ class SourceDataPolicy
      */
     public function restoreAny(User $user): bool
     {
-        return $user->can('restore_any_source::data');
+        return $user->can('restore_any_gedcom');
     }
 
     /**
      * Determine whether the user can replicate.
      */
-    public function replicate(User $user, SourceData $sourceData): bool
+    public function replicate(User $user, Gedcom $gedcom): bool
     {
-        return $user->can('replicate_source::data');
+        return $user->can('replicate_gedcom');
     }
 
     /**
@@ -103,6 +103,6 @@ class SourceDataPolicy
      */
     public function reorder(User $user): bool
     {
-        return $user->can('reorder_source::data');
+        return $user->can('reorder_gedcom');
     }
 }

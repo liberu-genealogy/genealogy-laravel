@@ -42,7 +42,7 @@ class CreateNewUser implements CreatesNewUsers
                 $team = $this->createTeam($user);
                 $user->switchTeam($team);
                 setPermissionsTeamId($team->id);
-                $user->assignRole('free');
+                // $user->assignRole('panel_user');
             });
         });
     }

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use BezhanSalleh\FilamentShield\Traits\HasPanelShield;
 use Filament\Models\Contracts\FilamentUser;
 use Filament\Models\Contracts\HasDefaultTenant;
 use Filament\Models\Contracts\HasTenants;
@@ -34,6 +35,7 @@ class User extends Authenticatable implements HasDefaultTenant, HasTenants, Fila
     use SetsProfilePhotoFromUrl;
     use TwoFactorAuthenticatable;
     use HasTeams;
+    use HasPanelShield;
 
     /**
      * The attributes that are mass assignable.
@@ -100,11 +102,6 @@ class User extends Authenticatable implements HasDefaultTenant, HasTenants, Fila
     public function canAccessTenant(Model $tenant): bool
     {
         return true; //$this->ownedTeams->contains($tenant);
-    }
-
-    public function canAccessPanel(Panel $panel): bool
-    {
-        return true;//$this->hasRole('admin');
     }
 
     public function canAccessFilament(): bool

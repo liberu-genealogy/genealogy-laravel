@@ -2,17 +2,20 @@
 
 namespace App\Policies;
 
-use App\Models\Type;
 use App\Models\User;
+use App\Models\Type;
+use Illuminate\Auth\Access\HandlesAuthorization;
 
 class TypePolicy
 {
+    use HandlesAuthorization;
+
     /**
      * Determine whether the user can view any models.
      */
     public function viewAny(User $user): bool
     {
-        return $user->checkPermissionTo('view-any Type');
+        return $user->can('view_any_type');
     }
 
     /**
@@ -20,7 +23,7 @@ class TypePolicy
      */
     public function view(User $user, Type $type): bool
     {
-        return $user->checkPermissionTo('view Type');
+        return $user->can('view_type');
     }
 
     /**
@@ -28,7 +31,7 @@ class TypePolicy
      */
     public function create(User $user): bool
     {
-        return $user->checkPermissionTo('create Type');
+        return $user->can('create_type');
     }
 
     /**
@@ -36,7 +39,7 @@ class TypePolicy
      */
     public function update(User $user, Type $type): bool
     {
-        return $user->checkPermissionTo('update Type');
+        return $user->can('update_type');
     }
 
     /**
@@ -44,22 +47,62 @@ class TypePolicy
      */
     public function delete(User $user, Type $type): bool
     {
-        return $user->checkPermissionTo('delete Type');
+        return $user->can('delete_type');
     }
 
     /**
-     * Determine whether the user can restore the model.
+     * Determine whether the user can bulk delete.
      */
-    public function restore(User $user, Type $type): bool
+    public function deleteAny(User $user): bool
     {
-        return $user->checkPermissionTo('restore Type');
+        return $user->can('delete_any_type');
     }
 
     /**
-     * Determine whether the user can permanently delete the model.
+     * Determine whether the user can permanently delete.
      */
     public function forceDelete(User $user, Type $type): bool
     {
-        return $user->checkPermissionTo('force-delete Type');
+        return $user->can('force_delete_type');
+    }
+
+    /**
+     * Determine whether the user can permanently bulk delete.
+     */
+    public function forceDeleteAny(User $user): bool
+    {
+        return $user->can('force_delete_any_type');
+    }
+
+    /**
+     * Determine whether the user can restore.
+     */
+    public function restore(User $user, Type $type): bool
+    {
+        return $user->can('restore_type');
+    }
+
+    /**
+     * Determine whether the user can bulk restore.
+     */
+    public function restoreAny(User $user): bool
+    {
+        return $user->can('restore_any_type');
+    }
+
+    /**
+     * Determine whether the user can replicate.
+     */
+    public function replicate(User $user, Type $type): bool
+    {
+        return $user->can('replicate_type');
+    }
+
+    /**
+     * Determine whether the user can reorder.
+     */
+    public function reorder(User $user): bool
+    {
+        return $user->can('reorder_type');
     }
 }

@@ -2,17 +2,20 @@
 
 namespace App\Policies;
 
-use App\Models\Citation;
 use App\Models\User;
+use App\Models\Citation;
+use Illuminate\Auth\Access\HandlesAuthorization;
 
 class CitationPolicy
 {
+    use HandlesAuthorization;
+
     /**
      * Determine whether the user can view any models.
      */
     public function viewAny(User $user): bool
     {
-        return $user->checkPermissionTo('view-any Citation');
+        return $user->can('view_any_citation');
     }
 
     /**
@@ -20,7 +23,7 @@ class CitationPolicy
      */
     public function view(User $user, Citation $citation): bool
     {
-        return $user->checkPermissionTo('view Citation');
+        return $user->can('view_citation');
     }
 
     /**
@@ -28,7 +31,7 @@ class CitationPolicy
      */
     public function create(User $user): bool
     {
-        return $user->checkPermissionTo('create Citation');
+        return $user->can('create_citation');
     }
 
     /**
@@ -36,7 +39,7 @@ class CitationPolicy
      */
     public function update(User $user, Citation $citation): bool
     {
-        return $user->checkPermissionTo('update Citation');
+        return $user->can('update_citation');
     }
 
     /**
@@ -44,22 +47,62 @@ class CitationPolicy
      */
     public function delete(User $user, Citation $citation): bool
     {
-        return $user->checkPermissionTo('delete Citation');
+        return $user->can('delete_citation');
     }
 
     /**
-     * Determine whether the user can restore the model.
+     * Determine whether the user can bulk delete.
      */
-    public function restore(User $user, Citation $citation): bool
+    public function deleteAny(User $user): bool
     {
-        return $user->checkPermissionTo('restore Citation');
+        return $user->can('delete_any_citation');
     }
 
     /**
-     * Determine whether the user can permanently delete the model.
+     * Determine whether the user can permanently delete.
      */
     public function forceDelete(User $user, Citation $citation): bool
     {
-        return $user->checkPermissionTo('force-delete Citation');
+        return $user->can('force_delete_citation');
+    }
+
+    /**
+     * Determine whether the user can permanently bulk delete.
+     */
+    public function forceDeleteAny(User $user): bool
+    {
+        return $user->can('force_delete_any_citation');
+    }
+
+    /**
+     * Determine whether the user can restore.
+     */
+    public function restore(User $user, Citation $citation): bool
+    {
+        return $user->can('restore_citation');
+    }
+
+    /**
+     * Determine whether the user can bulk restore.
+     */
+    public function restoreAny(User $user): bool
+    {
+        return $user->can('restore_any_citation');
+    }
+
+    /**
+     * Determine whether the user can replicate.
+     */
+    public function replicate(User $user, Citation $citation): bool
+    {
+        return $user->can('replicate_citation');
+    }
+
+    /**
+     * Determine whether the user can reorder.
+     */
+    public function reorder(User $user): bool
+    {
+        return $user->can('reorder_citation');
     }
 }

@@ -2,17 +2,20 @@
 
 namespace App\Policies;
 
-use App\Models\Dna;
 use App\Models\User;
+use App\Models\Dna;
+use Illuminate\Auth\Access\HandlesAuthorization;
 
 class DnaPolicy
 {
+    use HandlesAuthorization;
+
     /**
      * Determine whether the user can view any models.
      */
     public function viewAny(User $user): bool
     {
-        return $user->checkPermissionTo('view-any Dna');
+        return $user->can('view_any_dna');
     }
 
     /**
@@ -20,7 +23,7 @@ class DnaPolicy
      */
     public function view(User $user, Dna $dna): bool
     {
-        return $user->checkPermissionTo('view Dna');
+        return $user->can('view_dna');
     }
 
     /**
@@ -28,7 +31,7 @@ class DnaPolicy
      */
     public function create(User $user): bool
     {
-        return $user->checkPermissionTo('create Dna');
+        return $user->can('create_dna');
     }
 
     /**
@@ -36,7 +39,7 @@ class DnaPolicy
      */
     public function update(User $user, Dna $dna): bool
     {
-        return $user->checkPermissionTo('update Dna');
+        return $user->can('update_dna');
     }
 
     /**
@@ -44,22 +47,62 @@ class DnaPolicy
      */
     public function delete(User $user, Dna $dna): bool
     {
-        return $user->checkPermissionTo('delete Dna');
+        return $user->can('delete_dna');
     }
 
     /**
-     * Determine whether the user can restore the model.
+     * Determine whether the user can bulk delete.
      */
-    public function restore(User $user, Dna $dna): bool
+    public function deleteAny(User $user): bool
     {
-        return $user->checkPermissionTo('restore Dna');
+        return $user->can('delete_any_dna');
     }
 
     /**
-     * Determine whether the user can permanently delete the model.
+     * Determine whether the user can permanently delete.
      */
     public function forceDelete(User $user, Dna $dna): bool
     {
-        return $user->checkPermissionTo('force-delete Dna');
+        return $user->can('force_delete_dna');
+    }
+
+    /**
+     * Determine whether the user can permanently bulk delete.
+     */
+    public function forceDeleteAny(User $user): bool
+    {
+        return $user->can('force_delete_any_dna');
+    }
+
+    /**
+     * Determine whether the user can restore.
+     */
+    public function restore(User $user, Dna $dna): bool
+    {
+        return $user->can('restore_dna');
+    }
+
+    /**
+     * Determine whether the user can bulk restore.
+     */
+    public function restoreAny(User $user): bool
+    {
+        return $user->can('restore_any_dna');
+    }
+
+    /**
+     * Determine whether the user can replicate.
+     */
+    public function replicate(User $user, Dna $dna): bool
+    {
+        return $user->can('replicate_dna');
+    }
+
+    /**
+     * Determine whether the user can reorder.
+     */
+    public function reorder(User $user): bool
+    {
+        return $user->can('reorder_dna');
     }
 }

@@ -2,17 +2,20 @@
 
 namespace App\Policies;
 
-use App\Models\Repository;
 use App\Models\User;
+use App\Models\Repository;
+use Illuminate\Auth\Access\HandlesAuthorization;
 
 class RepositoryPolicy
 {
+    use HandlesAuthorization;
+
     /**
      * Determine whether the user can view any models.
      */
     public function viewAny(User $user): bool
     {
-        return $user->checkPermissionTo('view-any Repository');
+        return $user->can('view_any_repository');
     }
 
     /**
@@ -20,7 +23,7 @@ class RepositoryPolicy
      */
     public function view(User $user, Repository $repository): bool
     {
-        return $user->checkPermissionTo('view Repository');
+        return $user->can('view_repository');
     }
 
     /**
@@ -28,7 +31,7 @@ class RepositoryPolicy
      */
     public function create(User $user): bool
     {
-        return $user->checkPermissionTo('create Repository');
+        return $user->can('create_repository');
     }
 
     /**
@@ -36,7 +39,7 @@ class RepositoryPolicy
      */
     public function update(User $user, Repository $repository): bool
     {
-        return $user->checkPermissionTo('update Repository');
+        return $user->can('update_repository');
     }
 
     /**
@@ -44,22 +47,62 @@ class RepositoryPolicy
      */
     public function delete(User $user, Repository $repository): bool
     {
-        return $user->checkPermissionTo('delete Repository');
+        return $user->can('delete_repository');
     }
 
     /**
-     * Determine whether the user can restore the model.
+     * Determine whether the user can bulk delete.
      */
-    public function restore(User $user, Repository $repository): bool
+    public function deleteAny(User $user): bool
     {
-        return $user->checkPermissionTo('restore Repository');
+        return $user->can('delete_any_repository');
     }
 
     /**
-     * Determine whether the user can permanently delete the model.
+     * Determine whether the user can permanently delete.
      */
     public function forceDelete(User $user, Repository $repository): bool
     {
-        return $user->checkPermissionTo('force-delete Repository');
+        return $user->can('force_delete_repository');
+    }
+
+    /**
+     * Determine whether the user can permanently bulk delete.
+     */
+    public function forceDeleteAny(User $user): bool
+    {
+        return $user->can('force_delete_any_repository');
+    }
+
+    /**
+     * Determine whether the user can restore.
+     */
+    public function restore(User $user, Repository $repository): bool
+    {
+        return $user->can('restore_repository');
+    }
+
+    /**
+     * Determine whether the user can bulk restore.
+     */
+    public function restoreAny(User $user): bool
+    {
+        return $user->can('restore_any_repository');
+    }
+
+    /**
+     * Determine whether the user can replicate.
+     */
+    public function replicate(User $user, Repository $repository): bool
+    {
+        return $user->can('replicate_repository');
+    }
+
+    /**
+     * Determine whether the user can reorder.
+     */
+    public function reorder(User $user): bool
+    {
+        return $user->can('reorder_repository');
     }
 }

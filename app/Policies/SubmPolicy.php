@@ -2,17 +2,20 @@
 
 namespace App\Policies;
 
-use App\Models\Subm;
 use App\Models\User;
+use App\Models\Subm;
+use Illuminate\Auth\Access\HandlesAuthorization;
 
 class SubmPolicy
 {
+    use HandlesAuthorization;
+
     /**
      * Determine whether the user can view any models.
      */
     public function viewAny(User $user): bool
     {
-        return $user->checkPermissionTo('view-any Subm');
+        return $user->can('view_any_subm');
     }
 
     /**
@@ -20,7 +23,7 @@ class SubmPolicy
      */
     public function view(User $user, Subm $subm): bool
     {
-        return $user->checkPermissionTo('view Subm');
+        return $user->can('view_subm');
     }
 
     /**
@@ -28,7 +31,7 @@ class SubmPolicy
      */
     public function create(User $user): bool
     {
-        return $user->checkPermissionTo('create Subm');
+        return $user->can('create_subm');
     }
 
     /**
@@ -36,7 +39,7 @@ class SubmPolicy
      */
     public function update(User $user, Subm $subm): bool
     {
-        return $user->checkPermissionTo('update Subm');
+        return $user->can('update_subm');
     }
 
     /**
@@ -44,22 +47,62 @@ class SubmPolicy
      */
     public function delete(User $user, Subm $subm): bool
     {
-        return $user->checkPermissionTo('delete Subm');
+        return $user->can('delete_subm');
     }
 
     /**
-     * Determine whether the user can restore the model.
+     * Determine whether the user can bulk delete.
      */
-    public function restore(User $user, Subm $subm): bool
+    public function deleteAny(User $user): bool
     {
-        return $user->checkPermissionTo('restore Subm');
+        return $user->can('delete_any_subm');
     }
 
     /**
-     * Determine whether the user can permanently delete the model.
+     * Determine whether the user can permanently delete.
      */
     public function forceDelete(User $user, Subm $subm): bool
     {
-        return $user->checkPermissionTo('force-delete Subm');
+        return $user->can('force_delete_subm');
+    }
+
+    /**
+     * Determine whether the user can permanently bulk delete.
+     */
+    public function forceDeleteAny(User $user): bool
+    {
+        return $user->can('force_delete_any_subm');
+    }
+
+    /**
+     * Determine whether the user can restore.
+     */
+    public function restore(User $user, Subm $subm): bool
+    {
+        return $user->can('restore_subm');
+    }
+
+    /**
+     * Determine whether the user can bulk restore.
+     */
+    public function restoreAny(User $user): bool
+    {
+        return $user->can('restore_any_subm');
+    }
+
+    /**
+     * Determine whether the user can replicate.
+     */
+    public function replicate(User $user, Subm $subm): bool
+    {
+        return $user->can('replicate_subm');
+    }
+
+    /**
+     * Determine whether the user can reorder.
+     */
+    public function reorder(User $user): bool
+    {
+        return $user->can('reorder_subm');
     }
 }

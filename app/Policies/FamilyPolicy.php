@@ -2,17 +2,20 @@
 
 namespace App\Policies;
 
-use App\Models\Family;
 use App\Models\User;
+use App\Models\Family;
+use Illuminate\Auth\Access\HandlesAuthorization;
 
 class FamilyPolicy
 {
+    use HandlesAuthorization;
+
     /**
      * Determine whether the user can view any models.
      */
     public function viewAny(User $user): bool
     {
-        return $user->checkPermissionTo('view-any Family');
+        return $user->can('view_any_family');
     }
 
     /**
@@ -20,7 +23,7 @@ class FamilyPolicy
      */
     public function view(User $user, Family $family): bool
     {
-        return $user->checkPermissionTo('view Family');
+        return $user->can('view_family');
     }
 
     /**
@@ -28,7 +31,7 @@ class FamilyPolicy
      */
     public function create(User $user): bool
     {
-        return $user->checkPermissionTo('create Family');
+        return $user->can('create_family');
     }
 
     /**
@@ -36,7 +39,7 @@ class FamilyPolicy
      */
     public function update(User $user, Family $family): bool
     {
-        return $user->checkPermissionTo('update Family');
+        return $user->can('update_family');
     }
 
     /**
@@ -44,22 +47,62 @@ class FamilyPolicy
      */
     public function delete(User $user, Family $family): bool
     {
-        return $user->checkPermissionTo('delete Family');
+        return $user->can('delete_family');
     }
 
     /**
-     * Determine whether the user can restore the model.
+     * Determine whether the user can bulk delete.
      */
-    public function restore(User $user, Family $family): bool
+    public function deleteAny(User $user): bool
     {
-        return $user->checkPermissionTo('restore Family');
+        return $user->can('delete_any_family');
     }
 
     /**
-     * Determine whether the user can permanently delete the model.
+     * Determine whether the user can permanently delete.
      */
     public function forceDelete(User $user, Family $family): bool
     {
-        return $user->checkPermissionTo('force-delete Family');
+        return $user->can('force_delete_family');
+    }
+
+    /**
+     * Determine whether the user can permanently bulk delete.
+     */
+    public function forceDeleteAny(User $user): bool
+    {
+        return $user->can('force_delete_any_family');
+    }
+
+    /**
+     * Determine whether the user can restore.
+     */
+    public function restore(User $user, Family $family): bool
+    {
+        return $user->can('restore_family');
+    }
+
+    /**
+     * Determine whether the user can bulk restore.
+     */
+    public function restoreAny(User $user): bool
+    {
+        return $user->can('restore_any_family');
+    }
+
+    /**
+     * Determine whether the user can replicate.
+     */
+    public function replicate(User $user, Family $family): bool
+    {
+        return $user->can('replicate_family');
+    }
+
+    /**
+     * Determine whether the user can reorder.
+     */
+    public function reorder(User $user): bool
+    {
+        return $user->can('reorder_family');
     }
 }
