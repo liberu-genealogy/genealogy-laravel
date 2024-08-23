@@ -4192,16 +4192,16 @@
         },
         {
             "name": "liberu-genealogy/php-gedcom",
-            "version": "v2.0.4",
+            "version": "v2.0.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/liberu-genealogy/php-gedcom.git",
-                "reference": "9c2ba2aefc91d95ed72eefa0b425b4619da3b4bb"
+                "reference": "62d09e6c5ab45176ccf637959addda46f304e285"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/liberu-genealogy/php-gedcom/zipball/9c2ba2aefc91d95ed72eefa0b425b4619da3b4bb",
-                "reference": "9c2ba2aefc91d95ed72eefa0b425b4619da3b4bb",
+                "url": "https://api.github.com/repos/liberu-genealogy/php-gedcom/zipball/62d09e6c5ab45176ccf637959addda46f304e285",
+                "reference": "62d09e6c5ab45176ccf637959addda46f304e285",
                 "shasum": ""
             },
             "require": {
@@ -4231,7 +4231,7 @@
             ],
             "support": {
                 "issues": "https://github.com/liberu-genealogy/php-gedcom/issues",
-                "source": "https://github.com/liberu-genealogy/php-gedcom/tree/v2.0.4"
+                "source": "https://github.com/liberu-genealogy/php-gedcom/tree/v2.0.5"
             },
             "funding": [
                 {
@@ -4239,7 +4239,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2024-08-18T11:03:05+00:00"
+            "time": "2024-08-22T16:33:55+00:00"
         },
         {
             "name": "livewire/livewire",
