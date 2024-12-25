@@ -38,6 +38,8 @@ class Person extends Model
         'resn',
         'rfn',
         'afn',
+        'tree_position_x',
+        'tree_position_y',
     ];
     // public function searchableAs()
     // {
