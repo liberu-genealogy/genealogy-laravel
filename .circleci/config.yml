@@ -11,7 +11,7 @@ jobs:
   build:
     docker:
       # Specify the version you desire here
-      - image: cimg/php:8.3.3
+      - image: cimg/php:8.4
         environment:
           working_directory: ~/genealogy
           DB_CONNECTION: mysql
