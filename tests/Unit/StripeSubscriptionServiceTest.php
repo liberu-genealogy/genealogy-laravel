@@ -5,21 +5,20 @@ namespace Tests\Unit;
 use App\Models\Team;
 use App\Services\StripeSubscriptionService;
 use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Attributes\Test;
 
 class StripeSubscriptionServiceTest extends TestCase
 {
+    #[Test]
     public function testCreateTrialSubscription(): void
     {
-        // Create a mock Team instance
         $team = $this->createMock(Team::class);
         $team->stripe_customer_id = 'customer_id';
 
-        // Create a mock StripeSubscriptionService instance
         $stripeSubscriptionService = $this->getMockBuilder(StripeSubscriptionService::class)
             ->disableOriginalConstructor()
             ->getMock();
 
-        // Set up expectations for the StripeClient mock
         $stripeClientMock = $this->getMockBuilder(\Stripe\StripeClient::class)
             ->disableOriginalConstructor()
             ->getMock();
@@ -47,12 +46,14 @@ class StripeSubscriptionServiceTest extends TestCase
                     'stripe_subscription_id' => 'subscription_id',
                     'trial_ends_at'          => now()->addDays(14),
                 ]);
-            });
+            }
+});
 
         // Call the method under test
         $stripeSubscriptionService->createTrialSubscription($team);
 
         // Assert the expected behavior
-        $this->assertTrue(true); // Add more specific assertions based on your requirements
+        // Add assertions here
     }
+}
 }
