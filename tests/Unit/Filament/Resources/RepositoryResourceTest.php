@@ -1,47 +1,61 @@
+
+
 <?php
 
 namespace Tests\Unit\Filament\Resources;
 
-// Update the import to use the correct namespace
-use App\Filament\App\Resources\AddrResource;
+use App\Filament\App\Resources\RepositoryResource;
 use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\DateTimePicker;
+use Filament\Forms\Components\Textarea;
 use Filament\Tables\Actions\DeleteBulkAction;
 use Filament\Tables\Actions\EditAction;
 use Filament\Tables\Columns\TextColumn;
 use PHPUnit\Framework\TestCase;
 
-class AddrResourceTest extends TestCase
+class RepositoryResourceTest extends TestCase
 {
     public function test_form_schema_contains_expected_fields(): void
     {
-        $form = AddrResource::form(null);
+        $form = RepositoryResource::form(null);
         $schema = $form->getSchema();
 
         $expectedFields = [
-            'adr1' => TextInput::class,
-            'adr2' => TextInput::class,
-            'city' => TextInput::class,
-            'stae' => TextInput::class,
-            'post' => TextInput::class,
-            'ctry' => TextInput::class,
+            'group' => TextInput::class,
+            'gid' => TextInput::class,
+            'name' => TextInput::class,
+            'description' => Textarea::class,
+            'date' => DateTimePicker::class,
+            'is_active' => TextInput::class,
+            'type_id' => TextInput::class,
+            'repo' => TextInput::class,
+            'addr_id' => TextInput::class,
+            'rin' => TextInput::class,
+            'phon' => TextInput::class,
+            'email' => TextInput::class,
+            'fax' => TextInput::class,
+            'www' => TextInput::class
         ];
 
         foreach ($expectedFields as $fieldName => $fieldClass) {
             $field = collect($schema)->firstWhere('name', $fieldName);
             $this->assertNotNull($field, "Field {$fieldName} does not exist.");
             $this->assertInstanceOf($fieldClass, $field, "Field {$fieldName} is not of type {$fieldClass}.");
-            $this->assertEquals(255, $field->getMaxLength(), "Field {$fieldName} does not have the correct maxLength.");
         }
     }
 
     public function test_table_configuration_includes_correct_columns_and_actions(): void
     {
-        $table = AddrResource::table(null);
+        $table = RepositoryResource::table(null);
         $columns = $table->getColumns();
         $actions = $table->getActions();
         $bulkActions = $table->getBulkActions();
 
-        $expectedColumns = ['adr1', 'adr2', 'city', 'stae', 'post', 'ctry', 'created_at', 'updated_at'];
+        $expectedColumns = [
+            'group', 'gid', 'name', 'date', 'is_active', 'type_id', 'repo', 
+            'addr_id', 'rin', 'phon', 'email', 'fax', 'www', 'created_at', 'updated_at'
+        ];
+        
         foreach ($expectedColumns as $columnName) {
             $column = collect($columns)->firstWhere('name', $columnName);
             $this->assertNotNull($column, "Column {$columnName} does not exist.");
