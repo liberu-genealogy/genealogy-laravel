@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b0d8add99c022472d01cdf657104c102",
+    "content-hash": "126b7ed2d1297e19df6a3d63d9a6a2cc",
     "packages": [
         {
             "name": "althinect/filament-spatie-roles-permissions",
@@ -6920,16 +6920,16 @@
         },
         {
             "name": "stephenjude/filament-jetstream",
-            "version": "0.0.13",
+            "version": "0.0.15",
             "source": {
                 "type": "git",
                 "url": "https://github.com/stephenjude/filament-jetstream.git",
-                "reference": "cb3f6df3137ddf96f9c9660c8fead4135459959d"
+                "reference": "3ba7bb5c59736dfae65ca00a9f6403bd5143dd20"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/stephenjude/filament-jetstream/zipball/cb3f6df3137ddf96f9c9660c8fead4135459959d",
-                "reference": "cb3f6df3137ddf96f9c9660c8fead4135459959d",
+                "url": "https://api.github.com/repos/stephenjude/filament-jetstream/zipball/3ba7bb5c59736dfae65ca00a9f6403bd5143dd20",
+                "reference": "3ba7bb5c59736dfae65ca00a9f6403bd5143dd20",
                 "shasum": ""
             },
             "require": {
@@ -6992,7 +6992,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2024-08-03T12:31:02+00:00"
+            "time": "2024-11-27T12:02:15+00:00"
         },
         {
             "name": "stripe/stripe-php",
@@ -12543,12 +12543,12 @@
     ],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": {},
+    "stability-flags": [],
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
         "php": "^8.3"
     },
-    "platform-dev": {},
-    "plugin-api-version": "2.6.0"
+    "platform-dev": [],
+    "plugin-api-version": "2.3.0"
 }
