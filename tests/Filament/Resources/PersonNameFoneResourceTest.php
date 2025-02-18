@@ -5,8 +5,6 @@ namespace Tests\Filament\Resources;
 use App\Filament\Resources\PersonNameFoneResource;
 use App\Models\PersonNameFone;
 use Filament\Forms\Components\TextInput;
-use Filament\Forms\Form; // Add this import
-use Filament\Tables\Table; // Add this import
 use Filament\Tables\Columns\TextColumn;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
