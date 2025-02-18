@@ -4,6 +4,8 @@ namespace Tests\Filament\Resources;
 
 use App\Filament\Resources\SourceRefResource;
 use Filament\Forms\Components\TextInput;
+use Filament\Forms\Form; // Add this import
+use Filament\Tables\Table; // Add this import
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 

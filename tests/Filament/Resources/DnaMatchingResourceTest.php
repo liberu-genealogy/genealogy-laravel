@@ -5,7 +5,7 @@ namespace Tests\Filament\Resources;
 use App\Filament\Resources\DnaMatchingResource;
 use App\Models\DnaMatching;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use PHPUnit\Framework\TestCase;
+use Tests\TestCase; // Change from PHPUnit\Framework\TestCase;
 
 class DnaMatchingResourceTest extends TestCase
 {
