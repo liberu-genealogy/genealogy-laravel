@@ -5,7 +5,7 @@ namespace Tests\Filament\Resources;
 use App\Filament\Resources\AuthorResource;
 use App\Models\Author;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use PHPUnit\Framework\TestCase;
+use Tests\TestCase; // Change from PHPUnit\Framework\TestCase;
 
 class AuthorResourceTest extends TestCase
 {

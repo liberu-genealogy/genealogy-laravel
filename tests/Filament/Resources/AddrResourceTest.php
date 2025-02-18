@@ -5,7 +5,7 @@ namespace Tests\Filament\Resources;
 use App\Filament\Resources\AddrResource;
 use App\Models\Addr;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use PHPUnit\Framework\TestCase;
+use Tests\TestCase; // Change from PHPUnit\Framework\TestCase;
 
 class AddrResourceTest extends TestCase
 {

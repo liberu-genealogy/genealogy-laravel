@@ -5,7 +5,7 @@ namespace Tests\Filament\Resources;
 use App\Filament\Resources\CitationResource;
 use App\Models\Citation;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use PHPUnit\Framework\TestCase;
+use Tests\TestCase; // Change from PHPUnit\Framework\TestCase;
 
 class CitationResourceTest extends TestCase
 {
