@@ -118,7 +118,7 @@ On our platform you will find user-friendly data tables that provide comprehensi
 
 Customization is crucial, and our forms are designed to be easily editable to meet your specific needs. Customize your family tree to reflect the unique nuances and details of your lineage. Our flexible forms allow you to capture the rich history and connections that make your family history truly special.
 
-To get started, install the application available at https://github.com/liberu-genealogy/genealogy-laravel.
+To get started, install the application available at https://github.com/liberu-genealogy/genealogy-laravel
 
 Download it and explore its user-friendly interface, unleashing the power to easily create and discover your family's legacy.
 
