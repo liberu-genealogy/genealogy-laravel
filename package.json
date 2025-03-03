@@ -17,6 +17,6 @@
     },
     "dependencies": {
         "preline": "^2.4.1",
-        "vite-plugin-static-copy": "^2.2.0"
+        "vite-plugin-static-copy": "^2.3.0"
     }
 }
