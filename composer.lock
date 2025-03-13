@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b0d8add99c022472d01cdf657104c102",
+    "content-hash": "c745e2e598f6e3589cb1573a567e3e57",
     "packages": [
         {
             "name": "althinect/filament-spatie-roles-permissions",
@@ -6912,21 +6912,21 @@
         },
         {
             "name": "stephenjude/filament-jetstream",
-            "version": "0.0.13",
+            "version": "0.0.16",
             "source": {
                 "type": "git",
                 "url": "https://github.com/stephenjude/filament-jetstream.git",
-                "reference": "cb3f6df3137ddf96f9c9660c8fead4135459959d"
+                "reference": "40963cc838c6d6b7994a7e28381d76c16e6a297b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/stephenjude/filament-jetstream/zipball/cb3f6df3137ddf96f9c9660c8fead4135459959d",
-                "reference": "cb3f6df3137ddf96f9c9660c8fead4135459959d",
+                "url": "https://api.github.com/repos/stephenjude/filament-jetstream/zipball/40963cc838c6d6b7994a7e28381d76c16e6a297b",
+                "reference": "40963cc838c6d6b7994a7e28381d76c16e6a297b",
                 "shasum": ""
             },
             "require": {
                 "filament/filament": "^3.0",
-                "illuminate/contracts": "^10.0|^11.0",
+                "illuminate/contracts": "^10.0|^11.0|^12.0",
                 "laravel/jetstream": "^4.2|^5.0",
                 "php": "^8.1",
                 "spatie/laravel-package-tools": "^1.15.0"
@@ -6984,7 +6984,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2024-08-03T12:31:02+00:00"
+            "time": "2025-03-05T17:36:49+00:00"
         },
         {
             "name": "stripe/stripe-php",
@@ -12535,12 +12535,12 @@
     ],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": {},
+    "stability-flags": [],
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
         "php": "^8.3"
     },
-    "platform-dev": {},
-    "plugin-api-version": "2.6.0"
+    "platform-dev": [],
+    "plugin-api-version": "2.3.0"
 }
