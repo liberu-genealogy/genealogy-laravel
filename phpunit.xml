@@ -6,19 +6,21 @@
 >
     <testsuites>
         <testsuite name="Unit">
-            <directory suffix="Test.php">./tests/Unit</directory>
+            <directory>./tests/Unit</directory>
         </testsuite>
         <testsuite name="Feature">
-            <directory suffix="Test.php">./tests/Feature</directory>
+            <directory>./tests/Feature</directory>
         </testsuite>
         <testsuite name="Filament Resources">
-            <directory suffix="Test.php">./tests/Unit/Filament/Resources</directory>
+            <directory>./tests/Unit/Filament/Resources</directory>
         </testsuite>
     </testsuites>
-    <coverage processUncoveredFiles="true" includeUncoveredFiles="true">
+    <source>
         <include>
-            <directory suffix=".php">./app</directory>
+            <directory>./app</directory>
         </include>
+    </source>
+    <coverage>
         <report>
             <clover outputFile="./coverage.xml"/>
             <html outputDirectory="./coverage/html"/>
