@@ -4,37 +4,32 @@ namespace App\Http\Livewire;
 
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
+use Livewire\Attributes\Rule;
 
-class EditProfile extends Component
+final class EditProfile extends Component
 {
-    public $name;
-    public $email;
+    #[Rule('required|string|max:255')]
+    public string $name;
 
-    protected $rules = [
-        'name'  => 'required|string|max:255',
-        'email' => 'required|email|max:255|unique:users,email,'.Auth::id(),
-    ];
+    #[Rule('required|email|max:255')]
+    public string $email;
 
-    public function mount()
+    public function mount(): void
     {
         $user = Auth::user();
-        $this->name = $user->name;
-        $this->email = $user->email;
+        $this->name = $user?->name;
+        $this->email = $user?->email;
     }
 
-    public function updateProfile()
+    public function updateProfile(): void
     {
-        $this->validate();
+        $validated = $this->validate();
 
         try {
-            Auth::user()->update([
-                'name'  => $this->name,
-                'email' => $this->email,
-            ]);
-
-            $this->emit('profileUpdated');
-        } catch (\Exception $e) {
-            $this->emit('profileUpdateFailed', $e->getMessage());
+            Auth::user()?->update($validated);
+            $this->dispatch('profile-updated');
+        } catch (\Throwable $e) {
+            $this->dispatch('profile-update-failed', message: $e->getMessage());
         }
     }
 

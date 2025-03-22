@@ -1,5 +1,3 @@
-
-
 <?php
 
 namespace App\Http\Livewire;
@@ -7,61 +5,58 @@ namespace App\Http\Livewire;
 use App\Models\Person;
 use App\Models\Family;
 use Livewire\Component;
+use Livewire\Attributes\On;
 
-class FamilyTreeBuilder extends Component
+final class FamilyTreeBuilder extends Component
 {
-    public $treeData = [];
-    public $selectedPerson = null;
-    
-    protected $listeners = [
+    public array $treeData = [];
+    public ?Person $selectedPerson = null;
+
+    protected array $listeners = [
         'personMoved' => 'updatePersonPosition',
         'personAdded' => 'addPerson',
         'personRemoved' => 'removePerson'
     ];
 
-    public function mount()
+    public function mount(): void
     {
         $this->loadTreeData();
     }
 
-    public function loadTreeData()
+    private function loadTreeData(): void
     {
-        $people = Person::with(['childInFamily', 'familiesAsHusband', 'familiesAsWife'])
+        $this->treeData = Person::with(['childInFamily', 'familiesAsHusband', 'familiesAsWife'])
             ->get()
-            ->map(function ($person) {
-                return [
-                    'id' => $person->id,
-                    'name' => $person->fullname(),
-                    'position' => [
-                        'x' => $person->tree_position_x ?? 0,
-                        'y' => $person->tree_position_y ?? 0,
-                    ],
-                    'relationships' => [
-                        'parent_family' => $person->child_in_family_id,
-                        'spouse_families' => array_merge(
-                            $person->familiesAsHusband->pluck('id')->toArray(),
-                            $person->familiesAsWife->pluck('id')->toArray()
-                        )
+            ->map(fn (Person $person): array => [
+                'id' => $person->id,
+                'name' => $person->fullname(),
+                'position' => [
+                    'x' => $person->tree_position_x ?? 0,
+                    'y' => $person->tree_position_y ?? 0,
+                ],
+                'relationships' => [
+                    'parent_family' => $person->child_in_family_id,
+                    'spouse_families' => [
+                        ...$person->familiesAsHusband->pluck('id'),
+                        ...$person->familiesAsWife->pluck('id')
                     ]
-                ];
-            });
-        
-        $this->treeData = $people->toArray();
+                ]
+            ])
+            ->toArray();
     }
 
-    public function updatePersonPosition($personId, $x, $y)
+    #[On('updatePosition')]
+    public function updatePersonPosition(int $personId, float $x, float $y): void
     {
-        $person = Person::find($personId);
-        if ($person) {
-            $person->update([
-                'tree_position_x' => $x,
-                'tree_position_y' => $y
-            ]);
-            $this->emit('positionUpdated', $personId);
-        }
+        Person::find($personId)?->update([
+            'tree_position_x' => $x,
+            'tree_position_y' => $y
+        ]);
+
+        $this->dispatch('positionUpdated', personId: $personId);
     }
 
-    public function addPerson($data)
+    public function addPerson(array $data): void
     {
         $person = Person::create([
             'name' => $data['name'],
@@ -73,17 +68,14 @@ class FamilyTreeBuilder extends Component
         ]);
 
         $this->loadTreeData();
-        $this->emit('personCreated', $person->id);
+        $this->dispatch('personCreated', personId: $person->id);
     }
 
-    public function removePerson($personId)
+    public function removePerson(int $personId): void
     {
-        $person = Person::find($personId);
-        if ($person) {
-            $person->delete();
-            $this->loadTreeData();
-            $this->emit('personDeleted', $personId);
-        }
+        Person::find($personId)?->delete();
+        $this->loadTreeData();
+        $this->dispatch('personDeleted', personId: $personId);
     }
 
     public function render()
