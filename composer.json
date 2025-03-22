@@ -5,8 +5,8 @@
     "keywords": ["framework", "laravel"],
     "license": "MIT",
     "require": {
-        "php": "^8.3",
-        "althinect/filament-spatie-roles-permissions": "^2.2",
+        "php": "^8.4",
+        "althinect/filament-spatie-roles-permissions": "^3.0",
         "bezhansalleh/filament-shield": "^3.2",
         "filament/filament": "^3.2",
         "guzzlehttp/guzzle": "^7.8",
@@ -17,21 +17,20 @@
         "laravel/octane": "^2.3",
         "laravel/sanctum": "^4.0",
         "laravel/tinker": "^2.9",
-        "liberu-genealogy/laravel-dna": "^1.0",
-        "liberu-genealogy/laravel-gedcom": "^4.1",
+        "liberu-genealogy/laravel-dna": "^2.0",
+        "liberu-genealogy/laravel-gedcom": "^5.0",
         "livewire/livewire": "^3.5",
-        "orangehill/iseed": "^3.0",
-        "spatie/laravel-menu": "^4.2",
-        "stephenjude/filament-jetstream": "^0.0.13"
+        "spatie/laravel-menu": "^5.0",
+        "stephenjude/filament-jetstream": "^1.0"
     },
     "require-dev": {
-        "fakerphp/faker": "^1.23",
-        "laravel/pint": "^1.14",
-        "laravel/sail": "^1.28",
-        "mockery/mockery": "^1.6",
+        "fakerphp/faker": "^2.0",
+        "laravel/pint": "^2.0",
+        "laravel/sail": "^2.0",
+        "mockery/mockery": "^2.0",
         "nunomaduro/collision": "^8.0",
         "phpunit/phpunit": "^11.0",
-        "spatie/laravel-ignition": "^2.4"
+        "spatie/laravel-ignition": "^3.0"
     },
     "autoload": {
         "psr-4": {

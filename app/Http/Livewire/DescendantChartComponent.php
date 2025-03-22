@@ -5,45 +5,37 @@ namespace App\Http\Livewire;
 use App\Models\Person;
 use Illuminate\Support\Facades\Log;
 use Livewire\Component;
+use Illuminate\Support\Collection;
 
-class DescendantChartComponent extends Component
+final class DescendantChartComponent extends Component
 {
-    public $descendantsData = [];
+    public array $descendantsData = [];
 
-    /**
-     * Mounts the component and retrieves the descendants data.
-     */
-    public function mount()
+    public function mount(): void
     {
         try {
-            $rawData = Person::with('children')->get()->toArray();
+            $rawData = Person::with('children')->get();
             $this->descendantsData = $this->processDescendantData($rawData);
-        } catch (\Exception $e) {
-            // Handle errors, such as logging or setting an error state
-            Log::error('Failed to retrieve or process descendants data: '.$e->getMessage());
+        } catch (\Throwable $e) {
+            Log::error('Failed to retrieve descendants data', [
+                'error' => $e->getMessage(),
+                'trace' => $e->getTraceAsString()
+            ]);
             $this->descendantsData = [];
         }
     }
 
-    private function processDescendantData($data)
+    private function processDescendantData(Collection $data): array
     {
-        $tree = [];
-        foreach ($data as $item) {
-            if (!isset($tree[$item['id']])) {
-                $tree[$item['id']] = [
-                    'id'       => $item['id'],
-                    'name'     => $item['name'],
-                    'children' => [],
-                ];
-            }
-            foreach ($item['children'] as $child) {
-                $tree[$item['id']]['children'][] = $child['id'];
-            }
-        }
-
-        return array_filter($tree, function ($item) {
-            return !isset($item['parent_id']);
-        });
+        return $data->mapWithKeys(fn (Person $person) => [
+            $person->id => [
+                'id' => $person->id,
+                'name' => $person->name,
+                'children' => $person->children->pluck('id')->toArray()
+            ]
+        ])
+        ->filter(fn ($item) => !isset($item['parent_id']))
+        ->toArray();
     }
 
     public function render()
