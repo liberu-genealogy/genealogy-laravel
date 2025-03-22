@@ -2,15 +2,15 @@
 
 namespace App\Filament\App\Resources;
 
-use App\Filament\App\Resources\RepositoryResource\Pages;
 use App\Models\Repository;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Model;
 
-class RepositoryResource extends Resource
+final class RepositoryResource extends Resource
 {
     protected static ?string $model = Repository::class;
 
@@ -25,26 +25,31 @@ class RepositoryResource extends Resource
         return $form
             ->schema([
                 Forms\Components\TextInput::make('group')
-                ->maxLength(255),
-                Forms\Components\TextInput::make('gid')
-                    ->numeric(),
-                Forms\Components\TextInput::make('name')
                     ->maxLength(255),
+                Forms\Components\TextInput::make('gid')
+                    ->numeric()
+                    ->rules(['integer', 'min:0']),
+                Forms\Components\TextInput::make('name')
+                    ->maxLength(255)
+                    ->required(),
                 Forms\Components\Textarea::make('description')
                     ->maxLength(65535)
                     ->columnSpanFull(),
                 Forms\Components\DateTimePicker::make('date'),
-                Forms\Components\TextInput::make('is_active')
-                    ->numeric(),
+                Forms\Components\Toggle::make('is_active')
+                    ->default(true),
                 Forms\Components\TextInput::make('type_id')
-                    ->numeric(),
+                    ->numeric()
+                    ->rules(['integer', 'exists:types,id']),
                 Forms\Components\TextInput::make('repo')
                     ->maxLength(255),
                 Forms\Components\TextInput::make('addr_id')
-                    ->numeric(),
+                    ->numeric()
+                    ->rules(['integer', 'exists:addresses,id']),
                 Forms\Components\TextInput::make('rin')
                     ->maxLength(255),
                 Forms\Components\TextInput::make('phon')
+                    ->tel()
                     ->maxLength(255),
                 Forms\Components\TextInput::make('email')
                     ->email()
@@ -52,6 +57,7 @@ class RepositoryResource extends Resource
                 Forms\Components\TextInput::make('fax')
                     ->maxLength(255),
                 Forms\Components\TextInput::make('www')
+                    ->url()
                     ->maxLength(255),
             ]);
     }

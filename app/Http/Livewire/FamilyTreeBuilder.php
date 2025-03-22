@@ -3,16 +3,16 @@
 namespace App\Http\Livewire;
 
 use App\Models\Person;
-use App\Models\Family;
 use Livewire\Component;
 use Livewire\Attributes\On;
+use Illuminate\Support\Collection;
 
 final class FamilyTreeBuilder extends Component
 {
-    public array $treeData = [];
+    public Collection $treeData;
     public ?Person $selectedPerson = null;
-
-    protected array $listeners = [
+    
+    protected $listeners = [
         'personMoved' => 'updatePersonPosition',
         'personAdded' => 'addPerson',
         'personRemoved' => 'removePerson'
@@ -20,12 +20,14 @@ final class FamilyTreeBuilder extends Component
 
     public function mount(): void
     {
+        $this->treeData = collect();
         $this->loadTreeData();
     }
 
     private function loadTreeData(): void
     {
-        $this->treeData = Person::with(['childInFamily', 'familiesAsHusband', 'familiesAsWife'])
+        $this->treeData = Person::query()
+            ->with(['childInFamily', 'familiesAsHusband', 'familiesAsWife'])
             ->get()
             ->map(fn (Person $person): array => [
                 'id' => $person->id,
@@ -41,22 +43,22 @@ final class FamilyTreeBuilder extends Component
                         ...$person->familiesAsWife->pluck('id')
                     ]
                 ]
-            ])
-            ->toArray();
+            ]);
     }
 
-    #[On('updatePosition')]
-    public function updatePersonPosition(int $personId, float $x, float $y): void
+    public function updatePersonPosition($personId, $x, $y)
     {
-        Person::find($personId)?->update([
-            'tree_position_x' => $x,
-            'tree_position_y' => $y
-        ]);
-
-        $this->dispatch('positionUpdated', personId: $personId);
+        $person = Person::find($personId);
+        if ($person) {
+            $person->update([
+                'tree_position_x' => $x,
+                'tree_position_y' => $y
+            ]);
+            $this->emit('positionUpdated', $personId);
+        }
     }
 
-    public function addPerson(array $data): void
+    public function addPerson($data)
     {
         $person = Person::create([
             'name' => $data['name'],
@@ -68,14 +70,17 @@ final class FamilyTreeBuilder extends Component
         ]);
 
         $this->loadTreeData();
-        $this->dispatch('personCreated', personId: $person->id);
+        $this->emit('personCreated', $person->id);
     }
 
-    public function removePerson(int $personId): void
+    public function removePerson($personId)
     {
-        Person::find($personId)?->delete();
-        $this->loadTreeData();
-        $this->dispatch('personDeleted', personId: $personId);
+        $person = Person::find($personId);
+        if ($person) {
+            $person->delete();
+            $this->loadTreeData();
+            $this->emit('personDeleted', $personId);
+        }
     }
 
     public function render()

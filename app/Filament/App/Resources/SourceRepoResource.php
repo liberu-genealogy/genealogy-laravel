@@ -2,15 +2,15 @@
 
 namespace App\Filament\App\Resources;
 
-use App\Filament\App\Resources\SourceRepoResource\Pages;
 use App\Models\SourceRepo;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Model;
 
-class SourceRepoResource extends Resource
+final class SourceRepoResource extends Resource
 {
     protected static ?string $model = SourceRepo::class;
 
@@ -25,10 +25,12 @@ class SourceRepoResource extends Resource
                     ->maxLength(255),
                 Forms\Components\TextInput::make('gid')
                     ->required()
-                    ->numeric(),
+                    ->numeric()
+                    ->rules(['integer', 'min:0']),
                 Forms\Components\TextInput::make('repo_id')
                     ->required()
-                    ->maxLength(255),
+                    ->maxLength(255)
+                    ->rules(['exists:repositories,id']),
                 Forms\Components\Textarea::make('caln')
                     ->required()
                     ->maxLength(65535)
