@@ -6,9 +6,9 @@
     "license": "MIT",
     "require": {
         "php": "^8.4",
-        "althinect/filament-spatie-roles-permissions": "^3.0",
-        "bezhansalleh/filament-shield": "^3.2",
-        "filament/filament": "^3.2",
+        "althinect/filament-spatie-roles-permissions": "^4.0@dev",
+        "bezhansalleh/filament-shield": "^4.0@dev",
+        "filament/filament": "^4.0@dev",
         "guzzlehttp/guzzle": "^7.8",
         "joelbutcher/socialstream": "^6.0",
         "laravel/cashier": "^15.4",
