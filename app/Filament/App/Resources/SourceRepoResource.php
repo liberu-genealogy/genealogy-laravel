@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Filament\App\Resources;
 
 use App\Filament\App\Resources\SourceRepoResource\Pages;
@@ -10,7 +12,7 @@ use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 
-class SourceRepoResource extends Resource
+final class SourceRepoResource extends Resource
 {
     protected static ?string $model = SourceRepo::class;
 
@@ -56,9 +58,7 @@ class SourceRepoResource extends Resource
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
-            ->filters([
-                //
-            ])
+            ->filters([])
             ->actions([
                 Tables\Actions\EditAction::make(),
             ])
@@ -71,17 +71,15 @@ class SourceRepoResource extends Resource
 
     public static function getRelations(): array
     {
-        return [
-            //
-        ];
+        return [];
     }
 
     public static function getPages(): array
     {
         return [
-            'index'  => Pages\ListSourceRepos::route('/'),
+            'index' => Pages\ListSourceRepos::route('/'),
             'create' => Pages\CreateSourceRepo::route('/create'),
-            'edit'   => Pages\EditSourceRepo::route('/{record}/edit'),
+            'edit' => Pages\EditSourceRepo::route('/{record}/edit'),
         ];
     }
 }

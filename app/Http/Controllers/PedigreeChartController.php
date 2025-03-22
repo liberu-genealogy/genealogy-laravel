@@ -1,18 +1,18 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers;
 
-class PedigreeChartController extends Controller
-{
-    public function __construct()
-    {
-        // Placeholder for future dependency injections
-    }
+use Illuminate\Http\JsonResponse;
 
-    public function index()
+final readonly class PedigreeChartController extends Controller
+{
+    public function index(): JsonResponse
     {
-        // Placeholder method for future implementation
-        // This could return a view or a JSON response indicating the initial state or data for the pedigree chart
-        return response()->json(['message' => 'Pedigree Chart functionality is under development.']);
+        return response()->json([
+            'message' => 'Pedigree Chart functionality is under development.',
+            'status' => 'pending'
+        ]);
     }
 }
