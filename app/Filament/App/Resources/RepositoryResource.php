@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Filament\App\Resources;
 
 use App\Filament\App\Resources\RepositoryResource\Pages;
@@ -10,7 +12,7 @@ use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 
-class RepositoryResource extends Resource
+final class RepositoryResource extends Resource
 {
     protected static ?string $model = Repository::class;
 
@@ -25,7 +27,7 @@ class RepositoryResource extends Resource
         return $form
             ->schema([
                 Forms\Components\TextInput::make('group')
-                ->maxLength(255),
+                    ->maxLength(255),
                 Forms\Components\TextInput::make('gid')
                     ->numeric(),
                 Forms\Components\TextInput::make('name')
@@ -52,7 +54,8 @@ class RepositoryResource extends Resource
                 Forms\Components\TextInput::make('fax')
                     ->maxLength(255),
                 Forms\Components\TextInput::make('www')
-                    ->maxLength(255),
+                    ->maxLength(255)
+                    ->url(),
             ]);
     }
 
@@ -100,9 +103,7 @@ class RepositoryResource extends Resource
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
-            ->filters([
-                //
-            ])
+            ->filters([])
             ->actions([
                 Tables\Actions\EditAction::make(),
             ])
@@ -115,17 +116,15 @@ class RepositoryResource extends Resource
 
     public static function getRelations(): array
     {
-        return [
-            //
-        ];
+        return [];
     }
 
     public static function getPages(): array
     {
         return [
-            'index'  => Pages\ListRepositories::route('/'),
+            'index' => Pages\ListRepositories::route('/'),
             'create' => Pages\CreateRepository::route('/create'),
-            'edit'   => Pages\EditRepository::route('/{record}/edit'),
+            'edit' => Pages\EditRepository::route('/{record}/edit'),
         ];
     }
 }

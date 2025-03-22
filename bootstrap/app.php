@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 /**
  * Bootstrap the Laravel application.
  *
@@ -59,5 +62,3 @@ $app->singleton(
 */
 
 return $app;
-$app->register(App\Providers\Filament\PublicPanelProvider::class);
-$app->register(App\Providers\FilamentServiceProvider::class);
