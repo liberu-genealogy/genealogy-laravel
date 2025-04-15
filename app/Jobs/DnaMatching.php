@@ -53,8 +53,9 @@ class DnaMatching implements ShouldQueue
                 'fileName2' => $dna->file_name,
             ]);
             $resultData = json_decode($result, true, 512, JSON_THROW_ON_ERROR);
-//            $resultData = json_decode($result, true, 512, JSON_THROW_ON_ERROR);
-            $resultData = json_decode($result, true, 512, JSON_THROW_ON_ERROR);
+            // Remove these redundant json_decode calls that could cause issues
+            // $resultData = json_decode($result, true, 512, JSON_THROW_ON_ERROR);
+            // $resultData = json_decode($result, true, 512, JSON_THROW_ON_ERROR);
             // chmod(storage_path('/app/public/dna/output/shared_dna_'.$this->var_name.'_'.$dna->variable_name.'_'.$this->file_name.'_'.$dna->file_name), 0777);
 
             $dm = new DM();
