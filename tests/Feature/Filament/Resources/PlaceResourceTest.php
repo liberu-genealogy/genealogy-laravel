@@ -11,12 +11,12 @@ class PlaceResourceTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_model_association()
+    public function test_model_association(): void
     {
         $this->assertEquals(Place::class, PlaceResource::getModel());
     }
 
-    public function test_form_fields()
+    public function test_form_fields(): void
     {
         $formFields = PlaceResource::form([])->getSchema();
 
@@ -35,7 +35,7 @@ class PlaceResourceTest extends TestCase
         $this->assertTrue($descriptionField->getColumnSpan() === 'full');
     }
 
-    public function test_table_columns()
+    public function test_table_columns(): void
     {
         $tableColumns = PlaceResource::table([])->getColumns();
 

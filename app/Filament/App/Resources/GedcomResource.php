@@ -36,6 +36,7 @@ class GedcomResource extends Resource
         ];
     }
 
+    #[\Override]
     public static function form(Form $form): Form
     {
         return $form
@@ -45,7 +46,7 @@ class GedcomResource extends Resource
                     ->maxSize(100000)
                     ->directory('gedcom-form-imports')
                     ->visibility('private')
-                    ->afterStateUpdated(function ($state, $set, $livewire) {
+                    ->afterStateUpdated(function ($state, $set, $livewire): void {
                         if ($state === null) {
                             return;
                         }
@@ -55,6 +56,7 @@ class GedcomResource extends Resource
             ]);
     }
 
+    #[\Override]
     public static function table(Table $table): Table
     {
         return $table

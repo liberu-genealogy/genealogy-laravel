@@ -190,22 +190,16 @@ class Person extends Model
 
     public static function getListOptimized()
     {
-        return self::withBasicInfo()->get()->mapWithKeys(function ($person) {
-            return [$person->id => $person->fullname()];
-        });
+        return self::withBasicInfo()->get()->mapWithKeys(fn($person) => [$person->id => $person->fullname()]);
     }
 
     public static function getListCached()
     {
-        return cache()->remember('person_list', now()->addHours(1), function () {
-            return self::getListOptimized();
-        });
+        return cache()->remember('person_list', now()->addHours(1), fn() => self::getListOptimized());
     }
 
     public static function getBasicInfoCached($id)
     {
-        return cache()->remember("person_basic_info_{$id}", now()->addHours(1), function () use ($id) {
-            return self::withBasicInfo()->find($id);
-        });
+        return cache()->remember("person_basic_info_{$id}", now()->addHours(1), fn() => self::withBasicInfo()->find($id));
     }
 }

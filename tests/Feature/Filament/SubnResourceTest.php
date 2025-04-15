@@ -12,14 +12,14 @@ class SubnResourceTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_resource_configuration()
+    public function test_resource_configuration(): void
     {
         $this->assertEquals(Subn::class, SubnResource::getModel());
         $this->assertCount(7, SubnResource::form(null)->getSchema());
         $this->assertCount(9, SubnResource::table(null)->getColumns());
     }
 
-    public function test_user_can_create_subn()
+    public function test_user_can_create_subn(): void
     {
         $user = User::factory()->create();
         $this->actingAs($user);
@@ -39,7 +39,7 @@ class SubnResourceTest extends TestCase
         ]);
     }
 
-    public function test_user_can_edit_subn()
+    public function test_user_can_edit_subn(): void
     {
         $user = User::factory()->create();
         $subn = Subn::factory()->create();
@@ -56,7 +56,7 @@ class SubnResourceTest extends TestCase
         ]);
     }
 
-    public function test_subns_are_listed_correctly()
+    public function test_subns_are_listed_correctly(): void
     {
         $user = User::factory()->create();
         $this->actingAs($user);

@@ -45,7 +45,7 @@ class DevillierReport extends Component implements HasForms, HasActions
     public function generateAction(): Action
     {
         return Action::make('generate')
-            ->action(fn () => null);
+            ->action(fn (): null => null);
     }
 
     public function generateReport(): void

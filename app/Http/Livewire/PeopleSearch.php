@@ -12,12 +12,12 @@ class PeopleSearch extends Component
 
     protected $listeners = ['updatedQuery' => 'searchPeople'];
 
-    public function mount()
+    public function mount(): void
     {
         $this->searchPeople();
     }
 
-    public function searchPeople()
+    public function searchPeople(): void
     {
         $this->results = Person::where('givn', 'like', '%'.$this->query.'%')
                                ->orWhere('surn', 'like', '%'.$this->query.'%')

@@ -11,7 +11,7 @@ class SourceDataResourceTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_form_schema_is_correct()
+    public function test_form_schema_is_correct(): void
     {
         $form = SourceDataResource::form(app(\Filament\Forms\Form::class));
         $schema = collect($form->getSchema());
@@ -34,7 +34,7 @@ class SourceDataResourceTest extends TestCase
         }
     }
 
-    public function test_table_columns_are_correct()
+    public function test_table_columns_are_correct(): void
     {
         $table = SourceDataResource::table(app(\Filament\Tables\Table::class));
         $columns = collect($table->getColumns());
@@ -44,21 +44,21 @@ class SourceDataResourceTest extends TestCase
         ];
 
         foreach ($expectedColumns as $column) {
-            $this->assertTrue($columns->contains(fn ($component) => $component->getName() === $column), "{$column} is missing in the table columns.");
+            $this->assertTrue($columns->contains(fn ($component): bool => $component->getName() === $column), "{$column} is missing in the table columns.");
         }
     }
 
-    public function test_navigation_icon_is_correct()
+    public function test_navigation_icon_is_correct(): void
     {
         $this->assertEquals('heroicon-o-rectangle-stack', SourceDataResource::$navigationIcon);
     }
 
-    public function test_model_binding_is_correct()
+    public function test_model_binding_is_correct(): void
     {
         $this->assertEquals(SourceData::class, SourceDataResource::$model);
     }
 
-    public function test_page_routes_are_correct()
+    public function test_page_routes_are_correct(): void
     {
         $pages = SourceDataResource::getPages();
 

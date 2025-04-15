@@ -11,7 +11,7 @@ class PersonAliaResourceTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_form_fields_are_correctly_defined()
+    public function test_form_fields_are_correctly_defined(): void
     {
         $form = PersonAliaResource::form(Livewire::mock());
         $schema = collect($form->getSchema());
@@ -23,7 +23,7 @@ class PersonAliaResourceTest extends TestCase
         $this->assertEquals(0, $schema->firstWhere('name', 'import_confirm')->getDefault());
     }
 
-    public function test_table_configuration_is_correct()
+    public function test_table_configuration_is_correct(): void
     {
         $table = PersonAliaResource::table(Livewire::mock());
         $columns = $table->getColumns();

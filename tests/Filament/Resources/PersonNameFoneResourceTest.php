@@ -15,7 +15,7 @@ class PersonNameFoneResourceTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_form_schema_is_correct()
+    public function test_form_schema_is_correct(): void
     {
         $form = PersonNameFoneResource::form(Form::make())->getSchema();
 
@@ -31,7 +31,7 @@ class PersonNameFoneResourceTest extends TestCase
         // Continue for all fields...
     }
 
-    public function test_table_columns_are_correct()
+    public function test_table_columns_are_correct(): void
     {
         $table = PersonNameFoneResource::table(Table::make())->getColumns();
 
@@ -42,21 +42,21 @@ class PersonNameFoneResourceTest extends TestCase
         // Continue assertions for each column...
     }
 
-    public function test_index_route()
+    public function test_index_route(): void
     {
         $response = $this->get(route('filament.resources.person-name-fones.index'));
         $response->assertStatus(200);
         $response->assertViewIs('filament.resources.person-name-fones.pages.list-person-name-fones');
     }
 
-    public function test_create_route()
+    public function test_create_route(): void
     {
         $response = $this->get(route('filament.resources.person-name-fones.create'));
         $response->assertStatus(200);
         $response->assertViewIs('filament.resources.person-name-fones.pages.create-person-name-fone');
     }
 
-    public function test_edit_route()
+    public function test_edit_route(): void
     {
         $personNameFone = PersonNameFone::factory()->create();
         $response = $this->get(route('filament.resources.person-name-fones.edit', $personNameFone));

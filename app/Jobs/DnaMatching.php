@@ -33,10 +33,8 @@ class DnaMatching implements ShouldQueue
 
     /**
      * Execute the job.
-     *
-     * @return void
      */
-    public function handle()
+    public function handle(): void
     {
         $user = $this->current_user;
         $dnas = Dna::where('variable_name', '!=', $this->var_name)->get();

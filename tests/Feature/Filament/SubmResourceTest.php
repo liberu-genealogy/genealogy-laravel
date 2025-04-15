@@ -12,7 +12,7 @@ class SubmResourceTest extends TestCase
     use RefreshDatabase;
 
     /** @test */
-    public function resource_is_correctly_configured()
+    public function resource_is_correctly_configured(): void
     {
         $this->assertEquals(Subm::class, SubmResource::getModel());
         $formFields = SubmResource::form(null)->getSchema();
@@ -22,7 +22,7 @@ class SubmResourceTest extends TestCase
     }
 
     /** @test */
-    public function user_can_create_subm()
+    public function user_can_create_subm(): void
     {
         $this->actingAsUser();
         $response = $this->post(route('filament.resources.subms.create'), [
@@ -39,7 +39,7 @@ class SubmResourceTest extends TestCase
     }
 
     /** @test */
-    public function user_can_edit_subm()
+    public function user_can_edit_subm(): void
     {
         $this->actingAsUser();
         $subm = Subm::factory()->create();
@@ -56,7 +56,7 @@ class SubmResourceTest extends TestCase
     }
 
     /** @test */
-    public function subms_are_listed_correctly()
+    public function subms_are_listed_correctly(): void
     {
         $this->actingAsUser();
         Subm::factory()->count(5)->create();

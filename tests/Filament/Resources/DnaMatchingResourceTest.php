@@ -11,7 +11,7 @@ class DnaMatchingResourceTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_form_schema_includes_all_fields_with_correct_configurations()
+    public function test_form_schema_includes_all_fields_with_correct_configurations(): void
     {
         $formFields = DnaMatchingResource::form([])->getSchema();
 
@@ -32,7 +32,7 @@ class DnaMatchingResourceTest extends TestCase
         $this->assertTrue($formFields['match_id']->isNumeric());
     }
 
-    public function test_table_schema_includes_all_columns_with_correct_configurations()
+    public function test_table_schema_includes_all_columns_with_correct_configurations(): void
     {
         $tableColumns = DnaMatchingResource::table([])->getColumns();
 
@@ -53,7 +53,7 @@ class DnaMatchingResourceTest extends TestCase
         }
     }
 
-    public function test_crud_operations()
+    public function test_crud_operations(): void
     {
         $dnaMatchingData = [
             'user_id'            => 1,

@@ -16,13 +16,14 @@ class GedcomResourceTest extends TestCase
 
     protected $user;
 
+    #[\Override]
     protected function setUp(): void
     {
         parent::setUp();
         $this->user = User::factory()->create();
     }
 
-    public function test_form_schema_contains_correct_fields_and_validations()
+    public function test_form_schema_contains_correct_fields_and_validations(): void
     {
         $form = GedcomResource::form(Livewire::mock());
         $schema = collect($form->getSchema());
@@ -35,7 +36,7 @@ class GedcomResourceTest extends TestCase
         $this->assertTrue($fileUpload->isRequired());
     }
 
-    public function test_table_configuration()
+    public function test_table_configuration(): void
     {
         $table = GedcomResource::table(Livewire::mock());
         $this->assertCount(0, $table->getColumns());
@@ -46,7 +47,7 @@ class GedcomResourceTest extends TestCase
         $this->assertArrayHasKey('export', $actions);
     }
 
-    public function test_file_upload_dispatches_import_gedcom_job()
+    public function test_file_upload_dispatches_import_gedcom_job(): void
     {
         Storage::fake('private');
         $file = UploadedFile::fake()->create('document.ged', 500);

@@ -13,7 +13,7 @@ class MediaObjectResourceTest extends TestCase
     use RefreshDatabase;
     use WithFaker;
 
-    public function test_form_schema_contains_correct_fields()
+    public function test_form_schema_contains_correct_fields(): void
     {
         $form = MediaObjectResource::form(Livewire::mock());
         $schema = collect($form->getSchema());
@@ -25,7 +25,7 @@ class MediaObjectResourceTest extends TestCase
         $this->assertEquals(255, $schema->firstWhere('name', 'rin')->getMaxLength());
     }
 
-    public function test_table_configuration()
+    public function test_table_configuration(): void
     {
         $table = MediaObjectResource::table(Livewire::mock());
         $columns = $table->getColumns();

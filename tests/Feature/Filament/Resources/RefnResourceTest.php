@@ -11,12 +11,12 @@ class RefnResourceTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_model_association()
+    public function test_model_association(): void
     {
         $this->assertEquals(Refn::class, RefnResource::getModel());
     }
 
-    public function test_form_fields()
+    public function test_form_fields(): void
     {
         $formFields = RefnResource::form([])->getSchema();
 
@@ -37,7 +37,7 @@ class RefnResourceTest extends TestCase
         $this->assertEquals(255, $typeField->getMaxLength());
     }
 
-    public function test_table_columns()
+    public function test_table_columns(): void
     {
         $tableColumns = RefnResource::table([])->getColumns();
 

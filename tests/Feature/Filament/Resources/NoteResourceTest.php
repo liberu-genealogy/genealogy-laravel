@@ -11,7 +11,7 @@ class NoteResourceTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_form_fields_are_correctly_defined()
+    public function test_form_fields_are_correctly_defined(): void
     {
         $form = NoteResource::form(Livewire::mock());
         $schema = collect($form->getSchema());
@@ -27,7 +27,7 @@ class NoteResourceTest extends TestCase
         $this->assertNotNull($schema->firstWhere('name', 'rin'));
     }
 
-    public function test_table_configuration_is_correct()
+    public function test_table_configuration_is_correct(): void
     {
         $table = NoteResource::table(Livewire::mock());
         $columns = $table->getColumns();

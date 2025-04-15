@@ -35,11 +35,13 @@ class PersonalAccessTokensPage extends Page
         $this->user->tokens()->where('name', $name)->first()->delete();
     }
 
+    #[\Override]
     public function getHeading(): string
     {
         return static::$title;
     }
 
+    #[\Override]
     public static function shouldRegisterNavigation(): bool
     {
         return true;

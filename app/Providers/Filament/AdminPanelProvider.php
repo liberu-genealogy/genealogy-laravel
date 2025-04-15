@@ -109,7 +109,7 @@ class AdminPanelProvider extends PanelProvider
         return $panel;
     }
 
-    public function boot()
+    public function boot(): void
     {
         /**
          * Disable Fortify routes.
@@ -124,7 +124,7 @@ class AdminPanelProvider extends PanelProvider
 
     public function shouldRegisterMenuItem(): bool
     {
-        $hasVerifiedEmail = is_null(auth()->user()) ? false : true;//?->hasVerifiedEmail();
+        $hasVerifiedEmail = !is_null(auth()->user());//?->hasVerifiedEmail();
 
         return Filament::hasTenancy()
             ? $hasVerifiedEmail && Filament::getTenant()

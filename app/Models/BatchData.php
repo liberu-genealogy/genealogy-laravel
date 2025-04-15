@@ -6,6 +6,7 @@ use Filament\Facades\Filament;
 
 class BatchData extends \FamilyTree365\LaravelGedcom\Utils\BatchData
 {
+    #[\Override]
     public static function upsert($modelClass, $conn, array $values, array $uniqueBy, array $update = [])
     {
         // error_log("modi upsert");

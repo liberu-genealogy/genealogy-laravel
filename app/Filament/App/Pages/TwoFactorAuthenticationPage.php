@@ -45,11 +45,13 @@ class TwoFactorAuthenticationPage extends Page
         $this->user->regenerateRecoveryCodes();
     }
 
+    #[\Override]
     public function getHeading(): string
     {
         return static::$title;
     }
 
+    #[\Override]
     public static function shouldRegisterNavigation(): bool
     {
         return true; //config('filament-jetstream.show_two_factor_authentication_page');

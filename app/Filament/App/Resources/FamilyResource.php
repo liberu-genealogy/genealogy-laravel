@@ -19,6 +19,7 @@ class FamilyResource extends Resource
     protected static ?string $navigationLabel = 'Families';
     protected static ?string $navigationGroup = 'Family';
 
+    #[\Override]
     public static function form(Form $form): Form
     {
         return $form
@@ -43,6 +44,7 @@ class FamilyResource extends Resource
             ]);
     }
 
+    #[\Override]
     public static function table(Table $table): Table
     {
         return $table
@@ -91,6 +93,7 @@ class FamilyResource extends Resource
             ]);
     }
 
+    #[\Override]
     public static function getRelations(): array
     {
         return [

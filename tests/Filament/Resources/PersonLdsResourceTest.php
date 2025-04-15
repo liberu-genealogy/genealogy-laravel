@@ -12,7 +12,7 @@ class PersonLdsResourceTest extends TestCase
     use RefreshDatabase;
     use WithFaker;
 
-    public function testCreatePersonLds()
+    public function testCreatePersonLds(): void
     {
         $data = [
             'group'     => $this->faker->word,
@@ -31,7 +31,7 @@ class PersonLdsResourceTest extends TestCase
         $this->assertDatabaseHas('person_lds', $data);
     }
 
-    public function testReadPersonLds()
+    public function testReadPersonLds(): void
     {
         $personLds = PersonLds::factory()->create();
 
@@ -41,7 +41,7 @@ class PersonLdsResourceTest extends TestCase
         $response->assertSee([$personLds->group, $personLds->type]);
     }
 
-    public function testUpdatePersonLds()
+    public function testUpdatePersonLds(): void
     {
         $personLds = PersonLds::factory()->create();
 
@@ -56,7 +56,7 @@ class PersonLdsResourceTest extends TestCase
         $this->assertDatabaseHas('person_lds', $updatedData);
     }
 
-    public function testDeletePersonLds()
+    public function testDeletePersonLds(): void
     {
         $personLds = PersonLds::factory()->create();
 

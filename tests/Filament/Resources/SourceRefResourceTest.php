@@ -13,7 +13,7 @@ class SourceRefResourceTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_form_schema_contains_all_fields_with_correct_configurations()
+    public function test_form_schema_contains_all_fields_with_correct_configurations(): void
     {
         $form = SourceRefResource::form(app(Form::class));
 
@@ -42,7 +42,7 @@ class SourceRefResourceTest extends TestCase
         $this->assertEquals(255, $form->getComponent('page')->getMaxLength());
     }
 
-    public function test_table_configuration_defines_all_columns_correctly()
+    public function test_table_configuration_defines_all_columns_correctly(): void
     {
         $table = SourceRefResource::table(app(Table::class));
 

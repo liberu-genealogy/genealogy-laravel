@@ -14,13 +14,14 @@ class SubscriptionServiceTest extends TestCase
 
     protected $subscriptionService;
 
+    #[\Override]
     protected function setUp(): void
     {
         parent::setUp();
         $this->subscriptionService = new SubscriptionService();
     }
 
-    public function testCreateTrialSubscription()
+    public function testCreateTrialSubscription(): void
     {
         $team = Team::factory()->create();
         $this->subscriptionService->createTrialSubscription($team);
@@ -29,7 +30,7 @@ class SubscriptionServiceTest extends TestCase
         $this->assertTrue($team->subscription('default')->onTrial());
     }
 
-    public function testGetSubscriptionStatus()
+    public function testGetSubscriptionStatus(): void
     {
         $team = Team::factory()->create();
         $this->assertEquals('Inactive', $this->subscriptionService->getSubscriptionStatus($team));
@@ -42,7 +43,7 @@ class SubscriptionServiceTest extends TestCase
         $this->assertEquals('Active', $this->subscriptionService->getSubscriptionStatus($team));
     }
 
-    public function testCancelSubscription()
+    public function testCancelSubscription(): void
     {
         $team = Team::factory()->create();
         $this->subscriptionService->createTrialSubscription($team);
@@ -51,7 +52,7 @@ class SubscriptionServiceTest extends TestCase
         $this->assertTrue($team->subscription('default')->cancelled());
     }
 
-    public function testResumeSubscription()
+    public function testResumeSubscription(): void
     {
         $team = Team::factory()->create();
         $this->subscriptionService->createTrialSubscription($team);

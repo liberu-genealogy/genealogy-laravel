@@ -9,14 +9,12 @@ class SiteSettingsService
 {
     public function get($key = null)
     {
-        $settings = Cache::remember(config('site-settings.cache_key'), config('site-settings.cache_duration'), function () {
-            return SiteSettings::first() ?? new SiteSettings();
-        });
+        $settings = Cache::remember(config('site-settings.cache_key'), config('site-settings.cache_duration'), fn() => SiteSettings::first() ?? new SiteSettings());
 
         return $key ? $settings->$key : $settings;
     }
 
-    public function clear()
+    public function clear(): void
     {
         Cache::forget(config('site-settings.cache_key'));
     }

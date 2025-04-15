@@ -16,6 +16,7 @@ class EditTeam extends EditTenantProfile
         return 'Team Settings';
     }
 
+    #[\Override]
     protected function getViewData(): array
     {
         return [

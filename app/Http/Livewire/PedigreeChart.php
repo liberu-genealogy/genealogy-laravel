@@ -16,27 +16,28 @@ class PedigreeChartWidget extends Widget
         ];
     }
 
+    #[\Override]
     public function render(): \Illuminate\Contracts\View\View
     {
         return view(static::$view, $this->getData());
     }
 
-    public function initializeChart()
+    public function initializeChart(): void
     {
         $this->dispatchBrowserEvent('initializeChart', ['people' => $this->getData()['people']->toJson()]);
     }
 
-    public function zoomIn()
+    public function zoomIn(): void
     {
         $this->dispatchBrowserEvent('zoomIn');
     }
 
-    public function zoomOut()
+    public function zoomOut(): void
     {
         $this->dispatchBrowserEvent('zoomOut');
     }
 
-    public function pan($direction)
+    public function pan($direction): void
     {
         $this->dispatchBrowserEvent('pan', ['direction' => $direction]);
     }

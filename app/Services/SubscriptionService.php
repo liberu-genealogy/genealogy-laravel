@@ -7,7 +7,7 @@ use Laravel\Cashier\Exceptions\IncompletePayment;
 
 class SubscriptionService
 {
-    public function createTrialSubscription(Team $team)
+    public function createTrialSubscription(Team $team): void
     {
         $team->newSubscription('default', config('cashier.plans.default.price_id'))
             ->trialDays(config('cashier.plans.default.trial_days'))
@@ -25,21 +25,21 @@ class SubscriptionService
         }
     }
 
-    public function cancelSubscription(Team $team)
+    public function cancelSubscription(Team $team): void
     {
         if ($team->subscribed('default')) {
             $team->subscription('default')->cancel();
         }
     }
 
-    public function resumeSubscription(Team $team)
+    public function resumeSubscription(Team $team): void
     {
         if ($team->subscription('default')->cancelled()) {
             $team->subscription('default')->resume();
         }
     }
 
-    public function updatePaymentMethod(Team $team, string $paymentMethodId)
+    public function updatePaymentMethod(Team $team, string $paymentMethodId): void
     {
         $team->updateDefaultPaymentMethod($paymentMethodId);
     }

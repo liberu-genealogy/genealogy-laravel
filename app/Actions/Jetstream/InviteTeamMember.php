@@ -21,7 +21,7 @@ class InviteTeamMember implements InvitesTeamMembers
     /**
      * Invite a new team member to the given team.
      */
-    public function invite(User $user, Team $team, string $email, string $role = null): void
+    public function invite(User $user, Team $team, string $email, ?string $role = null): void
     {
         Gate::forUser($user)->authorize('addTeamMember', $team);
 
@@ -62,7 +62,7 @@ class InviteTeamMember implements InvitesTeamMembers
         return array_filter([
             'email' => [
                 'required', 'email',
-                Rule::unique(Jetstream::teamInvitationModel())->where(function (Builder $query) use ($team) {
+                Rule::unique(Jetstream::teamInvitationModel())->where(function (Builder $query) use ($team): void {
                     $query->where('team_id', $team->id);
                 }),
             ],
@@ -77,7 +77,7 @@ class InviteTeamMember implements InvitesTeamMembers
      */
     protected function ensureUserIsNotAlreadyOnTeam(Team $team, string $email): Closure
     {
-        return function ($validator) use ($team, $email) {
+        return function ($validator) use ($team, $email): void {
             $validator->errors()->addIf(
                 $team->hasUserWithEmail($email),
                 'email',

@@ -10,7 +10,7 @@ class FamilyResourceTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_form_fields_configuration()
+    public function test_form_fields_configuration(): void
     {
         $form = FamilyResource::form(Form::make())->getSchema();
 
@@ -35,7 +35,7 @@ class FamilyResourceTest extends TestCase
         }
     }
 
-    public function test_table_configuration()
+    public function test_table_configuration(): void
     {
         $table = FamilyResource::table(Table::make())->getColumns();
 

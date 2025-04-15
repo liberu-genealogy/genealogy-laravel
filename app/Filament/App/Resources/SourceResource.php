@@ -20,6 +20,7 @@ class SourceResource extends Resource
 
     protected static ?string $navigationGroup = 'Author';
 
+    #[\Override]
     public static function form(Form $form): Form
     {
         return $form
@@ -74,6 +75,7 @@ class SourceResource extends Resource
             ]);
     }
 
+    #[\Override]
     public static function table(Table $table): Table
     {
         return $table
@@ -138,6 +140,7 @@ class SourceResource extends Resource
             ]);
     }
 
+    #[\Override]
     public static function getRelations(): array
     {
         return [

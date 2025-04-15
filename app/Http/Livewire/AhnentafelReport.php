@@ -15,7 +15,7 @@ class AhnentafelReport extends Component
         return view('livewire.ahnentafel-report');
     }
 
-    public function generateReport($personId)
+    public function generateReport($personId): void
     {
         $this->selectedPersonId = $personId;
         $person = Person::with('child_in_family.birth', 'child_in_family.death')->find($personId);
@@ -25,7 +25,7 @@ class AhnentafelReport extends Component
         }
     }
 
-    private function traverseFamilyTree($person, $currentNumber)
+    private function traverseFamilyTree($person, string $currentNumber): void
     {
         $this->reportData[$person->id] = [
             'number' => $currentNumber,

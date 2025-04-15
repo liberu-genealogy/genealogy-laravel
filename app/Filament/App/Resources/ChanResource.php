@@ -22,6 +22,7 @@ class ChanResource extends Resource
 
     // protected static ?string $tenantRelationshipName = 'team';
 
+    #[\Override]
     public static function form(Form $form): Form
     {
         return $form
@@ -37,6 +38,7 @@ class ChanResource extends Resource
         ]);
     }
 
+    #[\Override]
     public static function table(Table $table): Table
     {
         return $table
@@ -72,6 +74,7 @@ class ChanResource extends Resource
             ]);
     }
 
+    #[\Override]
     public static function getRelations(): array
     {
         return [

@@ -13,17 +13,17 @@ class PrivateMessagingPage extends Page
 {
     protected static ?string $navigationIcon = 'heroicon-o-chart-bar';
 
-    public function mount()
+    public function mount(): void
     {
         $selectedUserId = Request::get('user_id');
 
         $this->data([
             'user'     => Auth::user(),
             'users'    => User::where('id', '!=', Auth::id())->get(),
-            'messages' => Message::where(function ($query) use ($selectedUserId) {
+            'messages' => Message::where(function ($query) use ($selectedUserId): void {
                 $query->where('from_user_id', Auth::id())
                     ->where('to_user_id', $selectedUserId);
-            })->orWhere(function ($query) use ($selectedUserId) {
+            })->orWhere(function ($query) use ($selectedUserId): void {
                 $query->where('from_user_id', $selectedUserId)
                     ->where('to_user_id', Auth::id());
             })->orderBy('created_at')->get(),

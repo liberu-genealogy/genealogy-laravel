@@ -8,6 +8,7 @@ use App\Filament\App\Pages\DabovilleReportPage;
 
 class DAbovilleReportPageTest extends TestCase
 {
+    public $expectedReportData;
     use RefreshDatabase;
     
     public function testRenderMethodReturnsCorrectView(): void
@@ -20,7 +21,7 @@ class DAbovilleReportPageTest extends TestCase
 
     public function testAhnentafelReportGeneration(): void 
     {
-        $page = new DAbovilleReportPage();
+        new DAbovilleReportPage();
         $component = new \App\Http\Livewire\AhnentafelReport();
         $component->generateReport(personId: 1);
 

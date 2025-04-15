@@ -34,7 +34,7 @@ final class DescendantChartComponent extends Component
                 'children' => $person->children->pluck('id')->toArray()
             ]
         ])
-        ->filter(fn ($item) => !isset($item['parent_id']))
+        ->filter(fn ($item): true => !isset($item['parent_id']))
         ->toArray();
     }
 

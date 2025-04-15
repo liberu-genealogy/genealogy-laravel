@@ -12,7 +12,7 @@ class FanChartComponentTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function testCanFetchAllPeople()
+    public function testCanFetchAllPeople(): void
     {
         // Seed the database with a known set of Person records
         $expectedPeople = Person::factory()->count(5)->create();

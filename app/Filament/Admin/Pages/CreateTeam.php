@@ -14,6 +14,7 @@ class CreateTeam extends RegisterTenant
         return 'Create Team';
     }
 
+    #[\Override]
     public function form(Form $form): Form
     {
         return $form
@@ -22,6 +23,7 @@ class CreateTeam extends RegisterTenant
             ]);
     }
 
+    #[\Override]
     protected function handleRegistration(array $data): Model
     {
         return app(\App\Actions\Jetstream\CreateTeam::class)->create(auth()->user(), $data);

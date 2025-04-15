@@ -22,6 +22,7 @@ class DnaMatchingResource extends Resource
 
     protected static ?string $navigationGroup = 'Dna Matching';
 
+    #[\Override]
     public static function form(Form $form): Form
     {
         return $form
@@ -49,6 +50,7 @@ class DnaMatchingResource extends Resource
             ]);
     }
 
+    #[\Override]
     public static function table(Table $table): Table
     {
         return $table
@@ -92,6 +94,7 @@ class DnaMatchingResource extends Resource
             ]);
     }
 
+    #[\Override]
     public static function getRelations(): array
     {
         return [

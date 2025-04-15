@@ -20,6 +20,7 @@ class PersonAssoResource extends Resource
 
     protected static ?string $navigationGroup = 'Person';
 
+    #[\Override]
     public static function form(Form $form): Form
     {
         return $form
@@ -39,6 +40,7 @@ class PersonAssoResource extends Resource
             ]);
     }
 
+    #[\Override]
     public static function table(Table $table): Table
     {
         return $table
@@ -77,6 +79,7 @@ class PersonAssoResource extends Resource
             ]);
     }
 
+    #[\Override]
     public static function getRelations(): array
     {
         return [

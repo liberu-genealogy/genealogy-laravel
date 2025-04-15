@@ -15,7 +15,7 @@ class HenryReport extends Component
         return view('livewire.henry-report', ['reportData' => $this->reportData]);
     }
 
-    public function generateReport($personId)
+    public function generateReport($personId): void
     {
         $this->selectedPersonId = $personId;
         $person = Person::with('child_in_family.birth', 'child_in_family.death')->find($personId);
@@ -25,7 +25,7 @@ class HenryReport extends Component
         }
     }
 
-    private function processHenryReportData($person)
+    private function processHenryReportData($person): void
     {
         $this->reportData[$person->id] = [
             'name'  => $person->fullname(),
@@ -35,7 +35,7 @@ class HenryReport extends Component
 
         $childNumber = 1;
         foreach ($person->child_in_family as $child) {
-            $this->processHenryReportData($child, $childNumber);
+            $this->processHenryReportData($child);
             $childNumber++;
         }
     }

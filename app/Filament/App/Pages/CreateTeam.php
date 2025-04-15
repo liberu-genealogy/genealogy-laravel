@@ -15,6 +15,7 @@ use App\Services\SubscriptionService;
 class CreateTeam extends RegisterTenant
 {
 
+    #[\Override]
     public function form(Form $form): Form
     {
         return $form
@@ -29,6 +30,7 @@ class CreateTeam extends RegisterTenant
             ]);
     }
     
+    #[\Override]
     protected function handleRegistration(array $data): Model
     {
         $team = app(\App\Actions\Jetstream\CreateTeam::class)->create(auth()->user(), $data);

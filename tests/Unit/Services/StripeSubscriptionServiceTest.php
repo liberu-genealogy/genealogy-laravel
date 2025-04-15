@@ -16,7 +16,7 @@ class StripeSubscriptionServiceTest extends TestCase
      *
      * @return array An array containing the result of the operation.
      */
-    public function testUpdateSubscription()
+    public function testUpdateSubscription(): void
     {
         // Test case 1: Valid subscription ID and new plan ID
         // Mock the StripeApiService and DatabaseUpdateService
@@ -43,7 +43,7 @@ class StripeSubscriptionServiceTest extends TestCase
         // Assert that the expected error message is returned
     }
 
-    public function testCancelSubscription()
+    public function testCancelSubscription(): void
     {
         // Test case 1: Valid subscription ID
         // Mock the StripeApiService and DatabaseUpdateService

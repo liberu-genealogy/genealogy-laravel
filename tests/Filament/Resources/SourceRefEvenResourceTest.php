@@ -8,7 +8,7 @@ use Tests\TestCase;
 
 class SourceRefEvenResourceTest extends TestCase
 {
-    public function test_form_schema_is_correct()
+    public function test_form_schema_is_correct(): void
     {
         $form = SourceRefEvenResource::form(app(\Filament\Forms\Form::class));
         $schema = collect($form->getSchema());
@@ -29,7 +29,7 @@ class SourceRefEvenResourceTest extends TestCase
         }
     }
 
-    public function test_table_columns_are_correct()
+    public function test_table_columns_are_correct(): void
     {
         $table = SourceRefEvenResource::table(app(\Filament\Tables\Table::class));
         $columns = collect($table->getColumns());
@@ -37,21 +37,21 @@ class SourceRefEvenResourceTest extends TestCase
         $expectedColumns = ['group', 'gid', 'even', 'role', 'created_at', 'updated_at'];
 
         foreach ($expectedColumns as $columnName) {
-            $this->assertTrue($columns->contains(fn ($column) => $column->getName() === $columnName), "{$columnName} column is missing.");
+            $this->assertTrue($columns->contains(fn ($column): bool => $column->getName() === $columnName), "{$columnName} column is missing.");
         }
     }
 
-    public function test_navigation_icon_is_correct()
+    public function test_navigation_icon_is_correct(): void
     {
         $this->assertEquals('heroicon-o-rectangle-stack', SourceRefEvenResource::$navigationIcon);
     }
 
-    public function test_model_binding_is_correct()
+    public function test_model_binding_is_correct(): void
     {
         $this->assertEquals(SourceRefEven::class, SourceRefEvenResource::$model);
     }
 
-    public function test_page_routes_are_correct()
+    public function test_page_routes_are_correct(): void
     {
         $pages = SourceRefEvenResource::getPages();
 

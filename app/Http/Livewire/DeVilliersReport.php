@@ -15,7 +15,7 @@ class DeVilliersReport extends Component
         return view('livewire.devilliers-report');
     }
 
-    public function generateReport($personId)
+    public function generateReport($personId): void
     {
         $this->selectedPersonId = $personId;
         $person = Person::find($personId);
@@ -25,7 +25,7 @@ class DeVilliersReport extends Component
         }
     }
 
-    private function traverseFamilyTree($person, $currentNumber)
+    private function traverseFamilyTree($person, string $currentNumber): void
     {
         $this->reportData[$person->id] = [
             'number' => $currentNumber,

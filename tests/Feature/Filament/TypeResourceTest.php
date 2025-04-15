@@ -11,7 +11,7 @@ class TypeResourceTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_resource_configuration()
+    public function test_resource_configuration(): void
     {
         $this->assertEquals(Type::class, TypeResource::getModel());
         $formFields = TypeResource::form(null)->getSchema();
@@ -20,7 +20,7 @@ class TypeResourceTest extends TestCase
         $this->assertCount(5, $tableColumns);
     }
 
-    public function test_user_can_create_type()
+    public function test_user_can_create_type(): void
     {
         $this->actingAsUser();
         $response = $this->post(route('filament.resources.types.create'), [
@@ -36,7 +36,7 @@ class TypeResourceTest extends TestCase
         ]);
     }
 
-    public function test_type_creation_requires_valid_data()
+    public function test_type_creation_requires_valid_data(): void
     {
         $this->actingAsUser();
         $response = $this->post(route('filament.resources.types.create'), [

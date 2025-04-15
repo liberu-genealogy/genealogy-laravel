@@ -11,12 +11,12 @@ class PublicationResourceTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_model_association()
+    public function test_model_association(): void
     {
         $this->assertEquals(Publication::class, PublicationResource::getModel());
     }
 
-    public function test_form_fields()
+    public function test_form_fields(): void
     {
         $form = PublicationResource::form([])->getSchema();
 
@@ -36,7 +36,7 @@ class PublicationResourceTest extends TestCase
         $this->assertTrue($isActiveField->isNumeric());
     }
 
-    public function test_table_columns()
+    public function test_table_columns(): void
     {
         $columns = PublicationResource::table([])->getColumns();
 

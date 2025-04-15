@@ -11,12 +11,12 @@ class PersonSubmResourceTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_model_association()
+    public function test_model_association(): void
     {
         $this->assertEquals(PersonSubm::class, PersonSubmResource::getModel());
     }
 
-    public function test_form_fields()
+    public function test_form_fields(): void
     {
         $formFields = PersonSubmResource::form([])->getSchema();
 
@@ -30,7 +30,7 @@ class PersonSubmResourceTest extends TestCase
         $this->assertEquals(255, $formFields['subm']->getMaxLength());
     }
 
-    public function test_table_columns()
+    public function test_table_columns(): void
     {
         $tableColumns = PersonSubmResource::table([])->getColumns();
 

@@ -11,11 +11,12 @@ class FanChartWidget extends Widget
 
     public $people;
 
-    public function mount()
+    public function mount(): void
     {
         $this->people = Person::all();
     }
 
+    #[\Override]
     public function render(): \Illuminate\Contracts\View\View
     {
         return view(static::$view, ['people' => $this->people]);

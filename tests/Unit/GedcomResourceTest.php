@@ -11,6 +11,7 @@ use Tests\TestCase;
 
 class GedcomResourceTest extends TestCase
 {
+    #[\Override]
     protected function setUp(): void
     {
         parent::setUp();
@@ -24,9 +25,7 @@ class GedcomResourceTest extends TestCase
 
         GedcomResource::exportGedcom();
 
-        Queue::assertPushed(ExportGedCom::class, function ($job) use ($user) {
-            return $job->user->id === $user->id;
-        });
+        Queue::assertPushed(ExportGedCom::class, fn($job): bool => $job->user->id === $user->id);
     }
 
     public function testExportGedcomFailsWithoutAuthenticatedUser(): void

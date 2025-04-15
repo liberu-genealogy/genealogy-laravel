@@ -16,6 +16,7 @@ class PersonEventResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
+    #[\Override]
     public static function form(Form $form): Form
     {
         return $form
@@ -65,6 +66,7 @@ class PersonEventResource extends Resource
             ]);
     }
 
+    #[\Override]
     public static function table(Table $table): Table
     {
         return $table
@@ -137,6 +139,7 @@ class PersonEventResource extends Resource
             ]);
     }
 
+    #[\Override]
     public static function getRelations(): array
     {
         return [

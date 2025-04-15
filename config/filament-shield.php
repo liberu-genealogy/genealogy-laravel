@@ -14,7 +14,7 @@ return [
     ],
 
     'auth_provider_model' => [
-        'fqcn' => 'App\\Models\\User',
+        'fqcn' => \App\Models\User::class,
     ],
 
     'super_admin' => [

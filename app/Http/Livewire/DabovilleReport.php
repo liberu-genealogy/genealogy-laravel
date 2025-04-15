@@ -33,10 +33,8 @@ class DabovilleReport extends Component
      * Generates a report based on the provided person ID.
      *
      * @param int personId The ID of the person to generate the report for.
-     *
-     * @return void
      */
-    public function generateReport($personId)
+    public function generateReport($personId): void
     {
         $this->selectedPersonId = $personId;
         $person = Person::with('child_in_family.birth', 'child_in_family.death')->find($personId);
@@ -51,10 +49,8 @@ class DabovilleReport extends Component
      *
      * @param Person person The person to start the traversal from.
      * @param string currentNumber The current number in the family tree.
-     *
-     * @return void
      */
-    private function traverseFamilyTree($person, $currentNumber)
+    private function traverseFamilyTree($person, string $currentNumber): void
     {
         $this->reportData[$person->id] = [
             'number' => $currentNumber,

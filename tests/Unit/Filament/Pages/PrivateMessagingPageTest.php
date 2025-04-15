@@ -8,7 +8,7 @@ use PHPUnit\Framework\TestCase;
 
 class PrivateMessagingPageTest extends TestCase
 {
-    public function test_mount()
+    public function test_mount(): void
     {
         // Create an instance of PrivateMessagingPage
         $page = new PrivateMessagingPage();
@@ -26,7 +26,7 @@ class PrivateMessagingPageTest extends TestCase
         // ...
     }
 
-    public function test_sendMessage()
+    public function test_sendMessage(): void
     {
         // Create an instance of PrivateMessagingPage
         $page = new PrivateMessagingPage();
@@ -37,7 +37,7 @@ class PrivateMessagingPageTest extends TestCase
         // Add your test logic here
 
         // Call the sendMessage method
-        $response = $page->sendMessage();
+        $page->sendMessage();
 
         // Assert that the message is saved correctly
         // ...

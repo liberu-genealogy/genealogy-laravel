@@ -12,7 +12,7 @@ use Illuminate\Support\ServiceProvider;
 
 class FilamentServiceProvider extends ServiceProvider
 {
-    public function boot()
+    public function boot(): void
     {
         // Panel::registerLivewireComponent('example-component', ExampleComponent::class);
         // Panel::registerLivewireComponent('another-component', AnotherComponent::class);

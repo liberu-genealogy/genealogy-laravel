@@ -12,7 +12,7 @@ class PersonEventResourceTest extends TestCase
     use RefreshDatabase;
     use WithFaker;
 
-    public function testCreatePersonEvent()
+    public function testCreatePersonEvent(): void
     {
         $data = [
             'converted_date' => $this->faker->date,
@@ -43,7 +43,7 @@ class PersonEventResourceTest extends TestCase
         $this->assertDatabaseHas('person_events', $data);
     }
 
-    public function testReadPersonEvent()
+    public function testReadPersonEvent(): void
     {
         $personEvent = PersonEvent::factory()->create();
 
@@ -53,7 +53,7 @@ class PersonEventResourceTest extends TestCase
         $response->assertSee([$personEvent->type, $personEvent->date]);
     }
 
-    public function testUpdatePersonEvent()
+    public function testUpdatePersonEvent(): void
     {
         $personEvent = PersonEvent::factory()->create();
 
@@ -68,7 +68,7 @@ class PersonEventResourceTest extends TestCase
         $this->assertDatabaseHas('person_events', $updatedData);
     }
 
-    public function testDeletePersonEvent()
+    public function testDeletePersonEvent(): void
     {
         $personEvent = PersonEvent::factory()->create();
 

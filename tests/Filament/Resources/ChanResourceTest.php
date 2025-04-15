@@ -11,7 +11,7 @@ class ChanResourceTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_form_schema_includes_all_fields_with_correct_configurations()
+    public function test_form_schema_includes_all_fields_with_correct_configurations(): void
     {
         $formFields = ChanResource::form([])->getSchema();
 
@@ -28,7 +28,7 @@ class ChanResourceTest extends TestCase
         $this->assertEquals(255, $formFields['time']->getMaxLength());
     }
 
-    public function test_table_schema_includes_all_columns_with_correct_configurations()
+    public function test_table_schema_includes_all_columns_with_correct_configurations(): void
     {
         $tableColumns = ChanResource::table([])->getColumns();
 
@@ -40,7 +40,7 @@ class ChanResourceTest extends TestCase
         $this->assertTrue($tableColumns['updated_at']->isSortable());
     }
 
-    public function test_crud_operations()
+    public function test_crud_operations(): void
     {
         $chanData = [
             'group' => 'Test Group',

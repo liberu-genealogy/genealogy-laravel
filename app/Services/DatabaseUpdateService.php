@@ -8,7 +8,7 @@ class DatabaseUpdateService
 {
     public function updateSubscriptionRecord(string $subscriptionId, string $newPlanId): array
     {
-        $team = Team::whereHas('subscriptions', function ($query) use ($subscriptionId) {
+        $team = Team::whereHas('subscriptions', function ($query) use ($subscriptionId): void {
             $query->where('stripe_subscription_id', $subscriptionId);
         })->first();
 
@@ -26,7 +26,7 @@ class DatabaseUpdateService
 
     public function cancelSubscriptionRecord(string $subscriptionId): array
     {
-        $team = Team::whereHas('subscriptions', function ($query) use ($subscriptionId) {
+        $team = Team::whereHas('subscriptions', function ($query) use ($subscriptionId): void {
             $query->where('stripe_subscription_id', $subscriptionId);
         })->first();
 

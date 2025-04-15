@@ -11,20 +11,20 @@ class PerformanceTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function testLargeDatasetRetrieval()
+    public function testLargeDatasetRetrieval(): void
     {
         // Create a large dataset
         Person::factory()->count(10000)->create();
 
         // Test uncached retrieval
         $start = microtime(true);
-        $result = Person::all();
+        Person::all();
         $end = microtime(true);
         $timeUncached = $end - $start;
 
         // Test cached retrieval
         $start = microtime(true);
-        $result = Person::getListCached();
+        Person::getListCached();
         $end = microtime(true);
         $timeCached = $end - $start;
 
@@ -32,13 +32,13 @@ class PerformanceTest extends TestCase
         $this->assertLessThan(1.0, $timeCached); // Ensure retrieval takes less than 1 second
     }
 
-    public function testQueryPerformance()
+    public function testQueryPerformance(): void
     {
         Person::factory()->count(10000)->create();
 
         DB::enableQueryLog();
 
-        $person = Person::withBasicInfo()->first();
+        Person::withBasicInfo()->first();
 
         $queries = DB::getQueryLog();
         

@@ -12,7 +12,7 @@ class SourceResourceTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_form_schema_contains_all_fields_with_correct_configurations()
+    public function test_form_schema_contains_all_fields_with_correct_configurations(): void
     {
         $form = SourceResource::form(app(\Filament\Forms\Form::class));
 
@@ -45,7 +45,7 @@ class SourceResourceTest extends TestCase
         }
     }
 
-    public function test_table_configuration_defines_all_columns_correctly()
+    public function test_table_configuration_defines_all_columns_correctly(): void
     {
         $table = SourceResource::table(app(\Filament\Tables\Table::class));
 

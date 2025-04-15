@@ -20,6 +20,7 @@ class NoteResource extends Resource
 
     protected static ?string $navigationGroup = 'Family';
 
+    #[\Override]
     public static function form(Form $form): Form
     {
         return $form
@@ -45,6 +46,7 @@ class NoteResource extends Resource
             ]);
     }
 
+    #[\Override]
     public static function table(Table $table): Table
     {
         return $table
@@ -88,6 +90,7 @@ class NoteResource extends Resource
             ]);
     }
 
+    #[\Override]
     public static function getRelations(): array
     {
         return [

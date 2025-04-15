@@ -9,13 +9,13 @@ trait BelongsToTenant
 {
     protected static function booted(): void
     {
-        static::addGlobalScope('team', function (Builder $query) {
+        static::addGlobalScope('team', function (Builder $query): void {
             if (auth()->check()) {
                 $query->where('team_id', static::getTenantId());
             }
         });
 
-        static::creating(function ($model) {
+        static::creating(function ($model): void {
             $model->team_id = static::getTenantId();
         });
     }

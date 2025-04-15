@@ -8,8 +8,9 @@ use Illuminate\Support\ServiceProvider;
 use App\Models\{Addr, BatchData, Chan, Family, FamilyEvent, FamilySlgs,
     Person, PersonAlia, PersonAsso, PersonEvent, Subm};
 
-final readonly class TeamServiceProvider extends ServiceProvider
+class TeamServiceProvider extends ServiceProvider
 {
+    #[\Override]
     public function register(): void
     {
         $bindings = [

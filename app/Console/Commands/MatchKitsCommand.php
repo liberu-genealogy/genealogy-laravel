@@ -11,7 +11,7 @@ class MatchKitsCommand extends Command
     protected $signature = 'dna:match {varName1} {fileName1} {varName2} {fileName2}';
     protected $description = 'Matches two DNA kits and updates the database with the results.';
 
-    public function handle()
+    public function handle(): void
     {
         $varName1 = $this->argument('varName1');
         $fileName1 = $this->argument('fileName1');
@@ -27,8 +27,8 @@ class MatchKitsCommand extends Command
             return;
         }
 
-        $totalSharedCm = rand(1, 100); // Simulated DNA match result
-        $largestCmSegment = rand(1, $totalSharedCm); // Simulated DNA match result
+        $totalSharedCm = random_int(1, 100); // Simulated DNA match result
+        $largestCmSegment = random_int(1, $totalSharedCm); // Simulated DNA match result
 
         DnaMatching::create([
             'file1'              => $fileName1,

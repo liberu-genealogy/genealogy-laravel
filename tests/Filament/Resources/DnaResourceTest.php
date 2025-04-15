@@ -14,7 +14,7 @@ class DnaResourceTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_form_configuration()
+    public function test_form_configuration(): void
     {
         Storage::fake('private');
 
@@ -32,14 +32,12 @@ class DnaResourceTest extends TestCase
 
         $response->assertStatus(302);
 
-        Queue::assertPushed(ImportGedcom::class, function ($job) use ($user, $file) {
-            return $job->user->is($user) && Storage::disk('private')->exists("gedcom-form-imports/{$file->hashName()}");
-        });
+        Queue::assertPushed(ImportGedcom::class, fn($job): bool => $job->user->is($user) && Storage::disk('private')->exists("gedcom-form-imports/{$file->hashName()}"));
 
         Storage::disk('private')->assertExists("gedcom-form-imports/{$file->hashName()}");
     }
 
-    public function test_table_configuration()
+    public function test_table_configuration(): void
     {
         $dna = Dna::factory()->create();
 

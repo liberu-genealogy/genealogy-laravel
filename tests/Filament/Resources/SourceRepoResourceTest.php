@@ -14,7 +14,7 @@ class SourceRepoResourceTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_form_schema_contains_all_fields_with_correct_configurations()
+    public function test_form_schema_contains_all_fields_with_correct_configurations(): void
     {
         $form = SourceRepoResource::form(app(Forms\Form::class));
 
@@ -39,7 +39,7 @@ class SourceRepoResourceTest extends TestCase
         $this->assertEquals(65535, $form->getComponent('caln')->getMaxLength());
     }
 
-    public function test_table_configuration_defines_all_columns_correctly()
+    public function test_table_configuration_defines_all_columns_correctly(): void
     {
         $table = SourceRepoResource::table(app(Tables\Table::class));
 

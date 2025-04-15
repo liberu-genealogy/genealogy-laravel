@@ -21,6 +21,7 @@ class EditTeam extends EditTenantProfile
         return 'Edit Team';
     }
 
+    #[\Override]
     public function form(Form $form): Form
     {
         $team = Filament::getTenant();
@@ -37,6 +38,7 @@ class EditTeam extends EditTenantProfile
             ]);
     }
     
+    #[\Override]
     protected function getViewData(): array
     {
         return [

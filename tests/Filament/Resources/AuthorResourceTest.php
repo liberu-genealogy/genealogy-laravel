@@ -11,7 +11,7 @@ class AuthorResourceTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_form_schema_includes_all_fields_with_correct_configurations()
+    public function test_form_schema_includes_all_fields_with_correct_configurations(): void
     {
         $formFields = AuthorResource::form([])->getSchema();
 
@@ -28,7 +28,7 @@ class AuthorResourceTest extends TestCase
         $this->assertTrue($formFields['is_active']->isNumeric());
     }
 
-    public function test_table_schema_includes_all_columns_with_correct_configurations()
+    public function test_table_schema_includes_all_columns_with_correct_configurations(): void
     {
         $tableColumns = AuthorResource::table([])->getColumns();
 
@@ -49,7 +49,7 @@ class AuthorResourceTest extends TestCase
         $this->assertTrue($tableColumns['updated_at']->isSortable());
     }
 
-    public function test_crud_operations()
+    public function test_crud_operations(): void
     {
         $authorData = [
             'name'        => 'John Doe',

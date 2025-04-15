@@ -13,7 +13,8 @@ class CreateTeam extends CreateTeamForm
      *
      * @return void
      */
-    public function createTeam()
+    #[\Override]
+    public function createTeam(\Laravel\Jetstream\Contracts\CreatesTeams $creator)
     {
         $this->validate();
 

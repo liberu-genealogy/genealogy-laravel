@@ -15,7 +15,7 @@ class PersonNameResourceTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_form_schema_is_correct()
+    public function test_form_schema_is_correct(): void
     {
         $form = PersonNameResource::form(Form::make())->getSchema();
 
@@ -38,7 +38,7 @@ class PersonNameResourceTest extends TestCase
         }
     }
 
-    public function test_table_columns_are_correct()
+    public function test_table_columns_are_correct(): void
     {
         $table = PersonNameResource::table(Table::make())->getColumns();
 
@@ -63,21 +63,21 @@ class PersonNameResourceTest extends TestCase
         }
     }
 
-    public function test_index_route()
+    public function test_index_route(): void
     {
         $response = $this->get(route('filament.resources.person-names.index'));
         $response->assertStatus(200);
         $response->assertViewIs('filament.resources.person-names.pages.list-person-names');
     }
 
-    public function test_create_route()
+    public function test_create_route(): void
     {
         $response = $this->get(route('filament.resources.person-names.create'));
         $response->assertStatus(200);
         $response->assertViewIs('filament.resources.person-names.pages.create-person-name');
     }
 
-    public function test_edit_route()
+    public function test_edit_route(): void
     {
         $personName = PersonName::factory()->create();
         $response = $this->get(route('filament.resources.person-names.edit', $personName));

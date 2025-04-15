@@ -9,7 +9,7 @@ use Tests\TestCase;
 
 class SourceDataEvenResourceTest extends TestCase
 {
-    public function test_form_schema_is_correct()
+    public function test_form_schema_is_correct(): void
     {
         $form = SourceDataEvenResource::form(app(\Filament\Forms\Form::class));
         $schema = collect($form->getSchema());
@@ -31,7 +31,7 @@ class SourceDataEvenResourceTest extends TestCase
         }
     }
 
-    public function test_table_columns_are_correct()
+    public function test_table_columns_are_correct(): void
     {
         $table = SourceDataEvenResource::table(app(\Filament\Tables\Table::class));
         $columns = collect($table->getColumns());
@@ -41,21 +41,21 @@ class SourceDataEvenResourceTest extends TestCase
         ];
 
         foreach ($expectedColumns as $column) {
-            $this->assertTrue($columns->contains(fn ($component) => $component->getName() === $column), "{$column} is missing in the table columns.");
+            $this->assertTrue($columns->contains(fn ($component): bool => $component->getName() === $column), "{$column} is missing in the table columns.");
         }
     }
 
-    public function test_navigation_icon_is_correct()
+    public function test_navigation_icon_is_correct(): void
     {
         $this->assertEquals('heroicon-o-rectangle-stack', SourceDataEvenResource::$navigationIcon);
     }
 
-    public function test_model_binding_is_correct()
+    public function test_model_binding_is_correct(): void
     {
         $this->assertEquals(SourceDataEven::class, SourceDataEvenResource::$model);
     }
 
-    public function test_page_routes_are_correct()
+    public function test_page_routes_are_correct(): void
     {
         $pages = SourceDataEvenResource::getPages();
 

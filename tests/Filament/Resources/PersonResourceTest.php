@@ -13,10 +13,10 @@ class PersonResourceTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_form_contains_relationship_fields()
+    public function test_form_contains_relationship_fields(): void
     {
-        $father = Person::factory()->create();
-        $mother = Person::factory()->create();
+        Person::factory()->create();
+        Person::factory()->create();
 
         $form = PersonResource::form(null)->getSchema();
 
@@ -29,7 +29,7 @@ class PersonResourceTest extends TestCase
         $this->assertInstanceOf(Select::class, $motherField);
     }
 
-    public function test_table_filters_by_name()
+    public function test_table_filters_by_name(): void
     {
         $person1 = Person::factory()->create(['name' => 'John Doe']);
         $person2 = Person::factory()->create(['name' => 'Jane Doe']);
@@ -44,7 +44,7 @@ class PersonResourceTest extends TestCase
         $this->assertFalse($filteredQuery->get()->contains($person2));
     }
 
-    public function test_bulk_delete_action()
+    public function test_bulk_delete_action(): void
     {
         $persons = Person::factory()->count(5)->create();
 

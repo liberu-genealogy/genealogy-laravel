@@ -20,6 +20,7 @@ class FamilyEventResource extends Resource
 
     protected static ?string $navigationGroup = 'Family';
 
+    #[\Override]
     public static function form(Form $form): Form
     {
         return $form
@@ -67,6 +68,7 @@ class FamilyEventResource extends Resource
             ]);
     }
 
+    #[\Override]
     public static function table(Table $table): Table
     {
         return $table
@@ -135,6 +137,7 @@ class FamilyEventResource extends Resource
             ]);
     }
 
+    #[\Override]
     public static function getRelations(): array
     {
         return [

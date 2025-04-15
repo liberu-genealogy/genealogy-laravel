@@ -12,7 +12,7 @@ class FamilySlgsResourceTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_form_fields_configuration()
+    public function test_form_fields_configuration(): void
     {
         $form = FamilySlgsResource::form(Form::make())->getSchema();
 
@@ -34,7 +34,7 @@ class FamilySlgsResourceTest extends TestCase
         }
     }
 
-    public function test_table_configuration()
+    public function test_table_configuration(): void
     {
         $table = FamilySlgsResource::table(Table::make())->getColumns();
 

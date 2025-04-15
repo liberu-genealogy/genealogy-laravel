@@ -22,6 +22,7 @@ class PersonResource extends Resource
 
     // protected static ?string $tenantRelationshipName = 'People';
 
+    #[\Override]
     public static function form(Form $form): Form
     {
         return $form
@@ -54,6 +55,7 @@ class PersonResource extends Resource
             ]);
     }
 
+    #[\Override]
     public static function table(Table $table): Table
     {
         return $table
@@ -95,6 +97,7 @@ class PersonResource extends Resource
             ]);
     }
 
+    #[\Override]
     public static function getRelations(): array
     {
         return [

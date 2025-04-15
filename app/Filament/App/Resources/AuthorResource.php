@@ -20,6 +20,7 @@ class AuthorResource extends Resource
 
     protected static ?string $navigationGroup = 'Author';
 
+    #[\Override]
     public static function form(Form $form): Form
     {
         return $form
@@ -36,6 +37,7 @@ class AuthorResource extends Resource
             ]);
     }
 
+    #[\Override]
     public static function table(Table $table): Table
     {
         return $table
@@ -69,6 +71,7 @@ class AuthorResource extends Resource
             ]);
     }
 
+    #[\Override]
     public static function getRelations(): array
     {
         return [
