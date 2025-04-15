@@ -16,10 +16,12 @@ class Author extends Model
 
     protected $attributes = ['is_active' => false];
 
-    protected $casts = ['is_active' => 'boolean'];
-
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class, 'user_id', 'id');
+    }
+    protected function casts(): array
+    {
+        return ['is_active' => 'boolean'];
     }
 }

@@ -33,16 +33,6 @@ class ConnectedAccount extends SocialstreamConnectedAccount
     ];
 
     /**
-     * The attributes that should be cast.
-     *
-     * @var array
-     */
-    protected $casts = [
-        'created_at' => 'datetime',
-        'expires_at' => 'datetime',
-    ];
-
-    /**
      * The event map for the model.
      *
      * @var array
@@ -52,4 +42,16 @@ class ConnectedAccount extends SocialstreamConnectedAccount
         'updated' => ConnectedAccountUpdated::class,
         'deleted' => ConnectedAccountDeleted::class,
     ];
+    /**
+     * The attributes that should be cast.
+     *
+     * @return array
+     */
+    protected function casts(): array
+    {
+        return [
+            'created_at' => 'datetime',
+            'expires_at' => 'datetime',
+        ];
+    }
 }

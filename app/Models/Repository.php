@@ -22,10 +22,12 @@ class Repository extends Model
 
     protected $attributes = ['is_active' => false];
 
-    protected $casts = ['is_active' => 'boolean'];
-
     public function sources()
     {
         return $this->hasMany(Source::class);
+    }
+    protected function casts(): array
+    {
+        return ['is_active' => 'boolean'];
     }
 }

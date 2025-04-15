@@ -22,7 +22,10 @@ class Geneanum extends Model
         'db_name',
     ];
 
-    protected $casts = [
-        'data' => 'array',
-    ];
+    protected function casts(): array
+    {
+        return [
+            'data' => 'array',
+        ];
+    }
 }

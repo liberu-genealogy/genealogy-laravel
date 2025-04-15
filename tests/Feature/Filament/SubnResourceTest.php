@@ -65,7 +65,7 @@ class SubnResourceTest extends TestCase
         $response->assertStatus(200);
         $subns = Subn::all();
         foreach ($subns as $subn) {
-            $response->assertSee($subn->subm, false);
+            $response->assertSeeHtml($subn->subm);
         }
     }
 }

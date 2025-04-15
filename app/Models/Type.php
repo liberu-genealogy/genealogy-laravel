@@ -15,5 +15,8 @@ class Type extends Model
 
     protected $attributes = ['is_active' => false];
 
-    protected $casts = ['is_active' => 'boolean'];
+    protected function casts(): array
+    {
+        return ['is_active' => 'boolean'];
+    }
 }

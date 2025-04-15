@@ -16,8 +16,6 @@ class Citation extends Model
 
     protected $attributes = ['is_active' => false];
 
-    protected $casts = ['is_active' => 'boolean'];
-
     public function sources()
     {
         return $this->belongsToMany(Source::class);
@@ -26,5 +24,9 @@ class Citation extends Model
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class, 'user_id', 'id');
+    }
+    protected function casts(): array
+    {
+        return ['is_active' => 'boolean'];
     }
 }

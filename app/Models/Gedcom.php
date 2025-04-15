@@ -22,7 +22,10 @@ class Gedcom extends Model
         'db_name',
     ];
 
-    protected $casts = [
-        'data' => 'array',
-    ];
+    protected function casts(): array
+    {
+        return [
+            'data' => 'array',
+        ];
+    }
 }

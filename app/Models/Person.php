@@ -41,23 +41,6 @@ class Person extends Model
         'tree_position_x',
         'tree_position_y',
     ];
-    // public function searchableAs()
-    // {
-    //     return 'name';
-    // }
-
-    /**
-     * The attributes that should be mutated to dates.
-     *
-     * @var array
-     */
-    protected $casts = [
-        'deleted_at' => 'datetime',
-        'birthday'   => 'datetime',
-        'deathday'   => 'datetime',
-        'burial_day' => 'datetime',
-        'chan'       => 'datetime',
-    ];
 
     protected $guarded = ['id'];
 
@@ -175,12 +158,12 @@ class Person extends Model
 
     public function birth()
     {
-        return $this->events->where('title', '=', 'BIRT')->first();
+        return $this->dispatchesEvents->where('title', '=', 'BIRT')->first();
     }
 
     public function death()
     {
-        return $this->events->where('title', '=', 'DEAT')->first();
+        return $this->dispatchesEvents->where('title', '=', 'DEAT')->first();
     }
 
     public function scopeWithBasicInfo($query)
@@ -201,5 +184,20 @@ class Person extends Model
     public static function getBasicInfoCached($id)
     {
         return cache()->remember("person_basic_info_{$id}", now()->addHours(1), fn() => self::withBasicInfo()->find($id));
+    }
+    /**
+     * The attributes that should be mutated to dates.
+     *
+     * @return array
+     */
+    protected function casts(): array
+    {
+        return [
+            'deleted_at' => 'datetime',
+            'birthday'   => 'datetime',
+            'deathday'   => 'datetime',
+            'burial_day' => 'datetime',
+            'chan'       => 'datetime',
+        ];
     }
 }
