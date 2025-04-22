@@ -18,13 +18,13 @@ footer
 }
 
 /* Custom styles extracted from tailwind.css */
-.btn {
   @apply px-4 py-2 bg-blue-500 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700;
 }
 .form-input {
-  @apply border-2 border-gray-300 p-3 rounded-lg focus:outline-none focus:border-blue-500;
+  @apply border-2 border-gray-300 p-3 rounded-lg focus:outline-none focus:border-blue-500 bg-white text-gray-900;
 }
 .container {
+  @apply max-w-6xl mx-auto px-4 sm:px-6 lg:px-8;
   @apply max-w-6xl mx-auto px-4 sm:px-6 lg:px-8;
   @media (max-width: 768px) {
     max-width: 100%;
