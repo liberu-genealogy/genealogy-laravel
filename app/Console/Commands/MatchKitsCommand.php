@@ -39,6 +39,10 @@ class MatchKitsCommand extends Command
             'match_id'           => $dna2->user_id,
         ]);
 
-        $this->info('DNA kits matched successfully.');
+        // Return JSON result for the job to process
+        $this->info(json_encode([
+            'total_cms' => $totalSharedCm,
+            'largest_cm' => $largestCmSegment
+        ]));
     }
 }
