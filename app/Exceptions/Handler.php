@@ -44,13 +44,13 @@ class Handler extends ExceptionHandler
     public function register(): void
     {
         $this->reportable(function (Throwable $e) {
-            // Only log if the application is fully bootstrapped
+            // Only log essential information to reduce memory usage
             if (app()->hasBeenBootstrapped()) {
                 Log::error($e->getMessage(), [
                     'exception' => get_class($e),
                     'file' => $e->getFile(),
                     'line' => $e->getLine(),
-                    'trace' => $e->getTraceAsString()
+                    // Don't include full trace to save memory
                 ]);
             }
         });
