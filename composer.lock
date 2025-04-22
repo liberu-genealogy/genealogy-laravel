@@ -3017,22 +3017,22 @@
         },
         {
             "name": "liberu-genealogy/laravel-gedcom",
-            "version": "v6.2.3",
+            "version": "v6.3.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/liberu-genealogy/laravel-gedcom.git",
-                "reference": "4a9df7dd9e910a8fa7416d03196b68310e6a5140"
+                "reference": "fea0a1af87bcc623af1090af40d1dc4056a60343"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/liberu-genealogy/laravel-gedcom/zipball/4a9df7dd9e910a8fa7416d03196b68310e6a5140",
-                "reference": "4a9df7dd9e910a8fa7416d03196b68310e6a5140",
+                "url": "https://api.github.com/repos/liberu-genealogy/laravel-gedcom/zipball/fea0a1af87bcc623af1090af40d1dc4056a60343",
+                "reference": "fea0a1af87bcc623af1090af40d1dc4056a60343",
                 "shasum": ""
             },
             "require": {
                 "illuminate/database": "^11.0||^12.0",
                 "illuminate/support": "^11.0||^12.0",
-                "liberu-genealogy/php-gedcom": "^3.0",
+                "liberu-genealogy/php-gedcom": "^3.1",
                 "php": ">=8.4"
             },
             "require-dev": {
@@ -3061,7 +3061,7 @@
             "description": "A package that converts gedcom files to Eloquent models",
             "support": {
                 "issues": "https://github.com/liberu-genealogy/laravel-gedcom/issues",
-                "source": "https://github.com/liberu-genealogy/laravel-gedcom/tree/v6.2.3"
+                "source": "https://github.com/liberu-genealogy/laravel-gedcom/tree/v6.3.1"
             },
             "funding": [
                 {
@@ -3069,7 +3069,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2025-03-23T23:51:04+00:00"
+            "time": "2025-04-15T22:45:17+00:00"
         },
         {
             "name": "liberu-genealogy/php-dna",
@@ -3131,16 +3131,16 @@
         },
         {
             "name": "liberu-genealogy/php-gedcom",
-            "version": "v3.0.0",
+            "version": "v3.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/liberu-genealogy/php-gedcom.git",
-                "reference": "f84424cb037116c05069775451bbc0edc0e48d1b"
+                "reference": "b5bfdb16f77abef420279feff78070e8e9b72889"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/liberu-genealogy/php-gedcom/zipball/f84424cb037116c05069775451bbc0edc0e48d1b",
-                "reference": "f84424cb037116c05069775451bbc0edc0e48d1b",
+                "url": "https://api.github.com/repos/liberu-genealogy/php-gedcom/zipball/b5bfdb16f77abef420279feff78070e8e9b72889",
+                "reference": "b5bfdb16f77abef420279feff78070e8e9b72889",
                 "shasum": ""
             },
             "require": {
@@ -3173,7 +3173,7 @@
             ],
             "support": {
                 "issues": "https://github.com/liberu-genealogy/php-gedcom/issues",
-                "source": "https://github.com/liberu-genealogy/php-gedcom/tree/v3.0.0"
+                "source": "https://github.com/liberu-genealogy/php-gedcom/tree/v3.1.0"
             },
             "funding": [
                 {
@@ -3181,7 +3181,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2025-03-22T22:19:04+00:00"
+            "time": "2025-04-15T22:43:34+00:00"
         },
         {
             "name": "livewire/livewire",
