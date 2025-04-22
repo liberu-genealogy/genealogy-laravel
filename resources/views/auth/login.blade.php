@@ -14,14 +14,14 @@
                     <label class="block font-medium text-sm text-gray-700" for="email">
                         {{ __('Email') }}
                     </label>
-                    <input class="border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm block mt-1 w-full" id="email" type="email" name="email" required="required" autofocus="autofocus">
+                    <input class="border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm block mt-1 w-full bg-white text-gray-900" id="email" type="email" name="email" required="required" autofocus="autofocus">
                 </div>
 
                 <div class="mt-4">
                     <label class="block font-medium text-sm text-gray-700" for="password">
                         {{ __('Password') }}
                     </label>
-                    <input class="border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm block mt-1 w-full" id="password" type="password" name="password" required="required" autocomplete="current-password">
+                    <input class="border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm block mt-1 w-full bg-white text-gray-900" id="password" type="password" name="password" required="required" autocomplete="current-password">
                 </div>
 
                 <div class="block mt-4">
