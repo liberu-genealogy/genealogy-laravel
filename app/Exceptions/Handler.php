@@ -43,13 +43,17 @@ class Handler extends ExceptionHandler
     #[\Override]
     public function register(): void
     {
-        $this->reportable(function (Throwable $e): void {
-            Log::error($e->getMessage(), [
-                'exception' => get_class($e),
-                'file' => $e->getFile(),
-                'line' => $e->getLine(),
-                'trace' => $e->getTraceAsString()
-            ]);
+        $this->reportable(function (Throwable $e) {
+            // Only log if the application is fully bootstrapped
+            if (app()->hasBeenBootstrapped()) {
+                Log::error($e->getMessage(), [
+                    'exception' => get_class($e),
+                    'file' => $e->getFile(),
+                    'line' => $e->getLine(),
+                    'trace' => $e->getTraceAsString()
+                ]);
+            }
         });
     }
+}
 }
