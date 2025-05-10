@@ -2,6 +2,10 @@
 
 declare(strict_types=1);
 
+// Increase memory limit
+ini_set('memory_limit', '256M');
+
+
 use Illuminate\Contracts\Http\Kernel;
 use Illuminate\Http\Request;
 

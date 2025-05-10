@@ -10,10 +10,11 @@
         "guzzlehttp/guzzle": "^7.8",
         "laravel/framework": "^12.0",
         "laravel/jetstream": "^5.0",
+        "laravel/octane": "*",
         "laravel/sanctum": "^4.0",
         "laravel/tinker": "^2.9",
         "liberu-genealogy/laravel-dna": "^2.0",
-        "liberu-genealogy/laravel-gedcom": "^6.0",
+        "liberu-genealogy/laravel-gedcom": "^6.5",
         "livewire/livewire": "^3.5",
         "spatie/laravel-menu": "^4.0"
     },
