@@ -28,4 +28,4 @@ class PersonAnciFactory extends Factory
         ];
     }
 }
-}
+// Remove the extra closing brace
