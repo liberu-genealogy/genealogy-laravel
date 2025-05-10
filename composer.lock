@@ -2726,16 +2726,16 @@
         },
         {
             "name": "liberu-genealogy/laravel-gedcom",
-            "version": "v6.5.1",
+            "version": "v6.6.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/liberu-genealogy/laravel-gedcom.git",
-                "reference": "88b97913cbc637585afbad04bbc0228a0e742220"
+                "reference": "070bd208f764fb5d9a0ca7cbbb75f3a1a51e6da1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/liberu-genealogy/laravel-gedcom/zipball/88b97913cbc637585afbad04bbc0228a0e742220",
-                "reference": "88b97913cbc637585afbad04bbc0228a0e742220",
+                "url": "https://api.github.com/repos/liberu-genealogy/laravel-gedcom/zipball/070bd208f764fb5d9a0ca7cbbb75f3a1a51e6da1",
+                "reference": "070bd208f764fb5d9a0ca7cbbb75f3a1a51e6da1",
                 "shasum": ""
             },
             "require": {
@@ -2770,7 +2770,7 @@
             "description": "A package that converts gedcom files to Eloquent models",
             "support": {
                 "issues": "https://github.com/liberu-genealogy/laravel-gedcom/issues",
-                "source": "https://github.com/liberu-genealogy/laravel-gedcom/tree/v6.5.1"
+                "source": "https://github.com/liberu-genealogy/laravel-gedcom/tree/v6.6.0"
             },
             "funding": [
                 {
@@ -2778,7 +2778,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2025-05-10T17:27:17+00:00"
+            "time": "2025-05-10T18:14:11+00:00"
         },
         {
             "name": "liberu-genealogy/php-dna",
