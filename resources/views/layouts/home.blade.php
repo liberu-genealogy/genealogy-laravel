@@ -1,9 +1,8 @@
-<x-app-layout>
-@include('components.home-navbar')
-
-    <main class="flex-1 mt-[64px] pt-6">
-        @yield('content')
-    </main>
-
-    @include('components.footer')
-</x-app-layout>
+// ... existing code ...
+    </div>
+    
+    <!-- Scripts -->
+    <script src="{{ asset('js/app.js') }}" defer></script>
+    <script src="{{ asset('js/csrf-refresh.js') }}" defer></script>
+</body>
+</html>
