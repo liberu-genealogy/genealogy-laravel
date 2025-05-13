@@ -4,6 +4,7 @@ namespace App\Filament\Admin\Pages;
 
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
+use Filament\Schemas\Schema;
 use Filament\Pages\Tenancy\RegisterTenant;
 use Illuminate\Database\Eloquent\Model;
 
@@ -15,7 +16,7 @@ class CreateTeam extends RegisterTenant
     }
 
     #[\Override]
-    public function form(Form $form): Form
+    public function form(Schema $form): Schema
     {
         return $form
             ->schema([

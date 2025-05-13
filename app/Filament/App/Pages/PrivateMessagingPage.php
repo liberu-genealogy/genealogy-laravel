@@ -2,6 +2,7 @@
 
 namespace App\Filament\App\Pages;
 
+use BackedEnum;
 use App\Models\Message;
 use App\Models\User;
 use Filament\Pages\Page;
@@ -11,7 +12,7 @@ use Illuminate\Support\Facades\Validator;
 
 class PrivateMessagingPage extends Page
 {
-    protected static ?string $navigationIcon = 'heroicon-o-chart-bar';
+    protected static BackedEnum|string|null $navigationIcon = 'heroicon-o-chart-bar';
 
     public function mount(): void
     {

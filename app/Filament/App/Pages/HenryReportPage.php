@@ -2,15 +2,17 @@
 
 namespace App\Filament\App\Pages;
 
+use UnitEnum;
+use BackedEnum;
 use Filament\Pages\Page;
 
 class HenryReportPage extends Page
 {
-    protected static string $view = 'henry-report-page';
+    protected string $view = 'henry-report-page';
 
     protected static ?string $title = 'Henry Report';
 
-    protected static ?string $navigationIcon = 'heroicon-o-chart-bar';
+    protected static BackedEnum|string|null $navigationIcon = 'heroicon-o-chart-bar';
 
-    protected static ?string $navigationGroup = 'Reports';
+    protected static UnitEnum|string|null $navigationGroup = 'Reports';
 }

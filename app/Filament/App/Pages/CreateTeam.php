@@ -11,12 +11,13 @@ use Filament\Pages\Tenancy\RegisterTenant;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 use App\Services\SubscriptionService;
+use Filament\Schemas\Schema;
 
 class CreateTeam extends RegisterTenant
 {
 
     #[\Override]
-    public function form(Form $form): Form
+    public function form(Schema $form): Schema
     {
         return $form
             ->schema([

@@ -10,11 +10,11 @@ color: #FFFFFF;
 
 footer
 {
-@apply bg-green-900 bg-opacity-75 text-white;
+@apply bg-green-900 text-white;
 }
 
 .navbar-nav {
-@apply bg-opacity-75 text-white shadow-md;
+@apply text-white shadow-md;
 }
 
 /* Custom styles extracted from tailwind.css */
@@ -32,18 +32,18 @@ footer
   }
 }
     .manage-section {
-        @apply bg-green-800 bg-opacity-75 text-white shadow-md overflow-hidden;
+        @apply bg-green-800 text-white shadow-md overflow-hidden;
     }
 
 
     .card, card {
-        @apply bg-green-800 bg-opacity-75 text-white rounded-lg shadow-md overflow-hidden;
+        @apply bg-green-800 text-white rounded-lg shadow-md overflow-hidden;
     }
     .card-header, card-header {
-        @apply text-white font-bold py-2 px-4 bg-green-800 bg-opacity-75;
+        @apply text-white font-bold py-2 px-4 bg-green-800;
     }
     .card-body, card-body {
-        @apply p-4 bg-green-800 bg-opacity-75;
+        @apply p-4 bg-green-800;
     }
 .sm\:container {
   @apply max-w-xl;
@@ -72,13 +72,13 @@ footer
   @apply max-w-6xl mx-auto px-4 sm:px-6 lg:px-8;
 }
     .card {
-        @apply bg-green-800 bg-opacity-75 text-white rounded-lg shadow-md overflow-hidden;
+        @apply bg-green-800 text-white rounded-lg shadow-md overflow-hidden;
     }
     .card-header {
-        @apply bg-green-800 bg-opacity-75 text-white font-bold py-2 px-4;
+        @apply bg-green-800 text-white font-bold py-2 px-4;
     }
     .card-body {
-        @apply p-4 bg-green-800 bg-opacity-75;
+        @apply p-4 bg-green-800;
     }.sm\:container {
   @apply max-w-xl;
 }
@@ -147,10 +147,10 @@ footer
   @apply max-w-6xl;
 }
 .card {
-  @apply bg-green-800 bg-opacity-75 rounded-lg shadow-md overflow-hidden;
+  @apply bg-green-800 rounded-lg shadow-md overflow-hidden;
 }
 .card-header {
-  @apply bg-green-800 bg-opacity-75 text-white font-bold py-2 px-4;
+  @apply bg-green-800 text-white font-bold py-2 px-4;
 }
 @media (max-width: 768px) {
   .card-header {

@@ -2,6 +2,8 @@
 
 namespace App\Filament\App\Pages;
 
+use UnitEnum;
+use BackedEnum;
 use Filament\Forms\Components\TextInput;
 use Filament\Pages\Page;
 use Illuminate\Support\Facades\Auth;
@@ -10,11 +12,11 @@ use Illuminate\Validation\Rules\Password;
 
 class UpdatePasswordPage extends Page
 {
-    protected static string $view = 'filament.pages.profile.update-password';
+    protected string $view = 'filament.pages.profile.update-password';
 
-    protected static ?string $navigationIcon = 'heroicon-o-lock-closed';
+    protected static BackedEnum|string|null $navigationIcon = 'heroicon-o-lock-closed';
 
-    protected static ?string $navigationGroup = 'Account';
+    protected static UnitEnum|string|null $navigationGroup = 'Account';
 
     protected static ?int $navigationSort = 1;
 

@@ -11,10 +11,11 @@ use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Placeholder;
 use Filament\Forms\Form;
 use App\Services\SubscriptionService;
+use Filament\Schemas\Schema;
 
 class EditTeam extends EditTenantProfile
 {
-    protected static string $view = 'filament.pages.edit-team';
+    protected string $view = 'filament.pages.edit-team';
 
     public static function getLabel(): string
     {
@@ -22,7 +23,7 @@ class EditTeam extends EditTenantProfile
     }
 
     #[\Override]
-    public function form(Form $form): Form
+    public function form(Schema $form): Schema
     {
         $team = Filament::getTenant();
         $subscriptionService = app(SubscriptionService::class);

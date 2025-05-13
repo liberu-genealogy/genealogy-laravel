@@ -7,7 +7,7 @@ use Filament\Widgets\Widget;
 
 class FanChartWidget extends Widget
 {
-    protected static string $view = 'livewire.fan-chart-component';
+    protected string $view = 'livewire.fan-chart-component';
 
     public $people;
 

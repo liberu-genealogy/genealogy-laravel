@@ -2,13 +2,14 @@
 
 namespace App\Filament\App\Pages;
 
+use BackedEnum;
 use Filament\Pages\Page;
 
 class PeopleDashboard extends Page
 {
-    protected static string $view = 'filament.pages.people-dashboard';
+    protected string $view = 'filament.pages.people-dashboard';
 
     protected static ?string $title = 'People Dashboard';
 
-    protected static ?string $navigationIcon = 'heroicon-o-chart-bar';
+    protected static BackedEnum|string|null $navigationIcon = 'heroicon-o-chart-bar';
 }

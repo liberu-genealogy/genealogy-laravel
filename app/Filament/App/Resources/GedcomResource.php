@@ -2,6 +2,7 @@
 
 namespace App\Filament\App\Resources;
 
+use BackedEnum;
 use App\Filament\App\Resources\GedcomResource\Pages;
 use App\Jobs\ExportGedcom;
 use App\Jobs\ImportGedcom;
@@ -9,6 +10,7 @@ use App\Models\Gedcom;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
+use Filament\Schemas\Schema;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Support\Facades\Auth;
@@ -22,7 +24,7 @@ class GedcomResource extends Resource
 
     protected static ?string $navigationLabel = 'Gedcom';
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static BackedEnum|string|null $navigationIcon = 'heroicon-o-rectangle-stack';
 
     protected static bool $shouldRegisterNavigation = true;
 
@@ -37,7 +39,7 @@ class GedcomResource extends Resource
     }
 
     #[\Override]
-    public static function form(Form $form): Form
+    public static function form(Schema $form): Schema
     {
         return $form
             ->schema([

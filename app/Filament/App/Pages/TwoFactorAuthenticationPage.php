@@ -2,17 +2,19 @@
 
 namespace App\Filament\App\Pages;
 
+use UnitEnum;
+use BackedEnum;
 use App\Models\User;
 use Filament\Pages\Page;
 use Illuminate\Support\Facades\Auth;
 
 class TwoFactorAuthenticationPage extends Page
 {
-    protected static string $view = 'filament.pages.profile.two-factor-authentication';
+    protected string $view = 'filament.pages.profile.two-factor-authentication';
 
-    protected static ?string $navigationIcon = 'heroicon-o-key';
+    protected static BackedEnum|string|null $navigationIcon = 'heroicon-o-key';
 
-    protected static ?string $navigationGroup = 'Account';
+    protected static UnitEnum|string|null $navigationGroup = 'Account';
 
     protected static ?int $navigationSort = 4;
 
