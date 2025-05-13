@@ -2,13 +2,14 @@
 
 namespace App\Filament\Admin\Pages;
 
+use BackedEnum;
 use Filament\Pages\Page;
 
 class ApiTokens extends Page
 {
-    protected static ?string $navigationIcon = 'heroicon-o-key';
+    protected static BackedEnum|string|null $navigationIcon = "heroicon-o-key";
 
-    protected static string $view = 'filament.pages.api-tokens';
+    protected string $view = 'filament.pages.api-tokens';
 
     protected static ?string $navigationLabel = 'API Tokens';
 

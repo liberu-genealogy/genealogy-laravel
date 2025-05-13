@@ -2,11 +2,14 @@
 
 namespace App\Filament\App\Resources;
 
+use UnitEnum;
+use BackedEnum;
 use App\Filament\App\Resources\DnaMatchingResource\Pages;
 use App\Models\DnaMatching;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
+use Filament\Schemas\Schema;
 use Filament\Tables;
 use Filament\Tables\Table;
 
@@ -16,14 +19,14 @@ class DnaMatchingResource extends Resource
 
     protected static ?string $model = DnaMatching::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static BackedEnum|string|null $navigationIcon = 'heroicon-o-rectangle-stack';
 
     protected static ?string $navigationLabel = 'Match DNA';
 
-    protected static ?string $navigationGroup = 'Dna Matching';
+    protected static UnitEnum|string|null $navigationGroup = 'Dna Matching';
 
     #[\Override]
-    public static function form(Form $form): Form
+    public static function form(Schema $form): Schema
     {
         return $form
             ->schema([

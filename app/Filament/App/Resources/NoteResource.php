@@ -2,11 +2,14 @@
 
 namespace App\Filament\App\Resources;
 
+use UnitEnum;
+use BackedEnum;
 use App\Filament\App\Resources\NoteResource\Pages;
 use App\Models\Note;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
+use Filament\Schemas\Schema;
 use Filament\Tables;
 use Filament\Tables\Table;
 
@@ -14,14 +17,14 @@ class NoteResource extends Resource
 {
     protected static ?string $model = Note::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static BackedEnum|string|null  $navigationIcon = 'heroicon-o-rectangle-stack';
 
     protected static ?string $navigationLabel = 'Add Notes';
 
-    protected static ?string $navigationGroup = 'Family';
+    protected static UnitEnum|string|null $navigationGroup = 'Family';
 
     #[\Override]
-    public static function form(Form $form): Form
+    public static function form(Schema $form): Schema
     {
         return $form
             ->schema([

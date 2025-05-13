@@ -2,6 +2,8 @@
 
 namespace App\Filament\App\Pages;
 
+use UnitEnum;
+use BackedEnum;
 use App\Filament\Resources\GedcomResource as ResourcesGedcomResource;
 use App\Filament\Resources\MediaObjectResource as ResourcesMediaObjectResource;
 use App\Filament\Resources\NoteResource as ResourcesNoteResource;
@@ -14,13 +16,13 @@ use Livewire\Livewire;
 
 class DeVilliersReportPage extends Page
 {
-    protected static string $view = 'de-villiers-report-page';
+    protected string $view = 'de-villiers-report-page';
 
     protected static ?string $title = 'Devilliers Report';
 
-    protected static ?string $navigationIcon = 'heroicon-o-chart-bar';
+    protected static BackedEnum|string|null $navigationIcon = 'heroicon-o-chart-bar';
 
-    protected static ?string $navigationGroup = 'Reports';
+    protected static UnitEnum|string|null $navigationGroup = 'Reports';
 
     //  public function mount(): void
     // {

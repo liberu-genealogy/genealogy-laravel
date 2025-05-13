@@ -2,17 +2,19 @@
 
 namespace App\Filament\App\Pages;
 
+use UnitEnum;
+use BackedEnum;
 use Filament\Forms\Components\TextInput;
 use Filament\Pages\Page;
 use Illuminate\Support\Facades\Auth;
 
 class UpdateProfileInformationPage extends Page
 {
-    protected static string $view = 'filament.pages.profile.update-profile-information';
+    protected string $view = 'filament.pages.profile.update-profile-information';
 
-    protected static ?string $navigationIcon = 'heroicon-o-user';
+    protected static BackedEnum|string|null $navigationIcon = 'heroicon-o-user';
 
-    protected static ?string $navigationGroup = 'Account';
+    protected static UnitEnum|string|null $navigationGroup = 'Account';
 
     protected static ?int $navigationSort = 0;
 

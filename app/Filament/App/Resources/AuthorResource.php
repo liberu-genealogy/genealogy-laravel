@@ -2,11 +2,14 @@
 
 namespace App\Filament\App\Resources;
 
+use BackedEnum;
+use UnitEnum;
 use App\Filament\App\Resources\AuthorResource\Pages;
 use App\Models\Author;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
+use Filament\Schemas\Schema;
 use Filament\Tables;
 use Filament\Tables\Table;
 
@@ -14,14 +17,14 @@ class AuthorResource extends Resource
 {
     protected static ?string $model = Author::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static BackedEnum|string|null $navigationIcon = 'heroicon-o-rectangle-stack';
 
     protected static ?string $navigationLabel = 'Author';
 
-    protected static ?string $navigationGroup = 'Author';
+    protected static UnitEnum|string|null $navigationGroup = 'Author';
 
     #[\Override]
-    public static function form(Form $form): Form
+    public static function form(Schema $form): Schema
     {
         return $form
             ->schema([

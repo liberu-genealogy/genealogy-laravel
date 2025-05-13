@@ -2,11 +2,13 @@
 
 namespace App\Filament\App\Resources;
 
+use BackedEnum;
 use App\Filament\App\Resources\PersonNameResource\Pages;
 use App\Models\PersonName;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
+use Filament\Schemas\Schema;
 use Filament\Tables;
 use Filament\Tables\Table;
 
@@ -14,10 +16,10 @@ class PersonNameResource extends Resource
 {
     protected static ?string $model = PersonName::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static BackedEnum|string|null $navigationIcon = 'heroicon-o-rectangle-stack';
 
     #[\Override]
-    public static function form(Form $form): Form
+    public static function form(Schema $form): Schema
     {
         return $form
             ->schema([

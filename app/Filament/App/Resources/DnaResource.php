@@ -2,12 +2,15 @@
 
 namespace App\Filament\App\Resources;
 
+use UnitEnum;
+use BackedEnum;
 use App\Filament\App\Resources\DnaResource\Pages;
 use App\Jobs\DnaMatching;
 use App\Models\Dna;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
+use Filament\Schemas\Schema;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Support\Facades\Auth;
@@ -22,12 +25,12 @@ class DnaResource extends Resource
 
     protected static ?string $navigationLabel = 'DNA';
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static BackedEnum|string|null $navigationIcon = 'heroicon-o-rectangle-stack';
 
-    protected static ?string $navigationGroup = 'Dna Matching';
+    protected static UnitEnum|string|null $navigationGroup = 'Dna Matching';
 
     #[\Override]
-    public static function form(Form $form): Form
+    public static function form(Schema $form): Schema
     {
         return $form
             ->schema([

@@ -2,11 +2,14 @@
 
 namespace App\Filament\App\Resources;
 
+use UnitEnum;
+use BackedEnum;
 use App\Filament\App\Resources\CitationResource\Pages;
 use App\Models\Citation;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
+use Filament\Schemas\Schema;
 use Filament\Tables;
 use Filament\Tables\Table;
 
@@ -14,14 +17,14 @@ class CitationResource extends Resource
 {
     protected static ?string $model = Citation::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static BackedEnum|string|null $navigationIcon = 'heroicon-o-rectangle-stack';
 
     protected static ?string $navigationLabel = 'Citation';
 
-    protected static ?string $navigationGroup = 'Author';
+    protected static UnitEnum|string|null $navigationGroup = 'Author';
 
     #[\Override]
-    public static function form(Form $form): Form
+    public static function form(Schema $form): Schema
     {
         return $form
         ->schema([

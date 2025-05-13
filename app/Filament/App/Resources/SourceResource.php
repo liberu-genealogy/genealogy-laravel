@@ -2,11 +2,14 @@
 
 namespace App\Filament\App\Resources;
 
+use UnitEnum;
+use BackedEnum;
 use App\Filament\App\Resources\SourceResource\Pages;
 use App\Models\Source;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
+use Filament\Schemas\Schema;
 use Filament\Tables;
 use Filament\Tables\Table;
 
@@ -14,14 +17,14 @@ class SourceResource extends Resource
 {
     protected static ?string $model = Source::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static BackedEnum|string|null $navigationIcon = 'heroicon-o-rectangle-stack';
 
     protected static ?string $navigationLabel = 'Sources';
 
-    protected static ?string $navigationGroup = 'Author';
+    protected static UnitEnum|string|null $navigationGroup = 'Author';
 
     #[\Override]
-    public static function form(Form $form): Form
+    public static function form(Schema $form): Schema
     {
         return $form
             ->schema([

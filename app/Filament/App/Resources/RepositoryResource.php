@@ -4,11 +4,14 @@ declare(strict_types=1);
 
 namespace App\Filament\App\Resources;
 
+use UnitEnum;
+use BackedEnum;
 use App\Filament\App\Resources\RepositoryResource\Pages;
 use App\Models\Repository;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
+use Filament\Schemas\Schema;
 use Filament\Tables;
 use Filament\Tables\Table;
 
@@ -18,12 +21,12 @@ final class RepositoryResource extends Resource
 
     protected static ?string $navigationLabel = 'Repository';
 
-    protected static ?string $navigationGroup = 'Author';
+    protected static UnitEnum|string|null $navigationGroup = 'Author';
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static BackedEnum|string|null $navigationIcon = 'heroicon-o-rectangle-stack';
 
     #[\Override]
-    public static function form(Form $form): Form
+    public static function form(Schema $form): Schema
     {
         return $form
             ->schema([
