@@ -1,5 +1,5 @@
 // ... existing code ...
-<form method="POST" action="{{ route('login') }}">
+<form method="POST" action="{{ route('admin.login') }}">
     @csrf
     <!-- Add a hidden CSRF token field as a backup -->
     <input type="hidden" name="_token" value="{{ csrf_token() }}">
