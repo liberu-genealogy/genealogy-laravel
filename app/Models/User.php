@@ -25,17 +25,17 @@ use Spatie\Permission\Traits\HasRoles;
 class User extends Authenticatable implements HasDefaultTenant, HasTenants, FilamentUser
 {
     use HasApiTokens;
-    use HasConnectedAccounts;
+    // use HasConnectedAccounts;
     use HasRoles;
     use HasFactory;
     use HasProfilePhoto {
         HasProfilePhoto::profilePhotoUrl as getPhotoUrl;
     }
     use Notifiable;
-    use SetsProfilePhotoFromUrl;
+    // use SetsProfilePhotoFromUrl;
     use TwoFactorAuthenticatable;
     use HasTeams;
-    use HasPanelShield;
+    // use HasPanelShield;
 
     /**
      * The attributes that are mass assignable.
@@ -108,6 +108,19 @@ class User extends Authenticatable implements HasDefaultTenant, HasTenants, Fila
     {
         //        return $this->hasVerifiedEmail();
         return true;
+    }
+
+    public function canAccessPanel(\Filament\Panel $panel): bool
+    {
+        if ($this->hasRole('super_admin')) {
+            return true;
+        }
+
+        return match ($panel->getId()) {
+            'admin' => $this->hasRole('super_admin'),
+            'app' => $this->hasRole('panel_user'),
+            default => false,
+        };
     }
 
     public function getDefaultTenant(Panel $panel): ?Model

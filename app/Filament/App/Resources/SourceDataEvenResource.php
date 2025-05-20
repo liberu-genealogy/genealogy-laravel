@@ -16,7 +16,7 @@ class SourceDataEvenResource extends Resource
 {
     protected static ?string $model = SourceDataEven::class;
 
-    protected static BackedEnum|string|null $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static string | BackedEnum | null $navigationIcon = 'heroicon-o-rectangle-stack';
 
     #[\Override]
     public static function form(Schema $form): Schema

@@ -17,11 +17,11 @@ class PersonAssoResource extends Resource
 {
     protected static ?string $model = PersonAsso::class;
 
-    protected static BackedEnum|string|null $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static string | BackedEnum | null $navigationIcon = 'heroicon-o-rectangle-stack';
 
     protected static ?string $navigationLabel = 'Person Associations';
 
-    protected static UnitEnum|string|null $navigationGroup = 'Person';
+    protected static string | UnitEnum | null $navigationGroup = 'Person';
 
     #[\Override]
     public static function form(Schema $form): Schema

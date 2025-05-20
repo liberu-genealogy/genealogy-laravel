@@ -1,7 +1,7 @@
 @import '../../../../vendor/filament/filament/resources/css/theme.css';
 
-@source '../../../../app/Filament/App/**/*';
-@source '../../../../resources/views/filament/app/**/*';
+@source '../../../../app/Filament/Admin/**/*';
+@source '../../../../resources/views/filament/admin/**/*';
 
 
 /* .fi-body {

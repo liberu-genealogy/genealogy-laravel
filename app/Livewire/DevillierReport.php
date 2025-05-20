@@ -24,7 +24,7 @@ class DevillierReport extends Component implements HasForms, HasActions
         $this->form->fill();
     }
 
-    public function form(Form $form): Form
+    public function form(Schema $form): Schema
     {
         return $form
             ->schema([

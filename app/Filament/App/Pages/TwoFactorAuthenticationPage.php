@@ -12,9 +12,9 @@ class TwoFactorAuthenticationPage extends Page
 {
     protected string $view = 'filament.pages.profile.two-factor-authentication';
 
-    protected static BackedEnum|string|null $navigationIcon = 'heroicon-o-key';
+    protected static string | BackedEnum | null $navigationIcon = 'heroicon-o-key';
 
-    protected static UnitEnum|string|null $navigationGroup = 'Account';
+    protected static string | UnitEnum | null $navigationGroup = 'Account';
 
     protected static ?int $navigationSort = 4;
 

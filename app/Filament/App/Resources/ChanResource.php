@@ -17,9 +17,9 @@ class ChanResource extends Resource
 {
     protected static ?string $model = Chan::class;
 
-    protected static BackedEnum|string|null $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static string | BackedEnum | null $navigationIcon = 'heroicon-o-rectangle-stack';
 
-    protected static UnitEnum|string|null $navigationGroup = 'Person';
+    protected static string | UnitEnum | null $navigationGroup = 'Person';
 
     protected static ?string $navigationLabel = ' Chan';
 

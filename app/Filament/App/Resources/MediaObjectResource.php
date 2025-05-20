@@ -17,11 +17,11 @@ class MediaObjectResource extends Resource
 {
     protected static ?string $model = MediaObject::class;
 
-    protected static BackedEnum|string|null $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static string | BackedEnum | null $navigationIcon = 'heroicon-o-rectangle-stack';
 
     protected static ?string $navigationLabel = 'Media Objects';
 
-    protected static UnitEnum|string|null $navigationGroup = 'Media Objects';
+    protected static string | UnitEnum | null $navigationGroup = 'Media Objects';
 
     #[\Override]
     public static function form(Schema $form): Schema

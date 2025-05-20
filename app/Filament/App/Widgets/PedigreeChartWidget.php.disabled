@@ -9,7 +9,7 @@ use Filament\Widgets\Widget;
 
 class PedigreeChartWidget extends Widget
 {
-    protected static string $view = 'livewire.pedigree-chart';
+    protected string $view = 'livewire.pedigree-chart';
 
     public $persons;
 

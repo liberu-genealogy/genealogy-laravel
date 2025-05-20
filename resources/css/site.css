@@ -10,7 +10,7 @@ color: #FFFFFF;
 
 footer
 {
-@apply bg-green-900 text-white;
+@apply text-white bg-green-900;
 }
 
 .navbar-nav {

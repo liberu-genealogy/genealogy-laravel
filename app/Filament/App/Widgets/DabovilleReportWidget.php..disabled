@@ -7,7 +7,7 @@ use Filament\Widgets\Widget;
 
 class DabovilleReportWidget extends Widget
 {
-    protected static string $view = 'livewire.daboville-report';
+    protected string $view = 'livewire.daboville-report';
 
     public $selectedPersonId;
     public $reportData = [];

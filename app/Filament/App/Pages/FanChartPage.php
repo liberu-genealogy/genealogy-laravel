@@ -9,9 +9,9 @@ use Filament\Pages\Page;
 
 class FanChartPage extends Page
 {
-    protected static BackedEnum|string|null $navigationIcon = 'heroicon-o-chart-pie';
+    protected static string | BackedEnum | null $navigationIcon = 'heroicon-o-chart-pie';
 
-    protected static UnitEnum|string|null $navigationGroup = 'Reports';
+    protected static string | UnitEnum | null $navigationGroup = 'Reports';
 
     protected static ?int $navigationSort = 0;
 

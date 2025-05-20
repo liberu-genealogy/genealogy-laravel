@@ -7,7 +7,7 @@ use Filament\Widgets\Widget;
 
 class FanChart extends Widget
 {
-    protected static string $view = 'filament.widgets.fan-chart-widget';
+    protected string $view = 'filament.widgets.fan-chart-widget';
 
     public function getData(): array
     {

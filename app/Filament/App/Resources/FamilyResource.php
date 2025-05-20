@@ -17,9 +17,9 @@ class FamilyResource extends Resource
 {
     protected static ?string $model = Family::class;
 
-    protected static BackedEnum|string|null $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static string | BackedEnum | null $navigationIcon = 'heroicon-o-rectangle-stack';
     protected static ?string $navigationLabel = 'Families';
-    protected static UnitEnum|string|null $navigationGroup = 'Family';
+    protected static string | UnitEnum | null $navigationGroup = 'Family';
 
     #[\Override]
     public static function form(Schema $form): Schema

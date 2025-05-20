@@ -7,7 +7,7 @@ use Filament\Pages\Page;
 
 class ApiTokens extends Page
 {
-    protected static BackedEnum|string|null $navigationIcon = "heroicon-o-key";
+    protected static string | BackedEnum | null $navigationIcon = "heroicon-o-key";
 
     protected string $view = 'filament.pages.api-tokens';
 

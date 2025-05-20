@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Validator;
 
 class PrivateMessagingPage extends Page
 {
-    protected static BackedEnum|string|null $navigationIcon = 'heroicon-o-chart-bar';
+    protected static string | BackedEnum | null $navigationIcon = 'heroicon-o-chart-bar';
 
     public function mount(): void
     {

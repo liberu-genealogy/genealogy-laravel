@@ -14,7 +14,7 @@ class PedigreeChartPage extends Page
 
     protected static ?string $title = ' Pedigree Chart';
 
-    protected static BackedEnum|string|null $navigationIcon = 'heroicon-o-chart-bar';
+    protected static string | BackedEnum | null $navigationIcon = 'heroicon-o-chart-bar';
 
-    protected static UnitEnum|string|null $navigationGroup = 'Charts';
+    protected static string | UnitEnum | null $navigationGroup = 'Charts';
 }

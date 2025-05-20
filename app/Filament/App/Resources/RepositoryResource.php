@@ -21,9 +21,9 @@ final class RepositoryResource extends Resource
 
     protected static ?string $navigationLabel = 'Repository';
 
-    protected static UnitEnum|string|null $navigationGroup = 'Author';
+    protected static string | UnitEnum | null $navigationGroup = 'Author';
 
-    protected static BackedEnum|string|null $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static string | BackedEnum | null $navigationIcon = 'heroicon-o-rectangle-stack';
 
     #[\Override]
     public static function form(Schema $form): Schema

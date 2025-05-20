@@ -11,7 +11,7 @@ use Filament\Widgets\Widget;
 
 class DeVilliersReportWidget extends Widget
 {
-    protected static string $view = 'livewire.devilliers-report';
+    protected string $view = 'livewire.devilliers-report';
 
     public $selectedPersonId;
     public $reportData = [];

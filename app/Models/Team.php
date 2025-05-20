@@ -13,7 +13,7 @@ use Laravel\Cashier\Billable;
 class Team extends JetstreamTeam
 {
     use HasFactory;
-    use Billable;
+    // use Billable;
 
     /**
      * The attributes that are mass assignable.

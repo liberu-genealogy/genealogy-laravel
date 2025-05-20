@@ -7,7 +7,7 @@ use Filament\Widgets\Widget;
 
 class PedigreeChartWidget extends Widget
 {
-    protected static string $view = 'filament.widgets.pedigree-chart-widget';
+    protected string $view = 'filament.widgets.pedigree-chart-widget';
 
     public function getData(): array
     {

@@ -19,9 +19,9 @@ class FamilyEventResource extends Resource
 
     protected static ?string $navigationLabel = 'Family Events';
 
-    protected static BackedEnum|string|null $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static string | BackedEnum | null $navigationIcon = 'heroicon-o-rectangle-stack';
 
-    protected static UnitEnum|string|null $navigationGroup = 'Family';
+    protected static string | UnitEnum | null $navigationGroup = 'Family';
 
     #[\Override]
     public static function form(Schema $form): Schema
