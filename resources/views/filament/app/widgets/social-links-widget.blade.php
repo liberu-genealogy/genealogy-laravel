@@ -1,4 +1,4 @@
-<x-filament::widget>
+<x-filament-widgets::widget>
     <x-filament::card>
         <h2 class="text-lg font-medium mb-4">Social Links</h2>
         <div class="space-y-4">
@@ -26,4 +26,4 @@
             @endforeach
         </div>
     </x-filament::card>
-</x-filament::widget>
+</x-filament-widgets::widget>

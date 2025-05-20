@@ -32,7 +32,7 @@ class PeopleWidget extends BaseWidget
     protected function getTableActions(): array
     {
         return [
-            Tables\Actions\ViewAction::make(),
+            // Tables\Actions\ViewAction::make(),
         ];
     }
 }

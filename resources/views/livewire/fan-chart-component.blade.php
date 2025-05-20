@@ -1,4 +1,4 @@
-<x-filament::widget class="filament-fan-chart-widget">
+<x-filament-widgets::widget class="filament-fan-chart-widget">
     <x-filament::card>
         <div id="fanChartContainer"></div>
     </x-filament::card>
@@ -17,4 +17,4 @@
             });
         </script>
     @endpush
-</x-filament::widget>
+</x-filament-widgets::widget>

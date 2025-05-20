@@ -11,7 +11,7 @@ class SocialLinksWidget extends Widget
  #[\Override]
  public function render(): \Illuminate\Contracts\View\View
     {
-        return view(static::$view, [
+        return view($this->view, [
             'links' => [
                 'GitHub' => 'https://www.github.com/liberu-genealogy',
                 'Facebook Page' => 'https://www.facebook.com/familytree365',
