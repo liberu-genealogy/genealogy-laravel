@@ -3,10 +3,10 @@
 @section('content')
     <div class="min-h-full flex flex-col sm:justify-center items-center pt-6 sm:pt-0">
 
-        <div class="w-full sm:max-w-md mt-6 px-6 py-4 bg-white shadow-md overflow-hidden sm:rounded-lg">
+        <div class="w-full sm:max-w-md mb-4 mt-6 px-6 py-4 bg-white shadow-md overflow-hidden sm:rounded-lg">
             <form method="POST" action="{{ route('register') }}">
                 @csrf
-                <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                {{-- <input type="hidden" name="_token" value="{{ csrf_token() }}"> --}}
 
                 <div>
                     <x-label for="name" value="{{ __('Name') }}" />
