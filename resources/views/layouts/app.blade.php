@@ -10,7 +10,7 @@
     @stack('styles')
 </head>
 <body class="flex min-h-full flex-col bg-gray-100">
-    <main class="flex-grow">
+    <main class="flex-grow flex flex-col">
         {{ $slot ?? '' }}
     </main>
     @vite('resources/js/app.js')
