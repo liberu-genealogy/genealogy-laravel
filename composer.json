@@ -20,6 +20,7 @@
         "liberu-genealogy/laravel-dna": "^2.0",
         "liberu-genealogy/laravel-gedcom": "^6.5",
         "livewire/livewire": "^3.5",
+        "raza9798/siteconfig": "^3.2",
         "spatie/laravel-menu": "^4.0",
         "spatie/laravel-permission": "*"
     },
