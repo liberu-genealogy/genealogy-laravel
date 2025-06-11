@@ -1,0 +1,12 @@
+{
+    "name": "Notes",
+    "version": "1.0.0",
+    "description": "Note and annotation management for genealogy records",
+    "dependencies": ["Core"],
+    "config": {
+        "enable_rich_text": true,
+        "enable_note_categories": true,
+        "max_note_length": 10000,
+        "enable_note_sharing": false
+    }
+}

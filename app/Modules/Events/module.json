@@ -1,0 +1,12 @@
+{
+    "name": "Events",
+    "version": "1.0.0",
+    "description": "Event management for births, deaths, marriages, and other life events",
+    "dependencies": ["Core", "Person", "Places"],
+    "config": {
+        "default_event_types": ["BIRT", "DEAT", "MARR", "DIV", "BURI", "BAPM"],
+        "enable_custom_events": true,
+        "require_event_dates": false,
+        "enable_timeline_view": true
+    }
+}

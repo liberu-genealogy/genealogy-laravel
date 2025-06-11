@@ -27,6 +27,27 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        // Enable default modules on first boot
+        $this->enableDefaultModules();
+    }
+
+    /**
+     * Enable default modules if they haven't been enabled yet.
+     */
+    protected function enableDefaultModules(): void
+    {
+        $moduleManager = app(ModuleManager::class);
+        $defaultModules = config('modules.default_enabled', []);
+
+        foreach ($defaultModules as $moduleName) {
+            if ($moduleManager->has($moduleName) && !$moduleManager->get($moduleName)->isEnabled()) {
+                try {
+                    $moduleManager->enable($moduleName);
+                } catch (\Exception $e) {
+                    // Log error but don't break the application
+                    \Log::warning("Failed to enable default module {$moduleName}: " . $e->getMessage());
+                }
+            }
+        }
     }
 }

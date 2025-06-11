@@ -1,41 +1,26 @@
 <?php
 
 return [
-
     /*
     |--------------------------------------------------------------------------
-    | Modules Path
+    | Module Discovery Path
     |--------------------------------------------------------------------------
     |
-    | This value determines the path where modules are stored. By default,
-    | modules are stored in the app/Modules directory.
+    | This is the path where modules will be discovered and loaded from.
+    | The system will scan this directory for module directories.
     |
     */
-
     'path' => app_path('Modules'),
 
     /*
     |--------------------------------------------------------------------------
-    | Auto Discovery
+    | Module Caching
     |--------------------------------------------------------------------------
     |
-    | When enabled, the module system will automatically discover and register
-    | modules found in the modules directory.
+    | Enable or disable module information caching. When enabled, module
+    | information will be cached to improve performance in production.
     |
     */
-
-    'auto_discovery' => true,
-
-    /*
-    |--------------------------------------------------------------------------
-    | Cache Modules
-    |--------------------------------------------------------------------------
-    |
-    | When enabled, module information will be cached to improve performance.
-    | This is recommended for production environments.
-    |
-    */
-
     'cache' => env('MODULES_CACHE', true),
 
     /*
@@ -46,8 +31,7 @@ return [
     | The cache key used to store module information.
     |
     */
-
-    'cache_key' => 'app.modules',
+    'cache_key' => 'modules',
 
     /*
     |--------------------------------------------------------------------------
@@ -57,8 +41,41 @@ return [
     | The time-to-live for cached module information in seconds.
     |
     */
-
     'cache_ttl' => 3600,
+
+    /*
+    |--------------------------------------------------------------------------
+    | Auto Discovery
+    |--------------------------------------------------------------------------
+    |
+    | Enable or disable automatic module discovery. When enabled, the system
+    | will automatically discover and register modules found in the modules path.
+    |
+    */
+    'auto_discovery' => true,
+
+    /*
+    |--------------------------------------------------------------------------
+    | Default Enabled Modules
+    |--------------------------------------------------------------------------
+    |
+    | List of modules that should be enabled by default when first discovered.
+    |
+    */
+    'default_enabled' => [
+        'Core',
+        'Person',
+        'Family',
+        'Tree',
+        'Places',
+        'Sources',
+        'Media',
+        'Events',
+        'Notes',
+        'DNA',
+        'Import',
+        'Admin',
+    ],
 
     /*
     |--------------------------------------------------------------------------
@@ -68,87 +85,85 @@ return [
     | The base namespace for modules.
     |
     */
-
     'namespace' => 'App\\Modules',
 
     /*
     |--------------------------------------------------------------------------
-    | Enabled Modules
+    | Module Assets Path
     |--------------------------------------------------------------------------
     |
-    | List of modules that should be enabled by default. This is useful
-    | for ensuring critical modules are always available.
+    | The public path where module assets will be published.
     |
     */
-
-    'enabled' => [
-        // 'ExampleModule',
-    ],
+    'assets_path' => 'modules',
 
     /*
     |--------------------------------------------------------------------------
-    | Module Assets
+    | Module Commands
     |--------------------------------------------------------------------------
     |
-    | Configuration for module assets publishing.
+    | Enable or disable module management commands.
     |
     */
-
-    'assets' => [
-        'path' => public_path('modules'),
-        'url' => '/modules',
-    ],
+    'commands' => true,
 
     /*
     |--------------------------------------------------------------------------
-    | Module Views
+    | Module Migration Path
     |--------------------------------------------------------------------------
     |
-    | Configuration for module views.
+    | The path within each module where migrations are stored.
     |
     */
-
-    'views' => [
-        'namespace_prefix' => 'module',
-    ],
+    'migration_path' => 'database/migrations',
 
     /*
     |--------------------------------------------------------------------------
-    | Module Translations
+    | Module Seeder Path
     |--------------------------------------------------------------------------
     |
-    | Configuration for module translations.
+    | The path within each module where seeders are stored.
     |
     */
-
-    'translations' => [
-        'namespace_prefix' => 'module',
-    ],
+    'seeder_path' => 'database/seeders',
 
     /*
     |--------------------------------------------------------------------------
-    | Development Mode
+    | Module Config Path
     |--------------------------------------------------------------------------
     |
-    | When enabled, additional debugging information will be available
-    | and modules will be reloaded on each request.
+    | The path within each module where configuration files are stored.
     |
     */
-
-    'development' => env('APP_DEBUG', false),
+    'config_path' => 'config',
 
     /*
     |--------------------------------------------------------------------------
-    | Module Requirements
+    | Module View Path
     |--------------------------------------------------------------------------
     |
-    | Global requirements that all modules must meet.
+    | The path within each module where view files are stored.
     |
     */
+    'view_path' => 'resources/views',
 
-    'requirements' => [
-        'php' => '8.1',
-        'laravel' => '11.0',
-    ],
+    /*
+    |--------------------------------------------------------------------------
+    | Module Language Path
+    |--------------------------------------------------------------------------
+    |
+    | The path within each module where language files are stored.
+    |
+    */
+    'lang_path' => 'resources/lang',
 
+    /*
+    |--------------------------------------------------------------------------
+    | Module Route Path
+    |--------------------------------------------------------------------------
+    |
+    | The path within each module where route files are stored.
+    |
+    */
+    'route_path' => 'routes',
 ];

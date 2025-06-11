@@ -1,0 +1,11 @@
+{
+    "name": "Person",
+    "version": "1.0.0",
+    "description": "Person management module for genealogy application",
+    "dependencies": ["Core"],
+    "config": {
+        "enable_person_search": true,
+        "enable_person_export": true,
+        "max_persons_per_page": 50
+    }
+}

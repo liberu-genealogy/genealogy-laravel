@@ -1,0 +1,10 @@
+{
+    "name": "Core",
+    "version": "1.0.0",
+    "description": "Core genealogy module containing shared functionality and base classes",
+    "dependencies": [],
+    "config": {
+        "auto_enable": true,
+        "required": true
+    }
+}

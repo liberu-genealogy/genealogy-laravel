@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Filament\Resources;
+namespace App\Filament\Admin\Resources;
 
+use App\Filament\Admin\Resources\ModuleResource\Pages;
 use App\Modules\ModuleManager;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -13,13 +14,15 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class ModuleResource extends Resource
 {
-    protected static ?string $model = null;
+    protected static ?string $model = null; // We don't use a traditional model
 
     protected static ?string $navigationIcon = 'heroicon-o-puzzle-piece';
 
     protected static ?string $navigationGroup = 'System';
 
     protected static ?string $navigationLabel = 'Modules';
+
+    protected static ?int $navigationSort = 10;
 
     public static function form(Form $form): Form
     {
@@ -32,6 +35,8 @@ class ModuleResource extends Resource
                     ->disabled(),
                 Forms\Components\Textarea::make('description')
                     ->disabled(),
+                Forms\Components\TagsInput::make('dependencies')
+                    ->disabled(),
                 Forms\Components\Toggle::make('enabled')
                     ->required(),
             ]);
@@ -43,144 +48,179 @@ class ModuleResource extends Resource
             ->query(static::getEloquentQuery())
             ->columns([
                 Tables\Columns\TextColumn::make('name')
+                    ->label('Module Name')
                     ->searchable()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('version')
+                    ->label('Version')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('description')
-                    ->limit(50),
+                    ->label('Description')
+                    ->limit(50)
+                    ->tooltip(function ($record) {
+                        return $record['description'];
+                    }),
+                Tables\Columns\TagsColumn::make('dependencies')
+                    ->label('Dependencies'),
                 Tables\Columns\IconColumn::make('enabled')
+                    ->label('Status')
                     ->boolean()
                     ->trueIcon('heroicon-o-check-circle')
                     ->falseIcon('heroicon-o-x-circle')
                     ->trueColor('success')
                     ->falseColor('danger'),
-                Tables\Columns\TextColumn::make('dependencies')
-                    ->formatStateUsing(fn ($state) => is_array($state) ? implode(', ', $state) : $state)
-                    ->limit(30),
             ])
             ->filters([
                 Tables\Filters\TernaryFilter::make('enabled')
                     ->label('Status')
-                    ->trueLabel('Enabled')
-                    ->falseLabel('Disabled')
-                    ->queries(
-                        true: fn (Builder $query) => $query->where('enabled', true),
-                        false: fn (Builder $query) => $query->where('enabled', false),
-                    ),
+                    ->placeholder('All modules')
+                    ->trueLabel('Enabled modules')
+                    ->falseLabel('Disabled modules'),
             ])
             ->actions([
                 Tables\Actions\Action::make('toggle')
-                    ->label(fn ($record) => $record->enabled ? 'Disable' : 'Enable')
-                    ->icon(fn ($record) => $record->enabled ? 'heroicon-o-x-circle' : 'heroicon-o-check-circle')
-                    ->color(fn ($record) => $record->enabled ? 'danger' : 'success')
+                    ->label(fn ($record) => $record['enabled'] ? 'Disable' : 'Enable')
+                    ->icon(fn ($record) => $record['enabled'] ? 'heroicon-o-pause' : 'heroicon-o-play')
+                    ->color(fn ($record) => $record['enabled'] ? 'warning' : 'success')
+                    ->requiresConfirmation()
+                    ->modalHeading(fn ($record) => ($record['enabled'] ? 'Disable' : 'Enable') . ' Module')
+                    ->modalDescription(fn ($record) => 'Are you sure you want to ' . 
+                        ($record['enabled'] ? 'disable' : 'enable') . ' the ' . $record['name'] . ' module?')
                     ->action(function ($record) {
                         $moduleManager = app(ModuleManager::class);
                         
-                        if ($record->enabled) {
-                            $moduleManager->disable($record->name);
-                        } else {
-                            $moduleManager->enable($record->name);
+                        try {
+                            if ($record['enabled']) {
+                                $moduleManager->disable($record['name']);
+                                \Filament\Notifications\Notification::make()
+                                    ->title('Module Disabled')
+                                    ->body("The {$record['name']} module has been disabled.")
+                                    ->success()
+                                    ->send();
+                            } else {
+                                $moduleManager->enable($record['name']);
+                                \Filament\Notifications\Notification::make()
+                                    ->title('Module Enabled')
+                                    ->body("The {$record['name']} module has been enabled.")
+                                    ->success()
+                                    ->send();
+                            }
+                        } catch (\Exception $e) {
+                            \Filament\Notifications\Notification::make()
+                                ->title('Error')
+                                ->body('Failed to toggle module: ' . $e->getMessage())
+                                ->danger()
+                                ->send();
                         }
-                    })
-                    ->requiresConfirmation(),
-                Tables\Actions\Action::make('install')
-                    ->label('Install')
-                    ->icon('heroicon-o-arrow-down-tray')
+                    }),
+                Tables\Actions\Action::make('info')
+                    ->label('Info')
+                    ->icon('heroicon-o-information-circle')
                     ->color('info')
-                    ->action(function ($record) {
-                        $moduleManager = app(ModuleManager::class);
-                        $moduleManager->install($record->name);
-                    })
-                    ->visible(fn ($record) => !$record->enabled)
-                    ->requiresConfirmation(),
-                Tables\Actions\Action::make('uninstall')
-                    ->label('Uninstall')
-                    ->icon('heroicon-o-trash')
-                    ->color('danger')
-                    ->action(function ($record) {
-                        $moduleManager = app(ModuleManager::class);
-                        $moduleManager->uninstall($record->name);
-                    })
-                    ->visible(fn ($record) => $record->enabled)
-                    ->requiresConfirmation(),
-                Tables\Actions\ViewAction::make(),
+                    ->modalHeading(fn ($record) => $record['name'] . ' Module Information')
+                    ->modalContent(function ($record) {
+                        return view('filament.admin.resources.module-resource.info-modal', [
+                            'module' => $record
+                        ]);
+                    }),
             ])
             ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\BulkAction::make('enable')
-                        ->label('Enable Selected')
-                        ->icon('heroicon-o-check-circle')
-                        ->color('success')
-                        ->action(function ($records) {
-                            $moduleManager = app(ModuleManager::class);
-                            foreach ($records as $record) {
-                                $moduleManager->enable($record->name);
-                            }
-                        })
-                        ->requiresConfirmation(),
-                    Tables\Actions\BulkAction::make('disable')
-                        ->label('Disable Selected')
-                        ->icon('heroicon-o-x-circle')
-                        ->color('danger')
-                        ->action(function ($records) {
-                            $moduleManager = app(ModuleManager::class);
-                            foreach ($records as $record) {
-                                $moduleManager->disable($record->name);
-                            }
-                        })
-                        ->requiresConfirmation(),
-                ]),
+                // No bulk actions for modules
             ]);
     }
 
-    public static function getEloquentQuery(): Builder
+    public static function getRelations(): array
     {
-        $moduleManager = app(ModuleManager::class);
-        $modules = $moduleManager->getAllModulesInfo();
-
-        // Convert modules array to a collection that can be used with Filament
-        $query = new class extends Builder {
-            protected $modules;
-
-            public function __construct($modules)
-            {
-                $this->modules = collect($modules);
-            }
-
-            public function get($columns = ['*'])
-            {
-                return $this->modules->map(function ($module) {
-                    return (object) $module;
-                });
-            }
-
-            public function paginate($perPage = 15, $columns = ['*'], $pageName = 'page', $page = null)
-            {
-                return $this->modules->map(function ($module) {
-                    return (object) $module;
-                });
-            }
-
-            public function where($column, $operator = null, $value = null, $boolean = 'and')
-            {
-                if ($column === 'enabled') {
-                    $this->modules = $this->modules->filter(function ($module) use ($value) {
-                        return $module['enabled'] === $value;
-                    });
-                }
-                return $this;
-            }
-        };
-
-        return new $query($modules);
+        return [
+            //
+        ];
     }
 
     public static function getPages(): array
     {
         return [
             'index' => Pages\ListModules::route('/'),
-            'view' => Pages\ViewModule::route('/{record}'),
         ];
+    }
+
+    /**
+     * Get the Eloquent query for modules.
+     */
+    public static function getEloquentQuery(): Builder
+    {
+        // Create a fake query builder that returns module data
+        $moduleManager = app(ModuleManager::class);
+        $modules = $moduleManager->getAllModulesInfo();
+
+        // Convert to a collection and create a fake query
+        $collection = collect($modules)->map(function ($module) {
+            return (object) $module;
+        });
+
+        // Return a custom query builder
+        return new class($collection) extends Builder {
+            protected $modules;
+
+            public function __construct($modules)
+            {
+                $this->modules = $modules;
+            }
+
+            public function get($columns = ['*'])
+            {
+                return $this->modules;
+            }
+
+            public function paginate($perPage = 15, $columns = ['*'], $pageName = 'page', $page = null)
+            {
+                return new \Illuminate\Pagination\LengthAwarePaginator(
+                    $this->modules->forPage($page ?? 1, $perPage),
+                    $this->modules->count(),
+                    $perPage,
+                    $page ?? 1,
+                    [
+                        'path' => request()->url(),
+                        'pageName' => $pageName,
+                    ]
+                );
+            }
+
+            public function where($column, $operator = null, $value = null, $boolean = 'and')
+            {
+                if ($column === 'enabled' && $value !== null) {
+                    $this->modules = $this->modules->filter(function ($module) use ($value) {
+                        return $module->enabled === (bool) $value;
+                    });
+                }
+                return $this;
+            }
+
+            public function orderBy($column, $direction = 'asc')
+            {
+                $this->modules = $this->modules->sortBy($column, SORT_REGULAR, $direction === 'desc');
+                return $this;
+            }
+
+            // Add other necessary methods as needed
+            public function __call($method, $parameters)
+            {
+                return $this;
+            }
+        };
+    }
+
+    public static function canCreate(): bool
+    {
+        return false; // Modules are created via artisan command
+    }
+
+    public static function canEdit($record): bool
+    {
+        return false; // Modules are managed via toggle actions
+    }
+
+    public static function canDelete($record): bool
+    {
+        return false; // Modules are not deleted through the UI
     }
 }
