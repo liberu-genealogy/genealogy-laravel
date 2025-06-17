@@ -18,7 +18,7 @@ class AdminServiceProvider extends ServiceProvider
         });
 
         // Register admin configuration
-        $this->mergeConfigFrom(__DIR__ . '/../config/admin.php', 'admin');
+        // $this->mergeConfigFrom(__DIR__ . '/../config/admin.php', 'admin');
     }
 
     /**
@@ -27,8 +27,8 @@ class AdminServiceProvider extends ServiceProvider
     public function boot(): void
     {
         // Load admin routes
-        $this->loadRoutesFrom(__DIR__ . '/../routes/web.php');
-        $this->loadRoutesFrom(__DIR__ . '/../routes/api.php');
+        // $this->loadRoutesFrom(__DIR__ . '/../routes/web.php');
+        // $this->loadRoutesFrom(__DIR__ . '/../routes/api.php');
 
         // Load admin views
         $this->loadViewsFrom(__DIR__ . '/../resources/views', 'admin');

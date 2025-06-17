@@ -23,7 +23,7 @@ class PlacesServiceProvider extends ServiceProvider
         });
 
         // Register places configuration
-        $this->mergeConfigFrom(__DIR__ . '/../config/places.php', 'places');
+        // $this->mergeConfigFrom(__DIR__ . '/../config/places.php', 'places');
     }
 
     /**
@@ -33,7 +33,7 @@ class PlacesServiceProvider extends ServiceProvider
     {
         // Load places routes
         $this->loadRoutesFrom(__DIR__ . '/../routes/web.php');
-        $this->loadRoutesFrom(__DIR__ . '/../routes/api.php');
+        // $this->loadRoutesFrom(__DIR__ . '/../routes/api.php');
 
         // Load places views
         $this->loadViewsFrom(__DIR__ . '/../resources/views', 'places');
