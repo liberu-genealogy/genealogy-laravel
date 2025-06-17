@@ -16,10 +16,7 @@ class Gedcom extends Model
     // protected $connection = 'landlord';
 
     protected $fillable = [
-        'remote_id',
-        'data',
-        'area',
-        'db_name',
+        'filename',
     ];
 
     protected function casts(): array

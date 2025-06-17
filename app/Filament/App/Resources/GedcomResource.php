@@ -15,6 +15,7 @@ use Filament\Actions;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 
 class GedcomResource extends Resource
@@ -44,18 +45,21 @@ class GedcomResource extends Resource
     {
         return $form
             ->schema([
-                FileUpload::make('attachment')
-                    ->required()
+                FileUpload::make('filename')
+                    ->multiple(false)
+                    // ->required()
                     ->maxSize(100000)
                     ->directory('gedcom-form-imports')
                     ->visibility('private')
-                    ->afterStateUpdated(function ($state, $set, $livewire): void {
-                        if ($state === null) {
-                            return;
-                        }
-                        $path = $state->store('gedcom-form-imports', 'private');
-                        ImportGedcom::dispatch(Auth::user(), Storage::disk('private')->path($path));
-                    }),
+                    
+                    // ->afterStateUpdated(function ($state, $set, $livewire): void {
+                    //     if ($state === null) {
+                    //         return;
+                    //     }
+                    //     $path = $state->store('gedcom-form-imports', 'private');
+                    //     Log::info($path);
+                    //     //ImportGedcom::dispatch(Auth::user(), Storage::disk('private')->path($path));
+                    // }),
             ]);
     }
 
@@ -66,7 +70,8 @@ class GedcomResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('name')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('file_name')
+                Tables\Columns\TextColumn::make('filename')
+                    ->label('File name')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
