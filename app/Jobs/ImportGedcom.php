@@ -48,11 +48,11 @@ class ImportGedcom implements ShouldQueue
             'slug'    => $slug,
         ]);
         $parser = new GedcomParser();
-
-        $parser->parse($job->getConnectionName(), $this->filePath, $slug, false);
+        $team_id = $this->user->currentTeam->id;
+        $parser->parse($job->getConnectionName(), $this->filePath, $slug, false, $team_id);
         // with(new GedcomParser())->parse($tenant->connectionName(), $this->filePath, $slug, true);
 
-        File::delete($this->filePath);
+        // File::delete($this->filePath);
 
         $job->update(['status' => 'complete']);
 

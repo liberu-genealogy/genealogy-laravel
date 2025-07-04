@@ -13,10 +13,11 @@ class CreateGedcom extends CreateRecord
 {
     protected static string $resource = GedcomResource::class;
 
-    protected function beforeCreate(): void
+    protected function afterCreate(): void
     {
         // Runs before the form fields are saved to the database.
         // $path =  $this->data['filename'];
+        Log::info($this->getRecord());
         foreach ($this->data['filename'] as $key => $path) {
             Log::info($path);
             ImportGedcom::dispatch(Auth::user(), Storage::disk('private')->path($path));
