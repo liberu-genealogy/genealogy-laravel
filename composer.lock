@@ -2081,16 +2081,16 @@
         },
         {
             "name": "kirschbaum-development/eloquent-power-joins",
-            "version": "4.2.4",
+            "version": "4.2.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/kirschbaum-development/eloquent-power-joins.git",
-                "reference": "4a8012cef7abed8ac3633a180c69138a228b6c4c"
+                "reference": "72cff1e838bb3f826dc09a5566219ad7fa56237f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kirschbaum-development/eloquent-power-joins/zipball/4a8012cef7abed8ac3633a180c69138a228b6c4c",
-                "reference": "4a8012cef7abed8ac3633a180c69138a228b6c4c",
+                "url": "https://api.github.com/repos/kirschbaum-development/eloquent-power-joins/zipball/72cff1e838bb3f826dc09a5566219ad7fa56237f",
+                "reference": "72cff1e838bb3f826dc09a5566219ad7fa56237f",
                 "shasum": ""
             },
             "require": {
@@ -2138,9 +2138,9 @@
             ],
             "support": {
                 "issues": "https://github.com/kirschbaum-development/eloquent-power-joins/issues",
-                "source": "https://github.com/kirschbaum-development/eloquent-power-joins/tree/4.2.4"
+                "source": "https://github.com/kirschbaum-development/eloquent-power-joins/tree/4.2.6"
             },
-            "time": "2025-05-19T14:14:41+00:00"
+            "time": "2025-07-10T16:55:34+00:00"
         },
         {
             "name": "laminas/laminas-diactoros",
@@ -2919,16 +2919,16 @@
         },
         {
             "name": "league/commonmark",
-            "version": "2.7.0",
+            "version": "2.7.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/commonmark.git",
-                "reference": "6fbb36d44824ed4091adbcf4c7d4a3923cdb3405"
+                "reference": "10732241927d3971d28e7ea7b5712721fa2296ca"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/commonmark/zipball/6fbb36d44824ed4091adbcf4c7d4a3923cdb3405",
-                "reference": "6fbb36d44824ed4091adbcf4c7d4a3923cdb3405",
+                "url": "https://api.github.com/repos/thephpleague/commonmark/zipball/10732241927d3971d28e7ea7b5712721fa2296ca",
+                "reference": "10732241927d3971d28e7ea7b5712721fa2296ca",
                 "shasum": ""
             },
             "require": {
@@ -2957,7 +2957,7 @@
                 "symfony/process": "^5.4 | ^6.0 | ^7.0",
                 "symfony/yaml": "^2.3 | ^3.0 | ^4.0 | ^5.0 | ^6.0 | ^7.0",
                 "unleashedtech/php-coding-standard": "^3.1.1",
-                "vimeo/psalm": "^4.24.0 || ^5.0.0"
+                "vimeo/psalm": "^4.24.0 || ^5.0.0 || ^6.0.0"
             },
             "suggest": {
                 "symfony/yaml": "v2.3+ required if using the Front Matter extension"
@@ -3022,7 +3022,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2025-05-05T12:20:28+00:00"
+            "time": "2025-07-20T12:47:49+00:00"
         },
         {
             "name": "league/config",
@@ -3693,16 +3693,16 @@
         },
         {
             "name": "liberu-genealogy/laravel-gedcom",
-            "version": "v6.6.2",
+            "version": "v6.6.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/liberu-genealogy/laravel-gedcom.git",
-                "reference": "00e25d55d516661ef0bc780d4ee3b870c9d1495b"
+                "reference": "01d308784367544663ad9cd692027cefaf4d2de1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/liberu-genealogy/laravel-gedcom/zipball/00e25d55d516661ef0bc780d4ee3b870c9d1495b",
-                "reference": "00e25d55d516661ef0bc780d4ee3b870c9d1495b",
+                "url": "https://api.github.com/repos/liberu-genealogy/laravel-gedcom/zipball/01d308784367544663ad9cd692027cefaf4d2de1",
+                "reference": "01d308784367544663ad9cd692027cefaf4d2de1",
                 "shasum": ""
             },
             "require": {
@@ -3737,7 +3737,7 @@
             "description": "A package that converts gedcom files to Eloquent models",
             "support": {
                 "issues": "https://github.com/liberu-genealogy/laravel-gedcom/issues",
-                "source": "https://github.com/liberu-genealogy/laravel-gedcom/tree/v6.6.2"
+                "source": "https://github.com/liberu-genealogy/laravel-gedcom/tree/v6.6.4"
             },
             "funding": [
                 {
@@ -3745,7 +3745,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2025-07-01T08:56:51+00:00"
+            "time": "2025-07-21T12:16:13+00:00"
         },
         {
             "name": "liberu-genealogy/php-dna",
@@ -3807,7 +3807,7 @@
         },
         {
             "name": "liberu-genealogy/php-gedcom",
-            "version": "v3.2.1",
+            "version": "v3.2.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/liberu-genealogy/php-gedcom.git",
@@ -3850,7 +3850,7 @@
             ],
             "support": {
                 "issues": "https://github.com/liberu-genealogy/php-gedcom/issues",
-                "source": "https://github.com/liberu-genealogy/php-gedcom/tree/v3.2.1"
+                "source": "https://github.com/liberu-genealogy/php-gedcom/tree/v3.2.2"
             },
             "funding": [
                 {
@@ -3862,16 +3862,16 @@
         },
         {
             "name": "livewire/livewire",
-            "version": "v3.6.3",
+            "version": "v3.6.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/livewire/livewire.git",
-                "reference": "56aa1bb63a46e06181c56fa64717a7287e19115e"
+                "reference": "ef04be759da41b14d2d129e670533180a44987dc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/livewire/livewire/zipball/56aa1bb63a46e06181c56fa64717a7287e19115e",
-                "reference": "56aa1bb63a46e06181c56fa64717a7287e19115e",
+                "url": "https://api.github.com/repos/livewire/livewire/zipball/ef04be759da41b14d2d129e670533180a44987dc",
+                "reference": "ef04be759da41b14d2d129e670533180a44987dc",
                 "shasum": ""
             },
             "require": {
@@ -3926,7 +3926,7 @@
             "description": "A front-end framework for Laravel.",
             "support": {
                 "issues": "https://github.com/livewire/livewire/issues",
-                "source": "https://github.com/livewire/livewire/tree/v3.6.3"
+                "source": "https://github.com/livewire/livewire/tree/v3.6.4"
             },
             "funding": [
                 {
@@ -3934,7 +3934,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2025-04-12T22:26:52+00:00"
+            "time": "2025-07-17T05:12:15+00:00"
         },
         {
             "name": "masterminds/html5",
@@ -6136,16 +6136,16 @@
         },
         {
             "name": "spatie/laravel-package-tools",
-            "version": "1.92.4",
+            "version": "1.92.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/laravel-package-tools.git",
-                "reference": "d20b1969f836d210459b78683d85c9cd5c5f508c"
+                "reference": "f09a799850b1ed765103a4f0b4355006360c49a5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-package-tools/zipball/d20b1969f836d210459b78683d85c9cd5c5f508c",
-                "reference": "d20b1969f836d210459b78683d85c9cd5c5f508c",
+                "url": "https://api.github.com/repos/spatie/laravel-package-tools/zipball/f09a799850b1ed765103a4f0b4355006360c49a5",
+                "reference": "f09a799850b1ed765103a4f0b4355006360c49a5",
                 "shasum": ""
             },
             "require": {
@@ -6185,7 +6185,7 @@
             ],
             "support": {
                 "issues": "https://github.com/spatie/laravel-package-tools/issues",
-                "source": "https://github.com/spatie/laravel-package-tools/tree/1.92.4"
+                "source": "https://github.com/spatie/laravel-package-tools/tree/1.92.7"
             },
             "funding": [
                 {
@@ -6193,7 +6193,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2025-04-11T15:27:14+00:00"
+            "time": "2025-07-17T15:46:43+00:00"
         },
         {
             "name": "spatie/laravel-permission",
@@ -11784,12 +11784,12 @@
     ],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": {},
+    "stability-flags": [],
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
         "php": "^8.4"
     },
-    "platform-dev": {},
-    "plugin-api-version": "2.6.0"
+    "platform-dev": [],
+    "plugin-api-version": "2.3.0"
 }
