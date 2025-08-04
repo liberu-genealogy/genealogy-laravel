@@ -6,6 +6,9 @@ use App\Models\Addr;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 
+/**
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Addr>
+ */
 class AddrFactory extends Factory
 {
     /**
@@ -23,12 +26,12 @@ class AddrFactory extends Factory
     public function definition(): array
     {
         return [
-            'adr1' => Str::limit($this->faker->address, 30),
-            'adr2' => Str::limit($this->faker->address, 30),
-            'city' => $this->faker->city,
-            'stae' => $this->faker->state,
-            'post' => $this->faker->postcode,
-            'ctry' => $this->faker->countryCode,
+            'adr1' => Str::limit(fake()->address, 30),
+            'adr2' => Str::limit(fake()->address, 30),
+            'city' => fake()->city,
+            'stae' => fake()->state,
+            'post' => fake()->postcode,
+            'ctry' => fake()->countryCode,
         ];
     }
 }

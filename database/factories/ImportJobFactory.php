@@ -6,6 +6,9 @@ use App\Models\ImportJob;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
+/**
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\ImportJob>
+ */
 class ImportJobFactory extends Factory
 {
     /**
@@ -23,9 +26,9 @@ class ImportJobFactory extends Factory
     public function definition()
     {
         return [
-            'user_id'    => $this->faker->randomElement([1, 2]),
-            'slug'       => $this->faker->word(),
-            'status'     => $this->faker->word(),
+            'user_id'    => fake()->randomElement([1, 2]),
+            'slug'       => fake()->word(),
+            'status'     => fake()->word(),
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ];

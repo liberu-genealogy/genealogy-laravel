@@ -5,6 +5,9 @@ namespace Database\Factories;
 use App\Models\PersonAnci;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
+/**
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\PersonAnci>
+ */
 class PersonAnciFactory extends Factory
 {
     /**
@@ -22,9 +25,9 @@ class PersonAnciFactory extends Factory
     public function definition()
     {
         return [
-            'group' => $this->faker->word(),
-            'gid'   => $this->faker->randomDigit('1', '2'),
-            'anci'  => $this->faker->word(),
+            'group' => fake()->word(),
+            'gid'   => fake()->randomDigit(),
+            'anci'  => fake()->word(),
         ];
     }
 }

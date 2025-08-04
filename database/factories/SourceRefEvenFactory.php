@@ -5,6 +5,9 @@ namespace Database\Factories;
 use App\Models\SourceRefEven;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
+/**
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\SourceRefEven>
+ */
 class SourceRefEvenFactory extends Factory
 {
     /**
@@ -22,10 +25,10 @@ class SourceRefEvenFactory extends Factory
     public function definition()
     {
         return [
-            'group' => $this->faker->word(),
-            'gid'   => $this->faker->randomDigit('1', '2'),
-            'even'  => $this->faker->word(),
-            'role'  => $this->faker->word(),
+            'group' => fake()->word(),
+            'gid'   => fake()->randomDigit(),
+            'even'  => fake()->word(),
+            'role'  => fake()->word(),
         ];
     }
 }

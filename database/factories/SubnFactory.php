@@ -5,6 +5,9 @@ namespace Database\Factories;
 use App\Models\Subn;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
+/**
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Subn>
+ */
 class SubnFactory extends Factory
 {
     /**
@@ -23,13 +26,13 @@ class SubnFactory extends Factory
     {
         return [
             //
-            'subm' => $this->faker->word(),
-            'famf' => $this->faker->word(),
-            'temp' => $this->faker->word(),
-            'ance' => $this->faker->word(),
-            'desc' => $this->faker->randomDigit('0', '1'),
-            'ordi' => $this->faker->word(),
-            'rin'  => $this->faker->word(),
+            'subm' => fake()->word(),
+            'famf' => fake()->word(),
+            'temp' => fake()->word(),
+            'ance' => fake()->word(),
+            'desc' => fake()->randomDigit(),
+            'ordi' => fake()->word(),
+            'rin'  => fake()->word(),
         ];
     }
 }

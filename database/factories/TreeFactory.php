@@ -7,6 +7,9 @@ use App\Models\Tree;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
+/**
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Tree>
+ */
 class TreeFactory extends Factory
 {
     /**
@@ -24,10 +27,10 @@ class TreeFactory extends Factory
     public function definition()
     {
         return [
-            'user_id'     => $this->faker->randomElement([1]),
+            'user_id'     => fake()->randomElement([1]),
             'company_id'  => Company::where('id', 1)->first()->id,
-            'name'        => $this->faker->word(),
-            'description' => $this->faker->text(),
+            'name'        => fake()->word(),
+            'description' => fake()->text(),
             'created_at'  => Carbon::now(),
             'updated_at'  => Carbon::now(),
             // 'current_tenant' => $this->faker->randomElement(['1', '2']),

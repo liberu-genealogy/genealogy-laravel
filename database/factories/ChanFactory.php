@@ -5,6 +5,9 @@ namespace Database\Factories;
 use App\Models\Chan;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
+/**
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Chan>
+ */
 class ChanFactory extends Factory
 {
     /**
@@ -22,10 +25,10 @@ class ChanFactory extends Factory
     public function definition(): array
     {
         return [
-            'gid'   => $this->faker->randomDigit(1, 2),
-            'group' => $this->faker->text(50),
-            'date'  => $this->faker->date,
-            'time'  => $this->faker->time,
+            'gid'   => fake()->randomDigit(),
+            'group' => fake()->text(50),
+            'date'  => fake()->date,
+            'time'  => fake()->time,
         ];
     }
 }

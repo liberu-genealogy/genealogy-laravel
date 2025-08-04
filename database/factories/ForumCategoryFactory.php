@@ -5,6 +5,9 @@ namespace Database\Factories;
 use App\Models\ForumCategory;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
+/**
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\ForumCategory>
+ */
 class ForumCategoryFactory extends Factory
 {
     /**
@@ -22,7 +25,7 @@ class ForumCategoryFactory extends Factory
     public function definition()
     {
         return [
-            'name'=> $this->faker->word(), 'slug' => $this->faker->word(),
+            'name'=> fake()->word(), 'slug' => fake()->word(),
         ];
     }
 }

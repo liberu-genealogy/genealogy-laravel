@@ -9,6 +9,9 @@ use App\Models\Source;
 // use App\Models\Type;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
+/**
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Source>
+ */
 class SourceFactory extends Factory
 {
     /**
@@ -26,37 +29,37 @@ class SourceFactory extends Factory
     public function definition()
     {
         return [
-            'sour'          => $this->faker->word(),
-            'titl'          => $this->faker->word(),
-            'auth'          => $this->faker->name(),
-            'data'          => $this->faker->word(),
-            'date'          => $this->faker->date(),
-            'text'          => $this->faker->word(),
-            'publ'          => $this->faker->text(),
-            'abbr'          => $this->faker->word(),
-            'name'          => $this->faker->word(),
-            'description'   => $this->faker->word(),
+            'sour'          => fake()->word(),
+            'titl'          => fake()->word(),
+            'auth'          => fake()->name(),
+            'data'          => fake()->word(),
+            'date'          => fake()->date(),
+            'text'          => fake()->word(),
+            'publ'          => fake()->text(),
+            'abbr'          => fake()->word(),
+            'name'          => fake()->word(),
+            'description'   => fake()->word(),
             'repository_id' => Repository::create()->id,
             'author_id'     => Author::create([
-                'description' => $this->faker->text(50),
-                'is_active'   => $this->faker->randomDigit('0', '1'),
-                'name'        => $this->faker->word(),
+                'description' => fake()->text(50),
+                'is_active'   => fake()->randomDigit(),
+                'name'        => fake()->word(),
             ])->id,
             'publication_id' => Publication::create([
-                'description' => $this->faker->text(50),
-                'is_active'   => $this->faker->randomDigit('0', '1'),
-                'name'        => $this->faker->word(),
+                'description' => fake()->text(50),
+                'is_active'   => fake()->randomDigit(),
+                'name'        => fake()->word(),
             ])->id,
             //              'type_id' => Type::create([
             //                  'name' => $this->faker->name(),
             //                  'description' => $this->faker->text(50),
             //                 'is_active' => 1,
             //              ])->id,
-            'is_active' => $this->faker->randomDigit('0', '1'),
-            'group'     => $this->faker->word(),
-            'gid'       => $this->faker->randomDigit(),
-            'quay'      => $this->faker->word(),
-            'page'      => $this->faker->word(),
+            'is_active' => fake()->randomDigit(),
+            'group'     => fake()->word(),
+            'gid'       => fake()->randomDigit(),
+            'quay'      => fake()->word(),
+            'page'      => fake()->word(),
         ];
     }
 }

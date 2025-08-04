@@ -6,6 +6,9 @@ use App\Models\Type;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 
+/**
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Type>
+ */
 class TypeFactory extends Factory
 {
     protected $model = Type::class;
@@ -13,15 +16,15 @@ class TypeFactory extends Factory
     public function definition()
     {
         return [
-            'name' => $this->faker->text(20),
+            'name' => fake()->text(20),
             // 'folder' => 'null',
             // 'model' => $this->faker->text(20),
             // 'icon' => 'folder',
             // 'endpoint' => null,
-            'description' => $this->faker->text(),
+            'description' => fake()->text(),
             // 'is_browsable' => false,
             // 'is_system' => false,
-            'is_active' => $this->faker->boolean(),
+            'is_active' => fake()->boolean(),
         ];
     }
 

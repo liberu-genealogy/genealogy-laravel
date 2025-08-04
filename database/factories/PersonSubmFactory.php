@@ -5,6 +5,9 @@ namespace Database\Factories;
 use App\Models\PersonSubm;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
+/**
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\PersonSubm>
+ */
 class PersonSubmFactory extends Factory
 {
     /**
@@ -22,9 +25,9 @@ class PersonSubmFactory extends Factory
     public function definition()
     {
         return [
-            'group' => $this->faker->word(),
-            'gid'   => $this->faker->randomDigit('1', '2'),
-            'subm'  => $this->faker->word(),
+            'group' => fake()->word(),
+            'gid'   => fake()->randomDigit(),
+            'subm'  => fake()->word(),
         ];
     }
 }

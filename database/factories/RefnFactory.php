@@ -5,6 +5,9 @@ namespace Database\Factories;
 use App\Models\Refn;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
+/**
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Refn>
+ */
 class RefnFactory extends Factory
 {
     /**
@@ -22,10 +25,10 @@ class RefnFactory extends Factory
     public function definition()
     {
         return [
-            'group' => $this->faker->word(),
-            'gid'   => $this->faker->randomDigit('1', '2'),
-            'refn'  => $this->faker->word(),
-            'type'  => $this->faker->word(),
+            'group' => fake()->word(),
+            'gid'   => fake()->randomDigit(),
+            'refn'  => fake()->word(),
+            'type'  => fake()->word(),
         ];
     }
 }

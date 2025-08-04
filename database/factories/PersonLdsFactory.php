@@ -5,6 +5,9 @@ namespace Database\Factories;
 use App\Models\PersonLds;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
+/**
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\PersonLds>
+ */
 class PersonLdsFactory extends Factory
 {
     /**
@@ -22,14 +25,14 @@ class PersonLdsFactory extends Factory
     public function definition()
     {
         return [
-            'group'     => $this->faker->word(),
-            'gid'       => $this->faker->randomDigit('1', '2'),
-            'type'      => $this->faker->word(),
-            'stat'      => $this->faker->word(),
-            'date'      => $this->faker->date(),
-            'plac'      => $this->faker->word(),
-            'temp'      => $this->faker->text(50),
-            'slac_famc' => $this->faker->word(),
+            'group'     => fake()->word(),
+            'gid'       => fake()->randomDigit(),
+            'type'      => fake()->word(),
+            'stat'      => fake()->word(),
+            'date'      => fake()->date(),
+            'plac'      => fake()->word(),
+            'temp'      => fake()->text(50),
+            'slac_famc' => fake()->word(),
         ];
     }
 }

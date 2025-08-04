@@ -5,6 +5,9 @@ namespace Database\Factories;
 use App\Models\Place;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
+/**
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Place>
+ */
 class PlaceFactory extends Factory
 {
     /**
@@ -22,9 +25,9 @@ class PlaceFactory extends Factory
     public function definition()
     {
         return [
-            'description' => $this->faker->text(50),
-            'title'       => $this->faker->word(),
-            'date'        => $this->faker->date(),
+            'description' => fake()->text(50),
+            'title'       => fake()->word(),
+            'date'        => fake()->date(),
         ];
     }
 }

@@ -6,6 +6,9 @@ use App\Models\Source;
 use App\Models\SourceRef;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
+/**
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\SourceRef>
+ */
 class SourceRefFactory extends Factory
 {
     /**
@@ -23,12 +26,12 @@ class SourceRefFactory extends Factory
     public function definition()
     {
         return [
-            'group'   => $this->faker->word(),
-            'gid'     => $this->faker->randomDigit('1', '2'),
+            'group'   => fake()->word(),
+            'gid'     => fake()->randomDigit(),
             'sour_id' => Source::create()->id,
-            'text'    => $this->faker->word(),
-            'quay'    => $this->faker->word(),
-            'page'    => $this->faker->word(),
+            'text'    => fake()->word(),
+            'quay'    => fake()->word(),
+            'page'    => fake()->word(),
         ];
     }
 }

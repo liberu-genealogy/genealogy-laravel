@@ -5,6 +5,9 @@ namespace Database\Factories;
 use App\Models\Geneanum;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
+/**
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Geneanum>
+ */
 class GeneanumFactory extends Factory
 {
     /**

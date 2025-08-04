@@ -6,6 +6,9 @@ use App\Models\Family;
 use App\Models\FamilySlgs;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
+/**
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\FamilySlgs>
+ */
 class FamilySlgsFactory extends Factory
 {
     /**
@@ -24,10 +27,10 @@ class FamilySlgsFactory extends Factory
     {
         return [
             'family_id' => Family::create()->id,
-            'stat'      => $this->faker->word(),
-            'date'      => $this->faker->date,
-            'plac'      => $this->faker->word(),
-            'temp'      => $this->faker->word(),
+            'stat'      => fake()->word(),
+            'date'      => fake()->date,
+            'plac'      => fake()->word(),
+            'temp'      => fake()->word(),
         ];
     }
 }

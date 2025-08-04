@@ -64,7 +64,7 @@ class GeocodingService
         
         foreach ($places as $place) {
             $results[$place->id] = $this->updatePlaceCoordinates($place);
-            
+
             // Add delay to respect API rate limits
             usleep(100000); // 0.1 second delay
         }

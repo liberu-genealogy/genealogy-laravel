@@ -19,8 +19,8 @@ class CreateAddressesTable extends Migration
             $table->string('additional')->nullable();
             $table->string('postcode')->nullable();
             $table->text('notes')->nullable();
-            $table->float('lat', 10, 6)->nullable();
-            $table->float('long', 10, 6)->nullable();
+            $table->float('lat', 10)->nullable();
+            $table->float('long', 10)->nullable();
             $table->boolean('is_default');
 
             $table->timestamps();

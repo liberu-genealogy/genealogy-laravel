@@ -7,6 +7,9 @@ use App\Models\ForumTopic;
 use FontLib\Table\Type\name;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
+/**
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\ForumPost>
+ */
 class ForumPostFactory extends Factory
 {
     /**
@@ -24,7 +27,7 @@ class ForumPostFactory extends Factory
     public function definition()
     {
         return [
-            'topic_id' => ForumTopic::factory(), 'content' => $this->faker->text(), 'author' => $this->faker->name(),
+            'topic_id' => ForumTopic::factory(), 'content' => fake()->text(), 'author' => fake()->name(),
         ];
     }
 }

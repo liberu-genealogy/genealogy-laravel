@@ -7,6 +7,9 @@ use App\Models\PersonEvent;
 use App\Models\Place;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
+/**
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\PersonEvent>
+ */
 class PersonEventFactory extends Factory
 {
     /**
@@ -25,28 +28,28 @@ class PersonEventFactory extends Factory
     {
         return [
             'person_id' => Person::create([
-                'name'  => $this->faker->name(),
-                'email' => $this->faker->email(),
-                'phone' => $this->faker->phoneNumber(),
+                'name'  => fake()->name(),
+                'email' => fake()->email(),
+                'phone' => fake()->phoneNumber(),
             ])->id,
-            'title'     => $this->faker->title(),
-            'type'      => $this->faker->word(),
-            'attr'      => $this->faker->text(),
-            'date'      => $this->faker->date(),
-            'plac'      => $this->faker->address(),
-            'phon'      => $this->faker->phoneNumber(),
-            'caus'      => $this->faker->text(),
-            'age'       => $this->faker->randomDigit(1, 50),
-            'agnc'      => $this->faker->word(),
+            'title'     => fake()->title(),
+            'type'      => fake()->word(),
+            'attr'      => fake()->text(),
+            'date'      => fake()->date(),
+            'plac'      => fake()->address(),
+            'phon'      => fake()->phoneNumber(),
+            'caus'      => fake()->text(),
+            'age'       => fake()->randomDigit(),
+            'agnc'      => fake()->word(),
             'places_id' => Place::create([
-                'description' => $this->faker->text(50),
-                'title'       => $this->faker->word(),
-                'date'        => $this->faker->date(),
+                'description' => fake()->text(50),
+                'title'       => fake()->word(),
+                'date'        => fake()->date(),
             ])->id,
-            'description' => $this->faker->text(50),
-            'year'        => $this->faker->year(),
-            'month'       => $this->faker->month(),
-            'day'         => $this->faker->dayOfMonth(),
+            'description' => fake()->text(50),
+            'year'        => fake()->year(),
+            'month'       => fake()->month(),
+            'day'         => fake()->dayOfMonth(),
         ];
     }
 }

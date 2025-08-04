@@ -6,6 +6,9 @@ use App\Models\Addr;
 use App\Models\Subm;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
+/**
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Subm>
+ */
 class SubmFactory extends Factory
 {
     /**
@@ -23,18 +26,18 @@ class SubmFactory extends Factory
     public function definition()
     {
         return [
-            'group'      => $this->faker->word(),
-            'gid'        => $this->faker->randomDigit('1', '2'),
-            'name'       => $this->faker->word(),
+            'group'      => fake()->word(),
+            'gid'        => fake()->randomDigit(),
+            'name'       => fake()->word(),
             'addr_id'    => Addr::create()->id,
-            'rin'        => $this->faker->word(),
-            'rfn'        => $this->faker->word(),
-            'lang'       => $this->faker->languageCode(),
-            'phon'       => $this->faker->phoneNumber(),
-            'email'      => $this->faker->email(),
-            'fax'        => $this->faker->word(),
-            'www'        => $this->faker->url(),
-            'created_at' => $this->faker->date(),
+            'rin'        => fake()->word(),
+            'rfn'        => fake()->word(),
+            'lang'       => fake()->languageCode(),
+            'phon'       => fake()->phoneNumber(),
+            'email'      => fake()->email(),
+            'fax'        => fake()->word(),
+            'www'        => fake()->url(),
+            'created_at' => fake()->date(),
         ];
     }
 }

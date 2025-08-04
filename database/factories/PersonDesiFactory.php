@@ -7,6 +7,9 @@ use Carbon\Carbon;
 use FamilyTree365\LaravelGedcom\Models\PersonDesi;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
+/**
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\FamilyTree365\LaravelGedcom\Models\PersonDesi>
+ */
 class PersonDesiFactory extends Factory
 {
     /**
@@ -24,9 +27,9 @@ class PersonDesiFactory extends Factory
     public function definition()
     {
         return [
-            'group'      => $this->faker->word(),
-            'gid'        => $this->faker->randomElement(['1', '2']),
-            'rela'       => $this->faker->word(),
+            'group'      => fake()->word(),
+            'gid'        => fake()->randomElement(['1', '2']),
+            'rela'       => fake()->word(),
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ];

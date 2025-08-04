@@ -6,6 +6,9 @@ use App\Models\ForumCategory;
 use App\Models\ForumTopic;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
+/**
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\ForumTopic>
+ */
 class ForumTopicFactory extends Factory
 {
     /**
@@ -23,7 +26,7 @@ class ForumTopicFactory extends Factory
     public function definition()
     {
         return [
-            'category_id' => ForumCategory::factory(), 'title' => $this->faker->word(), 'slug' => $this->faker->word(), 'content' => $this->faker->title(), 'created_by',
+            'category_id' => ForumCategory::factory(), 'title' => fake()->word(), 'slug' => fake()->word(), 'content' => fake()->title(), 'created_by',
         ];
     }
 }

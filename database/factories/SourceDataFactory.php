@@ -5,6 +5,9 @@ namespace Database\Factories;
 use App\Models\SourceData;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
+/**
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\SourceData>
+ */
 class SourceDataFactory extends Factory
 {
     /**
@@ -22,11 +25,11 @@ class SourceDataFactory extends Factory
     public function definition()
     {
         return [
-            'group' => $this->faker->word(),
-            'gid'   => $this->faker->randomDigit('1', '2'),
-            'date'  => $this->faker->date(),
-            'text'  => $this->faker->text(50),
-            'agnc'  => $this->faker->word(),
+            'group' => fake()->word(),
+            'gid'   => fake()->randomDigit(),
+            'date'  => fake()->date(),
+            'text'  => fake()->text(50),
+            'agnc'  => fake()->word(),
         ];
     }
 }

@@ -8,6 +8,9 @@ use App\Models\Type;
 // use App\Models\Type;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
+/**
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Family>
+ */
 class FamilyFactory extends Factory
 {
     /**
@@ -25,15 +28,15 @@ class FamilyFactory extends Factory
     public function definition()
     {
         return [
-            'description' => $this->faker->text(),
-            'is_active'   => $this->faker->randomDigit(0, 1),
-            'husband_id'  => $this->faker->randomDigit(1, 2),
-            'wife_id'     => $this->faker->randomDigit(1, 2),
+            'description' => fake()->text(),
+            'is_active'   => fake()->randomDigit(),
+            'husband_id'  => fake()->randomDigit(),
+            'wife_id'     => fake()->randomDigit(),
             // 'child_id'=> Person::create()->id,
             'type_id' => Type::where('id', 1)->first(),
-            'chan'    => $this->faker->word(),
-            'nchi'    => $this->faker->word(),
-            'rin'     => $this->faker->word(),
+            'chan'    => fake()->word(),
+            'nchi'    => fake()->word(),
+            'rin'     => fake()->word(),
         ];
     }
 }

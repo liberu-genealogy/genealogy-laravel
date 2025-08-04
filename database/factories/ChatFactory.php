@@ -5,6 +5,9 @@ namespace Database\Factories;
 use App\Models\Chat;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
+/**
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Chat>
+ */
 class ChatFactory extends Factory
 {
     /**
@@ -22,8 +25,8 @@ class ChatFactory extends Factory
     public function definition()
     {
         return [
-            'user_1' => $this->faker->randomElement([1, 2, 3, 4]),
-            'user_2' => $this->faker->randomElement([1, 2, 3, 4]),
+            'user_1' => fake()->randomElement([1, 2, 3, 4]),
+            'user_2' => fake()->randomElement([1, 2, 3, 4]),
         ];
     }
 }

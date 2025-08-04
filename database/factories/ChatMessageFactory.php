@@ -6,6 +6,9 @@ use App\Models\Chat;
 use App\Models\ChatMessage;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
+/**
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\ChatMessage>
+ */
 class ChatMessageFactory extends Factory
 {
     /**
@@ -23,10 +26,10 @@ class ChatMessageFactory extends Factory
     public function definition()
     {
         return [
-            'message'   => $this->faker->words(),
-            'sender_id' => $this->faker->randomElement([1, 2, 3, 4]),
+            'message'   => fake()->words(),
+            'sender_id' => fake()->randomElement([1, 2, 3, 4]),
             'chat_id'   => Chat::factory(),
-            'reply_to'  => $this->faker->randomElement([1, 2, 3, 4]),
+            'reply_to'  => fake()->randomElement([1, 2, 3, 4]),
         ];
     }
 }

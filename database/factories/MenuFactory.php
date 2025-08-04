@@ -5,6 +5,9 @@ namespace Database\Factories;
 use App\Models\Menu;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
+/**
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Menu>
+ */
 class MenuFactory extends Factory
 {
     protected $model = Menu::class;
@@ -12,9 +15,9 @@ class MenuFactory extends Factory
     public function definition()
     {
         return [
-            'name' => $this->faker->word,
-            'url' => $this->faker->url,
-            'order' => $this->faker->numberBetween(1, 10),
+            'name' => fake()->word,
+            'url' => fake()->url,
+            'order' => fake()->numberBetween(1, 10),
         ];
     }
 }

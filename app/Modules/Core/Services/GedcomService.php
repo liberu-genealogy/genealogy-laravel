@@ -156,7 +156,9 @@ class GedcomService
         
         foreach ($lines as $line) {
             $line = trim($line);
-            if (empty($line)) continue;
+            if ($line === '' || $line === '0') {
+                continue;
+            }
             
             $parts = explode(' ', $line, 3);
             $level = (int) $parts[0];

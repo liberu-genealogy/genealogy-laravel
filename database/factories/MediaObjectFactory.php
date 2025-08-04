@@ -5,6 +5,9 @@ namespace Database\Factories;
 use App\Models\MediaObject;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
+/**
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\MediaObject>
+ */
 class MediaObjectFactory extends Factory
 {
     /**
@@ -22,11 +25,11 @@ class MediaObjectFactory extends Factory
     public function definition()
     {
         return [
-            'group'   => $this->faker->word(),
-            'gid'     => $this->faker->randomDigit('1', '2'),
-            'titl'    => $this->faker->word(),
-            'obje_id' => $this->faker->randomDigit('1', '2'),
-            'rin'     => $this->faker->word(),
+            'group'   => fake()->word(),
+            'gid'     => fake()->randomDigit(),
+            'titl'    => fake()->word(),
+            'obje_id' => fake()->randomDigit(),
+            'rin'     => fake()->word(),
         ];
     }
 }

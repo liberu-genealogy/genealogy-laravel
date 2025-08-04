@@ -6,6 +6,9 @@ use App\Models\Person;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
+/**
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Person>
+ */
 class PersonFactory extends Factory
 {
     /**
@@ -23,13 +26,13 @@ class PersonFactory extends Factory
     public function definition()
     {
         return [
-            'name'         => $this->faker->name,
-            'appellative'  => $this->faker->firstName,
-            'email'        => $this->faker->unique()->safeEmail,
-            'phone'        => $this->faker->phoneNumber,
+            'name'         => fake()->name,
+            'appellative'  => fake()->firstName,
+            'email'        => fake()->unique()->safeEmail,
+            'phone'        => fake()->phoneNumber,
             'birthday'     => Carbon::now()->subYears(rand(15, 40)),
-            'bank'         => $this->faker->word,
-            'bank_account' => $this->faker->bankAccountNumber,
+            'bank'         => fake()->word,
+            'bank_account' => fake()->bankAccountNumber,
         ];
     }
 }

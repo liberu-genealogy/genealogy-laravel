@@ -155,11 +155,9 @@ class ModuleCommand extends Command
             return 1;
         }
 
-        if (!$this->option('force')) {
-            if (!$this->confirm("Are you sure you want to uninstall module '{$name}'? This action cannot be undone.")) {
-                $this->info('Operation cancelled.');
-                return 0;
-            }
+        if (!$this->option('force') && !$this->confirm("Are you sure you want to uninstall module '{$name}'? This action cannot be undone.")) {
+            $this->info('Operation cancelled.');
+            return 0;
         }
 
         try {
@@ -211,7 +209,7 @@ class ModuleCommand extends Command
 
         $info = $this->moduleManager->getModuleInfo($name);
 
-        if (empty($info)) {
+        if ($info === []) {
             $this->error("Module '{$name}' not found.");
             return 1;
         }

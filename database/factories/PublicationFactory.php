@@ -5,6 +5,9 @@ namespace Database\Factories;
 use App\Models\Publication;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
+/**
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Publication>
+ */
 class PublicationFactory extends Factory
 {
     /**
@@ -22,9 +25,9 @@ class PublicationFactory extends Factory
     public function definition()
     {
         return [
-            'description' => $this->faker->text(50),
-            'is_active'   => $this->faker->randomDigit('0', '1'),
-            'name'        => $this->faker->word(),
+            'description' => fake()->text(50),
+            'is_active'   => fake()->randomDigit(),
+            'name'        => fake()->word(),
         ];
     }
 }

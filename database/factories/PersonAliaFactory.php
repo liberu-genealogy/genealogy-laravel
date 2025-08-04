@@ -5,6 +5,9 @@ namespace Database\Factories;
 use App\Models\PersonAlia;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
+/**
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\PersonAlia>
+ */
 class PersonAliaFactory extends Factory
 {
     /**
@@ -22,10 +25,10 @@ class PersonAliaFactory extends Factory
     public function definition()
     {
         return [
-            'group'          => $this->faker->word(),
-            'gid'            => $this->faker->randomDigit('1', '2'),
-            'alia'           => $this->faker->word(),
-            'import_confirm' => $this->faker->randomDigit('0', '1'),
+            'group'          => fake()->word(),
+            'gid'            => fake()->randomDigit(),
+            'alia'           => fake()->word(),
+            'import_confirm' => fake()->randomDigit(),
         ];
     }
 }
