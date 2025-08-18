@@ -22,7 +22,7 @@ jobs:
     - name: Setup Node.js
       uses: actions/setup-node@v4
       with:
-        node-version: '20'
+        node-version: '22'
 
     
     - name: Start database
@@ -33,10 +33,10 @@ jobs:
       
     - name: Copy environment file
       run: cp .env.testing .env
-      
+
     - name: Install dependencies
-      run: composer install
-      
+      run: composer require laravel/framework:"^12.0"
+
     - name: Generate application key
       run: php artisan key:generate
       
@@ -45,6 +45,10 @@ jobs:
       
     - name: Seed database
       run: php artisan db:seed
+      
+    - name: Install dependencies
+      run: composer install
+      
       
     - name: Install npm dependencies
       run: npm install
