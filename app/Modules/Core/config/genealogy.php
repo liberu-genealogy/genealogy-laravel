@@ -126,7 +126,7 @@ return [
         | Cache Settings
         |--------------------------------------------------------------------------
         */
-        'enable' => true,
+        'enable' => false,
         'ttl' => 3600, // 1 hour
         'tags' => ['genealogy', 'persons', 'families'],
     ],
