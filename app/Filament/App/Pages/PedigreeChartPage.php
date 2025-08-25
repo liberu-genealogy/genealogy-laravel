@@ -3,15 +3,16 @@
 namespace App\Filament\App\Pages;
 
 use Filament\Pages\Page;
-
+use UnitEnum;
+use BackedEnum;
 class PedigreeChartPage extends Page
 {
-    protected static ?string $navigationIcon = 'heroicon-o-chart-bar';
-    
+    protected static string | BackedEnum | null $navigationIcon ='heroicon-o-chart-bar';
+
     protected static ?string $navigationLabel = 'Pedigree Chart';
-    
-    protected static ?string $navigationGroup = 'Charts & Reports';
-    
+
+    protected static string | UnitEnum | null $navigationGroup =  'Charts & Reports';
+
     protected static ?int $navigationSort = 1;
 
     protected static string $view = 'filament.app.pages.pedigree-chart-page';
