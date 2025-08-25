@@ -85,7 +85,31 @@ class Person extends Model
 
     public function parents()
     {
-        return $this->childInFamily->parents();
+        if (!$this->childInFamily) {
+            return collect();
+        }
+
+        $parents = collect();
+
+        if ($this->childInFamily->husband) {
+            $parents->push($this->childInFamily->husband);
+        }
+
+        if ($this->childInFamily->wife) {
+            $parents->push($this->childInFamily->wife);
+        }
+
+        return $parents;
+    }
+
+    public function father()
+    {
+        return $this->childInFamily?->husband;
+    }
+
+    public function mother()
+    {
+        return $this->childInFamily?->wife;
     }
 
     public function children()
