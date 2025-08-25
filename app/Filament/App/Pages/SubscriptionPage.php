@@ -9,18 +9,19 @@ use Filament\Forms\Form;
 use Filament\Notifications\Notification;
 use Filament\Pages\Page;
 use Illuminate\Support\Facades\Auth;
-
+use UnitEnum;
+use BackedEnum;
 class SubscriptionPage extends Page
 {
-    protected static ?string $navigationIcon = 'heroicon-o-star';
-    
+    protected static string | BackedEnum | null $navigationIcon = 'heroicon-o-star';
+
     protected static ?string $navigationLabel = 'Premium Subscription';
-    
-    protected static ?string $navigationGroup = 'Account';
-    
+
+    protected static string | UnitEnum | null $navigationGroup = 'Account';
+
     protected static ?int $navigationSort = 2;
 
-    protected static string $view = 'filament.app.pages.subscription-page';
+    protected string $view = 'filament.app.pages.subscription-page';
 
     protected static ?string $title = 'Premium Subscription';
 
