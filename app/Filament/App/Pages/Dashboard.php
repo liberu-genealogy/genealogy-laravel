@@ -4,6 +4,18 @@ namespace App\Filament\App\Pages;
 
 use Filament\Pages\Dashboard as BaseDashboard;
 use Filament\Widgets\StatsOverviewWidget\Stat;
+use UnitEnum;
+use BackedEnum;
+
+class FamilyEventResource extends Resource
+{
+    protected static ?string $model = FamilyEvent::class;
+
+    protected static ?string $navigationLabel = 'Family Events';
+
+    protected static string | BackedEnum | null $navigationIcon = 'heroicon-o-rectangle-stack';
+
+    protected static string | UnitEnum | null $navigationGroup = 'Family';
 
 class Dashboard extends BaseDashboard
 {
