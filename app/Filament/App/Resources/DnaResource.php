@@ -32,6 +32,11 @@ class DnaResource extends Resource
 
     protected static ?int $navigationSort = 1;
 
+    public static function canCreate(): bool
+    {
+        return auth()->user()->canUploadDna();
+    }
+
     #[\Override]
     public static function form(Schema $form): Schema
     {

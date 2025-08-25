@@ -109,6 +109,8 @@ class AppPanelProvider extends PanelProvider
                 \App\Filament\App\Pages\Dashboard::class,
                 \App\Filament\App\Pages\PedigreeChartPage::class,
                 \App\Filament\App\Pages\DescendantChartPage::class,
+                \App\Filament\App\Pages\SubscriptionPage::class,
+                \App\Filament\App\Pages\PremiumDashboardPage::class,
                 EditProfile::class,
             ])
             ->discoverWidgets(in: app_path('Filament/App/Widgets'), for: 'App\\Filament\\App\\Widgets')
