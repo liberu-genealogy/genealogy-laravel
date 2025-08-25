@@ -50,7 +50,7 @@ RUN apk update; \
     ca-certificates \
     supervisor \
     libsodium-dev \
-    # Install PHP extensions
+    # Install PHP extensions \
     && install-php-extensions \
     bz2 \
     pcntl \

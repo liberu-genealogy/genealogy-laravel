@@ -1,0 +1,127 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        WWWUSER: 1000
+        WWWGROUP: 1000
+    image: genealogy-laravel
+    container_name: genealogy-app
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    environment:
+      - CONTAINER_MODE=http
+      - OCTANE_SERVER=swoole
+      - WITH_HORIZON=false
+      - WITH_SCHEDULER=true
+      - RUNNING_MIGRATIONS_AND_SEEDERS=true
+    volumes:
+      - ./storage/logs:/var/www/html/storage/logs
+      - ./storage/app:/var/www/html/storage/app
+    depends_on:
+      - mysql
+      - redis
+    networks:
+      - genealogy-network
+    healthcheck:
+      test: ["CMD", "php", "artisan", "octane:status"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  mysql:
+    image: mysql:8.0
+    container_name: genealogy-mysql
+    restart: unless-stopped
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_DATABASE: liberu
+      MYSQL_ROOT_PASSWORD: secret
+      MYSQL_PASSWORD: secret
+      MYSQL_USER: liberu
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./database/init:/docker-entrypoint-initdb.d
+    networks:
+      - genealogy-network
+    command: --default-authentication-plugin=mysql_native_password
+
+  redis:
+    image: redis:7-alpine
+    container_name: genealogy-redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - genealogy-network
+    command: redis-server --appendonly yes
+
+  mailpit:
+    image: axllent/mailpit
+    container_name: genealogy-mailpit
+    restart: unless-stopped
+    ports:
+      - "1025:1025"
+      - "8025:8025"
+    networks:
+      - genealogy-network
+
+  horizon:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        WWWUSER: 1000
+        WWWGROUP: 1000
+    image: genealogy-laravel
+    container_name: genealogy-horizon
+    restart: unless-stopped
+    environment:
+      - CONTAINER_MODE=horizon
+      - WITH_HORIZON=true
+    volumes:
+      - ./storage/logs:/var/www/html/storage/logs
+    depends_on:
+      - mysql
+      - redis
+    networks:
+      - genealogy-network
+
+  scheduler:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        WWWUSER: 1000
+        WWWGROUP: 1000
+    image: genealogy-laravel
+    container_name: genealogy-scheduler
+    restart: unless-stopped
+    environment:
+      - CONTAINER_MODE=scheduler
+      - WITH_SCHEDULER=true
+    volumes:
+      - ./storage/logs:/var/www/html/storage/logs
+    depends_on:
+      - mysql
+      - redis
+    networks:
+      - genealogy-network
+
+volumes:
+  mysql_data:
+    driver: local
+  redis_data:
+    driver: local
+
+networks:
+  genealogy-network:
+    driver: bridge
