@@ -10,8 +10,6 @@ use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Columns\BadgeColumn;
-use Filament\Tables\Actions\Action;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Auth;
 
@@ -29,7 +27,7 @@ class DuplicateCheckResource extends Resource
 
     public static function canAccess(): bool
     {
-        return Auth::user()->isPremium();
+        return Auth::user()?->isPremium() ?? false;
     }
 
     public static function form(Form $form): Form
@@ -45,12 +43,14 @@ class DuplicateCheckResource extends Resource
                     ->label('Run Date')
                     ->dateTime()
                     ->sortable(),
-                BadgeColumn::make('status')
-                    ->colors([
-                        'warning' => 'pending',
-                        'success' => 'completed',
-                        'danger' => 'failed',
-                    ]),
+                TextColumn::make('status')
+                    ->badge()
+                    ->color(fn (string $state): string => match ($state) {
+                        'pending' => 'warning',
+                        'completed' => 'success',
+                        'failed' => 'danger',
+                        default => 'gray',
+                    }),
                 TextColumn::make('duplicates_found')
                     ->label('Duplicates Found')
                     ->numeric()
@@ -62,14 +62,11 @@ class DuplicateCheckResource extends Resource
             ])
             ->filters([])
             ->actions([
-                Action::make('view_results')
-                    ->label('View Results')
-                    ->icon('heroicon-o-eye')
-                    ->url(fn (DuplicateCheck $record): string => route('filament.app.resources.duplicate-checks.view', $record))
+                Tables\Actions\ViewAction::make()
                     ->visible(fn (DuplicateCheck $record): bool => $record->isCompleted()),
             ])
             ->headerActions([
-                Action::make('run_check')
+                Tables\Actions\Action::make('run_check')
                     ->label('Run Duplicate Check')
                     ->icon('heroicon-o-play')
                     ->color('primary')

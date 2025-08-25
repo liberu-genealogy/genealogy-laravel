@@ -10,8 +10,6 @@ use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Columns\BadgeColumn;
-use Filament\Tables\Actions\Action;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Auth;
 
@@ -29,7 +27,7 @@ class SmartMatchResource extends Resource
 
     public static function canAccess(): bool
     {
-        return Auth::user()->isPremium();
+        return Auth::user()?->isPremium() ?? false;
     }
 
     public static function form(Form $form): Form
@@ -51,27 +49,30 @@ class SmartMatchResource extends Resource
                 TextColumn::make('match_source')
                     ->label('Source')
                     ->badge()
-                    ->colors([
-                        'primary' => 'familysearch',
-                        'success' => 'ancestry',
-                        'warning' => 'myheritage',
-                        'info' => 'findmypast',
-                    ]),
+                    ->color(fn (string $state): string => match ($state) {
+                        'familysearch' => 'primary',
+                        'ancestry' => 'success',
+                        'myheritage' => 'warning',
+                        'findmypast' => 'info',
+                        default => 'gray',
+                    }),
                 TextColumn::make('confidence_percentage')
                     ->label('Confidence')
                     ->badge()
-                    ->colors([
-                        'success' => fn ($state): bool => (float) str_replace('%', '', $state) >= 80,
-                        'warning' => fn ($state): bool => (float) str_replace('%', '', $state) >= 60,
-                        'danger' => fn ($state): bool => (float) str_replace('%', '', $state) < 60,
-                    ]),
-                BadgeColumn::make('status')
-                    ->colors([
-                        'secondary' => 'pending',
-                        'primary' => 'reviewed',
-                        'success' => 'accepted',
-                        'danger' => 'rejected',
-                    ]),
+                    ->color(fn ($state): string => match (true) {
+                        (float) str_replace('%', '', $state) >= 80 => 'success',
+                        (float) str_replace('%', '', $state) >= 60 => 'warning',
+                        default => 'danger',
+                    }),
+                TextColumn::make('status')
+                    ->badge()
+                    ->color(fn (string $state): string => match ($state) {
+                        'pending' => 'gray',
+                        'reviewed' => 'primary',
+                        'accepted' => 'success',
+                        'rejected' => 'danger',
+                        default => 'gray',
+                    }),
                 TextColumn::make('created_at')
                     ->label('Found')
                     ->dateTime()
@@ -94,17 +95,14 @@ class SmartMatchResource extends Resource
                     ]),
             ])
             ->actions([
-                Action::make('view_details')
-                    ->label('View Details')
-                    ->icon('heroicon-o-eye')
-                    ->url(fn (SmartMatch $record): string => route('filament.app.resources.smart-matches.view', $record)),
-                Action::make('accept')
+                Tables\Actions\ViewAction::make(),
+                Tables\Actions\Action::make('accept')
                     ->label('Accept')
                     ->icon('heroicon-o-check')
                     ->color('success')
                     ->action(fn (SmartMatch $record) => $record->update(['status' => 'accepted', 'reviewed_at' => now()]))
                     ->visible(fn (SmartMatch $record): bool => $record->isPending()),
-                Action::make('reject')
+                Tables\Actions\Action::make('reject')
                     ->label('Reject')
                     ->icon('heroicon-o-x-mark')
                     ->color('danger')
@@ -112,7 +110,7 @@ class SmartMatchResource extends Resource
                     ->visible(fn (SmartMatch $record): bool => $record->isPending()),
             ])
             ->headerActions([
-                Action::make('find_matches')
+                Tables\Actions\Action::make('find_matches')
                     ->label('Find New Matches')
                     ->icon('heroicon-o-magnifying-glass')
                     ->color('primary')
