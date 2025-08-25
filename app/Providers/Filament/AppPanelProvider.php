@@ -47,7 +47,53 @@ class AppPanelProvider extends PanelProvider
             ->emailVerification()
             ->viteTheme('resources/css/filament/app/theme.css')
             ->colors([
-                'primary' => Color::Gray,
+                'primary' => Color::Emerald,
+                'gray' => Color::Slate,
+            ])
+            ->brandName('Liberu Genealogy')
+            ->brandLogo(asset('images/logo.svg'))
+            ->favicon(asset('images/favicon.ico'))
+            ->navigationGroups([
+                'Dashboard' => [
+                    'label' => 'Dashboard',
+                    'icon' => 'heroicon-o-home',
+                    'sort' => 1,
+                ],
+                'Family Tree' => [
+                    'label' => 'Family Tree',
+                    'icon' => 'heroicon-o-users',
+                    'sort' => 2,
+                ],
+                'Charts & Reports' => [
+                    'label' => 'Charts & Reports',
+                    'icon' => 'heroicon-o-chart-bar',
+                    'sort' => 3,
+                ],
+                'Research' => [
+                    'label' => 'Research',
+                    'icon' => 'heroicon-o-magnifying-glass',
+                    'sort' => 4,
+                ],
+                'DNA Analysis' => [
+                    'label' => 'DNA Analysis',
+                    'icon' => 'heroicon-o-beaker',
+                    'sort' => 5,
+                ],
+                'Media & Documents' => [
+                    'label' => 'Media & Documents',
+                    'icon' => 'heroicon-o-photo',
+                    'sort' => 6,
+                ],
+                'Data Management' => [
+                    'label' => 'Data Management',
+                    'icon' => 'heroicon-o-database',
+                    'sort' => 7,
+                ],
+                'Account' => [
+                    'label' => 'Account',
+                    'icon' => 'heroicon-o-user-circle',
+                    'sort' => 8,
+                ],
             ])
             ->userMenuItems([
                 MenuItem::make()
@@ -60,8 +106,9 @@ class AppPanelProvider extends PanelProvider
             ->discoverResources(in: app_path('Filament/App/Resources'), for: 'App\\Filament\\App\\Resources')
             ->discoverPages(in: app_path('Filament/App/Pages'), for: 'App\\Filament\\App\\Pages')
             ->pages([
-                // \App\Filament\App\Pages\Dashboard::class,
-                Dashboard::class,
+                \App\Filament\App\Pages\Dashboard::class,
+                \App\Filament\App\Pages\PedigreeChartPage::class,
+                \App\Filament\App\Pages\DescendantChartPage::class,
                 EditProfile::class,
             ])
             ->discoverWidgets(in: app_path('Filament/App/Widgets'), for: 'App\\Filament\\App\\Widgets')

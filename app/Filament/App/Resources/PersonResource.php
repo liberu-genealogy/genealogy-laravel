@@ -18,11 +18,13 @@ class PersonResource extends Resource
 {
     protected static ?string $model = Person::class;
 
-    protected static string | BackedEnum | null $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static string | BackedEnum | null $navigationIcon = 'heroicon-o-user-plus';
 
-    protected static ?string $navigationLabel = ' Add A Person';
+    protected static ?string $navigationLabel = 'People';
 
-    protected static string | UnitEnum | null $navigationGroup = 'Person';
+    protected static string | UnitEnum | null $navigationGroup = 'Family Tree';
+
+    protected static ?int $navigationSort = 1;
 
     // protected static ?string $tenantRelationshipName = 'People';
 

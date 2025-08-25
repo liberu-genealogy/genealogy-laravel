@@ -20,11 +20,13 @@ class DnaMatchingResource extends Resource
 
     protected static ?string $model = DnaMatching::class;
 
-    protected static string | BackedEnum | null $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static string | BackedEnum | null $navigationIcon = 'heroicon-o-puzzle-piece';
 
-    protected static ?string $navigationLabel = 'Match DNA';
+    protected static ?string $navigationLabel = 'DNA Matches';
 
-    protected static string | UnitEnum | null $navigationGroup = 'Dna Matching';
+    protected static string | UnitEnum | null $navigationGroup = 'DNA Analysis';
+
+    protected static ?int $navigationSort = 2;
 
     #[\Override]
     public static function form(Schema $form): Schema

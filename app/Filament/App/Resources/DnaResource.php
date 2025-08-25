@@ -24,11 +24,13 @@ class DnaResource extends Resource
 
     protected static ?string $model = Dna::class;
 
-    protected static ?string $navigationLabel = 'DNA';
+    protected static ?string $navigationLabel = 'DNA Records';
 
-    protected static string | BackedEnum | null $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static string | BackedEnum | null $navigationIcon = 'heroicon-o-beaker';
 
-    protected static string | UnitEnum | null $navigationGroup = 'Dna Matching';
+    protected static string | UnitEnum | null $navigationGroup = 'DNA Analysis';
+
+    protected static ?int $navigationSort = 1;
 
     #[\Override]
     public static function form(Schema $form): Schema

@@ -2,17 +2,26 @@
 
 namespace App\Filament\App\Pages;
 
-use UnitEnum;
-use BackedEnum;
 use Filament\Pages\Page;
 
 class DescendantChartPage extends Page
 {
-    protected string $view = 'descendant-chart-page';
+    protected static ?string $navigationIcon = 'heroicon-o-chart-pie';
+    
+    protected static ?string $navigationLabel = 'Descendant Chart';
+    
+    protected static ?string $navigationGroup = 'Charts & Reports';
+    
+    protected static ?int $navigationSort = 2;
+
+    protected static string $view = 'filament.app.pages.descendant-chart-page';
 
     protected static ?string $title = 'Descendant Chart';
 
-    protected static string | BackedEnum | null $navigationIcon = 'heroicon-o-chart-bar';
-
-    protected static string | UnitEnum | null $navigationGroup = 'Charts';
+    public function getWidgets(): array
+    {
+        return [
+            \App\Http\Livewire\DescendantChartWidget::class,
+        ];
+    }
 }

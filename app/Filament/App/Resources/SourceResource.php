@@ -18,11 +18,13 @@ class SourceResource extends Resource
 {
     protected static ?string $model = Source::class;
 
-    protected static string | BackedEnum | null $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static string | BackedEnum | null $navigationIcon = 'heroicon-o-document-text';
 
     protected static ?string $navigationLabel = 'Sources';
 
-    protected static string | UnitEnum | null $navigationGroup = 'Author';
+    protected static string | UnitEnum | null $navigationGroup = 'Research';
+
+    protected static ?int $navigationSort = 1;
 
     #[\Override]
     public static function form(Schema $form): Schema
