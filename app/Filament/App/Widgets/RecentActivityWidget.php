@@ -9,13 +9,13 @@ use Illuminate\Support\Collection;
 
 class RecentActivityWidget extends Widget
 {
-    protected static string $view = 'filament.app.widgets.recent-activity';
-    
+    protected string $view = 'filament.app.widgets.recent-activity';
+
     protected int | string | array $columnSpan = [
         'md' => 2,
         'xl' => 1,
     ];
-    
+
     protected static ?int $sort = 3;
 
     public function getViewData(): array

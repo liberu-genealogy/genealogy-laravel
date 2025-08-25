@@ -6,10 +6,10 @@ use Filament\Widgets\Widget;
 
 class QuickActionsWidget extends Widget
 {
-    protected static string $view = 'filament.app.widgets.quick-actions';
-    
+    protected string $view = 'filament.app.widgets.quick-actions';
+
     protected int | string | array $columnSpan = 'full';
-    
+
     protected static ?int $sort = 2;
 
     public function getViewData(): array
