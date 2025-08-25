@@ -2,6 +2,8 @@
 
 namespace App\Filament\App\Resources;
 
+use UnitEnum;
+use BackedEnum;
 use App\Filament\App\Resources\SmartMatchResource\Pages;
 use App\Models\SmartMatch;
 use App\Services\SmartMatchingService;

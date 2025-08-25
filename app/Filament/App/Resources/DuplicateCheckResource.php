@@ -2,6 +2,8 @@
 
 namespace App\Filament\App\Resources;
 
+use UnitEnum;
+use BackedEnum;
 use App\Filament\App\Resources\DuplicateCheckResource\Pages;
 use App\Models\DuplicateCheck;
 use App\Services\DuplicateCheckerService;
