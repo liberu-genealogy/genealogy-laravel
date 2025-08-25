@@ -15,14 +15,15 @@ use Illuminate\Support\Facades\Auth;
 
 class DuplicateCheckResource extends Resource
 {
+
     protected static ?string $model = DuplicateCheck::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-document-duplicate';
+    protected static string | BackedEnum | null $navigationIcon  'heroicon-o-document-duplicate';
 
     protected static ?string $navigationLabel = 'Duplicate Checker';
 
-    protected static ?string $navigationGroup = 'Research';
-    
+    protected static string | UnitEnum | null $navigationGroup =  'Research';
+
     protected static ?int $navigationSort = 3;
 
     public static function canAccess(): bool
@@ -73,7 +74,7 @@ class DuplicateCheckResource extends Resource
                     ->action(function () {
                         $service = app(DuplicateCheckerService::class);
                         $service->runDuplicateCheck(Auth::user());
-                        
+
                         return redirect()->back();
                     })
                     ->requiresConfirmation()

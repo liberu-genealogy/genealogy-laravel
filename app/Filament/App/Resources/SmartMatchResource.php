@@ -17,12 +17,12 @@ class SmartMatchResource extends Resource
 {
     protected static ?string $model = SmartMatch::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-magnifying-glass';
+    protected static string | BackedEnum | null $navigationIcon = 'heroicon-o-magnifying-glass';
 
     protected static ?string $navigationLabel = 'Smart Matches';
 
-    protected static ?string $navigationGroup = 'Research';
-    
+    protected static string | UnitEnum | null $navigationGroup =  'Research';
+
     protected static ?int $navigationSort = 4;
 
     public static function canAccess(): bool
@@ -117,13 +117,13 @@ class SmartMatchResource extends Resource
                     ->action(function () {
                         $service = app(SmartMatchingService::class);
                         $matches = $service->findSmartMatches(Auth::user());
-                        
+
                         \Filament\Notifications\Notification::make()
                             ->title('Smart Matching Complete')
                             ->body("Found {$matches->count()} potential matches!")
                             ->success()
                             ->send();
-                        
+
                         return redirect()->back();
                     })
                     ->requiresConfirmation()
