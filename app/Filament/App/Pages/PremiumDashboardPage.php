@@ -19,7 +19,7 @@ class PremiumDashboardPage extends Page
 
     protected static ?int $navigationSort = 1;
 
-    protected static string $view = 'filament.app.pages.premium-dashboard-page';
+    protected string $view = 'filament.app.pages.premium-dashboard-page';
 
     protected static ?string $title = 'Premium Dashboard';
 

@@ -15,7 +15,7 @@ class DescendantChartPage extends Page
 
     protected static ?int $navigationSort = 2;
 
-    protected static string $view = 'filament.app.pages.descendant-chart-page';
+    protected string $view = 'filament.app.pages.descendant-chart-page';
 
     protected static ?string $title = 'Descendant Chart';
 

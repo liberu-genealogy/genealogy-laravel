@@ -15,7 +15,7 @@ class PedigreeChartPage extends Page
 
     protected static ?int $navigationSort = 1;
 
-    protected static string $view = 'filament.app.pages.pedigree-chart-page';
+    protected string $view = 'filament.app.pages.pedigree-chart-page';
 
     protected static ?string $title = 'Pedigree Chart';
 
