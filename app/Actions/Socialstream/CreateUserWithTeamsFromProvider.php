@@ -10,7 +10,7 @@ use JoelButcher\Socialstream\Contracts\CreatesUserFromProvider;
 use JoelButcher\Socialstream\Socialstream;
 use Laravel\Socialite\Contracts\User as ProviderUserContract;
 
-class CreateUserFromProvider implements CreatesUserFromProvider
+class CreateUserWithTeamsFromProvider implements CreatesUserFromProvider
 {
     /**
      * Create a new action instance.

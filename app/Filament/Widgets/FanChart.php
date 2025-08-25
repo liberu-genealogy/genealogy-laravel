@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire;
+namespace App\Filament\Widgets;
 
 use App\Models\Person;
 use Filament\Widgets\Widget;
