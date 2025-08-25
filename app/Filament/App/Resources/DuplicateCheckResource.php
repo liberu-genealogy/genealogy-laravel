@@ -18,7 +18,7 @@ class DuplicateCheckResource extends Resource
 
     protected static ?string $model = DuplicateCheck::class;
 
-    protected static string | BackedEnum | null $navigationIcon  'heroicon-o-document-duplicate';
+    protected static string | BackedEnum | null $navigationIcon = 'heroicon-o-document-duplicate';
 
     protected static ?string $navigationLabel = 'Duplicate Checker';
 
