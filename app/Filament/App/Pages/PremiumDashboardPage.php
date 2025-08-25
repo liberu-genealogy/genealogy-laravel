@@ -7,15 +7,16 @@ use Filament\Actions\Action;
 use Filament\Notifications\Notification;
 use Filament\Pages\Page;
 use Illuminate\Support\Facades\Auth;
-
+use UnitEnum;
+use BackedEnum;
 class PremiumDashboardPage extends Page
 {
-    protected static ?string $navigationIcon = 'heroicon-o-star';
-    
+    protected static string | BackedEnum | null $navigationIcon = 'heroicon-o-star';
+
     protected static ?string $navigationLabel = 'Premium Dashboard';
-    
-    protected static ?string $navigationGroup = 'Account';
-    
+
+    protected static string | UnitEnum | null $navigationGroup = 'Account';
+
     protected static ?int $navigationSort = 1;
 
     protected static string $view = 'filament.app.pages.premium-dashboard-page';
@@ -101,7 +102,7 @@ class PremiumDashboardPage extends Page
     {
         $user = Auth::user();
         $subscription = $user->subscription('premium');
-        
+
         return [
             'is_premium' => $user->isPremium(),
             'on_trial' => $user->onPremiumTrial(),
