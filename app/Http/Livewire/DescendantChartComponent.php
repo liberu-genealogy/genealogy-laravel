@@ -11,11 +11,20 @@ final class DescendantChartComponent extends Component
 {
     public array $descendantsData = [];
 
-    public function mount(): void
+    public $rootPersonId = null;
+    public $generations = 4;
+
+    public function mount($rootPersonId = null): void
     {
+        $this->rootPersonId = $rootPersonId ?? Person::first()?->id;
+
         try {
-            $rawData = Person::with('children')->get();
-            $this->descendantsData = $this->processDescendantData($rawData);
+            if ($this->rootPersonId) {
+                $rootPerson = Person::find($this->rootPersonId);
+                $this->descendantsData = $this->buildDescendantTree($rootPerson, $this->generations);
+            } else {
+                $this->descendantsData = [];
+            }
         } catch (\Throwable $e) {
             Log::error('Failed to retrieve descendants data', [
                 'error' => $e->getMessage(),
@@ -25,17 +34,47 @@ final class DescendantChartComponent extends Component
         }
     }
 
-    private function processDescendantData(Collection $data): array
+    private function buildDescendantTree($person, $maxGenerations, $generation = 1): array
     {
-        return $data->mapWithKeys(fn (Person $person) => [
-            $person->id => [
-                'id' => $person->id,
-                'name' => $person->name,
-                'children' => $person->children->pluck('id')->toArray()
-            ]
-        ])
-        ->filter(fn ($item): true => !isset($item['parent_id']))
-        ->toArray();
+        if (!$person || $generation > $maxGenerations) {
+            return [];
+        }
+
+        $personData = [
+            'id' => $person->id,
+            'name' => $person->fullname(),
+            'givn' => $person->givn,
+            'surn' => $person->surn,
+            'sex' => $person->sex,
+            'birth_date' => $person->birthday?->format('Y-m-d'),
+            'death_date' => $person->deathday?->format('Y-m-d'),
+            'generation' => $generation,
+            'children' => []
+        ];
+
+        // Get all families where this person is a parent
+        $families = collect();
+        if ($person->familiesAsHusband) {
+            $families = $families->merge($person->familiesAsHusband);
+        }
+        if ($person->familiesAsWife) {
+            $families = $families->merge($person->familiesAsWife);
+        }
+
+        foreach ($families as $family) {
+            $children = Person::where('child_in_family_id', $family->id)
+                ->orderBy('birthday')
+                ->get();
+
+            foreach ($children as $child) {
+                $childData = $this->buildDescendantTree($child, $maxGenerations, $generation + 1);
+                if (!empty($childData)) {
+                    $personData['children'][] = $childData;
+                }
+            }
+        }
+
+        return $personData;
     }
 
     public function render()
