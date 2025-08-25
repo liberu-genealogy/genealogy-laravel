@@ -18,8 +18,11 @@
         </div>
         <div id="hs-navbar-alignment" class="hs-collapse hidden overflow-hidden transition-all duration-300 basis-full grow sm:grow-0 sm:basis-auto sm:block sm:order-2" aria-labelledby="hs-navbar-alignment-collapse">
         <div class="flex flex-col gap-5 mt-5 sm:flex-row sm:items-center sm:mt-0 sm:ps-5">
-            <a class="font-medium text-gray-500 focus:outline-none" href="/" aria-current="page">Home</a>
-            <a class="font-medium text-gray-600 hover:text-gray-400 focus:outline-none focus:text-gray-400 dark:text-neutral-400 dark:hover:text-neutral-500 dark:focus:text-neutral-500" href="/about">About</a>
+            <a class="font-medium text-gray-500 hover:text-gray-700 focus:outline-none transition-colors" href="/" aria-current="page">Home</a>
+            <a class="font-medium text-gray-600 hover:text-gray-700 focus:outline-none transition-colors" href="/about">About</a>
+            <a class="font-medium text-gray-600 hover:text-gray-700 focus:outline-none transition-colors" href="/contact">Contact</a>
+            <a class="font-medium text-gray-600 hover:text-gray-700 focus:outline-none transition-colors" href="/privacy">Privacy</a>
+            <a class="font-medium text-gray-600 hover:text-gray-700 focus:outline-none transition-colors" href="/terms-and-conditions">Terms</a>
         </div>
         </div>
     </nav>
