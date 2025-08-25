@@ -36,7 +36,7 @@ class DuplicateCheckResource extends Resource
         return Auth::user()?->isPremium() ?? false;
     }
 
-    public static function form(Form $form): Form
+    public static function form(Schema $form): Schema
     {
         return $form->schema([]);
     }
