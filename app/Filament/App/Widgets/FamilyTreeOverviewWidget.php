@@ -7,10 +7,10 @@ use Filament\Widgets\Widget;
 
 class FamilyTreeOverviewWidget extends Widget
 {
-    protected static string $view = 'filament.app.widgets.family-tree-overview';
-    
+    protected string $view = 'filament.app.widgets.family-tree-overview';
+
     protected int | string | array $columnSpan = 'full';
-    
+
     protected static ?int $sort = 4;
 
     public function getViewData(): array
