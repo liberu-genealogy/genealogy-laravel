@@ -56,29 +56,21 @@ class AppPanelProvider extends PanelProvider
             ->favicon(asset('images/favicon.ico'))
             ->navigationGroups([
                 NavigationGroup::make()
-                    ->label('Dashboard')
-                    ->icon('heroicon-o-home'),
+                    ->label('Dashboard'),
                 NavigationGroup::make()
-                    ->label('Family Tree')
-                    ->icon('heroicon-o-users'),
+                    ->label('Family Tree'),
                 NavigationGroup::make()
-                    ->label('Charts & Reports')
-                    ->icon('heroicon-o-chart-bar'),
+                    ->label('Charts & Reports'),
                 NavigationGroup::make()
-                    ->label('Research')
-                    ->icon('heroicon-o-magnifying-glass'),
+                    ->label('Research'),
                 NavigationGroup::make()
-                    ->label('DNA Analysis')
-                    ->icon('heroicon-o-beaker'),
+                    ->label('DNA Analysis'),
                 NavigationGroup::make()
-                    ->label('Media & Documents')
-                    ->icon('heroicon-o-photo'),
+                    ->label('Media & Documents'),
                 NavigationGroup::make()
-                    ->label('Data Management')
-                    ->icon('heroicon-o-database'),
+                    ->label('Data Management'),
                 NavigationGroup::make()
-                    ->label('Account')
-                    ->icon('heroicon-o-user-circle'),
+                    ->label('Account'),
             ])
             ->userMenuItems([
                 MenuItem::make()
