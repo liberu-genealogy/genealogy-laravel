@@ -126,8 +126,18 @@ class AdminPanelProvider extends PanelProvider
     {
         $hasVerifiedEmail = !is_null(auth()->user());//?->hasVerifiedEmail();
 
-        return Filament::hasTenancy()
-            ? $hasVerifiedEmail && Filament::getTenant()
-            : $hasVerifiedEmail;
+        // Check if Filament is properly initialized before using facades
+        if (!app()->bound('filament')) {
+            return $hasVerifiedEmail;
+        }
+
+        try {
+            return Filament::hasTenancy()
+                ? $hasVerifiedEmail && Filament::getTenant()
+                : $hasVerifiedEmail;
+        } catch (\Exception $e) {
+            // Fallback if facade is not ready
+            return $hasVerifiedEmail;
+        }
     }
 }

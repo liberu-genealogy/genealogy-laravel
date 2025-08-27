@@ -23,7 +23,7 @@
                     </x-filament::button>
                 </div>
             </div>
-            
+
             @livewire(\App\Http\Livewire\DescendantChartWidget::class)
         </div>
 
@@ -37,7 +37,7 @@
                     <li>• Adjust generations to control tree depth</li>
                 </ul>
             </div>
-            
+
             <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-4">
                 <h3 class="text-sm font-medium text-gray-900 dark:text-white mb-2">Layout Options</h3>
                 <div class="space-y-2 text-xs">
@@ -55,7 +55,7 @@
                     </div>
                 </div>
             </div>
-            
+
             <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-4">
                 <h3 class="text-sm font-medium text-gray-900 dark:text-white mb-2">Related Charts</h3>
                 <div class="space-y-2">
@@ -64,7 +64,7 @@
                         icon="heroicon-o-chart-bar"
                         size="xs"
                         tag="a"
-                        href="{{ route('filament.app.pages.pedigree-chart') }}"
+                        href="{{ \Filament\Facades\Filament::getUrl() }}/pedigree-chart"
                         class="w-full justify-start"
                     >
                         Pedigree Chart
@@ -74,7 +74,7 @@
                         icon="heroicon-o-chart-pie"
                         size="xs"
                         tag="a"
-                        href="{{ route('filament.app.pages.fan-chart') }}"
+                        href="{{ \Filament\Facades\Filament::getUrl() }}/fan-chart"
                         class="w-full justify-start"
                     >
                         Fan Chart

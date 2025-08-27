@@ -15,6 +15,7 @@ use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
 use Filament\Navigation\MenuItem;
+use Filament\Navigation\NavigationGroup;
 use Filament\Pages\Dashboard;
 use Filament\Panel;
 use Filament\PanelProvider;
@@ -54,46 +55,22 @@ class AppPanelProvider extends PanelProvider
             ->brandLogo(asset('images/logo.svg'))
             ->favicon(asset('images/favicon.ico'))
             ->navigationGroups([
-                'Dashboard' => [
-                    'label' => 'Dashboard',
-                    'icon' => 'heroicon-o-home',
-                    'sort' => 1,
-                ],
-                'Family Tree' => [
-                    'label' => 'Family Tree',
-                    'icon' => 'heroicon-o-users',
-                    'sort' => 2,
-                ],
-                'Charts & Reports' => [
-                    'label' => 'Charts & Reports',
-                    'icon' => 'heroicon-o-chart-bar',
-                    'sort' => 3,
-                ],
-                'Research' => [
-                    'label' => 'Research',
-                    'icon' => 'heroicon-o-magnifying-glass',
-                    'sort' => 4,
-                ],
-                'DNA Analysis' => [
-                    'label' => 'DNA Analysis',
-                    'icon' => 'heroicon-o-beaker',
-                    'sort' => 5,
-                ],
-                'Media & Documents' => [
-                    'label' => 'Media & Documents',
-                    'icon' => 'heroicon-o-photo',
-                    'sort' => 6,
-                ],
-                'Data Management' => [
-                    'label' => 'Data Management',
-                    'icon' => 'heroicon-o-database',
-                    'sort' => 7,
-                ],
-                'Account' => [
-                    'label' => 'Account',
-                    'icon' => 'heroicon-o-user-circle',
-                    'sort' => 8,
-                ],
+                NavigationGroup::make()
+                    ->label('Dashboard'),
+                NavigationGroup::make()
+                    ->label('Family Tree'),
+                NavigationGroup::make()
+                    ->label('Charts & Reports'),
+                NavigationGroup::make()
+                    ->label('Research'),
+                NavigationGroup::make()
+                    ->label('DNA Analysis'),
+                NavigationGroup::make()
+                    ->label('Media & Documents'),
+                NavigationGroup::make()
+                    ->label('Data Management'),
+                NavigationGroup::make()
+                    ->label('Account'),
             ])
             ->userMenuItems([
                 MenuItem::make()
@@ -198,8 +175,18 @@ class AppPanelProvider extends PanelProvider
     {
         $hasVerifiedEmail = !is_null(auth()->user());//?->hasVerifiedEmail();
 
-        return Filament::hasTenancy()
-            ? $hasVerifiedEmail && Filament::getTenant()
-            : $hasVerifiedEmail;
+        // Check if Filament is properly initialized before using facades
+        if (!app()->bound('filament')) {
+            return $hasVerifiedEmail;
+        }
+
+        try {
+            return Filament::hasTenancy()
+                ? $hasVerifiedEmail && Filament::getTenant()
+                : $hasVerifiedEmail;
+        } catch (\Exception $e) {
+            // Fallback if facade is not ready
+            return $hasVerifiedEmail;
+        }
     }
 }

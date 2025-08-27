@@ -24,14 +24,14 @@
 
             @auth
                 <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
-                    <a href="{{ route('filament.app.pages.dashboard') }}"
+                    <a href="{{ route('filament.app.tenant') }}"
                        class="inline-flex items-center px-8 py-4 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold rounded-lg shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-200">
                         <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
                         </svg>
                         Go to Dashboard
                     </a>
-                    <a href="{{ route('filament.app.pages.subscription') }}"
+                    <a href="{{ route('filament.app.tenant') }}/subscription"
                        class="inline-flex items-center px-6 py-4 bg-white hover:bg-gray-50 text-emerald-600 font-semibold rounded-lg border-2 border-emerald-200 hover:border-emerald-300 transition-all duration-200">
                         ✨ Explore Premium Features
                     </a>
@@ -226,7 +226,7 @@
                                 </a>
                                 <p class="text-xs text-gray-500 mt-3">No credit card required</p>
                             @else
-                                <a href="{{ route('filament.app.pages.subscription') }}"
+                                <a href="{{ route('filament.app.tenant') }}/subscription"
                                    class="block w-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-3 px-6 rounded-lg transition-colors duration-200">
                                     Upgrade to Premium
                                 </a>
@@ -257,7 +257,7 @@
                 Get Started Free
             </a>
         @else
-            <a href="{{ route('filament.app.pages.dashboard') }}"
+            <a href="{{ route('filament.app.tenant') }}"
                class="inline-flex items-center px-8 py-4 bg-white hover:bg-gray-100 text-emerald-600 font-semibold rounded-lg shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-200">
                 <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>

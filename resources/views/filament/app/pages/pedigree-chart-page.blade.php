@@ -23,7 +23,7 @@
                     </x-filament::button>
                 </div>
             </div>
-            
+
             @livewire(\App\Http\Livewire\PedigreeChartWidget::class)
         </div>
 
@@ -37,7 +37,7 @@
                     <li>• Adjust generations to see more or fewer levels</li>
                 </ul>
             </div>
-            
+
             <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-4">
                 <h3 class="text-sm font-medium text-gray-900 dark:text-white mb-2">Legend</h3>
                 <div class="space-y-2 text-xs">
@@ -55,7 +55,7 @@
                     </div>
                 </div>
             </div>
-            
+
             <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-4">
                 <h3 class="text-sm font-medium text-gray-900 dark:text-white mb-2">Quick Actions</h3>
                 <div class="space-y-2">
@@ -64,7 +64,7 @@
                         icon="heroicon-o-user-plus"
                         size="xs"
                         tag="a"
-                        href="{{ route('filament.app.resources.people.create') }}"
+                        href="{{ \Filament\Facades\Filament::getUrl() }}/people/create"
                         class="w-full justify-start"
                     >
                         Add Person
@@ -74,7 +74,7 @@
                         icon="heroicon-o-chart-pie"
                         size="xs"
                         tag="a"
-                        href="{{ route('filament.app.pages.descendant-chart') }}"
+                        href="{{ \Filament\Facades\Filament::getUrl() }}/descendant-chart"
                         class="w-full justify-start"
                     >
                         Descendant Chart

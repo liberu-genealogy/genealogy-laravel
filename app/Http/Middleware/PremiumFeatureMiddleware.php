@@ -30,13 +30,13 @@ class PremiumFeatureMiddleware
                 ->actions([
                     \Filament\Notifications\Actions\Action::make('upgrade')
                         ->label('Upgrade to Premium')
-                        ->url(route('filament.app.pages.subscription'))
+                        ->url(\Filament\Facades\Filament::getUrl() . '/subscription')
                         ->button()
                         ->color('primary'),
                 ])
                 ->send();
 
-            return redirect()->route('filament.app.pages.subscription');
+            return redirect(\Filament\Facades\Filament::getUrl() . '/subscription');
         }
 
         // Feature-specific checks
@@ -50,7 +50,7 @@ class PremiumFeatureMiddleware
                             ->warning()
                             ->send();
 
-                        return redirect()->route('filament.app.pages.subscription');
+                        return redirect(\Filament\Facades\Filament::getUrl() . '/subscription');
                     }
                     break;
 

@@ -27,7 +27,7 @@ class PremiumDashboardPage extends Page
     {
         // Redirect if user is not premium
         if (!Auth::user()->isPremium()) {
-            $this->redirect(route('filament.app.pages.subscription'));
+            $this->redirect(\Filament\Facades\Filament::getUrl() . '/subscription');
         }
     }
 
@@ -66,7 +66,7 @@ class PremiumDashboardPage extends Page
                 ->warning()
                 ->send();
 
-            $this->redirect(route('filament.app.pages.subscription'));
+            $this->redirect(\Filament\Facades\Filament::getUrl() . '/subscription');
 
         } catch (\Exception $e) {
             Notification::make()
