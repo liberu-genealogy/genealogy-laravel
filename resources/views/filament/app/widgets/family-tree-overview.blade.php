@@ -44,12 +44,12 @@
                                 @svg('heroicon-o-plus', 'h-4 w-4')
                                 <span>Add Person</span>
                             </a>
-                            <a href="{{ route('filament.app.pages.pedigree-chart') }}"
+                            <a href="{{ \Filament\Facades\Filament::getUrl() }}/pedigree-chart"
                                class="flex items-center space-x-2 text-sm text-green-600 hover:text-green-800 dark:text-green-400 dark:hover:text-green-200">
                                 @svg('heroicon-o-chart-bar', 'h-4 w-4')
                                 <span>View Pedigree Chart</span>
                             </a>
-                            <a href="{{ route('filament.app.pages.descendant-chart') }}"
+                            <a href="{{ \Filament\Facades\Filament::getUrl() }}/descendant-chart"
                                class="flex items-center space-x-2 text-sm text-purple-600 hover:text-purple-800 dark:text-purple-400 dark:hover:text-purple-200">
                                 @svg('heroicon-o-chart-pie', 'h-4 w-4')
                                 <span>View Descendant Chart</span>
@@ -94,7 +94,7 @@
                         </div>
 
                         <div class="mt-4 text-center">
-                            <a href="{{ route('filament.app.pages.pedigree-chart') }}"
+                            <a href="{{ \Filament\Facades\Filament::getUrl() }}/pedigree-chart"
                                class="inline-flex items-center space-x-2 text-sm text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-200">
                                 <span>View Full Tree</span>
                                 @svg('heroicon-o-arrow-right', 'h-4 w-4')

@@ -74,7 +74,7 @@
                         icon="heroicon-o-chart-pie"
                         size="xs"
                         tag="a"
-                        href="{{ route('filament.app.pages.descendant-chart') }}"
+                        href="{{ \Filament\Facades\Filament::getUrl() }}/descendant-chart"
                         class="w-full justify-start"
                     >
                         Descendant Chart
