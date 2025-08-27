@@ -15,6 +15,7 @@ use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
 use Filament\Navigation\MenuItem;
+use Filament\Navigation\NavigationGroup;
 use Filament\Pages\Dashboard;
 use Filament\Panel;
 use Filament\PanelProvider;
@@ -54,46 +55,30 @@ class AppPanelProvider extends PanelProvider
             ->brandLogo(asset('images/logo.svg'))
             ->favicon(asset('images/favicon.ico'))
             ->navigationGroups([
-                'Dashboard' => [
-                    'label' => 'Dashboard',
-                    'icon' => 'heroicon-o-home',
-                    'sort' => 1,
-                ],
-                'Family Tree' => [
-                    'label' => 'Family Tree',
-                    'icon' => 'heroicon-o-users',
-                    'sort' => 2,
-                ],
-                'Charts & Reports' => [
-                    'label' => 'Charts & Reports',
-                    'icon' => 'heroicon-o-chart-bar',
-                    'sort' => 3,
-                ],
-                'Research' => [
-                    'label' => 'Research',
-                    'icon' => 'heroicon-o-magnifying-glass',
-                    'sort' => 4,
-                ],
-                'DNA Analysis' => [
-                    'label' => 'DNA Analysis',
-                    'icon' => 'heroicon-o-beaker',
-                    'sort' => 5,
-                ],
-                'Media & Documents' => [
-                    'label' => 'Media & Documents',
-                    'icon' => 'heroicon-o-photo',
-                    'sort' => 6,
-                ],
-                'Data Management' => [
-                    'label' => 'Data Management',
-                    'icon' => 'heroicon-o-database',
-                    'sort' => 7,
-                ],
-                'Account' => [
-                    'label' => 'Account',
-                    'icon' => 'heroicon-o-user-circle',
-                    'sort' => 8,
-                ],
+                NavigationGroup::make()
+                    ->label('Dashboard')
+                    ->icon('heroicon-o-home'),
+                NavigationGroup::make()
+                    ->label('Family Tree')
+                    ->icon('heroicon-o-users'),
+                NavigationGroup::make()
+                    ->label('Charts & Reports')
+                    ->icon('heroicon-o-chart-bar'),
+                NavigationGroup::make()
+                    ->label('Research')
+                    ->icon('heroicon-o-magnifying-glass'),
+                NavigationGroup::make()
+                    ->label('DNA Analysis')
+                    ->icon('heroicon-o-beaker'),
+                NavigationGroup::make()
+                    ->label('Media & Documents')
+                    ->icon('heroicon-o-photo'),
+                NavigationGroup::make()
+                    ->label('Data Management')
+                    ->icon('heroicon-o-database'),
+                NavigationGroup::make()
+                    ->label('Account')
+                    ->icon('heroicon-o-user-circle'),
             ])
             ->userMenuItems([
                 MenuItem::make()
