@@ -3,7 +3,7 @@
         <x-slot name="heading">
             Family Tree Overview
         </x-slot>
-        
+
         <x-slot name="description">
             A quick glimpse of your family tree structure
         </x-slot>
@@ -39,17 +39,17 @@
                     <div class="space-y-2">
                         <h4 class="text-sm font-medium text-gray-900 dark:text-white">Quick Actions</h4>
                         <div class="space-y-1">
-                            <a href="{{ route('filament.app.resources.people.create') }}" 
+                            <a href="{{ \Filament\Facades\Filament::getUrl() }}/people/create"
                                class="flex items-center space-x-2 text-sm text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-200">
                                 @svg('heroicon-o-plus', 'h-4 w-4')
                                 <span>Add Person</span>
                             </a>
-                            <a href="{{ route('filament.app.pages.pedigree-chart') }}" 
+                            <a href="{{ route('filament.app.pages.pedigree-chart') }}"
                                class="flex items-center space-x-2 text-sm text-green-600 hover:text-green-800 dark:text-green-400 dark:hover:text-green-200">
                                 @svg('heroicon-o-chart-bar', 'h-4 w-4')
                                 <span>View Pedigree Chart</span>
                             </a>
-                            <a href="{{ route('filament.app.pages.descendant-chart') }}" 
+                            <a href="{{ route('filament.app.pages.descendant-chart') }}"
                                class="flex items-center space-x-2 text-sm text-purple-600 hover:text-purple-800 dark:text-purple-400 dark:hover:text-purple-200">
                                 @svg('heroicon-o-chart-pie', 'h-4 w-4')
                                 <span>View Descendant Chart</span>
@@ -72,7 +72,7 @@
                                         {{ $this->getViewData()['rootPerson']->fullname() }}
                                     </div>
                                 </div>
-                                
+
                                 <!-- Parents Level -->
                                 @if($this->getViewData()['generations'])
                                     <div class="flex justify-center space-x-8">
@@ -92,9 +92,9 @@
                                 @endif
                             </div>
                         </div>
-                        
+
                         <div class="mt-4 text-center">
-                            <a href="{{ route('filament.app.pages.pedigree-chart') }}" 
+                            <a href="{{ route('filament.app.pages.pedigree-chart') }}"
                                class="inline-flex items-center space-x-2 text-sm text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-200">
                                 <span>View Full Tree</span>
                                 @svg('heroicon-o-arrow-right', 'h-4 w-4')
@@ -111,7 +111,7 @@
                             Start by adding people and families to build your tree.
                         </p>
                         <div class="mt-4">
-                            <a href="{{ route('filament.app.resources.people.create') }}" 
+                            <a href="{{ \Filament\Facades\Filament::getUrl() }}/people/create"
                                class="inline-flex items-center space-x-2 bg-blue-600 text-white px-4 py-2 rounded-lg text-sm hover:bg-blue-700">
                                 @svg('heroicon-o-plus', 'h-4 w-4')
                                 <span>Add First Person</span>
