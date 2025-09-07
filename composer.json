@@ -15,7 +15,6 @@
         "laravel/cashier": "^15.7",
         "laravel/framework": "^12",
         "laravel/jetstream": "^5.0",
-        "laravel/octane": "*",
         "laravel/sanctum": "^4.0",
         "laravel/tinker": "^2.10.1",
         "liberu-genealogy/laravel-dna": "^2.0",
