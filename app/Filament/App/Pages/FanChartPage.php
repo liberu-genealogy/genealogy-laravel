@@ -2,33 +2,35 @@
 
 namespace App\Filament\App\Pages;
 
-use UnitEnum;
-use BackedEnum;
-use App\Filament\App\Widgets\FanChartWidget;
+use App\Http\Livewire\FanChart;
 use Filament\Pages\Page;
 
 class FanChartPage extends Page
 {
-    protected static string | BackedEnum | null $navigationIcon = 'heroicon-o-chart-pie';
+    protected static ?string $navigationIcon = 'heroicon-o-chart-pie';
 
-    protected static string | UnitEnum | null $navigationGroup = 'Reports';
+    protected static string $view = 'filament.app.pages.fan-chart-page';
 
-    protected static ?int $navigationSort = 0;
+    protected static ?string $navigationGroup = '📊 Charts & Visualizations';
 
-    protected string $view = 'filament.pages.fan-chart';
+    protected static ?string $title = 'Fan Chart';
 
-    protected static bool $shouldRegisterNavigation = false;
+    protected static ?string $navigationLabel = 'Fan Chart';
 
-    #[\Override]
+    protected static ?int $navigationSort = 2;
+
+    public function getTitle(): string
+    {
+        return 'Fan Chart - Ancestor Visualization';
+    }
+
     public function getHeading(): string
     {
         return 'Fan Chart';
     }
 
-    protected function getWidgets(): array
+    public function getSubheading(): ?string
     {
-        return [
-            FanChartWidget::class,
-        ];
+        return 'Visualize your ancestors in a circular fan layout';
     }
 }

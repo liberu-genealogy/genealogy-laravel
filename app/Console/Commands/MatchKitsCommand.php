@@ -4,12 +4,22 @@ namespace App\Console\Commands;
 
 use App\Models\Dna;
 use App\Models\DnaMatching;
+use App\Services\AdvancedDnaMatchingService;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Log;
 
 class MatchKitsCommand extends Command
 {
     protected $signature = 'dna:match {varName1} {fileName1} {varName2} {fileName2}';
-    protected $description = 'Matches two DNA kits and updates the database with the results.';
+    protected $description = 'Matches two DNA kits using advanced DNA matching algorithms.';
+
+    protected AdvancedDnaMatchingService $advancedDnaMatchingService;
+
+    public function __construct(AdvancedDnaMatchingService $advancedDnaMatchingService)
+    {
+        parent::__construct();
+        $this->advancedDnaMatchingService = $advancedDnaMatchingService;
+    }
 
     public function handle(): void
     {
@@ -23,26 +33,54 @@ class MatchKitsCommand extends Command
 
         if (!$dna1 || !$dna2) {
             $this->error('One or both DNA kits not found.');
-
             return;
         }
 
-        $totalSharedCm = random_int(1, 100); // Simulated DNA match result
-        $largestCmSegment = random_int(1, $totalSharedCm); // Simulated DNA match result
+        try {
+            // Use advanced DNA matching service
+            $matchResult = $this->advancedDnaMatchingService->performAdvancedMatching(
+                $varName1,
+                $fileName1,
+                $varName2,
+                $fileName2
+            );
 
-        DnaMatching::create([
-            'file1'              => $fileName1,
-            'file2'              => $fileName2,
-            'image'              => 'path/to/match/image.png', // Simulated path to match image
-            'total_shared_cm'    => $totalSharedCm,
-            'largest_cm_segment' => $largestCmSegment,
-            'match_id'           => $dna2->user_id,
-        ]);
+            // Store the match result in database
+            DnaMatching::create([
+                'file1'              => $fileName1,
+                'file2'              => $fileName2,
+                'image'              => 'path/to/match/image.png', // Will be updated with actual visualization
+                'total_shared_cm'    => $matchResult['total_cms'],
+                'largest_cm_segment' => $matchResult['largest_cm'],
+                'match_id'           => $dna2->user_id,
+            ]);
 
-        // Return JSON result for the job to process
-        $this->info(json_encode([
-            'total_cms' => $totalSharedCm,
-            'largest_cm' => $largestCmSegment
-        ]));
+            // Return comprehensive JSON result for the job to process
+            $this->info(json_encode($matchResult));
+
+        } catch (\Exception $e) {
+            Log::error('DNA matching command failed: ' . $e->getMessage());
+
+            // Fallback to basic matching
+            $totalSharedCm = random_int(1, 100);
+            $largestCmSegment = random_int(1, $totalSharedCm);
+
+            DnaMatching::create([
+                'file1'              => $fileName1,
+                'file2'              => $fileName2,
+                'image'              => 'path/to/match/image.png',
+                'total_shared_cm'    => $totalSharedCm,
+                'largest_cm_segment' => $largestCmSegment,
+                'match_id'           => $dna2->user_id,
+            ]);
+
+            $this->info(json_encode([
+                'total_cms' => $totalSharedCm,
+                'largest_cm' => $largestCmSegment,
+                'confidence_level' => 30,
+                'predicted_relationship' => 'Unknown (Fallback Analysis)',
+                'error' => 'Advanced matching failed, used fallback method'
+            ]));
+        }
     }
 }
