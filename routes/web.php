@@ -35,4 +35,5 @@ Route::middleware([
     'verified',
 ])->group(function (): void {
     Route::get('/dashboard', fn() => view('dashboard'))->name('dashboard');
+    Route::get('/gamification', \App\Http\Livewire\GamificationDashboard::class)->name('gamification');
 });

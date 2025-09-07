@@ -24,7 +24,7 @@
                 </div>
             </div>
 
-            @livewire(\App\Http\Livewire\DescendantChartWidget::class)
+            @livewire(\App\Livewire\DescendantChartComponent::class)
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">

@@ -22,7 +22,7 @@ class DescendantChartPage extends Page
     public function getWidgets(): array
     {
         return [
-            \App\Http\Livewire\DescendantChartWidget::class,
+            \App\Livewire\DescendantChartComponent::class,
         ];
     }
 }

@@ -24,7 +24,7 @@
                 </div>
             </div>
 
-            @livewire(\App\Http\Livewire\PedigreeChartWidget::class)
+            @livewire(\App\Livewire\PedigreeChartWidget::class)
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">

@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use JoelButcher\Socialstream\HasConnectedAccounts;
@@ -51,6 +52,11 @@ class User extends Authenticatable implements HasDefaultTenant, HasTenants, Fila
         'is_premium',
         'dna_uploads_count',
         'premium_started_at',
+        'total_points',
+        'level',
+        'level_progress',
+        'last_activity_at',
+        'show_on_leaderboard',
     ];
 
     /**
@@ -86,6 +92,11 @@ class User extends Authenticatable implements HasDefaultTenant, HasTenants, Fila
             'trial_ends_at' => 'datetime',
             'is_premium' => 'boolean',
             'premium_started_at' => 'datetime',
+            'total_points' => 'integer',
+            'level' => 'integer',
+            'level_progress' => 'integer',
+            'last_activity_at' => 'datetime',
+            'show_on_leaderboard' => 'boolean',
         ];
     }
 
@@ -207,5 +218,184 @@ class User extends Authenticatable implements HasDefaultTenant, HasTenants, Fila
                     </svg>
                     {$badgeText}
                 </span>";
+    }
+
+    /**
+     * Get user achievements
+     */
+    public function achievements(): HasMany
+    {
+        return $this->hasMany(UserAchievement::class);
+    }
+
+    /**
+     * Get user points
+     */
+    public function points(): HasMany
+    {
+        return $this->hasMany(UserPoint::class);
+    }
+
+    /**
+     * Get user progress
+     */
+    public function progress(): HasMany
+    {
+        return $this->hasMany(UserProgress::class);
+    }
+
+    /**
+     * Get recent achievements
+     */
+    public function recentAchievements(int $days = 7)
+    {
+        return $this->achievements()
+            ->with('achievement')
+            ->recent($days)
+            ->orderBy('unlocked_at', 'desc');
+    }
+
+    /**
+     * Get recent points
+     */
+    public function recentPoints(int $days = 7)
+    {
+        return $this->points()
+            ->recent($days)
+            ->orderBy('created_at', 'desc');
+    }
+
+    /**
+     * Get points for a specific activity type
+     */
+    public function getPointsForActivity(string $activityType): int
+    {
+        return $this->points()
+            ->byActivity($activityType)
+            ->sum('points');
+    }
+
+    /**
+     * Get total points earned today
+     */
+    public function getTodaysPoints(): int
+    {
+        return $this->points()
+            ->whereDate('created_at', today())
+            ->sum('points');
+    }
+
+    /**
+     * Get current level information
+     */
+    public function getLevelInfo(): array
+    {
+        $pointsForNextLevel = $this->getPointsRequiredForLevel($this->level + 1);
+        $pointsForCurrentLevel = $this->getPointsRequiredForLevel($this->level);
+        $progressToNextLevel = $this->total_points - $pointsForCurrentLevel;
+        $pointsNeededForNextLevel = $pointsForNextLevel - $pointsForCurrentLevel;
+
+        return [
+            'current_level' => $this->level,
+            'total_points' => $this->total_points,
+            'points_for_current_level' => $pointsForCurrentLevel,
+            'points_for_next_level' => $pointsForNextLevel,
+            'progress_to_next_level' => $progressToNextLevel,
+            'points_needed_for_next_level' => max(0, $pointsNeededForNextLevel - $progressToNextLevel),
+            'progress_percentage' => $pointsNeededForNextLevel > 0 ? min(100, ($progressToNextLevel / $pointsNeededForNextLevel) * 100) : 100,
+        ];
+    }
+
+    /**
+     * Get points required for a specific level
+     */
+    public function getPointsRequiredForLevel(int $level): int
+    {
+        if ($level <= 1) {
+            return 0;
+        }
+
+        // Exponential growth: level^2 * 100
+        return pow($level - 1, 2) * 100;
+    }
+
+    /**
+     * Update user level based on total points
+     */
+    public function updateLevel(): void
+    {
+        $newLevel = $this->calculateLevelFromPoints($this->total_points);
+
+        if ($newLevel > $this->level) {
+            $oldLevel = $this->level;
+            $this->level = $newLevel;
+            $this->save();
+
+            // Dispatch level up event
+            event(new \App\Events\UserLeveledUp($this, $oldLevel, $newLevel));
+        }
+    }
+
+    /**
+     * Calculate level from total points
+     */
+    private function calculateLevelFromPoints(int $points): int
+    {
+        $level = 1;
+        while ($this->getPointsRequiredForLevel($level + 1) <= $points) {
+            $level++;
+        }
+        return $level;
+    }
+
+    /**
+     * Check if user has a specific achievement
+     */
+    public function hasAchievement(string $achievementKey): bool
+    {
+        return $this->achievements()
+            ->whereHas('achievement', function ($query) use ($achievementKey) {
+                $query->where('key', $achievementKey);
+            })
+            ->exists();
+    }
+
+    /**
+     * Get achievement progress for a specific achievement
+     */
+    public function getAchievementProgress(string $achievementKey): ?UserProgress
+    {
+        return $this->progress()
+            ->whereHas('achievement', function ($query) use ($achievementKey) {
+                $query->where('key', $achievementKey);
+            })
+            ->first();
+    }
+
+    /**
+     * Get user's rank on leaderboard
+     */
+    public function getLeaderboardRank(): int
+    {
+        return User::where('show_on_leaderboard', true)
+            ->where('total_points', '>', $this->total_points)
+            ->count() + 1;
+    }
+
+    /**
+     * Get level badge HTML
+     */
+    public function getLevelBadgeAttribute(): string
+    {
+        $levelInfo = $this->getLevelInfo();
+        $progressPercentage = $levelInfo['progress_percentage'];
+
+        return "<div class=\"level-badge bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-lg p-2 text-center\">
+                    <div class=\"text-lg font-bold\">Level {$this->level}</div>
+                    <div class=\"text-xs\">{$this->total_points} points</div>
+                    <div class=\"w-full bg-white/20 rounded-full h-1 mt-1\">
+                        <div class=\"bg-white h-1 rounded-full\" style=\"width: {$progressPercentage}%\"></div>
+                    </div>
+                </div>";
     }
 }

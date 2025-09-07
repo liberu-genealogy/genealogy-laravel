@@ -22,7 +22,7 @@ class PedigreeChartPage extends Page
     public function getWidgets(): array
     {
         return [
-            \App\Http\Livewire\PedigreeChartWidget::class,
+            \App\Livewire\PedigreeChartWidget::class,
         ];
     }
 }
