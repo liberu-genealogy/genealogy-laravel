@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "382d142c59a4a6b03b1be3de1c81a5e4",
+    "content-hash": "073b581020776279dbb3537a1147c10f",
     "packages": [
         {
             "name": "anourvalar/eloquent-serialize",
@@ -3606,16 +3606,16 @@
         },
         {
             "name": "liberu-genealogy/laravel-gedcom",
-            "version": "v6.6.4",
+            "version": "v7.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/liberu-genealogy/laravel-gedcom.git",
-                "reference": "01d308784367544663ad9cd692027cefaf4d2de1"
+                "reference": "35d3437c066e9e081160504618f07709c48aada9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/liberu-genealogy/laravel-gedcom/zipball/01d308784367544663ad9cd692027cefaf4d2de1",
-                "reference": "01d308784367544663ad9cd692027cefaf4d2de1",
+                "url": "https://api.github.com/repos/liberu-genealogy/laravel-gedcom/zipball/35d3437c066e9e081160504618f07709c48aada9",
+                "reference": "35d3437c066e9e081160504618f07709c48aada9",
                 "shasum": ""
             },
             "require": {
@@ -3650,7 +3650,7 @@
             "description": "A package that converts gedcom files to Eloquent models",
             "support": {
                 "issues": "https://github.com/liberu-genealogy/laravel-gedcom/issues",
-                "source": "https://github.com/liberu-genealogy/laravel-gedcom/tree/v6.6.4"
+                "source": "https://github.com/liberu-genealogy/laravel-gedcom/tree/v7.0.0"
             },
             "funding": [
                 {
@@ -3658,7 +3658,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2025-07-21T12:16:13+00:00"
+            "time": "2025-09-07T17:34:50+00:00"
         },
         {
             "name": "liberu-genealogy/php-dna",
@@ -3720,16 +3720,16 @@
         },
         {
             "name": "liberu-genealogy/php-gedcom",
-            "version": "v3.2.2",
+            "version": "v3.2.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/liberu-genealogy/php-gedcom.git",
-                "reference": "1ec88324337c28cf2c8c0c0dd7e0e0f373ddec4e"
+                "reference": "42fd3bc91f6b65127df112eb3c7d7592c5524e5a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/liberu-genealogy/php-gedcom/zipball/1ec88324337c28cf2c8c0c0dd7e0e0f373ddec4e",
-                "reference": "1ec88324337c28cf2c8c0c0dd7e0e0f373ddec4e",
+                "url": "https://api.github.com/repos/liberu-genealogy/php-gedcom/zipball/42fd3bc91f6b65127df112eb3c7d7592c5524e5a",
+                "reference": "42fd3bc91f6b65127df112eb3c7d7592c5524e5a",
                 "shasum": ""
             },
             "require": {
@@ -3763,7 +3763,7 @@
             ],
             "support": {
                 "issues": "https://github.com/liberu-genealogy/php-gedcom/issues",
-                "source": "https://github.com/liberu-genealogy/php-gedcom/tree/v3.2.2"
+                "source": "https://github.com/liberu-genealogy/php-gedcom/tree/v3.2.3"
             },
             "funding": [
                 {
@@ -3771,7 +3771,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2025-07-01T08:31:25+00:00"
+            "time": "2025-09-07T16:51:49+00:00"
         },
         {
             "name": "livewire/livewire",
@@ -4809,16 +4809,16 @@
         },
         {
             "name": "phiki/phiki",
-            "version": "v2.0.2",
+            "version": "v2.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phikiphp/phiki.git",
-                "reference": "6d735108238c03daaaef571448d8dee8187cab5e"
+                "reference": "fe51fe6dc31856cd776fd1b04ee74053a4271644"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phikiphp/phiki/zipball/6d735108238c03daaaef571448d8dee8187cab5e",
-                "reference": "6d735108238c03daaaef571448d8dee8187cab5e",
+                "url": "https://api.github.com/repos/phikiphp/phiki/zipball/fe51fe6dc31856cd776fd1b04ee74053a4271644",
+                "reference": "fe51fe6dc31856cd776fd1b04ee74053a4271644",
                 "shasum": ""
             },
             "require": {
@@ -4864,7 +4864,7 @@
             "description": "Syntax highlighting using TextMate grammars in PHP.",
             "support": {
                 "issues": "https://github.com/phikiphp/phiki/issues",
-                "source": "https://github.com/phikiphp/phiki/tree/v2.0.2"
+                "source": "https://github.com/phikiphp/phiki/tree/v2.0.3"
             },
             "funding": [
                 {
@@ -4876,7 +4876,7 @@
                     "type": "other"
                 }
             ],
-            "time": "2025-09-17T18:32:40+00:00"
+            "time": "2025-09-19T11:50:41+00:00"
         },
         {
             "name": "phpoption/phpoption",
