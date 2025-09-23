@@ -2,6 +2,8 @@
 
 namespace App\Filament\App\Resources;
 
+use BackedEnum;
+use UnitEnum;
 use App\Filament\App\Resources\ChecklistTemplateResource\Pages;
 use App\Filament\App\Resources\ChecklistTemplateResource\RelationManagers;
 use App\Models\ChecklistTemplate;
@@ -16,13 +18,14 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class ChecklistTemplateResource extends Resource
 {
+   
     protected static ?string $model = ChecklistTemplate::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-clipboard-document-list';
+    protected static string | BackedEnum | null $navigationIcon = 'heroicon-o-clipboard-document-list';
 
     protected static ?string $navigationLabel = 'Checklist Templates';
 
-    protected static ?string $navigationGroup = '📋 Research Management';
+    protected static string | UnitEnum | null $navigationGroup = '📋 Research Management';
 
     protected static ?int $navigationSort = 1;
 
