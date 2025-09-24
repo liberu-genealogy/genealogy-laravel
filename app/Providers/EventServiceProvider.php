@@ -18,6 +18,12 @@ class EventServiceProvider extends ServiceProvider
             \App\Listeners\AssignDefaultRole::class,
             \App\Listeners\CreatePersonalTeam::class,
         ],
+        \App\Events\AchievementUnlocked::class => [
+            \App\Listeners\AchievementUnlockedListener::class,
+        ],
+        \App\Events\UserLeveledUp::class => [
+            \App\Listeners\UserLeveledUpListener::class,
+        ],
     ];
 
     #[\Override]

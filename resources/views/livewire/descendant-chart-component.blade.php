@@ -1,149 +1,177 @@
-<!--
-File: descendant-chart.blade.php
-Description: This file contains the descendant chart display and related functionality.
--->
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Descendant Chart</title>
-    <script src="https://d3js.org/d3.v6.min.js"></script>
-</head>
-<body>
-    <div id="descendant-chart-container"></div>
+<div class="descendant-chart-container">
+    <div class="chart-header mb-4">
+        <h3 class="text-xl font-semibold text-gray-800">Descendant Chart</h3>
+        <div class="chart-controls flex gap-2 mt-2">
+            <button wire:click="setGenerations(3)" class="px-3 py-1 bg-blue-500 text-white rounded {{ $generations == 3 ? 'bg-blue-700' : '' }}">3 Gen</button>
+            <button wire:click="setGenerations(4)" class="px-3 py-1 bg-blue-500 text-white rounded {{ $generations == 4 ? 'bg-blue-700' : '' }}">4 Gen</button>
+            <button wire:click="setGenerations(5)" class="px-3 py-1 bg-blue-500 text-white rounded {{ $generations == 5 ? 'bg-blue-700' : '' }}">5 Gen</button>
+        </div>
+    </div>
 
-<x-filament::widget class="filament-descendant-chart-widget">
-    <x-filament::card>
-        <div id="descendant-chart-container"></div>
-    </x-filament::card>
+    <div id="descendant-chart-display" class="chart-display bg-white border rounded-lg p-4" style="min-height: 500px;">
+        @if(!empty($descendantsData))
+            <div id="descendantChartSvg" class="w-full h-96"></div>
+        @else
+            <div class="text-center py-12">
+                <div class="text-gray-400 text-6xl mb-4">🌳</div>
+                <h4 class="text-lg font-medium text-gray-600 mb-2">No Descendant Data Available</h4>
+                <p class="text-gray-500">Add children to your family tree to see the descendant chart.</p>
+            </div>
+        @endif
+    </div>
+</div>
 
-    @push('scripts')
-        <script src="https://d3js.org/d3.v6.min.js"></script>
-        <script>
-            document.addEventListener('DOMContentLoaded', function () {
-                const data = @json($descendantsData);
+<style>
+.descendant-chart-container {
+    width: 100%;
+}
 
-                /**
-                 * Renders the descendant chart using the provided data.
-                 *
-                 * @param {Array} data - The data used to render the chart.
-                 */
-                function renderDescendantChart(data) {
-                    if (!data || Object.keys(data).length === 0) {
-                        console.warn('No valid data to render');
-                        return;
-                    }
+#descendantChartSvg {
+    cursor: grab;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+}
 
-                    const container = d3.select('#descendant-chart-container');
-                    container.selectAll("*").remove(); // Clear existing content
+#descendantChartSvg:active {
+    cursor: grabbing;
+}
 
-                    const width = 960;
-                    const height = 600;
+.descendant-node {
+    cursor: pointer;
+}
 
-                    const svg = container.append('svg')
-                        .attr('width', width)
-                        .attr('height', height)
-                        .attr('class', 'shadow-lg');
+.descendant-node circle {
+    fill: #f8f9fa;
+    stroke: #007bff;
+    stroke-width: 2;
+}
 
-                    const g = svg.append('g');
+.descendant-node.male circle {
+    fill: #e3f2fd;
+    stroke: #007bff;
+}
 
-                    // Create zoom behavior
-                    const zoom = d3.zoom()
-                        .scaleExtent([0.1, 3])
-                        .on("zoom", (event) => {
-                            g.attr("transform", event.transform);
-                        });
+.descendant-node.female circle {
+    fill: #fce4ec;
+    stroke: #e91e63;
+}
 
-                    svg.call(zoom);
+.descendant-node text {
+    font-family: Arial, sans-serif;
+    font-size: 12px;
+    fill: #333;
+}
 
-                    // Convert data to hierarchical structure
-                    const root = d3.hierarchy(data, d => d.children);
+.descendant-link {
+    fill: none;
+    stroke: #ccc;
+    stroke-width: 2;
+}
 
-                    // Create tree layout
-                    const treeLayout = d3.tree().size([width - 200, height - 100]);
-                    treeLayout(root);
+@media (max-width: 768px) {
+    .descendant-node text {
+        font-size: 10px;
+    }
+}
+</style>
 
-                    // Center the tree
-                    g.attr("transform", `translate(100, 50)`);
+<script src="https://d3js.org/d3.v7.min.js"></script>
+<script>
+document.addEventListener('livewire:init', () => {
+    initializeDescendantChart();
 
-                    // Draw links
-                    g.selectAll(".link")
-                        .data(root.links())
-                        .enter()
-                        .append("path")
-                        .attr("class", "link")
-                        .style("fill", "none")
-                        .style("stroke", "#ccc")
-                        .style("stroke-width", "2px")
-                        .attr("d", d3.linkVertical()
-                            .x(d => d.y)
-                            .y(d => d.x));
+    Livewire.on('refreshDescendantChart', () => {
+        initializeDescendantChart();
+    });
+});
 
-                    // Draw nodes
-                    const nodes = g.selectAll(".node")
-                        .data(root.descendants())
-                        .enter()
-                        .append("g")
-                        .attr("class", "node")
-                        .attr("transform", d => `translate(${d.y},${d.x})`)
-                        .style("cursor", "pointer");
+function initializeDescendantChart() {
+    const descendantData = @json($descendantsData ?? []);
 
-                    // Add circles for nodes
-                    nodes.append("circle")
-                        .attr("r", 30)
-                        .style("fill", d => d.depth === 0 ? "#4CAF50" : "#2196F3")
-                        .style("stroke", "#fff")
-                        .style("stroke-width", "2px");
+    if (descendantData && Object.keys(descendantData).length > 0) {
+        renderDescendantChart(descendantData);
+    } else {
+        console.warn('No data available to render the descendant chart.');
+    }
+}
 
-                    // Add text labels
-                    nodes.append("text")
-                        .attr("dy", "0.3em")
-                        .attr("text-anchor", "middle")
-                        .style("font-size", "12px")
-                        .style("fill", "white")
-                        .style("font-weight", "bold")
-                        .text(d => {
-                            const name = d.data.name || 'Unknown';
-                            return name.length > 10 ? name.substring(0, 8) + '...' : name;
-                        });
+function renderDescendantChart(data) {
+    // Clear existing chart
+    d3.select("#descendantChartSvg").selectAll("*").remove();
 
-                    // Add generation labels
-                    nodes.append("text")
-                        .attr("dy", "3em")
-                        .attr("text-anchor", "middle")
-                        .style("font-size", "10px")
-                        .style("fill", "#666")
-                        .text(d => `Gen ${d.data.generation || d.depth + 1}`);
-                }
+    const container = d3.select("#descendantChartSvg");
+    const containerNode = container.node();
+    const width = containerNode.clientWidth || 800;
+    const height = containerNode.clientHeight || 600;
 
-                if (data && data.length > 0) {
-                    renderDescendantChart(data);
-                } else {
-                    console.warn('No data available to render the descendant chart.');
-                }
-            });
-        </script>
-    @endpush
-</x-filament::widget>
-</body>
-</html>
+    const svg = container
+        .append("svg")
+        .attr("width", width)
+        .attr("height", height);
 
+    const g = svg.append("g")
+        .attr("transform", "translate(40,40)");
 
+    // Create tree layout
+    const tree = d3.tree()
+        .size([height - 80, width - 80]);
 
-{{-- @livewire('descendant-chart-component')
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Descendant Chart</title>
-    <script src="https://d3js.org/d3.v6.min.js"></script>
-    @livewireStyles
-</head>
-<body>
-    <div id="fanChartContainer"></div>
-    <script src="{{ asset('js/fan-chart.js') }}"></script>
-    @livewireScripts
-</body>
-</html> --}}
+    // Create hierarchy
+    const root = d3.hierarchy(data);
+    tree(root);
+
+    // Add links
+    g.selectAll(".descendant-link")
+        .data(root.links())
+        .enter().append("path")
+        .attr("class", "descendant-link")
+        .attr("d", d3.linkHorizontal()
+            .x(d => d.y)
+            .y(d => d.x));
+
+    // Add nodes
+    const node = g.selectAll(".descendant-node")
+        .data(root.descendants())
+        .enter().append("g")
+        .attr("class", d => `descendant-node ${d.data.sex || 'unknown'}`)
+        .attr("transform", d => `translate(${d.y},${d.x})`)
+        .on("click", function(event, d) {
+            if (d.data.id) {
+                @this.call('setRootPerson', d.data.id);
+            }
+        });
+
+    // Add circles
+    node.append("circle")
+        .attr("r", 20);
+
+    // Add text
+    node.append("text")
+        .attr("dy", "0.35em")
+        .attr("x", d => d.children ? -25 : 25)
+        .style("text-anchor", d => d.children ? "end" : "start")
+        .text(d => {
+            const name = d.data.givn || d.data.name || '';
+            return name.length > 12 ? name.substring(0, 12) + '...' : name;
+        });
+
+    // Add birth/death years
+    node.append("text")
+        .attr("dy", "1.5em")
+        .attr("x", d => d.children ? -25 : 25)
+        .style("text-anchor", d => d.children ? "end" : "start")
+        .style("font-size", "10px")
+        .style("fill", "#666")
+        .text(d => {
+            const birth = d.data.birth_date ? new Date(d.data.birth_date).getFullYear() : '';
+            const death = d.data.death_date ? new Date(d.data.death_date).getFullYear() : '';
+            if (birth && death) return `${birth}-${death}`;
+            if (birth) return `b.${birth}`;
+            return '';
+        });
+}
+
+function setGenerations(generations) {
+    @this.call('setGenerations', generations);
+}
+</script>

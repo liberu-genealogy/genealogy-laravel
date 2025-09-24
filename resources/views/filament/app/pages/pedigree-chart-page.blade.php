@@ -1,84 +1,35 @@
 <x-filament-panels::page>
     <div class="space-y-6">
-        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-6">
-            <div class="flex items-center justify-between mb-4">
-                <div>
-                    <h2 class="text-lg font-semibold text-gray-900 dark:text-white">Pedigree Chart</h2>
-                    <p class="text-sm text-gray-500 dark:text-gray-400">Explore your ancestral lineage</p>
-                </div>
-                <div class="flex space-x-2">
-                    <x-filament::button
-                        color="gray"
-                        icon="heroicon-o-arrow-path"
-                        size="sm"
-                    >
-                        Refresh
-                    </x-filament::button>
-                    <x-filament::button
-                        color="primary"
-                        icon="heroicon-o-arrow-down-tray"
-                        size="sm"
-                    >
-                        Export
-                    </x-filament::button>
-                </div>
+        <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+            <div class="mb-4">
+                <h2 class="text-lg font-semibold text-gray-900">Pedigree Chart Visualization</h2>
+                <p class="text-sm text-gray-600 mt-1">
+                    Explore your direct ancestors in a traditional pedigree format. Each generation shows your parents, 
+                    grandparents, great-grandparents, and beyond in a clear hierarchical layout.
+                </p>
             </div>
 
-            @livewire(\App\Http\Livewire\PedigreeChartWidget::class)
+            @livewire('pedigree-chart')
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-4">
-                <h3 class="text-sm font-medium text-gray-900 dark:text-white mb-2">Chart Tips</h3>
-                <ul class="text-xs text-gray-600 dark:text-gray-400 space-y-1">
-                    <li>• Click on any person to make them the root</li>
-                    <li>• Use zoom controls to navigate large trees</li>
-                    <li>• Toggle dates and photos for different views</li>
-                    <li>• Adjust generations to see more or fewer levels</li>
-                </ul>
-            </div>
-
-            <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-4">
-                <h3 class="text-sm font-medium text-gray-900 dark:text-white mb-2">Legend</h3>
-                <div class="space-y-2 text-xs">
-                    <div class="flex items-center space-x-2">
-                        <div class="w-3 h-3 bg-blue-500 rounded"></div>
-                        <span class="text-gray-600 dark:text-gray-400">Male</span>
-                    </div>
-                    <div class="flex items-center space-x-2">
-                        <div class="w-3 h-3 bg-pink-500 rounded"></div>
-                        <span class="text-gray-600 dark:text-gray-400">Female</span>
-                    </div>
-                    <div class="flex items-center space-x-2">
-                        <div class="w-3 h-3 bg-green-500 rounded border-2 border-green-700"></div>
-                        <span class="text-gray-600 dark:text-gray-400">Root Person</span>
-                    </div>
+        <div class="bg-green-50 rounded-lg p-4 border border-green-200">
+            <div class="flex items-start">
+                <div class="flex-shrink-0">
+                    <svg class="h-5 w-5 text-green-400" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path>
+                    </svg>
                 </div>
-            </div>
-
-            <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-4">
-                <h3 class="text-sm font-medium text-gray-900 dark:text-white mb-2">Quick Actions</h3>
-                <div class="space-y-2">
-                    <x-filament::button
-                        color="gray"
-                        icon="heroicon-o-user-plus"
-                        size="xs"
-                        tag="a"
-                        href="{{ \Filament\Facades\Filament::getUrl() }}/people/create"
-                        class="w-full justify-start"
-                    >
-                        Add Person
-                    </x-filament::button>
-                    <x-filament::button
-                        color="gray"
-                        icon="heroicon-o-chart-pie"
-                        size="xs"
-                        tag="a"
-                        href="{{ \Filament\Facades\Filament::getUrl() }}/descendant-chart"
-                        class="w-full justify-start"
-                    >
-                        Descendant Chart
-                    </x-filament::button>
+                <div class="ml-3">
+                    <h3 class="text-sm font-medium text-green-800">How to use the Pedigree Chart</h3>
+                    <div class="mt-2 text-sm text-green-700">
+                        <ul class="list-disc list-inside space-y-1">
+                            <li>Click on any person to make them the root of the chart</li>
+                            <li>Use the generation controls to show more or fewer generations</li>
+                            <li>Toggle dates visibility for cleaner viewing</li>
+                            <li>The chart is color-coded by gender for easy identification</li>
+                            <li>Hover over person boxes to see expand options</li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>

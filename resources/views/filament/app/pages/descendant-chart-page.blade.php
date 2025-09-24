@@ -1,84 +1,35 @@
 <x-filament-panels::page>
     <div class="space-y-6">
-        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-6">
-            <div class="flex items-center justify-between mb-4">
-                <div>
-                    <h2 class="text-lg font-semibold text-gray-900 dark:text-white">Descendant Chart</h2>
-                    <p class="text-sm text-gray-500 dark:text-gray-400">Explore your family's descendants</p>
-                </div>
-                <div class="flex space-x-2">
-                    <x-filament::button
-                        color="gray"
-                        icon="heroicon-o-arrow-path"
-                        size="sm"
-                    >
-                        Refresh
-                    </x-filament::button>
-                    <x-filament::button
-                        color="primary"
-                        icon="heroicon-o-arrow-down-tray"
-                        size="sm"
-                    >
-                        Export
-                    </x-filament::button>
-                </div>
+        <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+            <div class="mb-4">
+                <h2 class="text-lg font-semibold text-gray-900">Descendant Chart Visualization</h2>
+                <p class="text-sm text-gray-600 mt-1">
+                    Explore the descendants of any person in your family tree. This chart shows children, 
+                    grandchildren, and future generations branching out from your selected ancestor.
+                </p>
             </div>
 
-            @livewire(\App\Http\Livewire\DescendantChartWidget::class)
+            @livewire('descendant-chart-component')
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-4">
-                <h3 class="text-sm font-medium text-gray-900 dark:text-white mb-2">Chart Features</h3>
-                <ul class="text-xs text-gray-600 dark:text-gray-400 space-y-1">
-                    <li>• Click on any person to expand from them</li>
-                    <li>• Switch between vertical and horizontal layouts</li>
-                    <li>• Toggle spouse information display</li>
-                    <li>• Adjust generations to control tree depth</li>
-                </ul>
-            </div>
-
-            <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-4">
-                <h3 class="text-sm font-medium text-gray-900 dark:text-white mb-2">Layout Options</h3>
-                <div class="space-y-2 text-xs">
-                    <div class="flex items-center space-x-2">
-                        <div class="w-3 h-3 bg-blue-100 border border-blue-300 rounded"></div>
-                        <span class="text-gray-600 dark:text-gray-400">Vertical Tree</span>
-                    </div>
-                    <div class="flex items-center space-x-2">
-                        <div class="w-3 h-3 bg-green-100 border border-green-300 rounded"></div>
-                        <span class="text-gray-600 dark:text-gray-400">Horizontal Tree</span>
-                    </div>
-                    <div class="flex items-center space-x-2">
-                        <div class="w-3 h-3 bg-yellow-100 border border-yellow-300 rounded"></div>
-                        <span class="text-gray-600 dark:text-gray-400">Compact View</span>
-                    </div>
+        <div class="bg-purple-50 rounded-lg p-4 border border-purple-200">
+            <div class="flex items-start">
+                <div class="flex-shrink-0">
+                    <svg class="h-5 w-5 text-purple-400" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path>
+                    </svg>
                 </div>
-            </div>
-
-            <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-4">
-                <h3 class="text-sm font-medium text-gray-900 dark:text-white mb-2">Related Charts</h3>
-                <div class="space-y-2">
-                    <x-filament::button
-                        color="gray"
-                        icon="heroicon-o-chart-bar"
-                        size="xs"
-                        tag="a"
-                        href="{{ \Filament\Facades\Filament::getUrl() }}/pedigree-chart"
-                        class="w-full justify-start"
-                    >
-                        Pedigree Chart
-                    </x-filament::button>
-                    <x-filament::button
-                        color="gray"
-                        icon="heroicon-o-chart-pie"
-                        size="xs"
-                        tag="a"
-                        href="{{ \Filament\Facades\Filament::getUrl() }}/fan-chart"
-                        class="w-full justify-start"
-                    >
-                        Fan Chart
-                    </x-filament::button>
+                <div class="ml-3">
+                    <h3 class="text-sm font-medium text-purple-800">How to use the Descendant Chart</h3>
+                    <div class="mt-2 text-sm text-purple-700">
+                        <ul class="list-disc list-inside space-y-1">
+                            <li>Click on any person to make them the root ancestor</li>
+                            <li>Use generation controls to show more descendant levels</li>
+                            <li>The chart displays children, grandchildren, and beyond</li>
+                            <li>Each node shows birth/death years when available</li>
+                            <li>Navigate through the family tree by clicking on descendants</li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>

@@ -2,11 +2,11 @@
 
 namespace App\Providers;
 
-use App\Http\Livewire\DabovilleReport;
-use App\Http\Livewire\DescendantChartComponent;
-use App\Http\Livewire\HenryReport;
-use App\Http\Livewire\PedigreeChart;
-use App\Http\Livewire\PeopleSearch;
+use App\Livewire\DabovilleReport;
+use App\Livewire\DescendantChartComponent;
+use App\Livewire\HenryReport;
+use App\Livewire\PedigreeChart;
+use App\Livewire\PeopleSearch;
 use Filament\Panel;
 use Illuminate\Support\ServiceProvider;
 

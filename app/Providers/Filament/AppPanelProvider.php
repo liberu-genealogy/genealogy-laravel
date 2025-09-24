@@ -56,21 +56,32 @@ class AppPanelProvider extends PanelProvider
             ->favicon(asset('images/favicon.ico'))
             ->navigationGroups([
                 NavigationGroup::make()
-                    ->label('Dashboard'),
+                    ->label('🏠 Dashboard')
+                    ->icon('heroicon-o-home'),
                 NavigationGroup::make()
-                    ->label('Family Tree'),
+                    ->label('👥 Family Tree')
+                    ->icon('heroicon-o-users'),
                 NavigationGroup::make()
-                    ->label('Charts & Reports'),
+                    ->label('📊 Charts & Visualizations')
+                    ->icon('heroicon-o-chart-bar'),
                 NavigationGroup::make()
-                    ->label('Research'),
+                    ->label('🔍 Research & Analysis')
+                    ->icon('heroicon-o-magnifying-glass'),
                 NavigationGroup::make()
-                    ->label('DNA Analysis'),
+                    ->label('🧬 DNA & Genetics')
+                    ->icon('heroicon-o-beaker'),
                 NavigationGroup::make()
-                    ->label('Media & Documents'),
+                    ->label('📁 Media & Documents')
+                    ->icon('heroicon-o-folder'),
                 NavigationGroup::make()
-                    ->label('Data Management'),
+                    ->label('⚙️ Data Management')
+                    ->icon('heroicon-o-cog-6-tooth'),
                 NavigationGroup::make()
-                    ->label('Account'),
+                    ->label('🎮 Gamification')
+                    ->icon('heroicon-o-trophy'),
+                NavigationGroup::make()
+                    ->label('👤 Account & Settings')
+                    ->icon('heroicon-o-user-circle'),
             ])
             ->userMenuItems([
                 MenuItem::make()
@@ -85,7 +96,9 @@ class AppPanelProvider extends PanelProvider
             ->pages([
                 \App\Filament\App\Pages\Dashboard::class,
                 \App\Filament\App\Pages\PedigreeChartPage::class,
+                \App\Filament\App\Pages\FanChartPage::class,
                 \App\Filament\App\Pages\DescendantChartPage::class,
+                \App\Filament\App\Pages\GamificationPage::class,
                 \App\Filament\App\Pages\SubscriptionPage::class,
                 \App\Filament\App\Pages\PremiumDashboardPage::class,
                 EditProfile::class,
