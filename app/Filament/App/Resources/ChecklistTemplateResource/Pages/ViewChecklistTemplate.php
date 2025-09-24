@@ -5,7 +5,7 @@ namespace App\Filament\App\Resources\ChecklistTemplateResource\Pages;
 use App\Filament\App\Resources\ChecklistTemplateResource;
 use Filament\Actions;
 use Filament\Resources\Pages\ViewRecord;
-use Filament\Infolists\Infolist;
+use Filament\Schemas\Schema;
 use Filament\Infolists\Components\Section;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Infolists\Components\Grid;
@@ -28,9 +28,9 @@ class ViewChecklistTemplate extends ViewRecord
         ];
     }
 
-    public function infolist(Infolist $infolist): Infolist
+    public function infolist(Schema $schema): Schema
     {
-        return $infolist
+        return $schema
             ->schema([
                 Section::make('Template Information')
                     ->schema([
