@@ -4,7 +4,7 @@ namespace App\Modules\Places\Filament\Resources;
 
 use App\Models\Place;
 use Filament\Forms;
-use Filament\Forms\Form;
+use Filament\Schemas\Schema;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
@@ -20,7 +20,7 @@ class PlaceResource extends Resource
 
     protected static ?string $navigationLabel = 'Places';
 
-    public static function form(Form $form): Form
+    public static function form(Schema $form): Schema
     {
         return $form
             ->schema([
