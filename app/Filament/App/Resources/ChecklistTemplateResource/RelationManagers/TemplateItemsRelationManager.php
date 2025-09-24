@@ -14,8 +14,8 @@ class TemplateItemsRelationManager extends RelationManager
 
     protected static ?string $title = 'Checklist Items';
 
-    public function form(Form $form): Form
-    {
+   public static function form(Schema $form): Schema
+       {
         return $form
             ->schema([
                 Forms\Components\Grid::make(3)
