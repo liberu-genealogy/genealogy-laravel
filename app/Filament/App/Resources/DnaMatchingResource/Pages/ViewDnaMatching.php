@@ -22,8 +22,7 @@ class ViewDnaMatching extends ViewRecord
             Actions\EditAction::make(),
         ];
     }
-
-    public function infolist(Infolist $infolist): Infolist
+    public function infolist(Schema $schema): Schema
     {
         return $infolist
             ->schema([

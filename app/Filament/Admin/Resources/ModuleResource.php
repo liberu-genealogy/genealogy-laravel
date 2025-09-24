@@ -5,7 +5,7 @@ namespace App\Filament\Admin\Resources;
 use App\Filament\Admin\Resources\ModuleResource\Pages;
 use App\Modules\ModuleManager;
 use Filament\Forms;
-use Filament\Forms\Form;
+use Filament\Schemas\Schema;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
@@ -24,7 +24,7 @@ class ModuleResource extends Resource
 
     protected static ?int $navigationSort = 10;
 
-    public static function form(Form $form): Form
+    public static function form(Schema $form): Schema
     {
         return $form
             ->schema([
@@ -84,11 +84,11 @@ class ModuleResource extends Resource
                     ->color(fn ($record) => $record['enabled'] ? 'warning' : 'success')
                     ->requiresConfirmation()
                     ->modalHeading(fn ($record) => ($record['enabled'] ? 'Disable' : 'Enable') . ' Module')
-                    ->modalDescription(fn ($record) => 'Are you sure you want to ' . 
+                    ->modalDescription(fn ($record) => 'Are you sure you want to ' .
                         ($record['enabled'] ? 'disable' : 'enable') . ' the ' . $record['name'] . ' module?')
                     ->action(function ($record) {
                         $moduleManager = app(ModuleManager::class);
-                        
+
                         try {
                             if ($record['enabled']) {
                                 $moduleManager->disable($record['name']);
