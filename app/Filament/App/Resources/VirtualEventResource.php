@@ -7,7 +7,7 @@ use App\Filament\App\Resources\VirtualEventResource\RelationManagers;
 use App\Models\VirtualEvent;
 use App\Services\VideoConferencingService;
 use Filament\Forms;
-use Filament\Forms\Form;
+use Filament\Schemas\Schema;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
@@ -28,7 +28,7 @@ class VirtualEventResource extends Resource
 
     protected static ?int $navigationSort = 1;
 
-    public static function form(Form $form): Form
+    public static function form(Schema $form): Schema
     {
         return $form
             ->schema([

@@ -28,8 +28,8 @@ class DnaMatchingResource extends Resource
 
     protected static ?int $navigationSort = 2;
 
-    public static function form(Form $form): Form
-    {
+       public static function form(Schema $form): Schema
+       {
         return $form
             ->schema([
                 Forms\Components\Section::make('Basic Information')

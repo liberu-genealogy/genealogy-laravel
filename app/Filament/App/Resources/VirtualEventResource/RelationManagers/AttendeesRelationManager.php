@@ -6,7 +6,7 @@ use App\Models\VirtualEventAttendee;
 use App\Models\User;
 use App\Models\Person;
 use Filament\Forms;
-use Filament\Forms\Form;
+use Filament\Schemas\Schema;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables;
 use Filament\Tables\Table;
@@ -20,7 +20,7 @@ class AttendeesRelationManager extends RelationManager
 
     protected static ?string $title = 'Event Attendees';
 
-    public function form(Form $form): Form
+    public function form(Schema $form): Schema
     {
         return $form
             ->schema([
