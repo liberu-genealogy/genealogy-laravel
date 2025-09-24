@@ -4,7 +4,7 @@ namespace App\Modules\Admin\Filament\Resources;
 
 use App\Models\Type;
 use Filament\Forms;
-use Filament\Forms\Form;
+use Filament\Schemas\Schema;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
@@ -20,7 +20,7 @@ class TypeResource extends Resource
 
     protected static ?string $navigationLabel = 'Types';
 
-    public static function form(Form $form): Form
+    public static function form(Schema $form): Schema
     {
         return $form
             ->schema([
