@@ -11,6 +11,7 @@ use Filament\Infolists\Components\TextEntry;
 use Filament\Infolists\Components\ImageEntry;
 use Filament\Infolists\Components\Grid;
 use Filament\Infolists\Components\KeyValueEntry;
+use Filament\Schemas\Schema;
 
 class ViewDnaMatching extends ViewRecord
 {
