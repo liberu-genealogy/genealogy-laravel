@@ -10,11 +10,11 @@ use Filament\Tables\Table;
 
 class TemplateItemsRelationManager extends RelationManager
 {
-    protected string $relationship = 'templateItems';
+    protected static string $relationship = 'templateItems';
 
     protected static ?string $title = 'Checklist Items';
 
-   public static function form(Schema $form): Schema
+   public function form(Schema $form): Schema
        {
         return $form
             ->schema([
