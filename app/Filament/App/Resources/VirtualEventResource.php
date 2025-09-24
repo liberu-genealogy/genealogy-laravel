@@ -20,15 +20,14 @@ class VirtualEventResource extends Resource
 {
     protected static ?string $model = VirtualEvent::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-video-camera';
+    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-video-camera';
 
     protected static ?string $navigationLabel = 'Virtual Events';
 
-    protected static ?string $navigationGroup = '👥 Family Reunions';
+    protected static string | \UnitEnum | null $navigationGroup = '👥 Family Reunions';
 
     protected static ?int $navigationSort = 1;
-
-    public static function form(Schema $form): Schema
+ public static function form(Schema $form): Schema
     {
         return $form
             ->schema([
