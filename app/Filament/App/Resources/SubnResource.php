@@ -2,6 +2,15 @@
 
 namespace App\Filament\App\Resources;
 
+use Override;
+use Filament\Forms\Components\TextInput;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Actions\EditAction;
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteBulkAction;
+use App\Filament\App\Resources\SubnResource\Pages\ListSubns;
+use App\Filament\App\Resources\SubnResource\Pages\CreateSubn;
+use App\Filament\App\Resources\SubnResource\Pages\EditSubn;
 use BackedEnum;
 use App\Filament\App\Resources\SubnResource\Pages;
 use App\Models\Subn;
@@ -17,54 +26,54 @@ class SubnResource extends Resource
 {
     protected static ?string $model = Subn::class;
 
-    protected static string | BackedEnum | null $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-rectangle-stack';
 
-    #[\Override]
-    public static function form(Schema $form): Schema
+    #[Override]
+    public static function form(Schema $schema): Schema
     {
-        return $form
-            ->schema([
-                Forms\Components\TextInput::make('subm')
+        return $schema
+            ->components([
+                TextInput::make('subm')
                     ->maxLength(255),
-                Forms\Components\TextInput::make('famf')
+                TextInput::make('famf')
                     ->maxLength(255),
-                Forms\Components\TextInput::make('temp')
+                TextInput::make('temp')
                     ->maxLength(255),
-                Forms\Components\TextInput::make('ance')
+                TextInput::make('ance')
                     ->maxLength(255),
-                Forms\Components\TextInput::make('desc')
+                TextInput::make('desc')
                     ->maxLength(255),
-                Forms\Components\TextInput::make('ordi')
+                TextInput::make('ordi')
                     ->maxLength(255),
-                Forms\Components\TextInput::make('rin')
+                TextInput::make('rin')
                     ->maxLength(255),
             ]);
     }
 
-    #[\Override]
+    #[Override]
     public static function table(Table $table): Table
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('subm')
+                TextColumn::make('subm')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('famf')
+                TextColumn::make('famf')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('temp')
+                TextColumn::make('temp')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('ance')
+                TextColumn::make('ance')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('desc')
+                TextColumn::make('desc')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('ordi')
+                TextColumn::make('ordi')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('rin')
+                TextColumn::make('rin')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('created_at')
+                TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('updated_at')
+                TextColumn::make('updated_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
@@ -72,17 +81,17 @@ class SubnResource extends Resource
             ->filters([
                 //
             ])
-            ->actions([
-                Actions\EditAction::make(),
+            ->recordActions([
+                EditAction::make(),
             ])
-            ->bulkActions([
-                Actions\BulkActionGroup::make([
-                    Actions\DeleteBulkAction::make(),
+            ->toolbarActions([
+                BulkActionGroup::make([
+                    DeleteBulkAction::make(),
                 ]),
             ]);
     }
 
-    #[\Override]
+    #[Override]
     public static function getRelations(): array
     {
         return [
@@ -93,9 +102,9 @@ class SubnResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index'  => Pages\ListSubns::route('/'),
-            'create' => Pages\CreateSubn::route('/create'),
-            'edit'   => Pages\EditSubn::route('/{record}/edit'),
+            'index'  => ListSubns::route('/'),
+            'create' => CreateSubn::route('/create'),
+            'edit'   => EditSubn::route('/{record}/edit'),
         ];
     }
 }

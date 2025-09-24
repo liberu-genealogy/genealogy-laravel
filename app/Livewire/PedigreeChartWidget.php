@@ -2,13 +2,14 @@
 
 namespace App\Livewire;
 
+use Illuminate\Contracts\View\View;
 use App\Models\Person;
 use Filament\Widgets\Widget;
 use Livewire\Attributes\On;
 
 class PedigreeChartWidget extends Widget
 {
-    protected static string $view = 'filament.widgets.pedigree-chart-widget';
+    protected string $view = 'filament.widgets.pedigree-chart-widget';
 
     public ?int $rootPersonId = null;
     public int $generations = 4;
@@ -74,7 +75,7 @@ class PedigreeChartWidget extends Widget
         return $personData;
     }
 
-    public function render(): \Illuminate\Contracts\View\View
+    public function render(): View
     {
         return view(static::$view, $this->getData());
     }

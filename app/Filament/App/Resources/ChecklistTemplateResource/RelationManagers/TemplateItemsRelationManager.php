@@ -2,6 +2,21 @@
 
 namespace App\Filament\App\Resources\ChecklistTemplateResource\RelationManagers;
 
+use Filament\Schemas\Components\Grid;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\Toggle;
+use Filament\Forms\Components\TagsInput;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Columns\IconColumn;
+use Filament\Tables\Filters\SelectFilter;
+use Filament\Tables\Filters\TernaryFilter;
+use Filament\Actions\CreateAction;
+use Filament\Actions\EditAction;
+use Filament\Actions\DeleteAction;
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteBulkAction;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\RelationManagers\RelationManager;
@@ -15,25 +30,25 @@ class TemplateItemsRelationManager extends RelationManager
 
     protected static ?string $title = 'Checklist Items';
 
-   public function form(Schema $form): Schema
+   public function form(Schema $schema): Schema
        {
-        return $form
-            ->schema([
-                Forms\Components\Grid::make(3)
+        return $schema
+            ->components([
+                Grid::make(3)
                     ->schema([
-                        Forms\Components\TextInput::make('title')
+                        TextInput::make('title')
                             ->required()
                             ->columnSpan(2),
-                        Forms\Components\TextInput::make('order')
+                        TextInput::make('order')
                             ->numeric()
                             ->default(fn () => $this->getOwnerRecord()->templateItems()->max('order') + 1),
                     ]),
-                Forms\Components\Textarea::make('description')
+                Textarea::make('description')
                     ->rows(3)
                     ->columnSpanFull(),
-                Forms\Components\Grid::make(3)
+                Grid::make(3)
                     ->schema([
-                        Forms\Components\Select::make('category')
+                        Select::make('category')
                             ->options([
                                 'research' => 'Research',
                                 'documentation' => 'Documentation',
@@ -42,17 +57,17 @@ class TemplateItemsRelationManager extends RelationManager
                                 'follow_up' => 'Follow-up',
                             ])
                             ->default('research'),
-                        Forms\Components\TextInput::make('estimated_time')
+                        TextInput::make('estimated_time')
                             ->numeric()
                             ->suffix('minutes')
                             ->label('Estimated Time'),
-                        Forms\Components\Toggle::make('is_required')
+                        Toggle::make('is_required')
                             ->label('Required Item'),
                     ]),
-                Forms\Components\TagsInput::make('resources')
+                TagsInput::make('resources')
                     ->placeholder('Add helpful resources (URLs, document names, etc.)')
                     ->columnSpanFull(),
-                Forms\Components\TagsInput::make('tips')
+                TagsInput::make('tips')
                     ->placeholder('Add helpful tips and notes')
                     ->columnSpanFull(),
             ]);
@@ -63,25 +78,25 @@ class TemplateItemsRelationManager extends RelationManager
         return $table
             ->recordTitleAttribute('title')
             ->columns([
-                Tables\Columns\TextColumn::make('order')
+                TextColumn::make('order')
                     ->sortable()
                     ->width(60),
-                Tables\Columns\TextColumn::make('title')
+                TextColumn::make('title')
                     ->searchable()
                     ->weight('bold'),
-                Tables\Columns\TextColumn::make('category')
+                TextColumn::make('category')
                     ->badge()
                     ->formatStateUsing(fn (string $state): string => ucfirst($state)),
-                Tables\Columns\TextColumn::make('estimated_time')
+                TextColumn::make('estimated_time')
                     ->suffix(' min')
                     ->alignCenter()
                     ->sortable(),
-                Tables\Columns\IconColumn::make('is_required')
+                IconColumn::make('is_required')
                     ->boolean()
                     ->alignCenter(),
             ])
             ->filters([
-                Tables\Filters\SelectFilter::make('category')
+                SelectFilter::make('category')
                     ->options([
                         'research' => 'Research',
                         'documentation' => 'Documentation',
@@ -89,19 +104,19 @@ class TemplateItemsRelationManager extends RelationManager
                         'analysis' => 'Analysis',
                         'follow_up' => 'Follow-up',
                     ]),
-                Tables\Filters\TernaryFilter::make('is_required')
+                TernaryFilter::make('is_required')
                     ->label('Required Items'),
             ])
             ->headerActions([
-                Tables\Actions\CreateAction::make(),
+                CreateAction::make(),
             ])
-            ->actions([
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
+            ->recordActions([
+                EditAction::make(),
+                DeleteAction::make(),
             ])
-            ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+            ->toolbarActions([
+                BulkActionGroup::make([
+                    DeleteBulkAction::make(),
                 ]),
             ])
             ->reorderable('order')

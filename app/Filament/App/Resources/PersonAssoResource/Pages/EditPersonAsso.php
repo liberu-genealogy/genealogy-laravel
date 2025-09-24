@@ -2,6 +2,7 @@
 
 namespace App\Filament\App\Resources\PersonAssoResource\Pages;
 
+use Filament\Actions\DeleteAction;
 use App\Filament\App\Resources\PersonAssoResource;
 use Filament\Actions;
 use Filament\Resources\Pages\EditRecord;
@@ -13,7 +14,7 @@ class EditPersonAsso extends EditRecord
     protected function getHeaderActions(): array
     {
         return [
-            Actions\DeleteAction::make(),
+            DeleteAction::make(),
         ];
     }
 }

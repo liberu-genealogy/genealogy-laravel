@@ -2,6 +2,7 @@
 
 namespace App\Filament\App\Resources\FamilySlgsResource\Pages;
 
+use Filament\Actions\DeleteAction;
 use App\Filament\App\Resources\FamilySlgsResource;
 use Filament\Actions;
 use Filament\Resources\Pages\EditRecord;
@@ -13,7 +14,7 @@ class EditFamilySlgs extends EditRecord
     protected function getHeaderActions(): array
     {
         return [
-            Actions\DeleteAction::make(),
+            DeleteAction::make(),
         ];
     }
 }

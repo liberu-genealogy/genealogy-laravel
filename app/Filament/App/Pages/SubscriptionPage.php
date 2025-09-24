@@ -2,6 +2,7 @@
 
 namespace App\Filament\App\Pages;
 
+use Exception;
 use App\Services\SubscriptionService;
 use Filament\Actions\Action;
 use Filament\Forms\Components\TextInput;
@@ -12,11 +13,11 @@ use Illuminate\Support\Facades\Auth;
 
 class SubscriptionPage extends Page
 {
-    protected static ?string $navigationIcon = 'heroicon-o-star';
+    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-star';
 
     protected static ?string $navigationLabel = 'Premium Subscription';
 
-    protected static ?string $navigationGroup = '👤 Account & Settings';
+    protected static string | \UnitEnum | null $navigationGroup = '👤 Account & Settings';
 
     protected static ?int $navigationSort = 2;
 
@@ -61,7 +62,7 @@ class SubscriptionPage extends Page
 
             $this->redirect(route('filament.app.pages.premium-dashboard'));
 
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             Notification::make()
                 ->title('Subscription Error')
                 ->body('There was an error starting your trial. Please try again.')

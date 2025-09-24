@@ -2,24 +2,25 @@
 
 namespace App\Services;
 
+use Exception;
 use App\Models\Dna;
 use App\Models\DnaMatching;
 use App\Models\User;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
-use LiberuGenealogy\LaravelDna\Services\DnaAnalysisService;
+//use LiberuGenealogy\LaravelDna\Services\DnaAnalysisService;
 use LiberuGenealogy\PhpDna\DnaKit;
 use LiberuGenealogy\PhpDna\Snps;
 use LiberuGenealogy\PhpDna\Individual;
 
 class AdvancedDnaMatchingService
 {
-    protected DnaAnalysisService $dnaAnalysisService;
+  //  protected DnaAnalysisService $dnaAnalysisService;
 
-    public function __construct(DnaAnalysisService $dnaAnalysisService)
-    {
-        $this->dnaAnalysisService = $dnaAnalysisService;
-    }
+    //public function __construct(DnaAnalysisService $dnaAnalysisService)
+    //{
+    //    $this->dnaAnalysisService = $dnaAnalysisService;
+    //}
 
     /**
      * Perform advanced DNA matching between two DNA kits
@@ -32,7 +33,7 @@ class AdvancedDnaMatchingService
             $dnaKit2 = $this->loadDnaKit($fileName2);
 
             if (!$dnaKit1 || !$dnaKit2) {
-                throw new \Exception('Failed to load DNA kits');
+                throw new Exception('Failed to load DNA kits');
             }
 
             // Perform comprehensive DNA analysis
@@ -56,7 +57,7 @@ class AdvancedDnaMatchingService
                 'ibd_segments' => $matchResults['ibd_segments']
             ];
 
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             Log::error('Advanced DNA matching failed: ' . $e->getMessage());
 
             // Fallback to basic matching if advanced fails
@@ -87,7 +88,7 @@ class AdvancedDnaMatchingService
 
             return $dnaKit;
 
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             Log::error("Failed to load DNA kit from {$fileName}: " . $e->getMessage());
             return null;
         }

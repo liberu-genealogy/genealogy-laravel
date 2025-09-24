@@ -2,6 +2,10 @@
 
 namespace App\Filament\App\Resources;
 
+use Filament\Actions\ViewAction;
+use Filament\Actions\Action;
+use App\Filament\App\Resources\DuplicateCheckResource\Pages\ListDuplicateChecks;
+use App\Filament\App\Resources\DuplicateCheckResource\Pages\ViewDuplicateCheck;
 use UnitEnum;
 use BackedEnum;
 use App\Filament\App\Resources\DuplicateCheckResource\Pages;
@@ -23,11 +27,11 @@ class DuplicateCheckResource extends Resource
 
     protected static ?string $model = DuplicateCheck::class;
 
-    protected static string | BackedEnum | null $navigationIcon = 'heroicon-o-document-duplicate';
+    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-document-duplicate';
 
     protected static ?string $navigationLabel = 'Duplicate Checker';
 
-    protected static string | UnitEnum | null $navigationGroup =  'Research';
+    protected static string | \UnitEnum | null $navigationGroup =  'Research';
 
     protected static ?int $navigationSort = 3;
 
@@ -36,9 +40,9 @@ class DuplicateCheckResource extends Resource
         return Auth::user()?->isPremium() ?? false;
     }
 
-    public static function form(Schema $form): Schema
+    public static function form(Schema $schema): Schema
     {
-        return $form->schema([]);
+        return $schema->components([]);
     }
 
     public static function table(Table $table): Table
@@ -67,12 +71,12 @@ class DuplicateCheckResource extends Resource
                     ->sortable(),
             ])
             ->filters([])
-            ->actions([
-                Tables\Actions\ViewAction::make()
+            ->recordActions([
+                ViewAction::make()
                     ->visible(fn (DuplicateCheck $record): bool => $record->isCompleted()),
             ])
             ->headerActions([
-                Tables\Actions\Action::make('run_check')
+                Action::make('run_check')
                     ->label('Run Duplicate Check')
                     ->icon('heroicon-o-play')
                     ->color('primary')
@@ -87,15 +91,15 @@ class DuplicateCheckResource extends Resource
                     ->modalDescription('This will scan your family tree for potential duplicate people. This may take a few minutes.')
                     ->modalSubmitActionLabel('Start Check'),
             ])
-            ->bulkActions([])
+            ->toolbarActions([])
             ->modifyQueryUsing(fn (Builder $query) => $query->where('user_id', Auth::id()));
     }
 
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListDuplicateChecks::route('/'),
-            'view' => Pages\ViewDuplicateCheck::route('/{record}'),
+            'index' => ListDuplicateChecks::route('/'),
+            'view' => ViewDuplicateCheck::route('/{record}'),
         ];
     }
 }

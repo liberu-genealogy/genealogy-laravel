@@ -2,6 +2,15 @@
 
 namespace App\Filament\App\Resources;
 
+use Override;
+use Filament\Forms\Components\TextInput;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Actions\EditAction;
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteBulkAction;
+use App\Filament\App\Resources\AddrResource\Pages\ListAddrs;
+use App\Filament\App\Resources\AddrResource\Pages\CreateAddr;
+use App\Filament\App\Resources\AddrResource\Pages\EditAddr;
 use UnitEnum;
 use BackedEnum;
 use App\Filament\App\Resources\AddrResource\Pages;
@@ -18,54 +27,54 @@ class AddrResource extends Resource
 {
     protected static ?string $model = Addr::class;
 
-    protected static string | BackedEnum | null $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-rectangle-stack';
 
     protected static ?string $navigationLabel = 'Address';
 
-    protected static string | UnitEnum | null $navigationGroup = 'Person';
+    protected static string | \UnitEnum | null $navigationGroup = 'Person';
 
-    #[\Override]
-    public static function form(Schema $form): Schema
+    #[Override]
+    public static function form(Schema $schema): Schema
     {
-        return $form
-            ->schema([
-                Forms\Components\TextInput::make('adr1')
+        return $schema
+            ->components([
+                TextInput::make('adr1')
                 ->maxLength(255),
-                Forms\Components\TextInput::make('adr2')
+                TextInput::make('adr2')
                     ->maxLength(255),
-                Forms\Components\TextInput::make('city')
+                TextInput::make('city')
                     ->maxLength(255),
-                Forms\Components\TextInput::make('stae')
+                TextInput::make('stae')
                     ->maxLength(255),
-                Forms\Components\TextInput::make('post')
+                TextInput::make('post')
                     ->maxLength(255),
-                Forms\Components\TextInput::make('ctry')
+                TextInput::make('ctry')
                     ->maxLength(255),
             ]);
     }
 
-    #[\Override]
+    #[Override]
     public static function table(Table $table): Table
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('adr1')
+                TextColumn::make('adr1')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('adr2')
+                TextColumn::make('adr2')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('city')
+                TextColumn::make('city')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('stae')
+                TextColumn::make('stae')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('post')
+                TextColumn::make('post')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('ctry')
+                TextColumn::make('ctry')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('created_at')
+                TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('updated_at')
+                TextColumn::make('updated_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
@@ -73,17 +82,17 @@ class AddrResource extends Resource
             ->filters([
                 //
             ])
-            ->actions([
-                Actions\EditAction::make(),
+            ->recordActions([
+                EditAction::make(),
             ])
-            ->bulkActions([
-                Actions\BulkActionGroup::make([
-                    Actions\DeleteBulkAction::make(),
+            ->toolbarActions([
+                BulkActionGroup::make([
+                    DeleteBulkAction::make(),
                 ]),
             ]);
     }
 
-    #[\Override]
+    #[Override]
     public static function getRelations(): array
     {
         return [
@@ -94,9 +103,9 @@ class AddrResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index'  => Pages\ListAddrs::route('/'),
-            'create' => Pages\CreateAddr::route('/create'),
-            'edit'   => Pages\EditAddr::route('/{record}/edit'),
+            'index'  => ListAddrs::route('/'),
+            'create' => CreateAddr::route('/create'),
+            'edit'   => EditAddr::route('/{record}/edit'),
         ];
     }
 }

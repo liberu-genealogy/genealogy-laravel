@@ -2,6 +2,9 @@
 
 namespace App\Modules\Events;
 
+use App\Modules\Events\Services\EventsService;
+use App\Modules\Events\Services\TimelineService;
+use Artisan;
 use App\Modules\BaseModule;
 
 class EventsModule extends BaseModule
@@ -37,11 +40,11 @@ class EventsModule extends BaseModule
     protected function registerEventsServices(): void
     {
         app()->singleton('genealogy.events', function ($app) {
-            return new \App\Modules\Events\Services\EventsService();
+            return new EventsService();
         });
 
         app()->singleton('genealogy.events.timeline', function ($app) {
-            return new \App\Modules\Events\Services\TimelineService();
+            return new TimelineService();
         });
     }
 
@@ -58,7 +61,7 @@ class EventsModule extends BaseModule
      */
     protected function installEventsTables(): void
     {
-        \Artisan::call('migrate', [
+        Artisan::call('migrate', [
             '--path' => 'app/Modules/Events/database/migrations',
             '--force' => true,
         ]);
@@ -69,7 +72,7 @@ class EventsModule extends BaseModule
      */
     protected function seedEventsData(): void
     {
-        \Artisan::call('db:seed', [
+        Artisan::call('db:seed', [
             '--class' => 'App\\Modules\\Events\\Database\\Seeders\\EventsSeeder',
             '--force' => true,
         ]);

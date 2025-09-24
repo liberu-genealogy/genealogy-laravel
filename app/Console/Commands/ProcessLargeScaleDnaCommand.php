@@ -2,6 +2,9 @@
 
 namespace App\Console\Commands;
 
+use Exception;
+use App\Jobs\DnaMatching;
+use App\Models\User;
 use App\Models\Dna;
 use App\Services\AdvancedDnaMatchingService;
 use Illuminate\Console\Command;
@@ -75,7 +78,7 @@ class ProcessLargeScaleDnaCommand extends Command
                     // Store results in database
                     $this->storeMatchResults($results);
 
-                } catch (\Exception $e) {
+                } catch (Exception $e) {
                     $this->error("Error processing batch: " . $e->getMessage());
                     Log::error('Large-scale DNA processing batch error: ' . $e->getMessage());
                     $errorCount++;
@@ -99,7 +102,7 @@ class ProcessLargeScaleDnaCommand extends Command
 
             return Command::SUCCESS;
 
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $this->error('Large-scale DNA processing failed: ' . $e->getMessage());
             Log::error('Large-scale DNA processing failed: ' . $e->getMessage());
             return Command::FAILURE;
@@ -115,13 +118,13 @@ class ProcessLargeScaleDnaCommand extends Command
             try {
                 // Here you would typically queue individual jobs to store results
                 // to avoid blocking the main process
-                \App\Jobs\DnaMatching::dispatch(
-                    \App\Models\User::find($result['kit1_id']),
+                DnaMatching::dispatch(
+                    User::find($result['kit1_id']),
                     "kit_{$result['kit1_id']}",
                     "file_{$result['kit1_id']}"
                 );
 
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
                 Log::error("Failed to queue DNA matching job: " . $e->getMessage());
             }
         }

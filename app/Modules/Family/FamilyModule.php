@@ -2,6 +2,8 @@
 
 namespace App\Modules\Family;
 
+use App\Modules\Family\Services\FamilyService;
+use Artisan;
 use App\Modules\BaseModule;
 
 class FamilyModule extends BaseModule
@@ -37,7 +39,7 @@ class FamilyModule extends BaseModule
     protected function registerFamilyServices(): void
     {
         app()->singleton('genealogy.family', function ($app) {
-            return new \App\Modules\Family\Services\FamilyService();
+            return new FamilyService();
         });
     }
 
@@ -54,7 +56,7 @@ class FamilyModule extends BaseModule
      */
     protected function installFamilyTables(): void
     {
-        \Artisan::call('migrate', [
+        Artisan::call('migrate', [
             '--path' => 'app/Modules/Family/database/migrations',
             '--force' => true,
         ]);
@@ -65,7 +67,7 @@ class FamilyModule extends BaseModule
      */
     protected function seedFamilyData(): void
     {
-        \Artisan::call('db:seed', [
+        Artisan::call('db:seed', [
             '--class' => 'App\\Modules\\Family\\Database\\Seeders\\FamilySeeder',
             '--force' => true,
         ]);

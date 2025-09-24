@@ -2,6 +2,15 @@
 
 namespace App\Filament\App\Resources;
 
+use Override;
+use Filament\Forms\Components\TextInput;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Actions\EditAction;
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteBulkAction;
+use App\Filament\App\Resources\SourceRefEvenResource\Pages\ListSourceRefEvens;
+use App\Filament\App\Resources\SourceRefEvenResource\Pages\CreateSourceRefEven;
+use App\Filament\App\Resources\SourceRefEvenResource\Pages\EditSourceRefEven;
 use BackedEnum;
 use App\Filament\App\Resources\SourceRefEvenResource\Pages;
 use App\Models\SourceRefEven;
@@ -17,43 +26,43 @@ class SourceRefEvenResource extends Resource
 {
     protected static ?string $model = SourceRefEven::class;
 
-    protected static string | BackedEnum | null $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-rectangle-stack';
 
-    #[\Override]
-    public static function form(Schema $form): Schema
+    #[Override]
+    public static function form(Schema $schema): Schema
     {
-        return $form
-            ->schema([
-                Forms\Components\TextInput::make('group')
+        return $schema
+            ->components([
+                TextInput::make('group')
                     ->maxLength(255),
-                Forms\Components\TextInput::make('gid')
+                TextInput::make('gid')
                     ->numeric(),
-                Forms\Components\TextInput::make('even')
+                TextInput::make('even')
                     ->maxLength(255),
-                Forms\Components\TextInput::make('role')
+                TextInput::make('role')
                     ->maxLength(255),
             ]);
     }
 
-    #[\Override]
+    #[Override]
     public static function table(Table $table): Table
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('group')
+                TextColumn::make('group')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('gid')
+                TextColumn::make('gid')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('even')
+                TextColumn::make('even')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('role')
+                TextColumn::make('role')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('created_at')
+                TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('updated_at')
+                TextColumn::make('updated_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
@@ -61,17 +70,17 @@ class SourceRefEvenResource extends Resource
             ->filters([
                 //
             ])
-            ->actions([
-                Actions\EditAction::make(),
+            ->recordActions([
+                EditAction::make(),
             ])
-            ->bulkActions([
-                Actions\BulkActionGroup::make([
-                    Actions\DeleteBulkAction::make(),
+            ->toolbarActions([
+                BulkActionGroup::make([
+                    DeleteBulkAction::make(),
                 ]),
             ]);
     }
 
-    #[\Override]
+    #[Override]
     public static function getRelations(): array
     {
         return [
@@ -82,9 +91,9 @@ class SourceRefEvenResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index'  => Pages\ListSourceRefEvens::route('/'),
-            'create' => Pages\CreateSourceRefEven::route('/create'),
-            'edit'   => Pages\EditSourceRefEven::route('/{record}/edit'),
+            'index'  => ListSourceRefEvens::route('/'),
+            'create' => CreateSourceRefEven::route('/create'),
+            'edit'   => EditSourceRefEven::route('/{record}/edit'),
         ];
     }
 }

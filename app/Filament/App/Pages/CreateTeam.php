@@ -2,6 +2,7 @@
 
 namespace App\Filament\App\Pages;
 
+use Override;
 use App\Models\User;
 use Filament\Facades\Filament;
 use Filament\Forms\Components\TextInput;
@@ -16,11 +17,11 @@ use Filament\Schemas\Schema;
 class CreateTeam extends RegisterTenant
 {
 
-    #[\Override]
-    public function form(Schema $form): Schema
+    #[Override]
+    public function form(Schema $schema): Schema
     {
-        return $form
-            ->schema([
+        return $schema
+            ->components([
                 TextInput::make('name')
                     ->label('Team Name')
                     ->required()
@@ -31,7 +32,7 @@ class CreateTeam extends RegisterTenant
             ]);
     }
     
-    #[\Override]
+    #[Override]
     protected function handleRegistration(array $data): Model
     {
         $team = app(\App\Actions\Jetstream\CreateTeam::class)->create(auth()->user(), $data);

@@ -2,22 +2,24 @@
 
 namespace App\Models;
 
+use Override;
+use Exception;
 use Filament\Facades\Filament;
 
 class BatchData extends \FamilyTree365\LaravelGedcom\Utils\BatchData
 {
-    #[\Override]
+    #[Override]
     public static function upsert($modelClass, $conn, array $values, array $uniqueBy, array $update = [])
     {
         // error_log("modi upsert");
         $teamId = null;
 
         // Only try to get tenant if we're in a web context with auth and Filament is properly initialized
-        if (auth()->check() && app()->bound('filament') && \Filament\Facades\Filament::hasTenancy()) {
+        if (auth()->check() && app()->bound('filament') && Filament::hasTenancy()) {
             try {
-                $tenant = \Filament\Facades\Filament::getTenant();
+                $tenant = Filament::getTenant();
                 $teamId = $tenant ? $tenant->id : null;
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
                 // Silently handle cases where tenant context is not available
                 $teamId = null;
             }

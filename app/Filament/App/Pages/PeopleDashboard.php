@@ -11,5 +11,5 @@ class PeopleDashboard extends Page
 
     protected static ?string $title = 'People Dashboard';
 
-    protected static string | BackedEnum | null $navigationIcon = 'heroicon-o-chart-bar';
+    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-chart-bar';
 }

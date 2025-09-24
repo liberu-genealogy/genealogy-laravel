@@ -2,6 +2,7 @@
 
 namespace App\Filament\App\Pages;
 
+use Override;
 use UnitEnum;
 use BackedEnum;
 use Filament\Forms\Components\TextInput;
@@ -14,9 +15,9 @@ class UpdatePasswordPage extends Page
 {
     protected string $view = 'filament.pages.profile.update-password';
 
-    protected static string | BackedEnum | null $navigationIcon = 'heroicon-o-lock-closed';
+    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-lock-closed';
 
-    protected static string | UnitEnum | null $navigationGroup = 'Account';
+    protected static string | \UnitEnum | null $navigationGroup = 'Account';
 
     protected static ?int $navigationSort = 1;
 
@@ -69,13 +70,13 @@ class UpdatePasswordPage extends Page
         session()->flash('status', 'Your password has been updated.');
     }
 
-    #[\Override]
+    #[Override]
     public function getHeading(): string
     {
         return static::$title;
     }
 
-    #[\Override]
+    #[Override]
     public static function shouldRegisterNavigation(): bool
     {
         return true; //config('filament-jetstream.show_update_password_page');

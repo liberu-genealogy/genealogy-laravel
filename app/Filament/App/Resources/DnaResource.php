@@ -2,6 +2,15 @@
 
 namespace App\Filament\App\Resources;
 
+use Override;
+use Exception;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Actions\EditAction;
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteBulkAction;
+use App\Filament\App\Resources\DnaResource\Pages\ListDnas;
+use App\Filament\App\Resources\DnaResource\Pages\CreateDna;
+use App\Filament\App\Resources\DnaResource\Pages\EditDna;
 use UnitEnum;
 use BackedEnum;
 use App\Filament\App\Resources\DnaResource\Pages;
@@ -26,9 +35,9 @@ class DnaResource extends Resource
 
     protected static ?string $navigationLabel = 'DNA Records';
 
-    protected static string | BackedEnum | null $navigationIcon = 'heroicon-o-beaker';
+    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-beaker';
 
-    protected static string | UnitEnum | null $navigationGroup = 'DNA Analysis';
+    protected static string | \UnitEnum | null $navigationGroup = 'DNA Analysis';
 
     protected static ?int $navigationSort = 1;
 
@@ -37,11 +46,11 @@ class DnaResource extends Resource
         return auth()->user()->canUploadDna();
     }
 
-    #[\Override]
-    public static function form(Schema $form): Schema
+    #[Override]
+    public static function form(Schema $schema): Schema
     {
-        return $form
-            ->schema([
+        return $schema
+            ->components([
                 FileUpload::make('attachment')
                     ->required()
                     ->maxSize(100000)
@@ -93,7 +102,7 @@ class DnaResource extends Resource
                                     'redirect' => 'dna.edit',
                                     'param'    => ['dna' => $dna->id],
                                 ];
-                            } catch (\Exception $e) {
+                            } catch (Exception $e) {
                                 return $e->getMessage();
                             }
                         }
@@ -101,25 +110,25 @@ class DnaResource extends Resource
             ]);
     }
 
-    #[\Override]
+    #[Override]
     public static function table(Table $table): Table
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('name')
+                TextColumn::make('name')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('user_id')
+                TextColumn::make('user_id')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('variable_name')
+                TextColumn::make('variable_name')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('file_name')
+                TextColumn::make('file_name')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('created_at')
+                TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('updated_at')
+                TextColumn::make('updated_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
@@ -127,17 +136,17 @@ class DnaResource extends Resource
             ->filters([
                 //
             ])
-            ->actions([
-                Actions\EditAction::make(),
+            ->recordActions([
+                EditAction::make(),
             ])
-            ->bulkActions([
-                Actions\BulkActionGroup::make([
-                    Actions\DeleteBulkAction::make(),
+            ->toolbarActions([
+                BulkActionGroup::make([
+                    DeleteBulkAction::make(),
                 ]),
             ]);
     }
 
-    #[\Override]
+    #[Override]
     public static function getRelations(): array
     {
         return [
@@ -148,9 +157,9 @@ class DnaResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index'  => Pages\ListDnas::route('/'),
-            'create' => Pages\CreateDna::route('/create'),
-            'edit'   => Pages\EditDna::route('/{record}/edit'),
+            'index'  => ListDnas::route('/'),
+            'create' => CreateDna::route('/create'),
+            'edit'   => EditDna::route('/{record}/edit'),
         ];
     }
 

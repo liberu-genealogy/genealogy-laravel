@@ -2,6 +2,8 @@
 
 namespace App\Http\Middleware;
 
+use Filament\Actions\Action;
+use Filament\Facades\Filament;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -28,15 +30,15 @@ class PremiumFeatureMiddleware
                 ->warning()
                 ->persistent()
                 ->actions([
-                    \Filament\Notifications\Actions\Action::make('upgrade')
+                    Action::make('upgrade')
                         ->label('Upgrade to Premium')
-                        ->url(\Filament\Facades\Filament::getUrl() . '/subscription')
+                        ->url(Filament::getUrl() . '/subscription')
                         ->button()
                         ->color('primary'),
                 ])
                 ->send();
 
-            return redirect(\Filament\Facades\Filament::getUrl() . '/subscription');
+            return redirect(Filament::getUrl() . '/subscription');
         }
 
         // Feature-specific checks
@@ -50,7 +52,7 @@ class PremiumFeatureMiddleware
                             ->warning()
                             ->send();
 
-                        return redirect(\Filament\Facades\Filament::getUrl() . '/subscription');
+                        return redirect(Filament::getUrl() . '/subscription');
                     }
                     break;
 

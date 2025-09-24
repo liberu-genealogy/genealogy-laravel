@@ -2,6 +2,7 @@
 
 namespace App\Filament\App\Pages;
 
+use Override;
 use UnitEnum;
 use BackedEnum;
 use Filament\Forms\Components\TextInput;
@@ -12,9 +13,9 @@ class UpdateProfileInformationPage extends Page
 {
     protected string $view = 'filament.pages.profile.update-profile-information';
 
-    protected static string | BackedEnum | null $navigationIcon = 'heroicon-o-user';
+    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-user';
 
-    protected static string | UnitEnum | null $navigationGroup = 'Account';
+    protected static string | \UnitEnum | null $navigationGroup = 'Account';
 
     protected static ?int $navigationSort = 0;
 
@@ -60,13 +61,13 @@ class UpdateProfileInformationPage extends Page
         session()->flash('status', 'Your profile has been updated.');
     }
 
-    #[\Override]
+    #[Override]
     public function getHeading(): string
     {
         return static::$title;
     }
 
-    #[\Override]
+    #[Override]
     public static function shouldRegisterNavigation(): bool
     {
         return true; //config('filament-jetstream.show_update_profile_information_page');

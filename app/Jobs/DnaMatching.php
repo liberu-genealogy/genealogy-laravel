@@ -2,6 +2,7 @@
 
 namespace App\Jobs;
 
+use Exception;
 use App\Models\Dna;
 use App\Models\DnaMatching as DM;
 use App\Models\User;
@@ -141,7 +142,7 @@ class DnaMatching implements ShouldQueue
                 // $dm->save();
 
                 // $data = writeCSV(storage_path('app'.DIRECTORY_SEPARATOR.'dna'.DIRECTORY_SEPARATOR.'output'.DIRECTORY_SEPARATOR.$dm->file2), $data);
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
                 Log::error('Error in DNA matching job: ' . $e->getMessage());
                 continue; // Skip to next DNA record on error
             }

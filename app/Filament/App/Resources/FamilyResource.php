@@ -2,6 +2,16 @@
 
 namespace App\Filament\App\Resources;
 
+use Override;
+use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\TextInput;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Actions\EditAction;
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteBulkAction;
+use App\Filament\App\Resources\FamilyResource\Pages\ListFamilies;
+use App\Filament\App\Resources\FamilyResource\Pages\CreateFamily;
+use App\Filament\App\Resources\FamilyResource\Pages\EditFamily;
 use UnitEnum;
 use BackedEnum;
 use App\Filament\App\Resources\FamilyResource\Pages;
@@ -18,86 +28,86 @@ class FamilyResource extends Resource
 {
     protected static ?string $model = Family::class;
 
-    protected static string | BackedEnum | null $navigationIcon = 'heroicon-o-home';
+    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-home';
     protected static ?string $navigationLabel = 'Families';
-    protected static string | UnitEnum | null $navigationGroup = 'Family Tree';
+    protected static string | \UnitEnum | null $navigationGroup = 'Family Tree';
     protected static ?int $navigationSort = 2;
 
-    #[\Override]
-    public static function form(Schema $form): Schema
+    #[Override]
+    public static function form(Schema $schema): Schema
     {
-        return $form
-            ->schema([
-                Forms\Components\Textarea::make('description')
+        return $schema
+            ->components([
+                Textarea::make('description')
                 ->maxLength(65535)
                 ->columnSpanFull(),
-                Forms\Components\TextInput::make('is_active')
+                TextInput::make('is_active')
                     ->numeric(),
-                Forms\Components\TextInput::make('type_id')
+                TextInput::make('type_id')
                     ->numeric(),
-                Forms\Components\TextInput::make('husband_id')
+                TextInput::make('husband_id')
                     ->numeric(),
-                Forms\Components\TextInput::make('wife_id')
+                TextInput::make('wife_id')
                     ->numeric(),
-                Forms\Components\TextInput::make('chan')
+                TextInput::make('chan')
                     ->maxLength(255),
-                Forms\Components\TextInput::make('nchi')
+                TextInput::make('nchi')
                     ->maxLength(255),
-                Forms\Components\TextInput::make('rin')
+                TextInput::make('rin')
                     ->maxLength(255),
             ]);
     }
 
-    #[\Override]
+    #[Override]
     public static function table(Table $table): Table
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('is_active')
+                TextColumn::make('is_active')
                 ->numeric()
                 ->sortable(),
-                Tables\Columns\TextColumn::make('type_id')
+                TextColumn::make('type_id')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('husband_id')
+                TextColumn::make('husband_id')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('wife_id')
+                TextColumn::make('wife_id')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('created_at')
+                TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('updated_at')
+                TextColumn::make('updated_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('deleted_at')
+                TextColumn::make('deleted_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('chan')
+                TextColumn::make('chan')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('nchi')
+                TextColumn::make('nchi')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('rin')
+                TextColumn::make('rin')
                     ->searchable(),
             ])
             ->filters([
                 //
             ])
-            ->actions([
-                Actions\EditAction::make(),
+            ->recordActions([
+                EditAction::make(),
             ])
-            ->bulkActions([
-                Actions\BulkActionGroup::make([
-                    Actions\DeleteBulkAction::make(),
+            ->toolbarActions([
+                BulkActionGroup::make([
+                    DeleteBulkAction::make(),
                 ]),
             ]);
     }
 
-    #[\Override]
+    #[Override]
     public static function getRelations(): array
     {
         return [
@@ -108,9 +118,9 @@ class FamilyResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index'  => Pages\ListFamilies::route('/'),
-            'create' => Pages\CreateFamily::route('/create'),
-            'edit'   => Pages\EditFamily::route('/{record}/edit'),
+            'index'  => ListFamilies::route('/'),
+            'create' => CreateFamily::route('/create'),
+            'edit'   => EditFamily::route('/{record}/edit'),
         ];
     }
 }

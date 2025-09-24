@@ -2,6 +2,9 @@
 
 namespace App\Modules\Places;
 
+use App\Modules\Places\Services\PlacesService;
+use App\Modules\Places\Services\GeocodingService;
+use Artisan;
 use App\Modules\BaseModule;
 
 class PlacesModule extends BaseModule
@@ -37,11 +40,11 @@ class PlacesModule extends BaseModule
     protected function registerPlacesServices(): void
     {
         app()->singleton('genealogy.places', function ($app) {
-            return new \App\Modules\Places\Services\PlacesService();
+            return new PlacesService();
         });
 
         app()->singleton('genealogy.places.geocoder', function ($app) {
-            return new \App\Modules\Places\Services\GeocodingService();
+            return new GeocodingService();
         });
     }
 
@@ -58,7 +61,7 @@ class PlacesModule extends BaseModule
      */
     protected function installPlacesTables(): void
     {
-        \Artisan::call('migrate', [
+        Artisan::call('migrate', [
             '--path' => 'app/Modules/Places/database/migrations',
             '--force' => true,
         ]);
@@ -69,7 +72,7 @@ class PlacesModule extends BaseModule
      */
     protected function seedPlacesData(): void
     {
-        \Artisan::call('db:seed', [
+        Artisan::call('db:seed', [
             '--class' => 'App\\Modules\\Places\\Database\\Seeders\\PlacesSeeder',
             '--force' => true,
         ]);

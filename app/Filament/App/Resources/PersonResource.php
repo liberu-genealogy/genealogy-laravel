@@ -2,6 +2,17 @@
 
 namespace App\Filament\App\Resources;
 
+use Override;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\DateTimePicker;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Actions\EditAction;
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteBulkAction;
+use App\Filament\App\Resources\PersonResource\Pages\ListPeople;
+use App\Filament\App\Resources\PersonResource\Pages\CreatePerson;
+use App\Filament\App\Resources\PersonResource\Pages\EditPerson;
 use UnitEnum;
 use BackedEnum;
 use App\Filament\App\Resources\PersonResource\Pages;
@@ -18,92 +29,92 @@ class PersonResource extends Resource
 {
     protected static ?string $model = Person::class;
 
-    protected static string | BackedEnum | null $navigationIcon = 'heroicon-o-user-plus';
+    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-user-plus';
 
     protected static ?string $navigationLabel = 'People';
 
-    protected static string | UnitEnum | null $navigationGroup = 'Family Tree';
+    protected static string | \UnitEnum | null $navigationGroup = 'Family Tree';
 
     protected static ?int $navigationSort = 1;
 
     // protected static ?string $tenantRelationshipName = 'People';
 
-    #[\Override]
-    public static function form(Schema $form): Schema
+    #[Override]
+    public static function form(Schema $schema): Schema
     {
-        return $form
-            ->schema([
-                Forms\Components\TextInput::make('givn')->label('First Name'),
-                Forms\Components\TextInput::make('surn')->label('Last Name'),
-                Forms\Components\Select::make('sex')
+        return $schema
+            ->components([
+                TextInput::make('givn')->label('First Name'),
+                TextInput::make('surn')->label('Last Name'),
+                Select::make('sex')
                     ->options([
                         'M' => 'Male',
                         'F' => 'Female',
                     ])
                     ->label('Sex'),
-                Forms\Components\TextInput::make('child_in_family_id')->label('Child In Family ID'),
-                Forms\Components\TextInput::make('description')->label('Description'),
-                Forms\Components\TextInput::make('titl')->label('Title'),
-                Forms\Components\TextInput::make('name')->label('Name'),
-                Forms\Components\TextInput::make('appellative')->label('Appellative'),
-                Forms\Components\TextInput::make('email')->label('Email'),
-                Forms\Components\TextInput::make('phone')->label('Phone'),
-                Forms\Components\DateTimePicker::make('birthday')->label('Birthday'),
-                Forms\Components\DateTimePicker::make('deathday')->label('Deathday'),
-                Forms\Components\DateTimePicker::make('burial_day')->label('Burial Day'),
-                Forms\Components\TextInput::make('bank')->label('Bank'),
-                Forms\Components\TextInput::make('bank_account')->label('Bank Account'),
-                Forms\Components\TextInput::make('chan')->label('Chan'),
-                Forms\Components\TextInput::make('rin')->label('Rin'),
-                Forms\Components\TextInput::make('resn')->label('Resn'),
-                Forms\Components\TextInput::make('rfn')->label('Rfn'),
-                Forms\Components\TextInput::make('afn')->label('Afn'),
+                TextInput::make('child_in_family_id')->label('Child In Family ID'),
+                TextInput::make('description')->label('Description'),
+                TextInput::make('titl')->label('Title'),
+                TextInput::make('name')->label('Name'),
+                TextInput::make('appellative')->label('Appellative'),
+                TextInput::make('email')->label('Email'),
+                TextInput::make('phone')->label('Phone'),
+                DateTimePicker::make('birthday')->label('Birthday'),
+                DateTimePicker::make('deathday')->label('Deathday'),
+                DateTimePicker::make('burial_day')->label('Burial Day'),
+                TextInput::make('bank')->label('Bank'),
+                TextInput::make('bank_account')->label('Bank Account'),
+                TextInput::make('chan')->label('Chan'),
+                TextInput::make('rin')->label('Rin'),
+                TextInput::make('resn')->label('Resn'),
+                TextInput::make('rfn')->label('Rfn'),
+                TextInput::make('afn')->label('Afn'),
             ]);
     }
 
-    #[\Override]
+    #[Override]
     public static function table(Table $table): Table
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('givn')->label('First Name'),
-                Tables\Columns\TextColumn::make('surn')->label('Last Name'),
-                Tables\Columns\TextColumn::make('sex')->label('Sex'),
-                Tables\Columns\TextColumn::make('child_in_family_id')->label('Child In Family ID'),
-                Tables\Columns\TextColumn::make('description')->label('Description'),
-                Tables\Columns\TextColumn::make('titl')->label('Title'),
-                Tables\Columns\TextColumn::make('name')->label('Name'),
-                Tables\Columns\TextColumn::make('appellative')->label('Appellative'),
-                Tables\Columns\TextColumn::make('email')->label('Email'),
-                Tables\Columns\TextColumn::make('phone')->label('Phone'),
-                Tables\Columns\TextColumn::make('birthday')->label('Birthday'),
-                Tables\Columns\TextColumn::make('deathday')->label('Deathday'),
-                Tables\Columns\TextColumn::make('burial_day')->label('Burial Day'),
-                Tables\Columns\TextColumn::make('bank')->label('Bank'),
-                Tables\Columns\TextColumn::make('bank_account')->label('Bank Account'),
-                Tables\Columns\TextColumn::make('chan')->label('Chan'),
-                Tables\Columns\TextColumn::make('rin')->label('Rin'),
-                Tables\Columns\TextColumn::make('resn')->label('Resn'),
-                Tables\Columns\TextColumn::make('rfn')->label('Rfn'),
-                Tables\Columns\TextColumn::make('afn')->label('Afn'),
-                Tables\Columns\TextColumn::make('created_at')->label('Created At')->sortable(),
-                Tables\Columns\TextColumn::make('updated_at')->label('Updated At')->sortable(),
+                TextColumn::make('givn')->label('First Name'),
+                TextColumn::make('surn')->label('Last Name'),
+                TextColumn::make('sex')->label('Sex'),
+                TextColumn::make('child_in_family_id')->label('Child In Family ID'),
+                TextColumn::make('description')->label('Description'),
+                TextColumn::make('titl')->label('Title'),
+                TextColumn::make('name')->label('Name'),
+                TextColumn::make('appellative')->label('Appellative'),
+                TextColumn::make('email')->label('Email'),
+                TextColumn::make('phone')->label('Phone'),
+                TextColumn::make('birthday')->label('Birthday'),
+                TextColumn::make('deathday')->label('Deathday'),
+                TextColumn::make('burial_day')->label('Burial Day'),
+                TextColumn::make('bank')->label('Bank'),
+                TextColumn::make('bank_account')->label('Bank Account'),
+                TextColumn::make('chan')->label('Chan'),
+                TextColumn::make('rin')->label('Rin'),
+                TextColumn::make('resn')->label('Resn'),
+                TextColumn::make('rfn')->label('Rfn'),
+                TextColumn::make('afn')->label('Afn'),
+                TextColumn::make('created_at')->label('Created At')->sortable(),
+                TextColumn::make('updated_at')->label('Updated At')->sortable(),
 
             ])
             ->filters([
                 //
             ])
-            ->actions([
-                Actions\EditAction::make(),
+            ->recordActions([
+                EditAction::make(),
             ])
-            ->bulkActions([
-                Actions\BulkActionGroup::make([
-                    Actions\DeleteBulkAction::make(),
+            ->toolbarActions([
+                BulkActionGroup::make([
+                    DeleteBulkAction::make(),
                 ]),
             ]);
     }
 
-    #[\Override]
+    #[Override]
     public static function getRelations(): array
     {
         return [
@@ -114,9 +125,9 @@ class PersonResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index'  => Pages\ListPeople::route('/'),
-            'create' => Pages\CreatePerson::route('/create'),
-            'edit'   => Pages\EditPerson::route('/{record}/edit'),
+            'index'  => ListPeople::route('/'),
+            'create' => CreatePerson::route('/create'),
+            'edit'   => EditPerson::route('/{record}/edit'),
         ];
     }
 }

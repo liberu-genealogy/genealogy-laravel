@@ -2,6 +2,17 @@
 
 namespace App\Filament\App\Resources;
 
+use Override;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\DateTimePicker;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Actions\EditAction;
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteBulkAction;
+use App\Filament\App\Resources\NoteResource\Pages\ListNotes;
+use App\Filament\App\Resources\NoteResource\Pages\CreateNote;
+use App\Filament\App\Resources\NoteResource\Pages\EditNote;
 use UnitEnum;
 use BackedEnum;
 use App\Filament\App\Resources\NoteResource\Pages;
@@ -18,65 +29,65 @@ class NoteResource extends Resource
 {
     protected static ?string $model = Note::class;
 
-    protected static string | BackedEnum | null $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-rectangle-stack';
 
     protected static ?string $navigationLabel = 'Add Notes';
 
-    protected static string | UnitEnum | null $navigationGroup = 'Family';
+    protected static string | \UnitEnum | null $navigationGroup = 'Family';
 
-    #[\Override]
-    public static function form(Schema $form): Schema
+    #[Override]
+    public static function form(Schema $schema): Schema
     {
-        return $form
-            ->schema([
-                Forms\Components\TextInput::make('name')
+        return $schema
+            ->components([
+                TextInput::make('name')
                     ->maxLength(255),
-                Forms\Components\Textarea::make('description')
+                Textarea::make('description')
                     ->maxLength(65535)
                     ->columnSpanFull(),
-                Forms\Components\DateTimePicker::make('date'),
-                Forms\Components\TextInput::make('type_id')
+                DateTimePicker::make('date'),
+                TextInput::make('type_id')
                     ->numeric(),
-                Forms\Components\TextInput::make('is_active')
+                TextInput::make('is_active')
                     ->numeric(),
-                Forms\Components\TextInput::make('group')
+                TextInput::make('group')
                     ->maxLength(255),
-                Forms\Components\TextInput::make('gid')
+                TextInput::make('gid')
                     ->maxLength(255),
-                Forms\Components\Textarea::make('note')
+                Textarea::make('note')
                     ->columnSpanFull(),
-                Forms\Components\TextInput::make('rin')
+                TextInput::make('rin')
                     ->maxLength(255),
             ]);
     }
 
-    #[\Override]
+    #[Override]
     public static function table(Table $table): Table
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('name')
+                TextColumn::make('name')
                 ->searchable(),
-                Tables\Columns\TextColumn::make('date')
+                TextColumn::make('date')
                     ->dateTime()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('type_id')
+                TextColumn::make('type_id')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('is_active')
+                TextColumn::make('is_active')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('group')
+                TextColumn::make('group')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('gid')
+                TextColumn::make('gid')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('rin')
+                TextColumn::make('rin')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('created_at')
+                TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('updated_at')
+                TextColumn::make('updated_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
@@ -84,17 +95,17 @@ class NoteResource extends Resource
             ->filters([
                 //
             ])
-            ->actions([
-                Actions\EditAction::make(),
+            ->recordActions([
+                EditAction::make(),
             ])
-            ->bulkActions([
-                Actions\BulkActionGroup::make([
-                    Actions\DeleteBulkAction::make(),
+            ->toolbarActions([
+                BulkActionGroup::make([
+                    DeleteBulkAction::make(),
                 ]),
             ]);
     }
 
-    #[\Override]
+    #[Override]
     public static function getRelations(): array
     {
         return [
@@ -105,9 +116,9 @@ class NoteResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index'  => Pages\ListNotes::route('/'),
-            'create' => Pages\CreateNote::route('/create'),
-            'edit'   => Pages\EditNote::route('/{record}/edit'),
+            'index'  => ListNotes::route('/'),
+            'create' => CreateNote::route('/create'),
+            'edit'   => EditNote::route('/{record}/edit'),
         ];
     }
 }

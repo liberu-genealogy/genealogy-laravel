@@ -2,6 +2,10 @@
 
 namespace App\Modules\Sources;
 
+use App\Modules\Sources\Services\SourcesService;
+use App\Modules\Sources\Services\CitationService;
+use App\Modules\Sources\Services\RepositoryService;
+use Artisan;
 use App\Modules\BaseModule;
 
 class SourcesModule extends BaseModule
@@ -37,15 +41,15 @@ class SourcesModule extends BaseModule
     protected function registerSourcesServices(): void
     {
         app()->singleton('genealogy.sources', function ($app) {
-            return new \App\Modules\Sources\Services\SourcesService();
+            return new SourcesService();
         });
 
         app()->singleton('genealogy.citations', function ($app) {
-            return new \App\Modules\Sources\Services\CitationService();
+            return new CitationService();
         });
 
         app()->singleton('genealogy.repositories', function ($app) {
-            return new \App\Modules\Sources\Services\RepositoryService();
+            return new RepositoryService();
         });
     }
 
@@ -62,7 +66,7 @@ class SourcesModule extends BaseModule
      */
     protected function installSourcesTables(): void
     {
-        \Artisan::call('migrate', [
+        Artisan::call('migrate', [
             '--path' => 'app/Modules/Sources/database/migrations',
             '--force' => true,
         ]);
@@ -73,7 +77,7 @@ class SourcesModule extends BaseModule
      */
     protected function seedSourcesData(): void
     {
-        \Artisan::call('db:seed', [
+        Artisan::call('db:seed', [
             '--class' => 'App\\Modules\\Sources\\Database\\Seeders\\SourcesSeeder',
             '--force' => true,
         ]);

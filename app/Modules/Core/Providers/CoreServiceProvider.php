@@ -2,6 +2,8 @@
 
 namespace App\Modules\Core\Providers;
 
+use App\Modules\Core\Services\TreeService;
+use App\Modules\Core\Services\GedcomService;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\File;
 
@@ -33,11 +35,11 @@ class CoreServiceProvider extends ServiceProvider
     {
         // Register shared genealogy services
         $this->app->singleton('genealogy.tree', function ($app) {
-            return new \App\Modules\Core\Services\TreeService();
+            return new TreeService();
         });
 
         $this->app->singleton('genealogy.gedcom', function ($app) {
-            return new \App\Modules\Core\Services\GedcomService();
+            return new GedcomService();
         });
     }
 

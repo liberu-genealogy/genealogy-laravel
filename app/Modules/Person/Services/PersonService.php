@@ -2,6 +2,7 @@
 
 namespace App\Modules\Person\Services;
 
+use DB;
 use App\Models\Person;
 use App\Models\PersonEvent;
 use App\Models\PersonName;
@@ -160,11 +161,11 @@ class PersonService
             ->update(['person_id' => $primaryPerson->id]);
 
         // Update family relationships
-        \DB::table('families')
+        DB::table('families')
             ->where('husband_id', $duplicatePerson->id)
             ->update(['husband_id' => $primaryPerson->id]);
 
-        \DB::table('families')
+        DB::table('families')
             ->where('wife_id', $duplicatePerson->id)
             ->update(['wife_id' => $primaryPerson->id]);
 

@@ -2,6 +2,7 @@
 
 namespace App\Filament\App\Widgets;
 
+use Filament\Tables\Columns\TextColumn;
 use App\Models\Person;
 use Filament\Tables;
 use Filament\Widgets\TableWidget as BaseWidget;
@@ -17,13 +18,13 @@ class PeopleWidget extends BaseWidget
     protected function getTableColumns(): array
     {
         return [
-            Tables\Columns\TextColumn::make('fullname')
+            TextColumn::make('fullname')
                 ->label('Name')
                 ->searchable(['givn', 'surn'])
                 ->sortable(),
-            Tables\Columns\TextColumn::make('sex')
+            TextColumn::make('sex')
                 ->label('Gender'),
-            Tables\Columns\TextColumn::make('birthday')
+            TextColumn::make('birthday')
                 ->date()
                 ->sortable(),
         ];

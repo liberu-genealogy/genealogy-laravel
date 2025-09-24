@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use Override;
 use App\Actions\Jetstream\AddTeamMember;
 use App\Actions\Jetstream\CreateTeam;
 use App\Actions\Jetstream\DeleteTeam;
@@ -17,7 +18,7 @@ class JetstreamServiceProvider extends ServiceProvider
     /**
      * Register any application services.
      */
-    #[\Override]
+    #[Override]
     public function register(): void
     {
         //

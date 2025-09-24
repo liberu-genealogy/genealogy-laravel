@@ -4,13 +4,14 @@ declare(strict_types=1);
 
 namespace App\Providers;
 
+use Override;
 use Illuminate\Support\ServiceProvider;
 use App\Models\{Addr, BatchData, Chan, Family, FamilyEvent, FamilySlgs,
     Person, PersonAlia, PersonAsso, PersonEvent, Subm};
 
 class TeamServiceProvider extends ServiceProvider
 {
-    #[\Override]
+    #[Override]
     public function register(): void
     {
         // Instead of binding directly, we'll use a callback to prevent circular dependencies

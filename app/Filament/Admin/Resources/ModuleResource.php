@@ -2,6 +2,19 @@
 
 namespace App\Filament\Admin\Resources;
 
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\TagsInput;
+use Filament\Forms\Components\Toggle;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Columns\TagsColumn;
+use Filament\Tables\Columns\IconColumn;
+use Filament\Tables\Filters\TernaryFilter;
+use Filament\Actions\Action;
+use Filament\Notifications\Notification;
+use Exception;
+use App\Filament\Admin\Resources\ModuleResource\Pages\ListModules;
+use Illuminate\Pagination\LengthAwarePaginator;
 use App\Filament\Admin\Resources\ModuleResource\Pages;
 use App\Modules\ModuleManager;
 use Filament\Forms;
@@ -16,28 +29,28 @@ class ModuleResource extends Resource
 {
     protected static ?string $model = null; // We don't use a traditional model
 
-    protected static ?string $navigationIcon = 'heroicon-o-puzzle-piece';
+    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-puzzle-piece';
 
-    protected static ?string $navigationGroup = 'System';
+    protected static string | \UnitEnum | null $navigationGroup = 'System';
 
     protected static ?string $navigationLabel = 'Modules';
 
     protected static ?int $navigationSort = 10;
 
-    public static function form(Schema $form): Schema
+    public static function form(Schema $schema): Schema
     {
-        return $form
-            ->schema([
-                Forms\Components\TextInput::make('name')
+        return $schema
+            ->components([
+                TextInput::make('name')
                     ->required()
                     ->disabled(),
-                Forms\Components\TextInput::make('version')
+                TextInput::make('version')
                     ->disabled(),
-                Forms\Components\Textarea::make('description')
+                Textarea::make('description')
                     ->disabled(),
-                Forms\Components\TagsInput::make('dependencies')
+                TagsInput::make('dependencies')
                     ->disabled(),
-                Forms\Components\Toggle::make('enabled')
+                Toggle::make('enabled')
                     ->required(),
             ]);
     }
@@ -47,22 +60,22 @@ class ModuleResource extends Resource
         return $table
             ->query(static::getEloquentQuery())
             ->columns([
-                Tables\Columns\TextColumn::make('name')
+                TextColumn::make('name')
                     ->label('Module Name')
                     ->searchable()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('version')
+                TextColumn::make('version')
                     ->label('Version')
                     ->sortable(),
-                Tables\Columns\TextColumn::make('description')
+                TextColumn::make('description')
                     ->label('Description')
                     ->limit(50)
                     ->tooltip(function ($record) {
                         return $record['description'];
                     }),
-                Tables\Columns\TagsColumn::make('dependencies')
+                TagsColumn::make('dependencies')
                     ->label('Dependencies'),
-                Tables\Columns\IconColumn::make('enabled')
+                IconColumn::make('enabled')
                     ->label('Status')
                     ->boolean()
                     ->trueIcon('heroicon-o-check-circle')
@@ -71,14 +84,14 @@ class ModuleResource extends Resource
                     ->falseColor('danger'),
             ])
             ->filters([
-                Tables\Filters\TernaryFilter::make('enabled')
+                TernaryFilter::make('enabled')
                     ->label('Status')
                     ->placeholder('All modules')
                     ->trueLabel('Enabled modules')
                     ->falseLabel('Disabled modules'),
             ])
-            ->actions([
-                Tables\Actions\Action::make('toggle')
+            ->recordActions([
+                Action::make('toggle')
                     ->label(fn ($record) => $record['enabled'] ? 'Disable' : 'Enable')
                     ->icon(fn ($record) => $record['enabled'] ? 'heroicon-o-pause' : 'heroicon-o-play')
                     ->color(fn ($record) => $record['enabled'] ? 'warning' : 'success')
@@ -92,28 +105,28 @@ class ModuleResource extends Resource
                         try {
                             if ($record['enabled']) {
                                 $moduleManager->disable($record['name']);
-                                \Filament\Notifications\Notification::make()
+                                Notification::make()
                                     ->title('Module Disabled')
                                     ->body("The {$record['name']} module has been disabled.")
                                     ->success()
                                     ->send();
                             } else {
                                 $moduleManager->enable($record['name']);
-                                \Filament\Notifications\Notification::make()
+                                Notification::make()
                                     ->title('Module Enabled')
                                     ->body("The {$record['name']} module has been enabled.")
                                     ->success()
                                     ->send();
                             }
-                        } catch (\Exception $e) {
-                            \Filament\Notifications\Notification::make()
+                        } catch (Exception $e) {
+                            Notification::make()
                                 ->title('Error')
                                 ->body('Failed to toggle module: ' . $e->getMessage())
                                 ->danger()
                                 ->send();
                         }
                     }),
-                Tables\Actions\Action::make('info')
+                Action::make('info')
                     ->label('Info')
                     ->icon('heroicon-o-information-circle')
                     ->color('info')
@@ -124,7 +137,7 @@ class ModuleResource extends Resource
                         ]);
                     }),
             ])
-            ->bulkActions([
+            ->toolbarActions([
                 // No bulk actions for modules
             ]);
     }
@@ -139,7 +152,7 @@ class ModuleResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListModules::route('/'),
+            'index' => ListModules::route('/'),
         ];
     }
 
@@ -173,7 +186,7 @@ class ModuleResource extends Resource
 
             public function paginate($perPage = 15, $columns = ['*'], $pageName = 'page', $page = null)
             {
-                return new \Illuminate\Pagination\LengthAwarePaginator(
+                return new LengthAwarePaginator(
                     $this->modules->forPage($page ?? 1, $perPage),
                     $this->modules->count(),
                     $perPage,

@@ -2,6 +2,10 @@
 
 namespace App\Modules\Admin;
 
+use App\Modules\Admin\Services\AdminService;
+use App\Modules\Admin\Services\TypeService;
+use App\Modules\Admin\Services\ChangeService;
+use Artisan;
 use App\Modules\BaseModule;
 
 class AdminModule extends BaseModule
@@ -36,15 +40,15 @@ class AdminModule extends BaseModule
     protected function registerAdminServices(): void
     {
         app()->singleton('genealogy.admin', function ($app) {
-            return new \App\Modules\Admin\Services\AdminService();
+            return new AdminService();
         });
 
         app()->singleton('genealogy.admin.types', function ($app) {
-            return new \App\Modules\Admin\Services\TypeService();
+            return new TypeService();
         });
 
         app()->singleton('genealogy.admin.changes', function ($app) {
-            return new \App\Modules\Admin\Services\ChangeService();
+            return new ChangeService();
         });
     }
 
@@ -61,7 +65,7 @@ class AdminModule extends BaseModule
      */
     protected function installAdminTables(): void
     {
-        \Artisan::call('migrate', [
+        Artisan::call('migrate', [
             '--path' => 'app/Modules/Admin/database/migrations',
             '--force' => true,
         ]);

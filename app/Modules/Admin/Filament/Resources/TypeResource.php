@@ -2,6 +2,19 @@
 
 namespace App\Modules\Admin\Filament\Resources;
 
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\Toggle;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Columns\IconColumn;
+use Filament\Tables\Filters\TernaryFilter;
+use Filament\Actions\EditAction;
+use Filament\Actions\DeleteAction;
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteBulkAction;
+use App\Modules\Admin\Filament\Resources\TypeResource\Pages\ListTypes;
+use App\Modules\Admin\Filament\Resources\TypeResource\Pages\CreateType;
+use App\Modules\Admin\Filament\Resources\TypeResource\Pages\EditType;
 use App\Models\Type;
 use Filament\Forms;
 use Filament\Schemas\Schema;
@@ -14,22 +27,22 @@ class TypeResource extends Resource
 {
     protected static ?string $model = Type::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-tag';
+    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-tag';
 
-    protected static ?string $navigationGroup = 'Administration';
+    protected static string | \UnitEnum | null $navigationGroup = 'Administration';
 
     protected static ?string $navigationLabel = 'Types';
 
-    public static function form(Schema $form): Schema
+    public static function form(Schema $schema): Schema
     {
-        return $form
-            ->schema([
-                Forms\Components\TextInput::make('name')
+        return $schema
+            ->components([
+                TextInput::make('name')
                     ->required()
                     ->maxLength(255),
-                Forms\Components\Textarea::make('description')
+                Textarea::make('description')
                     ->maxLength(1000),
-                Forms\Components\Toggle::make('is_active')
+                Toggle::make('is_active')
                     ->required()
                     ->default(true),
             ]);
@@ -39,40 +52,40 @@ class TypeResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('name')
+                TextColumn::make('name')
                     ->searchable()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('description')
+                TextColumn::make('description')
                     ->limit(50)
                     ->tooltip(function ($record) {
                         return $record->description;
                     }),
-                Tables\Columns\IconColumn::make('is_active')
+                IconColumn::make('is_active')
                     ->boolean()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('created_at')
+                TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('updated_at')
+                TextColumn::make('updated_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                Tables\Filters\TernaryFilter::make('is_active')
+                TernaryFilter::make('is_active')
                     ->label('Status')
                     ->placeholder('All types')
                     ->trueLabel('Active types')
                     ->falseLabel('Inactive types'),
             ])
-            ->actions([
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
+            ->recordActions([
+                EditAction::make(),
+                DeleteAction::make(),
             ])
-            ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+            ->toolbarActions([
+                BulkActionGroup::make([
+                    DeleteBulkAction::make(),
                 ]),
             ]);
     }
@@ -80,9 +93,9 @@ class TypeResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => \App\Modules\Admin\Filament\Resources\TypeResource\Pages\ListTypes::route('/'),
-            'create' => \App\Modules\Admin\Filament\Resources\TypeResource\Pages\CreateType::route('/create'),
-            'edit' => \App\Modules\Admin\Filament\Resources\TypeResource\Pages\EditType::route('/{record}/edit'),
+            'index' => ListTypes::route('/'),
+            'create' => CreateType::route('/create'),
+            'edit' => EditType::route('/{record}/edit'),
         ];
     }
 }

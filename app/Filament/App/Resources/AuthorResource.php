@@ -2,6 +2,15 @@
 
 namespace App\Filament\App\Resources;
 
+use Override;
+use Filament\Forms\Components\TextInput;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Actions\EditAction;
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteBulkAction;
+use App\Filament\App\Resources\AuthorResource\Pages\ListAuthors;
+use App\Filament\App\Resources\AuthorResource\Pages\CreateAuthor;
+use App\Filament\App\Resources\AuthorResource\Pages\EditAuthor;
 use BackedEnum;
 use UnitEnum;
 use App\Filament\App\Resources\AuthorResource\Pages;
@@ -18,46 +27,46 @@ class AuthorResource extends Resource
 {
     protected static ?string $model = Author::class;
 
-    protected static string | BackedEnum | null $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-rectangle-stack';
 
     protected static ?string $navigationLabel = 'Author';
 
-    protected static string | UnitEnum | null $navigationGroup = 'Author';
+    protected static string | \UnitEnum | null $navigationGroup = 'Author';
 
-    #[\Override]
-    public static function form(Schema $form): Schema
+    #[Override]
+    public static function form(Schema $schema): Schema
     {
-        return $form
-            ->schema([
-                Forms\Components\TextInput::make('name')
+        return $schema
+            ->components([
+                TextInput::make('name')
                 ->required()
                 ->maxLength(255),
-                Forms\Components\TextInput::make('description')
+                TextInput::make('description')
                     ->required()
                     ->maxLength(255),
-                Forms\Components\TextInput::make('is_active')
+                TextInput::make('is_active')
                     ->required()
                     ->numeric(),
             ]);
     }
 
-    #[\Override]
+    #[Override]
     public static function table(Table $table): Table
     {
         return $table
         ->columns([
-            Tables\Columns\TextColumn::make('name')
+            TextColumn::make('name')
                 ->searchable(),
-            Tables\Columns\TextColumn::make('description')
+            TextColumn::make('description')
                 ->searchable(),
-            Tables\Columns\TextColumn::make('is_active')
+            TextColumn::make('is_active')
                 ->numeric()
                 ->sortable(),
-            Tables\Columns\TextColumn::make('created_at')
+            TextColumn::make('created_at')
                 ->dateTime()
                 ->sortable()
                 ->toggleable(isToggledHiddenByDefault: true),
-            Tables\Columns\TextColumn::make('updated_at')
+            TextColumn::make('updated_at')
                 ->dateTime()
                 ->sortable()
                 ->toggleable(isToggledHiddenByDefault: true),
@@ -65,17 +74,17 @@ class AuthorResource extends Resource
             ->filters([
                 //
             ])
-            ->actions([
-                Actions\EditAction::make(),
+            ->recordActions([
+                EditAction::make(),
             ])
-            ->bulkActions([
-                Actions\BulkActionGroup::make([
-                    Actions\DeleteBulkAction::make(),
+            ->toolbarActions([
+                BulkActionGroup::make([
+                    DeleteBulkAction::make(),
                 ]),
             ]);
     }
 
-    #[\Override]
+    #[Override]
     public static function getRelations(): array
     {
         return [
@@ -86,9 +95,9 @@ class AuthorResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index'  => Pages\ListAuthors::route('/'),
-            'create' => Pages\CreateAuthor::route('/create'),
-            'edit'   => Pages\EditAuthor::route('/{record}/edit'),
+            'index'  => ListAuthors::route('/'),
+            'create' => CreateAuthor::route('/create'),
+            'edit'   => EditAuthor::route('/{record}/edit'),
         ];
     }
 }

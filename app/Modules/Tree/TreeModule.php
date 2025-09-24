@@ -2,6 +2,10 @@
 
 namespace App\Modules\Tree;
 
+use App\Modules\Tree\Services\TreeBuilderService;
+use App\Modules\Tree\Services\TreeRenderService;
+use Artisan;
+use File;
 use App\Modules\BaseModule;
 
 class TreeModule extends BaseModule
@@ -36,11 +40,11 @@ class TreeModule extends BaseModule
     protected function registerTreeServices(): void
     {
         app()->singleton('genealogy.tree.builder', function ($app) {
-            return new \App\Modules\Tree\Services\TreeBuilderService();
+            return new TreeBuilderService();
         });
 
         app()->singleton('genealogy.tree.renderer', function ($app) {
-            return new \App\Modules\Tree\Services\TreeRenderService();
+            return new TreeRenderService();
         });
     }
 
@@ -57,7 +61,7 @@ class TreeModule extends BaseModule
      */
     protected function installTreeAssets(): void
     {
-        \Artisan::call('vendor:publish', [
+        Artisan::call('vendor:publish', [
             '--tag' => 'tree-assets',
             '--force' => true,
         ]);
@@ -69,8 +73,8 @@ class TreeModule extends BaseModule
     protected function removeTreeAssets(): void
     {
         $assetsPath = public_path('modules/tree');
-        if (\File::exists($assetsPath)) {
-            \File::deleteDirectory($assetsPath);
+        if (File::exists($assetsPath)) {
+            File::deleteDirectory($assetsPath);
         }
     }
 }

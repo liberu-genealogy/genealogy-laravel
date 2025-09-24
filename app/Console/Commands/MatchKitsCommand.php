@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use Exception;
 use App\Models\Dna;
 use App\Models\DnaMatching;
 use App\Services\AdvancedDnaMatchingService;
@@ -58,7 +59,7 @@ class MatchKitsCommand extends Command
             // Return comprehensive JSON result for the job to process
             $this->info(json_encode($matchResult));
 
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             Log::error('DNA matching command failed: ' . $e->getMessage());
 
             // Fallback to basic matching

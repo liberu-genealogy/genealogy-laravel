@@ -2,12 +2,13 @@
 
 namespace App\Filament\App\Pages;
 
+use Override;
+use Filament\Schemas\Components\Section;
 use App\Models\Team;
 use App\Models\User;
 use Filament\Facades\Filament;
 use Filament\Forms\Components\TextInput;
 use Filament\Pages\Tenancy\EditTenantProfile;
-use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Placeholder;
 use Filament\Forms\Form;
 use App\Services\SubscriptionService;
@@ -22,13 +23,13 @@ class EditTeam extends EditTenantProfile
         return 'Edit Team';
     }
 
-    #[\Override]
-    public function form(Schema $form): Schema
+    #[Override]
+    public function form(Schema $schema): Schema
     {
         $team = Filament::getTenant();
         $subscriptionService = app(SubscriptionService::class);
-        return $form
-            ->schema([
+        return $schema
+            ->components([
                 Section::make('Subscription')
                     ->schema([
                         Placeholder::make('status')
@@ -39,7 +40,7 @@ class EditTeam extends EditTenantProfile
             ]);
     }
     
-    #[\Override]
+    #[Override]
     protected function getViewData(): array
     {
         return [

@@ -2,9 +2,11 @@
 
 namespace App\Providers;
 
+use App\Console\Commands\MatchKitsCommand;
+use App\Console\Commands\ProcessLargeScaleDnaCommand;
 use App\Services\AdvancedDnaMatchingService;
 use Illuminate\Support\ServiceProvider;
-use LiberuGenealogy\LaravelDna\Services\DnaAnalysisService;
+//use LiberuGenealogy\LaravelDna\Services\DnaAnalysisService;
 
 class DnaServiceProvider extends ServiceProvider
 {
@@ -12,9 +14,9 @@ class DnaServiceProvider extends ServiceProvider
      * Register services.
      */
     public function register(): void
-    {
+    {}
         // Register the DnaAnalysisService if not already registered by the package
-        $this->app->singleton(DnaAnalysisService::class, function ($app) {
+  /**      $this->app->singleton(DnaAnalysisService::class, function ($app) {
             return new DnaAnalysisService();
         });
 
@@ -25,7 +27,7 @@ class DnaServiceProvider extends ServiceProvider
             );
         });
     }
-
+**/
     /**
      * Bootstrap services.
      */
@@ -34,8 +36,8 @@ class DnaServiceProvider extends ServiceProvider
         // Register console commands
         if ($this->app->runningInConsole()) {
             $this->commands([
-                \App\Console\Commands\MatchKitsCommand::class,
-                \App\Console\Commands\ProcessLargeScaleDnaCommand::class,
+                MatchKitsCommand::class,
+                ProcessLargeScaleDnaCommand::class,
             ]);
         }
     }

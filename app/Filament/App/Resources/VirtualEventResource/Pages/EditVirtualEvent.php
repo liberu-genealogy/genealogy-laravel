@@ -2,6 +2,10 @@
 
 namespace App\Filament\App\Resources\VirtualEventResource\Pages;
 
+use Filament\Actions\Action;
+use Exception;
+use Filament\Actions\ViewAction;
+use Filament\Actions\DeleteAction;
 use App\Filament\App\Resources\VirtualEventResource;
 use App\Services\VideoConferencingService;
 use Filament\Actions;
@@ -15,7 +19,7 @@ class EditVirtualEvent extends EditRecord
     protected function getHeaderActions(): array
     {
         return [
-            Actions\Action::make('create_meeting')
+            Action::make('create_meeting')
                 ->icon('heroicon-o-plus-circle')
                 ->color('primary')
                 ->action(function () {
@@ -30,7 +34,7 @@ class EditVirtualEvent extends EditRecord
                             ->send();
 
                         $this->refreshFormData(['meeting_url', 'join_url', 'meeting_password']);
-                    } catch (\Exception $e) {
+                    } catch (Exception $e) {
                         Notification::make()
                             ->title('Meeting Creation Failed')
                             ->body($e->getMessage())
@@ -39,7 +43,7 @@ class EditVirtualEvent extends EditRecord
                     }
                 })
                 ->visible(fn () => empty($this->getRecord()->meeting_id) && $this->getRecord()->platform !== 'custom'),
-            Actions\Action::make('update_meeting')
+            Action::make('update_meeting')
                 ->icon('heroicon-o-arrow-path')
                 ->color('warning')
                 ->action(function () {
@@ -54,7 +58,7 @@ class EditVirtualEvent extends EditRecord
                             ->send();
 
                         $this->refreshFormData(['meeting_url', 'join_url']);
-                    } catch (\Exception $e) {
+                    } catch (Exception $e) {
                         Notification::make()
                             ->title('Meeting Update Failed')
                             ->body($e->getMessage())
@@ -63,14 +67,14 @@ class EditVirtualEvent extends EditRecord
                     }
                 })
                 ->visible(fn () => !empty($this->getRecord()->meeting_id) && $this->getRecord()->platform !== 'custom'),
-            Actions\Action::make('join_meeting')
+            Action::make('join_meeting')
                 ->icon('heroicon-o-video-camera')
                 ->color('success')
                 ->url(fn () => $this->getRecord()->join_url ?? '#')
                 ->openUrlInNewTab()
                 ->visible(fn () => $this->getRecord()->canJoin() && !empty($this->getRecord()->join_url)),
-            Actions\ViewAction::make(),
-            Actions\DeleteAction::make(),
+            ViewAction::make(),
+            DeleteAction::make(),
         ];
     }
 
@@ -83,7 +87,7 @@ class EditVirtualEvent extends EditRecord
             try {
                 $service = app(VideoConferencingService::class);
                 $service->updateMeeting($record);
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
                 Notification::make()
                     ->title('Meeting Update Failed')
                     ->body('Event saved, but failed to update video conference meeting: ' . $e->getMessage())

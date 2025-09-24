@@ -2,6 +2,9 @@
 
 namespace App\Modules\Media;
 
+use App\Modules\Media\Services\MediaService;
+use App\Modules\Media\Services\MediaProcessorService;
+use Artisan;
 use App\Modules\BaseModule;
 
 class MediaModule extends BaseModule
@@ -37,11 +40,11 @@ class MediaModule extends BaseModule
     protected function registerMediaServices(): void
     {
         app()->singleton('genealogy.media', function ($app) {
-            return new \App\Modules\Media\Services\MediaService();
+            return new MediaService();
         });
 
         app()->singleton('genealogy.media.processor', function ($app) {
-            return new \App\Modules\Media\Services\MediaProcessorService();
+            return new MediaProcessorService();
         });
     }
 
@@ -58,7 +61,7 @@ class MediaModule extends BaseModule
      */
     protected function installMediaTables(): void
     {
-        \Artisan::call('migrate', [
+        Artisan::call('migrate', [
             '--path' => 'app/Modules/Media/database/migrations',
             '--force' => true,
         ]);
@@ -69,7 +72,7 @@ class MediaModule extends BaseModule
      */
     protected function publishMediaAssets(): void
     {
-        \Artisan::call('vendor:publish', [
+        Artisan::call('vendor:publish', [
             '--tag' => 'media-assets',
             '--force' => true,
         ]);

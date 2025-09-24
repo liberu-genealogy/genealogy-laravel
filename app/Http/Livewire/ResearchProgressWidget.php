@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use App\Models\UserChecklistItem;
 use App\Models\UserChecklist;
 use App\Models\Person;
 use App\Models\Family;
@@ -52,7 +53,7 @@ class ResearchProgressWidget extends Component
             ->where('completed_at', '>=', $periodStart)
             ->count();
 
-        $recentItemCompletions = \App\Models\UserChecklistItem::whereHas('userChecklist', function ($q) use ($userId) {
+        $recentItemCompletions = UserChecklistItem::whereHas('userChecklist', function ($q) use ($userId) {
                 $q->where('user_id', $userId);
             })
             ->where('completed_at', '>=', $periodStart)
@@ -87,7 +88,7 @@ class ResearchProgressWidget extends Component
             ->get();
 
         // Recent item completions
-        $recentItems = \App\Models\UserChecklistItem::whereHas('userChecklist', function ($q) use ($userId) {
+        $recentItems = UserChecklistItem::whereHas('userChecklist', function ($q) use ($userId) {
                 $q->where('user_id', $userId);
             })
             ->where('completed_at', '>=', $periodStart)

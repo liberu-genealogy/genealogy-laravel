@@ -2,6 +2,26 @@
 
 namespace App\Filament\App\Resources\VirtualEventResource\RelationManagers;
 
+use Filament\Schemas\Components\Section;
+use Filament\Forms\Components\Select;
+use Filament\Schemas\Components\Grid;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\DateTimePicker;
+use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\Toggle;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Columns\BadgeColumn;
+use Filament\Tables\Columns\IconColumn;
+use Filament\Tables\Filters\SelectFilter;
+use Filament\Tables\Filters\TernaryFilter;
+use Filament\Actions\CreateAction;
+use Filament\Actions\Action;
+use Filament\Forms\Components\TagsInput;
+use Filament\Actions\EditAction;
+use Filament\Actions\DeleteAction;
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\BulkAction;
+use Filament\Actions\DeleteBulkAction;
 use App\Models\VirtualEventAttendee;
 use App\Models\User;
 use App\Models\Person;
@@ -20,13 +40,13 @@ class AttendeesRelationManager extends RelationManager
 
     protected static ?string $title = 'Event Attendees';
 
-    public function form(Schema $form): Schema
+    public function form(Schema $schema): Schema
     {
-        return $form
-            ->schema([
-                Forms\Components\Section::make('Attendee Information')
+        return $schema
+            ->components([
+                Section::make('Attendee Information')
                     ->schema([
-                        Forms\Components\Select::make('user_id')
+                        Select::make('user_id')
                             ->label('User')
                             ->options(User::all()->pluck('name', 'id'))
                             ->searchable()
@@ -38,7 +58,7 @@ class AttendeesRelationManager extends RelationManager
                                     $set('guest_email', null);
                                 }
                             }),
-                        Forms\Components\Select::make('person_id')
+                        Select::make('person_id')
                             ->label('Person (from Family Tree)')
                             ->options(Person::all()->pluck('name', 'id'))
                             ->searchable()
@@ -51,13 +71,13 @@ class AttendeesRelationManager extends RelationManager
                                 }
                             })
                             ->visible(fn (callable $get) => !$get('user_id')),
-                        Forms\Components\Grid::make(2)
+                        Grid::make(2)
                             ->schema([
-                                Forms\Components\TextInput::make('guest_name')
+                                TextInput::make('guest_name')
                                     ->label('Guest Name')
                                     ->maxLength(255)
                                     ->visible(fn (callable $get) => !$get('user_id') && !$get('person_id')),
-                                Forms\Components\TextInput::make('guest_email')
+                                TextInput::make('guest_email')
                                     ->label('Guest Email')
                                     ->email()
                                     ->maxLength(255)
@@ -65,11 +85,11 @@ class AttendeesRelationManager extends RelationManager
                             ]),
                     ]),
 
-                Forms\Components\Section::make('RSVP & Participation')
+                Section::make('RSVP & Participation')
                     ->schema([
-                        Forms\Components\Grid::make(2)
+                        Grid::make(2)
                             ->schema([
-                                Forms\Components\Select::make('rsvp_status')
+                                Select::make('rsvp_status')
                                     ->options([
                                         'pending' => 'Pending',
                                         'accepted' => 'Accepted',
@@ -78,42 +98,42 @@ class AttendeesRelationManager extends RelationManager
                                     ])
                                     ->required()
                                     ->default('pending'),
-                                Forms\Components\DateTimePicker::make('rsvp_date')
+                                DateTimePicker::make('rsvp_date')
                                     ->label('RSVP Date')
                                     ->native(false),
                             ]),
-                        Forms\Components\Textarea::make('rsvp_notes')
+                        Textarea::make('rsvp_notes')
                             ->label('RSVP Notes')
                             ->rows(2)
                             ->columnSpanFull(),
-                        Forms\Components\Grid::make(2)
+                        Grid::make(2)
                             ->schema([
-                                Forms\Components\Toggle::make('is_host')
+                                Toggle::make('is_host')
                                     ->label('Event Host'),
-                                Forms\Components\Toggle::make('is_moderator')
+                                Toggle::make('is_moderator')
                                     ->label('Event Moderator'),
                             ]),
                     ]),
 
-                Forms\Components\Section::make('Attendance Tracking')
+                Section::make('Attendance Tracking')
                     ->schema([
-                        Forms\Components\Grid::make(2)
+                        Grid::make(2)
                             ->schema([
-                                Forms\Components\Toggle::make('attended')
+                                Toggle::make('attended')
                                     ->label('Actually Attended')
                                     ->live(),
-                                Forms\Components\TextInput::make('duration_minutes')
+                                TextInput::make('duration_minutes')
                                     ->label('Duration (minutes)')
                                     ->numeric()
                                     ->visible(fn (callable $get) => $get('attended')),
                             ]),
-                        Forms\Components\Grid::make(2)
+                        Grid::make(2)
                             ->schema([
-                                Forms\Components\DateTimePicker::make('joined_at')
+                                DateTimePicker::make('joined_at')
                                     ->label('Joined At')
                                     ->native(false)
                                     ->visible(fn (callable $get) => $get('attended')),
-                                Forms\Components\DateTimePicker::make('left_at')
+                                DateTimePicker::make('left_at')
                                     ->label('Left At')
                                     ->native(false)
                                     ->visible(fn (callable $get) => $get('attended')),
@@ -128,16 +148,16 @@ class AttendeesRelationManager extends RelationManager
         return $table
             ->recordTitleAttribute('display_name')
             ->columns([
-                Tables\Columns\TextColumn::make('display_name')
+                TextColumn::make('display_name')
                     ->label('Name')
                     ->searchable()
                     ->sortable()
                     ->weight('bold'),
-                Tables\Columns\TextColumn::make('display_email')
+                TextColumn::make('display_email')
                     ->label('Email')
                     ->searchable()
                     ->copyable(),
-                Tables\Columns\BadgeColumn::make('rsvp_status')
+                BadgeColumn::make('rsvp_status')
                     ->label('RSVP')
                     ->colors([
                         'success' => 'accepted',
@@ -152,71 +172,71 @@ class AttendeesRelationManager extends RelationManager
                         'pending' => 'Pending',
                         default => ucfirst($state),
                     }),
-                Tables\Columns\TextColumn::make('rsvp_date')
+                TextColumn::make('rsvp_date')
                     ->label('RSVP Date')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(),
-                Tables\Columns\IconColumn::make('attended')
+                IconColumn::make('attended')
                     ->label('Attended')
                     ->boolean()
                     ->alignCenter()
                     ->visible(fn () => $this->getOwnerRecord()->is_past || $this->getOwnerRecord()->is_active),
-                Tables\Columns\TextColumn::make('attendance_duration')
+                TextColumn::make('attendance_duration')
                     ->label('Duration')
                     ->visible(fn () => $this->getOwnerRecord()->is_past)
                     ->toggleable(),
-                Tables\Columns\IconColumn::make('is_host')
+                IconColumn::make('is_host')
                     ->label('Host')
                     ->boolean()
                     ->alignCenter()
                     ->toggleable(),
-                Tables\Columns\IconColumn::make('is_moderator')
+                IconColumn::make('is_moderator')
                     ->label('Moderator')
                     ->boolean()
                     ->alignCenter()
                     ->toggleable(),
-                Tables\Columns\TextColumn::make('created_at')
+                TextColumn::make('created_at')
                     ->label('Added')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                Tables\Filters\SelectFilter::make('rsvp_status')
+                SelectFilter::make('rsvp_status')
                     ->options([
                         'pending' => 'Pending',
                         'accepted' => 'Accepted',
                         'declined' => 'Declined',
                         'maybe' => 'Maybe',
                     ]),
-                Tables\Filters\TernaryFilter::make('attended')
+                TernaryFilter::make('attended')
                     ->label('Actually Attended')
                     ->visible(fn () => $this->getOwnerRecord()->is_past || $this->getOwnerRecord()->is_active),
-                Tables\Filters\TernaryFilter::make('is_host')
+                TernaryFilter::make('is_host')
                     ->label('Event Hosts'),
-                Tables\Filters\TernaryFilter::make('is_moderator')
+                TernaryFilter::make('is_moderator')
                     ->label('Event Moderators'),
             ])
             ->headerActions([
-                Tables\Actions\CreateAction::make()
+                CreateAction::make()
                     ->label('Add Attendee'),
-                Tables\Actions\Action::make('bulk_invite')
+                Action::make('bulk_invite')
                     ->label('Bulk Invite')
                     ->icon('heroicon-o-envelope')
                     ->color('primary')
-                    ->form([
-                        Forms\Components\Select::make('users')
+                    ->schema([
+                        Select::make('users')
                             ->label('Select Users')
                             ->multiple()
                             ->options(User::all()->pluck('name', 'id'))
                             ->searchable(),
-                        Forms\Components\Select::make('people')
+                        Select::make('people')
                             ->label('Select People from Family Tree')
                             ->multiple()
                             ->options(Person::all()->pluck('name', 'id'))
                             ->searchable(),
-                        Forms\Components\TagsInput::make('guest_emails')
+                        TagsInput::make('guest_emails')
                             ->label('Guest Email Addresses')
                             ->placeholder('Enter email addresses'),
                     ])
@@ -272,28 +292,28 @@ class AttendeesRelationManager extends RelationManager
                             ->send();
                     }),
             ])
-            ->actions([
-                Tables\Actions\Action::make('accept')
+            ->recordActions([
+                Action::make('accept')
                     ->icon('heroicon-o-check')
                     ->color('success')
                     ->action(fn (VirtualEventAttendee $record) => $record->accept())
                     ->visible(fn (VirtualEventAttendee $record) => $record->rsvp_status !== 'accepted'),
-                Tables\Actions\Action::make('decline')
+                Action::make('decline')
                     ->icon('heroicon-o-x-mark')
                     ->color('danger')
                     ->action(fn (VirtualEventAttendee $record) => $record->decline())
                     ->visible(fn (VirtualEventAttendee $record) => $record->rsvp_status !== 'declined'),
-                Tables\Actions\Action::make('mark_attended')
+                Action::make('mark_attended')
                     ->icon('heroicon-o-user-check')
                     ->color('primary')
                     ->action(fn (VirtualEventAttendee $record) => $record->markAsAttended())
                     ->visible(fn (VirtualEventAttendee $record) => !$record->attended && ($this->getOwnerRecord()->is_past || $this->getOwnerRecord()->is_active)),
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
+                EditAction::make(),
+                DeleteAction::make(),
             ])
-            ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\BulkAction::make('accept_all')
+            ->toolbarActions([
+                BulkActionGroup::make([
+                    BulkAction::make('accept_all')
                         ->label('Accept All')
                         ->icon('heroicon-o-check')
                         ->color('success')
@@ -307,7 +327,7 @@ class AttendeesRelationManager extends RelationManager
                                 ->success()
                                 ->send();
                         }),
-                    Tables\Actions\BulkAction::make('mark_all_attended')
+                    BulkAction::make('mark_all_attended')
                         ->label('Mark All as Attended')
                         ->icon('heroicon-o-user-check')
                         ->color('primary')
@@ -322,7 +342,7 @@ class AttendeesRelationManager extends RelationManager
                                 ->send();
                         })
                         ->visible(fn () => $this->getOwnerRecord()->is_past || $this->getOwnerRecord()->is_active),
-                    Tables\Actions\DeleteBulkAction::make(),
+                    DeleteBulkAction::make(),
                 ]),
             ])
             ->defaultSort('created_at', 'desc');

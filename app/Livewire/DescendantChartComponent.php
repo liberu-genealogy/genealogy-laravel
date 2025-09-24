@@ -2,6 +2,7 @@
 
 namespace App\Livewire;
 
+use Throwable;
 use App\Models\Person;
 use Illuminate\Support\Facades\Log;
 use Livewire\Component;
@@ -24,7 +25,7 @@ final class DescendantChartComponent extends Component
             } else {
                 $this->descendantsData = [];
             }
-        } catch (\Throwable $e) {
+        } catch (Throwable $e) {
             Log::error('Failed to retrieve descendants data', [
                 'error' => $e->getMessage(),
                 'trace' => $e->getTraceAsString()

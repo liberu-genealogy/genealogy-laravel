@@ -2,6 +2,21 @@
 
 namespace App\Modules\Sources\Filament\Resources;
 
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\DatePicker;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\Textarea;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Columns\IconColumn;
+use Filament\Tables\Filters\SelectFilter;
+use Filament\Tables\Filters\TernaryFilter;
+use Filament\Actions\EditAction;
+use Filament\Actions\DeleteAction;
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteBulkAction;
+use App\Modules\Sources\Filament\Resources\SourceResource\Pages\ListSources;
+use App\Modules\Sources\Filament\Resources\SourceResource\Pages\CreateSource;
+use App\Modules\Sources\Filament\Resources\SourceResource\Pages\EditSource;
 use App\Models\Source;
 use App\Models\Repository;
 use Filament\Forms;
@@ -15,34 +30,34 @@ class SourceResource extends Resource
 {
     protected static ?string $model = Source::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-document-text';
+    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-document-text';
 
-    protected static ?string $navigationGroup = 'Research';
+    protected static string | \UnitEnum | null $navigationGroup = 'Research';
 
     protected static ?string $navigationLabel = 'Sources';
 
-    public static function form(Schema $form): Schema
+    public static function form(Schema $schema): Schema
     {
-        return $form
-            ->schema([
-                Forms\Components\TextInput::make('title')
+        return $schema
+            ->components([
+                TextInput::make('title')
                     ->required()
                     ->maxLength(255),
-                Forms\Components\TextInput::make('author')
+                TextInput::make('author')
                     ->maxLength(255),
-                Forms\Components\TextInput::make('publisher')
+                TextInput::make('publisher')
                     ->maxLength(255),
-                Forms\Components\DatePicker::make('publication_date'),
-                Forms\Components\Select::make('repository_id')
+                DatePicker::make('publication_date'),
+                Select::make('repository_id')
                     ->label('Repository')
                     ->options(Repository::pluck('name', 'id'))
                     ->searchable(),
-                Forms\Components\TextInput::make('call_number')
+                TextInput::make('call_number')
                     ->maxLength(255),
-                Forms\Components\TextInput::make('url')
+                TextInput::make('url')
                     ->url()
                     ->maxLength(500),
-                Forms\Components\Textarea::make('description')
+                Textarea::make('description')
                     ->maxLength(1000),
             ]);
     }
@@ -51,35 +66,35 @@ class SourceResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('title')
+                TextColumn::make('title')
                     ->searchable()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('author')
+                TextColumn::make('author')
                     ->searchable()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('publisher')
+                TextColumn::make('publisher')
                     ->searchable()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('publication_date')
+                TextColumn::make('publication_date')
                     ->date()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('repository.name')
+                TextColumn::make('repository.name')
                     ->label('Repository')
                     ->sortable(),
-                Tables\Columns\IconColumn::make('has_url')
+                IconColumn::make('has_url')
                     ->label('Online')
                     ->boolean()
                     ->getStateUsing(fn ($record) => !empty($record->url)),
-                Tables\Columns\TextColumn::make('created_at')
+                TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                Tables\Filters\SelectFilter::make('repository_id')
+                SelectFilter::make('repository_id')
                     ->label('Repository')
                     ->options(Repository::pluck('name', 'id')),
-                Tables\Filters\TernaryFilter::make('has_url')
+                TernaryFilter::make('has_url')
                     ->label('Has URL')
                     ->placeholder('All sources')
                     ->trueLabel('With URL')
@@ -89,13 +104,13 @@ class SourceResource extends Resource
                         false: fn (Builder $query) => $query->whereNull('url'),
                     ),
             ])
-            ->actions([
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
+            ->recordActions([
+                EditAction::make(),
+                DeleteAction::make(),
             ])
-            ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+            ->toolbarActions([
+                BulkActionGroup::make([
+                    DeleteBulkAction::make(),
                 ]),
             ]);
     }
@@ -103,9 +118,9 @@ class SourceResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => \App\Modules\Sources\Filament\Resources\SourceResource\Pages\ListSources::route('/'),
-            'create' => \App\Modules\Sources\Filament\Resources\SourceResource\Pages\CreateSource::route('/create'),
-            'edit' => \App\Modules\Sources\Filament\Resources\SourceResource\Pages\EditSource::route('/{record}/edit'),
+            'index' => ListSources::route('/'),
+            'create' => CreateSource::route('/create'),
+            'edit' => EditSource::route('/{record}/edit'),
         ];
     }
 }

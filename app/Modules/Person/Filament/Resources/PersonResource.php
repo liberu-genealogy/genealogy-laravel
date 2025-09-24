@@ -2,6 +2,24 @@
 
 namespace App\Modules\Person\Filament\Resources;
 
+use Filament\Schemas\Components\Section;
+use Filament\Schemas\Components\Grid;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\DatePicker;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Columns\IconColumn;
+use Filament\Tables\Filters\SelectFilter;
+use Filament\Tables\Filters\TernaryFilter;
+use Filament\Tables\Filters\Filter;
+use Filament\Actions\EditAction;
+use Filament\Actions\DeleteAction;
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteBulkAction;
+use App\Modules\Person\Filament\Resources\PersonResource\Pages\ListPersons;
+use App\Modules\Person\Filament\Resources\PersonResource\Pages\CreatePerson;
+use App\Modules\Person\Filament\Resources\PersonResource\Pages\EditPerson;
 use App\Models\Person;
 use App\Models\Family;
 use Filament\Forms;
@@ -15,54 +33,54 @@ class PersonResource extends Resource
 {
     protected static ?string $model = Person::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-user';
+    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-user';
 
-    protected static ?string $navigationGroup = 'Genealogy';
+    protected static string | \UnitEnum | null $navigationGroup = 'Genealogy';
 
     protected static ?string $navigationLabel = 'Persons';
 
-    public static function form(Schema $form): Schema
+    public static function form(Schema $schema): Schema
     {
-        return $form
-            ->schema([
-                Forms\Components\Section::make('Basic Information')
+        return $schema
+            ->components([
+                Section::make('Basic Information')
                     ->schema([
-                        Forms\Components\Grid::make(2)
+                        Grid::make(2)
                             ->schema([
-                                Forms\Components\TextInput::make('givn')
+                                TextInput::make('givn')
                                     ->label('Given Name')
                                     ->required()
                                     ->maxLength(255),
-                                Forms\Components\TextInput::make('surn')
+                                TextInput::make('surn')
                                     ->label('Surname')
                                     ->required()
                                     ->maxLength(255),
                             ]),
-                        Forms\Components\Select::make('sex')
+                        Select::make('sex')
                             ->options([
                                 'M' => 'Male',
                                 'F' => 'Female',
                                 'U' => 'Unknown',
                             ])
                             ->default('U'),
-                        Forms\Components\Textarea::make('description')
+                        Textarea::make('description')
                             ->maxLength(1000),
                     ]),
-                Forms\Components\Section::make('Life Events')
+                Section::make('Life Events')
                     ->schema([
-                        Forms\Components\Grid::make(2)
+                        Grid::make(2)
                             ->schema([
-                                Forms\Components\DatePicker::make('birthday')
+                                DatePicker::make('birthday')
                                     ->label('Birth Date'),
-                                Forms\Components\DatePicker::make('deathday')
+                                DatePicker::make('deathday')
                                     ->label('Death Date'),
                             ]),
-                        Forms\Components\DatePicker::make('burial_day')
+                        DatePicker::make('burial_day')
                             ->label('Burial Date'),
                     ]),
-                Forms\Components\Section::make('Family Relationships')
+                Section::make('Family Relationships')
                     ->schema([
-                        Forms\Components\Select::make('child_in_family_id')
+                        Select::make('child_in_family_id')
                             ->label('Child in Family')
                             ->options(Family::with(['husband', 'wife'])->get()->mapWithKeys(function ($family) {
                                 $husbandName = $family->husband ? $family->husband->fullname() : 'Unknown';
@@ -71,15 +89,15 @@ class PersonResource extends Resource
                             }))
                             ->searchable(),
                     ]),
-                Forms\Components\Section::make('Additional Information')
+                Section::make('Additional Information')
                     ->schema([
-                        Forms\Components\TextInput::make('gid')
+                        TextInput::make('gid')
                             ->label('GEDCOM ID')
                             ->maxLength(255),
-                        Forms\Components\TextInput::make('email')
+                        TextInput::make('email')
                             ->email()
                             ->maxLength(255),
-                        Forms\Components\TextInput::make('phone')
+                        TextInput::make('phone')
                             ->tel()
                             ->maxLength(255),
                     ])
@@ -91,12 +109,12 @@ class PersonResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('fullname')
+                TextColumn::make('fullname')
                     ->label('Name')
                     ->getStateUsing(fn ($record) => $record->fullname())
                     ->searchable(['givn', 'surn'])
                     ->sortable(),
-                Tables\Columns\TextColumn::make('sex')
+                TextColumn::make('sex')
                     ->badge()
                     ->color(fn (string $state): string => match ($state) {
                         'M' => 'blue',
@@ -108,37 +126,37 @@ class PersonResource extends Resource
                         'F' => 'Female',
                         'U' => 'Unknown',
                     }),
-                Tables\Columns\TextColumn::make('birthday')
+                TextColumn::make('birthday')
                     ->label('Birth')
                     ->date()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('deathday')
+                TextColumn::make('deathday')
                     ->label('Death')
                     ->date()
                     ->sortable(),
-                Tables\Columns\IconColumn::make('is_living')
+                IconColumn::make('is_living')
                     ->label('Living')
                     ->boolean()
                     ->getStateUsing(fn ($record) => !$record->deathday),
-                Tables\Columns\TextColumn::make('childInFamily.husband.fullname')
+                TextColumn::make('childInFamily.husband.fullname')
                     ->label('Father')
                     ->limit(20),
-                Tables\Columns\TextColumn::make('childInFamily.wife.fullname')
+                TextColumn::make('childInFamily.wife.fullname')
                     ->label('Mother')
                     ->limit(20),
-                Tables\Columns\TextColumn::make('created_at')
+                TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                Tables\Filters\SelectFilter::make('sex')
+                SelectFilter::make('sex')
                     ->options([
                         'M' => 'Male',
                         'F' => 'Female',
                         'U' => 'Unknown',
                     ]),
-                Tables\Filters\TernaryFilter::make('is_living')
+                TernaryFilter::make('is_living')
                     ->label('Living Status')
                     ->placeholder('All persons')
                     ->trueLabel('Living')
@@ -147,17 +165,17 @@ class PersonResource extends Resource
                         true: fn (Builder $query) => $query->whereNull('deathday'),
                         false: fn (Builder $query) => $query->whereNotNull('deathday'),
                     ),
-                Tables\Filters\Filter::make('has_birth_date')
+                Filter::make('has_birth_date')
                     ->label('Has Birth Date')
                     ->query(fn (Builder $query) => $query->whereNotNull('birthday')),
             ])
-            ->actions([
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
+            ->recordActions([
+                EditAction::make(),
+                DeleteAction::make(),
             ])
-            ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+            ->toolbarActions([
+                BulkActionGroup::make([
+                    DeleteBulkAction::make(),
                 ]),
             ]);
     }
@@ -165,9 +183,9 @@ class PersonResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => \App\Modules\Person\Filament\Resources\PersonResource\Pages\ListPersons::route('/'),
-            'create' => \App\Modules\Person\Filament\Resources\PersonResource\Pages\CreatePerson::route('/create'),
-            'edit' => \App\Modules\Person\Filament\Resources\PersonResource\Pages\EditPerson::route('/{record}/edit'),
+            'index' => ListPersons::route('/'),
+            'create' => CreatePerson::route('/create'),
+            'edit' => EditPerson::route('/{record}/edit'),
         ];
     }
 }

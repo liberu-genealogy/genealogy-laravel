@@ -2,6 +2,36 @@
 
 namespace App\Filament\App\Resources;
 
+use Filament\Schemas\Components\Section;
+use Filament\Schemas\Components\Grid;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\Hidden;
+use Filament\Forms\Components\Toggle;
+use Filament\Forms\Components\TagsInput;
+use Filament\Forms\Components\Repeater;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Columns\IconColumn;
+use Filament\Tables\Filters\SelectFilter;
+use Filament\Tables\Filters\TernaryFilter;
+use Filament\Tables\Filters\TrashedFilter;
+use Filament\Actions\ActionGroup;
+use Filament\Actions\ViewAction;
+use Filament\Actions\EditAction;
+use Filament\Actions\Action;
+use Filament\Actions\DeleteAction;
+use Filament\Actions\RestoreAction;
+use Filament\Actions\ForceDeleteAction;
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteBulkAction;
+use Filament\Actions\RestoreBulkAction;
+use Filament\Actions\ForceDeleteBulkAction;
+use App\Filament\App\Resources\ChecklistTemplateResource\RelationManagers\TemplateItemsRelationManager;
+use App\Filament\App\Resources\ChecklistTemplateResource\Pages\ListChecklistTemplates;
+use App\Filament\App\Resources\ChecklistTemplateResource\Pages\CreateChecklistTemplate;
+use App\Filament\App\Resources\ChecklistTemplateResource\Pages\ViewChecklistTemplate;
+use App\Filament\App\Resources\ChecklistTemplateResource\Pages\EditChecklistTemplate;
 use BackedEnum;
 use UnitEnum;
 use App\Filament\App\Resources\ChecklistTemplateResource\Pages;
@@ -22,23 +52,23 @@ class ChecklistTemplateResource extends Resource
    
     protected static ?string $model = ChecklistTemplate::class;
 
-    protected static string | BackedEnum | null $navigationIcon = 'heroicon-o-clipboard-document-list';
+    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-clipboard-document-list';
 
     protected static ?string $navigationLabel = 'Checklist Templates';
 
-    protected static string | UnitEnum | null $navigationGroup = '📋 Research Management';
+    protected static string | \UnitEnum | null $navigationGroup = '📋 Research Management';
 
     protected static ?int $navigationSort = 1;
 
-    public static function form(Schema $form): Schema
+    public static function form(Schema $schema): Schema
     {
-        return $form
-            ->schema([
-                Forms\Components\Section::make('Template Information')
+        return $schema
+            ->components([
+                Section::make('Template Information')
                     ->schema([
-                        Forms\Components\Grid::make(2)
+                        Grid::make(2)
                             ->schema([
-                                Forms\Components\TextInput::make('name')
+                                TextInput::make('name')
                                     ->required()
                                     ->maxLength(255)
                                     ->live(onBlur: true)
@@ -47,7 +77,7 @@ class ChecklistTemplateResource extends Resource
                                             $set('description', "Research checklist for {$state}");
                                         }
                                     }),
-                                Forms\Components\Select::make('category')
+                                Select::make('category')
                                     ->options([
                                         'general' => 'General Research',
                                         'vital_records' => 'Vital Records',
@@ -65,12 +95,12 @@ class ChecklistTemplateResource extends Resource
                                     ->required()
                                     ->default('general'),
                             ]),
-                        Forms\Components\Textarea::make('description')
+                        Textarea::make('description')
                             ->rows(3)
                             ->columnSpanFull(),
-                        Forms\Components\Grid::make(3)
+                        Grid::make(3)
                             ->schema([
-                                Forms\Components\Select::make('difficulty_level')
+                                Select::make('difficulty_level')
                                     ->options([
                                         'beginner' => 'Beginner',
                                         'intermediate' => 'Intermediate',
@@ -78,55 +108,55 @@ class ChecklistTemplateResource extends Resource
                                     ])
                                     ->required()
                                     ->default('beginner'),
-                                Forms\Components\TextInput::make('estimated_time')
+                                TextInput::make('estimated_time')
                                     ->numeric()
                                     ->suffix('minutes')
                                     ->label('Estimated Time'),
-                                Forms\Components\Hidden::make('created_by')
+                                Hidden::make('created_by')
                                     ->default(auth()->id()),
                             ]),
                     ]),
 
-                Forms\Components\Section::make('Template Settings')
+                Section::make('Template Settings')
                     ->schema([
-                        Forms\Components\Grid::make(2)
+                        Grid::make(2)
                             ->schema([
-                                Forms\Components\Toggle::make('is_public')
+                                Toggle::make('is_public')
                                     ->label('Make Public')
                                     ->helperText('Allow other users to use this template'),
-                                Forms\Components\Toggle::make('is_default')
+                                Toggle::make('is_default')
                                     ->label('Default Template')
                                     ->helperText('Show as a recommended template')
                                     ->visible(fn () => auth()->user()->can('manage_default_templates')),
                             ]),
-                        Forms\Components\TagsInput::make('tags')
+                        TagsInput::make('tags')
                             ->placeholder('Add tags to help categorize this template')
                             ->columnSpanFull(),
                     ]),
 
-                Forms\Components\Section::make('Checklist Items')
+                Section::make('Checklist Items')
                     ->schema([
-                        Forms\Components\Repeater::make('templateItems')
+                        Repeater::make('templateItems')
                             ->relationship()
                             ->schema([
-                                Forms\Components\Grid::make(3)
+                                Grid::make(3)
                                     ->schema([
-                                        Forms\Components\TextInput::make('title')
+                                        TextInput::make('title')
                                             ->required()
                                             ->columnSpan(2),
-                                        Forms\Components\TextInput::make('order')
+                                        TextInput::make('order')
                                             ->numeric()
                                             ->default(function (callable $get) {
                                                 $items = $get('../../templateItems') ?? [];
                                                 return count($items) + 1;
                                             }),
                                     ]),
-                                Forms\Components\Textarea::make('description')
+                                Textarea::make('description')
                                     ->rows(2)
                                     ->columnSpanFull(),
-                                Forms\Components\Grid::make(3)
+                                Grid::make(3)
                                     ->schema([
-                                        Forms\Components\Select::make('category')
+                                        Select::make('category')
                                             ->options([
                                                 'research' => 'Research',
                                                 'documentation' => 'Documentation',
@@ -135,17 +165,17 @@ class ChecklistTemplateResource extends Resource
                                                 'follow_up' => 'Follow-up',
                                             ])
                                             ->default('research'),
-                                        Forms\Components\TextInput::make('estimated_time')
+                                        TextInput::make('estimated_time')
                                             ->numeric()
                                             ->suffix('minutes')
                                             ->label('Est. Time'),
-                                        Forms\Components\Toggle::make('is_required')
+                                        Toggle::make('is_required')
                                             ->label('Required'),
                                     ]),
-                                Forms\Components\TagsInput::make('resources')
+                                TagsInput::make('resources')
                                     ->placeholder('Add helpful resources (URLs, document names, etc.)')
                                     ->columnSpanFull(),
-                                Forms\Components\TagsInput::make('tips')
+                                TagsInput::make('tips')
                                     ->placeholder('Add helpful tips and notes')
                                     ->columnSpanFull(),
                             ])
@@ -163,11 +193,11 @@ class ChecklistTemplateResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('name')
+                TextColumn::make('name')
                     ->searchable()
                     ->sortable()
                     ->weight('bold'),
-                Tables\Columns\TextColumn::make('category')
+                TextColumn::make('category')
                     ->badge()
                     ->color(fn (string $state): string => match ($state) {
                         'vital_records' => 'success',
@@ -178,7 +208,7 @@ class ChecklistTemplateResource extends Resource
                         default => 'gray',
                     })
                     ->formatStateUsing(fn (string $state): string => str_replace('_', ' ', title_case($state))),
-                Tables\Columns\TextColumn::make('difficulty_level')
+                TextColumn::make('difficulty_level')
                     ->badge()
                     ->color(fn (string $state): string => match ($state) {
                         'beginner' => 'success',
@@ -187,33 +217,33 @@ class ChecklistTemplateResource extends Resource
                         default => 'gray',
                     })
                     ->formatStateUsing(fn (string $state): string => ucfirst($state)),
-                Tables\Columns\TextColumn::make('templateItems_count')
+                TextColumn::make('templateItems_count')
                     ->counts('templateItems')
                     ->label('Items')
                     ->alignCenter(),
-                Tables\Columns\TextColumn::make('estimated_time')
+                TextColumn::make('estimated_time')
                     ->suffix(' min')
                     ->label('Est. Time')
                     ->alignCenter()
                     ->sortable(),
-                Tables\Columns\IconColumn::make('is_public')
+                IconColumn::make('is_public')
                     ->boolean()
                     ->label('Public')
                     ->alignCenter(),
-                Tables\Columns\IconColumn::make('is_default')
+                IconColumn::make('is_default')
                     ->boolean()
                     ->label('Default')
                     ->alignCenter(),
-                Tables\Columns\TextColumn::make('creator.name')
+                TextColumn::make('creator.name')
                     ->label('Created By')
                     ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('created_at')
+                TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                Tables\Filters\SelectFilter::make('category')
+                SelectFilter::make('category')
                     ->options([
                         'general' => 'General Research',
                         'vital_records' => 'Vital Records',
@@ -228,23 +258,23 @@ class ChecklistTemplateResource extends Resource
                         'family_history' => 'Family History',
                         'verification' => 'Source Verification',
                     ]),
-                Tables\Filters\SelectFilter::make('difficulty_level')
+                SelectFilter::make('difficulty_level')
                     ->options([
                         'beginner' => 'Beginner',
                         'intermediate' => 'Intermediate',
                         'advanced' => 'Advanced',
                     ]),
-                Tables\Filters\TernaryFilter::make('is_public')
+                TernaryFilter::make('is_public')
                     ->label('Public Templates'),
-                Tables\Filters\TernaryFilter::make('is_default')
+                TernaryFilter::make('is_default')
                     ->label('Default Templates'),
-                Tables\Filters\TrashedFilter::make(),
+                TrashedFilter::make(),
             ])
-            ->actions([
-                Tables\Actions\ActionGroup::make([
-                    Tables\Actions\ViewAction::make(),
-                    Tables\Actions\EditAction::make(),
-                    Tables\Actions\Action::make('duplicate')
+            ->recordActions([
+                ActionGroup::make([
+                    ViewAction::make(),
+                    EditAction::make(),
+                    Action::make('duplicate')
                         ->icon('heroicon-o-document-duplicate')
                         ->action(function (ChecklistTemplate $record) {
                             $newTemplate = $record->replicate();
@@ -264,16 +294,16 @@ class ChecklistTemplateResource extends Resource
                         ->requiresConfirmation()
                         ->modalHeading('Duplicate Template')
                         ->modalDescription('This will create a copy of this template that you can modify.'),
-                    Tables\Actions\DeleteAction::make(),
-                    Tables\Actions\RestoreAction::make(),
-                    Tables\Actions\ForceDeleteAction::make(),
+                    DeleteAction::make(),
+                    RestoreAction::make(),
+                    ForceDeleteAction::make(),
                 ]),
             ])
-            ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                    Tables\Actions\RestoreBulkAction::make(),
-                    Tables\Actions\ForceDeleteBulkAction::make(),
+            ->toolbarActions([
+                BulkActionGroup::make([
+                    DeleteBulkAction::make(),
+                    RestoreBulkAction::make(),
+                    ForceDeleteBulkAction::make(),
                 ]),
             ])
             ->defaultSort('created_at', 'desc');
@@ -282,17 +312,17 @@ class ChecklistTemplateResource extends Resource
     public static function getRelations(): array
     {
         return [
-            RelationManagers\TemplateItemsRelationManager::class,
+            TemplateItemsRelationManager::class,
         ];
     }
 
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListChecklistTemplates::route('/'),
-            'create' => Pages\CreateChecklistTemplate::route('/create'),
-            'view' => Pages\ViewChecklistTemplate::route('/{record}'),
-            'edit' => Pages\EditChecklistTemplate::route('/{record}/edit'),
+            'index' => ListChecklistTemplates::route('/'),
+            'create' => CreateChecklistTemplate::route('/create'),
+            'view' => ViewChecklistTemplate::route('/{record}'),
+            'edit' => EditChecklistTemplate::route('/{record}/edit'),
         ];
     }
 

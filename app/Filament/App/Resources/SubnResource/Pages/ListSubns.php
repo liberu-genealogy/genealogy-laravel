@@ -2,6 +2,7 @@
 
 namespace App\Filament\App\Resources\SubnResource\Pages;
 
+use Filament\Actions\CreateAction;
 use App\Filament\App\Resources\SubnResource;
 use Filament\Actions;
 use Filament\Resources\Pages\ListRecords;
@@ -13,7 +14,7 @@ class ListSubns extends ListRecords
     protected function getHeaderActions(): array
     {
         return [
-            Actions\CreateAction::make(),
+            CreateAction::make(),
         ];
     }
 }

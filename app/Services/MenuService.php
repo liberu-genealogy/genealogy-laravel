@@ -25,7 +25,7 @@ class MenuService
 
     private function createMenuItems($items)
     {
-        return $items->map(function ($item): \Spatie\Menu\Menu|\Spatie\Menu\Laravel\Link {
+        return $items->map(function ($item): \Spatie\Menu\Menu|Link {
             if ($item->children->count() > 0) {
                 $submenu = SpatieMenu::new()
                     ->addClass('absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1')

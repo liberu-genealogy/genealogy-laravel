@@ -2,6 +2,7 @@
 
 namespace App\Jobs;
 
+use Exception;
 use App\Models\ImportJob;
 use App\Models\User;
 use App\Tenant\Manager;
@@ -30,7 +31,7 @@ class ImportGedcom implements ShouldQueue
 
     public function handle(): int
     {
-        throw_unless(File::isFile($this->filePath), \Exception::class, "{$this->filePath} does not exist.");
+        throw_unless(File::isFile($this->filePath), Exception::class, "{$this->filePath} does not exist.");
 
         // $tenant = Manager::fromModel($this->user->company(), $this->user);
         // if (!$tenant->databaseExists()) {

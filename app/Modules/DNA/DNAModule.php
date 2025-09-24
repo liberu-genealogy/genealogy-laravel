@@ -2,6 +2,9 @@
 
 namespace App\Modules\DNA;
 
+use App\Modules\DNA\Services\DNAService;
+use App\Modules\DNA\Services\DNAMatchService;
+use Artisan;
 use App\Modules\BaseModule;
 
 class DNAModule extends BaseModule
@@ -36,11 +39,11 @@ class DNAModule extends BaseModule
     protected function registerDNAServices(): void
     {
         app()->singleton('genealogy.dna', function ($app) {
-            return new \App\Modules\DNA\Services\DNAService();
+            return new DNAService();
         });
 
         app()->singleton('genealogy.dna.matcher', function ($app) {
-            return new \App\Modules\DNA\Services\DNAMatchService();
+            return new DNAMatchService();
         });
     }
 
@@ -57,7 +60,7 @@ class DNAModule extends BaseModule
      */
     protected function installDNATables(): void
     {
-        \Artisan::call('migrate', [
+        Artisan::call('migrate', [
             '--path' => 'app/Modules/DNA/database/migrations',
             '--force' => true,
         ]);

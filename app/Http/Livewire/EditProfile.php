@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Http\Livewire;
 
+use Throwable;
+use Illuminate\View\View;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 use Livewire\Attributes\Rule;
@@ -30,13 +32,13 @@ final readonly class EditProfile extends Component
         try {
             Auth::user()?->update($validated);
             $this->dispatch('profile-updated');
-        } catch (\Throwable $e) {
+        } catch (Throwable $e) {
             $this->dispatch('profile-update-failed', message: $e->getMessage());
             throw $e;
         }
     }
 
-    public function render(): \Illuminate\View\View
+    public function render(): View
     {
         return view('livewire.edit-profile');
     }

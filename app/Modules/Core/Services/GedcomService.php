@@ -2,6 +2,7 @@
 
 namespace App\Modules\Core\Services;
 
+use Exception;
 use App\Models\Person;
 use App\Models\Family;
 use Illuminate\Support\Collection;
@@ -48,7 +49,7 @@ class GedcomService
                     $this->importFamilyRecord($record);
                     $imported['families']++;
                 }
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
                 $imported['errors'][] = "Error importing {$record['type']} {$record['id']}: " . $e->getMessage();
             }
         }

@@ -4,6 +4,14 @@ declare(strict_types=1);
 
 namespace App\Providers;
 
+use App\Events\UserCreated;
+use App\Listeners\AssignDefaultRole;
+use App\Listeners\CreatePersonalTeam;
+use App\Events\AchievementUnlocked;
+use App\Listeners\AchievementUnlockedListener;
+use App\Events\UserLeveledUp;
+use App\Listeners\UserLeveledUpListener;
+use Override;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -14,25 +22,25 @@ class EventServiceProvider extends ServiceProvider
         Registered::class => [
             SendEmailVerificationNotification::class,
         ],
-        \App\Events\UserCreated::class => [
-            \App\Listeners\AssignDefaultRole::class,
-            \App\Listeners\CreatePersonalTeam::class,
+        UserCreated::class => [
+            AssignDefaultRole::class,
+            CreatePersonalTeam::class,
         ],
-        \App\Events\AchievementUnlocked::class => [
-            \App\Listeners\AchievementUnlockedListener::class,
+        AchievementUnlocked::class => [
+            AchievementUnlockedListener::class,
         ],
-        \App\Events\UserLeveledUp::class => [
-            \App\Listeners\UserLeveledUpListener::class,
+        UserLeveledUp::class => [
+            UserLeveledUpListener::class,
         ],
     ];
 
-    #[\Override]
+    #[Override]
     public function boot(): void
     {
         //
     }
 
-    #[\Override]
+    #[Override]
     public function shouldDiscoverEvents(): bool
     {
         return false;

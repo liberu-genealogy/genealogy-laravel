@@ -2,6 +2,7 @@
 
 namespace App\Listeners;
 
+use Exception;
 use App\Events\AchievementUnlocked;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
@@ -30,7 +31,7 @@ class AchievementUnlockedListener implements ShouldQueue
         // Send notification to user (if notification class exists)
         try {
             $event->user->notify(new AchievementUnlockedNotification($event->achievement));
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             // Notification class might not exist yet, log the error
             Log::warning('Could not send achievement notification', [
                 'error' => $e->getMessage(),

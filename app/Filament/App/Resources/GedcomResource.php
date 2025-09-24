@@ -2,6 +2,17 @@
 
 namespace App\Filament\App\Resources;
 
+use App\Filament\App\Resources\GedcomResource\Pages\ListGedcoms;
+use App\Filament\App\Resources\GedcomResource\Pages\CreateGedcom;
+use App\Filament\App\Resources\GedcomResource\Pages\ViewGedcom;
+use App\Filament\App\Resources\GedcomResource\Pages\EditGedcom;
+use Override;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Actions\ViewAction;
+use Filament\Actions\EditAction;
+use Filament\Actions\Action;
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteBulkAction;
 use BackedEnum;
 use App\Filament\App\Resources\GedcomResource\Pages;
 use App\Jobs\ExportGedcom;
@@ -26,25 +37,25 @@ class GedcomResource extends Resource
 
     protected static ?string $navigationLabel = 'Gedcom';
 
-    protected static string | BackedEnum | null $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-rectangle-stack';
 
     protected static bool $shouldRegisterNavigation = true;
 
     public static function getPages(): array
     {
         return [
-            'index'  => Pages\ListGedcoms::route('/'),
-            'create' => Pages\CreateGedcom::route('/create'),
-            'view'   => Pages\ViewGedcom::route('/{record}'),
-            'edit'   => Pages\EditGedcom::route('/{record}/edit'),
+            'index'  => ListGedcoms::route('/'),
+            'create' => CreateGedcom::route('/create'),
+            'view'   => ViewGedcom::route('/{record}'),
+            'edit'   => EditGedcom::route('/{record}/edit'),
         ];
     }
 
-    #[\Override]
-    public static function form(Schema $form): Schema
+    #[Override]
+    public static function form(Schema $schema): Schema
     {
-        return $form
-            ->schema([
+        return $schema
+            ->components([
                 FileUpload::make('filename')
                     ->multiple(false)
                     // ->required()
@@ -63,21 +74,21 @@ class GedcomResource extends Resource
             ]);
     }
 
-    #[\Override]
+    #[Override]
     public static function table(Table $table): Table
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('name')
+                TextColumn::make('name')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('filename')
+                TextColumn::make('filename')
                     ->label('File name')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('created_at')
+                TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('updated_at')
+                TextColumn::make('updated_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
@@ -86,16 +97,16 @@ class GedcomResource extends Resource
             ->filters([
                 //
             ])
-            ->actions([
-                Actions\ViewAction::make(),
-                Actions\EditAction::make(),
-                Actions\Action::make('export')
+            ->recordActions([
+                ViewAction::make(),
+                EditAction::make(),
+                Action::make('export')
                     ->action(fn () => static::exportGedcom())
                     ->label('Export GEDCOM'),
             ])
-            ->bulkActions([
-                Actions\BulkActionGroup::make([
-                    Actions\DeleteBulkAction::make(),
+            ->toolbarActions([
+                BulkActionGroup::make([
+                    DeleteBulkAction::make(),
                 ]),
             ]);
     }

@@ -2,6 +2,15 @@
 
 namespace App\Filament\App\Resources;
 
+use Override;
+use Filament\Forms\Components\TextInput;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Actions\EditAction;
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteBulkAction;
+use App\Filament\App\Resources\ChanResource\Pages\ListChans;
+use App\Filament\App\Resources\ChanResource\Pages\CreateChan;
+use App\Filament\App\Resources\ChanResource\Pages\EditChan;
 use UnitEnum;
 use BackedEnum;
 use App\Filament\App\Resources\ChanResource\Pages;
@@ -18,49 +27,49 @@ class ChanResource extends Resource
 {
     protected static ?string $model = Chan::class;
 
-    protected static string | BackedEnum | null $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-rectangle-stack';
 
-    protected static string | UnitEnum | null $navigationGroup = 'Person';
+    protected static string | \UnitEnum | null $navigationGroup = 'Person';
 
     protected static ?string $navigationLabel = ' Chan';
 
     // protected static ?string $tenantRelationshipName = 'team';
 
-    #[\Override]
-    public static function form(Schema $form): Schema
+    #[Override]
+    public static function form(Schema $schema): Schema
     {
-        return $form
-        ->schema([
-            Forms\Components\TextInput::make('group')
+        return $schema
+        ->components([
+            TextInput::make('group')
                 ->maxLength(255),
-            Forms\Components\TextInput::make('gid')
+            TextInput::make('gid')
                 ->numeric(),
-            Forms\Components\TextInput::make('date')
+            TextInput::make('date')
                 ->maxLength(255),
-            Forms\Components\TextInput::make('time')
+            TextInput::make('time')
                 ->maxLength(255),
         ]);
     }
 
-    #[\Override]
+    #[Override]
     public static function table(Table $table): Table
     {
         return $table
         ->columns([
-            Tables\Columns\TextColumn::make('group')
+            TextColumn::make('group')
                 ->searchable(),
-            Tables\Columns\TextColumn::make('gid')
+            TextColumn::make('gid')
                 ->numeric()
                 ->sortable(),
-            Tables\Columns\TextColumn::make('date')
+            TextColumn::make('date')
                 ->searchable(),
-            Tables\Columns\TextColumn::make('time')
+            TextColumn::make('time')
                 ->searchable(),
-            Tables\Columns\TextColumn::make('created_at')
+            TextColumn::make('created_at')
                 ->dateTime()
                 ->sortable()
                 ->toggleable(isToggledHiddenByDefault: true),
-            Tables\Columns\TextColumn::make('updated_at')
+            TextColumn::make('updated_at')
                 ->dateTime()
                 ->sortable()
                 ->toggleable(isToggledHiddenByDefault: true),
@@ -68,17 +77,17 @@ class ChanResource extends Resource
             ->filters([
                 //
             ])
-            ->actions([
-                Actions\EditAction::make(),
+            ->recordActions([
+                EditAction::make(),
             ])
-            ->bulkActions([
-                Actions\BulkActionGroup::make([
-                    Actions\DeleteBulkAction::make(),
+            ->toolbarActions([
+                BulkActionGroup::make([
+                    DeleteBulkAction::make(),
                 ]),
             ]);
     }
 
-    #[\Override]
+    #[Override]
     public static function getRelations(): array
     {
         return [
@@ -89,9 +98,9 @@ class ChanResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index'  => Pages\ListChans::route('/'),
-            'create' => Pages\CreateChan::route('/create'),
-            'edit'   => Pages\EditChan::route('/{record}/edit'),
+            'index'  => ListChans::route('/'),
+            'create' => CreateChan::route('/create'),
+            'edit'   => EditChan::route('/{record}/edit'),
         ];
     }
 }

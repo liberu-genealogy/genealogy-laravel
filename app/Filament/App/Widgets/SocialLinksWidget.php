@@ -2,14 +2,16 @@
 
 namespace App\Filament\App\Widgets;
 
+use Override;
+use Illuminate\Contracts\View\View;
 use Filament\Widgets\Widget;
 
 class SocialLinksWidget extends Widget
 {
     protected string $view = 'filament.app.widgets.social-links-widget';
 
- #[\Override]
- public function render(): \Illuminate\Contracts\View\View
+ #[Override]
+ public function render(): View
     {
         return view($this->view, [
             'links' => [

@@ -2,6 +2,15 @@
 
 namespace App\Filament\App\Resources;
 
+use Override;
+use Filament\Forms\Components\TextInput;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Actions\EditAction;
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteBulkAction;
+use App\Filament\App\Resources\RefnResource\Pages\ListRefns;
+use App\Filament\App\Resources\RefnResource\Pages\CreateRefn;
+use App\Filament\App\Resources\RefnResource\Pages\EditRefn;
 use BackedEnum;
 use App\Filament\App\Resources\RefnResource\Pages;
 use App\Models\Refn;
@@ -17,43 +26,43 @@ class RefnResource extends Resource
 {
     protected static ?string $model = Refn::class;
 
-    protected static string | BackedEnum | null $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-rectangle-stack';
 
-    #[\Override]
-    public static function form(Schema $form): Schema
+    #[Override]
+    public static function form(Schema $schema): Schema
     {
-        return $form
-            ->schema([
-                Forms\Components\TextInput::make('group')
+        return $schema
+            ->components([
+                TextInput::make('group')
                     ->maxLength(255),
-                Forms\Components\TextInput::make('gid')
+                TextInput::make('gid')
                     ->numeric(),
-                Forms\Components\TextInput::make('refn')
+                TextInput::make('refn')
                     ->maxLength(255),
-                Forms\Components\TextInput::make('type')
+                TextInput::make('type')
                     ->maxLength(255),
             ]);
     }
 
-    #[\Override]
+    #[Override]
     public static function table(Table $table): Table
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('group')
+                TextColumn::make('group')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('gid')
+                TextColumn::make('gid')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('refn')
+                TextColumn::make('refn')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('type')
+                TextColumn::make('type')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('created_at')
+                TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('updated_at')
+                TextColumn::make('updated_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
@@ -61,17 +70,17 @@ class RefnResource extends Resource
             ->filters([
                 //
             ])
-            ->actions([
-                Actions\EditAction::make(),
+            ->recordActions([
+                EditAction::make(),
             ])
-            ->bulkActions([
-                Actions\BulkActionGroup::make([
-                    Actions\DeleteBulkAction::make(),
+            ->toolbarActions([
+                BulkActionGroup::make([
+                    DeleteBulkAction::make(),
                 ]),
             ]);
     }
 
-    #[\Override]
+    #[Override]
     public static function getRelations(): array
     {
         return [
@@ -82,9 +91,9 @@ class RefnResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index'  => Pages\ListRefns::route('/'),
-            'create' => Pages\CreateRefn::route('/create'),
-            'edit'   => Pages\EditRefn::route('/{record}/edit'),
+            'index'  => ListRefns::route('/'),
+            'create' => CreateRefn::route('/create'),
+            'edit'   => EditRefn::route('/{record}/edit'),
         ];
     }
 }

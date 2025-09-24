@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use Exception;
+use Log;
 use App\Modules\ModuleManager;
 use App\Modules\ModuleServiceProvider;
 use Illuminate\Support\ServiceProvider;
@@ -60,9 +62,9 @@ class AppServiceProvider extends ServiceProvider
             if ($moduleManager->has($moduleName) && !$moduleManager->get($moduleName)->isEnabled()) {
                 try {
                     $moduleManager->enable($moduleName);
-                } catch (\Exception $e) {
+                } catch (Exception $e) {
                     // Log error but don't break the application
-                    \Log::warning("Failed to enable default module {$moduleName}: " . $e->getMessage());
+                    Log::warning("Failed to enable default module {$moduleName}: " . $e->getMessage());
                 }
             }
         }

@@ -2,6 +2,8 @@
 
 namespace App\Modules\Places\Services;
 
+use Exception;
+use Log;
 use App\Models\Place;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Cache;
@@ -96,8 +98,8 @@ class GeocodingService
                     'address' => $data['address'] ?? [],
                 ];
             }
-        } catch (\Exception $e) {
-            \Log::warning('Geocoding failed for place: ' . $placeName, [
+        } catch (Exception $e) {
+            Log::warning('Geocoding failed for place: ' . $placeName, [
                 'error' => $e->getMessage()
             ]);
         }
@@ -127,8 +129,8 @@ class GeocodingService
                     'place_type' => $data['type'] ?? null,
                 ];
             }
-        } catch (\Exception $e) {
-            \Log::warning('Reverse geocoding failed for coordinates: ' . $latitude . ',' . $longitude, [
+        } catch (Exception $e) {
+            Log::warning('Reverse geocoding failed for coordinates: ' . $latitude . ',' . $longitude, [
                 'error' => $e->getMessage()
             ]);
         }

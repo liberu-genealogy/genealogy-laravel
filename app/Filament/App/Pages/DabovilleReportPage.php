@@ -13,9 +13,9 @@ class DabovilleReportPage extends Page
 
     protected static ?string $title = 'DAboville Report';
 
-    protected static string | BackedEnum | null $navigationIcon = 'heroicon-o-chart-bar';
+    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-chart-bar';
 
-    protected static string | UnitEnum | null $navigationGroup = 'Reports';
+    protected static string | \UnitEnum | null $navigationGroup = 'Reports';
 
     public function mount(): void
     {

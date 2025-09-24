@@ -2,6 +2,15 @@
 
 namespace App\Filament\App\Resources;
 
+use Override;
+use Filament\Forms\Components\TextInput;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Actions\EditAction;
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteBulkAction;
+use App\Filament\App\Resources\SubmResource\Pages\ListSubms;
+use App\Filament\App\Resources\SubmResource\Pages\CreateSubm;
+use App\Filament\App\Resources\SubmResource\Pages\EditSubm;
 use BackedEnum;
 use App\Filament\App\Resources\SubmResource\Pages;
 use App\Models\Subm;
@@ -17,73 +26,73 @@ class SubmResource extends Resource
 {
     protected static ?string $model = Subm::class;
 
-    protected static string | BackedEnum | null $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-rectangle-stack';
 
-    #[\Override]
-    public static function form(Schema $form): Schema
+    #[Override]
+    public static function form(Schema $schema): Schema
     {
-        return $form
-            ->schema([
-                Forms\Components\TextInput::make('group')
+        return $schema
+            ->components([
+                TextInput::make('group')
                     ->maxLength(255),
-                Forms\Components\TextInput::make('gid')
+                TextInput::make('gid')
                     ->numeric(),
-                Forms\Components\TextInput::make('name')
+                TextInput::make('name')
                     ->maxLength(255),
-                Forms\Components\TextInput::make('addr_id')
+                TextInput::make('addr_id')
                     ->numeric(),
-                Forms\Components\TextInput::make('rin')
+                TextInput::make('rin')
                     ->maxLength(255),
-                Forms\Components\TextInput::make('rfn')
+                TextInput::make('rfn')
                     ->maxLength(255),
-                Forms\Components\TextInput::make('lang')
+                TextInput::make('lang')
                     ->maxLength(255),
-                Forms\Components\TextInput::make('phon')
+                TextInput::make('phon')
                     ->maxLength(255),
-                Forms\Components\TextInput::make('email')
+                TextInput::make('email')
                     ->email()
                     ->maxLength(255),
-                Forms\Components\TextInput::make('fax')
+                TextInput::make('fax')
                     ->maxLength(255),
-                Forms\Components\TextInput::make('www')
+                TextInput::make('www')
                     ->maxLength(255),
             ]);
     }
 
-    #[\Override]
+    #[Override]
     public static function table(Table $table): Table
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('group')
+                TextColumn::make('group')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('gid')
+                TextColumn::make('gid')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('name')
+                TextColumn::make('name')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('addr_id')
+                TextColumn::make('addr_id')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('rin')
+                TextColumn::make('rin')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('rfn')
+                TextColumn::make('rfn')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('lang')
+                TextColumn::make('lang')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('phon')
+                TextColumn::make('phon')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('email')
+                TextColumn::make('email')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('fax')
+                TextColumn::make('fax')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('www')
+                TextColumn::make('www')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('created_at')
+                TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('updated_at')
+                TextColumn::make('updated_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
@@ -91,17 +100,17 @@ class SubmResource extends Resource
             ->filters([
                 //
             ])
-            ->actions([
-                Actions\EditAction::make(),
+            ->recordActions([
+                EditAction::make(),
             ])
-            ->bulkActions([
-                Actions\BulkActionGroup::make([
-                    Actions\DeleteBulkAction::make(),
+            ->toolbarActions([
+                BulkActionGroup::make([
+                    DeleteBulkAction::make(),
                 ]),
             ]);
     }
 
-    #[\Override]
+    #[Override]
     public static function getRelations(): array
     {
         return [
@@ -112,9 +121,9 @@ class SubmResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index'  => Pages\ListSubms::route('/'),
-            'create' => Pages\CreateSubm::route('/create'),
-            'edit'   => Pages\EditSubm::route('/{record}/edit'),
+            'index'  => ListSubms::route('/'),
+            'create' => CreateSubm::route('/create'),
+            'edit'   => EditSubm::route('/{record}/edit'),
         ];
     }
 }

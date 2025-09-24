@@ -2,6 +2,7 @@
 
 namespace App\Filament\App\Resources\DnaMatchingResource\Pages;
 
+use Filament\Actions\DeleteAction;
 use App\Filament\App\Resources\DnaMatchingResource;
 use Filament\Actions;
 use Filament\Resources\Pages\EditRecord;
@@ -13,7 +14,7 @@ class EditDnaMatching extends EditRecord
     protected function getHeaderActions(): array
     {
         return [
-            Actions\DeleteAction::make(),
+            DeleteAction::make(),
         ];
     }
 }

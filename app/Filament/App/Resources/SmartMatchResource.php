@@ -2,6 +2,12 @@
 
 namespace App\Filament\App\Resources;
 
+use Filament\Tables\Filters\SelectFilter;
+use Filament\Actions\ViewAction;
+use Filament\Actions\Action;
+use Filament\Notifications\Notification;
+use App\Filament\App\Resources\SmartMatchResource\Pages\ListSmartMatches;
+use App\Filament\App\Resources\SmartMatchResource\Pages\ViewSmartMatch;
 use UnitEnum;
 use BackedEnum;
 use App\Filament\App\Resources\SmartMatchResource\Pages;
@@ -22,11 +28,11 @@ class SmartMatchResource extends Resource
 {
     protected static ?string $model = SmartMatch::class;
 
-    protected static string | BackedEnum | null $navigationIcon = 'heroicon-o-magnifying-glass';
+    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-magnifying-glass';
 
     protected static ?string $navigationLabel = 'Smart Matches';
 
-    protected static string | UnitEnum | null $navigationGroup =  'Research';
+    protected static string | \UnitEnum | null $navigationGroup =  'Research';
 
     protected static ?int $navigationSort = 4;
 
@@ -35,9 +41,9 @@ class SmartMatchResource extends Resource
         return Auth::user()?->isPremium() ?? false;
     }
 
-    public static function form(Schema $form): Schema
+    public static function form(Schema $schema): Schema
     {
-        return $form->schema([]);
+        return $schema->components([]);
     }
 
     public static function table(Table $table): Table
@@ -84,14 +90,14 @@ class SmartMatchResource extends Resource
                     ->sortable(),
             ])
             ->filters([
-                Tables\Filters\SelectFilter::make('status')
+                SelectFilter::make('status')
                     ->options([
                         'pending' => 'Pending',
                         'reviewed' => 'Reviewed',
                         'accepted' => 'Accepted',
                         'rejected' => 'Rejected',
                     ]),
-                Tables\Filters\SelectFilter::make('match_source')
+                SelectFilter::make('match_source')
                     ->options([
                         'familysearch' => 'FamilySearch',
                         'ancestry' => 'Ancestry',
@@ -99,15 +105,15 @@ class SmartMatchResource extends Resource
                         'findmypast' => 'FindMyPast',
                     ]),
             ])
-            ->actions([
-                Tables\Actions\ViewAction::make(),
-                Tables\Actions\Action::make('accept')
+            ->recordActions([
+                ViewAction::make(),
+                Action::make('accept')
                     ->label('Accept')
                     ->icon('heroicon-o-check')
                     ->color('success')
                     ->action(fn (SmartMatch $record) => $record->update(['status' => 'accepted', 'reviewed_at' => now()]))
                     ->visible(fn (SmartMatch $record): bool => $record->isPending()),
-                Tables\Actions\Action::make('reject')
+                Action::make('reject')
                     ->label('Reject')
                     ->icon('heroicon-o-x-mark')
                     ->color('danger')
@@ -115,7 +121,7 @@ class SmartMatchResource extends Resource
                     ->visible(fn (SmartMatch $record): bool => $record->isPending()),
             ])
             ->headerActions([
-                Tables\Actions\Action::make('find_matches')
+                Action::make('find_matches')
                     ->label('Find New Matches')
                     ->icon('heroicon-o-magnifying-glass')
                     ->color('primary')
@@ -123,7 +129,7 @@ class SmartMatchResource extends Resource
                         $service = app(SmartMatchingService::class);
                         $matches = $service->findSmartMatches(Auth::user());
 
-                        \Filament\Notifications\Notification::make()
+                        Notification::make()
                             ->title('Smart Matching Complete')
                             ->body("Found {$matches->count()} potential matches!")
                             ->success()
@@ -136,15 +142,15 @@ class SmartMatchResource extends Resource
                     ->modalDescription('This will search public genealogy databases for potential matches to your unknown ancestors. This may take a few minutes.')
                     ->modalSubmitActionLabel('Start Search'),
             ])
-            ->bulkActions([])
+            ->toolbarActions([])
             ->modifyQueryUsing(fn (Builder $query) => $query->where('user_id', Auth::id()));
     }
 
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListSmartMatches::route('/'),
-            'view' => Pages\ViewSmartMatch::route('/{record}'),
+            'index' => ListSmartMatches::route('/'),
+            'view' => ViewSmartMatch::route('/{record}'),
         ];
     }
 }

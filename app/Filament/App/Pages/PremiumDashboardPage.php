@@ -2,6 +2,8 @@
 
 namespace App\Filament\App\Pages;
 
+use Filament\Facades\Filament;
+use Exception;
 use App\Services\SubscriptionService;
 use Filament\Actions\Action;
 use Filament\Notifications\Notification;
@@ -10,11 +12,11 @@ use Illuminate\Support\Facades\Auth;
 
 class PremiumDashboardPage extends Page
 {
-    protected static ?string $navigationIcon = 'heroicon-o-star';
+    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-star';
 
     protected static ?string $navigationLabel = 'Premium Dashboard';
 
-    protected static ?string $navigationGroup = '👤 Account & Settings';
+    protected static string | \UnitEnum | null $navigationGroup = '👤 Account & Settings';
 
     protected static ?int $navigationSort = 1;
 
@@ -26,7 +28,7 @@ class PremiumDashboardPage extends Page
     {
         // Redirect if user is not premium
         if (!Auth::user()->isPremium()) {
-            $this->redirect(\Filament\Facades\Filament::getUrl() . '/subscription');
+            $this->redirect(Filament::getUrl() . '/subscription');
         }
     }
 
@@ -65,9 +67,9 @@ class PremiumDashboardPage extends Page
                 ->warning()
                 ->send();
 
-            $this->redirect(\Filament\Facades\Filament::getUrl() . '/subscription');
+            $this->redirect(Filament::getUrl() . '/subscription');
 
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             Notification::make()
                 ->title('Cancellation Error')
                 ->body('There was an error cancelling your subscription. Please try again.')
@@ -88,7 +90,7 @@ class PremiumDashboardPage extends Page
                 ->success()
                 ->send();
 
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             Notification::make()
                 ->title('Resume Error')
                 ->body('There was an error resuming your subscription. Please try again.')

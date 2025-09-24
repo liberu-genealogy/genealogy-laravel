@@ -2,6 +2,15 @@
 
 namespace App\Filament\App\Resources;
 
+use Override;
+use Filament\Forms\Components\TextInput;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Actions\EditAction;
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteBulkAction;
+use App\Filament\App\Resources\PersonAnciResource\Pages\ListPersonAncis;
+use App\Filament\App\Resources\PersonAnciResource\Pages\CreatePersonAnci;
+use App\Filament\App\Resources\PersonAnciResource\Pages\EditPersonAnci;
 use UnitEnum;
 use BackedEnum;
 use App\Filament\App\Resources\PersonAnciResource\Pages;
@@ -18,43 +27,43 @@ class PersonAnciResource extends Resource
 {
     protected static ?string $model = PersonAnci::class;
 
-    protected static string | BackedEnum | null $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-rectangle-stack';
 
     protected static ?string $navigationLabel = 'Person Anci';
 
-    protected static string | UnitEnum | null $navigationGroup = 'Person';
+    protected static string | \UnitEnum | null $navigationGroup = 'Person';
 
-    #[\Override]
-    public static function form(Schema $form): Schema
+    #[Override]
+    public static function form(Schema $schema): Schema
     {
-        return $form
-            ->schema([
-                Forms\Components\TextInput::make('group')
+        return $schema
+            ->components([
+                TextInput::make('group')
                 ->maxLength(255),
-                Forms\Components\TextInput::make('gid')
+                TextInput::make('gid')
                     ->numeric(),
-                Forms\Components\TextInput::make('anci')
+                TextInput::make('anci')
                     ->maxLength(255),
             ]);
     }
 
-    #[\Override]
+    #[Override]
     public static function table(Table $table): Table
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('group')
+                TextColumn::make('group')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('gid')
+                TextColumn::make('gid')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('anci')
+                TextColumn::make('anci')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('created_at')
+                TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('updated_at')
+                TextColumn::make('updated_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
@@ -62,12 +71,12 @@ class PersonAnciResource extends Resource
             ->filters([
                 //
             ])
-            ->actions([
-                Actions\EditAction::make(),
+            ->recordActions([
+                EditAction::make(),
             ])
-            ->bulkActions([
-                Actions\BulkActionGroup::make([
-                    Actions\DeleteBulkAction::make(),
+            ->toolbarActions([
+                BulkActionGroup::make([
+                    DeleteBulkAction::make(),
                 ]),
             ]);
     }
@@ -75,9 +84,9 @@ class PersonAnciResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index'  => Pages\ListPersonAncis::route('/'),
-            'create' => Pages\CreatePersonAnci::route('/create'),
-            'edit'   => Pages\EditPersonAnci::route('/{record}/edit'),
+            'index'  => ListPersonAncis::route('/'),
+            'create' => CreatePersonAnci::route('/create'),
+            'edit'   => EditPersonAnci::route('/{record}/edit'),
         ];
     }
 }

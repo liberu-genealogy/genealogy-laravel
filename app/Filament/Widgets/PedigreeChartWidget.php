@@ -2,6 +2,8 @@
 
 namespace App\Filament\Widgets;
 
+use Override;
+use Illuminate\Contracts\View\View;
 use App\Models\Person;
 use Filament\Widgets\Widget;
 
@@ -16,8 +18,8 @@ class PedigreeChartWidget extends Widget
         ];
     }
 
-    #[\Override]
-    public function render(): \Illuminate\Contracts\View\View
+    #[Override]
+    public function render(): View
     {
         return view(static::$view, $this->getData());
     }

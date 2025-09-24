@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Jobs;
 
+use Throwable;
 use App\Models\Family;
 use App\Models\Person;
 use App\Models\User;
@@ -44,7 +45,7 @@ final readonly class ExportGedCom implements ShouldQueue
             chmod($tenant->storage()->path($this->file), 0644);
 
             Log::info('GEDCOM file generated and stored successfully.');
-        } catch (\Throwable $e) {
+        } catch (Throwable $e) {
             Log::error('Error during GEDCOM export: ' . $e->getMessage());
             throw $e;
         }

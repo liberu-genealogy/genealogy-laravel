@@ -2,6 +2,19 @@
 
 namespace App\Modules\Places\Filament\Resources;
 
+use Filament\Forms\Components\TextInput;
+use Filament\Schemas\Components\Grid;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Columns\IconColumn;
+use Filament\Tables\Filters\SelectFilter;
+use Filament\Tables\Filters\TernaryFilter;
+use Filament\Actions\EditAction;
+use Filament\Actions\DeleteAction;
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteBulkAction;
+use App\Modules\Places\Filament\Resources\PlaceResource\Pages\ListPlaces;
+use App\Modules\Places\Filament\Resources\PlaceResource\Pages\CreatePlace;
+use App\Modules\Places\Filament\Resources\PlaceResource\Pages\EditPlace;
 use App\Models\Place;
 use Filament\Forms;
 use Filament\Schemas\Schema;
@@ -14,35 +27,35 @@ class PlaceResource extends Resource
 {
     protected static ?string $model = Place::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-map-pin';
+    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-map-pin';
 
-    protected static ?string $navigationGroup = 'Geography';
+    protected static string | \UnitEnum | null $navigationGroup = 'Geography';
 
     protected static ?string $navigationLabel = 'Places';
 
-    public static function form(Schema $form): Schema
+    public static function form(Schema $schema): Schema
     {
-        return $form
-            ->schema([
-                Forms\Components\TextInput::make('name')
+        return $schema
+            ->components([
+                TextInput::make('name')
                     ->required()
                     ->maxLength(255),
-                Forms\Components\TextInput::make('city')
+                TextInput::make('city')
                     ->maxLength(255),
-                Forms\Components\TextInput::make('state')
+                TextInput::make('state')
                     ->maxLength(255),
-                Forms\Components\TextInput::make('country')
+                TextInput::make('country')
                     ->maxLength(255),
-                Forms\Components\TextInput::make('postal_code')
+                TextInput::make('postal_code')
                     ->maxLength(20),
-                Forms\Components\Grid::make(2)
+                Grid::make(2)
                     ->schema([
-                        Forms\Components\TextInput::make('latitude')
+                        TextInput::make('latitude')
                             ->numeric()
                             ->step(0.000001)
                             ->minValue(-90)
                             ->maxValue(90),
-                        Forms\Components\TextInput::make('longitude')
+                        TextInput::make('longitude')
                             ->numeric()
                             ->step(0.000001)
                             ->minValue(-180)
@@ -55,31 +68,31 @@ class PlaceResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('name')
+                TextColumn::make('name')
                     ->searchable()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('city')
+                TextColumn::make('city')
                     ->searchable()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('state')
+                TextColumn::make('state')
                     ->searchable()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('country')
+                TextColumn::make('country')
                     ->searchable()
                     ->sortable(),
-                Tables\Columns\IconColumn::make('has_coordinates')
+                IconColumn::make('has_coordinates')
                     ->label('Coordinates')
                     ->boolean()
                     ->getStateUsing(fn ($record) => $record->latitude && $record->longitude),
-                Tables\Columns\TextColumn::make('created_at')
+                TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                Tables\Filters\SelectFilter::make('country')
+                SelectFilter::make('country')
                     ->options(fn () => Place::distinct('country')->whereNotNull('country')->pluck('country', 'country')),
-                Tables\Filters\TernaryFilter::make('has_coordinates')
+                TernaryFilter::make('has_coordinates')
                     ->label('Has Coordinates')
                     ->placeholder('All places')
                     ->trueLabel('With coordinates')
@@ -89,13 +102,13 @@ class PlaceResource extends Resource
                         false: fn (Builder $query) => $query->whereNull('latitude')->orWhereNull('longitude'),
                     ),
             ])
-            ->actions([
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
+            ->recordActions([
+                EditAction::make(),
+                DeleteAction::make(),
             ])
-            ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+            ->toolbarActions([
+                BulkActionGroup::make([
+                    DeleteBulkAction::make(),
                 ]),
             ]);
     }
@@ -103,9 +116,9 @@ class PlaceResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => \App\Modules\Places\Filament\Resources\PlaceResource\Pages\ListPlaces::route('/'),
-            'create' => \App\Modules\Places\Filament\Resources\PlaceResource\Pages\CreatePlace::route('/create'),
-            'edit' => \App\Modules\Places\Filament\Resources\PlaceResource\Pages\EditPlace::route('/{record}/edit'),
+            'index' => ListPlaces::route('/'),
+            'create' => CreatePlace::route('/create'),
+            'edit' => EditPlace::route('/{record}/edit'),
         ];
     }
 }

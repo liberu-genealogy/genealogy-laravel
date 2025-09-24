@@ -2,6 +2,15 @@
 
 namespace App\Filament\App\Resources;
 
+use Override;
+use Filament\Forms\Components\TextInput;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Actions\EditAction;
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteBulkAction;
+use App\Filament\App\Resources\PersonLdsResource\Pages\ListPersonLds;
+use App\Filament\App\Resources\PersonLdsResource\Pages\CreatePersonLds;
+use App\Filament\App\Resources\PersonLdsResource\Pages\EditPersonLds;
 use BackedEnum;
 use App\Filament\App\Resources\PersonLdsResource\Pages;
 use App\Models\PersonLds;
@@ -17,59 +26,59 @@ class PersonLdsResource extends Resource
 {
     protected static ?string $model = PersonLds::class;
 
-    protected static string | BackedEnum | null $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-rectangle-stack';
 
-    #[\Override]
-    public static function form(Schema $form): Schema
+    #[Override]
+    public static function form(Schema $schema): Schema
     {
-        return $form
-            ->schema([
-                Forms\Components\TextInput::make('group')
+        return $schema
+            ->components([
+                TextInput::make('group')
                     ->maxLength(255),
-                Forms\Components\TextInput::make('gid')
+                TextInput::make('gid')
                     ->numeric(),
-                Forms\Components\TextInput::make('type')
+                TextInput::make('type')
                     ->maxLength(255),
-                Forms\Components\TextInput::make('stat')
+                TextInput::make('stat')
                     ->maxLength(255),
-                Forms\Components\TextInput::make('date')
+                TextInput::make('date')
                     ->maxLength(255),
-                Forms\Components\TextInput::make('plac')
+                TextInput::make('plac')
                     ->maxLength(255),
-                Forms\Components\TextInput::make('temp')
+                TextInput::make('temp')
                     ->maxLength(255),
-                Forms\Components\TextInput::make('slac_famc')
+                TextInput::make('slac_famc')
                     ->maxLength(255),
             ]);
     }
 
-    #[\Override]
+    #[Override]
     public static function table(Table $table): Table
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('group')
+                TextColumn::make('group')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('gid')
+                TextColumn::make('gid')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('type')
+                TextColumn::make('type')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('stat')
+                TextColumn::make('stat')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('date')
+                TextColumn::make('date')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('plac')
+                TextColumn::make('plac')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('temp')
+                TextColumn::make('temp')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('slac_famc')
+                TextColumn::make('slac_famc')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('created_at')
+                TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('updated_at')
+                TextColumn::make('updated_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
@@ -77,17 +86,17 @@ class PersonLdsResource extends Resource
             ->filters([
                 //
             ])
-            ->actions([
-                Actions\EditAction::make(),
+            ->recordActions([
+                EditAction::make(),
             ])
-            ->bulkActions([
-                Actions\BulkActionGroup::make([
-                    Actions\DeleteBulkAction::make(),
+            ->toolbarActions([
+                BulkActionGroup::make([
+                    DeleteBulkAction::make(),
                 ]),
             ]);
     }
 
-    #[\Override]
+    #[Override]
     public static function getRelations(): array
     {
         return [
@@ -98,9 +107,9 @@ class PersonLdsResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index'  => Pages\ListPersonLds::route('/'),
-            'create' => Pages\CreatePersonLds::route('/create'),
-            'edit'   => Pages\EditPersonLds::route('/{record}/edit'),
+            'index'  => ListPersonLds::route('/'),
+            'create' => CreatePersonLds::route('/create'),
+            'edit'   => EditPersonLds::route('/{record}/edit'),
         ];
     }
 }

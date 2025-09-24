@@ -2,6 +2,23 @@
 
 namespace App\Filament\App\Resources;
 
+use Filament\Schemas\Components\Section;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\DateTimePicker;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Columns\ImageColumn;
+use Filament\Tables\Filters\SelectFilter;
+use Filament\Tables\Filters\Filter;
+use Filament\Actions\ViewAction;
+use Filament\Actions\EditAction;
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteBulkAction;
+use App\Filament\App\Resources\DnaMatchingResource\Pages\ListDnaMatchings;
+use App\Filament\App\Resources\DnaMatchingResource\Pages\CreateDnaMatching;
+use App\Filament\App\Resources\DnaMatchingResource\Pages\ViewDnaMatching;
+use App\Filament\App\Resources\DnaMatchingResource\Pages\EditDnaMatching;
 use UnitEnum;
 use BackedEnum;
 use App\Filament\App\Resources\DnaMatchingResource\Pages;
@@ -20,78 +37,78 @@ class DnaMatchingResource extends Resource
 
     protected static ?string $model = DnaMatching::class;
 
-    protected static string | BackedEnum | null $navigationIcon = 'heroicon-o-puzzle-piece';
+    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-puzzle-piece';
 
     protected static ?string $navigationLabel = 'DNA Matches';
 
-    protected static string | UnitEnum | null $navigationGroup = 'DNA Analysis';
+    protected static string | \UnitEnum | null $navigationGroup = 'DNA Analysis';
 
     protected static ?int $navigationSort = 2;
 
-       public static function form(Schema $form): Schema
+       public static function form(Schema $schema): Schema
        {
-        return $form
-            ->schema([
-                Forms\Components\Section::make('Basic Information')
+        return $schema
+            ->components([
+                Section::make('Basic Information')
                     ->schema([
-                        Forms\Components\TextInput::make('user_id')
+                        TextInput::make('user_id')
                             ->required()
                             ->numeric(),
-                        Forms\Components\TextInput::make('match_id')
+                        TextInput::make('match_id')
                             ->numeric(),
-                        Forms\Components\TextInput::make('match_name')
+                        TextInput::make('match_name')
                             ->maxLength(255),
-                        Forms\Components\FileUpload::make('image')
+                        FileUpload::make('image')
                             ->image(),
                     ]),
 
-                Forms\Components\Section::make('DNA Analysis Results')
+                Section::make('DNA Analysis Results')
                     ->schema([
-                        Forms\Components\TextInput::make('total_shared_cm')
+                        TextInput::make('total_shared_cm')
                             ->numeric()
                             ->suffix('cM')
                             ->label('Total Shared centiMorgans'),
-                        Forms\Components\TextInput::make('largest_cm_segment')
+                        TextInput::make('largest_cm_segment')
                             ->numeric()
                             ->suffix('cM')
                             ->label('Largest Segment'),
-                        Forms\Components\TextInput::make('confidence_level')
+                        TextInput::make('confidence_level')
                             ->numeric()
                             ->suffix('%')
                             ->label('Confidence Level'),
-                        Forms\Components\TextInput::make('predicted_relationship')
+                        TextInput::make('predicted_relationship')
                             ->maxLength(255)
                             ->label('Predicted Relationship'),
-                        Forms\Components\TextInput::make('shared_segments_count')
+                        TextInput::make('shared_segments_count')
                             ->numeric()
                             ->label('Shared Segments Count'),
-                        Forms\Components\TextInput::make('match_quality_score')
+                        TextInput::make('match_quality_score')
                             ->numeric()
                             ->suffix('/100')
                             ->label('Match Quality Score'),
                     ]),
 
-                Forms\Components\Section::make('Files')
+                Section::make('Files')
                     ->schema([
-                        Forms\Components\TextInput::make('file1')
+                        TextInput::make('file1')
                             ->maxLength(255)
                             ->label('DNA File 1'),
-                        Forms\Components\TextInput::make('file2')
+                        TextInput::make('file2')
                             ->maxLength(255)
                             ->label('DNA File 2'),
                     ]),
 
-                Forms\Components\Section::make('Detailed Analysis')
+                Section::make('Detailed Analysis')
                     ->schema([
-                        Forms\Components\Textarea::make('detailed_report')
+                        Textarea::make('detailed_report')
                             ->label('Detailed Report')
                             ->rows(5)
                             ->columnSpanFull(),
-                        Forms\Components\Textarea::make('chromosome_breakdown')
+                        Textarea::make('chromosome_breakdown')
                             ->label('Chromosome Breakdown')
                             ->rows(5)
                             ->columnSpanFull(),
-                        Forms\Components\DateTimePicker::make('analysis_date')
+                        DateTimePicker::make('analysis_date')
                             ->label('Analysis Date'),
                     ])
                     ->collapsible(),
@@ -102,11 +119,11 @@ class DnaMatchingResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('match_name')
+                TextColumn::make('match_name')
                     ->searchable()
                     ->sortable()
                     ->label('Match Name'),
-                Tables\Columns\TextColumn::make('predicted_relationship')
+                TextColumn::make('predicted_relationship')
                     ->searchable()
                     ->sortable()
                     ->label('Relationship')
@@ -119,17 +136,17 @@ class DnaMatchingResource extends Resource
                         'Second Cousin' => 'gray',
                         default => 'gray',
                     }),
-                Tables\Columns\TextColumn::make('total_shared_cm')
+                TextColumn::make('total_shared_cm')
                     ->numeric()
                     ->sortable()
                     ->suffix(' cM')
                     ->label('Shared cM'),
-                Tables\Columns\TextColumn::make('largest_cm_segment')
+                TextColumn::make('largest_cm_segment')
                     ->numeric()
                     ->sortable()
                     ->suffix(' cM')
                     ->label('Largest Segment'),
-                Tables\Columns\TextColumn::make('confidence_level')
+                TextColumn::make('confidence_level')
                     ->numeric()
                     ->sortable()
                     ->suffix('%')
@@ -139,49 +156,49 @@ class DnaMatchingResource extends Resource
                         $state >= 60 => 'warning',
                         default => 'danger',
                     }),
-                Tables\Columns\TextColumn::make('match_quality_score')
+                TextColumn::make('match_quality_score')
                     ->numeric()
                     ->sortable()
                     ->suffix('/100')
                     ->label('Quality Score')
                     ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('shared_segments_count')
+                TextColumn::make('shared_segments_count')
                     ->numeric()
                     ->sortable()
                     ->label('Segments')
                     ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\ImageColumn::make('image')
+                ImageColumn::make('image')
                     ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('analysis_date')
+                TextColumn::make('analysis_date')
                     ->dateTime()
                     ->sortable()
                     ->label('Analysis Date')
                     ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('user_id')
+                TextColumn::make('user_id')
                     ->numeric()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('match_id')
+                TextColumn::make('match_id')
                     ->numeric()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('file1')
+                TextColumn::make('file1')
                     ->searchable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('file2')
+                TextColumn::make('file2')
                     ->searchable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('created_at')
+                TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('updated_at')
+                TextColumn::make('updated_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                Tables\Filters\SelectFilter::make('predicted_relationship')
+                SelectFilter::make('predicted_relationship')
                     ->options([
                         'Parent/Child' => 'Parent/Child',
                         'Full Sibling' => 'Full Sibling',
@@ -194,20 +211,20 @@ class DnaMatchingResource extends Resource
                         'Distant Cousin' => 'Distant Cousin',
                     ])
                     ->label('Relationship'),
-                Tables\Filters\Filter::make('high_confidence')
+                Filter::make('high_confidence')
                     ->query(fn ($query) => $query->where('confidence_level', '>=', 80))
                     ->label('High Confidence (≥80%)'),
-                Tables\Filters\Filter::make('close_matches')
+                Filter::make('close_matches')
                     ->query(fn ($query) => $query->where('total_shared_cm', '>=', 100))
                     ->label('Close Matches (≥100 cM)'),
             ])
-            ->actions([
-                Actions\ViewAction::make(),
-                Actions\EditAction::make(),
+            ->recordActions([
+                ViewAction::make(),
+                EditAction::make(),
             ])
-            ->bulkActions([
-                Actions\BulkActionGroup::make([
-                    Actions\DeleteBulkAction::make(),
+            ->toolbarActions([
+                BulkActionGroup::make([
+                    DeleteBulkAction::make(),
                 ]),
             ])
             ->defaultSort('total_shared_cm', 'desc');
@@ -223,10 +240,10 @@ class DnaMatchingResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index'  => Pages\ListDnaMatchings::route('/'),
-            'create' => Pages\CreateDnaMatching::route('/create'),
-            'view'   => Pages\ViewDnaMatching::route('/{record}'),
-            'edit'   => Pages\EditDnaMatching::route('/{record}/edit'),
+            'index'  => ListDnaMatchings::route('/'),
+            'create' => CreateDnaMatching::route('/create'),
+            'view'   => ViewDnaMatching::route('/{record}'),
+            'edit'   => EditDnaMatching::route('/{record}/edit'),
         ];
     }
 }

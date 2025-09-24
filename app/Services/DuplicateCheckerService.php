@@ -2,6 +2,8 @@
 
 namespace App\Services;
 
+use Exception;
+use DateTime;
 use App\Models\Person;
 use App\Models\User;
 use App\Models\DuplicateCheck;
@@ -38,7 +40,7 @@ class DuplicateCheckerService
                 'completed_at' => now(),
             ]);
 
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $duplicateCheck->update([
                 'status' => 'failed',
                 'results' => ['error' => $e->getMessage()],
@@ -168,7 +170,7 @@ class DuplicateCheckerService
     /**
      * Calculate date similarity
      */
-    private function calculateDateSimilarity(\DateTime $date1, \DateTime $date2): float
+    private function calculateDateSimilarity(DateTime $date1, DateTime $date2): float
     {
         $diff = abs($date1->getTimestamp() - $date2->getTimestamp());
         $daysDiff = $diff / (60 * 60 * 24);
@@ -219,13 +221,13 @@ class DuplicateCheckerService
         $factors = 0;
 
         if ($person->birthday && $duplicate['birth_date']) {
-            $birthDate = new \DateTime($duplicate['birth_date']);
+            $birthDate = new DateTime($duplicate['birth_date']);
             $score += $this->calculateDateSimilarity($person->birthday, $birthDate) * 50;
             $factors += 50;
         }
 
         if ($person->deathday && $duplicate['death_date']) {
-            $deathDate = new \DateTime($duplicate['death_date']);
+            $deathDate = new DateTime($duplicate['death_date']);
             $score += $this->calculateDateSimilarity($person->deathday, $deathDate) * 50;
             $factors += 50;
         }

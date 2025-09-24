@@ -2,6 +2,7 @@
 
 namespace App\Filament\App\Pages;
 
+use Override;
 use UnitEnum;
 use BackedEnum;
 use App\Models\User;
@@ -12,9 +13,9 @@ class TwoFactorAuthenticationPage extends Page
 {
     protected string $view = 'filament.pages.profile.two-factor-authentication';
 
-    protected static string | BackedEnum | null $navigationIcon = 'heroicon-o-key';
+    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-key';
 
-    protected static string | UnitEnum | null $navigationGroup = 'Account';
+    protected static string | \UnitEnum | null $navigationGroup = 'Account';
 
     protected static ?int $navigationSort = 4;
 
@@ -47,13 +48,13 @@ class TwoFactorAuthenticationPage extends Page
         $this->user->regenerateRecoveryCodes();
     }
 
-    #[\Override]
+    #[Override]
     public function getHeading(): string
     {
         return static::$title;
     }
 
-    #[\Override]
+    #[Override]
     public static function shouldRegisterNavigation(): bool
     {
         return true; //config('filament-jetstream.show_two_factor_authentication_page');

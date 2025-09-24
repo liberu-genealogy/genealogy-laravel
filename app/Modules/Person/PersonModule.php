@@ -2,6 +2,8 @@
 
 namespace App\Modules\Person;
 
+use App\Modules\Person\Services\PersonService;
+use Artisan;
 use App\Modules\BaseModule;
 
 class PersonModule extends BaseModule
@@ -37,7 +39,7 @@ class PersonModule extends BaseModule
     protected function registerPersonServices(): void
     {
         app()->singleton('genealogy.person', function ($app) {
-            return new \App\Modules\Person\Services\PersonService();
+            return new PersonService();
         });
     }
 
@@ -54,7 +56,7 @@ class PersonModule extends BaseModule
      */
     protected function installPersonTables(): void
     {
-        \Artisan::call('migrate', [
+        Artisan::call('migrate', [
             '--path' => 'app/Modules/Person/database/migrations',
             '--force' => true,
         ]);
@@ -65,7 +67,7 @@ class PersonModule extends BaseModule
      */
     protected function seedPersonData(): void
     {
-        \Artisan::call('db:seed', [
+        Artisan::call('db:seed', [
             '--class' => 'App\\Modules\\Person\\Database\\Seeders\\PersonSeeder',
             '--force' => true,
         ]);

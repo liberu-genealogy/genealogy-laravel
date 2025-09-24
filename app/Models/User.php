@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Events\UserLeveledUp;
 use BezhanSalleh\FilamentShield\Traits\HasPanelShield;
 use Filament\Models\Contracts\FilamentUser;
 use Filament\Models\Contracts\HasDefaultTenant;
@@ -129,7 +130,7 @@ class User extends Authenticatable implements HasDefaultTenant, HasTenants, Fila
         return true;
     }
 
-    public function canAccessPanel(\Filament\Panel $panel): bool
+    public function canAccessPanel(Panel $panel): bool
     {
         if ($this->hasRole('super_admin')) {
             return true;
@@ -332,7 +333,7 @@ class User extends Authenticatable implements HasDefaultTenant, HasTenants, Fila
             $this->save();
 
             // Dispatch level up event
-            event(new \App\Events\UserLeveledUp($this, $oldLevel, $newLevel));
+            event(new UserLeveledUp($this, $oldLevel, $newLevel));
         }
     }
 

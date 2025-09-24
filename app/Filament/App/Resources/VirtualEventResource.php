@@ -2,6 +2,30 @@
 
 namespace App\Filament\App\Resources;
 
+use Filament\Schemas\Components\Section;
+use Filament\Schemas\Components\Grid;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\DateTimePicker;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\Toggle;
+use Filament\Forms\Components\Hidden;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Columns\BadgeColumn;
+use Filament\Tables\Columns\IconColumn;
+use Filament\Tables\Filters\SelectFilter;
+use Filament\Tables\Filters\Filter;
+use Filament\Actions\Action;
+use Exception;
+use Filament\Actions\EditAction;
+use Filament\Actions\DeleteAction;
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteBulkAction;
+use App\Filament\App\Resources\VirtualEventResource\RelationManagers\AttendeesRelationManager;
+use App\Filament\App\Resources\VirtualEventResource\Pages\ListVirtualEvents;
+use App\Filament\App\Resources\VirtualEventResource\Pages\CreateVirtualEvent;
+use App\Filament\App\Resources\VirtualEventResource\Pages\EditVirtualEvent;
+use App\Filament\App\Resources\VirtualEventResource\Pages\ViewVirtualEvent;
 use App\Filament\App\Resources\VirtualEventResource\Pages;
 use App\Filament\App\Resources\VirtualEventResource\RelationManagers;
 use App\Models\VirtualEvent;
@@ -27,29 +51,29 @@ class VirtualEventResource extends Resource
     protected static string | \UnitEnum | null $navigationGroup = '👥 Family Reunions';
 
     protected static ?int $navigationSort = 1;
- public static function form(Schema $form): Schema
+ public static function form(Schema $schema): Schema
     {
-        return $form
-            ->schema([
-                Forms\Components\Section::make('Event Information')
+        return $schema
+            ->components([
+                Section::make('Event Information')
                     ->schema([
-                        Forms\Components\Grid::make(2)
+                        Grid::make(2)
                             ->schema([
-                                Forms\Components\TextInput::make('title')
+                                TextInput::make('title')
                                     ->required()
                                     ->maxLength(255)
                                     ->columnSpanFull(),
-                                Forms\Components\Textarea::make('description')
+                                Textarea::make('description')
                                     ->rows(3)
                                     ->columnSpanFull(),
                             ]),
                     ]),
 
-                Forms\Components\Section::make('Schedule & Settings')
+                Section::make('Schedule & Settings')
                     ->schema([
-                        Forms\Components\Grid::make(3)
+                        Grid::make(3)
                             ->schema([
-                                Forms\Components\DateTimePicker::make('start_time')
+                                DateTimePicker::make('start_time')
                                     ->required()
                                     ->native(false)
                                     ->live()
@@ -58,11 +82,11 @@ class VirtualEventResource extends Resource
                                             $set('end_time', Carbon::parse($state)->addHours(2));
                                         }
                                     }),
-                                Forms\Components\DateTimePicker::make('end_time')
+                                DateTimePicker::make('end_time')
                                     ->required()
                                     ->native(false)
                                     ->after('start_time'),
-                                Forms\Components\Select::make('timezone')
+                                Select::make('timezone')
                                     ->options([
                                         'UTC' => 'UTC',
                                         'America/New_York' => 'Eastern Time',
@@ -78,9 +102,9 @@ class VirtualEventResource extends Resource
                                     ->default('UTC')
                                     ->searchable(),
                             ]),
-                        Forms\Components\Grid::make(2)
+                        Grid::make(2)
                             ->schema([
-                                Forms\Components\Select::make('status')
+                                Select::make('status')
                                     ->options([
                                         'draft' => 'Draft',
                                         'published' => 'Published',
@@ -90,25 +114,25 @@ class VirtualEventResource extends Resource
                                     ])
                                     ->required()
                                     ->default('draft'),
-                                Forms\Components\TextInput::make('max_attendees')
+                                TextInput::make('max_attendees')
                                     ->numeric()
                                     ->label('Maximum Attendees')
                                     ->helperText('Leave empty for unlimited'),
                             ]),
-                        Forms\Components\Grid::make(2)
+                        Grid::make(2)
                             ->schema([
-                                Forms\Components\Toggle::make('require_rsvp')
+                                Toggle::make('require_rsvp')
                                     ->label('Require RSVP')
                                     ->default(true),
-                                Forms\Components\Toggle::make('allow_guests')
+                                Toggle::make('allow_guests')
                                     ->label('Allow Guest Attendees')
                                     ->default(false),
                             ]),
                     ]),
 
-                Forms\Components\Section::make('Video Conferencing')
+                Section::make('Video Conferencing')
                     ->schema([
-                        Forms\Components\Select::make('platform')
+                        Select::make('platform')
                             ->options(function () {
                                 $service = app(VideoConferencingService::class);
                                 $platforms = $service->getAvailablePlatforms();
@@ -127,28 +151,28 @@ class VirtualEventResource extends Resource
                                 $set('join_url', null);
                                 $set('meeting_password', null);
                             }),
-                        Forms\Components\Grid::make(2)
+                        Grid::make(2)
                             ->schema([
-                                Forms\Components\TextInput::make('host_email')
+                                TextInput::make('host_email')
                                     ->email()
                                     ->label('Host Email')
                                     ->helperText('Email of the meeting host (defaults to event creator)')
                                     ->default(fn() => auth()->user()->email),
-                                Forms\Components\TextInput::make('meeting_password')
+                                TextInput::make('meeting_password')
                                     ->label('Meeting Password')
                                     ->helperText('Auto-generated when meeting is created')
                                     ->disabled()
                                     ->dehydrated(false),
                             ]),
-                        Forms\Components\Grid::make(1)
+                        Grid::make(1)
                             ->schema([
-                                Forms\Components\TextInput::make('meeting_url')
+                                TextInput::make('meeting_url')
                                     ->label('Meeting URL')
                                     ->url()
                                     ->disabled()
                                     ->dehydrated(false)
                                     ->visible(fn($get) => $get('platform') === 'custom'),
-                                Forms\Components\TextInput::make('join_url')
+                                TextInput::make('join_url')
                                     ->label('Join URL')
                                     ->url()
                                     ->disabled()
@@ -156,14 +180,14 @@ class VirtualEventResource extends Resource
                                     ->columnSpanFull()
                                     ->visible(fn($get) => !empty($get('join_url'))),
                             ]),
-                        Forms\Components\Textarea::make('instructions')
+                        Textarea::make('instructions')
                             ->label('Special Instructions')
                             ->rows(3)
                             ->helperText('Additional instructions for attendees')
                             ->columnSpanFull(),
                     ]),
 
-                Forms\Components\Hidden::make('created_by')
+                Hidden::make('created_by')
                     ->default(auth()->id()),
             ]);
     }
@@ -172,11 +196,11 @@ class VirtualEventResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('title')
+                TextColumn::make('title')
                     ->searchable()
                     ->sortable()
                     ->weight('bold'),
-                Tables\Columns\BadgeColumn::make('status')
+                BadgeColumn::make('status')
                     ->colors([
                         'secondary' => 'draft',
                         'success' => 'published',
@@ -185,7 +209,7 @@ class VirtualEventResource extends Resource
                         'gray' => 'ended',
                     ])
                     ->sortable(),
-                Tables\Columns\TextColumn::make('platform')
+                TextColumn::make('platform')
                     ->badge()
                     ->colors([
                         'primary' => 'zoom',
@@ -200,33 +224,33 @@ class VirtualEventResource extends Resource
                         'custom' => 'Custom',
                         default => ucfirst($state),
                     }),
-                Tables\Columns\TextColumn::make('formatted_start_time')
+                TextColumn::make('formatted_start_time')
                     ->label('Start Time')
                     ->sortable('start_time'),
-                Tables\Columns\TextColumn::make('attendee_count')
+                TextColumn::make('attendee_count')
                     ->label('Attendees')
                     ->alignCenter()
                     ->badge()
                     ->color('success'),
-                Tables\Columns\TextColumn::make('accepted_count')
+                TextColumn::make('accepted_count')
                     ->label('Accepted')
                     ->alignCenter()
                     ->badge()
                     ->color('primary'),
-                Tables\Columns\IconColumn::make('require_rsvp')
+                IconColumn::make('require_rsvp')
                     ->label('RSVP')
                     ->boolean()
                     ->alignCenter(),
-                Tables\Columns\TextColumn::make('creator.name')
+                TextColumn::make('creator.name')
                     ->label('Created By')
                     ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('created_at')
+                TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                Tables\Filters\SelectFilter::make('status')
+                SelectFilter::make('status')
                     ->options([
                         'draft' => 'Draft',
                         'published' => 'Published',
@@ -234,28 +258,28 @@ class VirtualEventResource extends Resource
                         'ended' => 'Ended',
                         'cancelled' => 'Cancelled',
                     ]),
-                Tables\Filters\SelectFilter::make('platform')
+                SelectFilter::make('platform')
                     ->options([
                         'zoom' => 'Zoom',
                         'google_meet' => 'Google Meet',
                         'teams' => 'Teams',
                         'custom' => 'Custom',
                     ]),
-                Tables\Filters\Filter::make('upcoming')
+                Filter::make('upcoming')
                     ->query(fn (Builder $query): Builder => $query->upcoming())
                     ->label('Upcoming Events'),
-                Tables\Filters\Filter::make('past')
+                Filter::make('past')
                     ->query(fn (Builder $query): Builder => $query->past())
                     ->label('Past Events'),
             ])
-            ->actions([
-                Tables\Actions\Action::make('join')
+            ->recordActions([
+                Action::make('join')
                     ->icon('heroicon-o-video-camera')
                     ->color('success')
                     ->url(fn (VirtualEvent $record): string => $record->join_url ?? '#')
                     ->openUrlInNewTab()
                     ->visible(fn (VirtualEvent $record): bool => $record->canJoin() && !empty($record->join_url)),
-                Tables\Actions\Action::make('create_meeting')
+                Action::make('create_meeting')
                     ->icon('heroicon-o-plus-circle')
                     ->color('primary')
                     ->action(function (VirtualEvent $record) {
@@ -268,7 +292,7 @@ class VirtualEventResource extends Resource
                                 ->body('Video conference meeting has been created successfully.')
                                 ->success()
                                 ->send();
-                        } catch (\Exception $e) {
+                        } catch (Exception $e) {
                             Notification::make()
                                 ->title('Meeting Creation Failed')
                                 ->body($e->getMessage())
@@ -277,12 +301,12 @@ class VirtualEventResource extends Resource
                         }
                     })
                     ->visible(fn (VirtualEvent $record): bool => empty($record->meeting_id) && $record->platform !== 'custom'),
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
+                EditAction::make(),
+                DeleteAction::make(),
             ])
-            ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+            ->toolbarActions([
+                BulkActionGroup::make([
+                    DeleteBulkAction::make(),
                 ]),
             ])
             ->defaultSort('start_time', 'desc');
@@ -291,17 +315,17 @@ class VirtualEventResource extends Resource
     public static function getRelations(): array
     {
         return [
-            RelationManagers\AttendeesRelationManager::class,
+            AttendeesRelationManager::class,
         ];
     }
 
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListVirtualEvents::route('/'),
-            'create' => Pages\CreateVirtualEvent::route('/create'),
-            'edit' => Pages\EditVirtualEvent::route('/{record}/edit'),
-            'view' => Pages\ViewVirtualEvent::route('/{record}'),
+            'index' => ListVirtualEvents::route('/'),
+            'create' => CreateVirtualEvent::route('/create'),
+            'edit' => EditVirtualEvent::route('/{record}/edit'),
+            'view' => ViewVirtualEvent::route('/{record}'),
         ];
     }
 

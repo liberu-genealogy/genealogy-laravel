@@ -2,10 +2,11 @@
 
 namespace App\Filament\App\Resources\VirtualEventResource\Pages;
 
+use Filament\Actions\CreateAction;
+use Filament\Schemas\Components\Tabs\Tab;
 use App\Filament\App\Resources\VirtualEventResource;
 use Filament\Actions;
 use Filament\Resources\Pages\ListRecords;
-use Filament\Resources\Components\Tab;
 use Illuminate\Database\Eloquent\Builder;
 
 class ListVirtualEvents extends ListRecords
@@ -15,7 +16,7 @@ class ListVirtualEvents extends ListRecords
     protected function getHeaderActions(): array
     {
         return [
-            Actions\CreateAction::make(),
+            CreateAction::make(),
         ];
     }
 

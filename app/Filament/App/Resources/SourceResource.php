@@ -2,6 +2,16 @@
 
 namespace App\Filament\App\Resources;
 
+use Override;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Textarea;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Actions\EditAction;
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteBulkAction;
+use App\Filament\App\Resources\SourceResource\Pages\ListSources;
+use App\Filament\App\Resources\SourceResource\Pages\CreateSource;
+use App\Filament\App\Resources\SourceResource\Pages\EditSource;
 use UnitEnum;
 use BackedEnum;
 use App\Filament\App\Resources\SourceResource\Pages;
@@ -18,117 +28,117 @@ class SourceResource extends Resource
 {
     protected static ?string $model = Source::class;
 
-    protected static string | BackedEnum | null $navigationIcon = 'heroicon-o-document-text';
+    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-document-text';
 
     protected static ?string $navigationLabel = 'Sources';
 
-    protected static string | UnitEnum | null $navigationGroup = 'Research';
+    protected static string | \UnitEnum | null $navigationGroup = 'Research';
 
     protected static ?int $navigationSort = 1;
 
-    #[\Override]
-    public static function form(Schema $form): Schema
+    #[Override]
+    public static function form(Schema $schema): Schema
     {
-        return $form
-            ->schema([
-                Forms\Components\TextInput::make('name')
+        return $schema
+            ->components([
+                TextInput::make('name')
                 ->maxLength(255),
-                Forms\Components\Textarea::make('description')
+                Textarea::make('description')
                     ->maxLength(65535)
                     ->columnSpanFull(),
-                Forms\Components\TextInput::make('date')
+                TextInput::make('date')
                     ->maxLength(255),
-                Forms\Components\TextInput::make('is_active')
+                TextInput::make('is_active')
                     ->numeric(),
-                Forms\Components\TextInput::make('author_id')
+                TextInput::make('author_id')
                     ->numeric(),
-                Forms\Components\TextInput::make('repository_id')
+                TextInput::make('repository_id')
                     ->numeric(),
-                Forms\Components\TextInput::make('publication_id')
+                TextInput::make('publication_id')
                     ->numeric(),
-                Forms\Components\TextInput::make('type_id')
+                TextInput::make('type_id')
                     ->numeric(),
-                Forms\Components\TextInput::make('sour')
+                TextInput::make('sour')
                     ->maxLength(255),
-                Forms\Components\Textarea::make('titl')
+                Textarea::make('titl')
                     ->maxLength(65535)
                     ->columnSpanFull(),
-                Forms\Components\TextInput::make('auth')
+                TextInput::make('auth')
                     ->maxLength(255),
-                Forms\Components\TextInput::make('data')
+                TextInput::make('data')
                     ->maxLength(255),
-                Forms\Components\Textarea::make('text')
+                Textarea::make('text')
                     ->maxLength(65535)
                     ->columnSpanFull(),
-                Forms\Components\Textarea::make('publ')
+                Textarea::make('publ')
                     ->maxLength(65535)
                     ->columnSpanFull(),
-                Forms\Components\TextInput::make('abbr')
+                TextInput::make('abbr')
                     ->maxLength(255),
-                Forms\Components\TextInput::make('group')
+                TextInput::make('group')
                     ->maxLength(255),
-                Forms\Components\TextInput::make('gid')
+                TextInput::make('gid')
                     ->numeric(),
-                Forms\Components\TextInput::make('quay')
+                TextInput::make('quay')
                     ->maxLength(255),
-                Forms\Components\Textarea::make('page')
+                Textarea::make('page')
                     ->maxLength(65535)
                     ->columnSpanFull(),
-                Forms\Components\TextInput::make('rin')
+                TextInput::make('rin')
                     ->maxLength(255),
-                Forms\Components\TextInput::make('note')
+                TextInput::make('note')
                     ->maxLength(255),
             ]);
     }
 
-    #[\Override]
+    #[Override]
     public static function table(Table $table): Table
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('name')
+                TextColumn::make('name')
                 ->searchable(),
-                Tables\Columns\TextColumn::make('date')
+                TextColumn::make('date')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('is_active')
+                TextColumn::make('is_active')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('author_id')
+                TextColumn::make('author_id')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('repository_id')
+                TextColumn::make('repository_id')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('publication_id')
+                TextColumn::make('publication_id')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('type_id')
+                TextColumn::make('type_id')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('sour')
+                TextColumn::make('sour')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('auth')
+                TextColumn::make('auth')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('data')
+                TextColumn::make('data')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('abbr')
+                TextColumn::make('abbr')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('group')
+                TextColumn::make('group')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('gid')
+                TextColumn::make('gid')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('quay')
+                TextColumn::make('quay')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('rin')
+                TextColumn::make('rin')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('note')
+                TextColumn::make('note')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('created_at')
+                TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('updated_at')
+                TextColumn::make('updated_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
@@ -136,17 +146,17 @@ class SourceResource extends Resource
             ->filters([
                 //
             ])
-            ->actions([
-                Actions\EditAction::make(),
+            ->recordActions([
+                EditAction::make(),
             ])
-            ->bulkActions([
-                Actions\BulkActionGroup::make([
-                    Actions\DeleteBulkAction::make(),
+            ->toolbarActions([
+                BulkActionGroup::make([
+                    DeleteBulkAction::make(),
                 ]),
             ]);
     }
 
-    #[\Override]
+    #[Override]
     public static function getRelations(): array
     {
         return [
@@ -157,9 +167,9 @@ class SourceResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index'  => Pages\ListSources::route('/'),
-            'create' => Pages\CreateSource::route('/create'),
-            'edit'   => Pages\EditSource::route('/{record}/edit'),
+            'index'  => ListSources::route('/'),
+            'create' => CreateSource::route('/create'),
+            'edit'   => EditSource::route('/{record}/edit'),
         ];
     }
 }

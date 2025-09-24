@@ -2,6 +2,17 @@
 
 namespace App\Filament\App\Resources;
 
+use Override;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\DateTimePicker;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Actions\EditAction;
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteBulkAction;
+use App\Filament\App\Resources\CitationResource\Pages\ListCitations;
+use App\Filament\App\Resources\CitationResource\Pages\CreateCitation;
+use App\Filament\App\Resources\CitationResource\Pages\EditCitation;
 use UnitEnum;
 use BackedEnum;
 use App\Filament\App\Resources\CitationResource\Pages;
@@ -18,73 +29,73 @@ class CitationResource extends Resource
 {
     protected static ?string $model = Citation::class;
 
-    protected static string | BackedEnum | null $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-rectangle-stack';
 
     protected static ?string $navigationLabel = 'Citation';
 
-    protected static string | UnitEnum | null $navigationGroup = 'Author';
+    protected static string | \UnitEnum | null $navigationGroup = 'Author';
 
-    #[\Override]
-    public static function form(Schema $form): Schema
+    #[Override]
+    public static function form(Schema $schema): Schema
     {
-        return $form
-        ->schema([
-            Forms\Components\TextInput::make('name')
+        return $schema
+        ->components([
+            TextInput::make('name')
                 ->required()
                 ->maxLength(255),
-            Forms\Components\Textarea::make('description')
+            Textarea::make('description')
                 ->required()
                 ->columnSpanFull(),
-            Forms\Components\DateTimePicker::make('date'),
-            Forms\Components\TextInput::make('is_active')
+            DateTimePicker::make('date'),
+            TextInput::make('is_active')
                 ->required()
                 ->numeric(),
-            Forms\Components\TextInput::make('volume')
+            TextInput::make('volume')
                 ->required()
                 ->numeric(),
-            Forms\Components\TextInput::make('page')
+            TextInput::make('page')
                 ->required()
                 ->numeric(),
-            Forms\Components\TextInput::make('confidence')
+            TextInput::make('confidence')
                 ->required()
                 ->numeric(),
-            Forms\Components\TextInput::make('source_id')
+            TextInput::make('source_id')
                 ->required()
                 ->numeric(),
 
         ]);
     }
 
-    #[\Override]
+    #[Override]
     public static function table(Table $table): Table
     {
         return $table
         ->columns([
-            Tables\Columns\TextColumn::make('name')
+            TextColumn::make('name')
                 ->searchable(),
-            Tables\Columns\TextColumn::make('date')
+            TextColumn::make('date')
                 ->dateTime()
                 ->sortable(),
-            Tables\Columns\TextColumn::make('is_active')
+            TextColumn::make('is_active')
                 ->numeric()
                 ->sortable(),
-            Tables\Columns\TextColumn::make('volume')
+            TextColumn::make('volume')
                 ->numeric()
                 ->sortable(),
-            Tables\Columns\TextColumn::make('page')
+            TextColumn::make('page')
                 ->numeric()
                 ->sortable(),
-            Tables\Columns\TextColumn::make('confidence')
+            TextColumn::make('confidence')
                 ->numeric()
                 ->sortable(),
-            Tables\Columns\TextColumn::make('source_id')
+            TextColumn::make('source_id')
                 ->numeric()
                 ->sortable(),
-            Tables\Columns\TextColumn::make('created_at')
+            TextColumn::make('created_at')
                 ->dateTime()
                 ->sortable()
                 ->toggleable(isToggledHiddenByDefault: true),
-            Tables\Columns\TextColumn::make('updated_at')
+            TextColumn::make('updated_at')
                 ->dateTime()
                 ->sortable()
                 ->toggleable(isToggledHiddenByDefault: true),
@@ -92,17 +103,17 @@ class CitationResource extends Resource
             ->filters([
                 //
             ])
-            ->actions([
-                Actions\EditAction::make(),
+            ->recordActions([
+                EditAction::make(),
             ])
-            ->bulkActions([
-                Actions\BulkActionGroup::make([
-                    Actions\DeleteBulkAction::make(),
+            ->toolbarActions([
+                BulkActionGroup::make([
+                    DeleteBulkAction::make(),
                 ]),
             ]);
     }
 
-    #[\Override]
+    #[Override]
     public static function getRelations(): array
     {
         return [
@@ -113,9 +124,9 @@ class CitationResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index'  => Pages\ListCitations::route('/'),
-            'create' => Pages\CreateCitation::route('/create'),
-            'edit'   => Pages\EditCitation::route('/{record}/edit'),
+            'index'  => ListCitations::route('/'),
+            'create' => CreateCitation::route('/create'),
+            'edit'   => EditCitation::route('/{record}/edit'),
         ];
     }
 }

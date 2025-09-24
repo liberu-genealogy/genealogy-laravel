@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use DateTime;
 use App\Models\Person;
 use App\Models\User;
 use App\Models\SmartMatch;
@@ -156,14 +157,14 @@ class SmartMatchingService
 
         // Birth date similarity (30% weight)
         if ($person->birthday && $match['birth_date']) {
-            $birthSimilarity = $this->calculateDateSimilarity($person->birthday, new \DateTime($match['birth_date']));
+            $birthSimilarity = $this->calculateDateSimilarity($person->birthday, new DateTime($match['birth_date']));
             $score += $birthSimilarity * 0.3;
             $factors += 0.3;
         }
 
         // Death date similarity (20% weight)
         if ($person->deathday && $match['death_date']) {
-            $deathSimilarity = $this->calculateDateSimilarity($person->deathday, new \DateTime($match['death_date']));
+            $deathSimilarity = $this->calculateDateSimilarity($person->deathday, new DateTime($match['death_date']));
             $score += $deathSimilarity * 0.2;
             $factors += 0.2;
         }
@@ -200,7 +201,7 @@ class SmartMatchingService
     /**
      * Calculate date similarity
      */
-    private function calculateDateSimilarity(\DateTime $date1, \DateTime $date2): float
+    private function calculateDateSimilarity(DateTime $date1, DateTime $date2): float
     {
         $diff = abs($date1->getTimestamp() - $date2->getTimestamp());
         $daysDiff = $diff / (60 * 60 * 24);
@@ -254,7 +255,7 @@ class SmartMatchingService
         return $variations[$name][array_rand($variations[$name])] ?? $name;
     }
 
-    private function generateSimilarDate(?\DateTime $originalDate): ?string
+    private function generateSimilarDate(?DateTime $originalDate): ?string
     {
         if (!$originalDate) return null;
 

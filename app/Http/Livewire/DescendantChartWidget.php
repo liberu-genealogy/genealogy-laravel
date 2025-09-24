@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use Illuminate\Contracts\View\View;
 use App\Models\Person;
 use App\Models\Family;
 use Filament\Widgets\Widget;
@@ -173,7 +174,7 @@ class DescendantChartWidget extends Widget
         $this->setRootPerson($personId);
     }
 
-    public function render(): \Illuminate\Contracts\View\View
+    public function render(): View
     {
         return view(static::$view, $this->getData());
     }

@@ -2,6 +2,7 @@
 
 namespace App\Filament\App\Pages;
 
+use Override;
 use UnitEnum;
 use BackedEnum;
 use App\Models\User;
@@ -12,9 +13,9 @@ class PersonalAccessTokensPage extends Page
 {
     protected string $view = 'filament.pages.profile.personal-access-tokens';
 
-    protected static string | BackedEnum | null $navigationIcon = 'heroicon-o-key';
+    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-key';
 
-    protected static string | UnitEnum | null $navigationGroup = 'Account';
+    protected static string | \UnitEnum | null $navigationGroup = 'Account';
 
     protected static ?int $navigationSort = 3;
 
@@ -37,13 +38,13 @@ class PersonalAccessTokensPage extends Page
         $this->user->tokens()->where('name', $name)->first()->delete();
     }
 
-    #[\Override]
+    #[Override]
     public function getHeading(): string
     {
         return static::$title;
     }
 
-    #[\Override]
+    #[Override]
     public static function shouldRegisterNavigation(): bool
     {
         return true;

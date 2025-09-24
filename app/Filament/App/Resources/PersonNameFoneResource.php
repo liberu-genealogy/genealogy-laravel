@@ -2,6 +2,15 @@
 
 namespace App\Filament\App\Resources;
 
+use Override;
+use Filament\Forms\Components\TextInput;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Actions\EditAction;
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteBulkAction;
+use App\Filament\App\Resources\PersonNameFoneResource\Pages\ListPersonNameFones;
+use App\Filament\App\Resources\PersonNameFoneResource\Pages\CreatePersonNameFone;
+use App\Filament\App\Resources\PersonNameFoneResource\Pages\EditPersonNameFone;
 use BackedEnum;
 use App\Filament\App\Resources\PersonNameFoneResource\Pages;
 use App\Models\PersonNameFone;
@@ -17,67 +26,67 @@ class PersonNameFoneResource extends Resource
 {
     protected static ?string $model = PersonNameFone::class;
 
-    protected static string | BackedEnum | null $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-rectangle-stack';
 
-    #[\Override]
-    public static function form(Schema $form): Schema
+    #[Override]
+    public static function form(Schema $schema): Schema
     {
-        return $form
-            ->schema([
-                Forms\Components\TextInput::make('group')
+        return $schema
+            ->components([
+                TextInput::make('group')
                     ->maxLength(255),
-                Forms\Components\TextInput::make('gid')
+                TextInput::make('gid')
                     ->numeric(),
-                Forms\Components\TextInput::make('name')
+                TextInput::make('name')
                     ->maxLength(255),
-                Forms\Components\TextInput::make('type')
+                TextInput::make('type')
                     ->maxLength(255),
-                Forms\Components\TextInput::make('npfx')
+                TextInput::make('npfx')
                     ->maxLength(255),
-                Forms\Components\TextInput::make('givn')
+                TextInput::make('givn')
                     ->maxLength(255),
-                Forms\Components\TextInput::make('nick')
+                TextInput::make('nick')
                     ->maxLength(255),
-                Forms\Components\TextInput::make('spfx')
+                TextInput::make('spfx')
                     ->maxLength(255),
-                Forms\Components\TextInput::make('surn')
+                TextInput::make('surn')
                     ->maxLength(255),
-                Forms\Components\TextInput::make('nsfx')
+                TextInput::make('nsfx')
                     ->maxLength(255),
             ]);
     }
 
-    #[\Override]
+    #[Override]
     public static function table(Table $table): Table
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('group')
+                TextColumn::make('group')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('gid')
+                TextColumn::make('gid')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('name')
+                TextColumn::make('name')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('type')
+                TextColumn::make('type')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('npfx')
+                TextColumn::make('npfx')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('givn')
+                TextColumn::make('givn')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('nick')
+                TextColumn::make('nick')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('spfx')
+                TextColumn::make('spfx')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('surn')
+                TextColumn::make('surn')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('nsfx')
+                TextColumn::make('nsfx')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('created_at')
+                TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('updated_at')
+                TextColumn::make('updated_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
@@ -85,17 +94,17 @@ class PersonNameFoneResource extends Resource
             ->filters([
                 //
             ])
-            ->actions([
-                Actions\EditAction::make(),
+            ->recordActions([
+                EditAction::make(),
             ])
-            ->bulkActions([
-                Actions\BulkActionGroup::make([
-                    Actions\DeleteBulkAction::make(),
+            ->toolbarActions([
+                BulkActionGroup::make([
+                    DeleteBulkAction::make(),
                 ]),
             ]);
     }
 
-    #[\Override]
+    #[Override]
     public static function getRelations(): array
     {
         return [
@@ -106,9 +115,9 @@ class PersonNameFoneResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index'  => Pages\ListPersonNameFones::route('/'),
-            'create' => Pages\CreatePersonNameFone::route('/create'),
-            'edit'   => Pages\EditPersonNameFone::route('/{record}/edit'),
+            'index'  => ListPersonNameFones::route('/'),
+            'create' => CreatePersonNameFone::route('/create'),
+            'edit'   => EditPersonNameFone::route('/{record}/edit'),
         ];
     }
 }

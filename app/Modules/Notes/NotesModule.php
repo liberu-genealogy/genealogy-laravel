@@ -2,6 +2,8 @@
 
 namespace App\Modules\Notes;
 
+use App\Modules\Notes\Services\NotesService;
+use Artisan;
 use App\Modules\BaseModule;
 
 class NotesModule extends BaseModule
@@ -36,7 +38,7 @@ class NotesModule extends BaseModule
     protected function registerNotesServices(): void
     {
         app()->singleton('genealogy.notes', function ($app) {
-            return new \App\Modules\Notes\Services\NotesService();
+            return new NotesService();
         });
     }
 
@@ -53,7 +55,7 @@ class NotesModule extends BaseModule
      */
     protected function installNotesTables(): void
     {
-        \Artisan::call('migrate', [
+        Artisan::call('migrate', [
             '--path' => 'app/Modules/Notes/database/migrations',
             '--force' => true,
         ]);

@@ -2,6 +2,16 @@
 
 namespace App\Filament\App\Resources;
 
+use Override;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Textarea;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Actions\EditAction;
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteBulkAction;
+use App\Filament\App\Resources\PersonEventResource\Pages\ListPersonEvents;
+use App\Filament\App\Resources\PersonEventResource\Pages\CreatePersonEvent;
+use App\Filament\App\Resources\PersonEventResource\Pages\EditPersonEvent;
 use BackedEnum;
 use App\Filament\App\Resources\PersonEventResource\Pages;
 use App\Models\PersonEvent;
@@ -17,132 +27,132 @@ class PersonEventResource extends Resource
 {
     protected static ?string $model = PersonEvent::class;
 
-    protected static string | BackedEnum | null $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-rectangle-stack';
 
-    #[\Override]
-    public static function form(Schema $form): Schema
+    #[Override]
+    public static function form(Schema $schema): Schema
     {
-        return $form
-            ->schema([
-                Forms\Components\TextInput::make('converted_date')
+        return $schema
+            ->components([
+                TextInput::make('converted_date')
                     ->maxLength(255),
-                Forms\Components\TextInput::make('year')
+                TextInput::make('year')
                     ->numeric(),
-                Forms\Components\TextInput::make('month')
+                TextInput::make('month')
                     ->numeric(),
-                Forms\Components\TextInput::make('day')
+                TextInput::make('day')
                     ->numeric(),
-                Forms\Components\TextInput::make('type')
+                TextInput::make('type')
                     ->maxLength(255),
-                Forms\Components\Textarea::make('attr')
+                Textarea::make('attr')
                     ->maxLength(65535)
                     ->columnSpanFull(),
-                Forms\Components\TextInput::make('plac')
+                TextInput::make('plac')
                     ->maxLength(255),
-                Forms\Components\TextInput::make('addr_id')
+                TextInput::make('addr_id')
                     ->numeric(),
-                Forms\Components\TextInput::make('phon')
+                TextInput::make('phon')
                     ->maxLength(255),
-                Forms\Components\Textarea::make('caus')
+                Textarea::make('caus')
                     ->maxLength(65535)
                     ->columnSpanFull(),
-                Forms\Components\TextInput::make('age')
+                TextInput::make('age')
                     ->maxLength(255),
-                Forms\Components\TextInput::make('agnc')
+                TextInput::make('agnc')
                     ->maxLength(255),
-                Forms\Components\TextInput::make('adop')
+                TextInput::make('adop')
                     ->maxLength(255),
-                Forms\Components\TextInput::make('adop_famc')
+                TextInput::make('adop_famc')
                     ->maxLength(255),
-                Forms\Components\TextInput::make('birt_famc')
+                TextInput::make('birt_famc')
                     ->maxLength(255),
-                Forms\Components\TextInput::make('person_id')
+                TextInput::make('person_id')
                     ->numeric(),
-                Forms\Components\TextInput::make('title')
+                TextInput::make('title')
                     ->maxLength(255),
-                Forms\Components\TextInput::make('date')
+                TextInput::make('date')
                     ->maxLength(255),
-                Forms\Components\TextInput::make('description')
+                TextInput::make('description')
                     ->maxLength(255),
-                Forms\Components\TextInput::make('places_id')
+                TextInput::make('places_id')
                     ->numeric(),
             ]);
     }
 
-    #[\Override]
+    #[Override]
     public static function table(Table $table): Table
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('converted_date')
+                TextColumn::make('converted_date')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('created_at')
+                TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('updated_at')
+                TextColumn::make('updated_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('deleted_at')
+                TextColumn::make('deleted_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('year')
+                TextColumn::make('year')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('month')
+                TextColumn::make('month')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('day')
+                TextColumn::make('day')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('type')
+                TextColumn::make('type')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('plac')
+                TextColumn::make('plac')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('addr_id')
+                TextColumn::make('addr_id')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('phon')
+                TextColumn::make('phon')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('age')
+                TextColumn::make('age')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('agnc')
+                TextColumn::make('agnc')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('adop')
+                TextColumn::make('adop')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('adop_famc')
+                TextColumn::make('adop_famc')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('birt_famc')
+                TextColumn::make('birt_famc')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('person_id')
+                TextColumn::make('person_id')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('title')
+                TextColumn::make('title')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('date')
+                TextColumn::make('date')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('description')
+                TextColumn::make('description')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('places_id')
+                TextColumn::make('places_id')
                     ->numeric()
                     ->sortable(),
             ])
             ->filters([
                 //
             ])
-            ->actions([
-                Actions\EditAction::make(),
+            ->recordActions([
+                EditAction::make(),
             ])
-            ->bulkActions([
-                Actions\BulkActionGroup::make([
-                    Actions\DeleteBulkAction::make(),
+            ->toolbarActions([
+                BulkActionGroup::make([
+                    DeleteBulkAction::make(),
                 ]),
             ]);
     }
 
-    #[\Override]
+    #[Override]
     public static function getRelations(): array
     {
         return [
@@ -153,9 +163,9 @@ class PersonEventResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index'  => Pages\ListPersonEvents::route('/'),
-            'create' => Pages\CreatePersonEvent::route('/create'),
-            'edit'   => Pages\EditPersonEvent::route('/{record}/edit'),
+            'index'  => ListPersonEvents::route('/'),
+            'create' => CreatePersonEvent::route('/create'),
+            'edit'   => EditPersonEvent::route('/{record}/edit'),
         ];
     }
 }

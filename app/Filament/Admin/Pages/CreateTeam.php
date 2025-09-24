@@ -2,6 +2,7 @@
 
 namespace App\Filament\Admin\Pages;
 
+use Override;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Schemas\Schema;
@@ -15,16 +16,16 @@ class CreateTeam extends RegisterTenant
         return 'Create Team';
     }
 
-    #[\Override]
-    public function form(Schema $form): Schema
+    #[Override]
+    public function form(Schema $schema): Schema
     {
-        return $form
-            ->schema([
+        return $schema
+            ->components([
                 TextInput::make('name'),
             ]);
     }
 
-    #[\Override]
+    #[Override]
     protected function handleRegistration(array $data): Model
     {
         return app(\App\Actions\Jetstream\CreateTeam::class)->create(auth()->user(), $data);

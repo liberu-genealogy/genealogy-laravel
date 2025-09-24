@@ -2,6 +2,15 @@
 
 namespace App\Filament\App\Resources;
 
+use Override;
+use Filament\Forms\Components\TextInput;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Actions\EditAction;
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteBulkAction;
+use App\Filament\App\Resources\PersonAssoResource\Pages\ListPersonAssos;
+use App\Filament\App\Resources\PersonAssoResource\Pages\CreatePersonAsso;
+use App\Filament\App\Resources\PersonAssoResource\Pages\EditPersonAsso;
 use UnitEnum;
 use BackedEnum;
 use App\Filament\App\Resources\PersonAssoResource\Pages;
@@ -18,54 +27,54 @@ class PersonAssoResource extends Resource
 {
     protected static ?string $model = PersonAsso::class;
 
-    protected static string | BackedEnum | null $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-rectangle-stack';
 
     protected static ?string $navigationLabel = 'Person Associations';
 
-    protected static string | UnitEnum | null $navigationGroup = 'Person';
+    protected static string | \UnitEnum | null $navigationGroup = 'Person';
 
-    #[\Override]
-    public static function form(Schema $form): Schema
+    #[Override]
+    public static function form(Schema $schema): Schema
     {
-        return $form
-            ->schema([
-                Forms\Components\TextInput::make('group')
+        return $schema
+            ->components([
+                TextInput::make('group')
                     ->maxLength(255),
-                Forms\Components\TextInput::make('gid')
+                TextInput::make('gid')
                     ->numeric(),
-                Forms\Components\TextInput::make('indi')
+                TextInput::make('indi')
                     ->maxLength(255),
-                Forms\Components\TextInput::make('rela')
+                TextInput::make('rela')
                     ->maxLength(255),
-                Forms\Components\TextInput::make('import_confirm')
+                TextInput::make('import_confirm')
                     ->required()
                     ->numeric()
                     ->default(0),
             ]);
     }
 
-    #[\Override]
+    #[Override]
     public static function table(Table $table): Table
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('group')
+                TextColumn::make('group')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('gid')
+                TextColumn::make('gid')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('indi')
+                TextColumn::make('indi')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('rela')
+                TextColumn::make('rela')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('import_confirm')
+                TextColumn::make('import_confirm')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('created_at')
+                TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('updated_at')
+                TextColumn::make('updated_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
@@ -73,17 +82,17 @@ class PersonAssoResource extends Resource
             ->filters([
                 //
             ])
-            ->actions([
-                Actions\EditAction::make(),
+            ->recordActions([
+                EditAction::make(),
             ])
-            ->bulkActions([
-                Actions\BulkActionGroup::make([
-                    Actions\DeleteBulkAction::make(),
+            ->toolbarActions([
+                BulkActionGroup::make([
+                    DeleteBulkAction::make(),
                 ]),
             ]);
     }
 
-    #[\Override]
+    #[Override]
     public static function getRelations(): array
     {
         return [
@@ -94,9 +103,9 @@ class PersonAssoResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index'  => Pages\ListPersonAssos::route('/'),
-            'create' => Pages\CreatePersonAsso::route('/create'),
-            'edit'   => Pages\EditPersonAsso::route('/{record}/edit'),
+            'index'  => ListPersonAssos::route('/'),
+            'create' => CreatePersonAsso::route('/create'),
+            'edit'   => EditPersonAsso::route('/{record}/edit'),
         ];
     }
 }

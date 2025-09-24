@@ -2,6 +2,7 @@
 
 namespace App\Filament\Admin\Pages;
 
+use Override;
 use Filament\Facades\Filament;
 use Filament\Pages\Tenancy\EditTenantProfile;
 
@@ -16,7 +17,7 @@ class EditTeam extends EditTenantProfile
         return 'Team Settings';
     }
 
-    #[\Override]
+    #[Override]
     protected function getViewData(): array
     {
         return [

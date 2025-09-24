@@ -4,6 +4,16 @@ declare(strict_types=1);
 
 namespace App\Filament\App\Resources;
 
+use Override;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Textarea;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Actions\EditAction;
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteBulkAction;
+use App\Filament\App\Resources\SourceRepoResource\Pages\ListSourceRepos;
+use App\Filament\App\Resources\SourceRepoResource\Pages\CreateSourceRepo;
+use App\Filament\App\Resources\SourceRepoResource\Pages\EditSourceRepo;
 use BackedEnum;
 use App\Filament\App\Resources\SourceRepoResource\Pages;
 use App\Models\SourceRepo;
@@ -19,62 +29,62 @@ final class SourceRepoResource extends Resource
 {
     protected static ?string $model = SourceRepo::class;
 
-    protected static string | BackedEnum | null $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-rectangle-stack';
 
-    #[\Override]
-    public static function form(Schema $form): Schema
+    #[Override]
+    public static function form(Schema $schema): Schema
     {
-        return $form
-            ->schema([
-                Forms\Components\TextInput::make('group')
+        return $schema
+            ->components([
+                TextInput::make('group')
                     ->required()
                     ->maxLength(255),
-                Forms\Components\TextInput::make('gid')
+                TextInput::make('gid')
                     ->required()
                     ->numeric(),
-                Forms\Components\TextInput::make('repo_id')
+                TextInput::make('repo_id')
                     ->required()
                     ->maxLength(255),
-                Forms\Components\Textarea::make('caln')
+                Textarea::make('caln')
                     ->required()
                     ->maxLength(65535)
                     ->columnSpanFull(),
             ]);
     }
 
-    #[\Override]
+    #[Override]
     public static function table(Table $table): Table
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('group')
+                TextColumn::make('group')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('gid')
+                TextColumn::make('gid')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('repo_id')
+                TextColumn::make('repo_id')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('created_at')
+                TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('updated_at')
+                TextColumn::make('updated_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([])
-            ->actions([
-                Actions\EditAction::make(),
+            ->recordActions([
+                EditAction::make(),
             ])
-            ->bulkActions([
-                Actions\BulkActionGroup::make([
-                    Actions\DeleteBulkAction::make(),
+            ->toolbarActions([
+                BulkActionGroup::make([
+                    DeleteBulkAction::make(),
                 ]),
             ]);
     }
 
-    #[\Override]
+    #[Override]
     public static function getRelations(): array
     {
         return [];
@@ -83,9 +93,9 @@ final class SourceRepoResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListSourceRepos::route('/'),
-            'create' => Pages\CreateSourceRepo::route('/create'),
-            'edit' => Pages\EditSourceRepo::route('/{record}/edit'),
+            'index' => ListSourceRepos::route('/'),
+            'create' => CreateSourceRepo::route('/create'),
+            'edit' => EditSourceRepo::route('/{record}/edit'),
         ];
     }
 }

@@ -2,6 +2,10 @@
 
 namespace App\Modules\Import;
 
+use App\Modules\Import\Services\ImportService;
+use App\Modules\Import\Services\GedcomImportService;
+use App\Modules\Import\Services\ExportService;
+use Artisan;
 use App\Modules\BaseModule;
 
 class ImportModule extends BaseModule
@@ -36,15 +40,15 @@ class ImportModule extends BaseModule
     protected function registerImportServices(): void
     {
         app()->singleton('genealogy.import', function ($app) {
-            return new \App\Modules\Import\Services\ImportService();
+            return new ImportService();
         });
 
         app()->singleton('genealogy.import.gedcom', function ($app) {
-            return new \App\Modules\Import\Services\GedcomImportService();
+            return new GedcomImportService();
         });
 
         app()->singleton('genealogy.export', function ($app) {
-            return new \App\Modules\Import\Services\ExportService();
+            return new ExportService();
         });
     }
 
@@ -61,7 +65,7 @@ class ImportModule extends BaseModule
      */
     protected function installImportTables(): void
     {
-        \Artisan::call('migrate', [
+        Artisan::call('migrate', [
             '--path' => 'app/Modules/Import/database/migrations',
             '--force' => true,
         ]);

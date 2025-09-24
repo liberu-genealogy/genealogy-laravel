@@ -2,6 +2,9 @@
 
 namespace App\Services;
 
+use App\Models\Person;
+use App\Models\Family;
+use App\Models\PersonEvent;
 use App\Models\Achievement;
 use App\Models\User;
 use App\Models\UserAchievement;
@@ -308,7 +311,7 @@ class GamificationService
      */
     private function getPersonCount(User $user): int
     {
-        return \App\Models\Person::where('team_id', $user->current_team_id ?? $user->latestTeam?->id)->count();
+        return Person::where('team_id', $user->current_team_id ?? $user->latestTeam?->id)->count();
     }
 
     /**
@@ -316,7 +319,7 @@ class GamificationService
      */
     private function getFamilyCount(User $user): int
     {
-        return \App\Models\Family::where('team_id', $user->current_team_id ?? $user->latestTeam?->id)->count();
+        return Family::where('team_id', $user->current_team_id ?? $user->latestTeam?->id)->count();
     }
 
     /**
@@ -324,7 +327,7 @@ class GamificationService
      */
     private function getEventCount(User $user): int
     {
-        return \App\Models\PersonEvent::whereHas('person', function ($query) use ($user) {
+        return PersonEvent::whereHas('person', function ($query) use ($user) {
             $query->where('team_id', $user->current_team_id ?? $user->latestTeam?->id);
         })->count();
     }

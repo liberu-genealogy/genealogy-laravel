@@ -2,12 +2,13 @@
 
 namespace App\Livewire;
 
+use Illuminate\Contracts\View\View;
 use App\Models\Person;
 use Filament\Widgets\Widget;
 
 class FanChart extends Widget
 {
-    protected static string $view = 'filament.widgets.fan-chart-widget';
+    protected string $view = 'filament.widgets.fan-chart-widget';
 
     public ?int $rootPersonId = null;
     public int $generations = 5;
@@ -106,7 +107,7 @@ class FanChart extends Widget
         $this->dispatch('refreshFanChart');
     }
 
-    public function render(): \Illuminate\Contracts\View\View
+    public function render(): View
     {
         return view(static::$view, $this->getData());
     }

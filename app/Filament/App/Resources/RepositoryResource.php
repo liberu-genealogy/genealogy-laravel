@@ -4,6 +4,17 @@ declare(strict_types=1);
 
 namespace App\Filament\App\Resources;
 
+use Override;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\DateTimePicker;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Actions\EditAction;
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteBulkAction;
+use App\Filament\App\Resources\RepositoryResource\Pages\ListRepositories;
+use App\Filament\App\Resources\RepositoryResource\Pages\CreateRepository;
+use App\Filament\App\Resources\RepositoryResource\Pages\EditRepository;
 use UnitEnum;
 use BackedEnum;
 use App\Filament\App\Resources\RepositoryResource\Pages;
@@ -22,105 +33,105 @@ final class RepositoryResource extends Resource
 
     protected static ?string $navigationLabel = 'Repository';
 
-    protected static string | UnitEnum | null $navigationGroup = 'Author';
+    protected static string | \UnitEnum | null $navigationGroup = 'Author';
 
-    protected static string | BackedEnum | null $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-rectangle-stack';
 
-    #[\Override]
-    public static function form(Schema $form): Schema
+    #[Override]
+    public static function form(Schema $schema): Schema
     {
-        return $form
-            ->schema([
-                Forms\Components\TextInput::make('group')
+        return $schema
+            ->components([
+                TextInput::make('group')
                     ->maxLength(255),
-                Forms\Components\TextInput::make('gid')
+                TextInput::make('gid')
                     ->numeric(),
-                Forms\Components\TextInput::make('name')
+                TextInput::make('name')
                     ->maxLength(255),
-                Forms\Components\Textarea::make('description')
+                Textarea::make('description')
                     ->maxLength(65535)
                     ->columnSpanFull(),
-                Forms\Components\DateTimePicker::make('date'),
-                Forms\Components\TextInput::make('is_active')
+                DateTimePicker::make('date'),
+                TextInput::make('is_active')
                     ->numeric(),
-                Forms\Components\TextInput::make('type_id')
+                TextInput::make('type_id')
                     ->numeric(),
-                Forms\Components\TextInput::make('repo')
+                TextInput::make('repo')
                     ->maxLength(255),
-                Forms\Components\TextInput::make('addr_id')
+                TextInput::make('addr_id')
                     ->numeric(),
-                Forms\Components\TextInput::make('rin')
+                TextInput::make('rin')
                     ->maxLength(255),
-                Forms\Components\TextInput::make('phon')
+                TextInput::make('phon')
                     ->maxLength(255),
-                Forms\Components\TextInput::make('email')
+                TextInput::make('email')
                     ->email()
                     ->maxLength(255),
-                Forms\Components\TextInput::make('fax')
+                TextInput::make('fax')
                     ->maxLength(255),
-                Forms\Components\TextInput::make('www')
+                TextInput::make('www')
                     ->maxLength(255)
                     ->url(),
             ]);
     }
 
-    #[\Override]
+    #[Override]
     public static function table(Table $table): Table
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('group')
+                TextColumn::make('group')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('gid')
+                TextColumn::make('gid')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('name')
+                TextColumn::make('name')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('date')
+                TextColumn::make('date')
                     ->dateTime()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('is_active')
+                TextColumn::make('is_active')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('type_id')
+                TextColumn::make('type_id')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('repo')
+                TextColumn::make('repo')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('addr_id')
+                TextColumn::make('addr_id')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('rin')
+                TextColumn::make('rin')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('phon')
+                TextColumn::make('phon')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('email')
+                TextColumn::make('email')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('fax')
+                TextColumn::make('fax')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('www')
+                TextColumn::make('www')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('created_at')
+                TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('updated_at')
+                TextColumn::make('updated_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([])
-            ->actions([
-                Actions\EditAction::make(),
+            ->recordActions([
+                EditAction::make(),
             ])
-            ->bulkActions([
-                Actions\BulkActionGroup::make([
-                    Actions\DeleteBulkAction::make(),
+            ->toolbarActions([
+                BulkActionGroup::make([
+                    DeleteBulkAction::make(),
                 ]),
             ]);
     }
 
-    #[\Override]
+    #[Override]
     public static function getRelations(): array
     {
         return [];
@@ -129,9 +140,9 @@ final class RepositoryResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListRepositories::route('/'),
-            'create' => Pages\CreateRepository::route('/create'),
-            'edit' => Pages\EditRepository::route('/{record}/edit'),
+            'index' => ListRepositories::route('/'),
+            'create' => CreateRepository::route('/create'),
+            'edit' => EditRepository::route('/{record}/edit'),
         ];
     }
 }
