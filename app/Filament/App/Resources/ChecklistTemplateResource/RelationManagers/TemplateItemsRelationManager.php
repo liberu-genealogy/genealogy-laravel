@@ -12,7 +12,7 @@ class TemplateItemsRelationManager extends RelationManager
 {
     protected string $relationship = 'templateItems';
 
-    protected ?string $title = 'Checklist Items';
+    protected static ?string $title = 'Checklist Items';
 
    public static function form(Schema $form): Schema
        {
