@@ -54,7 +54,7 @@ class AppPanelProvider extends PanelProvider
             ->brandName('Liberu Genealogy')
             ->brandLogo(asset('images/logo.svg'))
             ->favicon(asset('images/favicon.ico'))
-            ->navigationGroups([
+      /**      ->navigationGroups([
                 NavigationGroup::make()
                     ->label('🏠 Dashboard')
                     ->icon('heroicon-o-home'),
@@ -82,7 +82,7 @@ class AppPanelProvider extends PanelProvider
                 NavigationGroup::make()
                     ->label('👤 Account & Settings')
                     ->icon('heroicon-o-user-circle'),
-            ])
+            ])**/
             ->userMenuItems([
                 MenuItem::make()
                     ->label('Profile')
