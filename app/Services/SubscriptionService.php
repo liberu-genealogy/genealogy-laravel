@@ -4,29 +4,40 @@ namespace App\Services;
 
 use App\Models\User;
 use Laravel\Cashier\Subscription;
-use Stripe\Price;
-use Stripe\Product;
 
 class SubscriptionService
 {
     public const PREMIUM_PRICE_ID = 'price_premium_monthly'; // Set this in Stripe
     public const PREMIUM_PRODUCT_ID = 'prod_premium'; // Set this in Stripe
-    
+
     /**
      * Create premium subscription with trial
+     *
+     * If a payment method is not provided, enable a local 7-day trial without
+     * contacting Stripe. This sets the user's generic trial and premium flag
+     * so premium checks work immediately. When a payment method is provided,
+     * defer to Cashier to create a real Stripe subscription.
      */
-    public function createPremiumSubscription(User $user, string $paymentMethod = null): Subscription
+    public function createPremiumSubscription(User $user, string $paymentMethod = null)
     {
-        $subscriptionBuilder = $user->newSubscription('premium', self::PREMIUM_PRICE_ID)
-            ->trialDays(7); // 7-day trial
+        // Trial-only flow without requiring a payment method / Stripe setup
+        if (empty($paymentMethod)) {
+            $user->forceFill([
+                'is_premium' => true,
+                'premium_started_at' => now(),
+                // Generic trial used by Cashier's Billable::onTrial()
+                'trial_ends_at' => now()->addDays(7),
+            ])->save();
 
-        if ($paymentMethod) {
-            $subscriptionBuilder->add();
+            return null;
         }
+
+        // Real subscription flow using Stripe via Cashier
+        $subscriptionBuilder = $user->newSubscription('premium', self::PREMIUM_PRICE_ID)
+            ->trialDays(7);
 
         $subscription = $subscriptionBuilder->create($paymentMethod);
 
-        // Update user premium status
         $user->update([
             'is_premium' => true,
             'premium_started_at' => now(),
@@ -41,7 +52,7 @@ class SubscriptionService
     public function cancelPremiumSubscription(User $user): void
     {
         $subscription = $user->subscription('premium');
-        
+
         if ($subscription) {
             $subscription->cancel();
         }
@@ -58,10 +69,10 @@ class SubscriptionService
     public function resumePremiumSubscription(User $user): void
     {
         $subscription = $user->subscription('premium');
-        
+
         if ($subscription && $subscription->cancelled()) {
             $subscription->resume();
-            
+
             $user->update([
                 'is_premium' => true,
             ]);
@@ -106,7 +117,7 @@ class SubscriptionService
         }
 
         $remaining = max(0, 1 - $user->dna_uploads_count);
-        
+
         return [
             'can_upload' => $remaining > 0,
             'remaining' => $remaining,
@@ -120,7 +131,7 @@ class SubscriptionService
     public function getPremiumFeaturesStatus(User $user): array
     {
         $isPremium = $user->isPremium();
-        
+
         return [
             'is_premium' => $isPremium,
             'on_trial' => $user->onPremiumTrial(),

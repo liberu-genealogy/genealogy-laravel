@@ -158,7 +158,8 @@ class User extends Authenticatable implements HasDefaultTenant, HasTenants, Fila
      */
     public function isPremium(): bool
     {
-        return $this->is_premium && ($this->subscribed('premium') || $this->onTrial('premium'));
+        // Consider either an active Stripe subscription or a generic user trial
+        return $this->is_premium && ($this->subscribed('premium') || $this->onTrial());
     }
 
     /**
@@ -166,7 +167,8 @@ class User extends Authenticatable implements HasDefaultTenant, HasTenants, Fila
      */
     public function onPremiumTrial(): bool
     {
-        return $this->onTrial('premium');
+        // Use generic trial (trial_ends_at on users table)
+        return $this->onTrial();
     }
 
     /**
@@ -174,7 +176,7 @@ class User extends Authenticatable implements HasDefaultTenant, HasTenants, Fila
      */
     public function trialDaysRemaining(): int
     {
-        if (!$this->onTrial('premium')) {
+        if (!$this->onTrial()) {
             return 0;
         }
 
