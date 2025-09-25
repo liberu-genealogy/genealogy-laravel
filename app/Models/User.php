@@ -159,7 +159,7 @@ class User extends Authenticatable implements HasDefaultTenant, HasTenants, Fila
     public function isPremium(): bool
     {
         // Consider either an active Stripe subscription or a generic user trial
-y        return $this->is_premium && ($this->subscribed('premium') || $this->onTrial());
+        return $this->is_premium && ($this->subscribed('premium') || $this->onTrial());
     }
 
     /**
