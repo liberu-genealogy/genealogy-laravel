@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "065a23ed1ed6a46b5161aef94b2d0e78",
+    "content-hash": "f7e094dc32725f86090f827b46b29c75",
     "packages": [
         {
             "name": "anourvalar/eloquent-serialize",
@@ -2314,16 +2314,16 @@
         },
         {
             "name": "laravel/cashier",
-            "version": "v15.7.1",
+            "version": "v16.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/cashier-stripe.git",
-                "reference": "8dd6a6c35fd2eb67857d06438d849254e47de7d1"
+                "reference": "340e1b44acfd2fb83242e7fbfea7971f1034b02b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/cashier-stripe/zipball/8dd6a6c35fd2eb67857d06438d849254e47de7d1",
-                "reference": "8dd6a6c35fd2eb67857d06438d849254e47de7d1",
+                "url": "https://api.github.com/repos/laravel/cashier-stripe/zipball/340e1b44acfd2fb83242e7fbfea7971f1034b02b",
+                "reference": "340e1b44acfd2fb83242e7fbfea7971f1034b02b",
                 "shasum": ""
             },
             "require": {
@@ -2341,17 +2341,20 @@
                 "moneyphp/money": "^4.0",
                 "nesbot/carbon": "^2.0|^3.0",
                 "php": "^8.1",
-                "stripe/stripe-php": "^16.2",
+                "stripe/stripe-php": "^17.3.0",
                 "symfony/console": "^6.0|^7.0",
                 "symfony/http-kernel": "^6.0|^7.0",
-                "symfony/polyfill-intl-icu": "^1.22.1"
+                "symfony/polyfill-intl-icu": "^1.22.1",
+                "symfony/polyfill-php84": "^1.32"
             },
             "require-dev": {
                 "dompdf/dompdf": "^2.0|^3.0",
                 "mockery/mockery": "^1.0",
                 "orchestra/testbench": "^8.18|^9.0|^10.0",
+                "orchestra/workbench": "^8.0|^9.0|^10.0",
                 "phpstan/phpstan": "^1.10",
-                "phpunit/phpunit": "^10.4|^11.5"
+                "phpunit/phpunit": "^10.4|^11.5",
+                "spatie/laravel-ray": "^1.40"
             },
             "suggest": {
                 "dompdf/dompdf": "Required when generating and downloading invoice PDF's using Dompdf (^2.0|^3.0).",
@@ -2365,7 +2368,7 @@
                     ]
                 },
                 "branch-alias": {
-                    "dev-master": "15.x-dev"
+                    "dev-master": "16.x-dev"
                 }
             },
             "autoload": {
@@ -2398,7 +2401,7 @@
                 "issues": "https://github.com/laravel/cashier/issues",
                 "source": "https://github.com/laravel/cashier"
             },
-            "time": "2025-07-22T15:49:31+00:00"
+            "time": "2025-09-10T19:52:07+00:00"
         },
         {
             "name": "laravel/fortify",
@@ -6721,16 +6724,16 @@
         },
         {
             "name": "stripe/stripe-php",
-            "version": "v16.6.0",
+            "version": "v17.6.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/stripe/stripe-php.git",
-                "reference": "d6de0a536f00b5c5c74f36b8f4d0d93b035499ff"
+                "reference": "a6219df5df1324a0d3f1da25fb5e4b8a3307ea16"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/stripe/stripe-php/zipball/d6de0a536f00b5c5c74f36b8f4d0d93b035499ff",
-                "reference": "d6de0a536f00b5c5c74f36b8f4d0d93b035499ff",
+                "url": "https://api.github.com/repos/stripe/stripe-php/zipball/a6219df5df1324a0d3f1da25fb5e4b8a3307ea16",
+                "reference": "a6219df5df1324a0d3f1da25fb5e4b8a3307ea16",
                 "shasum": ""
             },
             "require": {
@@ -6740,7 +6743,7 @@
                 "php": ">=5.6.0"
             },
             "require-dev": {
-                "friendsofphp/php-cs-fixer": "3.5.0",
+                "friendsofphp/php-cs-fixer": "3.72.0",
                 "phpstan/phpstan": "^1.2",
                 "phpunit/phpunit": "^5.7 || ^9.0"
             },
@@ -6774,9 +6777,9 @@
             ],
             "support": {
                 "issues": "https://github.com/stripe/stripe-php/issues",
-                "source": "https://github.com/stripe/stripe-php/tree/v16.6.0"
+                "source": "https://github.com/stripe/stripe-php/tree/v17.6.0"
             },
-            "time": "2025-02-24T22:35:29+00:00"
+            "time": "2025-08-27T19:32:42+00:00"
         },
         {
             "name": "symfony/clock",
