@@ -10,15 +10,15 @@
                 </div>
                 <h1 class="text-3xl font-bold mb-2">Upgrade to Premium</h1>
                 <p class="text-lg opacity-90 mb-6">Unlock powerful genealogy tools and unlimited features</p>
-                
+
                 <div class="bg-white/10 rounded-lg p-4 inline-block">
-                    <div class="text-4xl font-bold">£4.99</div>
-                    <div class="text-sm opacity-75">per month</div>
+                    <div class="text-4xl font-bold">{{ $this->getPricingData()['premium']['price'] }}</div>
+                    <div class="text-sm opacity-75">per {{ $this->getPricingData()['premium']['interval'] }}</div>
                 </div>
-                
+
                 <div class="mt-6">
                     <div class="bg-yellow-400 text-yellow-900 px-4 py-2 rounded-full inline-block font-semibold">
-                        🎉 7-Day Free Trial
+                        🎉 {{ $this->getPricingData()['premium']['trial_days'] }}-Day Free Trial
                     </div>
                 </div>
             </div>
@@ -33,7 +33,7 @@
                     <p class="text-gray-500 dark:text-gray-400">Free forever</p>
                     <div class="text-3xl font-bold text-gray-900 dark:text-white mt-2">£0</div>
                 </div>
-                
+
                 <ul class="space-y-3">
                     <li class="flex items-center">
                         @svg('heroicon-o-check', 'h-5 w-5 text-green-500 mr-3')
@@ -69,14 +69,14 @@
                         Most Popular
                     </span>
                 </div>
-                
+
                 <div class="text-center mb-6">
                     <h3 class="text-xl font-semibold text-gray-900 dark:text-white">Premium</h3>
-                    <p class="text-gray-500 dark:text-gray-400">7-day free trial</p>
-                    <div class="text-3xl font-bold text-gray-900 dark:text-white mt-2">£4.99</div>
-                    <p class="text-sm text-gray-500 dark:text-gray-400">per month</p>
+                    <p class="text-gray-500 dark:text-gray-400">{{ $this->getPricingData()['premium']['trial_days'] }}-day free trial</p>
+                    <div class="text-3xl font-bold text-gray-900 dark:text-white mt-2">{{ $this->getPricingData()['premium']['price'] }}</div>
+                    <p class="text-sm text-gray-500 dark:text-gray-400">per {{ $this->getPricingData()['premium']['interval'] }}</p>
                 </div>
-                
+
                 <ul class="space-y-3">
                     @foreach($this->getPricingData()['premium']['features'] as $feature)
                         <li class="flex items-center">
@@ -92,9 +92,20 @@
                         size="lg"
                         class="w-full"
                         wire:click="startTrial"
+                        wire:target="startTrial"
+                        wire:loading.attr="disabled"
+                        aria-label="Start {{ $this->getPricingData()['premium']['trial_days'] }}-day free trial"
                     >
-                        Start Free Trial
+                        <span class="inline-flex items-center justify-center">
+                            <svg wire:loading wire:target="startTrial" class="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"></path>
+                            </svg>
+                            <span wire:loading.remove wire:target="startTrial">Start Free Trial</span>
+                            <span wire:loading wire:target="startTrial">Starting…</span>
+                        </span>
                     </x-filament::button>
+                    <p class="text-xs text-gray-500 dark:text-gray-400 mt-2 text-center">No credit card required for the trial</p>
                 </div>
             </div>
         </div>
@@ -102,7 +113,7 @@
         <!-- Current Usage -->
         <div class="bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 p-6">
             <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">Current Usage</h3>
-            
+
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <div class="text-center">
                     <div class="text-2xl font-bold text-blue-600 dark:text-blue-400">
@@ -115,7 +126,7 @@
                         Limit: {{ $this->getDnaLimitData()['limit'] }}
                     </div>
                 </div>
-                
+
                 <div class="text-center">
                     <div class="text-2xl font-bold text-green-600 dark:text-green-400">
                         {{ auth()->user()->dna_uploads_count }}
@@ -124,7 +135,7 @@
                         DNA kits uploaded
                     </div>
                 </div>
-                
+
                 <div class="text-center">
                     <div class="text-2xl font-bold text-purple-600 dark:text-purple-400">
                         Standard
@@ -139,7 +150,7 @@
         <!-- FAQ -->
         <div class="bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 p-6">
             <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">Frequently Asked Questions</h3>
-            
+
             <div class="space-y-4">
                 <div>
                     <h4 class="font-medium text-gray-900 dark:text-white">What happens during the free trial?</h4>
@@ -147,14 +158,14 @@
                         You get full access to all premium features for 7 days. No payment required upfront.
                     </p>
                 </div>
-                
+
                 <div>
                     <h4 class="font-medium text-gray-900 dark:text-white">Can I cancel anytime?</h4>
                     <p class="text-sm text-gray-600 dark:text-gray-400 mt-1">
                         Yes, you can cancel your subscription at any time. You'll continue to have access until the end of your billing period.
                     </p>
                 </div>
-                
+
                 <div>
                     <h4 class="font-medium text-gray-900 dark:text-white">What payment methods do you accept?</h4>
                     <p class="text-sm text-gray-600 dark:text-gray-400 mt-1">

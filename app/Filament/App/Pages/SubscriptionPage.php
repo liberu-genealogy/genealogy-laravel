@@ -51,12 +51,19 @@ class SubscriptionPage extends Page
             $subscriptionService = app(SubscriptionService::class);
             $user = Auth::user();
 
-            // Create trial subscription
-            $subscription = $subscriptionService->createPremiumSubscription($user);
+            // Create trial subscription (no assignment needed)
+            $subscriptionService->createPremiumSubscription($user);
+
+            // Refresh user and show trial end date if available
+            $user = $user->fresh();
+            $endsAt = optional($user->trial_ends_at)->toFormattedDateString();
+            $body = $endsAt
+                ? "Welcome to Premium! Your trial ends on {$endsAt}."
+                : 'Welcome to Premium! Your 7-day trial has begun.';
 
             Notification::make()
                 ->title('Premium Trial Started!')
-                ->body('Welcome to Premium! Your 7-day trial has begun.')
+                ->body($body)
                 ->success()
                 ->send();
 
