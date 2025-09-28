@@ -9,6 +9,7 @@ use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Notifications\Notification;
 use Filament\Pages\Page;
+use Filament\Facades\Filament;
 use Illuminate\Support\Facades\Auth;
 
 class SubscriptionPage extends Page
@@ -25,12 +26,23 @@ class SubscriptionPage extends Page
 
     protected static ?string $title = 'Premium Subscription';
 
+    protected static ?string $slug = 'subscription';
+
     public function mount(): void
     {
+        if (! config('premium.enabled')) {
+            $this->redirect(Filament::getUrl());
+            return;
+        }
         // Redirect if user is already premium
         if (Auth::user()->isPremium()) {
             $this->redirect(route('filament.app.pages.premium-dashboard'));
         }
+    }
+
+    public static function shouldRegisterNavigation(): bool
+    {
+        return config('premium.enabled') && Auth::check() && ! Auth::user()->isPremium();
     }
 
     protected function getHeaderActions(): array

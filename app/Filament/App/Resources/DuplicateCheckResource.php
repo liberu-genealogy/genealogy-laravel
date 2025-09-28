@@ -35,6 +35,11 @@ class DuplicateCheckResource extends Resource
 
     protected static ?int $navigationSort = 3;
 
+    public static function shouldRegisterNavigation(): bool
+    {
+        return config('premium.enabled') && (auth()->user()?->isPremium() ?? false);
+    }
+
     public static function canAccess(): bool
     {
         return Auth::user()?->isPremium() ?? false;

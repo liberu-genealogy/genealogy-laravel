@@ -41,6 +41,11 @@ class DnaResource extends Resource
 
     protected static ?int $navigationSort = 1;
 
+    public static function shouldRegisterNavigation(): bool
+    {
+        return config('premium.enabled') && (auth()->user()?->isPremium() ?? false);
+    }
+
     public static function canCreate(): bool
     {
         return auth()->user()->canUploadDna();
@@ -165,6 +170,6 @@ class DnaResource extends Resource
 
     public static function visibility(): bool
     {
-        return true; // Set to true to make the resource visible in the sidebar
+        return config('premium.enabled');
     }
 }

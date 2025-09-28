@@ -6,6 +6,8 @@ use Override;
 use UnitEnum;
 use BackedEnum;
 use Filament\Forms\Components\TextInput;
+use Filament\Forms\Concerns\InteractsWithForms;
+use Filament\Forms\Form;
 use Filament\Pages\Page;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -13,6 +15,7 @@ use Illuminate\Validation\Rules\Password;
 
 class UpdatePasswordPage extends Page
 {
+    use InteractsWithForms;
     protected string $view = 'filament.pages.profile.update-password';
 
     protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-lock-closed';
@@ -23,44 +26,40 @@ class UpdatePasswordPage extends Page
 
     protected static ?string $title = 'Update Password';
 
-    public $current_password;
-
-    public $new_password;
-
-    public $new_password_confirmation;
+    public ?array $data = [];
 
     public function mount(): void
     {
         $this->form->fill();
     }
 
-    protected function getFormSchema(): array
+    public function form(Form $form): Form
     {
-        return [
-            TextInput::make('current_password')
-                ->label('Current Password')
-                ->password()
-                ->rules(['required', 'current_password'])
-                ->required(),
-            TextInput::make('new_password')
-                ->label('New Password')
-                ->password()
-                ->rules(['required', Password::defaults(), 'confirmed'])
-                ->required(),
-            TextInput::make('new_password_confirmation')
-                ->label('Confirm Password')
-                ->password()
-                ->rules(['required'])
-                ->required(),
-        ];
+        return $form
+            ->schema([
+                TextInput::make('current_password')
+                    ->label('Current Password')
+                    ->password()
+                    ->rules(['required', 'current_password'])
+                    ->required(),
+                TextInput::make('new_password')
+                    ->label('New Password')
+                    ->password()
+                    ->rules(['required', Password::defaults(), 'confirmed'])
+                    ->required(),
+                TextInput::make('new_password_confirmation')
+                    ->label('Confirm Password')
+                    ->password()
+                    ->rules(['required'])
+                    ->required(),
+            ])
+            ->statePath('data');
     }
 
     public function submit(): void
     {
-        $this->form->getState();
-
         $state = array_filter([
-            'password' => Hash::make($this->new_password),
+            'password' => Hash::make($this->form->getState()['new_password'] ?? ''),
         ]);
 
         $user = Auth::user();
