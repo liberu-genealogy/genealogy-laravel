@@ -39,6 +39,8 @@ class GedcomResource extends Resource
 
     protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-rectangle-stack';
 
+    protected static ?int $navigationSort = 1;
+
     protected static bool $shouldRegisterNavigation = true;
 
     protected static string | \UnitEnum | null $navigationGroup = '\ud83d\udee0\ufe0f Data Management';
@@ -60,8 +62,10 @@ class GedcomResource extends Resource
             ->components([
                 FileUpload::make('filename')
                     ->multiple(false)
-                    // ->required()
+                    ->required()
+                    ->acceptedFileTypes(['.ged', 'text/plain', 'application/octet-stream'])
                     ->maxSize(100000)
+                    ->disk('private')
                     ->directory('gedcom-form-imports')
                     ->visibility('private')
 
