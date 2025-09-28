@@ -31,6 +31,8 @@ class PlaceResource extends Resource
 
     protected static string | \UnitEnum | null $navigationGroup = '\ud83d\udc65 Family Tree';
 
+    protected static ?int $navigationSort = 3;
+
     #[Override]
     public static function form(Schema $schema): Schema
     {
