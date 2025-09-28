@@ -31,7 +31,6 @@
             </div>
         @endif
     </div>
-</div>
 
 <style>
 .pedigree-tree {
@@ -178,4 +177,5 @@ document.addEventListener('livewire:init', () => {
         console.log('Pedigree chart refreshed');
     });
 });
-</script>
+    </script>
+</div>

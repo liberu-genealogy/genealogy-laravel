@@ -8,7 +8,7 @@ use Filament\Widgets\Widget;
 
 class FanChart extends Widget
 {
-    protected static string $view = 'filament.widgets.fan-chart-widget';
+    protected string $view = 'filament.widgets.fan-chart-widget';
 
     public ?int $rootPersonId = null;
     public int $generations = 5;
@@ -109,6 +109,6 @@ class FanChart extends Widget
 
     public function render(): View
     {
-        return view(static::$view, $this->getData());
+        return view($this->view, $this->getData());
     }
 }
