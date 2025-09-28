@@ -17,7 +17,7 @@ class UpdatePasswordPage extends Page
 
     protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-lock-closed';
 
-    protected static string | \UnitEnum | null $navigationGroup = 'Account';
+    protected static string | \UnitEnum | null $navigationGroup = '\ud83d\udc64 Account & Settings';
 
     protected static ?int $navigationSort = 1;
 

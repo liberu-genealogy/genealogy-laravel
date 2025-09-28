@@ -41,7 +41,7 @@ class DnaMatchingResource extends Resource
 
     protected static ?string $navigationLabel = 'DNA Matches';
 
-    protected static string | \UnitEnum | null $navigationGroup = 'DNA Analysis';
+    protected static string | \UnitEnum | null $navigationGroup = '\ud83e\uddec DNA & Genetics';
 
     protected static ?int $navigationSort = 2;
 

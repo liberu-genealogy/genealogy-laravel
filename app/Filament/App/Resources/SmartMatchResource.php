@@ -32,7 +32,7 @@ class SmartMatchResource extends Resource
 
     protected static ?string $navigationLabel = 'Smart Matches';
 
-    protected static string | \UnitEnum | null $navigationGroup =  'Research';
+    protected static string | \UnitEnum | null $navigationGroup =  '\ud83d\udd0d Research & Analysis';
 
     protected static ?int $navigationSort = 4;
 

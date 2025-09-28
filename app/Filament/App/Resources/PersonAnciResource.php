@@ -31,7 +31,7 @@ class PersonAnciResource extends Resource
 
     protected static ?string $navigationLabel = 'Person Anci';
 
-    protected static string | \UnitEnum | null $navigationGroup = 'Person';
+    protected static string | \UnitEnum | null $navigationGroup = '\ud83d\udc65 Family Tree';
 
     #[Override]
     public static function form(Schema $schema): Schema

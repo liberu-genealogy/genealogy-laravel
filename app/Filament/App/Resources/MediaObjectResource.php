@@ -31,7 +31,7 @@ class MediaObjectResource extends Resource
 
     protected static ?string $navigationLabel = 'Photos & Documents';
 
-    protected static string | \UnitEnum | null $navigationGroup = 'Media & Documents';
+    protected static string | \UnitEnum | null $navigationGroup = '\ud83d\udcc1 Media & Documents';
 
     protected static ?int $navigationSort = 1;
 

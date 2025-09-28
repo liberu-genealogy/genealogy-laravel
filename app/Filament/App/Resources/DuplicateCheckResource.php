@@ -31,7 +31,7 @@ class DuplicateCheckResource extends Resource
 
     protected static ?string $navigationLabel = 'Duplicate Checker';
 
-    protected static string | \UnitEnum | null $navigationGroup =  'Research';
+    protected static string | \UnitEnum | null $navigationGroup =  '\ud83d\udd0d Research & Analysis';
 
     protected static ?int $navigationSort = 3;
 

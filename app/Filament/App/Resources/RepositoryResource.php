@@ -33,7 +33,7 @@ final class RepositoryResource extends Resource
 
     protected static ?string $navigationLabel = 'Repository';
 
-    protected static string | \UnitEnum | null $navigationGroup = 'Author';
+    protected static string | \UnitEnum | null $navigationGroup = '\ud83d\udd0d Research & Analysis';
 
     protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-rectangle-stack';
 

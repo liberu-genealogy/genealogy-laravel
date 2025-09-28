@@ -33,7 +33,7 @@ class PersonResource extends Resource
 
     protected static ?string $navigationLabel = 'People';
 
-    protected static string | \UnitEnum | null $navigationGroup = 'Family Tree';
+    protected static string | \UnitEnum | null $navigationGroup = '👥 Family Tree';
 
     protected static ?int $navigationSort = 1;
 
