@@ -4,19 +4,36 @@ namespace App\Traits;
 
 use App\Models\Team;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\Schema;
 
 trait BelongsToTenant
 {
     protected static function booted(): void
     {
         static::addGlobalScope('team', function (Builder $query): void {
-            if (auth()->check()) {
-                $query->where('team_id', static::getTenantId());
+            // Only apply scope when a tenant is available and the model's table has a team_id column
+            $tenantId = static::getTenantId();
+            if (! auth()->check() || empty($tenantId)) {
+                return;
+            }
+
+            $table = $query->getModel()->getTable();
+            if (Schema::hasColumn($table, 'team_id')) {
+                $query->where($table.'.team_id', $tenantId);
             }
         });
 
         static::creating(function ($model): void {
-            $model->team_id = static::getTenantId();
+            // Set team_id on create only if the table has the column and a tenant is present
+            $tenantId = static::getTenantId();
+            if (empty($tenantId)) {
+                return;
+            }
+
+            $table = $model->getTable();
+            if (Schema::hasColumn($table, 'team_id')) {
+                $model->team_id = $tenantId;
+            }
         });
     }
 
