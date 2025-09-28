@@ -8,7 +8,7 @@ use Filament\Widgets\Widget;
 
 class FanChart extends Widget
 {
-    protected string $view = 'filament.widgets.fan-chart-widget';
+    protected static string $view = 'filament.widgets.fan-chart-widget';
 
     public ?int $rootPersonId = null;
     public int $generations = 5;
