@@ -31,6 +31,8 @@ final class SourceRepoResource extends Resource
 
     protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-rectangle-stack';
 
+    protected static string | \UnitEnum | null $navigationGroup = '\ud83d\udd0d Research & Analysis';
+
     #[Override]
     public static function form(Schema $schema): Schema
     {

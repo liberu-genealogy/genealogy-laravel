@@ -41,6 +41,8 @@ class GedcomResource extends Resource
 
     protected static bool $shouldRegisterNavigation = true;
 
+    protected static string | \UnitEnum | null $navigationGroup = '\ud83d\udee0\ufe0f Data Management';
+
     public static function getPages(): array
     {
         return [
@@ -62,7 +64,7 @@ class GedcomResource extends Resource
                     ->maxSize(100000)
                     ->directory('gedcom-form-imports')
                     ->visibility('private')
-                    
+
                     // ->afterStateUpdated(function ($state, $set, $livewire): void {
                     //     if ($state === null) {
                     //         return;
