@@ -14,7 +14,7 @@ class PrivateMessagingPage extends Page
 {
     protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-chat-bubble-left-right';
 
-    protected static string | \UnitEnum | null $navigationGroup = '\ud83d\udc64 Account & Settings';
+    protected static string | \UnitEnum | null $navigationGroup = '👤 Account & Settings';
 
     public function mount(): void
     {
