@@ -29,7 +29,7 @@ class PlaceResource extends Resource
 
     protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-rectangle-stack';
 
-    protected static string | \UnitEnum | null $navigationGroup = '\ud83d\udc65 Family Tree';
+    protected static string | \UnitEnum | null $navigationGroup = '👥 Family Tree';
 
     protected static ?int $navigationSort = 3;
 

@@ -32,7 +32,7 @@ class SourceResource extends Resource
 
     protected static ?string $navigationLabel = 'Sources';
 
-    protected static string | \UnitEnum | null $navigationGroup = '\ud83d\udd0d Research & Analysis';
+    protected static string | \UnitEnum | null $navigationGroup = '🔍 Research & Analysis';
 
     protected static ?int $navigationSort = 1;
 

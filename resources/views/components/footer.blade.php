@@ -6,7 +6,7 @@
                     <li><a href="/about" class="hover:text-gray-300">About Us</a></li>
                     <li><a href="/privacy" class="hover:text-gray-300">Privacy</a></li>
                     <li><a href="/terms-and-conditions" class="hover:text-gray-300">Terms &amp; Conditions</a></li>
-                    <li><a href="https://wa.me/443300435658" class="hover:text-gray-300">Contact on WhatsApp</a></li>
+                    <li><a href="https://wa.me/442080505865" class="hover:text-gray-300">Contact on WhatsApp</a></li>
                 </ul>
             </nav>
             <div class="flex items-center flex-wrap w-full lg:w-auto order-2 lg:order-1 lg:pt-3">
@@ -18,7 +18,7 @@
                     <p>&copy; {{ date('Y') }} {{ config('app.name') }}. All rights reserved.</p>
                 </div>
             </div>
-            
+
         </div>
 
     </div>
