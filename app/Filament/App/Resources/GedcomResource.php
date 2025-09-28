@@ -39,7 +39,7 @@ class GedcomResource extends Resource
 
     protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-rectangle-stack';
 
-    protected static ?int $navigationSort = 1;
+    protected static ?int $navigationSort = 10;
 
     protected static bool $shouldRegisterNavigation = true;
 
