@@ -6,11 +6,15 @@ use Override;
 use UnitEnum;
 use BackedEnum;
 use Filament\Forms\Components\TextInput;
+use Filament\Forms\Concerns\InteractsWithForms;
+use Filament\Forms\Form;
 use Filament\Pages\Page;
 use Illuminate\Support\Facades\Auth;
 
 class UpdateProfileInformationPage extends Page
 {
+    use InteractsWithForms;
+
     protected string $view = 'filament.pages.profile.update-profile-information';
 
     protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-user';
@@ -21,9 +25,7 @@ class UpdateProfileInformationPage extends Page
 
     protected static ?string $title = 'Profile';
 
-    public $name;
-
-    public $email;
+    public ?array $data = [];
 
     public function mount(): void
     {
@@ -33,26 +35,23 @@ class UpdateProfileInformationPage extends Page
         ]);
     }
 
-    protected function getFormSchema(): array
+    public function form(Form $form): Form
     {
-        return [
-            TextInput::make('name')
-                ->label('Name')
-                ->required(),
-            TextInput::make('email')
-                ->label('Email Address')
-                ->required(),
-        ];
+        return $form
+            ->schema([
+                TextInput::make('name')
+                    ->label('Name')
+                    ->required(),
+                TextInput::make('email')
+                    ->label('Email Address')
+                    ->required(),
+            ])
+            ->statePath('data');
     }
 
     public function submit(): void
     {
-        $this->form->getState();
-
-        $state = array_filter([
-            'name'  => $this->name,
-            'email' => $this->email,
-        ]);
+        $state = array_filter($this->form->getState());
 
         $user = Auth::user();
 
