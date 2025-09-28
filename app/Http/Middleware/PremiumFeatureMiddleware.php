@@ -16,6 +16,11 @@ class PremiumFeatureMiddleware
      */
     public function handle(Request $request, Closure $next, string $feature = null): mixed
     {
+        // If premium is globally enabled, allow access for everyone
+        if (config('premium.enabled')) {
+            return $next($request);
+        }
+
         $user = Auth::user();
 
         if (!$user) {

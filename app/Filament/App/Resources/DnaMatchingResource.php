@@ -47,7 +47,10 @@ class DnaMatchingResource extends Resource
 
     public static function shouldRegisterNavigation(): bool
     {
-        return config('premium.enabled') && (auth()->user()?->isPremium() ?? false);
+        if (config('premium.enabled')) {
+            return true;
+        }
+        return auth()->user()?->isPremium() ?? false;
     }
 
        public static function form(Schema $schema): Schema

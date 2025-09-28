@@ -41,7 +41,11 @@ class SubscriptionPage extends Page
 
     public static function shouldRegisterNavigation(): bool
     {
-        return config('premium.enabled') && Auth::check() && ! Auth::user()->isPremium();
+        // Hide the subscription page when premium features are globally enabled
+        if (config('premium.enabled')) {
+            return false;
+        }
+        return Auth::check() && ! Auth::user()->isPremium();
     }
 
     protected function getHeaderActions(): array

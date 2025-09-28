@@ -43,7 +43,11 @@ class DnaResource extends Resource
 
     public static function shouldRegisterNavigation(): bool
     {
-        return config('premium.enabled') && (auth()->user()?->isPremium() ?? false);
+        // When premium is enabled globally, always show DNA navigation for all users
+        if (config('premium.enabled')) {
+            return true;
+        }
+        return auth()->user()?->isPremium() ?? false;
     }
 
     public static function canCreate(): bool
@@ -66,17 +70,21 @@ class DnaResource extends Resource
                             return;
                         }
                         $allowed = null;
+                        // If premium features are enabled, allow all users to upload
+                        if (config('premium.enabled')) {
+                            $allowed = true;
+                        }
                         $role = Auth::user()->role_id;
                         $user_id = Auth::user()->id;
                         $dna = Dna::where('user_id', '=', $user_id)->count();
-                        if (in_array($role, [1, 2, 9, 10])) {
+                        if ($allowed !== true && in_array($role, [1, 2, 9, 10])) {
                             $allowed = true;
                         }
-                        if (in_array($role, [4, 5, 6]) && $dna < 1) {
+                        if ($allowed !== true && in_array($role, [4, 5, 6]) && $dna < 1) {
                             $allowed = true;
                         }
 
-                        if (in_array($role, [7, 8]) && $dna < 5) {
+                        if ($allowed !== true && in_array($role, [7, 8]) && $dna < 5) {
                             $allowed = true;
                         }
                         if ($allowed === true) {
@@ -170,6 +178,10 @@ class DnaResource extends Resource
 
     public static function visibility(): bool
     {
-        return config('premium.enabled');
+        // If premium is enabled, make visible to everyone; otherwise default to premium users only
+        if (config('premium.enabled')) {
+            return true;
+        }
+        return auth()->user()?->isPremium() ?? false;
     }
 }
