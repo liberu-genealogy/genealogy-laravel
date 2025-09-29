@@ -43,7 +43,7 @@ class GedcomResource extends Resource
 
     protected static bool $shouldRegisterNavigation = true;
 
-    protected static string | \UnitEnum | null $navigationGroup = '\ud83d\udee0\ufe0f Data Management';
+    protected static string | \UnitEnum | null $navigationGroup = "🛠️ Data Management";
 
     public static function getPages(): array
     {
