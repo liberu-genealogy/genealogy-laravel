@@ -31,12 +31,23 @@ class DuplicateCheckResource extends Resource
 
     protected static ?string $navigationLabel = 'Duplicate Checker';
 
-    protected static string | \UnitEnum | null $navigationGroup =  'Research';
+    protected static string | \UnitEnum | null $navigationGroup =  '🔍 Research & Analysis';
 
     protected static ?int $navigationSort = 3;
 
+    public static function shouldRegisterNavigation(): bool
+    {
+        if (config('premium.enabled')) {
+            return true;
+        }
+        return auth()->user()?->isPremium() ?? false;
+    }
+
     public static function canAccess(): bool
     {
+        if (config('premium.enabled')) {
+            return true;
+        }
         return Auth::user()?->isPremium() ?? false;
     }
 

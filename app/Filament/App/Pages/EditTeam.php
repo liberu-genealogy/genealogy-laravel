@@ -10,7 +10,6 @@ use Filament\Facades\Filament;
 use Filament\Forms\Components\TextInput;
 use Filament\Pages\Tenancy\EditTenantProfile;
 use Filament\Forms\Components\Placeholder;
-use Filament\Forms\Form;
 use App\Services\SubscriptionService;
 use Filament\Schemas\Schema;
 
@@ -39,7 +38,7 @@ class EditTeam extends EditTenantProfile
                     ]),
             ]);
     }
-    
+
     #[Override]
     protected function getViewData(): array
     {

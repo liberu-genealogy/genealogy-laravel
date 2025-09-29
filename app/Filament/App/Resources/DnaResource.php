@@ -37,9 +37,18 @@ class DnaResource extends Resource
 
     protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-beaker';
 
-    protected static string | \UnitEnum | null $navigationGroup = 'DNA Analysis';
+    protected static string | \UnitEnum | null $navigationGroup = '🧬 DNA & Genetics';
 
     protected static ?int $navigationSort = 1;
+
+    public static function shouldRegisterNavigation(): bool
+    {
+        // When premium is enabled globally, always show DNA navigation for all users
+        if (config('premium.enabled')) {
+            return true;
+        }
+        return auth()->user()?->isPremium() ?? false;
+    }
 
     public static function canCreate(): bool
     {
@@ -61,17 +70,21 @@ class DnaResource extends Resource
                             return;
                         }
                         $allowed = null;
+                        // If premium features are enabled, allow all users to upload
+                        if (config('premium.enabled')) {
+                            $allowed = true;
+                        }
                         $role = Auth::user()->role_id;
                         $user_id = Auth::user()->id;
                         $dna = Dna::where('user_id', '=', $user_id)->count();
-                        if (in_array($role, [1, 2, 9, 10])) {
+                        if ($allowed !== true && in_array($role, [1, 2, 9, 10])) {
                             $allowed = true;
                         }
-                        if (in_array($role, [4, 5, 6]) && $dna < 1) {
+                        if ($allowed !== true && in_array($role, [4, 5, 6]) && $dna < 1) {
                             $allowed = true;
                         }
 
-                        if (in_array($role, [7, 8]) && $dna < 5) {
+                        if ($allowed !== true && in_array($role, [7, 8]) && $dna < 5) {
                             $allowed = true;
                         }
                         if ($allowed === true) {
@@ -165,6 +178,10 @@ class DnaResource extends Resource
 
     public static function visibility(): bool
     {
-        return true; // Set to true to make the resource visible in the sidebar
+        // If premium is enabled, make visible to everyone; otherwise default to premium users only
+        if (config('premium.enabled')) {
+            return true;
+        }
+        return auth()->user()?->isPremium() ?? false;
     }
 }

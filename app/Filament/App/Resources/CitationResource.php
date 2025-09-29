@@ -33,7 +33,7 @@ class CitationResource extends Resource
 
     protected static ?string $navigationLabel = 'Citation';
 
-    protected static string | \UnitEnum | null $navigationGroup = 'Author';
+    protected static string | \UnitEnum | null $navigationGroup = '🔍 Research & Analysis';
 
     #[Override]
     public static function form(Schema $schema): Schema

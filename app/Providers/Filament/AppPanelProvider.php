@@ -65,8 +65,14 @@ class AppPanelProvider extends PanelProvider
                     ->label('📊 Charts & Visualizations')
                     ->icon('heroicon-o-chart-bar'),
                 NavigationGroup::make()
+                    ->label('Reports')
+                    ->icon('heroicon-o-document-text'),
+                NavigationGroup::make()
                     ->label('🔍 Research & Analysis')
                     ->icon('heroicon-o-magnifying-glass'),
+                NavigationGroup::make()
+                    ->label('📋 Research Management')
+                    ->icon('heroicon-o-clipboard-document-check'),
                 NavigationGroup::make()
                     ->label('🧬 DNA & Genetics')
                     ->icon('heroicon-o-beaker'),
@@ -76,6 +82,9 @@ class AppPanelProvider extends PanelProvider
                 NavigationGroup::make()
                     ->label('⚙️ Data Management')
                     ->icon('heroicon-o-cog-6-tooth'),
+                NavigationGroup::make()
+                    ->label('👥 Family Reunions')
+                    ->icon('heroicon-o-calendar'),
                 NavigationGroup::make()
                     ->label('🎮 Gamification')
                     ->icon('heroicon-o-trophy'),

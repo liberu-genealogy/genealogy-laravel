@@ -109,6 +109,6 @@ class FanChart extends Widget
 
     public function render(): View
     {
-        return view(static::$view, $this->getData());
+        return view($this->view, $this->getData());
     }
 }

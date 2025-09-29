@@ -31,7 +31,7 @@ class AuthorResource extends Resource
 
     protected static ?string $navigationLabel = 'Author';
 
-    protected static string | \UnitEnum | null $navigationGroup = 'Author';
+    protected static string | \UnitEnum | null $navigationGroup = '🔍 Research & Analysis';
 
     #[Override]
     public static function form(Schema $schema): Schema

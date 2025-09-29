@@ -28,6 +28,8 @@ class SourceDataResource extends Resource
 
     protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-rectangle-stack';
 
+    protected static string | \UnitEnum | null $navigationGroup = '🔍 Research & Analysis';
+
     #[Override]
     public static function form(Schema $schema): Schema
     {

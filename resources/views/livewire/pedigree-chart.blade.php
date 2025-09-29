@@ -1,4 +1,13 @@
 <div class="pedigree-chart-container">
+    <div class="flex items-center gap-3 mb-4">
+        <label class="text-sm text-gray-700">Root person:</label>
+        <select class="fi-input block rounded-md border-gray-300 text-sm"
+                wire:change="setRootPerson($event.target.value)">
+            @foreach($this->peopleList as $id => $label)
+                <option value="{{ $id }}" @selected($rootPersonId === (int) $id)>{{ $label }}</option>
+            @endforeach
+        </select>
+    </div>
     <div class="chart-header mb-4">
         <h3 class="text-xl font-semibold text-gray-800">Pedigree Chart</h3>
         <div class="chart-controls flex gap-2 mt-2">
@@ -22,7 +31,6 @@
             </div>
         @endif
     </div>
-</div>
 
 <style>
 .pedigree-tree {
@@ -169,4 +177,5 @@ document.addEventListener('livewire:init', () => {
         console.log('Pedigree chart refreshed');
     });
 });
-</script>
+    </script>
+</div>

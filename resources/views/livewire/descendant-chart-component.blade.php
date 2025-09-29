@@ -19,159 +19,158 @@
             </div>
         @endif
     </div>
-</div>
+    <style>
+    .descendant-chart-container {
+        width: 100%;
+    }
 
-<style>
-.descendant-chart-container {
-    width: 100%;
-}
+    #descendantChartSvg {
+        cursor: grab;
+        border: 1px solid #e5e7eb;
+        border-radius: 8px;
+    }
 
-#descendantChartSvg {
-    cursor: grab;
-    border: 1px solid #e5e7eb;
-    border-radius: 8px;
-}
+    #descendantChartSvg:active {
+        cursor: grabbing;
+    }
 
-#descendantChartSvg:active {
-    cursor: grabbing;
-}
+    .descendant-node {
+        cursor: pointer;
+    }
 
-.descendant-node {
-    cursor: pointer;
-}
+    .descendant-node circle {
+        fill: #f8f9fa;
+        stroke: #007bff;
+        stroke-width: 2;
+    }
 
-.descendant-node circle {
-    fill: #f8f9fa;
-    stroke: #007bff;
-    stroke-width: 2;
-}
+    .descendant-node.male circle {
+        fill: #e3f2fd;
+        stroke: #007bff;
+    }
 
-.descendant-node.male circle {
-    fill: #e3f2fd;
-    stroke: #007bff;
-}
+    .descendant-node.female circle {
+        fill: #fce4ec;
+        stroke: #e91e63;
+    }
 
-.descendant-node.female circle {
-    fill: #fce4ec;
-    stroke: #e91e63;
-}
-
-.descendant-node text {
-    font-family: Arial, sans-serif;
-    font-size: 12px;
-    fill: #333;
-}
-
-.descendant-link {
-    fill: none;
-    stroke: #ccc;
-    stroke-width: 2;
-}
-
-@media (max-width: 768px) {
     .descendant-node text {
-        font-size: 10px;
+        font-family: Arial, sans-serif;
+        font-size: 12px;
+        fill: #333;
     }
-}
-</style>
 
-<script src="https://d3js.org/d3.v7.min.js"></script>
-<script>
-document.addEventListener('livewire:init', () => {
-    initializeDescendantChart();
+    .descendant-link {
+        fill: none;
+        stroke: #ccc;
+        stroke-width: 2;
+    }
 
-    Livewire.on('refreshDescendantChart', () => {
+    @media (max-width: 768px) {
+        .descendant-node text {
+            font-size: 10px;
+        }
+    }
+    </style>
+
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <script>
+    document.addEventListener('livewire:init', () => {
         initializeDescendantChart();
+
+        Livewire.on('refreshDescendantChart', () => {
+            initializeDescendantChart();
+        });
     });
-});
 
-function initializeDescendantChart() {
-    const descendantData = @json($descendantsData ?? []);
+    function initializeDescendantChart() {
+        const descendantData = @json($descendantsData ?? []);
 
-    if (descendantData && Object.keys(descendantData).length > 0) {
-        renderDescendantChart(descendantData);
-    } else {
-        console.warn('No data available to render the descendant chart.');
+        if (descendantData && Object.keys(descendantData).length > 0) {
+            renderDescendantChart(descendantData);
+        } else {
+            console.warn('No data available to render the descendant chart.');
+        }
     }
-}
 
-function renderDescendantChart(data) {
-    // Clear existing chart
-    d3.select("#descendantChartSvg").selectAll("*").remove();
+    function renderDescendantChart(data) {
+        // Clear existing chart
+        d3.select("#descendantChartSvg").selectAll("*").remove();
 
-    const container = d3.select("#descendantChartSvg");
-    const containerNode = container.node();
-    const width = containerNode.clientWidth || 800;
-    const height = containerNode.clientHeight || 600;
+        const container = d3.select("#descendantChartSvg");
+        const containerNode = container.node();
+        const width = containerNode.clientWidth || 800;
+        const height = containerNode.clientHeight || 600;
 
-    const svg = container
-        .append("svg")
-        .attr("width", width)
-        .attr("height", height);
+        const svg = container
+            .append("svg")
+            .attr("width", width)
+            .attr("height", height);
 
-    const g = svg.append("g")
-        .attr("transform", "translate(40,40)");
+        const g = svg.append("g")
+            .attr("transform", "translate(40,40)");
 
-    // Create tree layout
-    const tree = d3.tree()
-        .size([height - 80, width - 80]);
+        // Create tree layout
+        const tree = d3.tree()
+            .size([height - 80, width - 80]);
 
-    // Create hierarchy
-    const root = d3.hierarchy(data);
-    tree(root);
+        // Create hierarchy
+        const root = d3.hierarchy(data);
+        tree(root);
 
-    // Add links
-    g.selectAll(".descendant-link")
-        .data(root.links())
-        .enter().append("path")
-        .attr("class", "descendant-link")
-        .attr("d", d3.linkHorizontal()
-            .x(d => d.y)
-            .y(d => d.x));
+        // Add links
+        g.selectAll(".descendant-link")
+            .data(root.links())
+            .enter().append("path")
+            .attr("class", "descendant-link")
+            .attr("d", d3.linkHorizontal()
+                .x(d => d.y)
+                .y(d => d.x));
 
-    // Add nodes
-    const node = g.selectAll(".descendant-node")
-        .data(root.descendants())
-        .enter().append("g")
-        .attr("class", d => `descendant-node ${d.data.sex || 'unknown'}`)
-        .attr("transform", d => `translate(${d.y},${d.x})`)
-        .on("click", function(event, d) {
-            if (d.data.id) {
-                @this.call('setRootPerson', d.data.id);
-            }
-        });
+        // Add nodes
+        const node = g.selectAll(".descendant-node")
+            .data(root.descendants())
+            .enter().append("g")
+            .attr("class", d => `descendant-node ${d.data.sex || 'unknown'}`)
+            .attr("transform", d => `translate(${d.y},${d.x})`)
+            .on("click", function(event, d) {
+                if (d.data.id) {
+                    @this.call('setRootPerson', d.data.id);
+                }
+            });
 
-    // Add circles
-    node.append("circle")
-        .attr("r", 20);
+        // Add circles
+        node.append("circle")
+            .attr("r", 20);
 
-    // Add text
-    node.append("text")
-        .attr("dy", "0.35em")
-        .attr("x", d => d.children ? -25 : 25)
-        .style("text-anchor", d => d.children ? "end" : "start")
-        .text(d => {
-            const name = d.data.givn || d.data.name || '';
-            return name.length > 12 ? name.substring(0, 12) + '...' : name;
-        });
+        // Add text
+        node.append("text")
+            .attr("dy", "0.35em")
+            .attr("x", d => d.children ? -25 : 25)
+            .style("text-anchor", d => d.children ? "end" : "start")
+            .text(d => {
+                const name = d.data.givn || d.data.name || '';
+                return name.length > 12 ? name.substring(0, 12) + '...' : name;
+            });
 
-    // Add birth/death years
-    node.append("text")
-        .attr("dy", "1.5em")
-        .attr("x", d => d.children ? -25 : 25)
-        .style("text-anchor", d => d.children ? "end" : "start")
-        .style("font-size", "10px")
-        .style("fill", "#666")
-        .text(d => {
-            const birth = d.data.birth_date ? new Date(d.data.birth_date).getFullYear() : '';
-            const death = d.data.death_date ? new Date(d.data.death_date).getFullYear() : '';
-            if (birth && death) return `${birth}-${death}`;
-            if (birth) return `b.${birth}`;
-            return '';
-        });
-}
+        // Add birth/death years
+        node.append("text")
+            .attr("dy", "1.5em")
+            .attr("x", d => d.children ? -25 : 25)
+            .style("text-anchor", d => d.children ? "end" : "start")
+            .style("font-size", "10px")
+            .style("fill", "#666")
+            .text(d => {
+                const birth = d.data.birth_date ? new Date(d.data.birth_date).getFullYear() : '';
+                const death = d.data.death_date ? new Date(d.data.death_date).getFullYear() : '';
+                if (birth && death) return `${birth}-${death}`;
+                if (birth) return `b.${birth}`;
+                return '';
+            });
+    }
 
-function setGenerations(generations) {
-    @this.call('setGenerations', generations);
-}
-</script>
+    function setGenerations(generations) {
+        @this.call('setGenerations', generations);
+    }
+    </script>
+</div>

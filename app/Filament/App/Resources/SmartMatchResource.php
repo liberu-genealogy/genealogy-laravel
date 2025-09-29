@@ -32,12 +32,23 @@ class SmartMatchResource extends Resource
 
     protected static ?string $navigationLabel = 'Smart Matches';
 
-    protected static string | \UnitEnum | null $navigationGroup =  'Research';
+    protected static string | \UnitEnum | null $navigationGroup =  '🔍 Research & Analysis';
 
     protected static ?int $navigationSort = 4;
 
+    public static function shouldRegisterNavigation(): bool
+    {
+        if (config('premium.enabled')) {
+            return true;
+        }
+        return auth()->user()?->isPremium() ?? false;
+    }
+
     public static function canAccess(): bool
     {
+        if (config('premium.enabled')) {
+            return true;
+        }
         return Auth::user()?->isPremium() ?? false;
     }
 

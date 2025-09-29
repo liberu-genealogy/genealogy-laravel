@@ -49,13 +49,22 @@ class ImportGedcom implements ShouldQueue
             'slug'    => $slug,
         ]);
         $parser = new GedcomParser();
-        $team_id = $this->user->currentTeam->id;
-        $parser->parse($job->getConnectionName(), $this->filePath, $slug, false, $team_id);
+        $team_id = $this->user->currentTeam?->id;
+        $parser->parse($job->getConnectionName(), $this->filePath, $slug, true, $team_id);
         // with(new GedcomParser())->parse($tenant->connectionName(), $this->filePath, $slug, true);
 
         // File::delete($this->filePath);
 
         $job->update(['status' => 'complete']);
+
+        // Clear application caches so new records are visible immediately
+        try {
+            \Artisan::call('cache:clear');
+            \Artisan::call('view:clear');
+            \Artisan::call('config:clear');
+        } catch (\Throwable $e) {
+            // swallow cache clear errors
+        }
 
         // $tenant->disconnect();
 

@@ -41,9 +41,17 @@ class DnaMatchingResource extends Resource
 
     protected static ?string $navigationLabel = 'DNA Matches';
 
-    protected static string | \UnitEnum | null $navigationGroup = 'DNA Analysis';
+    protected static string | \UnitEnum | null $navigationGroup = '🧬 DNA & Genetics';
 
     protected static ?int $navigationSort = 2;
+
+    public static function shouldRegisterNavigation(): bool
+    {
+        if (config('premium.enabled')) {
+            return true;
+        }
+        return auth()->user()?->isPremium() ?? false;
+    }
 
        public static function form(Schema $schema): Schema
        {

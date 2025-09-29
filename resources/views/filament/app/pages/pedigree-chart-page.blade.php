@@ -4,7 +4,7 @@
             <div class="mb-4">
                 <h2 class="text-lg font-semibold text-gray-900">Pedigree Chart Visualization</h2>
                 <p class="text-sm text-gray-600 mt-1">
-                    Explore your direct ancestors in a traditional pedigree format. Each generation shows your parents, 
+                    Explore your direct ancestors in a traditional pedigree format. Each generation shows your parents,
                     grandparents, great-grandparents, and beyond in a clear hierarchical layout.
                 </p>
             </div>

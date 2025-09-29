@@ -24,11 +24,18 @@ class PremiumDashboardPage extends Page
 
     protected static ?string $title = 'Premium Dashboard';
 
+    protected static ?string $slug = 'premium-dashboard';
+
     public function mount(): void
     {
+        // Disable if premium feature is off
+        if (! config('premium.enabled')) {
+            $this->redirect(Filament::getUrl());
+            return;
+        }
         // Redirect if user is not premium
         if (!Auth::user()->isPremium()) {
-            $this->redirect(Filament::getUrl() . '/subscription');
+            $this->redirect(route('filament.app.pages.subscription'));
         }
     }
 

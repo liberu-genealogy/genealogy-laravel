@@ -30,7 +30,7 @@ class FamilyResource extends Resource
 
     protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-home';
     protected static ?string $navigationLabel = 'Families';
-    protected static string | \UnitEnum | null $navigationGroup = 'Family Tree';
+    protected static string | \UnitEnum | null $navigationGroup = '👥 Family Tree';
     protected static ?int $navigationSort = 2;
 
     #[Override]

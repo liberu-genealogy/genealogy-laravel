@@ -158,6 +158,11 @@ class User extends Authenticatable implements HasDefaultTenant, HasTenants, Fila
      */
     public function isPremium(): bool
     {
+        // If premium features are globally enabled, treat all users as premium
+        if (config('premium.enabled')) {
+            return true;
+        }
+
         // Consider either an active Stripe subscription or a generic user trial
         return $this->is_premium && ($this->subscribed('premium') || $this->onTrial());
     }
@@ -188,6 +193,11 @@ class User extends Authenticatable implements HasDefaultTenant, HasTenants, Fila
      */
     public function canUploadDna(): bool
     {
+        // When premium features are enabled, allow unlimited uploads for all users
+        if (config('premium.enabled')) {
+            return true;
+        }
+
         if ($this->isPremium()) {
             return true; // Unlimited for premium users
         }

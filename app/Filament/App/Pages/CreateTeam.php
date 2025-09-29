@@ -7,7 +7,6 @@ use App\Models\User;
 use Filament\Facades\Filament;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Checkbox;
-use Filament\Forms\Form;
 use Filament\Pages\Tenancy\RegisterTenant;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
@@ -31,17 +30,17 @@ class CreateTeam extends RegisterTenant
                     ->helperText('14-day free trial, then $9.99/month'),
             ]);
     }
-    
+
     #[Override]
     protected function handleRegistration(array $data): Model
     {
         $team = app(\App\Actions\Jetstream\CreateTeam::class)->create(auth()->user(), $data);
-    
+
         if ($data['premium_membership']) {
             $subscriptionService = app(SubscriptionService::class);
             $subscriptionService->createTrialSubscription($team);
         }
-    
+
         return $team;
     }
 

@@ -15,7 +15,7 @@ class TwoFactorAuthenticationPage extends Page
 
     protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-key';
 
-    protected static string | \UnitEnum | null $navigationGroup = 'Account';
+    protected static string | \UnitEnum | null $navigationGroup = '👤 Account & Settings';
 
     protected static ?int $navigationSort = 4;
 
