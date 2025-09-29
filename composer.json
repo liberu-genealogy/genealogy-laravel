@@ -12,6 +12,7 @@
         "php": "^8.4",
         "bezhansalleh/filament-shield": "^4.0",
         "filament/filament": "^4.0",
+        "filament/spatie-laravel-settings-plugin": "^4.0",
         "guzzlehttp/guzzle": "^7.8",
         "laravel/cashier": "^16.0",
         "laravel/framework": "^12",
@@ -21,7 +22,6 @@
         "liberu-genealogy/laravel-dna": "^2.0",
         "liberu-genealogy/laravel-gedcom": "^7.0",
         "livewire/livewire": "^3.5",
-        "raza9798/siteconfig": "^3.2",
         "spatie/laravel-menu": "^4.0",
         "spatie/laravel-permission": "*"
     },
