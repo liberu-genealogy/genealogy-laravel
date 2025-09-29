@@ -51,7 +51,7 @@ class AppPanelProvider extends PanelProvider
                 'primary' => Color::Emerald,
                 'gray' => Color::Slate,
             ])
-            ->brandName('Liberu Genealogy')
+            ->brandName(fn () => app(\App\Settings\GeneralSettings::class)->site_name)
             ->brandLogo(asset('images/logo.svg'))
             ->favicon(asset('images/favicon.ico'))
       /**      ->navigationGroups([

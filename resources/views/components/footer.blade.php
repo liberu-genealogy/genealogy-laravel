@@ -1,3 +1,6 @@
+@php
+    $settings = app(\App\Settings\GeneralSettings::class);
+@endphp
 <footer class="mt-auto pb-5 pt-3">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between items-center flex-wrap">
@@ -11,11 +14,11 @@
             </nav>
             <div class="flex items-center flex-wrap w-full lg:w-auto order-2 lg:order-1 lg:pt-3">
                 <div class="mr-6">
-                    <a href="/" class="text-lg font-semibold">{{ config('app.name') }}</a>
+                    <a href="/" class="text-lg font-semibold">{{ $settings->site_name }}</a>
                 </div>
 
                 <div>
-                    <p>&copy; {{ date('Y') }} {{ config('app.name') }}. All rights reserved.</p>
+                    <p>{{ $settings->footer_copyright }}</p>
                 </div>
             </div>
 
