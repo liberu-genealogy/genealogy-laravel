@@ -31,7 +31,7 @@ class PersonAliaResource extends Resource
 
     protected static ?string $navigationLabel = 'Person Alia';
 
-    protected static string | \UnitEnum | null $navigationGroup = '\ud83d\udc65 Family Tree';
+    protected static string | \UnitEnum | null $navigationGroup = '👥 Family Tree';
 
     #[Override]
     public static function form(Schema $schema): Schema
