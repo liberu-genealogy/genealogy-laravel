@@ -25,10 +25,10 @@ class DevillierReport extends Component implements HasForms, HasActions
         $this->form->fill();
     }
 
-    public function form(Schema $form): Schema
+    public function form(Schema $schema): Schema
     {
-        return $form
-            ->schema([
+        return $schema
+            ->components([
                 Select::make('person')
                     ->hiddenLabel()
                     ->options(Person::all()->pluck('name', 'id'))

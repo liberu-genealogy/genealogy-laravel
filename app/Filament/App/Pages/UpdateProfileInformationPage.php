@@ -38,7 +38,7 @@ class UpdateProfileInformationPage extends Page
     public function form(Schema $schema): Schema
     {
         return $schema
-            ->schema([
+            ->components([
                 TextInput::make('name')
                     ->label('Name')
                     ->required(),

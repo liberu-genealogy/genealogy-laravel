@@ -2,6 +2,8 @@
 
 namespace App\Jobs;
 
+use Artisan;
+use Throwable;
 use Exception;
 use App\Models\ImportJob;
 use App\Models\User;
@@ -59,10 +61,10 @@ class ImportGedcom implements ShouldQueue
 
         // Clear application caches so new records are visible immediately
         try {
-            \Artisan::call('cache:clear');
-            \Artisan::call('view:clear');
-            \Artisan::call('config:clear');
-        } catch (\Throwable $e) {
+            Artisan::call('cache:clear');
+            Artisan::call('view:clear');
+            Artisan::call('config:clear');
+        } catch (Throwable $e) {
             // swallow cache clear errors
         }
 

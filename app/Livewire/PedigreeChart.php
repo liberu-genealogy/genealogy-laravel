@@ -2,6 +2,7 @@
 
 namespace App\Livewire;
 
+use Throwable;
 use App\Models\Person;
 use Illuminate\Contracts\View\View;
 use Livewire\Component;
@@ -172,7 +173,7 @@ class PedigreeChart extends Component
     {
         try {
             return PersonResource::getUrl('edit', ['record' => $id]);
-        } catch (\Throwable $e) {
+        } catch (Throwable $e) {
             return url('/');
         }
     }
