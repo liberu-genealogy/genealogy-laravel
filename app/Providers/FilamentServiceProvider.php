@@ -7,6 +7,7 @@ use App\Livewire\DescendantChartComponent;
 use App\Livewire\HenryReport;
 use App\Livewire\PedigreeChart;
 use App\Livewire\PeopleSearch;
+use App\Http\Livewire\TimelineComponent; // <- add this import
 use Filament\Panel;
 use Illuminate\Support\ServiceProvider;
 
@@ -21,6 +22,8 @@ class FilamentServiceProvider extends ServiceProvider
         Panel::registerLivewireComponent('devilliers-report', DabovilleReport::class);
         Panel::registerLivewireComponent('people-search', PeopleSearch::class);
         Panel::registerLivewireComponent('pedigree-chart', PedigreeChart::class);
-        // Register the DescendantChartComponent
+
+        // Register the timeline component (Filament v4)
+        Panel::registerLivewireComponent('timeline', TimelineComponent::class);
     }
 }
