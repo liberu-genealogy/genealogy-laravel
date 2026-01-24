@@ -36,4 +36,10 @@ Route::middleware([
 ])->group(function (): void {
     Route::get('/dashboard', fn() => view('dashboard'))->name('dashboard');
     Route::get('/gamification', \App\Http\Livewire\GamificationDashboard::class)->name('gamification');
+
+    
 });
+
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::post('/ai/matches/{suggestion}/confirm', [AIMatchController::class, 'confirm'])->name('ai.matches.confirm');
+    Route::post('/ai/matches/{suggestion}/reject', [AIMatchController::class, 'reject'])->name('ai.matches.reject');
