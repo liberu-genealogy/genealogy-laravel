@@ -4,6 +4,8 @@ namespace App\Modules\Person\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use App\Modules\Person\Services\PersonService;
+use App\Services\DuplicateDetectionService;
+use App\Services\PersonMergeService;
 
 class PersonServiceProvider extends ServiceProvider
 {
@@ -15,6 +17,15 @@ class PersonServiceProvider extends ServiceProvider
         // Register person service
         $this->app->singleton(PersonService::class, function ($app) {
             return new PersonService();
+        });
+
+        // Duplicate detection + merge services
+        $this->app->singleton(DuplicateDetectionService::class, function ($app) {
+            return new DuplicateDetectionService();
+        });
+
+        $this->app->singleton(PersonMergeService::class, function ($app) {
+            return new PersonMergeService();
         });
 
         // Register person configuration
