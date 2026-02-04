@@ -9,10 +9,10 @@
     ],
     "license": "MIT",
     "require": {
-        "php": "^8.4",
+        "php": "^8.5",
         "bezhansalleh/filament-shield": "^4.0",
-        "filament/filament": "^4.0",
-        "filament/spatie-laravel-settings-plugin": "^4.0",
+        "filament/filament": "^5.1",
+        "filament/spatie-laravel-settings-plugin": "^5.0",
         "guzzlehttp/guzzle": "^7.8",
         "laravel/cashier": "^16.0",
         "laravel/framework": "^12",
@@ -21,7 +21,7 @@
         "laravel/tinker": "^2.10.1",
         "liberu-genealogy/laravel-dna": "^2.0",
         "liberu-genealogy/laravel-gedcom": "^7.0",
-        "livewire/livewire": "^3.5",
+        "livewire/livewire": "^4.0",
         "spatie/laravel-menu": "^4.0",
         "spatie/laravel-permission": "*"
     },
