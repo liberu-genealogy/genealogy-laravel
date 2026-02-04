@@ -85,6 +85,7 @@ class PedigreeChart extends Component
             'sex' => $person->sex,
             'birth' => optional($person->birthday)?->format('Y-m-d'),
             'death' => optional($person->deathday)?->format('Y-m-d'),
+            'image' => method_exists($person, 'profileImageUrl') ? $person->profileImageUrl() : asset('images/default-avatar.svg'),
             'father' => null,
             'mother' => null,
         ];
@@ -122,8 +123,12 @@ class PedigreeChart extends Component
         }
 
         $name = htmlspecialchars($node['name'] ?? 'Unknown', ENT_QUOTES, 'UTF-8');
+        $imageSrc = htmlspecialchars($node['image'] ?? asset('images/default-avatar.svg'), ENT_QUOTES, 'UTF-8');
+        $imageAlt = htmlspecialchars($node['name'] ?? 'Person', ENT_QUOTES, 'UTF-8');
         $editUrl = htmlspecialchars($this->personEditUrl($node['id']), ENT_QUOTES, 'UTF-8');
+        // include thumbnail image in person box
         $personHtml = "<div class=\"person-box {$sexClass}\" onclick=\"expandPerson({$node['id']})\">".
+            "<div class=\"person-thumb\"><img src=\"{$imageSrc}\" alt=\"{$imageAlt}\" loading=\"lazy\"/></div>".
             "<div class=\"person-name\"><a href=\"{$editUrl}\" class=\"hover:underline\" target=\"_blank\" rel=\"noopener\">{$name}</a></div>".
             $datesHtml.
             "<button class=\"expand-btn\" title=\"Set as root\" onclick=\"event.stopPropagation(); expandPerson({$node['id']});\">+</button>".

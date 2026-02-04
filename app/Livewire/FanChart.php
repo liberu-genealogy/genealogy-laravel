@@ -60,6 +60,8 @@ class FanChart extends Widget
             'generation' => $generation,
             'children' => []
         ];
+        // include image URL when available
+        $personData['image'] = method_exists($person, 'profileImageUrl') ? $person->profileImageUrl() : asset('images/default-avatar.svg');
 
         // For fan chart, we build ancestors (parents) not descendants
         if ($person->childInFamily && $generation < $maxGenerations - 1) {

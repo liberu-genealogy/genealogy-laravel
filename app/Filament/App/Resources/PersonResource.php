@@ -24,6 +24,8 @@ use Filament\Schemas\Schema;
 use Filament\Tables;
 use Filament\Actions;
 use Filament\Tables\Table;
+use Filament\Forms\Components\FileUpload;
+use Filament\Tables\Columns\ImageColumn;
 
 class PersonResource extends Resource
 {
@@ -61,6 +63,11 @@ class PersonResource extends Resource
                 TextInput::make('phone')->label('Phone'),
                 DateTimePicker::make('birthday')->label('Birthday'),
                 DateTimePicker::make('deathday')->label('Deathday'),
+                FileUpload::make('photo_url')
+                    ->image()
+                    ->label('Profile Photo')
+                    ->directory('persons')
+                    ->disk('public'),
                 DateTimePicker::make('burial_day')->label('Burial Day'),
                 TextInput::make('bank')->label('Bank'),
                 TextInput::make('bank_account')->label('Bank Account'),
@@ -89,6 +96,7 @@ class PersonResource extends Resource
                 TextColumn::make('phone')->label('Phone'),
                 TextColumn::make('birthday')->label('Birthday'),
                 TextColumn::make('deathday')->label('Deathday'),
+                ImageColumn::make('photo_url')->label('Photo')->disk('public')->height(40)->width(40),
                 TextColumn::make('burial_day')->label('Burial Day'),
                 TextColumn::make('bank')->label('Bank'),
                 TextColumn::make('bank_account')->label('Bank Account'),

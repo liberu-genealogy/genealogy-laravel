@@ -48,6 +48,8 @@ final class DescendantChartComponent extends Component
             'sex' => $person->sex,
             'birth_date' => $person->birthday?->format('Y-m-d'),
             'death_date' => $person->deathday?->format('Y-m-d'),
+            // include a safe image URL for use in charts (uses Person::profileImageUrl)
+            'image' => method_exists($person, 'profileImageUrl') ? $person->profileImageUrl() : asset('images/default-avatar.svg'),
             'generation' => $generation,
             'children' => []
         ];
@@ -80,14 +82,24 @@ final class DescendantChartComponent extends Component
     public function setRootPerson(int $personId): void
     {
         $this->rootPersonId = $personId;
-        $this->mount($personId);
+        // reload data without remounting component lifecycle
+        $this->descendantsData = [];
+        if ($this->rootPersonId) {
+            $rootPerson = Person::find($this->rootPersonId);
+            $this->descendantsData = $this->buildDescendantTree($rootPerson, $this->generations);
+        }
         $this->emit('descendant-chart-updated');
     }
 
     public function setGenerations(int $generations): void
     {
         $this->generations = max(1, min(10, $generations));
-        $this->mount($this->rootPersonId);
+        // rebuild tree with new generation settings
+        $this->descendantsData = [];
+        if ($this->rootPersonId) {
+            $rootPerson = Person::find($this->rootPersonId);
+            $this->descendantsData = $this->buildDescendantTree($rootPerson, $this->generations);
+        }
         $this->emit('descendant-chart-updated');
     }
 

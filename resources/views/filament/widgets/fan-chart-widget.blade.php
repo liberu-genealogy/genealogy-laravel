@@ -57,6 +57,30 @@
 
     @push('styles')
         <style>
+            /* Thumbnail and tooltip styles */
+            .fan-tooltip img {
+                width: 48px;
+                height: 48px;
+                object-fit: cover;
+                border-radius: 6px;
+                margin-right: 8px;
+                vertical-align: middle;
+            }
+
+            .person-thumb img {
+                width: 40px;
+                height: 40px;
+                object-fit: cover;
+                border-radius: 6px;
+                display: inline-block;
+                margin-right: 8px;
+            }
+
+            .fan-tooltip .tooltip-content {
+                display: flex;
+                align-items: center;
+            }
+
             .fan-chart-container {
                 position: relative;
                 min-height: 600px;
@@ -159,11 +183,11 @@
                 .fan-chart-container {
                     min-height: 400px;
                 }
-                
+
                 .fan-chart-wrapper {
                     height: 400px;
                 }
-                
+
                 .fan-chart-header .flex {
                     flex-direction: column;
                     gap: 2;
@@ -181,7 +205,7 @@
 
             document.addEventListener('livewire:init', () => {
                 initializeFanChart();
-                
+
                 Livewire.on('refreshFanChart', () => {
                     setTimeout(() => {
                         initializeFanChart();
@@ -241,7 +265,7 @@
 
                 // Convert data to hierarchical structure
                 const root = d3.hierarchy(data);
-                
+
                 // Create partition layout
                 const partition = d3.partition()
                     .size([2 * Math.PI, radius]);
@@ -319,7 +343,7 @@
                             const birthYear = d.data.birth_year || '?';
                             const deathYear = d.data.death_year || '';
                             const dateText = `${birthYear}${deathYear ? '-' + deathYear : ''}`;
-                            
+
                             textGroup.append("text")
                                 .attr("class", "fan-text dates")
                                 .attr("text-anchor", "middle")
@@ -332,7 +356,7 @@
 
             function getSegmentClass(d, config) {
                 let className = '';
-                
+
                 switch (config.colorScheme) {
                     case 'generation':
                         className = `generation-${d.depth}`;
@@ -356,7 +380,7 @@
                         }
                         break;
                 }
-                
+
                 return className;
             }
 
@@ -372,12 +396,22 @@
                     .style("pointer-events", "none")
                     .style("z-index", "1000");
 
-                let content = `<strong>${d.data.name || 'Unknown'}</strong>`;
+                // Build tooltip HTML with optional thumbnail
+                const imageSrc = d.data.image || null;
+                let content = '';
+                if (imageSrc) {
+                    content += `<div class="tooltip-content"><img src="${imageSrc}" alt="${(d.data.name||'Person')}">`;
+                } else {
+                    content += `<div class="tooltip-content">`;
+                }
+
+                content += `<div><strong>${d.data.name || 'Unknown'}</strong>`;
                 if (d.data.birth_year || d.data.death_year) {
                     content += `<br>${d.data.birth_year || '?'} - ${d.data.death_year || ''}`;
                 }
                 content += `<br>Generation: ${d.depth}`;
                 content += `<br>Click to expand`;
+                content += `</div></div>`;
 
                 tooltip.html(content)
                     .style("left", (event.pageX + 10) + "px")
@@ -415,3 +449,4 @@
         </script>
     @endpush
 </x-filament::widget>
+

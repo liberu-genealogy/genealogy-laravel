@@ -28,6 +28,7 @@ class Person extends Model
         'appellative',
         'email',
         'phone',
+        'photo_url',
         'birthday',
         'deathday',
         'burial_day',
@@ -208,6 +209,45 @@ class Person extends Model
     public static function getBasicInfoCached($id)
     {
         return cache()->remember("person_basic_info_{$id}", now()->addHours(1), fn() => self::withBasicInfo()->find($id));
+    }
+
+    /**
+     * Return the best-guess profile image URL for a person.
+     * Tries multiple non-destructive locations and returns a default when none found.
+     */
+    public function profileImageUrl(): string
+    {
+        // 1) Prefer an explicit attribute if present (e.g. photo_url or image)
+        if (!empty($this->photo_url)) {
+            return $this->photo_url;
+        }
+        if (!empty($this->image)) {
+            return $this->image;
+        }
+
+        // 2) Look for files in the public storage under predictable paths
+        try {
+            $disk = \Illuminate\Support\Facades\Storage::disk('public');
+            $candidates = [
+                "persons/{$this->id}.jpg",
+                "persons/{$this->id}.jpeg",
+                "persons/{$this->id}.png",
+                "persons/{$this->id}.webp",
+                "photos/{$this->id}.jpg",
+                "photos/{$this->id}.png",
+            ];
+
+            foreach ($candidates as $path) {
+                if ($disk->exists($path)) {
+                    return $disk->url($path);
+                }
+            }
+        } catch (\Exception $e) {
+            // ignore storage errors and continue to fallback
+        }
+
+        // 3) Fallback to a bundled public asset (keeps UI consistent)
+        return asset('images/default-avatar.svg');
     }
 
     /**
