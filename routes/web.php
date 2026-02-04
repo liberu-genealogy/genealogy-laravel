@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\TeamInvitationController;
+use App\Http\Controllers\ContactController;
+use App\Http\Controllers\AIMatchController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -27,7 +29,7 @@ Route::get('/terms-and-conditions', fn() => view('pages.termsandconditions'))->n
 Route::get('/about', fn() => view('pages.aboutus'))->name('about');
 
 Route::get('/contact', fn() => view('contact'));
-Route::post('/contact/send', 'App\Http\Controllers\ContactController@sendEmail');
+Route::post('/contact/send', [ContactController::class, 'sendEmail'])->name('contact.send');
 
 Route::middleware([
     'auth:sanctum',
@@ -36,10 +38,9 @@ Route::middleware([
 ])->group(function (): void {
     Route::get('/dashboard', fn() => view('dashboard'))->name('dashboard');
     Route::get('/gamification', \App\Http\Livewire\GamificationDashboard::class)->name('gamification');
-
-    
 });
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('/ai/matches/{suggestion}/confirm', [AIMatchController::class, 'confirm'])->name('ai.matches.confirm');
     Route::post('/ai/matches/{suggestion}/reject', [AIMatchController::class, 'reject'])->name('ai.matches.reject');
+});
