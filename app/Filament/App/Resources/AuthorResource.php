@@ -2,26 +2,19 @@
 
 namespace App\Filament\App\Resources;
 
-use Override;
+use Filament\Schemas\Schema;
 use Filament\Forms\Components\TextInput;
+use Filament\Resources\Resource;
+use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
-use Filament\Actions\EditAction;
-use Filament\Actions\BulkActionGroup;
-use Filament\Actions\DeleteBulkAction;
 use App\Filament\App\Resources\AuthorResource\Pages\ListAuthors;
 use App\Filament\App\Resources\AuthorResource\Pages\CreateAuthor;
 use App\Filament\App\Resources\AuthorResource\Pages\EditAuthor;
-use BackedEnum;
-use UnitEnum;
-use App\Filament\App\Resources\AuthorResource\Pages;
 use App\Models\Author;
 use Filament\Forms;
-use Filament\Forms\Form;
-use Filament\Resources\Resource;
-use Filament\Schemas\Schema;
-use Filament\Tables;
-use Filament\Actions;
-use Filament\Tables\Table;
+use Filament\Actions\EditAction;
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteBulkAction;
 
 class AuthorResource extends Resource
 {
@@ -33,7 +26,6 @@ class AuthorResource extends Resource
 
     protected static string | \UnitEnum | null $navigationGroup = '🔍 Research & Analysis';
 
-    #[Override]
     public static function form(Schema $schema): Schema
     {
         return $schema

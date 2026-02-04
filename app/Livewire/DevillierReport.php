@@ -9,8 +9,7 @@ use Filament\Actions\Contracts\HasActions;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
-use Filament\Forms\Form;
-use Filament\Schemas\Schema;
+use Filament\Forms\Schema;
 use Livewire\Component;
 
 class DevillierReport extends Component implements HasForms, HasActions
@@ -25,7 +24,7 @@ class DevillierReport extends Component implements HasForms, HasActions
         $this->form->fill();
     }
 
-    public function form(Schema $schema): Schema
+    public function form(\Filament\Schemas\Schema $schema): \Filament\Schemas\Schema
     {
         return $schema
             ->components([

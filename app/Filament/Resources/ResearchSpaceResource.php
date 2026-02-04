@@ -2,25 +2,27 @@
 
 namespace App\Filament\Resources;
 
+use Filament\Schemas\Schema;
+use Filament\Tables\Table;
+use App\Filament\Resources\ResearchSpaceResource\Pages\ListResearchSpaces;
+use App\Filament\Resources\ResearchSpaceResource\Pages\CreateResearchSpace;
+use App\Filament\Resources\ResearchSpaceResource\Pages\EditResearchSpace;
 use App\Filament\Resources\ResearchSpaceResource\Pages;
 use App\Models\ResearchSpace;
-use Filament\Schemas\Schema;
-use Filament\Schemas\Components\Section;
-use Filament\Schemas\Components\Grid;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\Toggle;
-use Filament\Tables\Table;
-use Filament\Tables\Columns\TextColumn;
 use Filament\Resources\Resource;
+use Filament\Tables;
+use Filament\Tables\Columns\TextColumn;
 
 class ResearchSpaceResource extends Resource
 {
     protected static ?string $model = ResearchSpace::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-users';
+    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-users';
 
-    protected static ?string $navigationGroup = 'Collaboration';
+    protected static string | \UnitEnum | null $navigationGroup = 'Collaboration';
 
     protected static ?string $navigationLabel = 'Research Spaces';
 
@@ -28,23 +30,17 @@ class ResearchSpaceResource extends Resource
     {
         return $schema
             ->components([
-                Section::make('Details')
-                    ->schema([
-                        Grid::make(1)
-                            ->schema([
-                                TextInput::make('name')
-                                    ->required()
-                                    ->maxLength(255),
-                                TextInput::make('slug')
-                                    ->required()
-                                    ->maxLength(255),
-                                Textarea::make('description')
-                                    ->rows(4),
-                                Toggle::make('is_private')
-                                    ->label('Private')
-                                    ->default(true),
-                            ]),
-                    ]),
+                TextInput::make('name')
+                    ->required()
+                    ->maxLength(255),
+                TextInput::make('slug')
+                    ->required()
+                    ->maxLength(255),
+                Textarea::make('description')
+                    ->rows(4),
+                Toggle::make('is_private')
+                    ->label('Private')
+                    ->default(true),
             ]);
     }
 
@@ -63,9 +59,9 @@ class ResearchSpaceResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListResearchSpaces::route('/'),
-            'create' => Pages\CreateResearchSpace::route('/create'),
-            'edit' => Pages\EditResearchSpace::route('/{record}/edit'),
+            'index' => ListResearchSpaces::route('/'),
+            'create' => CreateResearchSpace::route('/create'),
+            'edit' => EditResearchSpace::route('/{record}/edit'),
         ];
     }
 }

@@ -2,6 +2,8 @@
 
 namespace App\Services\RecordMatcher\Providers;
 
+use App\Models\Person;
+
 interface ExternalRecordProviderInterface
 {
     /**
@@ -20,7 +22,7 @@ interface ExternalRecordProviderInterface
      *   ...
      * ]
      *
-     * @param \App\Models\Person|int $localPerson
+     * @param Person|int $localPerson
      * @return array
      */
     public function search($localPerson): array;

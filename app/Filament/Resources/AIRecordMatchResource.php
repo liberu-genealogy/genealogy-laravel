@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources;
 
+use Filament\Actions\Action;
 use App\Filament\Resources\AIRecordMatchResource\Pages\ReviewMatches;
 use App\Models\AISuggestedMatch;
 use Filament\Resources\Resource;
@@ -13,7 +14,7 @@ class AIRecordMatchResource extends Resource
 {
     protected static ?string $model = AISuggestedMatch::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-switch-horizontal';
+    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-switch-horizontal';
 
     public static function table(Table $table): Table
     {
@@ -31,10 +32,10 @@ class AIRecordMatchResource extends Resource
                 //
             ])
             ->actions([
-                Tables\Actions\Action::make('confirm')
+                Action::make('confirm')
                     ->label('Confirm')
                     ->action(fn (AISuggestedMatch $record) => redirect()->route('filament.resources.ai-record-matches.review.confirm', ['record' => $record->id])),
-                Tables\Actions\Action::make('reject')
+                Action::make('reject')
                     ->label('Reject')
                     ->action(fn (AISuggestedMatch $record) => redirect()->route('filament.resources.ai-record-matches.review.reject', ['record' => $record->id])),
             ]);

@@ -2,6 +2,7 @@
 
 namespace App\Services\RecordMatcher;
 
+use App\Models\Person;
 use App\Models\AIMatchModel;
 use App\Models\AISuggestedMatch;
 use Illuminate\Support\Str;
@@ -30,14 +31,14 @@ class RecordMatcherService
     /**
      * Predict matches for a local person given a set of external candidates.
      *
-     * @param \App\Models\Person|int $localPerson
+     * @param Person|int $localPerson
      * @param array $candidates
      * @return array array of ['candidate' => array, 'score' => float]
      */
     public function scoreCandidates($localPerson, array $candidates): array
     {
         // Normalize local person record
-        $person = is_int($localPerson) ? \App\Models\Person::find($localPerson) : $localPerson;
+        $person = is_int($localPerson) ? Person::find($localPerson) : $localPerson;
         if (! $person) {
             return [];
         }
@@ -131,7 +132,7 @@ class RecordMatcherService
      * @param string $provider
      * @param array $candidate
      * @param float $confidence
-     * @return \App\Models\AISuggestedMatch
+     * @return AISuggestedMatch
      */
     public function persistSuggestion(int $localPersonId, string $provider, array $candidate, float $confidence): AISuggestedMatch
     {
@@ -152,7 +153,7 @@ class RecordMatcherService
     /**
      * Update model weights based on feedback (simple incremental algorithm).
      *
-     * @param \App\Models\AISuggestedMatch $suggestedMatch
+     * @param AISuggestedMatch $suggestedMatch
      * @param string $action 'confirm'|'reject'
      * @return void
      */
@@ -164,7 +165,7 @@ class RecordMatcherService
         $delta = $action === 'confirm' ? 0.02 : -0.03;
 
         $candidate = $suggestedMatch->candidate_data;
-        $local = \App\Models\Person::find($suggestedMatch->local_person_id);
+        $local = Person::find($suggestedMatch->local_person_id);
         if (!$local || !$candidate) {
             return;
         }

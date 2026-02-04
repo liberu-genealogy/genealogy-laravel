@@ -2,6 +2,9 @@
 
 namespace App\Modules\Person\Filament\Resources;
 
+use Filament\Actions\Action;
+use Filament\Actions\BulkAction;
+use App\Modules\Person\Filament\Resources\DuplicateMatchResource\Pages\ListDuplicateMatches;
 use App\Models\DuplicateMatch;
 use App\Services\PersonMergeService;
 use App\Models\Person;
@@ -9,8 +12,6 @@ use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Resources\Table;
 use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Actions\Action;
-use Filament\Tables\Actions\BulkAction;
 use Filament\Tables\Filters\SelectFilter;
 use Illuminate\Database\Eloquent\Builder;
 
@@ -19,8 +20,8 @@ class DuplicateMatchResource extends Resource
     protected static ?string $model = DuplicateMatch::class;
 
     protected static ?string $navigationLabel = 'Duplicate Suggestions';
-    protected static ?string $navigationGroup = 'Genealogy';
-    protected static ?string $navigationIcon = 'heroicon-o-identification';
+    protected static string | \UnitEnum | null $navigationGroup = 'Genealogy';
+    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-identification';
 
     public static function table(Table $table): Table
     {
@@ -134,7 +135,7 @@ class DuplicateMatchResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => \App\Modules\Person\Filament\Resources\DuplicateMatchResource\Pages\ListDuplicateMatches::route('/'),
+            'index' => ListDuplicateMatches::route('/'),
         ];
     }
 }

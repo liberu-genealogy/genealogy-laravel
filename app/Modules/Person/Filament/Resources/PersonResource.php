@@ -2,8 +2,13 @@
 
 namespace App\Modules\Person\Filament\Resources;
 
+use Filament\Schemas\Schema;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Components\Grid;
+use Filament\Actions\EditAction;
+use Filament\Actions\DeleteAction;
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteBulkAction;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
@@ -13,17 +18,12 @@ use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Filters\TernaryFilter;
 use Filament\Tables\Filters\Filter;
-use Filament\Actions\EditAction;
-use Filament\Actions\DeleteAction;
-use Filament\Actions\BulkActionGroup;
-use Filament\Actions\DeleteBulkAction;
 use App\Modules\Person\Filament\Resources\PersonResource\Pages\ListPersons;
 use App\Modules\Person\Filament\Resources\PersonResource\Pages\CreatePerson;
 use App\Modules\Person\Filament\Resources\PersonResource\Pages\EditPerson;
 use App\Models\Person;
 use App\Models\Family;
 use Filament\Forms;
-use Filament\Schemas\Schema;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;

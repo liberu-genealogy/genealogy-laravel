@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\AIRecordMatchResource\Pages;
 
+use Filament\Actions\Action;
 use App\Filament\Resources\AIRecordMatchResource;
 use App\Models\AISuggestedMatch;
 use Filament\Pages\Actions;
@@ -15,14 +16,14 @@ class ReviewMatches extends ListRecords
     protected function getTableActions(): array
     {
         return [
-            Actions\Action::make('confirm')
+            Action::make('confirm')
                 ->label('Confirm')
                 ->action(function (AISuggestedMatch $record) {
                     // call controller endpoint
                     Http::post(route('ai.matches.confirm', ['suggestion' => $record->id]));
                     $this->notify('success', 'Confirmed');
                 }),
-            Actions\Action::make('reject')
+            Action::make('reject')
                 ->label('Reject')
                 ->action(function (AISuggestedMatch $record) {
                     Http::post(route('ai.matches.reject', ['suggestion' => $record->id]));

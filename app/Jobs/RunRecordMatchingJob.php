@@ -2,6 +2,7 @@
 
 namespace App\Jobs;
 
+use ReflectionClass;
 use App\Models\Person;
 use App\Services\RecordMatcher\Providers\ExampleProvider;
 use App\Services\RecordMatcher\RecordMatcherService;
@@ -38,7 +39,7 @@ class RunRecordMatchingJob implements ShouldQueue
                     $score = $entry['score'];
                     // Only persist suggestions above a threshold (e.g., 0.45)
                     if ($score >= config('ai_record_match.min_confidence', 0.45)) {
-                        $matcher->persistSuggestion($person->id, (new \ReflectionClass($provider))->getShortName(), $candidate, $score);
+                        $matcher->persistSuggestion($person->id, (new ReflectionClass($provider))->getShortName(), $candidate, $score);
                     }
                 }
             }

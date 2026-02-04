@@ -2,6 +2,17 @@
 
 namespace App\Services;
 
+use App\Models\PersonEvent;
+use App\Models\PersonName;
+use App\Models\PersonAlia;
+use App\Models\PersonLds;
+use App\Models\PersonSubm;
+use App\Models\VirtualEventAttendee;
+use App\Models\PersonAnci;
+use App\Models\PersonAsso;
+use App\Models\PersonNameFone;
+use App\Models\Family;
+use Exception;
 use App\Models\Person;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Arr;
@@ -15,7 +26,7 @@ class PersonMergeService
      * This is conservative: it prefers existing primary fields, and only copies fields
      * when primary is empty. All related records will be reassigned to primary where safe.
      *
-     * @throws \Exception
+     * @throws Exception
      */
     public function merge(Person $primary, Person $duplicate): Person
     {
@@ -48,15 +59,15 @@ class PersonMergeService
 
             // Reassign related models that have person_id
             $modelsWithPersonId = [
-                \App\Models\PersonEvent::class,
-                \App\Models\PersonName::class,
-                \App\Models\PersonAlia::class,
-                \App\Models\PersonLds::class,
-                \App\Models\PersonSubm::class,
-                \App\Models\VirtualEventAttendee::class,
-                \App\Models\PersonAnci::class,
-                \App\Models\PersonAsso::class,
-                \App\Models\PersonNameFone::class,
+                PersonEvent::class,
+                PersonName::class,
+                PersonAlia::class,
+                PersonLds::class,
+                PersonSubm::class,
+                VirtualEventAttendee::class,
+                PersonAnci::class,
+                PersonAsso::class,
+                PersonNameFone::class,
             ];
 
             foreach ($modelsWithPersonId as $model) {
@@ -66,15 +77,15 @@ class PersonMergeService
             }
 
             // Families: if duplicate is husband/wife/child, reassign references to primary
-            if (class_exists(\App\Models\Family::class)) {
+            if (class_exists(Family::class)) {
                 // husband_id
-                \App\Models\Family::where('husband_id', $duplicateId)->update(['husband_id' => $primaryId]);
+                Family::where('husband_id', $duplicateId)->update(['husband_id' => $primaryId]);
                 // wife_id
-                \App\Models\Family::where('wife_id', $duplicateId)->update(['wife_id' => $primaryId]);
+                Family::where('wife_id', $duplicateId)->update(['wife_id' => $primaryId]);
             }
 
             // If duplicate was child_in_family in a family, update that relation
-            \App\Models\Person::where('child_in_family_id', $duplicateId)->update(['child_in_family_id' => $primaryId]);
+            Person::where('child_in_family_id', $duplicateId)->update(['child_in_family_id' => $primaryId]);
 
             // Move tree positions if missing
             if (empty($primary->tree_position_x) && !empty($duplicate->tree_position_x)) {

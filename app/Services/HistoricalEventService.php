@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use DateTimeInterface;
 use App\Models\HistoricalEvent;
 use App\Models\Person;
 use Carbon\Carbon;
@@ -12,10 +13,10 @@ class HistoricalEventService
     /**
      * Fetch historical events within a date range and optionally by country.
      *
-     * @param  string|\DateTimeInterface  $start
-     * @param  string|\DateTimeInterface  $end
+     * @param string|DateTimeInterface $start
+     * @param string|DateTimeInterface $end
      * @param  string|null  $country
-     * @return \Illuminate\Support\Collection
+     * @return Collection
      */
     public function fetchForPeriod($start, $end, ?string $country = null): Collection
     {
@@ -35,7 +36,7 @@ class HistoricalEventService
      *
      * @param  Person  $person
      * @param  int  $bufferYears
-     * @return \Illuminate\Support\Collection
+     * @return Collection
      */
     public function fetchForPerson(Person $person, int $bufferYears = 5): Collection
     {

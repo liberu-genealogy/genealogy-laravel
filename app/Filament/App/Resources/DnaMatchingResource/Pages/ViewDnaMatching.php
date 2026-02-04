@@ -2,9 +2,8 @@
 
 namespace App\Filament\App\Resources\DnaMatchingResource\Pages;
 
+use Filament\Schemas\Schema;
 use Filament\Actions\EditAction;
-use Filament\Schemas\Components\Section;
-use Filament\Schemas\Components\Grid;
 use App\Filament\App\Resources\DnaMatchingResource;
 use Filament\Actions;
 use Filament\Resources\Pages\ViewRecord;
@@ -12,7 +11,6 @@ use Filament\Infolists\Infolist;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Infolists\Components\ImageEntry;
 use Filament\Infolists\Components\KeyValueEntry;
-use Filament\Schemas\Schema;
 
 class ViewDnaMatching extends ViewRecord
 {

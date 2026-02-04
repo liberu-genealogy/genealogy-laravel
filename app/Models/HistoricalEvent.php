@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Throwable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
@@ -44,7 +45,7 @@ class HistoricalEvent extends Model
     {
         try {
             return Carbon::parse($date)->year;
-        } catch (\Throwable $e) {
+        } catch (Throwable $e) {
             return null;
         }
     }

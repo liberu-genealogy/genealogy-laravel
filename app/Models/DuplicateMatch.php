@@ -38,7 +38,7 @@ class DuplicateMatch extends Model
         return $this->belongsTo(User::class, 'reviewed_by');
     }
 
-    public function markReviewed(string $status, ?\App\Models\User $user = null): void
+    public function markReviewed(string $status, ?User $user = null): void
     {
         $this->status = $status;
         $this->reviewed_at = now();

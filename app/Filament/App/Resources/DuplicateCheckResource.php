@@ -2,6 +2,7 @@
 
 namespace App\Filament\App\Resources;
 
+use Filament\Schemas\Schema;
 use Filament\Actions\ViewAction;
 use Filament\Actions\Action;
 use App\Filament\App\Resources\DuplicateCheckResource\Pages\ListDuplicateChecks;
@@ -12,9 +13,8 @@ use App\Filament\App\Resources\DuplicateCheckResource\Pages;
 use App\Models\DuplicateCheck;
 use App\Services\DuplicateCheckerService;
 use Filament\Forms;
-use Filament\Forms\Form;
 use Filament\Resources\Resource;
-use Filament\Schemas\Schema;
+use Filament\Forms\Components\Section;
 use Filament\Tables;
 use Filament\Actions;
 use Filament\Tables\Table;
@@ -68,6 +68,7 @@ class DuplicateCheckResource extends Resource
                     ->badge()
                     ->color(fn (string $state): string => match ($state) {
                         'pending' => 'warning',
+                        'running' => 'primary',
                         'completed' => 'success',
                         'failed' => 'danger',
                         default => 'gray',

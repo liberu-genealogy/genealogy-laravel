@@ -10,40 +10,40 @@ jobs:
 
   tests:
     runs-on: ubuntu-latest
-    
+
     steps:
     - uses: actions/checkout@v5
-    
+
     - name: Setup PHP
       uses: shivammathur/setup-php@v2
       with:
-        php-version: '8.4'
+        php-version: '8.5'
 
-    
+
     - name: Start database
       run: sudo /etc/init.d/mysql start
 
     - name: Create database
       run: mysql -e "CREATE DATABASE IF NOT EXISTS liberu;" -uroot -proot
-      
+
     - name: Copy environment file
       run: cp .env.testing .env
-      
+
     - name: Install dependencies
       run: composer install
-      
+
     - name: Generate application key
       run: php artisan key:generate
-      
+
     - name: Run database migrations
       run: php artisan migrate
-      
+
     - name: Seed database
       run: php artisan db:seed
-      
+
     - name: Run tests
       run: vendor/bin/phpunit --coverage-clover=coverage.xml
-    
+
     - name: Upload coverage to Codecov
       uses: codecov/codecov-action@v5
       with:
@@ -52,4 +52,4 @@ jobs:
          flags: unittests
          name: codecov-umbrella
          fail_ci_if_error: true
-      
+
