@@ -6,7 +6,7 @@ use Filament\Actions\Action;
 use App\Filament\Resources\AIRecordMatchResource\Pages\ReviewMatches;
 use App\Models\AISuggestedMatch;
 use Filament\Resources\Resource;
-use Filament\Resources\Table;
+use Filament\Tables\Table;
 use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
 

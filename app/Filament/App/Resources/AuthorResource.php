@@ -5,6 +5,7 @@ namespace App\Filament\App\Resources;
 use Filament\Schemas\Schema;
 use Filament\Forms\Components\TextInput;
 use Filament\Resources\Resource;
+use Filament\Tables\Table;
 use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
 use App\Filament\App\Resources\AuthorResource\Pages\ListAuthors;
