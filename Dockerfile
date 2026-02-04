@@ -9,6 +9,10 @@ ARG NODE_VERSION=20-alpine
 
 FROM composer:${COMPOSER_VERSION} AS vendor
 
+WORKDIR /app
+COPY composer.json composer.lock /app/
+RUN composer install --no-dev --no-interaction --prefer-dist --optimize-autoloader --no-ansi --no-scripts --no-progress
+
 FROM php:${PHP_VERSION}-cli-alpine
 
 LABEL maintainer="SMortexa <seyed.me720@gmail.com>"
@@ -32,15 +36,17 @@ ENV TERM=xterm-color \
 
 WORKDIR ${ROOT}
 
-SHELL ["/bin/sh", "-eou", "pipefail", "-c"]
+# Use a portable shell invocation. Use -lc so scripts and chained commands behave as expected.
+SHELL ["/bin/sh", "-lc"]
 
 RUN ln -snf /usr/share/zoneinfo/${TZ} /etc/localtime \
   && echo ${TZ} > /etc/timezone
 
-ADD --chmod=0755 https://github.com/mlocati/docker-php-extension-installer/releases/latest/download/install-php-extensions /usr/local/bin/
+ADD --chmod=0755 https://github.com/mlocati/docker-php-extension-installer/releases/latest/download/install-php-extensions /usr/local/bin/install-php-extensions
+RUN chmod +x /usr/local/bin/install-php-extensions || true
 
-RUN apk update; \
-    apk upgrade; \
+RUN apk update && \
+    apk upgrade && \
     apk add --no-cache \
     curl \
     wget \
@@ -100,15 +106,10 @@ RUN cp ${PHP_INI_DIR}/php.ini-production ${PHP_INI_DIR}/php.ini
 USER ${USER}
 
 COPY  --chown=${USER}:${USER} --from=vendor /usr/bin/composer /usr/bin/composer
+COPY  --chown=${USER}:${USER} --from=vendor /app/vendor /var/www/html/vendor
 COPY  --chown=${USER}:${USER} composer.json composer.lock ./
 
-RUN composer install \
-    --no-dev \
-    --no-interaction \
-    --no-autoloader \
-    --no-ansi \
-    --no-scripts \
-    --audit
+RUN composer dump-autoload --classmap-authoritative --no-dev --no-interaction --no-ansi
 
 COPY  --chown=${USER}:${USER} . .
 
@@ -135,6 +136,9 @@ RUN composer install \
 
 COPY .env.example ./.env
 
+COPY --chown=${USER}:${USER} .docker/healthcheck.php /usr/local/bin/docker-healthcheck.php
+RUN chmod +x /usr/local/bin/docker-healthcheck.php || true
+
 RUN chmod +x /usr/local/bin/start-container
 
 RUN cat .docker/utilities.sh >> ~/.bashrc
@@ -143,4 +147,4 @@ EXPOSE 8000
 
 ENTRYPOINT ["start-container"]
 
-HEALTHCHECK --start-period=5s --interval=2s --timeout=5s --retries=8 CMD php artisan octane:status || exit 1
+HEALTHCHECK --start-period=5s --interval=15s --timeout=5s --retries=5 CMD ["php", "/usr/local/bin/docker-healthcheck.php"]
