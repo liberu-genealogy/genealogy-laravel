@@ -214,7 +214,7 @@ class VirtualEventRsvp extends Component
         };
 
         session()->flash('success', $statusMessage);
-        $this->dispatch('rsvp-updated');
+        $this->emit('rsvp-updated');
     }
 
     public function openInviteModal()
@@ -265,7 +265,7 @@ class VirtualEventRsvp extends Component
 
         $this->invite_person_id = '';
         session()->flash('success', 'Person has been invited successfully.');
-        $this->dispatch('attendee-invited');
+        $this->emit('attendee-invited');
     }
 
     public function sendInvitations()
@@ -321,7 +321,7 @@ class VirtualEventRsvp extends Component
             session()->flash('warning', implode(' ', $errors));
         }
 
-        $this->dispatch('invitations-sent');
+        $this->emit('invitations-sent');
     }
 
     public function joinEvent()
@@ -417,8 +417,9 @@ class VirtualEventRsvp extends Component
 
     public function getCanInviteProperty()
     {
-        return Auth::check() && 
-               ($this->event->creator->id === Auth::id() || 
+        return Auth::check() &&
+               ($this->event->creator->id === Auth::id() ||
                 ($this->attendee && ($this->attendee->is_host || $this->attendee->is_moderator)));
     }
 }
+

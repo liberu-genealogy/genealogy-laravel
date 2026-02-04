@@ -31,10 +31,10 @@ final class EditProfile extends Component
 
         try {
             Auth::user()?->update($validated);
-            $this->dispatch('profile-updated');
+            $this->emit('profile-updated');
             session()->flash('message', 'Profile updated successfully!');
         } catch (Throwable $e) {
-            $this->dispatch('profile-update-failed', message: $e->getMessage());
+            $this->emit('profile-update-failed', message: $e->getMessage());
             session()->flash('error', 'Failed to update profile: ' . $e->getMessage());
         }
     }

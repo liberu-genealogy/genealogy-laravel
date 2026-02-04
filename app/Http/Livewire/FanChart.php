@@ -79,31 +79,31 @@ class FanChart extends Component
     public function setRootPerson($personId): void
     {
         $this->rootPersonId = $personId;
-        $this->dispatch('refreshFanChart');
+        $this->emit('refreshFanChart');
     }
 
     public function setGenerations($generations): void
     {
         $this->generations = max(2, min(8, $generations));
-        $this->dispatch('refreshFanChart');
+        $this->emit('refreshFanChart');
     }
 
     public function toggleNames(): void
     {
         $this->showNames = !$this->showNames;
-        $this->dispatch('refreshFanChart');
+        $this->emit('refreshFanChart');
     }
 
     public function toggleDates(): void
     {
         $this->showDates = !$this->showDates;
-        $this->dispatch('refreshFanChart');
+        $this->emit('refreshFanChart');
     }
 
     public function setColorScheme($scheme): void
     {
         $this->colorScheme = $scheme;
-        $this->dispatch('refreshFanChart');
+        $this->emit('refreshFanChart');
     }
 
     public function render()

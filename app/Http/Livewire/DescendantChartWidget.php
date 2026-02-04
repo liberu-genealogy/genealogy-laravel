@@ -130,43 +130,43 @@ class DescendantChartWidget extends Widget
     public function setRootPerson($personId): void
     {
         $this->rootPersonId = $personId;
-        $this->dispatch('refreshDescendantChart');
+        $this->emit('refreshDescendantChart');
     }
 
     public function setGenerations($generations): void
     {
         $this->generations = max(1, min(8, $generations));
-        $this->dispatch('refreshDescendantChart');
+        $this->emit('refreshDescendantChart');
     }
 
     public function toggleSpouses(): void
     {
         $this->showSpouses = !$this->showSpouses;
-        $this->dispatch('refreshDescendantChart');
+        $this->emit('refreshDescendantChart');
     }
 
     public function toggleDates(): void
     {
         $this->showDates = !$this->showDates;
-        $this->dispatch('refreshDescendantChart');
+        $this->emit('refreshDescendantChart');
     }
 
     public function togglePhotos(): void
     {
         $this->showPhotos = !$this->showPhotos;
-        $this->dispatch('refreshDescendantChart');
+        $this->emit('refreshDescendantChart');
     }
 
     public function setLayout($layout): void
     {
         $this->layout = $layout;
-        $this->dispatch('refreshDescendantChart');
+        $this->emit('refreshDescendantChart');
     }
 
     public function setColorScheme($scheme): void
     {
         $this->colorScheme = $scheme;
-        $this->dispatch('refreshDescendantChart');
+        $this->emit('refreshDescendantChart');
     }
 
     public function expandPerson($personId): void

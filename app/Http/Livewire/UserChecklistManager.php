@@ -162,7 +162,7 @@ class UserChecklistManager extends Component
 
         $this->resetForm();
         $this->showCreateModal = false;
-        $this->dispatch('checklist-created');
+        $this->emit('checklist-created');
         session()->flash('message', 'Checklist created successfully!');
     }
 
@@ -195,14 +195,14 @@ class UserChecklistManager extends Component
 
         $this->resetForm();
         $this->showEditModal = false;
-        $this->dispatch('checklist-updated');
+        $this->emit('checklist-updated');
         session()->flash('message', 'Checklist updated successfully!');
     }
 
     public function deleteChecklist($checklistId)
     {
         UserChecklist::findOrFail($checklistId)->delete();
-        $this->dispatch('checklist-deleted');
+        $this->emit('checklist-deleted');
         session()->flash('message', 'Checklist deleted successfully!');
     }
 
@@ -216,7 +216,7 @@ class UserChecklistManager extends Component
             $item->markAsCompleted();
         }
 
-        $this->dispatch('item-toggled');
+        $this->emit('item-toggled');
     }
 
     public function editItem($itemId)
@@ -244,7 +244,7 @@ class UserChecklistManager extends Component
 
         $this->resetItemForm();
         $this->showItemModal = false;
-        $this->dispatch('item-updated');
+        $this->emit('item-updated');
         session()->flash('message', 'Item updated successfully!');
     }
 
@@ -260,7 +260,7 @@ class UserChecklistManager extends Component
             'order' => $maxOrder + 1,
         ]);
 
-        $this->dispatch('item-added');
+        $this->emit('item-added');
         session()->flash('message', 'Custom item added successfully!');
     }
 
@@ -316,3 +316,4 @@ class UserChecklistManager extends Component
         $this->resetPage();
     }
 }
+

@@ -12,12 +12,6 @@ final class FamilyTreeBuilder extends Component
     public array $treeData = [];
     public ?Person $selectedPerson = null;
 
-    protected array $listeners = [
-        'personMoved' => 'updatePersonPosition',
-        'personAdded' => 'addPerson',
-        'personRemoved' => 'removePerson'
-    ];
-
     public function mount(): void
     {
         $this->loadTreeData();
@@ -45,7 +39,7 @@ final class FamilyTreeBuilder extends Component
             ->toArray();
     }
 
-    #[On('updatePosition')]
+    #[On('personMoved')]
     public function updatePersonPosition(int $personId, float $x, float $y): void
     {
         Person::find($personId)?->update([
@@ -53,9 +47,10 @@ final class FamilyTreeBuilder extends Component
             'tree_position_y' => $y
         ]);
 
-        $this->dispatch('positionUpdated', personId: $personId);
+        $this->emit('positionUpdated', personId: $personId);
     }
 
+    #[On('personAdded')]
     public function addPerson(array $data): void
     {
         $person = Person::create([
@@ -68,14 +63,15 @@ final class FamilyTreeBuilder extends Component
         ]);
 
         $this->loadTreeData();
-        $this->dispatch('personCreated', personId: $person->id);
+        $this->emit('personCreated', personId: $person->id);
     }
 
+    #[On('personRemoved')]
     public function removePerson(int $personId): void
     {
         Person::find($personId)?->delete();
         $this->loadTreeData();
-        $this->dispatch('personDeleted', personId: $personId);
+        $this->emit('personDeleted', personId: $personId);
     }
 
     public function render()

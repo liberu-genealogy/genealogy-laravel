@@ -83,25 +83,25 @@ class PedigreeChartWidget extends Widget
     public function setRootPerson($personId): void
     {
         $this->rootPersonId = $personId;
-        $this->dispatch('refreshChart');
+        $this->emit('refreshChart');
     }
 
     public function setGenerations($generations): void
     {
         $this->generations = max(1, min(6, $generations));
-        $this->dispatch('refreshChart');
+        $this->emit('refreshChart');
     }
 
     public function toggleDates(): void
     {
         $this->showDates = !$this->showDates;
-        $this->dispatch('refreshChart');
+        $this->emit('refreshChart');
     }
 
     public function togglePhotos(): void
     {
         $this->showPhotos = !$this->showPhotos;
-        $this->dispatch('refreshChart');
+        $this->emit('refreshChart');
     }
 
     public function expandPerson($personId): void

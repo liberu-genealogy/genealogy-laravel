@@ -82,14 +82,14 @@ final class DescendantChartComponent extends Component
     {
         $this->rootPersonId = $personId;
         $this->mount($personId);
-        $this->dispatch('refreshDescendantChart');
+        $this->emit('refreshDescendantChart');
     }
 
     public function setGenerations($generations): void
     {
         $this->generations = max(1, min(6, $generations));
         $this->mount($this->rootPersonId);
-        $this->dispatch('refreshDescendantChart');
+        $this->emit('refreshDescendantChart');
     }
 
     public function render()
