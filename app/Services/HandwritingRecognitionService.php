@@ -237,13 +237,13 @@ class HandwritingRecognitionService
     {
         // Get all statistics in a single optimized query
         $stats = DocumentTranscription::where('team_id', $teamId)
-            ->selectRaw('
+            ->selectRaw("
                 COUNT(*) as total,
-                SUM(CASE WHEN status = "completed" THEN 1 ELSE 0 END) as completed,
-                SUM(CASE WHEN status = "pending" THEN 1 ELSE 0 END) as pending,
-                SUM(CASE WHEN status = "failed" THEN 1 ELSE 0 END) as failed,
-                AVG(CASE WHEN status = "completed" THEN JSON_EXTRACT(metadata, "$.confidence") ELSE NULL END) as avg_confidence
-            ')
+                SUM(CASE WHEN status = 'completed' THEN 1 ELSE 0 END) as completed,
+                SUM(CASE WHEN status = 'pending' THEN 1 ELSE 0 END) as pending,
+                SUM(CASE WHEN status = 'failed' THEN 1 ELSE 0 END) as failed,
+                AVG(CASE WHEN status = 'completed' THEN JSON_EXTRACT(metadata, '$.confidence') ELSE NULL END) as avg_confidence
+            ")
             ->first();
 
         // Get total corrections count
