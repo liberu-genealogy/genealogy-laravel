@@ -32,6 +32,10 @@ class FamilyMatchingService
 
         foreach ($connectedAccounts as $account) {
             $accountMatches = $this->findMatchesForAccount($user, $account);
+            // Add account_id to each match for later processing
+            $accountMatches->each(function ($match) use ($account) {
+                $match['account_id'] = $account->id;
+            });
             $matches = $matches->merge($accountMatches);
         }
 
@@ -169,20 +173,15 @@ class FamilyMatchingService
         try {
             $matches = $this->findPotentialConnections($user);
 
-            $connectedAccounts = ConnectedAccount::where('user_id', $user->id)
-                ->where('enable_family_matching', true)
-                ->get()
-                ->keyBy('id');
-
             foreach ($matches as $match) {
-                // Find the appropriate connected account
-                $account = $connectedAccounts->first(function ($acc) use ($match) {
-                    return $acc->provider_id === $match['social_id'];
-                });
-
-                if ($account) {
-                    $this->createConnection($user, $account, $match);
-                    $count++;
+                // The account_id was added in findPotentialConnections
+                if (isset($match['account_id'])) {
+                    $account = ConnectedAccount::find($match['account_id']);
+                    
+                    if ($account) {
+                        $this->createConnection($user, $account, $match);
+                        $count++;
+                    }
                 }
             }
         } catch (\Exception $e) {
