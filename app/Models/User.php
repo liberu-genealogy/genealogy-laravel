@@ -14,6 +14,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use JoelButcher\Socialstream\HasConnectedAccounts;
@@ -28,14 +29,14 @@ use Spatie\Permission\Traits\HasRoles;
 class User extends Authenticatable implements HasDefaultTenant, HasTenants, FilamentUser
 {
     use HasApiTokens;
-    // use HasConnectedAccounts;
+    use HasConnectedAccounts;
     use HasRoles;
     use HasFactory;
     use HasProfilePhoto {
         HasProfilePhoto::profilePhotoUrl as getPhotoUrl;
     }
     use Notifiable;
-    // use SetsProfilePhotoFromUrl;
+    use SetsProfilePhotoFromUrl;
     use TwoFactorAuthenticatable;
     use HasTeams;
     use Billable;
@@ -410,5 +411,30 @@ class User extends Authenticatable implements HasDefaultTenant, HasTenants, Fila
                         <div class=\"bg-white h-1 rounded-full\" style=\"width: {$progressPercentage}%\"></div>
                     </div>
                 </div>";
+    }
+
+    /**
+     * Get the user's social connection privacy settings.
+     */
+    public function socialConnectionPrivacy(): HasOne
+    {
+        return $this->hasOne(SocialConnectionPrivacy::class);
+    }
+
+    /**
+     * Get the user's social family connections.
+     */
+    public function socialFamilyConnections(): HasMany
+    {
+        return $this->hasMany(SocialFamilyConnection::class);
+    }
+
+    /**
+     * Get pending social family connections.
+     */
+    public function pendingSocialConnections(): HasMany
+    {
+        return $this->hasMany(SocialFamilyConnection::class)
+            ->where('status', 'pending');
     }
 }
