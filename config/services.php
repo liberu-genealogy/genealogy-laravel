@@ -51,6 +51,8 @@ return [
         'client_id' => env('TWITTER_CLIENT_ID'),
         'client_secret' => env('TWITTER_CLIENT_SECRET'),
         'redirect' => env('TWITTER_REDIRECT_URI', env('APP_URL') . '/oauth/twitter/callback'),
+    'google_vision' => [
+        'api_key' => env('GOOGLE_VISION_API_KEY'),
     ],
 
 ];
