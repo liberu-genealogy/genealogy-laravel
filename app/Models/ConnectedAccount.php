@@ -52,6 +52,17 @@ class ConnectedAccount extends SocialstreamConnectedAccount
         return [
             'created_at' => 'datetime',
             'expires_at' => 'datetime',
+            'enable_family_matching' => 'boolean',
+            'cached_profile_data' => 'array',
+            'last_synced_at' => 'datetime',
         ];
+    }
+
+    /**
+     * Get the social family connections for this account.
+     */
+    public function socialFamilyConnections()
+    {
+        return $this->hasMany(\App\Models\SocialFamilyConnection::class);
     }
 }

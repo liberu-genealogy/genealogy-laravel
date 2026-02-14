@@ -28,14 +28,14 @@ use Spatie\Permission\Traits\HasRoles;
 class User extends Authenticatable implements HasDefaultTenant, HasTenants, FilamentUser
 {
     use HasApiTokens;
-    // use HasConnectedAccounts;
+    use HasConnectedAccounts;
     use HasRoles;
     use HasFactory;
     use HasProfilePhoto {
         HasProfilePhoto::profilePhotoUrl as getPhotoUrl;
     }
     use Notifiable;
-    // use SetsProfilePhotoFromUrl;
+    use SetsProfilePhotoFromUrl;
     use TwoFactorAuthenticatable;
     use HasTeams;
     use Billable;
@@ -410,5 +410,30 @@ class User extends Authenticatable implements HasDefaultTenant, HasTenants, Fila
                         <div class=\"bg-white h-1 rounded-full\" style=\"width: {$progressPercentage}%\"></div>
                     </div>
                 </div>";
+    }
+
+    /**
+     * Get the user's social connection privacy settings.
+     */
+    public function socialConnectionPrivacy(): HasMany
+    {
+        return $this->hasMany(SocialConnectionPrivacy::class);
+    }
+
+    /**
+     * Get the user's social family connections.
+     */
+    public function socialFamilyConnections(): HasMany
+    {
+        return $this->hasMany(SocialFamilyConnection::class);
+    }
+
+    /**
+     * Get pending social family connections.
+     */
+    public function pendingSocialConnections(): HasMany
+    {
+        return $this->hasMany(SocialFamilyConnection::class)
+            ->where('status', 'pending');
     }
 }
