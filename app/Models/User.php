@@ -14,6 +14,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use JoelButcher\Socialstream\HasConnectedAccounts;
@@ -415,9 +416,9 @@ class User extends Authenticatable implements HasDefaultTenant, HasTenants, Fila
     /**
      * Get the user's social connection privacy settings.
      */
-    public function socialConnectionPrivacy(): HasMany
+    public function socialConnectionPrivacy(): HasOne
     {
-        return $this->hasMany(SocialConnectionPrivacy::class);
+        return $this->hasOne(SocialConnectionPrivacy::class);
     }
 
     /**

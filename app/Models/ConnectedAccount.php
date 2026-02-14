@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Concerns\HasTimestamps;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use JoelButcher\Socialstream\ConnectedAccount as SocialstreamConnectedAccount;
 use JoelButcher\Socialstream\Events\ConnectedAccountCreated;
 use JoelButcher\Socialstream\Events\ConnectedAccountDeleted;
@@ -61,7 +62,7 @@ class ConnectedAccount extends SocialstreamConnectedAccount
     /**
      * Get the social family connections for this account.
      */
-    public function socialFamilyConnections()
+    public function socialFamilyConnections(): HasMany
     {
         return $this->hasMany(\App\Models\SocialFamilyConnection::class);
     }
