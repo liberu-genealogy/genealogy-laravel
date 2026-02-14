@@ -235,19 +235,16 @@ class HandwritingRecognitionService
      */
     public function getTeamStats(int $teamId): array
     {
-        // Get status counts in a single query
-        $statusCounts = DocumentTranscription::where('team_id', $teamId)
-            ->selectRaw('status, COUNT(*) as count')
-            ->groupBy('status')
-            ->pluck('count', 'status')
-            ->toArray();
-
-        $totalTranscriptions = array_sum($statusCounts);
-
-        // Get average confidence for completed transcriptions
-        $avgConfidence = DocumentTranscription::where('team_id', $teamId)
-            ->where('status', 'completed')
-            ->avg('metadata->confidence') ?? 0;
+        // Get all statistics in a single optimized query
+        $stats = DocumentTranscription::where('team_id', $teamId)
+            ->selectRaw('
+                COUNT(*) as total,
+                SUM(CASE WHEN status = "completed" THEN 1 ELSE 0 END) as completed,
+                SUM(CASE WHEN status = "pending" THEN 1 ELSE 0 END) as pending,
+                SUM(CASE WHEN status = "failed" THEN 1 ELSE 0 END) as failed,
+                AVG(CASE WHEN status = "completed" THEN JSON_EXTRACT(metadata, "$.confidence") ELSE NULL END) as avg_confidence
+            ')
+            ->first();
 
         // Get total corrections count
         $totalCorrections = TranscriptionCorrection::whereHas('documentTranscription', function ($query) use ($teamId) {
@@ -255,12 +252,12 @@ class HandwritingRecognitionService
         })->count();
 
         return [
-            'total_transcriptions' => $totalTranscriptions,
-            'completed_transcriptions' => $statusCounts['completed'] ?? 0,
-            'pending_transcriptions' => $statusCounts['pending'] ?? 0,
-            'failed_transcriptions' => $statusCounts['failed'] ?? 0,
+            'total_transcriptions' => (int) ($stats->total ?? 0),
+            'completed_transcriptions' => (int) ($stats->completed ?? 0),
+            'pending_transcriptions' => (int) ($stats->pending ?? 0),
+            'failed_transcriptions' => (int) ($stats->failed ?? 0),
             'total_corrections' => $totalCorrections,
-            'avg_confidence' => round($avgConfidence, 2),
+            'avg_confidence' => round((float) ($stats->avg_confidence ?? 0), 2),
         ];
     }
 }

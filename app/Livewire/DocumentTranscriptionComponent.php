@@ -185,9 +185,12 @@ class DocumentTranscriptionComponent extends Component
 
         if (!$teamId) {
             return [
-                'total' => 0,
-                'completed' => 0,
-                'pending' => 0,
+                'total_transcriptions' => 0,
+                'completed_transcriptions' => 0,
+                'pending_transcriptions' => 0,
+                'failed_transcriptions' => 0,
+                'total_corrections' => 0,
+                'avg_confidence' => 0,
             ];
         }
 
