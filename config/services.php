@@ -35,4 +35,14 @@ return [
         ],
     ],
 
+    'facial_recognition' => [
+        'provider' => env('FACIAL_RECOGNITION_PROVIDER', 'mock'),
+        'aws' => [
+            'key' => env('AWS_ACCESS_KEY_ID'),
+            'secret' => env('AWS_SECRET_ACCESS_KEY'),
+            'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
+            'collection_id' => env('AWS_REKOGNITION_COLLECTION_ID', 'genealogy-faces'),
+        ],
+    ],
+
 ];

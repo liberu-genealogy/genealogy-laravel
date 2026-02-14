@@ -251,6 +251,38 @@ class Person extends Model
     }
 
     /**
+     * Get photos associated with this person
+     */
+    public function photos()
+    {
+        return $this->hasMany(PersonPhoto::class);
+    }
+
+    /**
+     * Get photo tags where this person is tagged
+     */
+    public function photoTags()
+    {
+        return $this->hasMany(PhotoTag::class);
+    }
+
+    /**
+     * Get confirmed photo tags for this person
+     */
+    public function confirmedPhotoTags()
+    {
+        return $this->hasMany(PhotoTag::class)->where('status', 'confirmed');
+    }
+
+    /**
+     * Get face encodings for this person
+     */
+    public function faceEncodings()
+    {
+        return $this->hasMany(FaceEncoding::class);
+    }
+
+    /**
      * Get checklists associated with this person
      */
     public function checklists()
