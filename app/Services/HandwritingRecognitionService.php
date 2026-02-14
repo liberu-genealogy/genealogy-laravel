@@ -235,17 +235,32 @@ class HandwritingRecognitionService
      */
     public function getTeamStats(int $teamId): array
     {
-        $transcriptions = DocumentTranscription::where('team_id', $teamId);
+        // Get status counts in a single query
+        $statusCounts = DocumentTranscription::where('team_id', $teamId)
+            ->selectRaw('status, COUNT(*) as count')
+            ->groupBy('status')
+            ->pluck('count', 'status')
+            ->toArray();
+
+        $totalTranscriptions = array_sum($statusCounts);
+
+        // Get average confidence for completed transcriptions
+        $avgConfidence = DocumentTranscription::where('team_id', $teamId)
+            ->where('status', 'completed')
+            ->avg('metadata->confidence') ?? 0;
+
+        // Get total corrections count
+        $totalCorrections = TranscriptionCorrection::whereHas('documentTranscription', function ($query) use ($teamId) {
+            $query->where('team_id', $teamId);
+        })->count();
 
         return [
-            'total_transcriptions' => $transcriptions->count(),
-            'completed_transcriptions' => $transcriptions->where('status', 'completed')->count(),
-            'pending_transcriptions' => $transcriptions->where('status', 'pending')->count(),
-            'failed_transcriptions' => $transcriptions->where('status', 'failed')->count(),
-            'total_corrections' => TranscriptionCorrection::whereHas('documentTranscription', function ($query) use ($teamId) {
-                $query->where('team_id', $teamId);
-            })->count(),
-            'avg_confidence' => round($transcriptions->where('status', 'completed')->avg('metadata->confidence') ?? 0, 2),
+            'total_transcriptions' => $totalTranscriptions,
+            'completed_transcriptions' => $statusCounts['completed'] ?? 0,
+            'pending_transcriptions' => $statusCounts['pending'] ?? 0,
+            'failed_transcriptions' => $statusCounts['failed'] ?? 0,
+            'total_corrections' => $totalCorrections,
+            'avg_confidence' => round($avgConfidence, 2),
         ];
     }
 }
