@@ -42,42 +42,77 @@ final class FamilyTreeBuilder extends Component
     #[On('personMoved')]
     public function updatePersonPosition(int $personId, float $x, float $y): void
     {
-        Person::find($personId)?->update([
+        $person = Person::find($personId);
+        
+        if (!$person) {
+            $this->dispatch('error', message: 'Person not found');
+            return;
+        }
+        
+        $person->update([
             'tree_position_x' => $x,
             'tree_position_y' => $y
         ]);
 
-        $this->emit('positionUpdated', personId: $personId);
+        $this->dispatch('positionUpdated', personId: $personId);
     }
 
     #[On('personAdded')]
     public function addPerson(array $data): void
     {
-        $person = Person::create([
-            'name' => $data['name'],
+        // Validate required fields
+        if (empty($data['givn']) && empty($data['surn'])) {
+            $this->dispatch('error', message: 'Either given name or surname is required');
+            return;
+        }
+        
+        $personData = [
             'givn' => $data['givn'] ?? '',
             'surn' => $data['surn'] ?? '',
             'sex' => $data['sex'] ?? 'U',
-            'tree_position_x' => $data['position']['x'],
-            'tree_position_y' => $data['position']['y']
-        ]);
+            'tree_position_x' => $data['position']['x'] ?? 0,
+            'tree_position_y' => $data['position']['y'] ?? 0,
+        ];
+        
+        // Add optional fields if provided
+        if (isset($data['birthday'])) {
+            $personData['birthday'] = $data['birthday'];
+        }
+        if (isset($data['child_in_family_id'])) {
+            $personData['child_in_family_id'] = $data['child_in_family_id'];
+        }
+
+        $person = Person::create($personData);
 
         $this->loadTreeData();
-        $this->emit('personCreated', personId: $person->id);
+        $this->dispatch('personCreated', personId: $person->id);
     }
 
     #[On('personRemoved')]
     public function removePerson(int $personId): void
     {
-        Person::find($personId)?->delete();
+        $person = Person::find($personId);
+        
+        if (!$person) {
+            $this->dispatch('error', message: 'Person not found');
+            return;
+        }
+        
+        $person->delete();
         $this->loadTreeData();
-        $this->emit('personDeleted', personId: $personId);
+        $this->dispatch('personDeleted', personId: $personId);
     }
 
     public function selectPerson(int $personId): void
     {
         $this->selectedPerson = Person::find($personId);
-        $this->emit('personSelected', personId: $personId);
+        
+        if (!$this->selectedPerson) {
+            $this->dispatch('error', message: 'Person not found');
+            return;
+        }
+        
+        $this->dispatch('personSelected', personId: $personId);
     }
 
     public function render()
