@@ -38,6 +38,7 @@ Route::middleware([
 ])->group(function (): void {
     Route::get('/dashboard', fn() => view('dashboard'))->name('dashboard');
     Route::get('/gamification', \App\Http\Livewire\GamificationDashboard::class)->name('gamification');
+    Route::get('/transcriptions', \App\Livewire\DocumentTranscriptionComponent::class)->name('transcriptions');
 });
 
 Route::middleware(['auth', 'verified'])->group(function () {
