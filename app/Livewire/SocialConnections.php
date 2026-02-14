@@ -17,10 +17,41 @@ use Livewire\Attributes\On;
 
 final class SocialConnections extends Component
 {
+    /**
+     * User privacy settings for social connections.
+     * Contains: allow_family_discovery, show_profile_to_matches, 
+     * share_tree_with_matches, allow_contact_from_matches
+     *
+     * @var array
+     */
     public array $privacySettings = [];
+
+    /**
+     * Collection of user's connected social media accounts.
+     *
+     * @var Collection|null
+     */
     public ?Collection $connectedAccounts = null;
+
+    /**
+     * Collection of pending family connection matches awaiting user action.
+     *
+     * @var Collection|null
+     */
     public ?Collection $pendingConnections = null;
+
+    /**
+     * Collection of accepted family connections.
+     *
+     * @var Collection|null
+     */
     public ?Collection $acceptedConnections = null;
+
+    /**
+     * Loading state indicator for async operations.
+     *
+     * @var bool
+     */
     public bool $isLoading = false;
 
     protected SocialMediaConnectionService $socialService;
