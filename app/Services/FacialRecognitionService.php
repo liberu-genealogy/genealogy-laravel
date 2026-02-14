@@ -160,7 +160,7 @@ class FacialRecognitionService
                 'team_id' => $photo->team_id,
                 'confidence' => $confidence,
                 'bounding_box' => $face['bounding_box'],
-                'status' => $matchedPerson ? 'pending' : 'pending', // All tags start as pending for review
+                'status' => 'pending', // All tags start as pending for review
             ]);
 
             $tagsCreated++;
