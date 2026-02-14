@@ -19,8 +19,24 @@ class ConnectedAccountFactory extends Factory
         return [
             'provider'      => fake()->randomElement(Providers::all()),
             'provider_id'   => fake()->numerify('########'),
+            'name'          => fake()->name(),
+            'email'         => fake()->safeEmail(),
             'token'         => Str::random(432),
             'refresh_token' => Str::random(432),
+            'enable_family_matching' => false,
+            'cached_profile_data' => null,
+            'last_synced_at' => null,
         ];
+    }
+
+    /**
+     * Indicate that family matching is enabled.
+     */
+    public function withFamilyMatching(): static
+    {
+        return $this->state(fn (array $attributes) => [
+            'enable_family_matching' => true,
+            'last_synced_at' => now(),
+        ]);
     }
 }
