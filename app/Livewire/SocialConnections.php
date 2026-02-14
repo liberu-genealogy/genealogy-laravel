@@ -9,6 +9,7 @@ use App\Models\SocialConnectionPrivacy;
 use App\Models\SocialFamilyConnection;
 use App\Services\FamilyMatchingService;
 use App\Services\SocialMediaConnectionService;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 use Livewire\Component;
@@ -17,9 +18,9 @@ use Livewire\Attributes\On;
 final class SocialConnections extends Component
 {
     public array $privacySettings = [];
-    public $connectedAccounts;
-    public $pendingConnections;
-    public $acceptedConnections;
+    public ?Collection $connectedAccounts = null;
+    public ?Collection $pendingConnections = null;
+    public ?Collection $acceptedConnections = null;
     public bool $isLoading = false;
 
     protected SocialMediaConnectionService $socialService;
