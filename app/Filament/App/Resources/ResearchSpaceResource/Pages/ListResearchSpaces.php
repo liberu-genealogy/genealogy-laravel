@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Filament\Resources\ResearchSpaceResource\Pages;
+namespace App\Filament\App\Resources\ResearchSpaceResource\Pages;
 
 use Filament\Actions\CreateAction;
 use Filament\Resources\Pages\ListRecords;
-use App\Filament\Resources\ResearchSpaceResource;
+use App\Filament\App\Resources\ResearchSpaceResource;
 
 class ListResearchSpaces extends ListRecords
 {

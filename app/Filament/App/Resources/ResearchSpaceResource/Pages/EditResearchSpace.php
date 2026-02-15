@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Filament\Resources\ResearchSpaceResource\Pages;
+namespace App\Filament\App\Resources\ResearchSpaceResource\Pages;
 
 use Filament\Resources\Pages\EditRecord;
-use App\Filament\Resources\ResearchSpaceResource;
+use App\Filament\App\Resources\ResearchSpaceResource;
 
 class EditResearchSpace extends EditRecord
 {

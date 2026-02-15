@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Filament\Resources;
+namespace App\Filament\App\Resources;
 
 use Filament\Schemas\Schema;
 use Filament\Tables\Table;
-use App\Filament\Resources\ResearchSpaceResource\Pages\ListResearchSpaces;
-use App\Filament\Resources\ResearchSpaceResource\Pages\CreateResearchSpace;
-use App\Filament\Resources\ResearchSpaceResource\Pages\EditResearchSpace;
-use App\Filament\Resources\ResearchSpaceResource\Pages;
+use App\Filament\App\Resources\ResearchSpaceResource\Pages\ListResearchSpaces;
+use App\Filament\App\Resources\ResearchSpaceResource\Pages\CreateResearchSpace;
+use App\Filament\App\Resources\ResearchSpaceResource\Pages\EditResearchSpace;
+use App\Filament\App\Resources\ResearchSpaceResource\Pages;
 use App\Models\ResearchSpace;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Textarea;
