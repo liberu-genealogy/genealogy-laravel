@@ -307,8 +307,8 @@ class FindMyPastMatchingProvider
      */
     private function searchMilitaryRecords(Person $person): array
     {
-        // Only search if person would have been of military age
-        if (!$person->birthday || $person->sex !== 'M') {
+        // Only search if person would have been of military age and male
+        if (!$person->birthday || $person->sex !== Person::GENDER_MALE) {
             return [];
         }
 

@@ -133,7 +133,7 @@ class SmartMatchingService
                 'person_id' => $match['person_id'],
                 'source' => 'findmypast',
                 'record_type' => $match['record_type'] ?? null,
-                'record_category' => $match['record_type'] ?? null,
+                'record_category' => $match['record_category'] ?? ($match['record_type'] ?? null),
                 'confidence_score' => $match['confidence_score'],
                 'data' => $match['data'],
                 'search_criteria' => [

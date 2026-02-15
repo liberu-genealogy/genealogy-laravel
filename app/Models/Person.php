@@ -16,6 +16,11 @@ class Person extends Model
     use HasFactory;
     use BelongsToTenant;
 
+    // Gender constants
+    public const GENDER_MALE = 'M';
+    public const GENDER_FEMALE = 'F';
+    public const GENDER_UNKNOWN = 'U';
+
     protected $fillable = [
         'gid',
         'givn',
