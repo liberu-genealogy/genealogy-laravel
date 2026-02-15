@@ -35,6 +35,10 @@ Key goals:
 - Support GEDCOM import/export and DNA-matching integrations.
 - Integrate with external genealogy services (MyHeritage, Ancestry, FamilySearch).
 - Offer a developer-friendly, modular codebase.
+- Support major genealogy platforms including FindMyPast, FamilySearch, Ancestry, and MyHeritage.
+
+**New Features**: 
+- **FindMyPast Integration**: Comprehensive support for FindMyPast record types including newspapers, parish records, census data, electoral registers, GRO indices, military records, probate records, and more. See [FINDMYPAST_FEATURES.md](FINDMYPAST_FEATURES.md) for details.
 
 Quick links: Demo • Hosting
 - Demo: https://familytree365.com
