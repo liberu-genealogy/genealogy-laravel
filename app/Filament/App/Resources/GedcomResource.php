@@ -16,7 +16,9 @@ use Filament\Actions\DeleteBulkAction;
 use BackedEnum;
 use App\Filament\App\Resources\GedcomResource\Pages;
 use App\Jobs\ExportGedcom;
+use App\Jobs\ExportGrampsXml;
 use App\Jobs\ImportGedcom;
+use App\Jobs\ImportGrampsXml;
 use App\Models\Gedcom;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Form;
@@ -63,11 +65,12 @@ class GedcomResource extends Resource
                 FileUpload::make('filename')
                     ->multiple(false)
                     ->required()
-                    ->acceptedFileTypes(['.ged', 'text/plain', 'application/octet-stream'])
+                    ->acceptedFileTypes(['.ged', '.gramps', 'text/plain', 'application/xml', 'text/xml'])
                     ->maxSize(100000)
                     ->disk('private')
                     ->directory('gedcom-form-imports')
                     ->visibility('private')
+                    ->helperText('Upload GEDCOM (.ged) or GrampsXML (.gramps, .xml) files')
 
                     // ->afterStateUpdated(function ($state, $set, $livewire): void {
                     //     if ($state === null) {
@@ -106,9 +109,15 @@ class GedcomResource extends Resource
             ->recordActions([
                 ViewAction::make(),
                 EditAction::make(),
-                Action::make('export')
+                Action::make('export_gedcom')
                     ->action(fn () => static::exportGedcom())
-                    ->label('Export GEDCOM'),
+                    ->label('Export GEDCOM')
+                    ->icon('heroicon-o-arrow-down-tray'),
+                Action::make('export_grampsxml')
+                    ->action(fn () => static::exportGrampsXml())
+                    ->label('Export GrampsXML')
+                    ->icon('heroicon-o-arrow-down-tray')
+                    ->color('success'),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([
@@ -127,5 +136,12 @@ class GedcomResource extends Resource
         $user = auth()->user(); // Assuming the user is authenticated
         $fileName = now()->format('Y-m-d_His').'_family_tree.ged'; // Generating a unique file name
         ExportGedCom::dispatch($fileName, $user);
+    }
+
+    public static function exportGrampsXml(): void
+    {
+        $user = auth()->user();
+        $fileName = now()->format('Y-m-d_His').'_family_tree.gramps';
+        ExportGrampsXml::dispatch($fileName, $user);
     }
 }

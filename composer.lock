@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "3b69d7bd6c33905b1675f1d8a9359a50",
+    "content-hash": "1fccca439cbabeaf3fb4b222f017e559",
     "packages": [
         {
             "name": "anourvalar/eloquent-serialize",
@@ -4092,6 +4092,30 @@
                 }
             ],
             "time": "2025-09-21T16:51:18+00:00"
+        },
+        {
+            "name": "liberu/laravel-gramps-xml",
+            "version": "dev-main",
+            "dist": {
+                "type": "path",
+                "url": "vendor-local/laravel-gramps-xml",
+                "reference": "e413a6192a1e29b1bdc65577b38bbce49c6cda02"
+            },
+            "require": {
+                "laravel/framework": "^11.0|^12.0",
+                "php": "^8.3"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "LaravelGrampsXml\\": "src/"
+                }
+            },
+            "description": "A Laravel package for reading and writing XML files.",
+            "transport-options": {
+                "symlink": false,
+                "relative": true
+            }
         },
         {
             "name": "livewire/livewire",
@@ -12761,7 +12785,9 @@
     ],
     "aliases": [],
     "minimum-stability": "beta",
-    "stability-flags": {},
+    "stability-flags": {
+        "liberu/laravel-gramps-xml": 20
+    },
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {

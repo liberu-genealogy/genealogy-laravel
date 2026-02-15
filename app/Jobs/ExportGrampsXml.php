@@ -8,7 +8,7 @@ use Throwable;
 use App\Models\Family;
 use App\Models\Person;
 use App\Models\User;
-use App\Services\GedcomService;
+use App\Services\GrampsXmlService;
 use App\Tenant\Manager;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -17,7 +17,7 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Log;
 
-final readonly class ExportGedCom implements ShouldQueue
+final readonly class ExportGrampsXml implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
@@ -35,18 +35,18 @@ final readonly class ExportGedCom implements ShouldQueue
             $people = Person::all();
             $families = Family::all();
 
-            Log::info("Exporting {$people->count()} people and {$families->count()} families.");
+            Log::info("Exporting {$people->count()} people and {$families->count()} families to GrampsXML.");
 
-            $gedcomService = new GedcomService();
-            $content = $gedcomService->generateGedcomContent($people, $families);
+            $grampsXmlService = new GrampsXmlService();
+            $content = $grampsXmlService->generateGrampsXmlContent($people, $families);
 
             $tenant->storage()->put($this->file, $content);
 
             chmod($tenant->storage()->path($this->file), 0600);
 
-            Log::info('GEDCOM file generated and stored successfully.');
+            Log::info('GrampsXML file generated and stored successfully.');
         } catch (Throwable $e) {
-            Log::error('Error during GEDCOM export: ' . $e->getMessage());
+            Log::error('Error during GrampsXML export: ' . $e->getMessage());
             throw $e;
         }
     }
