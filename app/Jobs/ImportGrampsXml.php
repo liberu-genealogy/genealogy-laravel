@@ -57,7 +57,7 @@ class ImportGrampsXml implements ShouldQueue
             // Convert GrampsXML to GEDCOM format and import using existing parser
             // This leverages the existing GEDCOM import infrastructure
             $gedcomContent = $this->convertGrampsToGedcom($grampsData['data']);
-            $tempGedcomPath = storage_path('app/temp/' . $slug . '.ged');
+            $tempGedcomPath = storage_path('app/private/temp/' . $slug . '.ged');
             
             // Ensure temp directory exists
             File::ensureDirectoryExists(dirname($tempGedcomPath));

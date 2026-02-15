@@ -42,7 +42,7 @@ final readonly class ExportGrampsXml implements ShouldQueue
 
             $tenant->storage()->put($this->file, $content);
 
-            chmod($tenant->storage()->path($this->file), 0644);
+            chmod($tenant->storage()->path($this->file), 0600);
 
             Log::info('GrampsXML file generated and stored successfully.');
         } catch (Throwable $e) {

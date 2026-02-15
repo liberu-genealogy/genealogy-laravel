@@ -65,7 +65,7 @@ class GedcomResource extends Resource
                 FileUpload::make('filename')
                     ->multiple(false)
                     ->required()
-                    ->acceptedFileTypes(['.ged', '.gramps', '.xml', 'text/plain', 'application/octet-stream', 'application/xml'])
+                    ->acceptedFileTypes(['.ged', '.gramps', 'text/plain', 'application/xml', 'text/xml'])
                     ->maxSize(100000)
                     ->disk('private')
                     ->directory('gedcom-form-imports')
