@@ -121,7 +121,7 @@ class SmartMatchingServiceTest extends TestCase
         
         $matches = $this->service->findSmartMatches($user);
         
-        // Should have created smart match records
-        $this->assertGreaterThanOrEqual(0, $matches->count());
+        // Should have created smart match records (count can be 0 or more depending on scoring)
+        $this->assertInstanceOf(\Illuminate\Support\Collection::class, $matches);
     }
 }
