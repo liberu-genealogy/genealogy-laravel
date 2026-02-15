@@ -67,6 +67,21 @@ class SmartMatchResource extends Resource
                 TextColumn::make('match_data.name')
                     ->label('Potential Match')
                     ->getStateUsing(fn (SmartMatch $record): string => $record->match_data['name'] ?? 'Unknown'),
+                TextColumn::make('record_category')
+                    ->label('Record Type')
+                    ->badge()
+                    ->color(fn (?string $state): string => match ($state) {
+                        'newspaper' => 'info',
+                        'parish' => 'primary',
+                        'census' => 'success',
+                        'electoral' => 'warning',
+                        'gro_index' => 'info',
+                        'military' => 'danger',
+                        'probate' => 'warning',
+                        'poor_law' => 'gray',
+                        default => 'gray',
+                    })
+                    ->formatStateUsing(fn (?string $state): string => $state ? ucwords(str_replace('_', ' ', $state)) : 'General'),
                 TextColumn::make('match_source')
                     ->label('Source')
                     ->badge()
@@ -113,6 +128,19 @@ class SmartMatchResource extends Resource
                         'ancestry' => 'Ancestry',
                         'myheritage' => 'MyHeritage',
                         'findmypast' => 'FindMyPast',
+                    ]),
+                SelectFilter::make('record_category')
+                    ->label('Record Type')
+                    ->options([
+                        'newspaper' => 'Newspaper',
+                        'parish' => 'Parish Record',
+                        'census' => 'Census',
+                        'electoral' => 'Electoral Register',
+                        'gro_index' => 'GRO Index',
+                        'military' => 'Military',
+                        'probate' => 'Probate',
+                        'poor_law' => 'Poor Law/Workhouse',
+                        'vital' => 'Vital Records',
                     ]),
             ])
             ->recordActions([

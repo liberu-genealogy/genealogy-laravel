@@ -16,7 +16,10 @@ class SmartMatch extends Model
         'external_tree_id',
         'external_person_id',
         'match_source',
+        'record_type_id',
+        'record_category',
         'match_data',
+        'search_criteria',
         'confidence_score',
         'status',
         'reviewed_at',
@@ -24,6 +27,7 @@ class SmartMatch extends Model
 
     protected $casts = [
         'match_data' => 'array',
+        'search_criteria' => 'array',
         'confidence_score' => 'decimal:2',
         'reviewed_at' => 'datetime',
     ];
@@ -36,6 +40,11 @@ class SmartMatch extends Model
     public function person(): BelongsTo
     {
         return $this->belongsTo(Person::class);
+    }
+
+    public function recordType(): BelongsTo
+    {
+        return $this->belongsTo(RecordType::class);
     }
 
     public function isPending(): bool

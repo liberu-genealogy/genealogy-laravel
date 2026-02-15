@@ -37,7 +37,10 @@ class SmartMatchingService
                     'external_tree_id' => $match['tree_id'],
                     'external_person_id' => $match['person_id'],
                     'match_source' => $match['source'],
+                    'record_type_id' => $match['record_type_id'] ?? null,
+                    'record_category' => $match['record_category'] ?? null,
                     'match_data' => $match['data'],
+                    'search_criteria' => $match['search_criteria'] ?? null,
                     'confidence_score' => $match['confidence_score'],
                     'status' => 'pending',
                 ]);
@@ -78,8 +81,13 @@ class SmartMatchingService
      */
     private function searchSource(Person $person, string $source): array
     {
+        // Use specialized FindMyPast provider for findmypast source
+        if ($source === 'findmypast') {
+            return $this->searchFindMyPast($person);
+        }
+
         // This would integrate with actual genealogy APIs
-        // For now, we'll simulate potential matches
+        // For now, we'll simulate potential matches for other sources
         
         $matches = [];
         
@@ -105,6 +113,36 @@ class SmartMatchingService
                     'data' => $match,
                 ];
             }
+        }
+
+        return $matches;
+    }
+
+    /**
+     * Search FindMyPast using the specialized provider
+     */
+    private function searchFindMyPast(Person $person): array
+    {
+        $provider = new FindMyPastMatchingProvider();
+        $recordMatches = $provider->searchRecords($person);
+
+        $matches = [];
+        foreach ($recordMatches as $match) {
+            $matches[] = [
+                'tree_id' => $match['tree_id'],
+                'person_id' => $match['person_id'],
+                'source' => 'findmypast',
+                'record_type' => $match['record_type'] ?? null,
+                'record_category' => $match['record_type'] ?? null,
+                'confidence_score' => $match['confidence_score'],
+                'data' => $match['data'],
+                'search_criteria' => [
+                    'name' => $person->fullname(),
+                    'birth_year' => $person->birthday?->format('Y'),
+                    'death_year' => $person->deathday?->format('Y'),
+                    'record_types_searched' => ['newspaper', 'parish', 'census', 'electoral', 'gro_index', 'military', 'probate'],
+                ],
+            ];
         }
 
         return $matches;
