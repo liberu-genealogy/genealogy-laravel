@@ -61,8 +61,43 @@ class FamilyTreeOverviewWidget extends Widget
 
     private function calculateGenerations(): int
     {
-        // Simple calculation - could be more sophisticated
-        return Person::selectRaw('MAX(CASE WHEN deathday IS NULL THEN 0 ELSE YEAR(CURDATE()) - YEAR(birthday) END) / 25 as generations')
-            ->value('generations') ?? 1;
+        // Calculate actual depth by finding the deepest ancestor chain
+        $maxDepth = 0;
+        $people = Person::whereNotNull('child_in_family_id')->with('childInFamily')->get();
+        
+        foreach ($people as $person) {
+            $depth = $this->calculatePersonDepth($person);
+            $maxDepth = max($maxDepth, $depth);
+        }
+        
+        return max($maxDepth, 1);
+    }
+    
+    private function calculatePersonDepth(Person $person, int $currentDepth = 1, array &$visited = []): int
+    {
+        // Prevent infinite loops in case of data issues
+        if (in_array($person->id, $visited)) {
+            return $currentDepth;
+        }
+        
+        $visited[] = $person->id;
+        
+        if (!$person->childInFamily) {
+            return $currentDepth;
+        }
+        
+        $maxParentDepth = $currentDepth;
+        
+        if ($person->childInFamily->husband) {
+            $fatherDepth = $this->calculatePersonDepth($person->childInFamily->husband, $currentDepth + 1, $visited);
+            $maxParentDepth = max($maxParentDepth, $fatherDepth);
+        }
+        
+        if ($person->childInFamily->wife) {
+            $motherDepth = $this->calculatePersonDepth($person->childInFamily->wife, $currentDepth + 1, $visited);
+            $maxParentDepth = max($maxParentDepth, $motherDepth);
+        }
+        
+        return $maxParentDepth;
     }
 }

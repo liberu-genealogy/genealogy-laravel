@@ -17,7 +17,7 @@ class TreeBuilderService
         $includeSpouses = $options['include_spouses'] ?? true;
         $includeSiblings = $options['include_siblings'] ?? false;
 
-        return [
+        $tree = [
             'root_person' => $this->formatPersonNode($rootPerson),
             'ancestors' => $this->buildAncestorTree($rootPerson, $generations),
             'descendants' => $this->buildDescendantTree($rootPerson, $generations),
@@ -27,6 +27,15 @@ class TreeBuilderService
                 'build_date' => now()->toISOString(),
             ],
         ];
+        
+        // Add siblings if requested
+        if ($includeSiblings) {
+            $tree['siblings'] = $this->getSiblings($rootPerson)
+                ->map(fn($sibling) => $this->formatPersonNode($sibling))
+                ->toArray();
+        }
+        
+        return $tree;
     }
 
     /**
@@ -273,9 +282,18 @@ class TreeBuilderService
      */
     protected function countTreePersons(Person $rootPerson, int $generations): int
     {
-        // This would recursively count all persons in the tree
-        // Implementation would depend on specific counting requirements
-        return 1; // Placeholder
+        $persons = collect([$rootPerson]);
+        
+        // Count ancestors
+        $ancestors = $this->getAllAncestors($rootPerson, $generations);
+        $persons = $persons->merge($ancestors);
+        
+        // Count descendants
+        $descendants = $this->getAllDescendants($rootPerson, $generations);
+        $persons = $persons->merge($descendants);
+        
+        // Return unique count
+        return $persons->unique('id')->count();
     }
 
     /**
@@ -357,5 +375,92 @@ class TreeBuilderService
                 }
             }
         }
+    }
+
+    /**
+     * Get comprehensive tree statistics for a person.
+     */
+    public function getTreeStatistics(Person $person, int $maxGenerations = 10): array
+    {
+        $ancestors = $this->getAllAncestors($person, $maxGenerations);
+        $descendants = $this->getAllDescendants($person, $maxGenerations);
+        $siblings = $this->getSiblings($person);
+        
+        // Calculate unique people in the tree
+        $allPeople = collect([$person])
+            ->merge($ancestors)
+            ->merge($descendants)
+            ->unique('id');
+        
+        return [
+            'total_people' => $allPeople->count(),
+            'total_ancestors' => $ancestors->count(),
+            'total_descendants' => $descendants->count(),
+            'total_siblings' => $siblings->count(),
+            'living_people' => $allPeople->filter(fn($p) => !$p->deathday)->count(),
+            'deceased_people' => $allPeople->filter(fn($p) => $p->deathday)->count(),
+            'males' => $allPeople->filter(fn($p) => $p->sex === 'M')->count(),
+            'females' => $allPeople->filter(fn($p) => $p->sex === 'F')->count(),
+            'max_ancestor_depth' => $this->getMaxAncestorDepth($person),
+            'max_descendant_depth' => $this->getMaxDescendantDepth($person),
+        ];
+    }
+
+    /**
+     * Get maximum ancestor depth for a person.
+     */
+    protected function getMaxAncestorDepth(Person $person, int $depth = 0, array &$visited = []): int
+    {
+        if (in_array($person->id, $visited)) {
+            return $depth;
+        }
+        
+        $visited[] = $person->id;
+        
+        if (!$person->childInFamily) {
+            return $depth;
+        }
+
+        $maxDepth = $depth;
+
+        if ($person->childInFamily->husband) {
+            $maxDepth = max($maxDepth, $this->getMaxAncestorDepth($person->childInFamily->husband, $depth + 1, $visited));
+        }
+
+        if ($person->childInFamily->wife) {
+            $maxDepth = max($maxDepth, $this->getMaxAncestorDepth($person->childInFamily->wife, $depth + 1, $visited));
+        }
+
+        return $maxDepth;
+    }
+
+    /**
+     * Get maximum descendant depth for a person.
+     */
+    protected function getMaxDescendantDepth(Person $person, int $depth = 0, array &$visited = []): int
+    {
+        if (in_array($person->id, $visited)) {
+            return $depth;
+        }
+        
+        $visited[] = $person->id;
+        
+        $families = $person->familiesAsHusband->merge($person->familiesAsWife);
+        
+        if ($families->isEmpty()) {
+            return $depth;
+        }
+
+        $maxDepth = $depth;
+
+        foreach ($families as $family) {
+            $children = Person::where('child_in_family_id', $family->id)->get();
+            
+            foreach ($children as $child) {
+                $maxDepth = max($maxDepth, $this->getMaxDescendantDepth($child, $depth + 1, $visited));
+            }
+        }
+
+        return $maxDepth;
     }
 }
