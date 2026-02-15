@@ -33,6 +33,7 @@ A modern genealogy web application built with Laravel and Filament. This reposit
 Key goals:
 - Provide a performant, extensible genealogy platform.
 - Support GEDCOM import/export and DNA-matching integrations.
+- Integrate with external genealogy services (MyHeritage, Ancestry, FamilySearch).
 - Offer a developer-friendly, modular codebase.
 
 Quick links: Demo • Hosting
@@ -87,6 +88,32 @@ Start the Sail development environment:
 ```
 
 Visit http://localhost once containers are ready.
+
+## Features
+
+### Smart Matching & Record Discovery
+
+Liberu Genealogy integrates with major genealogy service providers to help you discover missing ancestors and fill gaps in your family tree:
+
+- **MyHeritage Integration** - Search MyHeritage family trees for potential matches
+- **Ancestry Integration** - Find records and family trees on Ancestry.com
+- **FamilySearch Integration** - Access the FamilySearch Family Tree
+- **Intelligent Confidence Scoring** - Machine learning-based matching algorithm
+- **Automated Discovery** - Background jobs continuously search for new matches
+- **Match Management** - Review, accept, or reject matches through intuitive UI
+
+See [`docs/MYHERITAGE_INTEGRATION.md`](docs/MYHERITAGE_INTEGRATION.md) for setup instructions.
+
+### Core Genealogy Features
+
+- **Family Tree Management** - Build and visualize family trees with interactive charts
+- **GEDCOM Support** - Import and export standard GEDCOM files
+- **DNA Matching** - Upload DNA results and find genetic relatives
+- **Smart Matching** - Automatic discovery of potential ancestors
+- **Media Management** - Store photos, documents, and multimedia
+- **Source Citations** - Track and cite your genealogy sources
+- **Research Tools** - Checklists, notes, and collaboration features
+- **Privacy Controls** - Manage visibility of living persons
 
 ## Our projects
 
