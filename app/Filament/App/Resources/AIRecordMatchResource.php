@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Filament\Resources;
+namespace App\Filament\App\Resources;
 
 use Filament\Actions\Action;
-use App\Filament\Resources\AIRecordMatchResource\Pages\ReviewMatches;
+use App\Filament\App\Resources\AIRecordMatchResource\Pages\ReviewMatches;
 use App\Models\AISuggestedMatch;
 use Filament\Resources\Resource;
 use Filament\Tables\Table;

@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Filament\Resources\ResearchSpaceResource\Pages;
+namespace App\Filament\App\Resources\ResearchSpaceResource\Pages;
 
 use Filament\Resources\Pages\CreateRecord;
-use App\Filament\Resources\ResearchSpaceResource;
+use App\Filament\App\Resources\ResearchSpaceResource;
 
 class CreateResearchSpace extends CreateRecord
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Filament\Widgets;
+namespace App\Filament\App\Widgets;
 
 use Override;
 use Illuminate\Contracts\View\View;
