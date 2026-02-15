@@ -6,10 +6,50 @@ use DateTime;
 use App\Models\Person;
 use App\Models\User;
 use App\Models\SmartMatch;
+use App\Services\RecordMatcher\Providers\MyHeritageProvider;
+use App\Services\RecordMatcher\Providers\AncestryProvider;
+use App\Services\RecordMatcher\Providers\FamilySearchProvider;
+use App\Services\RecordMatcher\Providers\ExternalRecordProviderInterface;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Log;
 
 class SmartMatchingService
 {
+    protected array $providers = [];
+
+    public function __construct()
+    {
+        $this->initializeProviders();
+    }
+
+    /**
+     * Initialize external genealogy providers
+     */
+    protected function initializeProviders(): void
+    {
+        // Add MyHeritage provider
+        $myHeritage = new MyHeritageProvider();
+        if ($myHeritage->isConfigured()) {
+            $this->providers['myheritage'] = $myHeritage;
+        }
+
+        // Add Ancestry provider
+        $ancestry = new AncestryProvider();
+        if ($ancestry->isConfigured()) {
+            $this->providers['ancestry'] = $ancestry;
+        }
+
+        // Add FamilySearch provider
+        $familySearch = new FamilySearchProvider();
+        if ($familySearch->isConfigured()) {
+            $this->providers['familysearch'] = $familySearch;
+        }
+
+        Log::info('Smart matching providers initialized', [
+            'configured_providers' => array_keys($this->providers),
+        ]);
+    }
+
     /**
      * Find smart matches for user's unknown ancestors
      */
@@ -56,12 +96,12 @@ class SmartMatchingService
     {
         $matches = [];
 
-        // Simulate searching different genealogy platforms
-        $sources = ['familysearch', 'ancestry', 'myheritage', 'findmypast'];
-
-        foreach ($sources as $source) {
-            $sourceMatches = $this->searchSource($person, $source);
-            $matches = array_merge($matches, $sourceMatches);
+        // If providers are configured, use them; otherwise fall back to simulation
+        if (count($this->providers) > 0) {
+            $matches = $this->searchUsingProviders($person);
+        } else {
+            Log::warning('No genealogy providers configured, using simulation mode');
+            $matches = $this->searchUsingSimulation($person);
         }
 
         // Sort by confidence score
@@ -71,6 +111,59 @@ class SmartMatchingService
 
         // Return top 10 matches
         return array_slice($matches, 0, 10);
+    }
+
+    /**
+     * Search using configured external providers
+     */
+    private function searchUsingProviders(Person $person): array
+    {
+        $matches = [];
+
+        foreach ($this->providers as $providerName => $provider) {
+            try {
+                $candidates = $provider->search($person);
+                
+                foreach ($candidates as $candidate) {
+                    $confidence = $this->calculateMatchConfidence($person, $candidate);
+                    
+                    if ($confidence >= 0.6) { // 60% confidence threshold
+                        $matches[] = [
+                            'tree_id' => $candidate['tree_id'] ?? null,
+                            'person_id' => $candidate['id'] ?? $candidate['external_id'] ?? null,
+                            'source' => $providerName,
+                            'confidence_score' => $confidence,
+                            'data' => $candidate,
+                        ];
+                    }
+                }
+            } catch (\Exception $e) {
+                Log::error("Provider search failed: {$providerName}", [
+                    'person_id' => $person->id,
+                    'error' => $e->getMessage(),
+                ]);
+            }
+        }
+
+        return $matches;
+    }
+
+    /**
+     * Fallback simulation mode when no providers are configured
+     */
+    private function searchUsingSimulation(Person $person): array
+    {
+        $matches = [];
+        
+        // Simulate searching different genealogy platforms
+        $sources = ['familysearch', 'ancestry', 'myheritage', 'findmypast'];
+
+        foreach ($sources as $source) {
+            $sourceMatches = $this->searchSource($person, $source);
+            $matches = array_merge($matches, $sourceMatches);
+        }
+
+        return $matches;
     }
 
     /**
