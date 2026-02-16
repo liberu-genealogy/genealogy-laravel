@@ -26,7 +26,15 @@ class BulkImportDnaCommand extends Command
 
     public function handle(): int
     {
-        $userId = $this->argument('user_id');
+        $userId = (int) $this->argument('user_id');
+        
+        // Validate user exists
+        $user = \App\Models\User::find($userId);
+        if (!$user) {
+            $this->error("User with ID {$userId} not found.");
+            return Command::FAILURE;
+        }
+        
         $directory = $this->option('directory');
         $files = $this->option('files');
         $autoMatch = !$this->option('no-match');

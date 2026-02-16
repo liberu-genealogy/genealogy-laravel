@@ -12,6 +12,10 @@ use LiberuGenealogy\PhpDna\Snps;
 
 class DnaImportService
 {
+    const VAR_NAME_PREFIX = 'var_';
+    const VAR_NAME_LENGTH = 5;
+    const EXPECTED_VAR_NAME_FULL_LENGTH = 9; // prefix (4) + random (5)
+    
     /**
      * Import multiple DNA kits from files
      *
@@ -213,10 +217,10 @@ class DnaImportService
      */
     protected function generateUniqueVarName(): string
     {
-        $varName = 'var_' . Str::random(5);
+        $varName = self::VAR_NAME_PREFIX . Str::random(self::VAR_NAME_LENGTH);
         
         while (Dna::where('variable_name', $varName)->exists()) {
-            $varName = 'var_' . Str::random(5);
+            $varName = self::VAR_NAME_PREFIX . Str::random(self::VAR_NAME_LENGTH);
         }
 
         return $varName;

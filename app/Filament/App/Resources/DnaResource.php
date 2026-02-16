@@ -106,11 +106,11 @@ class DnaResource extends Resource
                                 
                                 foreach ($files as $file) {
                                     try {
-                                        $file_name = $file->store('dna-form-imports', 'private');
+                                        $fileName = $file->store('dna-form-imports', 'private');
                                         
                                         // Use import service for validation and creation
                                         $result = $importService->importSingleKit(
-                                            $file_name,
+                                            $fileName,
                                             $currentUser->id,
                                             true // auto-match
                                         );

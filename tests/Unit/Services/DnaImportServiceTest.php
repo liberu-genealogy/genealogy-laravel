@@ -34,8 +34,8 @@ class DnaImportServiceTest extends TestCase
 
         $varName = $method->invoke($this->service);
 
-        $this->assertStringStartsWith('var_', $varName);
-        $this->assertEquals(9, strlen($varName)); // var_ + 5 random chars
+        $this->assertStringStartsWith(DnaImportService::VAR_NAME_PREFIX, $varName);
+        $this->assertEquals(DnaImportService::EXPECTED_VAR_NAME_FULL_LENGTH, strlen($varName)); // var_ + 5 random chars
         $this->assertNotEquals('var_test1', $varName);
     }
 

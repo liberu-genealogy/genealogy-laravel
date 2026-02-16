@@ -10,6 +10,8 @@ use Illuminate\Support\Collection;
 
 class DnaTriangulationService
 {
+    const MAX_CHROMOSOME_NUMBER = 23;
+    
     protected AdvancedDnaMatchingService $matchingService;
 
     public function __construct(AdvancedDnaMatchingService $matchingService)
@@ -223,7 +225,7 @@ class DnaTriangulationService
     {
         $triangulated = [];
 
-        for ($chr = 1; $chr <= 23; $chr++) {
+        for ($chr = 1; $chr <= self::MAX_CHROMOSOME_NUMBER; $chr++) {
             $cm12 = $breakdown12[$chr]['total_cm'] ?? 0;
             $cm13 = $breakdown13[$chr]['total_cm'] ?? 0;
             $cm23 = $breakdown23[$chr]['total_cm'] ?? 0;

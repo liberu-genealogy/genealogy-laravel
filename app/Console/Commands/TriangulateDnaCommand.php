@@ -14,7 +14,7 @@ class TriangulateDnaCommand extends Command
                             {--kits=* : Specific kit IDs to compare (optional, defaults to all kits)}
                             {--min-cm=20 : Minimum shared cM threshold}
                             {--three-way : Perform three-way triangulation}
-                            {--three-way-kits=* : Three kit IDs for three-way triangulation}
+                            {--three-way-kits=* : Exactly three kit IDs required for three-way triangulation (used with --three-way)}
                             {--store : Store results in database}';
 
     protected $description = 'Perform DNA triangulation analysis to match one kit against many or find triangulated groups';
