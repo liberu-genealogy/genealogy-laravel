@@ -16,6 +16,7 @@ use BackedEnum;
 use App\Filament\App\Resources\DnaResource\Pages;
 use App\Jobs\DnaMatching;
 use App\Models\Dna;
+use App\Services\DnaImportService;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -61,14 +62,19 @@ class DnaResource extends Resource
         return $schema
             ->components([
                 FileUpload::make('attachment')
+                    ->label('DNA Kit File(s)')
+                    ->helperText('Upload one or more DNA kit files. Supported formats: 23andMe, AncestryDNA, MyHeritage, FamilyTreeDNA')
                     ->required()
+                    ->multiple() // Enable multiple file uploads
                     ->maxSize(100000)
                     ->directory('dna-form-imports')
                     ->visibility('private')
+                    ->acceptedFileTypes(['text/plain', 'text/csv', 'application/zip'])
                     ->afterStateUpdated(function ($state, $set, $livewire) {
                         if ($state === null) {
                             return;
                         }
+                        
                         $allowed = null;
                         // If premium features are enabled, allow all users to upload
                         if (config('premium.enabled')) {
@@ -77,47 +83,62 @@ class DnaResource extends Resource
                         $role = Auth::user()->role_id;
                         $user_id = Auth::user()->id;
                         $dna = Dna::where('user_id', '=', $user_id)->count();
+                        
                         if ($allowed !== true && in_array($role, [1, 2, 9, 10])) {
                             $allowed = true;
                         }
                         if ($allowed !== true && in_array($role, [4, 5, 6]) && $dna < 1) {
                             $allowed = true;
                         }
-
                         if ($allowed !== true && in_array($role, [7, 8]) && $dna < 5) {
                             $allowed = true;
                         }
+                        
                         if ($allowed === true) {
                             try {
                                 $currentUser = Auth::user();
-
-                                $random_string = Str::random(5);
-                                while (Dna::where('name', $random_string)->exists()) {
-                                    $random_string = Str::random(5);
+                                $importService = app(DnaImportService::class);
+                                
+                                // Handle multiple files
+                                $files = is_array($state) ? $state : [$state];
+                                $successCount = 0;
+                                $errors = [];
+                                
+                                foreach ($files as $file) {
+                                    try {
+                                        $file_name = $file->store('dna-form-imports', 'private');
+                                        
+                                        // Use import service for validation and creation
+                                        $result = $importService->importSingleKit(
+                                            $file_name,
+                                            $currentUser->id,
+                                            true // auto-match
+                                        );
+                                        
+                                        $successCount++;
+                                    } catch (Exception $e) {
+                                        $errors[] = "Failed to import " . $file->getClientOriginalName() . ": " . $e->getMessage();
+                                    }
                                 }
-
-                                $var_name = 'var_'.$random_string;
-                                $file_name = $state->store('dna-form-imports', 'private');
-                                $filename = Storage::disk('private')->path($file_name);
-                                $user_id = $currentUser->id;
-
-                                $dna = new Dna();
-                                $dna->name = 'DNA Kit for user '.$user_id;
-                                $dna->user_id = $user_id;
-                                $dna->variable_name = $var_name;
-                                $dna->file_name = $file_name;
-
-                                $dna->save();
-                                DnaMatching::dispatch($currentUser, $var_name, $file_name);
-
-                                return [
-                                    'message'  => __('The dna was successfully created'),
-                                    'redirect' => 'dna.edit',
-                                    'param'    => ['dna' => $dna->id],
-                                ];
+                                
+                                if ($successCount > 0) {
+                                    $message = "Successfully imported {$successCount} DNA kit(s)";
+                                    if (!empty($errors)) {
+                                        $message .= " with " . count($errors) . " error(s)";
+                                    }
+                                    
+                                    return [
+                                        'message'  => __($message),
+                                        'redirect' => 'dna.index',
+                                    ];
+                                } else {
+                                    throw new Exception("All imports failed: " . implode(", ", $errors));
+                                }
                             } catch (Exception $e) {
                                 return $e->getMessage();
                             }
+                        } else {
+                            return "You have reached your DNA kit upload limit for your role.";
                         }
                     }),
             ]);
