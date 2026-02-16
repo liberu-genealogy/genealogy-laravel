@@ -302,7 +302,7 @@ class AdvancedDnaMatchingService
     {
         $breakdown = [];
 
-        for ($chr = 1; $chr <= 23; $chr++) {
+        for ($chr = 1; $chr <= self::MAX_CHROMOSOME_NUMBER; $chr++) {
             $chrSegments = array_filter($ibdSegments, fn($seg) => $seg['chromosome'] == $chr);
             $breakdown[$chr] = [
                 'segment_count' => count($chrSegments),
