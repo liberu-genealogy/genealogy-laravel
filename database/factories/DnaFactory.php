@@ -25,7 +25,10 @@ class DnaFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'name' => $this->faker->words(3, true),
+            'file_name' => 'dna-test-files/' . $this->faker->uuid . '.txt',
+            'variable_name' => 'var_' . $this->faker->unique()->bothify('?????'),
+            'user_id' => \App\Models\User::factory(),
         ];
     }
 }
