@@ -39,20 +39,20 @@ class PedigreeChart extends Component
     {
         $this->rootPersonId = $personId;
         $this->hydrateTree();
-        $this->emit('refreshChart');
+        $this->dispatch('refreshChart');
     }
 
     public function setGenerations(int $generations): void
     {
         $this->generations = max(3, min(8, $generations));
         $this->hydrateTree();
-        $this->emit('refreshChart');
+        $this->dispatch('refreshChart');
     }
 
     public function toggleDates(): void
     {
         $this->showDates = ! $this->showDates;
-        $this->emit('refreshChart');
+        $this->dispatch('refreshChart');
     }
 
     public function expandPerson(int $personId): void

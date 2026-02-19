@@ -4,11 +4,11 @@ namespace App\Livewire;
 
 use Illuminate\Contracts\View\View;
 use App\Models\Person;
-use Filament\Widgets\Widget;
+use Livewire\Component;
 
-class FanChart extends Widget
+class FanChart extends Component
 {
-    protected string $view = 'filament.widgets.fan-chart-widget';
+    protected string $view = 'livewire.fan-chart';
 
     public ?int $rootPersonId = null;
     public int $generations = 5;
@@ -82,35 +82,40 @@ class FanChart extends Widget
     public function setRootPerson($personId): void
     {
         $this->rootPersonId = $personId;
-        $this->emit('refreshFanChart');
+        $this->dispatch('refreshFanChart');
     }
 
     public function setGenerations($generations): void
     {
         $this->generations = max(2, min(8, $generations));
-        $this->emit('refreshFanChart');
+        $this->dispatch('refreshFanChart');
     }
 
     public function toggleNames(): void
     {
         $this->showNames = !$this->showNames;
-        $this->emit('refreshFanChart');
+        $this->dispatch('refreshFanChart');
     }
 
     public function toggleDates(): void
     {
         $this->showDates = !$this->showDates;
-        $this->emit('refreshFanChart');
+        $this->dispatch('refreshFanChart');
     }
 
     public function setColorScheme($scheme): void
     {
         $this->colorScheme = $scheme;
-        $this->emit('refreshFanChart');
+        $this->dispatch('refreshFanChart');
     }
 
     public function render(): View
     {
         return view($this->view, $this->getData());
+    }
+
+    public function getPeopleListProperty(): array
+    {
+        return Person::getListOptimized();
     }
 }

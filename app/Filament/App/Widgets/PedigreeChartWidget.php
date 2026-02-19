@@ -26,22 +26,22 @@ class PedigreeChartWidget extends Widget
 
     public function initializeChart(): void
     {
-        $this->dispatchBrowserEvent('initializeChart', ['people' => $this->getData()['people']->toJson()]);
+        $this->dispatch('initializeChart', people: $this->getData()['people']->toJson());
     }
 
     public function zoomIn(): void
     {
-        $this->dispatchBrowserEvent('zoomIn');
+        $this->dispatch('zoomIn');
     }
 
     public function zoomOut(): void
     {
-        $this->dispatchBrowserEvent('zoomOut');
+        $this->dispatch('zoomOut');
     }
 
     public function pan($direction): void
     {
-        $this->dispatchBrowserEvent('pan', ['direction' => $direction]);
+        $this->dispatch('pan', direction: $direction);
     }
 
     protected function getListeners()
