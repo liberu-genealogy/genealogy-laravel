@@ -3,9 +3,12 @@
 namespace App\Filament\App\Resources;
 
 use Override;
+use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Toggle;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Columns\IconColumn;
 use Filament\Actions\EditAction;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
@@ -38,23 +41,48 @@ class FamilyResource extends Resource
     {
         return $schema
             ->components([
-                Textarea::make('description')
-                ->maxLength(65535)
-                ->columnSpanFull(),
-                TextInput::make('is_active')
-                    ->numeric(),
-                TextInput::make('type_id')
-                    ->numeric(),
-                TextInput::make('husband_id')
-                    ->numeric(),
-                TextInput::make('wife_id')
-                    ->numeric(),
-                TextInput::make('chan')
-                    ->maxLength(255),
-                TextInput::make('nchi')
-                    ->maxLength(255),
-                TextInput::make('rin')
-                    ->maxLength(255),
+                Section::make('Family Members')
+                    ->description('Identify the husband and wife in this family unit')
+                    ->icon('heroicon-o-users')
+                    ->columns(2)
+                    ->schema([
+                        TextInput::make('husband_id')
+                            ->label('Husband ID')
+                            ->numeric(),
+                        TextInput::make('wife_id')
+                            ->label('Wife ID')
+                            ->numeric(),
+                        TextInput::make('nchi')
+                            ->label('Number of Children')
+                            ->maxLength(255),
+                        TextInput::make('type_id')
+                            ->label('Family Type')
+                            ->numeric(),
+                        Toggle::make('is_active')
+                            ->label('Active')
+                            ->default(true),
+                    ]),
+
+                Section::make('Notes')
+                    ->icon('heroicon-o-document-text')
+                    ->schema([
+                        Textarea::make('description')
+                            ->maxLength(65535)
+                            ->columnSpanFull(),
+                    ]),
+
+                Section::make('Record References')
+                    ->icon('heroicon-o-hashtag')
+                    ->columns(2)
+                    ->collapsed()
+                    ->schema([
+                        TextInput::make('chan')
+                            ->label('Change Date')
+                            ->maxLength(255),
+                        TextInput::make('rin')
+                            ->label('RIN')
+                            ->maxLength(255),
+                    ]),
             ]);
     }
 
@@ -63,39 +91,37 @@ class FamilyResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('is_active')
-                ->numeric()
-                ->sortable(),
-                TextColumn::make('type_id')
-                    ->numeric()
+                TextColumn::make('id')
+                    ->label('ID')
                     ->sortable(),
                 TextColumn::make('husband_id')
+                    ->label('Husband ID')
                     ->numeric()
                     ->sortable(),
                 TextColumn::make('wife_id')
+                    ->label('Wife ID')
                     ->numeric()
                     ->sortable(),
+                TextColumn::make('nchi')
+                    ->label('Children')
+                    ->searchable(),
+                IconColumn::make('is_active')
+                    ->label('Active')
+                    ->boolean(),
                 TextColumn::make('created_at')
-                    ->dateTime()
+                    ->label('Created')
+                    ->since()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('updated_at')
-                    ->dateTime()
+                    ->label('Updated')
+                    ->since()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                TextColumn::make('deleted_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                TextColumn::make('chan')
-                    ->searchable(),
-                TextColumn::make('nchi')
-                    ->searchable(),
-                TextColumn::make('rin')
-                    ->searchable(),
             ])
             ->filters([
-                //
+                Tables\Filters\TernaryFilter::make('is_active')
+                    ->label('Active'),
             ])
             ->recordActions([
                 EditAction::make(),

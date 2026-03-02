@@ -6,6 +6,8 @@ use Override;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\DateTimePicker;
+use Filament\Forms\Components\Section;
+use Filament\Forms\Components\Grid;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Actions\EditAction;
 use Filament\Actions\BulkActionGroup;
@@ -46,36 +48,65 @@ class PersonResource extends Resource
     {
         return $schema
             ->components([
-                TextInput::make('givn')->label('First Name'),
-                TextInput::make('surn')->label('Last Name'),
-                Select::make('sex')
-                    ->options([
-                        'M' => 'Male',
-                        'F' => 'Female',
-                    ])
-                    ->label('Sex'),
-                TextInput::make('child_in_family_id')->label('Child In Family ID'),
-                TextInput::make('description')->label('Description'),
-                TextInput::make('titl')->label('Title'),
-                TextInput::make('name')->label('Name'),
-                TextInput::make('appellative')->label('Appellative'),
-                TextInput::make('email')->label('Email'),
-                TextInput::make('phone')->label('Phone'),
-                DateTimePicker::make('birthday')->label('Birthday'),
-                DateTimePicker::make('deathday')->label('Deathday'),
-                FileUpload::make('photo_url')
-                    ->image()
-                    ->label('Profile Photo')
-                    ->directory('persons')
-                    ->disk('public'),
-                DateTimePicker::make('burial_day')->label('Burial Day'),
-                TextInput::make('bank')->label('Bank'),
-                TextInput::make('bank_account')->label('Bank Account'),
-                TextInput::make('chan')->label('Chan'),
-                TextInput::make('rin')->label('Rin'),
-                TextInput::make('resn')->label('Resn'),
-                TextInput::make('rfn')->label('Rfn'),
-                TextInput::make('afn')->label('Afn'),
+                Section::make('Basic Information')
+                    ->description('Core identity and personal details')
+                    ->icon('heroicon-o-user')
+                    ->columns(2)
+                    ->schema([
+                        FileUpload::make('photo_url')
+                            ->image()
+                            ->label('Profile Photo')
+                            ->directory('persons')
+                            ->disk('public')
+                            ->columnSpanFull(),
+                        TextInput::make('givn')->label('First Name'),
+                        TextInput::make('surn')->label('Last Name'),
+                        TextInput::make('titl')->label('Title'),
+                        TextInput::make('appellative')->label('Appellative'),
+                        TextInput::make('name')->label('Full Name'),
+                        Select::make('sex')
+                            ->options([
+                                'M' => 'Male',
+                                'F' => 'Female',
+                            ])
+                            ->label('Sex'),
+                        TextInput::make('description')->label('Description')->columnSpanFull(),
+                    ]),
+
+                Section::make('Vital Records')
+                    ->description('Birth, death, and burial information')
+                    ->icon('heroicon-o-calendar')
+                    ->columns(2)
+                    ->schema([
+                        DateTimePicker::make('birthday')->label('Date of Birth'),
+                        DateTimePicker::make('deathday')->label('Date of Death'),
+                        DateTimePicker::make('burial_day')->label('Burial Date'),
+                        TextInput::make('child_in_family_id')->label('Child in Family ID'),
+                    ]),
+
+                Section::make('Contact Information')
+                    ->description('Email and phone details')
+                    ->icon('heroicon-o-envelope')
+                    ->columns(2)
+                    ->schema([
+                        TextInput::make('email')->label('Email')->email(),
+                        TextInput::make('phone')->label('Phone'),
+                    ]),
+
+                Section::make('Record References')
+                    ->description('Genealogy record identifiers and metadata')
+                    ->icon('heroicon-o-document-text')
+                    ->columns(3)
+                    ->collapsed()
+                    ->schema([
+                        TextInput::make('rin')->label('RIN'),
+                        TextInput::make('rfn')->label('RFN'),
+                        TextInput::make('afn')->label('AFN'),
+                        TextInput::make('resn')->label('Restriction'),
+                        TextInput::make('chan')->label('Change Date'),
+                        TextInput::make('bank')->label('Bank'),
+                        TextInput::make('bank_account')->label('Bank Account'),
+                    ]),
             ]);
     }
 
@@ -84,33 +115,27 @@ class PersonResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('givn')->label('First Name'),
-                TextColumn::make('surn')->label('Last Name'),
-                TextColumn::make('sex')->label('Sex'),
-                TextColumn::make('child_in_family_id')->label('Child In Family ID'),
-                TextColumn::make('description')->label('Description'),
-                TextColumn::make('titl')->label('Title'),
-                TextColumn::make('name')->label('Name'),
-                TextColumn::make('appellative')->label('Appellative'),
-                TextColumn::make('email')->label('Email'),
-                TextColumn::make('phone')->label('Phone'),
-                TextColumn::make('birthday')->label('Birthday'),
-                TextColumn::make('deathday')->label('Deathday'),
-                ImageColumn::make('photo_url')->label('Photo')->disk('public')->height(40)->width(40),
-                TextColumn::make('burial_day')->label('Burial Day'),
-                TextColumn::make('bank')->label('Bank'),
-                TextColumn::make('bank_account')->label('Bank Account'),
-                TextColumn::make('chan')->label('Chan'),
-                TextColumn::make('rin')->label('Rin'),
-                TextColumn::make('resn')->label('Resn'),
-                TextColumn::make('rfn')->label('Rfn'),
-                TextColumn::make('afn')->label('Afn'),
-                TextColumn::make('created_at')->label('Created At')->sortable(),
-                TextColumn::make('updated_at')->label('Updated At')->sortable(),
-
+                ImageColumn::make('photo_url')->label('Photo')->disk('public')->height(40)->width(40)->circular(),
+                TextColumn::make('givn')->label('First Name')->searchable()->sortable(),
+                TextColumn::make('surn')->label('Last Name')->searchable()->sortable(),
+                TextColumn::make('sex')->label('Sex')->badge()
+                    ->color(fn (string $state): string => match ($state) {
+                        'M' => 'info',
+                        'F' => 'danger',
+                        default => 'gray',
+                    }),
+                TextColumn::make('birthday')->label('Born')->date('Y')->sortable(),
+                TextColumn::make('deathday')->label('Died')->date('Y')->sortable(),
+                TextColumn::make('email')->label('Email')->toggleable(isToggledHiddenByDefault: true),
+                TextColumn::make('phone')->label('Phone')->toggleable(isToggledHiddenByDefault: true),
+                TextColumn::make('created_at')->label('Added')->since()->sortable()->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                //
+                Tables\Filters\SelectFilter::make('sex')
+                    ->options([
+                        'M' => 'Male',
+                        'F' => 'Female',
+                    ]),
             ])
             ->recordActions([
                 EditAction::make(),
