@@ -51,17 +51,20 @@ class TreeBuilderService
         $family = $person->childInFamily;
 
         if ($family) {
-            if ($family->husband) {
+            $husband = $family->husband()->first();
+            $wife = $family->wife()->first();
+
+            if ($husband) {
                 $ancestors['father'] = [
-                    'person' => $this->formatPersonNode($family->husband),
-                    'ancestors' => $this->buildAncestorTree($family->husband, $generations - 1),
+                    'person' => $this->formatPersonNode($husband),
+                    'ancestors' => $this->buildAncestorTree($husband, $generations - 1),
                 ];
             }
 
-            if ($family->wife) {
+            if ($wife) {
                 $ancestors['mother'] = [
-                    'person' => $this->formatPersonNode($family->wife),
-                    'ancestors' => $this->buildAncestorTree($family->wife, $generations - 1),
+                    'person' => $this->formatPersonNode($wife),
+                    'ancestors' => $this->buildAncestorTree($wife, $generations - 1),
                 ];
             }
         }
@@ -93,10 +96,12 @@ class TreeBuilderService
             ];
 
             // Add spouse information
-            if ($person->sex === 'M' && $family->wife) {
-                $familyNode['spouse'] = $this->formatPersonNode($family->wife);
-            } elseif ($person->sex === 'F' && $family->husband) {
-                $familyNode['spouse'] = $this->formatPersonNode($family->husband);
+            $wife = $family->wife()->first();
+            $husband = $family->husband()->first();
+            if ($person->sex === 'M' && $wife) {
+                $familyNode['spouse'] = $this->formatPersonNode($wife);
+            } elseif ($person->sex === 'F' && $husband) {
+                $familyNode['spouse'] = $this->formatPersonNode($husband);
             }
 
             // Add children
@@ -145,18 +150,20 @@ class TreeBuilderService
             $family = $person->childInFamily;
             if ($family) {
                 $data['parents'] = [];
+                $husband = $family->husband()->first();
+                $wife = $family->wife()->first();
                 
-                if ($family->husband) {
+                if ($husband) {
                     $data['parents']['father'] = $this->buildPedigreeData(
-                        $family->husband, 
+                        $husband, 
                         $maxGenerations, 
                         $currentGeneration + 1
                     );
                 }
                 
-                if ($family->wife) {
+                if ($wife) {
                     $data['parents']['mother'] = $this->buildPedigreeData(
-                        $family->wife, 
+                        $wife, 
                         $maxGenerations, 
                         $currentGeneration + 1
                     );
@@ -206,10 +213,12 @@ class TreeBuilderService
                 ];
 
                 // Add spouse
-                if ($person->sex === 'M' && $family->wife) {
-                    $familyData['spouse'] = $this->formatPersonNode($family->wife);
-                } elseif ($person->sex === 'F' && $family->husband) {
-                    $familyData['spouse'] = $this->formatPersonNode($family->husband);
+                $wife = $family->wife()->first();
+                $husband = $family->husband()->first();
+                if ($person->sex === 'M' && $wife) {
+                    $familyData['spouse'] = $this->formatPersonNode($wife);
+                } elseif ($person->sex === 'F' && $husband) {
+                    $familyData['spouse'] = $this->formatPersonNode($husband);
                 }
 
                 // Add children
@@ -332,14 +341,17 @@ class TreeBuilderService
 
         $family = $person->childInFamily;
         if ($family) {
-            if ($family->husband && !$ancestors->contains('id', $family->husband->id)) {
-                $ancestors->push($family->husband);
-                $this->collectAncestors($family->husband, $ancestors, $remainingGenerations - 1);
+            $husband = $family->husband()->first();
+            $wife = $family->wife()->first();
+
+            if ($husband && !$ancestors->contains('id', $husband->id)) {
+                $ancestors->push($husband);
+                $this->collectAncestors($husband, $ancestors, $remainingGenerations - 1);
             }
 
-            if ($family->wife && !$ancestors->contains('id', $family->wife->id)) {
-                $ancestors->push($family->wife);
-                $this->collectAncestors($family->wife, $ancestors, $remainingGenerations - 1);
+            if ($wife && !$ancestors->contains('id', $wife->id)) {
+                $ancestors->push($wife);
+                $this->collectAncestors($wife, $ancestors, $remainingGenerations - 1);
             }
         }
     }

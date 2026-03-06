@@ -19,7 +19,8 @@ class RegistrationTest extends TestCase
 
         $response = $this->get('/register');
 
-        $response->assertStatus(200);
+        // In this Filament-based app, /register redirects to the Filament admin panel
+        $response->assertRedirect('/admin/register');
     }
 
     public function test_registration_screen_cannot_be_rendered_if_support_is_disabled(): void
@@ -48,6 +49,7 @@ class RegistrationTest extends TestCase
         ]);
 
         $this->assertAuthenticated();
-        $response->assertRedirect(route('dashboard', absolute: false));
+        // Fortify home is configured to /app (Filament panel)
+        $response->assertRedirect('/app');
     }
 }

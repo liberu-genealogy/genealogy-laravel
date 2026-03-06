@@ -16,9 +16,9 @@ class CreateTreesTable extends Migration
         Schema::create('trees', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->foreignId('user_id')->constrained('users');
-            $table->foreignId('company_id')->constrained('companies');
+            $table->foreignId('company_id')->nullable()->constrained('companies');
             $table->string('name', 255);
-            $table->text('description');
+            $table->text('description')->nullable();
 
             $table->timestamps();
         });

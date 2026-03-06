@@ -6,7 +6,7 @@
 /storage/*.key
 /storage/pail
 /vendor
-/vendor-local
+!/vendor-local/laravel-gramps-xml
 .env
 .env.backup
 .env.production

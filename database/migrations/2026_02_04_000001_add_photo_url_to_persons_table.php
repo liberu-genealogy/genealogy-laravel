@@ -15,6 +15,12 @@ return new class() extends Migration
             return;
         }
 
+        // photo_url is already added in the create_persons_table migration,
+        // so this migration is a no-op if the column already exists.
+        if (Schema::hasColumn('persons', 'photo_url')) {
+            return;
+        }
+
         // If the 'phone' column exists we keep the original intent and place
         // photo_url after it; otherwise add the column without the 'after'.
         if (Schema::hasColumn('persons', 'phone')) {
