@@ -21,8 +21,9 @@ Route::get('/', fn() => view('home'));
 Route::post('/send-invitation', [TeamInvitationController::class, 'sendInvitation'])->name('send.invitation');
 Route::post('/accept-invitation/{token}', [TeamInvitationController::class, 'acceptInvitation'])->name('accept.invitation');
 
-Route::redirect('/register', '/admin/register')->name('register');
-Route::redirect('/login', '/admin/login')->name('login');
+// redirect the public auth paths to the Filament `app` panel
+Route::redirect('/register', '/app/register')->name('register');
+Route::redirect('/login', '/app/login')->name('login');
 
 Route::get('/privacy', fn() => view('pages.privacy'))->name('privacy');
 Route::get('/terms-and-conditions', fn() => view('pages.termsandconditions'))->name('terms.and.conditions');

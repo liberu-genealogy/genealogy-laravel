@@ -133,13 +133,19 @@ class User extends Authenticatable implements HasDefaultTenant, HasTenants, Fila
 
     public function canAccessPanel(Panel $panel): bool
     {
+        // always allow access to the `app` panel for any authenticated user;
+        // prior implementation required a `panel_user` role which caused
+        // 403 errors immediately after login/registration for new accounts.
+        if ($panel->getId() === 'app') {
+            return true;
+        }
+
         if ($this->hasRole('super_admin')) {
             return true;
         }
 
         return match ($panel->getId()) {
             'admin' => $this->hasRole('super_admin'),
-            'app' => $this->hasRole('panel_user'),
             default => false,
         };
     }
