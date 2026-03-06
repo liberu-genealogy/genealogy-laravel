@@ -12,7 +12,8 @@ class GedcomResource
     {
         $user = Auth::user();
         if ($user) {
-            Queue::push(new ExportGedCom($user));
+            $file = 'gedcom_export_' . $user->id . '_' . now()->format('YmdHis') . '.ged';
+            Queue::push(new ExportGedCom($file, $user));
         }
     }
 }

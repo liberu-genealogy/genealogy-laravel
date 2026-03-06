@@ -23,7 +23,7 @@ final class ExportGedCom implements ShouldQueue
 
     public function __construct(
         private readonly string $file,
-        private readonly User $user,
+        public readonly User $user,
     ) {}
 
     public function handle(): void
