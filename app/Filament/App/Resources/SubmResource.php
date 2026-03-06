@@ -30,86 +30,49 @@ class SubmResource extends Resource
 
     protected static string | \UnitEnum | null $navigationGroup = '🛠️ Data Management';
 
+    use BasicResourceTrait;
+
     #[Override]
     public static function form(Schema $schema): Schema
     {
         return $schema
-            ->components([
-                TextInput::make('group')
-                    ->maxLength(255),
-                TextInput::make('gid')
-                    ->numeric(),
-                TextInput::make('name')
-                    ->maxLength(255),
-                TextInput::make('addr_id')
-                    ->numeric(),
-                TextInput::make('rin')
-                    ->maxLength(255),
-                TextInput::make('rfn')
-                    ->maxLength(255),
-                TextInput::make('lang')
-                    ->maxLength(255),
-                TextInput::make('phon')
-                    ->maxLength(255),
-                TextInput::make('email')
-                    ->email()
-                    ->maxLength(255),
-                TextInput::make('fax')
-                    ->maxLength(255),
-                TextInput::make('www')
-                    ->maxLength(255),
-            ]);
+            ->components(array_merge(
+                static::basicFormFields(),
+                [
+                    TextInput::make('addr_id')->numeric(),
+                    TextInput::make('rin')->maxLength(255),
+                    TextInput::make('rfn')->maxLength(255),
+                    TextInput::make('lang')->maxLength(255),
+                    TextInput::make('phon')->maxLength(255),
+                    TextInput::make('email')->email()->maxLength(255),
+                    TextInput::make('fax')->maxLength(255),
+                    TextInput::make('www')->maxLength(255),
+                ]
+            ));
     }
 
     #[Override]
     public static function table(Table $table): Table
     {
         return $table
-            ->columns([
-                TextColumn::make('group')
-                    ->searchable(),
-                TextColumn::make('gid')
-                    ->numeric()
-                    ->sortable(),
-                TextColumn::make('name')
-                    ->searchable(),
-                TextColumn::make('addr_id')
-                    ->numeric()
-                    ->sortable(),
-                TextColumn::make('rin')
-                    ->searchable(),
-                TextColumn::make('rfn')
-                    ->searchable(),
-                TextColumn::make('lang')
-                    ->searchable(),
-                TextColumn::make('phon')
-                    ->searchable(),
-                TextColumn::make('email')
-                    ->searchable(),
-                TextColumn::make('fax')
-                    ->searchable(),
-                TextColumn::make('www')
-                    ->searchable(),
-                TextColumn::make('created_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                TextColumn::make('updated_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-            ])
-            ->filters([
-                //
-            ])
-            ->recordActions([
-                EditAction::make(),
-            ])
-            ->toolbarActions([
-                BulkActionGroup::make([
-                    DeleteBulkAction::make(),
-                ]),
-            ]);
+            ->columns(array_merge(
+                static::basicTableColumns(),
+                [
+                    TextColumn::make('addr_id')->numeric()->sortable(),
+                    TextColumn::make('rin')->searchable(),
+                    TextColumn::make('rfn')->searchable(),
+                    TextColumn::make('lang')->searchable(),
+                    TextColumn::make('phon')->searchable(),
+                    TextColumn::make('email')->searchable(),
+                    TextColumn::make('fax')->searchable(),
+                    TextColumn::make('www')->searchable(),
+                    TextColumn::make('created_at')->dateTime()->sortable()->toggleable(isToggledHiddenByDefault: true),
+                    TextColumn::make('updated_at')->dateTime()->sortable()->toggleable(isToggledHiddenByDefault: true),
+                ]
+            ))
+            ->filters([])
+            ->recordActions([EditAction::make()])
+            ->toolbarActions([BulkActionGroup::make([DeleteBulkAction::make()])]);
     }
 
     #[Override]

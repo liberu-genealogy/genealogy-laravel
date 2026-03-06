@@ -26,6 +26,8 @@ use Filament\Tables\Table;
 
 class FamilyEventResource extends Resource
 {
+    use EventResourceTrait;
+
     protected static ?string $model = FamilyEvent::class;
 
     protected static ?string $navigationLabel = 'Family Events';
@@ -38,117 +40,35 @@ class FamilyEventResource extends Resource
     public static function form(Schema $schema): Schema
     {
         return $schema
-            ->components([
-                TextInput::make('family_id')
-                ->required()
-                ->numeric(),
-                TextInput::make('places_id')
-                    ->numeric(),
-                Textarea::make('date')
-                    ->maxLength(65535)
-                    ->columnSpanFull(),
-                TextInput::make('title')
-                    ->maxLength(255),
-                Textarea::make('description')
-                    ->maxLength(65535)
-                    ->columnSpanFull(),
-                TextInput::make('converted_date')
-                    ->maxLength(255),
-                TextInput::make('year')
-                    ->numeric(),
-                TextInput::make('month')
-                    ->numeric(),
-                TextInput::make('day')
-                    ->numeric(),
-                TextInput::make('type')
-                    ->maxLength(255),
-                TextInput::make('plac')
-                    ->maxLength(255),
-                TextInput::make('addr_id')
-                    ->numeric(),
-                TextInput::make('phon')
-                    ->maxLength(255),
-                Textarea::make('caus')
-                    ->maxLength(65535)
-                    ->columnSpanFull(),
-                TextInput::make('age')
-                    ->maxLength(255),
-                TextInput::make('agnc')
-                    ->maxLength(255),
-                TextInput::make('husb')
-                    ->numeric(),
-                TextInput::make('wife')
-                    ->numeric(),
-            ]);
+            ->components(array_merge(
+                [TextInput::make('family_id')->required()->numeric()],
+                static::eventFormFields(),
+                [
+                    TextInput::make('places_id')->numeric(),
+                    TextInput::make('husb')->numeric(),
+                    TextInput::make('wife')->numeric(),
+                ]
+            ));
     }
 
     #[Override]
     public static function table(Table $table): Table
     {
         return $table
-            ->columns([
-                TextColumn::make('family_id')
-                    ->numeric()
-                    ->sortable(),
-                TextColumn::make('places_id')
-                    ->numeric()
-                    ->sortable(),
-                TextColumn::make('title')
-                    ->searchable(),
-                TextColumn::make('converted_date')
-                    ->searchable(),
-                TextColumn::make('created_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                TextColumn::make('updated_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                TextColumn::make('deleted_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                TextColumn::make('year')
-                    ->numeric()
-                    ->sortable(),
-                TextColumn::make('month')
-                    ->numeric()
-                    ->sortable(),
-                TextColumn::make('day')
-                    ->numeric()
-                    ->sortable(),
-                TextColumn::make('type')
-                    ->searchable(),
-                TextColumn::make('plac')
-                    ->searchable(),
-                TextColumn::make('addr_id')
-                    ->numeric()
-                    ->sortable(),
-                TextColumn::make('phon')
-                    ->searchable(),
-                TextColumn::make('age')
-                    ->searchable(),
-                TextColumn::make('agnc')
-                    ->searchable(),
-                TextColumn::make('husb')
-                    ->numeric()
-                    ->sortable(),
-                TextColumn::make('wife')
-                    ->numeric()
-                    ->sortable(),
-            ])
-            ->filters([
-                //
-            ])
-            ->recordActions([
-                EditAction::make(),
-            ])
-            ->toolbarActions([
-                BulkActionGroup::make([
-                    DeleteBulkAction::make(),
-                ]),
-            ]);
+            ->columns(array_merge(
+                [
+                    TextColumn::make('family_id')->numeric()->sortable(),
+                    TextColumn::make('places_id')->numeric()->sortable(),
+                ],
+                static::eventTableColumns(),
+                [
+                    TextColumn::make('husb')->numeric()->sortable(),
+                    TextColumn::make('wife')->numeric()->sortable(),
+                ]
+            ))
+            ->filters([])
+            ->recordActions([EditAction::make()])
+            ->toolbarActions([BulkActionGroup::make([DeleteBulkAction::make()])]);
     }
 
     #[Override]
