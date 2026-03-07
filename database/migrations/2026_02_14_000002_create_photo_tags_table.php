@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('photo_tags', function (Blueprint $table) {
             $table->id();
             $table->foreignId('photo_id')->constrained('person_photos')->onDelete('cascade');
-            $table->foreignId('person_id')->nullable()->constrained('people')->onDelete('set null');
+            $table->foreignId('person_id')->nullable()->constrained('persons')->onDelete('set null');
             $table->foreignId('team_id')->nullable()->constrained('teams')->onDelete('cascade');
             $table->decimal('confidence', 5, 2)->nullable();
             $table->json('bounding_box')->nullable(); // Store face coordinates

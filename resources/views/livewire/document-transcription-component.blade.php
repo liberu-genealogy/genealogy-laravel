@@ -75,7 +75,7 @@
                         @enderror
                     </div>
 
-                    @if ($document)
+                    @if ($document && in_array($document->getMimeType(), ['image/jpeg', 'image/png', 'image/gif', 'image/webp', 'image/svg+xml']))
                         <div class="mt-2">
                             <img src="{{ $document->temporaryUrl() }}" alt="Preview" class="max-w-full h-auto rounded border">
                         </div>
