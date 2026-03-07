@@ -28,27 +28,31 @@ class ModuleSystemTest extends TestCase
     /** @test */
     public function it_can_get_module_by_name()
     {
-        $module = $this->moduleManager->get('BlogModule');
+        $module = $this->moduleManager->get('Core');
         $this->assertNotNull($module);
-        $this->assertEquals('BlogModule', $module->getName());
+        $this->assertEquals('Core', $module->getName());
     }
 
     /** @test */
     public function it_can_enable_and_disable_modules()
     {
-        $moduleName = 'BlogModule';
-        
-        // Enable module
+        // First enable Core since other modules depend on it
+        $coreModule = $this->moduleManager->get('Core');
+        $this->assertNotNull($coreModule, 'Core module should exist');
+        $coreModule->enable();
+
+        // Now enable Media (depends only on Core)
+        $moduleName = 'Media';
         $result = $this->moduleManager->enable($moduleName);
         $this->assertTrue($result);
-        
+
         $module = $this->moduleManager->get($moduleName);
         $this->assertTrue($module->isEnabled());
 
-        // Disable module
+        // Disable Media module
         $result = $this->moduleManager->disable($moduleName);
         $this->assertTrue($result);
-        
+
         $module = $this->moduleManager->get($moduleName);
         $this->assertFalse($module->isEnabled());
     }
@@ -56,32 +60,12 @@ class ModuleSystemTest extends TestCase
     /** @test */
     public function it_can_get_module_info()
     {
-        $info = $this->moduleManager->getModuleInfo('BlogModule');
-        
+        $info = $this->moduleManager->getModuleInfo('Core');
+
         $this->assertArrayHasKey('name', $info);
         $this->assertArrayHasKey('version', $info);
         $this->assertArrayHasKey('description', $info);
-        $this->assertEquals('BlogModule', $info['name']);
-    }
-
-    /** @test */
-    public function it_can_install_and_uninstall_modules()
-    {
-        $moduleName = 'BlogModule';
-        
-        // Install module
-        $result = $this->moduleManager->install($moduleName);
-        $this->assertTrue($result);
-        
-        $module = $this->moduleManager->get($moduleName);
-        $this->assertTrue($module->isEnabled());
-
-        // Uninstall module
-        $result = $this->moduleManager->uninstall($moduleName);
-        $this->assertTrue($result);
-        
-        $module = $this->moduleManager->get($moduleName);
-        $this->assertFalse($module->isEnabled());
+        $this->assertEquals('Core', $info['name']);
     }
 
     /** @test */

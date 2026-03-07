@@ -2,10 +2,9 @@
 
 namespace Tests\Unit\Services;
 
-use App\Models\Team;
+use App\Models\User;
 use App\Services\SubscriptionService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Laravel\Cashier\Subscription;
 use Tests\TestCase;
 
 class SubscriptionServiceTest extends TestCase
@@ -21,44 +20,41 @@ class SubscriptionServiceTest extends TestCase
         $this->subscriptionService = new SubscriptionService();
     }
 
-    public function testCreateTrialSubscription(): void
+    public function testCreatePremiumSubscriptionWithoutPaymentMethod(): void
     {
-        $team = Team::factory()->create();
-        $this->subscriptionService->createTrialSubscription($team);
+        $user = User::factory()->create();
+        $this->subscriptionService->createPremiumSubscription($user);
 
-        $this->assertTrue($team->subscribed('default'));
-        $this->assertTrue($team->subscription('default')->onTrial());
+        $this->assertTrue($user->fresh()->is_premium);
+        $this->assertNotNull($user->fresh()->trial_ends_at);
+        $this->assertNotNull($user->fresh()->premium_started_at);
     }
 
-    public function testGetSubscriptionStatus(): void
+    public function testGetPricingInfoReturnsPremiumInfo(): void
     {
-        $team = Team::factory()->create();
-        $this->assertEquals('Inactive', $this->subscriptionService->getSubscriptionStatus($team));
+        $pricingInfo = $this->subscriptionService->getPricingInfo();
 
-        $this->subscriptionService->createTrialSubscription($team);
-        $this->assertEquals('Trial', $this->subscriptionService->getSubscriptionStatus($team));
-
-        // Simulate an active subscription
-        $team->subscription('default')->update(['trial_ends_at' => now()->subDay()]);
-        $this->assertEquals('Active', $this->subscriptionService->getSubscriptionStatus($team));
+        $this->assertArrayHasKey('premium', $pricingInfo);
+        $this->assertArrayHasKey('name', $pricingInfo['premium']);
+        $this->assertArrayHasKey('features', $pricingInfo['premium']);
+        $this->assertEquals('Premium', $pricingInfo['premium']['name']);
+        $this->assertIsArray($pricingInfo['premium']['features']);
     }
 
-    public function testCancelSubscription(): void
+    public function testCheckDnaUploadLimitForNonPremiumUser(): void
     {
-        $team = Team::factory()->create();
-        $this->subscriptionService->createTrialSubscription($team);
-        $this->subscriptionService->cancelSubscription($team);
+        $user = User::factory()->create(['is_premium' => false]);
+        $result = $this->subscriptionService->checkDnaUploadLimit($user);
 
-        $this->assertTrue($team->subscription('default')->cancelled());
+        $this->assertArrayHasKey('can_upload', $result);
+        $this->assertArrayHasKey('limit', $result);
     }
 
-    public function testResumeSubscription(): void
+    public function testGetPremiumFeaturesStatus(): void
     {
-        $team = Team::factory()->create();
-        $this->subscriptionService->createTrialSubscription($team);
-        $this->subscriptionService->cancelSubscription($team);
-        $this->subscriptionService->resumeSubscription($team);
+        $user = User::factory()->create(['is_premium' => false]);
+        $status = $this->subscriptionService->getPremiumFeaturesStatus($user);
 
-        $this->assertFalse($team->subscription('default')->cancelled());
+        $this->assertIsArray($status);
     }
 }

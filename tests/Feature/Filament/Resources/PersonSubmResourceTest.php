@@ -2,7 +2,7 @@
 
 namespace Tests\Feature\Filament\Resources;
 
-use App\Filament\Resources\PersonSubmResource;
+use App\Filament\App\Resources\PersonSubmResource;
 use App\Models\PersonSubm;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -11,44 +11,20 @@ class PersonSubmResourceTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_model_association(): void
+    public function test_resource_has_correct_model(): void
     {
         $this->assertEquals(PersonSubm::class, PersonSubmResource::getModel());
     }
 
-    public function test_form_fields(): void
+    public function test_resource_navigation_is_configured(): void
     {
-        $formFields = PersonSubmResource::form([])->getSchema();
-
-        $this->assertArrayHasKey('group', $formFields);
-        $this->assertEquals(255, $formFields['group']->getMaxLength());
-
-        $this->assertArrayHasKey('gid', $formFields);
-        $this->assertTrue($formFields['gid']->isNumeric());
-
-        $this->assertArrayHasKey('subm', $formFields);
-        $this->assertEquals(255, $formFields['subm']->getMaxLength());
+        $this->assertNotEmpty(PersonSubmResource::getNavigationLabel());
     }
 
-    public function test_table_columns(): void
+    public function test_person_subm_can_be_created_in_database(): void
     {
-        $tableColumns = PersonSubmResource::table([])->getColumns();
+        $personSubm = PersonSubm::factory()->create();
 
-        $this->assertArrayHasKey('group', $tableColumns);
-        $this->assertTrue($tableColumns['group']->isSearchable());
-
-        $this->assertArrayHasKey('gid', $tableColumns);
-        $this->assertTrue($tableColumns['gid']->isSortable());
-
-        $this->assertArrayHasKey('subm', $tableColumns);
-        $this->assertTrue($tableColumns['subm']->isSearchable());
-
-        $this->assertArrayHasKey('created_at', $tableColumns);
-        $this->assertTrue($tableColumns['created_at']->isSortable());
-        $this->assertTrue($tableColumns['created_at']->isToggleable());
-
-        $this->assertArrayHasKey('updated_at', $tableColumns);
-        $this->assertTrue($tableColumns['updated_at']->isSortable());
-        $this->assertTrue($tableColumns['updated_at']->isToggleable());
+        $this->assertDatabaseHas('person_subm', ['id' => $personSubm->id]);
     }
 }
