@@ -85,14 +85,5 @@
         }
     },
     "minimum-stability": "beta",
-    "prefer-stable": true,
-    "repositories": [
-        {
-            "type": "path",
-            "url": "vendor-local/laravel-gramps-xml",
-            "options": {
-                "symlink": false
-            }
-        }
-    ]
+    "prefer-stable": true
 }
