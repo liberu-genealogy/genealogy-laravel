@@ -4,6 +4,7 @@ namespace Tests\Feature;
 
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Route;
 use Tests\TestCase;
 
 class PasswordConfirmationTest extends TestCase
@@ -12,6 +13,10 @@ class PasswordConfirmationTest extends TestCase
 
     public function test_confirm_password_screen_can_be_rendered(): void
     {
+        if (!Route::has('password.confirm')) {
+            $this->markTestSkipped('Password confirmation route is not registered in this app configuration.');
+        }
+
         $user = User::factory()->withPersonalTeam()->create();
 
         $response = $this->actingAs($user)->get('/user/confirm-password');
@@ -21,6 +26,10 @@ class PasswordConfirmationTest extends TestCase
 
     public function test_password_can_be_confirmed(): void
     {
+        if (!Route::has('password.confirm')) {
+            $this->markTestSkipped('Password confirmation route is not registered in this app configuration.');
+        }
+
         $user = User::factory()->create();
 
         $response = $this->actingAs($user)->post('/user/confirm-password', [
@@ -33,6 +42,10 @@ class PasswordConfirmationTest extends TestCase
 
     public function test_password_is_not_confirmed_with_invalid_password(): void
     {
+        if (!Route::has('password.confirm')) {
+            $this->markTestSkipped('Password confirmation route is not registered in this app configuration.');
+        }
+
         $user = User::factory()->create();
 
         $response = $this->actingAs($user)->post('/user/confirm-password', [

@@ -1,5 +1,5 @@
-# Accepted values: 8.5+
-ARG PHP_VERSION=8.5
+# Accepted values: 8.3+
+ARG PHP_VERSION=8.4
 
 ARG COMPOSER_VERSION=latest
 
@@ -85,7 +85,7 @@ RUN apk update && \
     zip \
     intl \
     gd \
-    redis@stable \
+    redis \
     ldap \
     && docker-php-source delete \
     && rm -rf /var/cache/apk/* /tmp/* /var/tmp/*

@@ -11,43 +11,65 @@ jobs:
   install:
     runs-on: ubuntu-latest
 
+    services:
+      mysql:
+        image: mysql:8.0
+        env:
+          MYSQL_ROOT_PASSWORD: root
+          MYSQL_DATABASE: liberu
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd="mysqladmin ping"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=3
+
     steps:
-    - uses: actions/checkout@v5
+    - uses: actions/checkout@v4
 
     - name: Setup PHP
       uses: shivammathur/setup-php@v2
       with:
-        php-version: '8.5'
+        php-version: '8.4'
+        extensions: mbstring, bcmath, pdo_mysql, redis, intl, gd, zip
+        tools: composer:v2
 
     - name: Setup Node.js
-      uses: actions/setup-node@v5
+      uses: actions/setup-node@v4
       with:
         node-version: '24'
+        cache: 'npm'
 
+    - name: Get Composer cache directory
+      id: composer-cache
+      run: echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
 
-    - name: Start database
-      run: sudo /etc/init.d/mysql start
-
-    - name: Create database
-      run: mysql -e "CREATE DATABASE IF NOT EXISTS liberu;" -uroot -proot
+    - name: Cache Composer dependencies
+      uses: actions/cache@v4
+      with:
+        path: ${{ steps.composer-cache.outputs.dir }}
+        key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+        restore-keys: ${{ runner.os }}-composer-
 
     - name: Copy environment file
       run: cp .env.testing .env
 
     - name: Install dependencies
-      run: composer install
+      run: composer install --prefer-dist --no-progress
 
     - name: Generate application key
       run: php artisan key:generate
 
     - name: Run database migrations
-      run: php artisan migrate
+      run: php artisan migrate --force
 
     - name: Seed database
-      run: php artisan db:seed
+      run: php artisan db:seed --force
 
     - name: Install npm dependencies
-      run: npm install
+      run: npm ci
 
     - name: Build frontend assets
       run: npm run build
+

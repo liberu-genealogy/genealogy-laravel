@@ -14,8 +14,8 @@ class AuthenticationTest extends TestCase
     {
         $response = $this->get('/login');
 
-        // In this Filament-based app, /login redirects to the Filament admin panel
-        $response->assertRedirect('/admin/login');
+        // In this Filament-based app, /login redirects to the Filament app panel
+        $response->assertRedirect('/app/login');
     }
 
     public function test_users_can_authenticate_using_the_login_screen(): void
