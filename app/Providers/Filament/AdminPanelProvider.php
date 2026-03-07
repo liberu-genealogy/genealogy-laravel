@@ -34,7 +34,6 @@ class AdminPanelProvider extends PanelProvider
     public function panel(Panel $panel): Panel
     {
         $panel
-            ->default()
             ->id('admin')
             ->path('admin')
             ->login([AuthenticatedSessionController::class, 'create'])
@@ -53,7 +52,7 @@ class AdminPanelProvider extends PanelProvider
                         ? url(EditProfile::getUrl())
                         : url($panel->getPath())),
             ])
-            ->discoverResources(in: app_path('Filament/App/Resources'), for: 'App\\Filament\\App\\Resources')
+            ->discoverResources(in: app_path('Filament/Admin/Resources'), for: 'App\\Filament\\Admin\\Resources')
             ->discoverPages(in: app_path('Filament/Admin/Pages'), for: 'App\\Filament\\Admin\\Pages')
             ->pages([
                 FilamentPage\Dashboard::class,
