@@ -25,12 +25,12 @@ use BackedEnum;
 use App\Filament\App\Resources\DnaMatchingResource\Pages;
 use App\Models\DnaMatching;
 use Filament\Forms;
-use Filament\Resources\Resource;
+use App\Filament\App\Resources\AppResource;
 use Filament\Tables;
 use Filament\Actions;
 use Filament\Tables\Table;
 
-class DnaMatchingResource extends Resource
+class DnaMatchingResource extends AppResource
 {
     protected static bool $isScopedToTenant = false;
 

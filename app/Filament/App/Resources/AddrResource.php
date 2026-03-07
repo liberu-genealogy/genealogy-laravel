@@ -17,13 +17,13 @@ use App\Filament\App\Resources\AddrResource\Pages;
 use App\Models\Addr;
 use Filament\Forms;
 use Filament\Forms\Form;
-use Filament\Resources\Resource;
+use App\Filament\App\Resources\AppResource;
 use Filament\Schemas\Schema;
 use Filament\Tables;
 use Filament\Actions;
 use Filament\Tables\Table;
 
-class AddrResource extends Resource
+class AddrResource extends AppResource
 {
     protected static ?string $model = Addr::class;
 

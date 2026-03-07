@@ -16,13 +16,13 @@ use App\Filament\App\Resources\SourceRefResource\Pages;
 use App\Models\SourceRef;
 use Filament\Forms;
 use Filament\Forms\Form;
-use Filament\Resources\Resource;
+use App\Filament\App\Resources\AppResource;
 use Filament\Schemas\Schema;
 use Filament\Tables;
 use Filament\Actions;
 use Filament\Tables\Table;
 
-class SourceRefResource extends Resource
+class SourceRefResource extends AppResource
 {
     protected static ?string $model = SourceRef::class;
 

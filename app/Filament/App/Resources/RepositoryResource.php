@@ -21,13 +21,13 @@ use App\Filament\App\Resources\RepositoryResource\Pages;
 use App\Models\Repository;
 use Filament\Forms;
 use Filament\Forms\Form;
-use Filament\Resources\Resource;
+use App\Filament\App\Resources\AppResource;
 use Filament\Schemas\Schema;
 use Filament\Tables;
 use Filament\Actions;
 use Filament\Tables\Table;
 
-final class RepositoryResource extends Resource
+final class RepositoryResource extends AppResource
 {
     protected static ?string $model = Repository::class;
 

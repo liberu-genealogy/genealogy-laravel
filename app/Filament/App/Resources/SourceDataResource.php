@@ -16,13 +16,13 @@ use App\Filament\App\Resources\SourceDataResource\Pages;
 use App\Models\SourceData;
 use Filament\Forms;
 use Filament\Forms\Form;
-use Filament\Resources\Resource;
+use App\Filament\App\Resources\AppResource;
 use Filament\Schemas\Schema;
 use Filament\Tables;
 use Filament\Actions;
 use Filament\Tables\Table;
 
-class SourceDataResource extends Resource
+class SourceDataResource extends AppResource
 {
     protected static ?string $model = SourceData::class;
 

@@ -17,13 +17,13 @@ use App\Filament\App\Resources\PlaceResource\Pages;
 use App\Models\Place;
 use Filament\Forms;
 use Filament\Forms\Form;
-use Filament\Resources\Resource;
+use App\Filament\App\Resources\AppResource;
 use Filament\Schemas\Schema;
 use Filament\Tables;
 use Filament\Actions;
 use Filament\Tables\Table;
 
-class PlaceResource extends Resource
+class PlaceResource extends AppResource
 {
     protected static ?string $model = Place::class;
 

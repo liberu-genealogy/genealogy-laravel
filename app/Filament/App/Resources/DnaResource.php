@@ -19,7 +19,7 @@ use App\Models\Dna;
 use App\Services\DnaImportService;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Form;
-use Filament\Resources\Resource;
+use App\Filament\App\Resources\AppResource;
 use Filament\Schemas\Schema;
 use Filament\Tables;
 use Filament\Actions;
@@ -28,7 +28,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
-class DnaResource extends Resource
+class DnaResource extends AppResource
 {
     protected static bool $isScopedToTenant = false;
 

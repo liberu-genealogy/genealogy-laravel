@@ -22,7 +22,7 @@ use App\Jobs\ImportGrampsXml;
 use App\Models\Gedcom;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Form;
-use Filament\Resources\Resource;
+use App\Filament\App\Resources\AppResource;
 use Filament\Schemas\Schema;
 use Filament\Actions;
 use Filament\Tables;
@@ -31,7 +31,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 
-class GedcomResource extends Resource
+class GedcomResource extends AppResource
 {
     protected static bool $isScopedToTenant = false;
 

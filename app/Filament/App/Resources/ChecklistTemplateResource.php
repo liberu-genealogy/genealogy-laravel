@@ -39,7 +39,7 @@ use App\Filament\App\Resources\ChecklistTemplateResource\RelationManagers;
 use App\Models\ChecklistTemplate;
 use Filament\Forms;
 use Filament\Forms\Form;
-use Filament\Resources\Resource;
+use App\Filament\App\Resources\AppResource;
 use Filament\Schemas\Schema;
 use Filament\Tables;
 use Filament\Tables\Table;
@@ -47,7 +47,7 @@ use Filament\Actions;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class ChecklistTemplateResource extends Resource
+class ChecklistTemplateResource extends AppResource
 {
 
     protected static ?string $model = ChecklistTemplate::class;

@@ -18,13 +18,13 @@ use App\Filament\App\Resources\FamilyResource\Pages;
 use App\Models\Family;
 use Filament\Forms;
 use Filament\Forms\Form;
-use Filament\Resources\Resource;
+use App\Filament\App\Resources\AppResource;
 use Filament\Schemas\Schema;
 use Filament\Tables;
 use Filament\Actions;
 use Filament\Tables\Table;
 
-class FamilyResource extends Resource
+class FamilyResource extends AppResource
 {
     protected static ?string $model = Family::class;
 
