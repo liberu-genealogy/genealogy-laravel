@@ -24,6 +24,8 @@ use Filament\Tables\Table;
 
 class PersonNameFoneResource extends Resource
 {
+    use PersonNameResourceTrait;
+
     protected static ?string $model = PersonNameFone::class;
 
     protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-rectangle-stack';
@@ -33,77 +35,13 @@ class PersonNameFoneResource extends Resource
     #[Override]
     public static function form(Schema $schema): Schema
     {
-        return $schema
-            ->components([
-                TextInput::make('group')
-                    ->maxLength(255),
-                TextInput::make('gid')
-                    ->numeric(),
-                TextInput::make('name')
-                    ->maxLength(255),
-                TextInput::make('type')
-                    ->maxLength(255),
-                TextInput::make('npfx')
-                    ->maxLength(255),
-                TextInput::make('givn')
-                    ->maxLength(255),
-                TextInput::make('nick')
-                    ->maxLength(255),
-                TextInput::make('spfx')
-                    ->maxLength(255),
-                TextInput::make('surn')
-                    ->maxLength(255),
-                TextInput::make('nsfx')
-                    ->maxLength(255),
-            ]);
+        return static::baseForm($schema);
     }
 
     #[Override]
     public static function table(Table $table): Table
     {
-        return $table
-            ->columns([
-                TextColumn::make('group')
-                    ->searchable(),
-                TextColumn::make('gid')
-                    ->numeric()
-                    ->sortable(),
-                TextColumn::make('name')
-                    ->searchable(),
-                TextColumn::make('type')
-                    ->searchable(),
-                TextColumn::make('npfx')
-                    ->searchable(),
-                TextColumn::make('givn')
-                    ->searchable(),
-                TextColumn::make('nick')
-                    ->searchable(),
-                TextColumn::make('spfx')
-                    ->searchable(),
-                TextColumn::make('surn')
-                    ->searchable(),
-                TextColumn::make('nsfx')
-                    ->searchable(),
-                TextColumn::make('created_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                TextColumn::make('updated_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-            ])
-            ->filters([
-                //
-            ])
-            ->recordActions([
-                EditAction::make(),
-            ])
-            ->toolbarActions([
-                BulkActionGroup::make([
-                    DeleteBulkAction::make(),
-                ]),
-            ]);
+        return static::baseTable($table);
     }
 
     #[Override]

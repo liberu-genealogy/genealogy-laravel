@@ -37,98 +37,56 @@ final class RepositoryResource extends Resource
 
     protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-rectangle-stack';
 
+    use BasicResourceTrait;
+
     #[Override]
     public static function form(Schema $schema): Schema
     {
         return $schema
-            ->components([
-                TextInput::make('group')
-                    ->maxLength(255),
-                TextInput::make('gid')
-                    ->numeric(),
-                TextInput::make('name')
-                    ->maxLength(255),
-                Textarea::make('description')
-                    ->maxLength(65535)
-                    ->columnSpanFull(),
-                DateTimePicker::make('date'),
-                TextInput::make('is_active')
-                    ->numeric(),
-                TextInput::make('type_id')
-                    ->numeric(),
-                TextInput::make('repo')
-                    ->maxLength(255),
-                TextInput::make('addr_id')
-                    ->numeric(),
-                TextInput::make('rin')
-                    ->maxLength(255),
-                TextInput::make('phon')
-                    ->maxLength(255),
-                TextInput::make('email')
-                    ->email()
-                    ->maxLength(255),
-                TextInput::make('fax')
-                    ->maxLength(255),
-                TextInput::make('www')
-                    ->maxLength(255)
-                    ->url(),
-            ]);
+            ->components(array_merge(
+                static::basicFormFields(),
+                [
+                    Textarea::make('description')
+                        ->maxLength(65535)
+                        ->columnSpanFull(),
+                    DateTimePicker::make('date'),
+                    TextInput::make('is_active')->numeric(),
+                    TextInput::make('type_id')->numeric(),
+                    TextInput::make('repo')->maxLength(255),
+                    TextInput::make('addr_id')->numeric(),
+                    TextInput::make('rin')->maxLength(255),
+                    TextInput::make('phon')->maxLength(255),
+                    TextInput::make('email')->email()->maxLength(255),
+                    TextInput::make('fax')->maxLength(255),
+                    TextInput::make('www')->maxLength(255)->url(),
+                ]
+            ));
     }
 
     #[Override]
     public static function table(Table $table): Table
     {
         return $table
-            ->columns([
-                TextColumn::make('group')
-                    ->searchable(),
-                TextColumn::make('gid')
-                    ->numeric()
-                    ->sortable(),
-                TextColumn::make('name')
-                    ->searchable(),
-                TextColumn::make('date')
-                    ->dateTime()
-                    ->sortable(),
-                TextColumn::make('is_active')
-                    ->numeric()
-                    ->sortable(),
-                TextColumn::make('type_id')
-                    ->numeric()
-                    ->sortable(),
-                TextColumn::make('repo')
-                    ->searchable(),
-                TextColumn::make('addr_id')
-                    ->numeric()
-                    ->sortable(),
-                TextColumn::make('rin')
-                    ->searchable(),
-                TextColumn::make('phon')
-                    ->searchable(),
-                TextColumn::make('email')
-                    ->searchable(),
-                TextColumn::make('fax')
-                    ->searchable(),
-                TextColumn::make('www')
-                    ->searchable(),
-                TextColumn::make('created_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                TextColumn::make('updated_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-            ])
+            ->columns(array_merge(
+                static::basicTableColumns(),
+                [
+                    TextColumn::make('date')->dateTime()->sortable(),
+                    TextColumn::make('is_active')->numeric()->sortable(),
+                    TextColumn::make('type_id')->numeric()->sortable(),
+                    TextColumn::make('repo')->searchable(),
+                    TextColumn::make('addr_id')->numeric()->sortable(),
+                    TextColumn::make('rin')->searchable(),
+                    TextColumn::make('phon')->searchable(),
+                    TextColumn::make('email')->searchable(),
+                    TextColumn::make('fax')->searchable(),
+                    TextColumn::make('www')->searchable(),
+                    TextColumn::make('created_at')->dateTime()->sortable()->toggleable(isToggledHiddenByDefault: true),
+                    TextColumn::make('updated_at')->dateTime()->sortable()->toggleable(isToggledHiddenByDefault: true),
+                ]
+            ))
             ->filters([])
-            ->recordActions([
-                EditAction::make(),
-            ])
-            ->toolbarActions([
-                BulkActionGroup::make([
-                    DeleteBulkAction::make(),
-                ]),
-            ]);
+            ->recordActions([EditAction::make()])
+            ->toolbarActions([BulkActionGroup::make([DeleteBulkAction::make()])]);
     }
 
     #[Override]

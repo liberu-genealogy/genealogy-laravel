@@ -19,6 +19,8 @@ use Filament\Actions\DeleteBulkAction;
 
 class AuthorResource extends Resource
 {
+    use NameDescriptionActiveResourceTrait;
+
     protected static ?string $model = Author::class;
 
     protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-rectangle-stack';
@@ -29,52 +31,13 @@ class AuthorResource extends Resource
 
     public static function form(Schema $schema): Schema
     {
-        return $schema
-            ->components([
-                TextInput::make('name')
-                ->required()
-                ->maxLength(255),
-                TextInput::make('description')
-                    ->required()
-                    ->maxLength(255),
-                TextInput::make('is_active')
-                    ->required()
-                    ->numeric(),
-            ]);
+        return static::baseForm($schema);
     }
 
     #[Override]
     public static function table(Table $table): Table
     {
-        return $table
-        ->columns([
-            TextColumn::make('name')
-                ->searchable(),
-            TextColumn::make('description')
-                ->searchable(),
-            TextColumn::make('is_active')
-                ->numeric()
-                ->sortable(),
-            TextColumn::make('created_at')
-                ->dateTime()
-                ->sortable()
-                ->toggleable(isToggledHiddenByDefault: true),
-            TextColumn::make('updated_at')
-                ->dateTime()
-                ->sortable()
-                ->toggleable(isToggledHiddenByDefault: true),
-        ])
-            ->filters([
-                //
-            ])
-            ->recordActions([
-                EditAction::make(),
-            ])
-            ->toolbarActions([
-                BulkActionGroup::make([
-                    DeleteBulkAction::make(),
-                ]),
-            ]);
+        return static::baseTable($table);
     }
 
     #[Override]
