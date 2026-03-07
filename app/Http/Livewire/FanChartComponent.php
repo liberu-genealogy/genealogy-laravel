@@ -9,6 +9,11 @@ class FanChartComponent extends Component
 {
     public $people;
 
+    public function getColumnSpan(): int|string|array
+    {
+        return 'full';
+    }
+
     public function render()
     {
         $this->people = Person::all();

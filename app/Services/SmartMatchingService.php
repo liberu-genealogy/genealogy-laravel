@@ -56,9 +56,7 @@ class SmartMatchingService
     public function findSmartMatches(User $user): Collection
     {
         // Get people with missing parent information
-        $peopleWithMissingParents = Person::whereHas('user', function ($query) use ($user) {
-            $query->where('current_team_id', $user->current_team_id);
-        })
+        $peopleWithMissingParents = Person::where('team_id', $user->current_team_id)
         ->whereNull('child_in_family_id')
         ->orWhereHas('childInFamily', function ($query) {
             $query->whereNull('husband_id')->orWhereNull('wife_id');

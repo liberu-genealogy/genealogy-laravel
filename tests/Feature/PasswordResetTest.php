@@ -7,7 +7,9 @@ use Illuminate\Auth\Notifications\ResetPassword;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Password;
+use Illuminate\Support\Facades\Route;
 use Laravel\Fortify\Features;
+use Laravel\Fortify\Fortify;
 use Tests\TestCase;
 
 class PasswordResetTest extends TestCase
@@ -18,6 +20,10 @@ class PasswordResetTest extends TestCase
     {
         if (!Features::enabled(Features::resetPasswords())) {
             $this->markTestSkipped('Password updates are not enabled.');
+        }
+
+        if (!Fortify::$registersRoutes) {
+            $this->markTestSkipped('Fortify routes are not registered (using Filament for authentication).');
         }
 
         $response = $this->get('/forgot-password');
@@ -45,6 +51,10 @@ class PasswordResetTest extends TestCase
     {
         if (!Features::enabled(Features::resetPasswords())) {
             $this->markTestSkipped('Password updates are not enabled.');
+        }
+
+        if (!Fortify::$registersRoutes) {
+            $this->markTestSkipped('Fortify routes are not registered (using Filament for authentication).');
         }
 
         Notification::fake();
