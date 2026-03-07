@@ -20,7 +20,7 @@ class PasswordResetTest extends TestCase
             $this->markTestSkipped('Password updates are not enabled.');
         }
 
-        $response = $this->get('/app/forgot-password');
+        $response = $this->get('/forgot-password');
 
         $response->assertStatus(200);
     }
@@ -54,7 +54,7 @@ class PasswordResetTest extends TestCase
         Password::sendResetLink(['email' => $user->email]);
 
         Notification::assertSentTo($user, ResetPassword::class, function (object $notification): true {
-            $response = $this->get('/app/reset-password/'.$notification->token);
+            $response = $this->get('/reset-password/'.$notification->token);
 
             $response->assertStatus(200);
 

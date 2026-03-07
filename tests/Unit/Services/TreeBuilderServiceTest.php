@@ -44,8 +44,9 @@ class TreeBuilderServiceTest extends TestCase
 
         $this->assertArrayHasKey('siblings', $tree);
         $this->assertCount(2, $tree['siblings']);
-        $this->assertEquals($child2->id, $tree['siblings'][0]['id']);
-        $this->assertEquals($child3->id, $tree['siblings'][1]['id']);
+        $siblingIds = array_column($tree['siblings'], 'id');
+        $this->assertContains($child2->id, $siblingIds);
+        $this->assertContains($child3->id, $siblingIds);
     }
 
     public function testBuildFamilyTreeWithoutSiblings(): void

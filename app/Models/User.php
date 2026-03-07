@@ -109,7 +109,15 @@ class User extends Authenticatable implements HasDefaultTenant, HasTenants, Fila
     {
         return filter_var($this->profile_photo_path, FILTER_VALIDATE_URL)
             ? Attribute::get(fn () => $this->profile_photo_path)
-            : $this->getPhotoUrl();
+            : $this->defaultPhotoUrl();
+    }
+
+    /**
+     * Get the default profile photo URL if no profile photo has been uploaded.
+     */
+    protected function defaultPhotoUrl(): Attribute
+    {
+        return Attribute::get(fn () => 'https://ui-avatars.com/api/?name='.urlencode($this->name).'&color=7F9CF5&background=EBF4FF');
     }
 
     /**
