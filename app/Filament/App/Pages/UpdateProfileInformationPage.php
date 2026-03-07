@@ -18,7 +18,7 @@ class UpdateProfileInformationPage extends Page
     protected string $view = 'filament.pages.profile.update-profile-information';
 
     protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-user';
-
+    protected static ?string $navigationLabel = 'Update Profile';
     protected static string | \UnitEnum | null $navigationGroup = '👤 Account & Settings';
 
     protected static ?int $navigationSort = 0;

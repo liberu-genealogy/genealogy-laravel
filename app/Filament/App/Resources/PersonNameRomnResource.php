@@ -26,8 +26,8 @@ class PersonNameRomnResource extends Resource
 {
     protected static ?string $model = PersonNameRomn::class;
 
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-rectangle-stack';
-
+    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-language';
+    protected static ?string $navigationLabel = 'Romanized Names';
     protected static string | \UnitEnum | null $navigationGroup = '👥 Family Tree';
 
     #[Override]

@@ -26,8 +26,8 @@ class SourceDataEvenResource extends Resource
 {
     protected static ?string $model = SourceDataEven::class;
 
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-rectangle-stack';
-
+    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-calendar-days';
+    protected static ?string $navigationLabel = 'Source Data Events';
     protected static string | \UnitEnum | null $navigationGroup = '🔍 Research & Analysis';
 
     #[Override]

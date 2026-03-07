@@ -26,8 +26,8 @@ class SubnResource extends Resource
 {
     protected static ?string $model = Subn::class;
 
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-rectangle-stack';
-
+    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-inbox-arrow-down';
+    protected static ?string $navigationLabel = 'Submissions';
     protected static string | \UnitEnum | null $navigationGroup = '🛠️ Data Management';
 
     #[Override]

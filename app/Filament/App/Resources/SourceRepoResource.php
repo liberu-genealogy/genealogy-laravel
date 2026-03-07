@@ -29,8 +29,8 @@ final class SourceRepoResource extends Resource
 {
     protected static ?string $model = SourceRepo::class;
 
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-rectangle-stack';
-
+    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-building-library';
+    protected static ?string $navigationLabel = 'Source Repositories';
     protected static string | \UnitEnum | null $navigationGroup = '🔍 Research & Analysis';
 
     #[Override]

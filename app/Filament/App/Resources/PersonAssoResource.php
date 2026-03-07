@@ -27,7 +27,7 @@ class PersonAssoResource extends Resource
 {
     protected static ?string $model = PersonAsso::class;
 
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-user-group';
 
     protected static ?string $navigationLabel = 'Person Associations';
 

@@ -27,11 +27,11 @@ class ChanResource extends Resource
 {
     protected static ?string $model = Chan::class;
 
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-clock';
 
     protected static string | \UnitEnum | null $navigationGroup = '👥 Family Tree';
 
-    protected static ?string $navigationLabel = ' Chan';
+    protected static ?string $navigationLabel = 'Chan';
 
     // protected static ?string $tenantRelationshipName = 'team';
 

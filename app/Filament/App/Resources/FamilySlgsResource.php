@@ -27,7 +27,7 @@ class FamilySlgsResource extends Resource
 {
     protected static ?string $model = FamilySlgs::class;
 
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-link';
 
     protected static ?string $navigationLabel = 'Family Slugs';
 
