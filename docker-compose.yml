@@ -4,7 +4,7 @@ services:
       context: .
       dockerfile: Dockerfile
       args:
-        PHP_VERSION: 8.5
+        PHP_VERSION: 8.4
         WWWUSER: 1000
         WWWGROUP: 1000
     image: genealogy-laravel
@@ -89,7 +89,7 @@ services:
       context: .
       dockerfile: Dockerfile
       args:
-        PHP_VERSION: 8.5
+        PHP_VERSION: 8.4
         WWWUSER: 1000
         WWWGROUP: 1000
     image: genealogy-laravel
@@ -122,7 +122,7 @@ services:
       context: .
       dockerfile: Dockerfile
       args:
-        PHP_VERSION: 8.5
+        PHP_VERSION: 8.4
         WWWUSER: 1000
         WWWGROUP: 1000
     image: genealogy-laravel
