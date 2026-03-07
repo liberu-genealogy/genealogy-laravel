@@ -56,44 +56,31 @@ class AppPanelProvider extends PanelProvider
             ->favicon(asset('images/favicon.ico'))
             ->navigationGroups([
                 NavigationGroup::make()
-                    ->label('🏠 Dashboard')
-                    ->icon('heroicon-o-home'),
+                    ->label('🏠 Dashboard'),
                 NavigationGroup::make()
-                    ->label('👥 Family Tree')
-                    ->icon('heroicon-o-users'),
+                    ->label('👥 Family Tree'),
                 NavigationGroup::make()
-                    ->label('📊 Charts & Visualizations')
-                    ->icon('heroicon-o-chart-bar'),
+                    ->label('📊 Charts & Visualizations'),
                 NavigationGroup::make()
-                    ->label('📄 Reports')
-                    ->icon('heroicon-o-document-text'),
+                    ->label('📄 Reports'),
                 NavigationGroup::make()
-                    ->label('🔍 Research & Analysis')
-                    ->icon('heroicon-o-magnifying-glass'),
+                    ->label('🔍 Research & Analysis'),
                 NavigationGroup::make()
-                    ->label('📋 Research Management')
-                    ->icon('heroicon-o-clipboard-document-check'),
+                    ->label('📋 Research Management'),
                 NavigationGroup::make()
-                    ->label('🧬 DNA & Genetics')
-                    ->icon('heroicon-o-beaker'),
+                    ->label('🧬 DNA & Genetics'),
                 NavigationGroup::make()
-                    ->label('📁 Media & Documents')
-                    ->icon('heroicon-o-folder'),
+                    ->label('📁 Media & Documents'),
                 NavigationGroup::make()
-                    ->label('🛠️ Data Management')
-                    ->icon('heroicon-o-wrench-screwdriver'),
+                    ->label('🛠️ Data Management'),
                 NavigationGroup::make()
-                    ->label('👥 Family Reunions')
-                    ->icon('heroicon-o-calendar'),
+                    ->label('👥 Family Reunions'),
                 NavigationGroup::make()
-                    ->label('🎮 Gamification')
-                    ->icon('heroicon-o-trophy'),
+                    ->label('🎮 Gamification'),
                 NavigationGroup::make()
-                    ->label('⚙️ System Settings')
-                    ->icon('heroicon-o-cog-6-tooth'),
+                    ->label('⚙️ System Settings'),
                 NavigationGroup::make()
-                    ->label('👤 Account & Settings')
-                    ->icon('heroicon-o-user-circle'),
+                    ->label('👤 Account & Settings'),
             ])
             ->userMenuItems([
                 MenuItem::make()
