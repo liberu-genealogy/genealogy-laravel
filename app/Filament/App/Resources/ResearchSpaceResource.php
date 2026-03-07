@@ -22,7 +22,7 @@ class ResearchSpaceResource extends Resource
 
     protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-users';
 
-    protected static string | \UnitEnum | null $navigationGroup = 'Collaboration';
+    protected static string | \UnitEnum | null $navigationGroup = '📋 Research Management';
 
     protected static ?string $navigationLabel = 'Research Spaces';
 
