@@ -27,8 +27,8 @@ class PersonEventResource extends Resource
 {
     protected static ?string $model = PersonEvent::class;
 
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-rectangle-stack';
-
+    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-calendar';
+    protected static ?string $navigationLabel = 'Person Events';
     protected static string | \UnitEnum | null $navigationGroup = '👥 Family Tree';
 
     #[Override]

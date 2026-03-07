@@ -30,7 +30,7 @@ class FamilyEventResource extends Resource
 
     protected static ?string $navigationLabel = 'Family Events';
 
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-calendar';
 
     protected static string | \UnitEnum | null $navigationGroup = '👥 Family Tree';
 

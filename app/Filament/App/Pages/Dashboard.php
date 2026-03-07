@@ -12,6 +12,7 @@ use Filament\Widgets\StatsOverviewWidget\Stat;
 class Dashboard extends BaseDashboard
 {
     protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-home';
+    protected static ?string $navigationLabel = 'Dashboard';
     protected static string | \UnitEnum | null $navigationGroup = '🏠 Dashboard';
     protected static ?int $navigationSort = 1;
 

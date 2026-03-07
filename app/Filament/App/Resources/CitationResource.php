@@ -29,7 +29,7 @@ class CitationResource extends Resource
 {
     protected static ?string $model = Citation::class;
 
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-academic-cap';
 
     protected static ?string $navigationLabel = 'Citation';
 

@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Validator;
 class PrivateMessagingPage extends Page
 {
     protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-chat-bubble-left-right';
-
+    protected static ?string $navigationLabel = 'Private Messaging';
     protected static string | \UnitEnum | null $navigationGroup = '👤 Account & Settings';
 
     public function mount(): void

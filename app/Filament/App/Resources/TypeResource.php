@@ -26,8 +26,8 @@ class TypeResource extends Resource
 {
     protected static ?string $model = Type::class;
 
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-rectangle-stack';
-
+    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-tag';
+    protected static ?string $navigationLabel = 'Types';
     protected static string | \UnitEnum | null $navigationGroup = '🛠️ Data Management';
 
     #[Override]

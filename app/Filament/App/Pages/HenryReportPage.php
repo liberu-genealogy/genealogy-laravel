@@ -13,6 +13,6 @@ class HenryReportPage extends Page
     protected static ?string $title = 'Henry Report';
 
     protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-chart-bar';
-
+    protected static ?string $navigationLabel = 'Henry Report';
     protected static string | \UnitEnum | null $navigationGroup = '📄 Reports';
 }

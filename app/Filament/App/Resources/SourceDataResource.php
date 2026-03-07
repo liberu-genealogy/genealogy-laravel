@@ -26,8 +26,8 @@ class SourceDataResource extends Resource
 {
     protected static ?string $model = SourceData::class;
 
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-rectangle-stack';
-
+    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-circle-stack';
+    protected static ?string $navigationLabel = 'Source Data';
     protected static string | \UnitEnum | null $navigationGroup = '🔍 Research & Analysis';
 
     #[Override]

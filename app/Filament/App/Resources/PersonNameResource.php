@@ -26,8 +26,8 @@ class PersonNameResource extends Resource
 {
     protected static ?string $model = PersonName::class;
 
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-rectangle-stack';
-
+    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-identification';
+    protected static ?string $navigationLabel = 'Person Names';
     protected static string | \UnitEnum | null $navigationGroup = '👥 Family Tree';
 
     #[Override]

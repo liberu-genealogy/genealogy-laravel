@@ -26,8 +26,8 @@ class RefnResource extends Resource
 {
     protected static ?string $model = Refn::class;
 
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-rectangle-stack';
-
+    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-hashtag';
+    protected static ?string $navigationLabel = 'Reference Numbers';
     protected static string | \UnitEnum | null $navigationGroup = "🛠️ Data Management";
 
     protected static ?int $navigationSort = 3;
