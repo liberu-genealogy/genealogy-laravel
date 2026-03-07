@@ -33,7 +33,7 @@ class NoteResource extends Resource
 
     protected static ?string $navigationLabel = 'Add Notes';
 
-    protected static string | \UnitEnum | null $navigationGroup = 'Family';
+    protected static string | \UnitEnum | null $navigationGroup = '👥 Family Tree';
 
     #[Override]
     public static function form(Schema $schema): Schema

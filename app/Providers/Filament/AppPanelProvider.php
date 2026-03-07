@@ -54,7 +54,7 @@ class AppPanelProvider extends PanelProvider
             ->brandName(fn () => app(\App\Settings\GeneralSettings::class)->site_name)
             ->brandLogo(asset('images/logo.svg'))
             ->favicon(asset('images/favicon.ico'))
-      /**      ->navigationGroups([
+            ->navigationGroups([
                 NavigationGroup::make()
                     ->label('🏠 Dashboard')
                     ->icon('heroicon-o-home'),
@@ -65,7 +65,7 @@ class AppPanelProvider extends PanelProvider
                     ->label('📊 Charts & Visualizations')
                     ->icon('heroicon-o-chart-bar'),
                 NavigationGroup::make()
-                    ->label('Reports')
+                    ->label('📄 Reports')
                     ->icon('heroicon-o-document-text'),
                 NavigationGroup::make()
                     ->label('🔍 Research & Analysis')
@@ -80,8 +80,8 @@ class AppPanelProvider extends PanelProvider
                     ->label('📁 Media & Documents')
                     ->icon('heroicon-o-folder'),
                 NavigationGroup::make()
-                    ->label('⚙️ Data Management')
-                    ->icon('heroicon-o-cog-6-tooth'),
+                    ->label('🛠️ Data Management')
+                    ->icon('heroicon-o-wrench-screwdriver'),
                 NavigationGroup::make()
                     ->label('👥 Family Reunions')
                     ->icon('heroicon-o-calendar'),
@@ -89,9 +89,12 @@ class AppPanelProvider extends PanelProvider
                     ->label('🎮 Gamification')
                     ->icon('heroicon-o-trophy'),
                 NavigationGroup::make()
+                    ->label('⚙️ System Settings')
+                    ->icon('heroicon-o-cog-6-tooth'),
+                NavigationGroup::make()
                     ->label('👤 Account & Settings')
                     ->icon('heroicon-o-user-circle'),
-            ])**/
+            ])
             ->userMenuItems([
                 MenuItem::make()
                     ->label('Profile')

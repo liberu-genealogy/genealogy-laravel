@@ -14,7 +14,11 @@ class AIRecordMatchResource extends Resource
 {
     protected static ?string $model = AISuggestedMatch::class;
 
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-document-text';
+    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-cpu-chip';
+
+    protected static ?string $navigationLabel = 'AI Record Matches';
+
+    protected static string | \UnitEnum | null $navigationGroup = '🔍 Research & Analysis';
 
     public static function table(Table $table): Table
     {

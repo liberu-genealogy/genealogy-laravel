@@ -26,7 +26,7 @@ class RecordTypeResource extends Resource
 
     protected static ?string $navigationLabel = 'Record Types';
 
-    protected static string|\UnitEnum|null $navigationGroup = '⚙️ Settings';
+    protected static string|\UnitEnum|null $navigationGroup = '⚙️ System Settings';
 
     protected static ?int $navigationSort = 90;
 
