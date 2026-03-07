@@ -60,9 +60,7 @@ if (!check_key()) {
         // redirect with key in query for convenient requests (short-lived)
         $key = urlencode($_POST['key']);
         $uri = strtok($_SERVER["REQUEST_URI"], '?');
-        header("Location: {
-$uri}?key={
-$key}");
+        header("Location: {$uri}?key={$key}");
         exit;
     }
     echo '<!doctype html><html><body style="font-family:system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif">';
@@ -172,7 +170,7 @@ if ($action) {
                 
                 // Check if PHP exists
                 $php = getenv('PHP_BINARY') ?: 'php';
-                if (empty(shell_exec("command -v $php 2>/dev/null"))) {
+                if (empty(shell_exec('command -v ' . escapeshellarg($php) . ' 2>/dev/null'))) {
                     echo json_encode(['ok' => false, 'message' => 'PHP is required but not found.']);
                     exit;
                 }
@@ -323,7 +321,7 @@ if ($action) {
             // try clearing config caches (works only if vendor installed)
             if (file_exists($projectRoot . '/vendor/autoload.php')) {
                 $php = getenv('PHP_BINARY') ?: 'php';
-                run_cmd(escapeshellcmd($php) . ' artisan config:clear', $o1);
+                run_cmd_array([$php, 'artisan', 'config:clear'], $o1);
             }
             echo json_encode(['ok' => true, 'message' => '.env updated']);
             exit;
@@ -461,9 +459,8 @@ PHP;
             $payload = ['users' => $users];
             $b64 = base64_encode(json_encode($payload));
             $php = getenv('PHP_BINARY') ?: 'php';
-            $cmd = escapeshellcmd($php) . ' ' . escapeshellarg($scriptPath) . ' ' . escapeshellarg($b64);
             $out = null;
-            $code = run_cmd($cmd, $out);
+            $code = run_cmd_array([$php, $scriptPath, $b64], $out);
             echo json_encode(['ok' => $code === 0, 'exit' => $code, 'output' => $out]);
             exit;
         }

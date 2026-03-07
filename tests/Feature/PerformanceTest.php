@@ -4,7 +4,6 @@ namespace Tests\Feature;
 
 use App\Models\Person;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use Tests\TestCase;
 
@@ -17,23 +16,23 @@ class PerformanceTest extends TestCase
         // Create a dataset (reduced size for CI stability)
         Person::factory()->count(100)->create();
 
-        // Warm up the cache first
-        Person::getListCached();
-
         // Test uncached retrieval
         $start = microtime(true);
         Person::all();
         $end = microtime(true);
         $timeUncached = $end - $start;
 
-        // Test cached retrieval (cache is already warm)
+        // Warm up the cache before measuring cached retrieval
+        Person::getListCached();
+
+        // Test cached retrieval (cache is now warm)
         $start = microtime(true);
         Person::getListCached();
         $end = microtime(true);
         $timeCached = $end - $start;
 
         $this->assertLessThan($timeUncached, $timeCached);
-        $this->assertLessThan(2.0, $timeCached); // Ensure cached retrieval completes in under 2 seconds
+        $this->assertLessThan(0.5, $timeCached); // Cached retrieval should complete well under 0.5 seconds
     }
 
     public function testQueryPerformance(): void
@@ -47,6 +46,6 @@ class PerformanceTest extends TestCase
         $queries = DB::getQueryLog();
 
         $this->assertCount(1, $queries);
-        $this->assertStringContainsString('`id`, `givn`, `surn`, `sex`, `child_in_family_id`, `birthday`, `deathday`', $queries[0]['query']);
+        $this->assertStringContainsString('select `id`, `givn`, `surn`, `sex`, `child_in_family_id`, `birthday`, `deathday`', $queries[0]['query']);
     }
 }
