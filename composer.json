@@ -9,7 +9,7 @@
     ],
     "license": "MIT",
     "require": {
-        "php": "^8.3",
+        "php": "^8.5",
         "bezhansalleh/filament-shield": "^4.0",
         "filament/filament": "^5.1",
         "filament/spatie-laravel-settings-plugin": "^5.0",
@@ -85,14 +85,5 @@
         }
     },
     "minimum-stability": "beta",
-    "prefer-stable": true,
-    "repositories": [
-        {
-            "type": "path",
-            "url": "vendor-local/laravel-gramps-xml",
-            "options": {
-                "symlink": false
-            }
-        }
-    ]
+    "prefer-stable": true
 }

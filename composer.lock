@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "bd98513ea8f8013b356adbc14ab4061a",
+    "content-hash": "3d95db7e2e9b8d7a92b039139fe74c70",
     "packages": [
         {
             "name": "anourvalar/eloquent-serialize",
@@ -4093,26 +4093,35 @@
         {
             "name": "liberu/laravel-gramps-xml",
             "version": "dev-main",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/liberu-genealogy/laravel-gramps-xml.git",
+                "reference": "e413a6192a1e29b1bdc65577b38bbce49c6cda02"
+            },
             "dist": {
-                "type": "path",
-                "url": "vendor-local/laravel-gramps-xml",
-                "reference": "ebae3a4274d44d50272af85c2ea8df25c5dd2678"
+                "type": "zip",
+                "url": "https://api.github.com/repos/liberu-genealogy/laravel-gramps-xml/zipball/e413a6192a1e29b1bdc65577b38bbce49c6cda02",
+                "reference": "e413a6192a1e29b1bdc65577b38bbce49c6cda02",
+                "shasum": ""
             },
             "require": {
                 "laravel/framework": "^11.0|^12.0",
                 "php": "^8.3"
             },
+            "default-branch": true,
             "type": "library",
             "autoload": {
                 "psr-4": {
                     "LaravelGrampsXml\\": "src/"
                 }
             },
+            "notification-url": "https://packagist.org/downloads/",
             "description": "A Laravel package for reading and writing XML files.",
-            "transport-options": {
-                "symlink": false,
-                "relative": true
-            }
+            "support": {
+                "issues": "https://github.com/liberu-genealogy/laravel-gramps-xml/issues",
+                "source": "https://github.com/liberu-genealogy/laravel-gramps-xml/tree/v1.0.0"
+            },
+            "time": "2026-02-15T13:25:03+00:00"
         },
         {
             "name": "livewire/livewire",
@@ -12334,7 +12343,7 @@
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
-        "php": "^8.3"
+        "php": "^8.5"
     },
     "platform-dev": {},
     "plugin-api-version": "2.9.0"
