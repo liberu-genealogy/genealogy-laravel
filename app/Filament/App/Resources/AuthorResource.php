@@ -4,7 +4,7 @@ namespace App\Filament\App\Resources;
 
 use Filament\Schemas\Schema;
 use Filament\Forms\Components\TextInput;
-use Filament\Resources\Resource;
+use App\Filament\App\Resources\AppResource;
 use Filament\Tables\Table;
 use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
@@ -17,7 +17,7 @@ use Filament\Actions\EditAction;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 
-class AuthorResource extends Resource
+class AuthorResource extends AppResource
 {
     protected static ?string $model = Author::class;
 

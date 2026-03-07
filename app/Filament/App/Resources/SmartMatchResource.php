@@ -15,7 +15,7 @@ use App\Filament\App\Resources\SmartMatchResource\Pages;
 use App\Models\SmartMatch;
 use App\Services\SmartMatchingService;
 use Filament\Forms;
-use Filament\Resources\Resource;
+use App\Filament\App\Resources\AppResource;
 use Filament\Tables;
 use Filament\Actions;
 use Filament\Tables\Table;
@@ -23,7 +23,7 @@ use Filament\Tables\Columns\TextColumn;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Auth;
 
-class SmartMatchResource extends Resource
+class SmartMatchResource extends AppResource
 {
     protected static ?string $model = SmartMatch::class;
 

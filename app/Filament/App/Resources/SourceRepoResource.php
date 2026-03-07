@@ -19,13 +19,13 @@ use App\Filament\App\Resources\SourceRepoResource\Pages;
 use App\Models\SourceRepo;
 use Filament\Forms;
 use Filament\Forms\Form;
-use Filament\Resources\Resource;
+use App\Filament\App\Resources\AppResource;
 use Filament\Schemas\Schema;
 use Filament\Tables;
 use Filament\Actions;
 use Filament\Tables\Table;
 
-final class SourceRepoResource extends Resource
+final class SourceRepoResource extends AppResource
 {
     protected static ?string $model = SourceRepo::class;
 

@@ -5,12 +5,12 @@ namespace App\Filament\App\Resources;
 use Filament\Actions\Action;
 use App\Filament\App\Resources\AIRecordMatchResource\Pages\ReviewMatches;
 use App\Models\AISuggestedMatch;
-use Filament\Resources\Resource;
+use App\Filament\App\Resources\AppResource;
 use Filament\Tables\Table;
 use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
 
-class AIRecordMatchResource extends Resource
+class AIRecordMatchResource extends AppResource
 {
     protected static ?string $model = AISuggestedMatch::class;
 

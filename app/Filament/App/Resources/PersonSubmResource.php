@@ -16,13 +16,13 @@ use App\Filament\App\Resources\PersonSubmResource\Pages;
 use App\Models\PersonSubm;
 use Filament\Forms;
 use Filament\Forms\Form;
-use Filament\Resources\Resource;
+use App\Filament\App\Resources\AppResource;
 use Filament\Schemas\Schema;
 use Filament\Tables;
 use Filament\Actions;
 use Filament\Tables\Table;
 
-class PersonSubmResource extends Resource
+class PersonSubmResource extends AppResource
 {
     protected static ?string $model = PersonSubm::class;
 

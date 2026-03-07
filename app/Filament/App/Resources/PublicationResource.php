@@ -16,13 +16,13 @@ use App\Filament\App\Resources\PublicationResource\Pages;
 use App\Models\Publication;
 use Filament\Forms;
 use Filament\Forms\Form;
-use Filament\Resources\Resource;
+use App\Filament\App\Resources\AppResource;
 use Filament\Schemas\Schema;
 use Filament\Tables;
 use Filament\Actions;
 use Filament\Tables\Table;
 
-class PublicationResource extends Resource
+class PublicationResource extends AppResource
 {
     protected static ?string $model = Publication::class;
 

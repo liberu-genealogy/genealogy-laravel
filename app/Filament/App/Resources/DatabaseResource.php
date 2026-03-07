@@ -14,12 +14,12 @@ use App\Filament\App\Resources\DatabaseResource\Pages\EditDatabase;
 use App\Filament\App\Resources\DatabaseResource\Pages;
 use App\Models\Tree;
 use Filament\Forms;
-use Filament\Resources\Resource;
+use App\Filament\App\Resources\AppResource;
 use Filament\Schemas\Schema;
 use Filament\Tables;
 use Filament\Tables\Table;
 
-class DatabaseResource extends Resource
+class DatabaseResource extends AppResource
 {
     protected static ?string $model = Tree::class;
 

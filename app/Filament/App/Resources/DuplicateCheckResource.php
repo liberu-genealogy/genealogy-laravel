@@ -13,7 +13,7 @@ use App\Filament\App\Resources\DuplicateCheckResource\Pages;
 use App\Models\DuplicateCheck;
 use App\Services\DuplicateCheckerService;
 use Filament\Forms;
-use Filament\Resources\Resource;
+use App\Filament\App\Resources\AppResource;
 use Filament\Forms\Components\Section;
 use Filament\Tables;
 use Filament\Actions;
@@ -22,7 +22,7 @@ use Filament\Tables\Columns\TextColumn;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Auth;
 
-class DuplicateCheckResource extends Resource
+class DuplicateCheckResource extends AppResource
 {
 
     protected static ?string $model = DuplicateCheck::class;

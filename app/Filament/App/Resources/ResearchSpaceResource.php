@@ -12,11 +12,11 @@ use App\Models\ResearchSpace;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\Toggle;
-use Filament\Resources\Resource;
+use App\Filament\App\Resources\AppResource;
 use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
 
-class ResearchSpaceResource extends Resource
+class ResearchSpaceResource extends AppResource
 {
     protected static ?string $model = ResearchSpace::class;
 

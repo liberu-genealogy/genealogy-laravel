@@ -6,7 +6,7 @@ use App\Filament\App\Resources\RecordTypeResource\Pages;
 use App\Models\RecordType;
 use Filament\Forms;
 use Filament\Forms\Form;
-use Filament\Resources\Resource;
+use App\Filament\App\Resources\AppResource;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Filament\Forms\Components\TextInput;
@@ -18,7 +18,7 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\ToggleColumn;
 
-class RecordTypeResource extends Resource
+class RecordTypeResource extends AppResource
 {
     protected static ?string $model = RecordType::class;
 

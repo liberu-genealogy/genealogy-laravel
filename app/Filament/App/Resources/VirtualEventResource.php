@@ -32,7 +32,7 @@ use App\Models\VirtualEvent;
 use App\Services\VideoConferencingService;
 use Filament\Forms;
 use Filament\Schemas\Schema;
-use Filament\Resources\Resource;
+use App\Filament\App\Resources\AppResource;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Filament\Notifications\Notification;
@@ -40,7 +40,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Carbon\Carbon;
 
-class VirtualEventResource extends Resource
+class VirtualEventResource extends AppResource
 {
     protected static ?string $model = VirtualEvent::class;
 

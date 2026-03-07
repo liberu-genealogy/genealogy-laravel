@@ -16,13 +16,13 @@ use App\Filament\App\Resources\PersonLdsResource\Pages;
 use App\Models\PersonLds;
 use Filament\Forms;
 use Filament\Forms\Form;
-use Filament\Resources\Resource;
+use App\Filament\App\Resources\AppResource;
 use Filament\Schemas\Schema;
 use Filament\Tables;
 use Filament\Actions;
 use Filament\Tables\Table;
 
-class PersonLdsResource extends Resource
+class PersonLdsResource extends AppResource
 {
     protected static ?string $model = PersonLds::class;
 

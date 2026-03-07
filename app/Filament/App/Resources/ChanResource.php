@@ -17,13 +17,13 @@ use App\Filament\App\Resources\ChanResource\Pages;
 use App\Models\Chan;
 use Filament\Forms;
 use Filament\Forms\Form;
-use Filament\Resources\Resource;
+use App\Filament\App\Resources\AppResource;
 use Filament\Schemas\Schema;
 use Filament\Tables;
 use Filament\Actions;
 use Filament\Tables\Table;
 
-class ChanResource extends Resource
+class ChanResource extends AppResource
 {
     protected static ?string $model = Chan::class;
 

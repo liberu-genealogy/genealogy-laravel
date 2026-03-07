@@ -17,13 +17,13 @@ use App\Filament\App\Resources\PersonEventResource\Pages;
 use App\Models\PersonEvent;
 use Filament\Forms;
 use Filament\Forms\Form;
-use Filament\Resources\Resource;
+use App\Filament\App\Resources\AppResource;
 use Filament\Schemas\Schema;
 use Filament\Tables;
 use Filament\Actions;
 use Filament\Tables\Table;
 
-class PersonEventResource extends Resource
+class PersonEventResource extends AppResource
 {
     protected static ?string $model = PersonEvent::class;
 
