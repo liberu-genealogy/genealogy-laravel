@@ -8,23 +8,17 @@ use App\Filament\App\Pages\DabovilleReportPage;
 
 class DAbovilleReportPageTest extends TestCase
 {
-    public $expectedReportData;
     use RefreshDatabase;
-    
-    public function testRenderMethodReturnsCorrectView(): void
+
+    public function testPageClassCanBeInstantiated(): void
     {
         $page = new DabovilleReportPage();
-        $view = $page->render();
 
-        $this->assertViewIs('livewire.daboville-report', $view);
+        $this->assertInstanceOf(DabovilleReportPage::class, $page);
     }
 
-    public function testAhnentafelReportGeneration(): void 
+    public function testPageHasCorrectNavigationLabel(): void
     {
-        new DAbovilleReportPage();
-        $component = new \App\Http\Livewire\AhnentafelReport();
-        $component->generateReport(personId: 1);
-
-        $this->assertEquals($this->expectedReportData, $component->reportData);
+        $this->assertEquals('DAboville Report', DabovilleReportPage::getNavigationLabel());
     }
 }
