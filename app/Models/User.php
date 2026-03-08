@@ -103,13 +103,40 @@ class User extends Authenticatable implements HasDefaultTenant, HasTenants, Fila
     }
 
     /**
+     * Delete the user's profile photo.
+     */
+    public function deleteProfilePhoto(): void
+    {
+        if (!is_null($this->profile_photo_path)) {
+            \Illuminate\Support\Facades\Storage::disk($this->profilePhotoDisk())->delete($this->profile_photo_path);
+            $this->forceFill(['profile_photo_path' => null])->save();
+        }
+    }
+
+    /**
+     * Get the disk used for storing profile photos.
+     */
+    protected function profilePhotoDisk(): string
+    {
+        return env('VAPOR_ARTIFACT_NAME') ? 's3' : config('jetstream.profile_photo_disk', 'public');
+    }
+
+    /**
      * Get the URL to the user's profile photo.
      */
     public function profilePhotoUrl(): Attribute
     {
         return filter_var($this->profile_photo_path, FILTER_VALIDATE_URL)
             ? Attribute::get(fn () => $this->profile_photo_path)
-            : $this->getPhotoUrl();
+            : $this->defaultPhotoUrl();
+    }
+
+    /**
+     * Get the default profile photo URL if no profile photo has been uploaded.
+     */
+    protected function defaultPhotoUrl(): Attribute
+    {
+        return Attribute::get(fn () => 'https://ui-avatars.com/api/?name='.urlencode($this->name).'&color=7F9CF5&background=EBF4FF');
     }
 
     /**
@@ -425,6 +452,14 @@ class User extends Authenticatable implements HasDefaultTenant, HasTenants, Fila
     public function socialConnectionPrivacy(): HasOne
     {
         return $this->hasOne(SocialConnectionPrivacy::class);
+    }
+
+    /**
+     * Get the user's connected accounts.
+     */
+    public function connectedAccounts(): HasMany
+    {
+        return $this->hasMany(ConnectedAccount::class);
     }
 
     /**

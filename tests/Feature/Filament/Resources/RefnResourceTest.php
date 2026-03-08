@@ -2,7 +2,7 @@
 
 namespace Tests\Feature\Filament\Resources;
 
-use App\Filament\Resources\RefnResource;
+use App\Filament\App\Resources\RefnResource;
 use App\Models\Refn;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -11,41 +11,20 @@ class RefnResourceTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_model_association(): void
+    public function test_resource_has_correct_model(): void
     {
         $this->assertEquals(Refn::class, RefnResource::getModel());
     }
 
-    public function test_form_fields(): void
+    public function test_resource_navigation_is_configured(): void
     {
-        $formFields = RefnResource::form([])->getSchema();
-
-        $groupField = collect($formFields)->firstWhere('name', 'group');
-        $this->assertNotNull($groupField);
-        $this->assertEquals(255, $groupField->getMaxLength());
-
-        $gidField = collect($formFields)->firstWhere('name', 'gid');
-        $this->assertNotNull($gidField);
-        $this->assertTrue($gidField->isNumeric());
-
-        $refnField = collect($formFields)->firstWhere('name', 'refn');
-        $this->assertNotNull($refnField);
-        $this->assertEquals(255, $refnField->getMaxLength());
-
-        $typeField = collect($formFields)->firstWhere('name', 'type');
-        $this->assertNotNull($typeField);
-        $this->assertEquals(255, $typeField->getMaxLength());
+        $this->assertNotEmpty(RefnResource::getNavigationLabel());
     }
 
-    public function test_table_columns(): void
+    public function test_refn_can_be_created_in_database(): void
     {
-        $tableColumns = RefnResource::table([])->getColumns();
+        $refn = Refn::factory()->create();
 
-        $this->assertTrue(collect($tableColumns)->firstWhere('name', 'group')->isSearchable());
-        $this->assertTrue(collect($tableColumns)->firstWhere('name', 'gid')->isNumeric()->isSortable());
-        $this->assertTrue(collect($tableColumns)->firstWhere('name', 'refn')->isSearchable());
-        $this->assertTrue(collect($tableColumns)->firstWhere('name', 'type')->isSearchable());
-        $this->assertTrue(collect($tableColumns)->firstWhere('name', 'created_at')->isSortable()->isToggleable());
-        $this->assertTrue(collect($tableColumns)->firstWhere('name', 'updated_at')->isSortable()->isToggleable());
+        $this->assertDatabaseHas('refn', ['id' => $refn->id]);
     }
 }

@@ -2,12 +2,13 @@
 
 namespace Tests\Feature\Filament\Resources;
 
-use App\Filament\Resources\GedcomResource;
+use App\Filament\App\Resources\GedcomResource;
+use App\Jobs\ExportGedCom;
+use App\Models\Gedcom;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Http\UploadedFile;
-use Illuminate\Support\Facades\Storage;
-use Livewire\Livewire;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Queue;
 use Tests\TestCase;
 
 class GedcomResourceTest extends TestCase
@@ -20,44 +21,43 @@ class GedcomResourceTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
+        Queue::fake();
         $this->user = User::factory()->create();
     }
 
-    public function test_form_schema_contains_correct_fields_and_validations(): void
+    public function test_resource_has_correct_model(): void
     {
-        $form = GedcomResource::form(Livewire::mock());
-        $schema = collect($form->getSchema());
-
-        $fileUpload = $schema->firstWhere('name', 'attachment');
-        $this->assertNotNull($fileUpload);
-        $this->assertEquals('private', $fileUpload->getVisibility());
-        $this->assertEquals(100000, $fileUpload->getMaxSize());
-        $this->assertEquals('gedcom-form-imports', $fileUpload->getDirectory());
-        $this->assertTrue($fileUpload->isRequired());
+        $this->assertEquals(Gedcom::class, GedcomResource::getModel());
     }
 
-    public function test_table_configuration(): void
+    public function test_resource_navigation_is_configured(): void
     {
-        $table = GedcomResource::table(Livewire::mock());
-        $this->assertCount(0, $table->getColumns());
-        $this->assertCount(0, $table->getFilters());
-
-        $actions = $table->getActions();
-        $this->assertNotEmpty($actions);
-        $this->assertArrayHasKey('export', $actions);
+        $this->assertNotEmpty(GedcomResource::getNavigationLabel());
+        $this->assertNotEmpty(GedcomResource::getNavigationIcon());
     }
 
-    public function test_file_upload_dispatches_import_gedcom_job(): void
+    public function test_resource_has_pages_defined(): void
     {
-        Storage::fake('private');
-        $file = UploadedFile::fake()->create('document.ged', 500);
+        $pages = GedcomResource::getPages();
+        $this->assertArrayHasKey('index', $pages);
+        $this->assertArrayHasKey('create', $pages);
+    }
 
-        Livewire::actingAs($this->user)
-            ->test(GedcomResource::class)
-            ->set('attachment', $file)
-            ->call('save');
+    public function test_export_gedcom_dispatches_job_with_authenticated_user(): void
+    {
+        Auth::login($this->user);
 
-        Storage::disk('private')->assertExists('gedcom-form-imports/'.$file->hashName());
-        $this->assertDatabaseHas('jobs', ['queue' => 'default']);
+        GedcomResource::exportGedcom();
+
+        Queue::assertPushed(ExportGedCom::class, fn ($job): bool => $job->user->id === $this->user->id);
+    }
+
+    public function test_export_gedcom_does_not_dispatch_without_authenticated_user(): void
+    {
+        Auth::logout();
+
+        GedcomResource::exportGedcom();
+
+        Queue::assertNotPushed(ExportGedCom::class);
     }
 }

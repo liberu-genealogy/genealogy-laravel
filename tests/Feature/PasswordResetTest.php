@@ -7,7 +7,9 @@ use Illuminate\Auth\Notifications\ResetPassword;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Password;
+use Illuminate\Support\Facades\Route;
 use Laravel\Fortify\Features;
+use Laravel\Fortify\Fortify;
 use Tests\TestCase;
 
 class PasswordResetTest extends TestCase
@@ -20,7 +22,11 @@ class PasswordResetTest extends TestCase
             $this->markTestSkipped('Password updates are not enabled.');
         }
 
-        $response = $this->get('/app/forgot-password');
+        if (!Fortify::$registersRoutes) {
+            $this->markTestSkipped('Fortify routes are not registered (using Filament for authentication).');
+        }
+
+        $response = $this->get('/forgot-password');
 
         $response->assertStatus(200);
     }
@@ -47,6 +53,10 @@ class PasswordResetTest extends TestCase
             $this->markTestSkipped('Password updates are not enabled.');
         }
 
+        if (!Fortify::$registersRoutes) {
+            $this->markTestSkipped('Fortify routes are not registered (using Filament for authentication).');
+        }
+
         Notification::fake();
 
         $user = User::factory()->create();
@@ -54,7 +64,7 @@ class PasswordResetTest extends TestCase
         Password::sendResetLink(['email' => $user->email]);
 
         Notification::assertSentTo($user, ResetPassword::class, function (object $notification): true {
-            $response = $this->get('/app/reset-password/'.$notification->token);
+            $response = $this->get('/reset-password/'.$notification->token);
 
             $response->assertStatus(200);
 

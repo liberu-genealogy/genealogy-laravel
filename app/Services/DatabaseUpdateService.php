@@ -2,39 +2,32 @@
 
 namespace App\Services;
 
-use App\Models\Team;
+use Laravel\Cashier\Subscription;
 
 class DatabaseUpdateService
 {
     public function updateSubscriptionRecord(string $subscriptionId, string $newPlanId): array
     {
-        $team = Team::whereHas('subscriptions', function ($query) use ($subscriptionId): void {
-            $query->where('stripe_subscription_id', $subscriptionId);
-        })->first();
+        $subscription = Subscription::where('stripe_id', $subscriptionId)->first();
 
-        if (!$team) {
-            return ['success' => false, 'message' => 'Team not found.'];
+        if (!$subscription) {
+            return ['success' => false, 'message' => 'Subscription not found.'];
         }
 
-        $team->subscriptions()->updateOrCreate(
-            ['stripe_subscription_id' => $subscriptionId],
-            ['stripe_plan_id' => $newPlanId]
-        );
+        $subscription->update(['stripe_price' => $newPlanId]);
 
         return ['success' => true, 'message' => 'Subscription updated successfully.'];
     }
 
     public function cancelSubscriptionRecord(string $subscriptionId): array
     {
-        $team = Team::whereHas('subscriptions', function ($query) use ($subscriptionId): void {
-            $query->where('stripe_subscription_id', $subscriptionId);
-        })->first();
+        $subscription = Subscription::where('stripe_id', $subscriptionId)->first();
 
-        if (!$team) {
-            return ['success' => false, 'message' => 'Team not found.'];
+        if (!$subscription) {
+            return ['success' => false, 'message' => 'Subscription not found.'];
         }
 
-        $team->subscriptions()->where('stripe_subscription_id', $subscriptionId)->delete();
+        $subscription->delete();
 
         return ['success' => true, 'message' => 'Subscription cancelled successfully.'];
     }

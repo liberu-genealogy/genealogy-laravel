@@ -15,7 +15,7 @@ use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use BackedEnum;
 use App\Filament\App\Resources\GedcomResource\Pages;
-use App\Jobs\ExportGedcom;
+use App\Jobs\ExportGedCom;
 use App\Jobs\ExportGrampsXml;
 use App\Jobs\ImportGedcom;
 use App\Jobs\ImportGrampsXml;
@@ -133,7 +133,10 @@ class GedcomResource extends AppResource
 
     public static function exportGedcom(): void
     {
-        $user = auth()->user(); // Assuming the user is authenticated
+        $user = auth()->user();
+        if (! $user) {
+            return;
+        }
         $fileName = now()->format('Y-m-d_His').'_family_tree.ged'; // Generating a unique file name
         ExportGedCom::dispatch($fileName, $user);
     }
@@ -141,6 +144,9 @@ class GedcomResource extends AppResource
     public static function exportGrampsXml(): void
     {
         $user = auth()->user();
+        if (! $user) {
+            return;
+        }
         $fileName = now()->format('Y-m-d_His').'_family_tree.gramps';
         ExportGrampsXml::dispatch($fileName, $user);
     }

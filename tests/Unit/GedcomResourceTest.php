@@ -2,7 +2,7 @@
 
 namespace Tests\Unit;
 
-use App\Filament\Resources\GedcomResource;
+use App\Filament\App\Resources\GedcomResource;
 use App\Jobs\ExportGedCom;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
@@ -18,8 +18,6 @@ class GedcomResourceTest extends TestCase
     {
         parent::setUp();
         Queue::fake();
-        // ensure migrations have been run
-        $this->artisan('migrate');
     }
 
     public function testExportGedcomDispatchesJobWithAuthenticatedUser(): void

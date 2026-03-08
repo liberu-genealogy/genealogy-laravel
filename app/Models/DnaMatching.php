@@ -13,6 +13,7 @@ class DnaMatching extends Model
     use BelongsToTenant;
 
     protected $fillable = [
+        'user_id',
         'file1',
         'file2',
         'image',

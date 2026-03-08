@@ -96,6 +96,11 @@ class Person extends Model
         return $this->hasMany(Family::class, 'wife_id');
     }
 
+    public function families(): \Illuminate\Support\Collection
+    {
+        return $this->familiesAsHusband->merge($this->familiesAsWife);
+    }
+
     public function parents()
     {
         if (!$this->childInFamily) {

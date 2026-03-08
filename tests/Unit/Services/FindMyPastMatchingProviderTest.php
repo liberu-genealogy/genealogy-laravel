@@ -22,8 +22,8 @@ class FindMyPastMatchingProviderTest extends TestCase
     public function test_search_records_returns_array(): void
     {
         $person = Person::factory()->create([
-            'firstname' => 'John',
-            'surname' => 'Smith',
+            'givn' => 'John',
+            'surn' => 'Smith',
         ]);
 
         $results = $this->provider->searchRecords($person);
@@ -34,8 +34,8 @@ class FindMyPastMatchingProviderTest extends TestCase
     public function test_search_records_includes_newspaper_matches_for_deceased_person(): void
     {
         $person = Person::factory()->create([
-            'firstname' => 'John',
-            'surname' => 'Smith',
+            'givn' => 'John',
+            'surn' => 'Smith',
         ]);
 
         // Set death date
@@ -52,8 +52,8 @@ class FindMyPastMatchingProviderTest extends TestCase
     public function test_search_records_includes_census_matches(): void
     {
         $person = Person::factory()->create([
-            'firstname' => 'John',
-            'surname' => 'Smith',
+            'givn' => 'John',
+            'surn' => 'Smith',
         ]);
 
         // Set birth date to ensure person would appear in census
@@ -70,8 +70,8 @@ class FindMyPastMatchingProviderTest extends TestCase
     public function test_search_records_includes_parish_matches(): void
     {
         $person = Person::factory()->create([
-            'firstname' => 'John',
-            'surname' => 'Smith',
+            'givn' => 'John',
+            'surn' => 'Smith',
         ]);
 
         $person->birthday = now()->subYears(100);
@@ -87,8 +87,8 @@ class FindMyPastMatchingProviderTest extends TestCase
     public function test_confidence_scores_are_within_valid_range(): void
     {
         $person = Person::factory()->create([
-            'firstname' => 'John',
-            'surname' => 'Smith',
+            'givn' => 'John',
+            'surn' => 'Smith',
         ]);
 
         $person->birthday = now()->subYears(100);
@@ -107,8 +107,8 @@ class FindMyPastMatchingProviderTest extends TestCase
     public function test_matches_include_required_fields(): void
     {
         $person = Person::factory()->create([
-            'firstname' => 'John',
-            'surname' => 'Smith',
+            'givn' => 'John',
+            'surn' => 'Smith',
         ]);
 
         $person->birthday = now()->subYears(100);
