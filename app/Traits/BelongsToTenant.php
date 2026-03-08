@@ -12,8 +12,11 @@ trait BelongsToTenant
     {
         static::addGlobalScope('team', function (Builder $query): void {
             // Only apply scope when a tenant is available and the model's table has a team_id column
+            if (! auth()->check()) {
+                return;
+            }
             $tenantId = static::getTenantId();
-            if (! auth()->check() || empty($tenantId)) {
+            if (empty($tenantId)) {
                 return;
             }
 
@@ -44,6 +47,6 @@ trait BelongsToTenant
 
     private static function getTenantId()
     {
-        return auth()->user()->currentTeam->id ?? null;
+        return auth()->user()?->currentTeam?->id;
     }
 }

@@ -66,7 +66,7 @@ class ImportGrampsXml implements ShouldQueue
             // Use existing GEDCOM parser
             $parser = new GedcomParser();
             $team_id = $this->user->currentTeam?->id;
-            $parser->parse($job->getConnectionName(), $tempGedcomPath, $slug, true, $team_id);
+            $parser->parse(config('database.default'), $tempGedcomPath, $slug, true, $team_id);
 
             // Clean up temp file
             File::delete($tempGedcomPath);
