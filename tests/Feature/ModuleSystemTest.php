@@ -18,23 +18,20 @@ class ModuleSystemTest extends TestCase
         $this->moduleManager = app(ModuleManager::class);
     }
 
-    /** @test */
-    public function it_can_list_all_modules()
+    public function test_it_can_list_all_modules(): void
     {
         $modules = $this->moduleManager->all();
         $this->assertNotEmpty($modules);
     }
 
-    /** @test */
-    public function it_can_get_module_by_name()
+    public function test_it_can_get_module_by_name(): void
     {
         $module = $this->moduleManager->get('Core');
         $this->assertNotNull($module);
         $this->assertEquals('Core', $module->getName());
     }
 
-    /** @test */
-    public function it_can_enable_and_disable_modules()
+    public function test_it_can_enable_and_disable_modules(): void
     {
         // First enable Core since other modules depend on it
         $coreModule = $this->moduleManager->get('Core');
@@ -57,8 +54,7 @@ class ModuleSystemTest extends TestCase
         $this->assertFalse($module->isEnabled());
     }
 
-    /** @test */
-    public function it_can_get_module_info()
+    public function test_it_can_get_module_info(): void
     {
         $info = $this->moduleManager->getModuleInfo('Core');
 
@@ -68,8 +64,7 @@ class ModuleSystemTest extends TestCase
         $this->assertEquals('Core', $info['name']);
     }
 
-    /** @test */
-    public function it_returns_false_for_non_existent_modules()
+    public function test_it_returns_false_for_non_existent_modules(): void
     {
         $result = $this->moduleManager->enable('NonExistentModule');
         $this->assertFalse($result);

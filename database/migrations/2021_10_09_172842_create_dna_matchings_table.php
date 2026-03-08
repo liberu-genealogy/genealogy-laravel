@@ -15,7 +15,7 @@ return new class() extends Migration {
         Schema::create('dna_matchings', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->foreignId('user_id')->constrained('users');
-            $table->string('image');
+            $table->string('image')->nullable();
             $table->string('file1');
             $table->string('file2');
             $table->string('total_shared_cm')->nullable();
