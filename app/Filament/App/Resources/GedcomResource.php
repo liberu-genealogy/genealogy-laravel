@@ -71,6 +71,7 @@ class GedcomResource extends AppResource
                     ->multiple(false)
                     ->required()
                     ->acceptedFileTypes(['.ged', '.gramps', 'text/plain', 'application/xml', 'text/xml'])
+                    ->mimeTypeMap(['ged' => 'text/plain', 'gramps' => 'application/xml'])
                     ->maxSize(100000)
                     ->disk('private')
                     ->directory('gedcom-form-imports')
