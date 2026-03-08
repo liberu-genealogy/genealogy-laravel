@@ -21,8 +21,10 @@ class SwitchTeam
     {
         $user = auth()->user();
 
-        if ($user && $user->hasTeam($event->tenant)) {
-            $user->switchTeam($event->tenant);
+        $tenant = $event->getTenant();
+
+        if ($user && $user->hasTeam($tenant)) {
+            $user->switchTeam($tenant);
         }
     }
 }
