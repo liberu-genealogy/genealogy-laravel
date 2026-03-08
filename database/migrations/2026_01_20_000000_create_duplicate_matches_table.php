@@ -10,8 +10,8 @@ return new class extends Migration
     {
         Schema::create('duplicate_matches', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('primary_person_id')->constrained('persons')->cascadeOnDelete();
-            $table->foreignId('duplicate_person_id')->constrained('persons')->cascadeOnDelete();
+            $table->foreignId('primary_person_id')->constrained('people')->cascadeOnDelete();
+            $table->foreignId('duplicate_person_id')->constrained('people')->cascadeOnDelete();
             $table->decimal('confidence_score', 5, 4)->default(0.0);
             $table->json('match_data')->nullable();
             $table->string('status')->default('pending'); // pending | reviewed | accepted | rejected | merged

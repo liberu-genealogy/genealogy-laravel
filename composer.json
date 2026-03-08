@@ -72,7 +72,9 @@
     },
     "extra": {
         "laravel": {
-            "dont-discover": []
+            "dont-discover": [
+                "liberu-genealogy/laravel-gedcom"
+            ]
         }
     },
     "config": {
