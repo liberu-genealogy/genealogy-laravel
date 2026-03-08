@@ -9,6 +9,7 @@ use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
 use Laravel\Jetstream\Contracts\InvitesTeamMembers;
 use Laravel\Jetstream\Events\InvitingTeamMember;
@@ -32,6 +33,7 @@ class InviteTeamMember implements InvitesTeamMembers
         $invitation = $team->teamInvitations()->create([
             'email' => $email,
             'role'  => $role,
+            'token' => Str::random(64),
         ]);
 
         Mail::to($email)->send(new TeamInvitation($invitation));
