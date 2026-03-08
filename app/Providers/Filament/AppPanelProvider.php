@@ -256,6 +256,18 @@ class AppPanelProvider extends PanelProvider
         Jetstream::$registersRoutes = false;
 
         /**
+         * Use a tenant-aware LoginResponse so that users without a team are
+         * redirected to /app/new (team creation) rather than landing on the
+         * bare /app panel root.  This binding is placed in boot() to run
+         * after Filament's own register() bindings so that ours takes
+         * precedence.
+         */
+        $this->app->singleton(
+            \Laravel\Fortify\Contracts\LoginResponse::class,
+            \App\Http\Responses\Auth\LoginResponse::class,
+        );
+
+        /**
          * Listen and create personal team for new accounts.
          */
         Event::listen(
