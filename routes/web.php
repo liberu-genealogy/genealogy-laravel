@@ -29,6 +29,8 @@ Route::get('/terms-and-conditions', fn() => view('pages.termsandconditions'))->n
 
 Route::get('/about', fn() => view('pages.aboutus'))->name('about');
 
+Route::get('/subscription', fn() => view('pages.subscription'))->name('subscription');
+
 Route::get('/contact', fn() => view('contact'));
 Route::post('/contact/send', [ContactController::class, 'sendEmail'])->name('contact.send');
 
