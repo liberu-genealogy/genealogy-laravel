@@ -3929,28 +3929,30 @@
         },
         {
             "name": "liberu-genealogy/laravel-gedcom",
-            "version": "v8.0.0",
+            "version": "v8.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/liberu-genealogy/laravel-gedcom.git",
-                "reference": "ddc81c7c8380c18c33189c75853954dfff71c850"
+                "reference": "a477d308191042b2a93e99e2c5e7ee2b58a10dee"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/liberu-genealogy/laravel-gedcom/zipball/ddc81c7c8380c18c33189c75853954dfff71c850",
-                "reference": "ddc81c7c8380c18c33189c75853954dfff71c850",
+                "url": "https://api.github.com/repos/liberu-genealogy/laravel-gedcom/zipball/a477d308191042b2a93e99e2c5e7ee2b58a10dee",
+                "reference": "a477d308191042b2a93e99e2c5e7ee2b58a10dee",
                 "shasum": ""
             },
             "require": {
                 "illuminate/database": "^11.0||^12.0",
                 "illuminate/support": "^11.0||^12.0",
-                "liberu-genealogy/php-gedcom": "^4.1.0",
-                "php": ">=8.4"
+                "liberu-genealogy/php-gedcom": "^4.2.0",
+                "php": ">=8.5"
             },
             "require-dev": {
                 "driftingly/rector-laravel": "^1.2.0",
                 "laravel/framework": "^10.0||^11.0||^12.0",
-                "phpunit/phpunit": "^10.0||^11.0||^12.0",
+                "mockery/mockery": "^1.6",
+                "orchestra/testbench": "^10.7",
+                "phpunit/phpunit": "^11.0||^12.0",
                 "rector/rector": "^1.0.0"
             },
             "type": "library",
@@ -3973,7 +3975,7 @@
             "description": "A package that converts gedcom files to Eloquent models",
             "support": {
                 "issues": "https://github.com/liberu-genealogy/laravel-gedcom/issues",
-                "source": "https://github.com/liberu-genealogy/laravel-gedcom/tree/v8.0.0"
+                "source": "https://github.com/liberu-genealogy/laravel-gedcom/tree/v8.2.0"
             },
             "funding": [
                 {
@@ -3981,7 +3983,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-02-15T07:01:43+00:00"
+            "time": "2026-03-08T15:50:14+00:00"
         },
         {
             "name": "liberu-genealogy/php-dna",
