@@ -1,32 +1,36 @@
-# Accepted values: 8.3+
-ARG PHP_VERSION=8.4
-
-ARG COMPOSER_VERSION=latest
-
-ARG NODE_VERSION=20-alpine
+# Supported PHP versions: 8.2, 8.3
+# Note: PHP 8.5 is not yet fully supported by all extensions
+ARG PHP_VERSION=8.3
 
 ###########################################
-
-FROM composer:${COMPOSER_VERSION} AS vendor
-
-WORKDIR /app
-COPY composer.json composer.lock /app/
-COPY vendor-local/laravel-gramps-xml /app/vendor-local/laravel-gramps-xml
-RUN composer install --no-dev --no-interaction --prefer-dist --optimize-autoloader --no-ansi --no-scripts --no-progress --ignore-platform-req=php --ignore-platform-req=ext-intl --ignore-platform-req=ext-bcmath
-
-FROM node:${NODE_VERSION} AS node_modules
+# Composer dependencies stage
+###########################################
+FROM php:${PHP_VERSION}-cli-alpine AS composer-deps
 
 WORKDIR /app
-COPY package.json package-lock.json ./
-RUN npm ci --only=prod && \
-    npm install --save-dev
 
-WORKDIR /app
-COPY . .
-COPY --from=vendor /app/vendor ./vendor
-RUN npm run build && \
-    rm -rf node_modules
+# Install required extensions for composer install
+ADD --chmod=0755 https://github.com/mlocati/docker-php-extension-installer/releases/latest/download/install-php-extensions /usr/local/bin/
+RUN install-php-extensions intl sockets zip
 
+# Install Composer
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+
+# Copy composer files
+COPY composer.json composer.lock ./
+
+# Install composer dependencies (no autoloader yet, will optimize in final stage)
+RUN composer install \
+    --no-dev \
+    --no-interaction \
+    --no-autoloader \
+    --no-ansi \
+    --no-scripts \
+    --prefer-dist
+
+###########################################
+# Main application stage
+###########################################
 FROM php:${PHP_VERSION}-cli-alpine
 
 LABEL maintainer="SMortexa <seyed.me720@gmail.com>"
@@ -42,7 +46,7 @@ ARG TZ=UTC
 ENV TERM=xterm-color \
     WITH_HORIZON=false \
     WITH_SCHEDULER=false \
-    OCTANE_SERVER=frankenphp \
+    OCTANE_SERVER=roadrunner \
     USER=octane \
     ROOT=/var/www/html \
     COMPOSER_FUND=0 \
@@ -50,15 +54,14 @@ ENV TERM=xterm-color \
 
 WORKDIR ${ROOT}
 
-# Use a portable shell invocation. Use -lc so scripts and chained commands behave as expected.
-SHELL ["/bin/sh", "-lc"]
+SHELL ["/bin/sh", "-eou", "pipefail", "-c"]
 
 RUN ln -snf /usr/share/zoneinfo/${TZ} /etc/localtime \
   && echo ${TZ} > /etc/timezone
 
-ADD --chmod=0755 https://github.com/mlocati/docker-php-extension-installer/releases/latest/download/install-php-extensions /usr/local/bin/install-php-extensions
-RUN chmod +x /usr/local/bin/install-php-extensions || true
+ADD --chmod=0755 https://github.com/mlocati/docker-php-extension-installer/releases/latest/download/install-php-extensions /usr/local/bin/
 
+# Install system dependencies and PHP extensions in one layer
 RUN apk update && \
     apk upgrade && \
     apk add --no-cache \
@@ -69,9 +72,8 @@ RUN apk update && \
     procps \
     ca-certificates \
     supervisor \
-    libsodium-dev \
-    # Install PHP extensions \
-    && install-php-extensions \
+    libsodium-dev && \
+    install-php-extensions \
     bz2 \
     pcntl \
     mbstring \
@@ -86,9 +88,9 @@ RUN apk update && \
     intl \
     gd \
     redis \
-    ldap \
-    && docker-php-source delete \
-    && rm -rf /var/cache/apk/* /tmp/* /var/tmp/*
+    igbinary && \
+    docker-php-source delete && \
+    rm -rf /var/cache/apk/* /tmp/* /var/tmp/*
 
 RUN arch="$(apk --print-arch)" \
     && case "$arch" in \
@@ -115,50 +117,50 @@ RUN cp ${PHP_INI_DIR}/php.ini-production ${PHP_INI_DIR}/php.ini
 
 USER ${USER}
 
-COPY  --chown=${USER}:${USER} --from=vendor /usr/bin/composer /usr/bin/composer
-COPY  --chown=${USER}:${USER} --from=vendor /app/vendor /var/www/html/vendor
-COPY  --chown=${USER}:${USER} composer.json composer.lock ./
+# Install Composer from official image
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-RUN composer dump-autoload --classmap-authoritative --no-dev --no-interaction --no-ansi --ignore-platform-req=php --no-scripts
+# Copy vendor from composer-deps stage for better caching
+COPY --chown=${USER}:${USER} --from=composer-deps /app/vendor ./vendor
 
-COPY  --chown=${USER}:${USER} . .
-COPY  --chown=${USER}:${USER} --from=node_modules /app/public/build /var/www/html/public/build
+# Copy composer files (needed for autoloader generation)
+COPY --chown=${USER}:${USER} composer.json composer.lock ./
 
+# Copy application code first so autoloader can resolve all files
+COPY --chown=${USER}:${USER} . .
+
+# Generate optimized autoloader now that all app files are present
+RUN composer dump-autoload --classmap-authoritative --no-dev && \
+    composer clear-cache
+
+# Create necessary Laravel directories
 RUN mkdir -p \
     storage/framework/sessions \
     storage/framework/views \
     storage/framework/cache \
     storage/framework/testing \
     storage/logs \
-    bootstrap/cache && chmod -R a+rw storage
+    bootstrap/cache && \
+    chmod -R a+rw storage
 
-COPY  --chown=${USER}:${USER} .docker/supervisord.conf /etc/supervisor/
-COPY  --chown=${USER}:${USER} .docker/octane/Swoole/supervisord.swoole.conf /etc/supervisor/conf.d/
-COPY  --chown=${USER}:${USER} .docker/octane/FrankenPHP/supervisord.frankenphp.conf /etc/supervisor/conf.d/
-COPY  --chown=${USER}:${USER} .docker/supervisord.*.conf /etc/supervisor/conf.d/
-COPY  --chown=${USER}:${USER} .docker/php.ini ${PHP_INI_DIR}/conf.d/99-octane.ini
-COPY  --chown=${USER}:${USER} .docker/start-container /usr/local/bin/start-container
+# Copy configuration files
+COPY --chown=${USER}:${USER} .docker/supervisord.conf /etc/supervisor/
+COPY --chown=${USER}:${USER} .docker/octane/RoadRunner/supervisord.roadrunner.conf /etc/supervisor/conf.d/
+COPY --chown=${USER}:${USER} .docker/supervisord.horizon.conf /etc/supervisor/conf.d/
+COPY --chown=${USER}:${USER} .docker/supervisord.scheduler.conf /etc/supervisor/conf.d/
+COPY --chown=${USER}:${USER} .docker/supervisord.worker.conf /etc/supervisor/conf.d/
+COPY --chown=${USER}:${USER} .docker/php.ini ${PHP_INI_DIR}/conf.d/99-octane.ini
+COPY --chown=${USER}:${USER} .docker/start-container /usr/local/bin/start-container
 
-RUN composer install \
-    --classmap-authoritative \
-    --no-interaction \
-    --no-ansi \
-    --no-dev \
-    --ignore-platform-req=php \
-    --no-scripts \
-    && composer clear-cache
+# Copy environment file
+COPY --chown=${USER}:${USER} .env.example ./.env
 
-COPY .env.example ./.env
-
-COPY --chown=${USER}:${USER} .docker/healthcheck.php /usr/local/bin/docker-healthcheck.php
-RUN chmod +x /usr/local/bin/docker-healthcheck.php || true
-
-RUN chmod +x /usr/local/bin/start-container
-
-RUN cat .docker/utilities.sh >> ~/.bashrc
+RUN chmod +x /usr/local/bin/start-container && \
+    cat .docker/utilities.sh >> ~/.bashrc
 
 EXPOSE 8000
 
 ENTRYPOINT ["start-container"]
 
-HEALTHCHECK --start-period=5s --interval=15s --timeout=5s --retries=5 CMD ["php", "/usr/local/bin/docker-healthcheck.php"]
+HEALTHCHECK --start-period=5s --interval=2s --timeout=5s --retries=8 CMD php artisan octane:status || exit 1
+

@@ -9,7 +9,6 @@ echo "Container mode: $container_mode"
 
 initialStuff() {
     php artisan storage:link; \
-    php artisan package:discover; \
     php artisan optimize:clear; \
     php artisan event:cache; \
     php artisan config:cache; \
@@ -24,9 +23,18 @@ initialStuff() {
 if [ "$1" != "" ]; then
     exec "$@"
 elif [ ${container_mode} = "http" ]; then
-    echo "HTTP server: artisan serve"
+    echo "Octane Server: $octane_server"
     initialStuff
-    exec php artisan serve --host=0.0.0.0 --port=8000
+    if [ ${octane_server}  = "frankenphp" ]; then
+        exec /usr/bin/supervisord -c /etc/supervisor/conf.d/supervisord.frankenphp.conf
+    elif [ ${octane_server}  = "swoole" ]; then
+        exec /usr/bin/supervisord -c /etc/supervisor/conf.d/supervisord.swoole.conf
+    elif [ ${octane_server}  = "roadrunner" ]; then
+        exec /usr/bin/supervisord -c /etc/supervisor/conf.d/supervisord.roadrunner.conf
+    else
+        echo "Invalid Octane server supplied."
+        exit 1
+    fi
 elif [ ${container_mode} = "horizon" ]; then
     initialStuff
     exec /usr/bin/supervisord -c /etc/supervisor/conf.d/supervisord.horizon.conf

@@ -4,169 +4,107 @@ services:
       context: .
       dockerfile: Dockerfile
       args:
-        PHP_VERSION: 8.4
-        WWWUSER: 1000
-        WWWGROUP: 1000
-    image: genealogy-laravel
-    container_name: genealogy-app
-    restart: unless-stopped
+        PHP_VERSION: '8.3'
+        WWWUSER: '${WWWUSER:-1000}'
+        WWWGROUP: '${WWWGROUP:-1000}'
+    image: boilerplate-laravel:latest
     ports:
-      - "8000:8000"
-    env_file: .env
+      - '${APP_PORT:-8000}:80'
     environment:
-      - CONTAINER_MODE=http
-      - OCTANE_SERVER=frankenphp
-      - WITH_HORIZON=false
-      - WITH_SCHEDULER=true
-      - RUNNING_MIGRATIONS_AND_SEEDERS=false
-      - DB_CONNECTION=mysql
-      - DB_HOST=mysql
-      - DB_PORT=3306
-      - DB_DATABASE=liberu
-      - DB_USERNAME=liberu
-      - DB_PASSWORD=secret
-      - REDIS_HOST=redis
-      - REDIS_PORT=6379
+      CONTAINER_MODE: http
+      OCTANE_SERVER: roadrunner
+      WITH_SCHEDULER: 'true'
+      WITH_HORIZON: 'false'
+      RUNNING_MIGRATIONS_AND_SEEDERS: '${RUNNING_MIGRATIONS_AND_SEEDERS:-false}'
+    env_file:
+      - .env
     volumes:
-      - ./.env:/var/www/html/.env
-      - ./storage/logs:/var/www/html/storage/logs
-      - ./storage/app:/var/www/html/storage/app
-      - ./public/build:/var/www/html/public/build
+      - storage:/var/www/html/storage/app
+      - logs:/var/www/html/storage/logs
     depends_on:
-      - mysql
-      - redis
+      mysql:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
     networks:
-      - genealogy-network
-    healthcheck:
-      test: ["CMD", "wget", "--spider", "-q", "http://127.0.0.1:8000"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
-      start_period: 40s
+      - appnet
+
+  worker:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        PHP_VERSION: '8.3'
+    image: boilerplate-laravel:latest
+    environment:
+      CONTAINER_MODE: worker
+      WORKER_COMMAND: 'php /var/www/html/artisan queue:work --sleep=3 --tries=3 --max-time=3600'
+    env_file:
+      - .env
+    volumes:
+      - storage:/var/www/html/storage/app
+      - logs:/var/www/html/storage/logs
+    depends_on:
+      mysql:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    networks:
+      - appnet
+    profiles:
+      - worker
 
   mysql:
     image: mysql:8.0
-    container_name: genealogy-mysql
-    restart: unless-stopped
     ports:
-      - "3307:3306"
+      - '${FORWARD_DB_PORT:-3306}:3306'
     environment:
-      MYSQL_DATABASE: liberu
-      MYSQL_ROOT_PASSWORD: secret
-      MYSQL_PASSWORD: secret
-      MYSQL_USER: liberu
+      MYSQL_ROOT_PASSWORD: '${DB_PASSWORD:-secret}'
+      MYSQL_DATABASE: '${DB_DATABASE:-liberu}'
+      MYSQL_USER: '${DB_USERNAME:-liberu}'
+      MYSQL_PASSWORD: '${DB_PASSWORD:-secret}'
     volumes:
-      - mysql_data:/var/lib/mysql
-      - ./database/init:/docker-entrypoint-initdb.d
+      - mysql:/var/lib/mysql
     networks:
-      - genealogy-network
-    command: --default-authentication-plugin=mysql_native_password
+      - appnet
+    healthcheck:
+      test: ['CMD', 'mysqladmin', 'ping', '-h', 'localhost']
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
   redis:
     image: redis:7-alpine
-    container_name: genealogy-redis
-    restart: unless-stopped
     ports:
-      - "6379:6379"
+      - '${FORWARD_REDIS_PORT:-6379}:6379'
     volumes:
-      - redis_data:/data
+      - redis:/data
     networks:
-      - genealogy-network
-    command: redis-server --appendonly yes
+      - appnet
+    healthcheck:
+      test: ['CMD', 'redis-cli', 'ping']
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
   mailpit:
-    image: axllent/mailpit
-    container_name: genealogy-mailpit
-    restart: unless-stopped
+    image: axllent/mailpit:latest
     ports:
-      - "1025:1025"
-      - "8025:8025"
+      - '${FORWARD_MAIL_PORT:-1025}:1025'
+      - '${FORWARD_MAILPIT_DASHBOARD_PORT:-8025}:8025'
     networks:
-      - genealogy-network
-
-  horizon:
-    build:
-      context: .
-      dockerfile: Dockerfile
-      args:
-        PHP_VERSION: 8.4
-        WWWUSER: 1000
-        WWWGROUP: 1000
-    image: genealogy-laravel
-    container_name: genealogy-horizon
-    restart: unless-stopped
-    env_file: .env
-    environment:
-      - CONTAINER_MODE=horizon
-      - WITH_HORIZON=true
-      - DB_CONNECTION=mysql
-      - DB_HOST=mysql
-      - DB_PORT=3306
-      - DB_DATABASE=liberu
-      - DB_USERNAME=liberu
-      - DB_PASSWORD=secret
-      - REDIS_HOST=redis
-      - REDIS_PORT=6379
-    volumes:
-      - ./storage/logs:/var/www/html/storage/logs
-    depends_on:
-      - mysql
-      - redis
-    networks:
-      - genealogy-network
-    healthcheck:
-      disable: true
-
-  scheduler:
-    build:
-      context: .
-      dockerfile: Dockerfile
-      args:
-        PHP_VERSION: 8.4
-        WWWUSER: 1000
-        WWWGROUP: 1000
-    image: genealogy-laravel
-    container_name: genealogy-scheduler
-    restart: unless-stopped
-    env_file: .env
-    environment:
-      - CONTAINER_MODE=scheduler
-      - WITH_SCHEDULER=true
-      - DB_CONNECTION=mysql
-      - DB_HOST=mysql
-      - DB_PORT=3306
-      - DB_DATABASE=liberu
-      - DB_USERNAME=liberu
-      - DB_PASSWORD=secret
-      - REDIS_HOST=redis
-      - REDIS_PORT=6379
-    volumes:
-      - ./storage/logs:/var/www/html/storage/logs
-    depends_on:
-      - mysql
-      - redis
-    networks:
-      - genealogy-network
-    healthcheck:
-      disable: true
-
-  # temporary helper service for building JS assets
-  node:
-    image: node:20-alpine
-    working_dir: /app
-    volumes:
-      - ./:/app
-      - ./vendor:/app/vendor
-    command: sh -c "npm ci && npm run build"
-
-volumes:
-  mysql_data:
-    driver: local
-  redis_data:
-    driver: local
+      - appnet
 
 networks:
-  genealogy-network:
+  appnet:
     driver: bridge
 
-
+volumes:
+  mysql:
+    driver: local
+  redis:
+    driver: local
+  storage:
+    driver: local
+  logs:
+    driver: local
