@@ -3,13 +3,17 @@
 namespace Tests\Feature\Filament\Resources;
 
 use App\Filament\App\Resources\GedcomResource;
+use App\Filament\App\Resources\GedcomResource\Pages\CreateGedcom;
 use App\Jobs\ExportGedCom;
+use App\Jobs\ImportGedcom;
+use App\Jobs\ImportGrampsXml;
 use App\Models\Gedcom;
 use App\Models\User;
 use Filament\Forms\Components\FileUpload;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Queue;
+use Illuminate\Support\Facades\Storage;
 use Tests\TestCase;
 
 class GedcomResourceTest extends TestCase
@@ -74,6 +78,57 @@ class GedcomResourceTest extends TestCase
         GedcomResource::exportGedcom();
 
         Queue::assertNotPushed(ExportGedCom::class);
+    }
+
+    public function test_after_create_dispatches_import_gedcom_for_ged_file(): void
+    {
+        Auth::login($this->user);
+        Storage::fake('private');
+
+        $gedcom = Gedcom::create(['filename' => 'gedcom-form-imports/test.ged']);
+
+        $page = new CreateGedcom();
+        $page->record = $gedcom;
+
+        $method = new \ReflectionMethod($page, 'afterCreate');
+        $method->invoke($page);
+
+        Queue::assertPushed(ImportGedcom::class);
+        Queue::assertNotPushed(ImportGrampsXml::class);
+    }
+
+    public function test_after_create_dispatches_import_gramps_xml_for_gramps_file(): void
+    {
+        Auth::login($this->user);
+        Storage::fake('private');
+
+        $gedcom = Gedcom::create(['filename' => 'gedcom-form-imports/test.gramps']);
+
+        $page = new CreateGedcom();
+        $page->record = $gedcom;
+
+        $method = new \ReflectionMethod($page, 'afterCreate');
+        $method->invoke($page);
+
+        Queue::assertPushed(ImportGrampsXml::class);
+        Queue::assertNotPushed(ImportGedcom::class);
+    }
+
+    public function test_after_create_does_not_dispatch_when_filename_is_null(): void
+    {
+        Auth::login($this->user);
+        Storage::fake('private');
+
+        $gedcom = Gedcom::create(['filename' => '']);
+
+        $page = new CreateGedcom();
+        $page->record = $gedcom;
+
+        $method = new \ReflectionMethod($page, 'afterCreate');
+        $method->invoke($page);
+
+        Queue::assertNotPushed(ImportGedcom::class);
+        Queue::assertNotPushed(ImportGrampsXml::class);
     }
 
     public function test_file_upload_component_accepts_ged_files_via_mime_type_map(): void

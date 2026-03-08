@@ -16,20 +16,22 @@ class CreateGedcom extends CreateRecord
 
     protected function afterCreate(): void
     {
-        // Dispatch import for the stored file(s) based on file extension
-        $files = (array)($this->data['filename'] ?? []);
-        foreach ($files as $path) {
-            $fullPath = Storage::disk('private')->path($path);
-            $extension = strtolower(pathinfo($fullPath, PATHINFO_EXTENSION));
-            
-            // Dispatch appropriate import job based on file extension
-            if (in_array($extension, ['gramps', 'xml'])) {
-                ImportGrampsXml::dispatch(Auth::user(), $fullPath);
-                Log::info("Dispatched GrampsXML import for: {$path}");
-            } else {
-                ImportGedcom::dispatch(Auth::user(), $fullPath);
-                Log::info("Dispatched GEDCOM import for: {$path}");
-            }
+        $path = $this->getRecord()->filename;
+
+        if (! $path) {
+            return;
+        }
+
+        $fullPath = Storage::disk('private')->path($path);
+        $extension = strtolower(pathinfo($fullPath, PATHINFO_EXTENSION));
+
+        // Dispatch appropriate import job based on file extension
+        if (in_array($extension, ['gramps', 'xml'])) {
+            ImportGrampsXml::dispatch(Auth::user(), $fullPath);
+            Log::info("Dispatched GrampsXML import for: {$path}");
+        } else {
+            ImportGedcom::dispatch(Auth::user(), $fullPath);
+            Log::info("Dispatched GEDCOM import for: {$path}");
         }
     }
 }
