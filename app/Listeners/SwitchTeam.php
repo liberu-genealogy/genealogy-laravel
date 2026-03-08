@@ -23,7 +23,7 @@ class SwitchTeam
 
         $tenant = $event->getTenant();
 
-        if ($user && $user->hasTeam($tenant)) {
+        if ($user && $user->belongsToTeam($tenant)) {
             $user->switchTeam($tenant);
         }
     }
