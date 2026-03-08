@@ -13,7 +13,7 @@ class SubscriptionService
     /**
      * Create premium subscription with trial
      *
-     * If a payment method is not provided, enable a local 7-day trial without
+     * If a payment method is not provided, enable a local 14-day trial without
      * contacting Stripe. This sets the user's generic trial and premium flag
      * so premium checks work immediately. When a payment method is provided,
      * defer to Cashier to create a real Stripe subscription.
@@ -22,11 +22,12 @@ class SubscriptionService
     {
         // Trial-only flow without requiring a payment method / Stripe setup
         if (empty($paymentMethod)) {
+            $trialDays = config('subscription.premium.trial_days', 14);
             $user->forceFill([
                 'is_premium' => true,
                 'premium_started_at' => now(),
                 // Generic trial used by Cashier's Billable::onTrial()
-                'trial_ends_at' => now()->addDays(7),
+                'trial_ends_at' => now()->addDays($trialDays),
             ])->save();
 
             return null;
@@ -34,7 +35,7 @@ class SubscriptionService
 
         // Real subscription flow using Stripe via Cashier
         $subscriptionBuilder = $user->newSubscription('premium', self::PREMIUM_PRICE_ID)
-            ->trialDays(7);
+            ->trialDays(config('subscription.premium.trial_days', 14));
 
         $subscription = $subscriptionBuilder->create($paymentMethod);
 
@@ -53,14 +54,30 @@ class SubscriptionService
     {
         $subscription = $user->subscription('premium');
 
-        if ($subscription) {
+        // Only call cancel() on Stripe if the subscription isn't already cancelled –
+        // preventing a redundant API call. Regardless of subscription state, always
+        // clear the is_premium flag so the user's access is revoked.
+        if ($subscription && ! $subscription->cancelled()) {
             $subscription->cancel();
         }
 
-        // Update user premium status
         $user->update([
             'is_premium' => false,
         ]);
+    }
+
+    /**
+     * Downgrade to free plan – removes premium flag and cancels any active subscription
+     * while preserving all core free-tier features.
+     */
+    public function downgradeToFree(User $user): void
+    {
+        $this->cancelPremiumSubscription($user);
+
+        // Clear trial so the user is not considered on trial anymore
+        $user->forceFill([
+            'trial_ends_at' => null,
+        ])->save();
     }
 
     /**
@@ -84,12 +101,14 @@ class SubscriptionService
      */
     public function getPricingInfo(): array
     {
+        $trialDays = config('subscription.premium.trial_days', 14);
+
         return [
             'premium' => [
                 'name' => 'Premium',
-                'price' => '£4.99',
+                'price' => '$2.99',
                 'interval' => 'month',
-                'trial_days' => 7,
+                'trial_days' => $trialDays,
                 'features' => [
                     'Premium user badge',
                     'Unlimited DNA kit uploads',

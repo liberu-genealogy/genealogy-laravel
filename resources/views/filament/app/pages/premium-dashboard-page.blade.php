@@ -62,7 +62,7 @@
                     </div>
                     <div class="ml-4">
                         <p class="text-sm font-medium text-gray-600 dark:text-gray-400">Price</p>
-                        <p class="text-lg font-semibold text-gray-900 dark:text-white">£4.99/month</p>
+                        <p class="text-lg font-semibold text-gray-900 dark:text-white">$2.99/month</p>
                     </div>
                 </div>
             </div>

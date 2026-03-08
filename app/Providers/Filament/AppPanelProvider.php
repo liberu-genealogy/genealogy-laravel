@@ -188,6 +188,7 @@ class AppPanelProvider extends PanelProvider
                 \App\Filament\App\Pages\GamificationPage::class,
                 \App\Filament\App\Pages\SubscriptionPage::class,
                 \App\Filament\App\Pages\PremiumDashboardPage::class,
+                \App\Filament\App\Pages\TrialExpiredPage::class,
                 EditProfile::class,
             ])
             ->discoverWidgets(in: app_path('Filament/App/Widgets'), for: 'App\\Filament\\App\\Widgets')

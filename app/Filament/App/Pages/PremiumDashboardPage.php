@@ -30,12 +30,19 @@ class PremiumDashboardPage extends Page
     {
         // Disable if premium feature is off
         if (! config('premium.enabled')) {
-            $this->redirect(Filament::getUrl());
-            return;
-        }
-        // Redirect if user is not premium
-        if (!Auth::user()->isPremium()) {
-            $this->redirect(route('filament.app.pages.subscription'));
+            $user = Auth::user();
+
+            // Trial expired – send to the card-details / trial-expired page
+            if ($user->hasExpiredTrial()) {
+                $this->redirect(route('filament.app.pages.trial-expired'));
+                return;
+            }
+
+            // Not premium at all – send to subscription page
+            if (! $user->isPremium()) {
+                $this->redirect(route('filament.app.pages.subscription'));
+                return;
+            }
         }
     }
 
@@ -59,6 +66,16 @@ class PremiumDashboardPage extends Page
                 ->action('cancelSubscription');
         }
 
+        $actions[] = Action::make('downgrade')
+            ->label('Downgrade to Free')
+            ->icon('heroicon-o-arrow-down-circle')
+            ->color('gray')
+            ->requiresConfirmation()
+            ->modalHeading('Downgrade to Free Plan')
+            ->modalDescription('You will lose access to premium features (Duplicate Checker, Smart Matching, unlimited DNA uploads). All your family tree data is kept. Are you sure?')
+            ->modalSubmitActionLabel('Yes, downgrade to free')
+            ->action('downgradeToFree');
+
         return $actions;
     }
 
@@ -80,6 +97,28 @@ class PremiumDashboardPage extends Page
             Notification::make()
                 ->title('Cancellation Error')
                 ->body('There was an error cancelling your subscription. Please try again.')
+                ->danger()
+                ->send();
+        }
+    }
+
+    public function downgradeToFree(): void
+    {
+        try {
+            $subscriptionService = app(SubscriptionService::class);
+            $subscriptionService->downgradeToFree(Auth::user());
+
+            Notification::make()
+                ->title('Downgraded to Free Plan')
+                ->body('You now have access to all standard features. You can upgrade again at any time.')
+                ->success()
+                ->send();
+
+            $this->redirect(Filament::getUrl());
+        } catch (Exception $e) {
+            Notification::make()
+                ->title('Error')
+                ->body('There was an error processing your request. Please try again.')
                 ->danger()
                 ->send();
         }
