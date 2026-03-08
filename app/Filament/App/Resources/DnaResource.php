@@ -51,7 +51,7 @@ class DnaResource extends AppResource
             return false;
         }
 
-        return $user->can('create_dna') && $user->canUploadDna();
+        return $user->canUploadDna();
     }
 
     #[Override]
