@@ -4,7 +4,10 @@ namespace Tests\Filament\Resources;
 
 use App\Filament\App\Resources\DnaResource;
 use App\Models\Dna;
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Auth;
+use Spatie\Permission\Models\Permission;
 use Tests\TestCase;
 
 class DnaResourceTest extends TestCase
@@ -34,5 +37,40 @@ class DnaResourceTest extends TestCase
     public function test_model_class_is_dna(): void
     {
         $this->assertEquals(\App\Models\Dna::class, DnaResource::getModel());
+    }
+
+    public function test_can_create_returns_true_for_user_with_permission_and_upload_allowed(): void
+    {
+        Permission::findOrCreate('create_dna', 'web');
+        $user = User::factory()->create(['dna_uploads_count' => 0]);
+        $user->givePermissionTo('create_dna');
+        Auth::login($user);
+
+        $this->assertTrue(DnaResource::canCreate());
+    }
+
+    public function test_can_create_returns_false_for_user_without_permission(): void
+    {
+        $user = User::factory()->create(['dna_uploads_count' => 0]);
+        Auth::login($user);
+
+        $this->assertFalse(DnaResource::canCreate());
+    }
+
+    public function test_can_create_returns_false_when_upload_limit_reached(): void
+    {
+        Permission::findOrCreate('create_dna', 'web');
+        $user = User::factory()->create(['dna_uploads_count' => 1, 'is_premium' => false]);
+        $user->givePermissionTo('create_dna');
+        Auth::login($user);
+
+        $this->assertFalse(DnaResource::canCreate());
+    }
+
+    public function test_can_create_returns_false_when_unauthenticated(): void
+    {
+        Auth::logout();
+
+        $this->assertFalse(DnaResource::canCreate());
     }
 }
