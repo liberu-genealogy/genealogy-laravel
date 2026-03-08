@@ -66,7 +66,6 @@ class PhotosRelationManager extends RelationManager
             ->headerActions([
                 Tables\Actions\CreateAction::make()
                     ->mutateFormDataUsing(function (array $data): array {
-                        $data['team_id'] = auth()->user()->currentTeam?->id;
                         $data['person_id'] = $this->ownerRecord->id;
                         $data['file_name'] = basename($data['file_path']);
                         return $data;
