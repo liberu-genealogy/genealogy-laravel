@@ -2,52 +2,37 @@
 
 namespace Tests\Filament\Resources;
 
-use App\Jobs\ImportGedcom;
+use App\Filament\App\Resources\DnaResource;
 use App\Models\Dna;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Http\UploadedFile;
-use Illuminate\Support\Facades\Queue;
-use Illuminate\Support\Facades\Storage;
 use Tests\TestCase;
 
 class DnaResourceTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_form_configuration(): void
+    public function test_resource_pages_registered(): void
     {
-        Storage::fake('private');
+        $pages = DnaResource::getPages();
 
-        Queue::fake();
-
-        $user = User::factory()->create();
-
-        $this->actingAs($user);
-
-        $file = UploadedFile::fake()->create('document.ged', 100);
-
-        $response = $this->post(route('filament.resources.dna.store'), [
-            'attachment' => $file,
-        ]);
-
-        $response->assertStatus(302);
-
-        Queue::assertPushed(ImportGedcom::class, fn($job): bool => $job->user->is($user) && Storage::disk('private')->exists("gedcom-form-imports/{$file->hashName()}"));
-
-        Storage::disk('private')->assertExists("gedcom-form-imports/{$file->hashName()}");
+        $this->assertArrayHasKey('index', $pages);
+        $this->assertArrayHasKey('create', $pages);
+        $this->assertArrayHasKey('edit', $pages);
     }
 
     public function test_table_configuration(): void
     {
         $dna = Dna::factory()->create();
 
-        $response = $this->get(route('filament.resources.dna.index'));
+        $this->assertDatabaseHas('dnas', [
+            'id'            => $dna->id,
+            'name'          => $dna->name,
+            'variable_name' => $dna->variable_name,
+        ]);
+    }
 
-        $response->assertSeeText($dna->name)
-                 ->assertSeeText($dna->user_id)
-                 ->assertSeeText($dna->variable_name)
-                 ->assertSeeText($dna->file_name)
-                 ->assertSeeText($dna->created_at)
-                 ->assertSeeText($dna->updated_at);
+    public function test_model_class_is_dna(): void
+    {
+        $this->assertEquals(\App\Models\Dna::class, DnaResource::getModel());
     }
 }

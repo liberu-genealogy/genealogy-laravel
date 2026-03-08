@@ -49,7 +49,7 @@ class QuickActionsWidget extends Widget
                 [
                     'label' => 'DNA Analysis',
                     'icon' => 'heroicon-o-beaker',
-                    'url' => Filament::getUrl() . '/dna',
+                    'url' => Filament::getUrl() . '/dnas',
                     'color' => 'purple',
                     'description' => 'Analyze DNA matches'
                 ],
