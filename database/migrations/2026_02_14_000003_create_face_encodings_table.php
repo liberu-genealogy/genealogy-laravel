@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('face_encodings', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('person_id')->constrained('persons')->onDelete('cascade');
+            $table->foreignId('person_id')->constrained('people')->onDelete('cascade');
             $table->foreignId('team_id')->nullable()->constrained('teams')->onDelete('cascade');
             $table->foreignId('source_photo_id')->nullable()->constrained('person_photos')->onDelete('set null');
             $table->text('encoding'); // Store face encoding/features for matching

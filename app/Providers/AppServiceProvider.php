@@ -4,6 +4,8 @@ namespace App\Providers;
 
 use Exception;
 use Log;
+use App\Models\Family;
+use App\Models\Person;
 use App\Modules\ModuleManager;
 use App\Modules\ModuleServiceProvider;
 use Illuminate\Support\ServiceProvider;
@@ -15,6 +17,13 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
+        // Bind vendor Person/Family models to the app's versions so that
+        // the GEDCOM parser (which calls app(VendorPerson::class)) resolves
+        // to our models and therefore uses the correct "people" / "families"
+        // tables.
+        $this->app->bind(\FamilyTree365\LaravelGedcom\Models\Person::class, Person::class);
+        $this->app->bind(\FamilyTree365\LaravelGedcom\Models\Family::class, Family::class);
+
         // Register the module manager as a singleton
         $this->app->singleton(ModuleManager::class, function ($app) {
             return new ModuleManager();
