@@ -182,7 +182,7 @@
                     </div>
                 </a>
 
-                <a href="{{ route('filament.app.resources.dna.create') }}" 
+                <a href="{{ route('filament.app.resources.dnas.create') }}" 
                    class="flex items-center space-x-3 p-4 bg-gray-50 dark:bg-gray-700 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors">
                     @svg('heroicon-o-beaker', 'h-6 w-6 text-blue-600 dark:text-blue-400')
                     <div>
