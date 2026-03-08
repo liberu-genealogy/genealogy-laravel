@@ -49,7 +49,7 @@ class GedcomResource extends AppResource
 
     public static function canCreate(): bool
     {
-        return auth()->user()?->can('create_gedcom') ?? false;
+        return auth()->check();
     }
 
     public static function getPages(): array

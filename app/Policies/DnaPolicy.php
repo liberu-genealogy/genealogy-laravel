@@ -28,10 +28,11 @@ class DnaPolicy
 
     /**
      * Determine whether the user can create models.
+     * Any authenticated user can upload DNA kits (subject to upload limits).
      */
     public function create(User $user): bool
     {
-        return $user->can('create_dna');
+        return true;
     }
 
     /**
