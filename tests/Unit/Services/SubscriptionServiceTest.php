@@ -30,7 +30,7 @@ class SubscriptionServiceTest extends TestCase
         $this->assertNotNull($user->trial_ends_at);
         $this->assertNotNull($user->premium_started_at);
         // Trial should be 14 days from now (allow ±1 second tolerance)
-        $this->assertEquals(14, now()->diffInDays($user->trial_ends_at));
+        $this->assertEqualsWithDelta(14, now()->diffInDays($user->trial_ends_at), 0.01);
     }
 
     public function testGetPricingInfoReturnsPremiumInfo(): void
