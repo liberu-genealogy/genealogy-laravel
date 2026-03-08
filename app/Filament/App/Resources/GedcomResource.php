@@ -88,8 +88,6 @@ class GedcomResource extends AppResource
     {
         return $table
             ->columns([
-                TextColumn::make('name')
-                    ->searchable(),
                 TextColumn::make('filename')
                     ->label('File name')
                     ->searchable(),
