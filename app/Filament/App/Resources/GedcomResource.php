@@ -47,6 +47,11 @@ class GedcomResource extends AppResource
 
     protected static string | \UnitEnum | null $navigationGroup = "🛠️ Data Management";
 
+    public static function canCreate(): bool
+    {
+        return auth()->user()?->can('create_gedcom') ?? false;
+    }
+
     public static function getPages(): array
     {
         return [

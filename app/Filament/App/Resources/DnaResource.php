@@ -46,7 +46,12 @@ class DnaResource extends AppResource
 
     public static function canCreate(): bool
     {
-        return auth()->user()->canUploadDna();
+        $user = auth()->user();
+        if (!$user) {
+            return false;
+        }
+
+        return $user->can('create_dna') && $user->canUploadDna();
     }
 
     #[Override]

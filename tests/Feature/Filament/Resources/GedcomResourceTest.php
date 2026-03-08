@@ -9,6 +9,7 @@ use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Queue;
+use Spatie\Permission\Models\Permission;
 use Tests\TestCase;
 
 class GedcomResourceTest extends TestCase
@@ -41,6 +42,29 @@ class GedcomResourceTest extends TestCase
         $pages = GedcomResource::getPages();
         $this->assertArrayHasKey('index', $pages);
         $this->assertArrayHasKey('create', $pages);
+    }
+
+    public function test_can_create_returns_true_for_user_with_permission(): void
+    {
+        Permission::findOrCreate('create_gedcom', 'web');
+        $this->user->givePermissionTo('create_gedcom');
+        Auth::login($this->user);
+
+        $this->assertTrue(GedcomResource::canCreate());
+    }
+
+    public function test_can_create_returns_false_for_user_without_permission(): void
+    {
+        Auth::login($this->user);
+
+        $this->assertFalse(GedcomResource::canCreate());
+    }
+
+    public function test_can_create_returns_false_when_unauthenticated(): void
+    {
+        Auth::logout();
+
+        $this->assertFalse(GedcomResource::canCreate());
     }
 
     public function test_export_gedcom_dispatches_job_with_authenticated_user(): void
