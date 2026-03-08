@@ -14,6 +14,11 @@ class FanChartComponent extends Component
         return 'full';
     }
 
+    public function getColumnStart(): int|string|array|null
+    {
+        return null;
+    }
+
     public function render()
     {
         $this->people = Person::all();

@@ -139,7 +139,7 @@ class SocialMediaConnectionService
         }
 
         // Sync if older than 24 hours
-        return now()->diffInHours($account->last_synced_at) > 24;
+        return $account->last_synced_at->diffInHours(now()) >= 24;
     }
 
     /**
