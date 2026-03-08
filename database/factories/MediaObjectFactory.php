@@ -29,7 +29,6 @@ class MediaObjectFactory extends Factory
             'gid'     => fake()->randomDigit(),
             'titl'    => fake()->word(),
             'obje_id' => fake()->randomDigit(),
-            'rin'     => fake()->word(),
         ];
     }
 }
