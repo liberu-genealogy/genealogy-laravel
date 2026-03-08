@@ -15,6 +15,7 @@ return new class() extends Migration {
                 $table->foreignId('team_id')->nullable()->constrained()->onDelete('cascade');
             });
         }
+
     }
 
     /**
