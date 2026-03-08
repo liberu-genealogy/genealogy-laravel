@@ -2,6 +2,8 @@
 
 namespace App\Listeners;
 
+use Filament\Events\TenantSet;
+
 class SwitchTeam
 {
     /**
@@ -15,8 +17,12 @@ class SwitchTeam
     /**
      * Handle the event.
      */
-    public function handle(object $event): void
+    public function handle(TenantSet $event): void
     {
-        // dd($event);
+        $user = auth()->user();
+
+        if ($user && $user->hasTeam($event->tenant)) {
+            $user->switchTeam($event->tenant);
+        }
     }
 }

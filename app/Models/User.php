@@ -179,7 +179,7 @@ class User extends Authenticatable implements HasDefaultTenant, HasTenants, Fila
 
     public function getDefaultTenant(Panel $panel): ?Model
     {
-        return $this->latestTeam;
+        return $this->latestTeam ?? $this->ownedTeams()->first();
     }
 
     public function latestTeam(): BelongsTo
