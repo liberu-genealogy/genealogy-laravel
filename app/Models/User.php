@@ -197,8 +197,34 @@ class User extends Authenticatable implements HasDefaultTenant, HasTenants, Fila
             return true;
         }
 
-        // Consider either an active Stripe subscription or a generic user trial
-        return $this->is_premium && ($this->subscribed('premium') || $this->onTrial());
+        // Active Stripe subscription (not cancelled / not expired)
+        if ($this->subscribed('premium')) {
+            return true;
+        }
+
+        // Local trial still running
+        if ($this->is_premium && $this->onTrial()) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * Check whether the user started a trial that has since expired and they
+     * have not yet set up a paid subscription.
+     */
+    public function hasExpiredTrial(): bool
+    {
+        if (config('premium.enabled')) {
+            return false;
+        }
+
+        // They went through the trial flow (is_premium was set) but the trial
+        // window has closed and there is no active Stripe subscription.
+        return $this->is_premium
+            && ! $this->onTrial()
+            && ! $this->subscribed('premium');
     }
 
     /**
