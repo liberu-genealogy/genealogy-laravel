@@ -66,7 +66,7 @@ class PersonResource extends AppResource
                 FileUpload::make('photo_url')
                     ->image()
                     ->label('Profile Photo')
-                    ->directory('persons')
+                    ->directory('people')
                     ->disk('public'),
                 DateTimePicker::make('burial_day')->label('Burial Day'),
                 TextInput::make('bank')->label('Bank'),
