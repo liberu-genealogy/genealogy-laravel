@@ -21,6 +21,8 @@ class CreateGedcom extends CreateRecord
 {
     protected static string $resource = GedcomResource::class;
 
+    protected string $view = 'filament.resources.gedcom-resource.pages.gedcom';
+
     protected function handleRecordCreation(array $data): Model
     {
         $path = $data['filename'] ?? null;
