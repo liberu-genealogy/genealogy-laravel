@@ -267,6 +267,11 @@ class AppPanelProvider extends PanelProvider
             \App\Http\Responses\Auth\LoginResponse::class,
         );
 
+        $this->app->singleton(
+            \Laravel\Fortify\Contracts\RegisterResponse::class,
+            \App\Http\Responses\Auth\RegisterResponse::class,
+        );
+
         /**
          * Listen and create personal team for new accounts.
          */
