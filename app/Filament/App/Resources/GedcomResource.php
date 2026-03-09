@@ -47,6 +47,11 @@ class GedcomResource extends AppResource
 
     protected static string | \UnitEnum | null $navigationGroup = "🛠️ Data Management";
 
+    public static function canCreate(): bool
+    {
+        return auth()->check();
+    }
+
     public static function getPages(): array
     {
         return [
@@ -66,6 +71,7 @@ class GedcomResource extends AppResource
                     ->multiple(false)
                     ->required()
                     ->acceptedFileTypes(['.ged', '.gramps', 'text/plain', 'application/xml', 'text/xml'])
+                    ->mimeTypeMap(['ged' => 'text/plain', 'gramps' => 'application/xml'])
                     ->maxSize(100000)
                     ->disk('private')
                     ->directory('gedcom-form-imports')
@@ -88,8 +94,6 @@ class GedcomResource extends AppResource
     {
         return $table
             ->columns([
-                TextColumn::make('name')
-                    ->searchable(),
                 TextColumn::make('filename')
                     ->label('File name')
                     ->searchable(),

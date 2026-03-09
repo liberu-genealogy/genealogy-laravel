@@ -20,7 +20,7 @@
         "laravel/sanctum": "^4.0",
         "laravel/tinker": "^2.10.1",
         "liberu-genealogy/laravel-dna": "^2.0",
-        "liberu-genealogy/laravel-gedcom": "^7.0",
+        "liberu-genealogy/laravel-gedcom": "^8.0",
         "liberu/laravel-gramps-xml": "dev-main",
         "livewire/livewire": "^4.0",
         "spatie/laravel-menu": "^4.0",
@@ -72,7 +72,9 @@
     },
     "extra": {
         "laravel": {
-            "dont-discover": []
+            "dont-discover": [
+                "liberu-genealogy/laravel-gedcom"
+            ]
         }
     },
     "config": {

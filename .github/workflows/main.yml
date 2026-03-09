@@ -17,8 +17,27 @@ jobs:
   docker:
     if: github.event_name == 'push'
     runs-on: ubuntu-latest
+
+    services:
+      mysql:
+        image: mysql:8.0
+        env:
+          MYSQL_ROOT_PASSWORD: root
+          MYSQL_DATABASE: liberu
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd="mysqladmin ping"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=3
+
     steps:
+<<<<<<< HEAD
       - name: Checkout code
+=======
+      - name: Checkout
+>>>>>>> 327e4771520e20cf0d5d971ae3b2a73a7baec282
         uses: actions/checkout@v4
 
       - name: Login to Docker Hub
@@ -32,7 +51,14 @@ jobs:
         uses: docker/metadata-action@902fa8ec7d6ecbf8d84d538b9b233a880e4288.5
         with:
           images: liberu/genealogy
+          flavor: |
+            latest=true
 
+<<<<<<< HEAD
+=======
+      # Setting up Docker Buildx with docker-container driver is required
+      # at the moment to be able to use a subdirectory with Git context
+>>>>>>> 327e4771520e20cf0d5d971ae3b2a73a7baec282
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 

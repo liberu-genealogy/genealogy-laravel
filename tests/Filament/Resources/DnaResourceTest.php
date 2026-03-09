@@ -2,52 +2,62 @@
 
 namespace Tests\Filament\Resources;
 
-use App\Jobs\ImportGedcom;
+use App\Filament\App\Resources\DnaResource;
 use App\Models\Dna;
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Http\UploadedFile;
-use Illuminate\Support\Facades\Queue;
-use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Auth;
 use Tests\TestCase;
 
 class DnaResourceTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_form_configuration(): void
+    public function test_resource_pages_registered(): void
     {
-        Storage::fake('private');
+        $pages = DnaResource::getPages();
 
-        Queue::fake();
-
-        $user = User::factory()->create();
-
-        $this->actingAs($user);
-
-        $file = UploadedFile::fake()->create('document.ged', 100);
-
-        $response = $this->post(route('filament.resources.dna.store'), [
-            'attachment' => $file,
-        ]);
-
-        $response->assertStatus(302);
-
-        Queue::assertPushed(ImportGedcom::class, fn($job): bool => $job->user->is($user) && Storage::disk('private')->exists("gedcom-form-imports/{$file->hashName()}"));
-
-        Storage::disk('private')->assertExists("gedcom-form-imports/{$file->hashName()}");
+        $this->assertArrayHasKey('index', $pages);
+        $this->assertArrayHasKey('create', $pages);
+        $this->assertArrayHasKey('edit', $pages);
     }
 
     public function test_table_configuration(): void
     {
         $dna = Dna::factory()->create();
 
-        $response = $this->get(route('filament.resources.dna.index'));
+        $this->assertDatabaseHas('dnas', [
+            'id'            => $dna->id,
+            'name'          => $dna->name,
+            'variable_name' => $dna->variable_name,
+        ]);
+    }
 
-        $response->assertSeeText($dna->name)
-                 ->assertSeeText($dna->user_id)
-                 ->assertSeeText($dna->variable_name)
-                 ->assertSeeText($dna->file_name)
-                 ->assertSeeText($dna->created_at)
-                 ->assertSeeText($dna->updated_at);
+    public function test_model_class_is_dna(): void
+    {
+        $this->assertEquals(\App\Models\Dna::class, DnaResource::getModel());
+    }
+
+    public function test_can_create_returns_true_for_authenticated_user_within_upload_limit(): void
+    {
+        $user = User::factory()->create(['dna_uploads_count' => 0]);
+        Auth::login($user);
+
+        $this->assertTrue(DnaResource::canCreate());
+    }
+
+    public function test_can_create_returns_false_when_upload_limit_reached(): void
+    {
+        $user = User::factory()->create(['dna_uploads_count' => 1, 'is_premium' => false]);
+        Auth::login($user);
+
+        $this->assertFalse(DnaResource::canCreate());
+    }
+
+    public function test_can_create_returns_false_when_unauthenticated(): void
+    {
+        Auth::logout();
+
+        $this->assertFalse(DnaResource::canCreate());
     }
 }

@@ -31,7 +31,7 @@ class CreatePersonsEventsTable extends Migration
                 $table->string('adop_famc')->nullable();
                 $table->string('birt_famc')->nullable();
                 $table->string('converted_date')->nullable();
-                $table->foreignId('person_id')->constrained('persons')->nullable();
+                $table->foreignId('person_id')->constrained('people')->nullable();
                 $table->string('title')->nullable();
                 $table->string('date')->nullable();
                 $table->string('description')->nullable();

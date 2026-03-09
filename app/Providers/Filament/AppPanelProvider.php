@@ -188,6 +188,7 @@ class AppPanelProvider extends PanelProvider
                 \App\Filament\App\Pages\GamificationPage::class,
                 \App\Filament\App\Pages\SubscriptionPage::class,
                 \App\Filament\App\Pages\PremiumDashboardPage::class,
+                \App\Filament\App\Pages\TrialExpiredPage::class,
                 EditProfile::class,
             ])
             ->discoverWidgets(in: app_path('Filament/App/Widgets'), for: 'App\\Filament\\App\\Widgets')
@@ -253,6 +254,18 @@ class AppPanelProvider extends PanelProvider
          * Disable Jetstream routes.
          */
         Jetstream::$registersRoutes = false;
+
+        /**
+         * Use a tenant-aware LoginResponse so that users without a team are
+         * redirected to /app/new (team creation) rather than landing on the
+         * bare /app panel root.  This binding is placed in boot() to run
+         * after Filament's own register() bindings so that ours takes
+         * precedence.
+         */
+        $this->app->singleton(
+            \Laravel\Fortify\Contracts\LoginResponse::class,
+            \App\Http\Responses\Auth\LoginResponse::class,
+        );
 
         /**
          * Listen and create personal team for new accounts.

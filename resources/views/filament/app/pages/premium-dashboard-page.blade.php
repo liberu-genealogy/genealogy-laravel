@@ -62,7 +62,7 @@
                     </div>
                     <div class="ml-4">
                         <p class="text-sm font-medium text-gray-600 dark:text-gray-400">Price</p>
-                        <p class="text-lg font-semibold text-gray-900 dark:text-white">£4.99/month</p>
+                        <p class="text-lg font-semibold text-gray-900 dark:text-white">$2.99/month</p>
                     </div>
                 </div>
             </div>
@@ -182,7 +182,7 @@
                     </div>
                 </a>
 
-                <a href="{{ route('filament.app.resources.dna.create') }}" 
+                <a href="{{ route('filament.app.resources.dnas.create') }}" 
                    class="flex items-center space-x-3 p-4 bg-gray-50 dark:bg-gray-700 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors">
                     @svg('heroicon-o-beaker', 'h-6 w-6 text-blue-600 dark:text-blue-400')
                     <div>

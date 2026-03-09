@@ -19,8 +19,8 @@ class CreateFamiliesTable extends Migration
                 $table->text('description')->nullable();
                 $table->integer('is_active')->nullable();
                 $table->foreignId('type_id')->constrained('types')->nullable();
-                $table->foreignId('husband_id')->constrained('persons')->nullable();
-                $table->foreignId('wife_id')->constrained('persons')->nullable();
+                $table->foreignId('husband_id')->constrained('people')->nullable();
+                $table->foreignId('wife_id')->constrained('people')->nullable();
                 $table->string('chan')->nullable();
                 $table->string('nchi')->nullable();
                 $table->string('rin')->nullable();

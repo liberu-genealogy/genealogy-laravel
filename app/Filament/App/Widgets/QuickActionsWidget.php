@@ -2,6 +2,7 @@
 
 namespace App\Filament\App\Widgets;
 
+use App\Filament\App\Resources\GedcomResource;
 use Filament\Facades\Filament;
 use Filament\Widgets\Widget;
 
@@ -41,14 +42,14 @@ class QuickActionsWidget extends Widget
                 [
                     'label' => 'Import GEDCOM',
                     'icon' => 'heroicon-o-arrow-up-tray',
-                    'url' => Filament::getUrl() . '/gedcom/create',
+                    'url' => GedcomResource::getUrl('create'),
                     'color' => 'primary',
                     'description' => 'Import genealogy data'
                 ],
                 [
                     'label' => 'DNA Analysis',
                     'icon' => 'heroicon-o-beaker',
-                    'url' => Filament::getUrl() . '/dna',
+                    'url' => Filament::getUrl() . '/dnas',
                     'color' => 'purple',
                     'description' => 'Analyze DNA matches'
                 ],

@@ -1,5 +1,9 @@
 #!/bin/bash
+<<<<<<< HEAD
 # Setup script for the control-panel-laravel project.
+=======
+# Setup script for the Liberu genealogy project.
+>>>>>>> 327e4771520e20cf0d5d971ae3b2a73a7baec282
 #
 # This script provides installation options for Standalone, Docker, or Kubernetes deployments.
 # It handles composer and npm installations with fallback logic and error checking.
@@ -452,7 +456,11 @@ install_kubernetes() {
 # Main installation menu
 main() {
     clear
+<<<<<<< HEAD
     print_header "LIBERU CONTROL PANEL - INSTALLER"
+=======
+    print_header "LIBERU GENEALOGY - INSTALLER"
+>>>>>>> 327e4771520e20cf0d5d971ae3b2a73a7baec282
 
     echo "Please select installation type:"
     echo ""
