@@ -46,7 +46,42 @@ class CreateGedcom extends CreateRecord
             return;
         }
 
-        $fullPath  = Storage::disk('private')->path($path);
+        $disk = Storage::disk('private');
+
+        $path = (string) $path;
+
+        // If the file landed in livewire-tmp (Livewire's temporary upload directory),
+        // move it to the permanent gedcom-form-imports directory so storage is organised
+        // correctly and the file survives queue processing.
+        if (str_starts_with($path, 'livewire-tmp/') && $disk->exists($path)) {
+            $newPath = 'gedcom-form-imports/' . basename($path);
+            $disk->move($path, $newPath);
+            $record->update(['filename' => $newPath]);
+            $path = $newPath;
+
+            Log::info('CreateGedcom: moved upload from livewire-tmp to gedcom-form-imports', [
+                'gedcom_id' => $record->getKey(),
+                'new_path'  => $newPath,
+            ]);
+        }
+
+        // Verify the file actually exists before dispatching the job
+        if (! $disk->exists($path)) {
+            Log::error('CreateGedcom::afterCreate: file does not exist on private disk, aborting dispatch', [
+                'gedcom_id' => $record->getKey(),
+                'path'      => $path,
+            ]);
+
+            Notification::make()
+                ->title('Import failed')
+                ->body('The uploaded file could not be found. Please try uploading again.')
+                ->danger()
+                ->send();
+
+            return;
+        }
+
+        $fullPath  = $disk->path($path);
         $extension = strtolower(pathinfo($fullPath, PATHINFO_EXTENSION));
 
         // Pre-create the ImportJob so the user can track it immediately

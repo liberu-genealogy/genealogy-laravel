@@ -84,7 +84,8 @@ class GedcomResourceTest extends TestCase
     public function test_after_create_dispatches_import_gedcom_for_ged_file(): void
     {
         Auth::login($this->user);
-        Storage::fake('private');
+        $disk = Storage::fake('private');
+        $disk->put('gedcom-form-imports/test.ged', '0 HEAD');
 
         $gedcom = Gedcom::create(['filename' => 'gedcom-form-imports/test.ged']);
 
@@ -101,7 +102,8 @@ class GedcomResourceTest extends TestCase
     public function test_after_create_dispatches_gedcom_job_when_filename_is_array(): void
     {
         Auth::login($this->user);
-        Storage::fake('private');
+        $disk = Storage::fake('private');
+        $disk->put('gedcom-form-imports/test.ged', '0 HEAD');
 
         // Filament FileUpload may persist as an array even for single-file uploads;
         // CreateGedcom::afterCreate must extract the first element safely.
@@ -122,7 +124,8 @@ class GedcomResourceTest extends TestCase
     public function test_after_create_dispatches_import_gramps_xml_for_gramps_file(): void
     {
         Auth::login($this->user);
-        Storage::fake('private');
+        $disk = Storage::fake('private');
+        $disk->put('gedcom-form-imports/test.gramps', '<database/>');
 
         $gedcom = Gedcom::create(['filename' => 'gedcom-form-imports/test.gramps']);
 
@@ -153,10 +156,59 @@ class GedcomResourceTest extends TestCase
         Queue::assertNotPushed(ImportGrampsXml::class);
     }
 
-    public function test_after_create_pre_creates_import_job_before_dispatch(): void
+    public function test_after_create_does_not_dispatch_when_file_not_found_on_disk(): void
     {
         Auth::login($this->user);
         Storage::fake('private');
+        // File is NOT placed in the fake disk; afterCreate should abort gracefully.
+
+        $gedcom = Gedcom::create(['filename' => 'gedcom-form-imports/missing.ged']);
+
+        $page = new CreateGedcom();
+        $page->record = $gedcom;
+
+        $method = new \ReflectionMethod($page, 'afterCreate');
+        $method->invoke($page);
+
+        Queue::assertNotPushed(ImportGedcom::class);
+        Queue::assertNotPushed(ImportGrampsXml::class);
+    }
+
+    public function test_after_create_moves_file_from_livewire_tmp_and_dispatches_job(): void
+    {
+        Auth::login($this->user);
+        $disk = Storage::fake('private');
+
+        // Simulate a file that Livewire stored in its temporary directory instead of
+        // the final gedcom-form-imports directory (e.g. when Filament's file-move step
+        // did not run before afterCreate was called).
+        $tmpPath = 'livewire-tmp/abcdef-test.ged';
+        $disk->put($tmpPath, '0 HEAD');
+
+        $gedcom = Gedcom::create(['filename' => $tmpPath]);
+
+        $page = new CreateGedcom();
+        $page->record = $gedcom;
+
+        $method = new \ReflectionMethod($page, 'afterCreate');
+        $method->invoke($page);
+
+        // The file should have been moved out of livewire-tmp
+        $disk->assertMissing($tmpPath);
+        $disk->assertExists('gedcom-form-imports/abcdef-test.ged');
+
+        // The Gedcom record should point to the new location
+        $this->assertEquals('gedcom-form-imports/abcdef-test.ged', $gedcom->fresh()->filename);
+
+        // The import job should still be dispatched
+        Queue::assertPushed(ImportGedcom::class);
+    }
+
+    public function test_after_create_pre_creates_import_job_before_dispatch(): void
+    {
+        Auth::login($this->user);
+        $disk = Storage::fake('private');
+        $disk->put('gedcom-form-imports/test.ged', '0 HEAD');
 
         $gedcom = Gedcom::create(['filename' => 'gedcom-form-imports/test.ged']);
 
@@ -177,7 +229,8 @@ class GedcomResourceTest extends TestCase
     public function test_after_create_dispatches_gedcom_job_with_slug(): void
     {
         Auth::login($this->user);
-        Storage::fake('private');
+        $disk = Storage::fake('private');
+        $disk->put('gedcom-form-imports/test.ged', '0 HEAD');
 
         $gedcom = Gedcom::create(['filename' => 'gedcom-form-imports/test.ged']);
 
@@ -222,3 +275,4 @@ class GedcomResourceTest extends TestCase
         $this->assertContains('text/plain', $acceptedTypes, 'FileUpload should accept text/plain MIME type');
     }
 }
+
