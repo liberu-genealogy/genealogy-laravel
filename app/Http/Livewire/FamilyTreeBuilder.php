@@ -47,7 +47,7 @@ final class FamilyTreeBuilder extends Component
             'tree_position_y' => $y
         ]);
 
-        $this->emit('positionUpdated', personId: $personId);
+        $this->dispatch('positionUpdated', personId: $personId);
     }
 
     #[On('personAdded')]
@@ -63,7 +63,7 @@ final class FamilyTreeBuilder extends Component
         ]);
 
         $this->loadTreeData();
-        $this->emit('personCreated', personId: $person->id);
+        $this->dispatch('personCreated', personId: $person->id);
     }
 
     #[On('personRemoved')]
@@ -71,7 +71,7 @@ final class FamilyTreeBuilder extends Component
     {
         Person::find($personId)?->delete();
         $this->loadTreeData();
-        $this->emit('personDeleted', personId: $personId);
+        $this->dispatch('personDeleted', personId: $personId);
     }
 
     public function render()

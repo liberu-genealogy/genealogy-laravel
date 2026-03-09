@@ -3,6 +3,7 @@
 namespace App\Http\Livewire;
 
 use App\Models\Person;
+use Livewire\Attributes\On;
 use Livewire\Component;
 
 class PeopleSearch extends Component
@@ -10,13 +11,12 @@ class PeopleSearch extends Component
     public $query = '';
     public $results = [];
 
-    protected $listeners = ['updatedQuery' => 'searchPeople'];
-
     public function mount(): void
     {
         $this->searchPeople();
     }
 
+    #[On('updatedQuery')]
     public function searchPeople(): void
     {
         try {

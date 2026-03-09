@@ -152,7 +152,7 @@ function renderFanChart(data, config) {
         .style("fill", d => color(d.data.sex || 'unknown'))
         .on("click", function(event, d) {
             if (d.data.id) {
-                @this.call('setRootPerson', d.data.id);
+                $wire.call('setRootPerson', d.data.id);
             }
         });
 
@@ -180,7 +180,7 @@ function renderFanChart(data, config) {
         .attr("class", "fan-center")
         .attr("r", 30)
         .on("click", function() {
-            @this.call('setRootPerson', @json($rootPersonId));
+            $wire.call('setRootPerson', @json($rootPersonId));
         });
 
     // Add center text
