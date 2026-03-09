@@ -1,7 +1,7 @@
 <x-app-layout>
 @include('components.home-navbar')
 
-    <main class="flex-1 pt-6">
+    <main class="flex-1">
         @yield('content')
     </main>
 
