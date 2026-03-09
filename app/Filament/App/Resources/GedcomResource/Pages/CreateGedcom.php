@@ -31,16 +31,25 @@ class CreateGedcom extends CreateRecord
             $path     = $filtered !== [] ? $filtered[0] : null;
         }
 
+        $data['filename'] = (string) ($path ?? '');
+
+        return Gedcom::create($data);
+    }
+
+    protected function afterCreate(): void
+    {
+        $path = $this->record->filename;
+
+        // FileUpload may store as array even when multiple(false) is set
+        if (is_array($path)) {
+            $filtered = array_values(array_filter($path));
+            $path     = $filtered !== [] ? $filtered[0] : null;
+        }
+
         $path = (string) ($path ?? '');
 
         if (! $path) {
-            Notification::make()
-                ->title('No file selected')
-                ->body('Please upload a GEDCOM or GrampsXML file.')
-                ->danger()
-                ->send();
-
-            $this->halt();
+            return;
         }
 
         $disk = Storage::disk('private');
@@ -51,34 +60,22 @@ class CreateGedcom extends CreateRecord
         if (str_starts_with($path, 'livewire-tmp/') && $disk->exists($path)) {
             $newPath = 'gedcom-form-imports/' . basename($path);
             $disk->move($path, $newPath);
-            $path          = $newPath;
-            $data['filename'] = $newPath;
+            $path = $newPath;
+            $this->record->update(['filename' => $newPath]);
 
             Log::info('CreateGedcom: moved upload from livewire-tmp to gedcom-form-imports', [
                 'new_path' => $newPath,
             ]);
         }
 
-        // Ensure the (possibly moved) filename is written into the record
-        $data['filename'] = $path;
-        $gedcom           = Gedcom::create($data);
-
         // Verify the file actually exists before dispatching the job
         if (! $disk->exists($path)) {
             Log::error('CreateGedcom: file does not exist on private disk, aborting dispatch', [
-                'gedcom_id' => $gedcom->getKey(),
+                'gedcom_id' => $this->record->getKey(),
                 'path'      => $path,
             ]);
 
-            $gedcom->delete();
-
-            Notification::make()
-                ->title('Import failed')
-                ->body('The uploaded file could not be found. Please try uploading again.')
-                ->danger()
-                ->send();
-
-            $this->halt();
+            return;
         }
 
         $fullPath  = $disk->path($path);
@@ -109,7 +106,7 @@ class CreateGedcom extends CreateRecord
                 ->send();
         } catch (Throwable $e) {
             Log::error('Failed to dispatch GEDCOM import job', [
-                'gedcom_id' => $gedcom->getKey(),
+                'gedcom_id' => $this->record->getKey(),
                 'path'      => $path,
                 'full_path' => $fullPath,
                 'error'     => $e->getMessage(),
@@ -122,8 +119,6 @@ class CreateGedcom extends CreateRecord
                 ->danger()
                 ->send();
         }
-
-        return $gedcom;
     }
 
     /**
