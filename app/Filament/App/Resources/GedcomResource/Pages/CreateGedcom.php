@@ -6,9 +6,11 @@ use App\Filament\App\Resources\GedcomResource;
 use App\Filament\App\Resources\ImportJobResource;
 use App\Jobs\ImportGedcom;
 use App\Jobs\ImportGrampsXml;
+use App\Models\Gedcom;
 use App\Models\ImportJob;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\CreateRecord;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
@@ -19,36 +21,29 @@ class CreateGedcom extends CreateRecord
 {
     protected static string $resource = GedcomResource::class;
 
-    /** The import slug created before dispatch, used for the redirect. */
-    private string $importSlug = '';
-
-    protected function afterCreate(): void
+    protected function handleRecordCreation(array $data): Model
     {
-        $record = $this->getRecord();
-        $path   = $record->filename;
+        $path = $data['filename'] ?? null;
 
-        // FileUpload may store as array (e.g. when Filament uses array persistence)
+        // FileUpload may store as array even when multiple(false) is set
         if (is_array($path)) {
             $filtered = array_values(array_filter($path));
-            $path = $filtered !== [] ? $filtered[0] : null;
+            $path     = $filtered !== [] ? $filtered[0] : null;
         }
 
-        Log::info('CreateGedcom::afterCreate called', [
-            'gedcom_id' => $record->getKey(),
-            'filename'  => $path,
-        ]);
+        $path = (string) ($path ?? '');
 
         if (! $path) {
-            Log::warning('CreateGedcom::afterCreate: filename is empty, skipping dispatch', [
-                'gedcom_id' => $record->getKey(),
-            ]);
+            Notification::make()
+                ->title('No file selected')
+                ->body('Please upload a GEDCOM or GrampsXML file.')
+                ->danger()
+                ->send();
 
-            return;
+            $this->halt();
         }
 
         $disk = Storage::disk('private');
-
-        $path = (string) $path;
 
         // If the file landed in livewire-tmp (Livewire's temporary upload directory),
         // move it to the permanent gedcom-form-imports directory so storage is organised
@@ -56,21 +51,26 @@ class CreateGedcom extends CreateRecord
         if (str_starts_with($path, 'livewire-tmp/') && $disk->exists($path)) {
             $newPath = 'gedcom-form-imports/' . basename($path);
             $disk->move($path, $newPath);
-            $record->update(['filename' => $newPath]);
-            $path = $newPath;
+            $path          = $newPath;
+            $data['filename'] = $newPath;
 
             Log::info('CreateGedcom: moved upload from livewire-tmp to gedcom-form-imports', [
-                'gedcom_id' => $record->getKey(),
-                'new_path'  => $newPath,
+                'new_path' => $newPath,
             ]);
         }
 
+        // Ensure the (possibly moved) filename is written into the record
+        $data['filename'] = $path;
+        $gedcom           = Gedcom::create($data);
+
         // Verify the file actually exists before dispatching the job
         if (! $disk->exists($path)) {
-            Log::error('CreateGedcom::afterCreate: file does not exist on private disk, aborting dispatch', [
-                'gedcom_id' => $record->getKey(),
+            Log::error('CreateGedcom: file does not exist on private disk, aborting dispatch', [
+                'gedcom_id' => $gedcom->getKey(),
                 'path'      => $path,
             ]);
+
+            $gedcom->delete();
 
             Notification::make()
                 ->title('Import failed')
@@ -78,13 +78,12 @@ class CreateGedcom extends CreateRecord
                 ->danger()
                 ->send();
 
-            return;
+            $this->halt();
         }
 
         $fullPath  = $disk->path($path);
         $extension = strtolower(pathinfo($fullPath, PATHINFO_EXTENSION));
 
-        // Pre-create the ImportJob so the user can track it immediately
         $slug = (string) Str::uuid();
         ImportJob::create([
             'user_id'  => Auth::id(),
@@ -92,7 +91,6 @@ class CreateGedcom extends CreateRecord
             'slug'     => $slug,
             'progress' => 0,
         ]);
-        $this->importSlug = $slug;
 
         try {
             // Dispatch the appropriate import job, passing the pre-created slug
@@ -111,7 +109,7 @@ class CreateGedcom extends CreateRecord
                 ->send();
         } catch (Throwable $e) {
             Log::error('Failed to dispatch GEDCOM import job', [
-                'gedcom_id' => $record->getKey(),
+                'gedcom_id' => $gedcom->getKey(),
                 'path'      => $path,
                 'full_path' => $fullPath,
                 'error'     => $e->getMessage(),
@@ -124,6 +122,8 @@ class CreateGedcom extends CreateRecord
                 ->danger()
                 ->send();
         }
+
+        return $gedcom;
     }
 
     /**
