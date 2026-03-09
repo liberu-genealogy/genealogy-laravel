@@ -8,6 +8,7 @@ use App\Jobs\ExportGedCom;
 use App\Jobs\ImportGedcom;
 use App\Jobs\ImportGrampsXml;
 use App\Models\Gedcom;
+use App\Models\ImportJob;
 use App\Models\User;
 use Filament\Forms\Components\FileUpload;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -27,7 +28,7 @@ class GedcomResourceTest extends TestCase
     {
         parent::setUp();
         Queue::fake();
-        $this->user = User::factory()->create();
+        $this->user = User::factory()->withPersonalTeam()->create();
     }
 
     public function test_resource_has_correct_model(): void
@@ -97,6 +98,27 @@ class GedcomResourceTest extends TestCase
         Queue::assertNotPushed(ImportGrampsXml::class);
     }
 
+    public function test_after_create_dispatches_gedcom_job_when_filename_is_array(): void
+    {
+        Auth::login($this->user);
+        Storage::fake('private');
+
+        // Filament FileUpload may persist as an array even for single-file uploads;
+        // CreateGedcom::afterCreate must extract the first element safely.
+        $gedcom = Gedcom::create(['filename' => 'placeholder']);
+        // Simulate Filament storing the path as an array in the model instance
+        $gedcom->setAttribute('filename', ['gedcom-form-imports/test.ged']);
+
+        $page = new CreateGedcom();
+        $page->record = $gedcom;
+
+        $method = new \ReflectionMethod($page, 'afterCreate');
+        $method->invoke($page);
+
+        Queue::assertPushed(ImportGedcom::class);
+        Queue::assertNotPushed(ImportGrampsXml::class);
+    }
+
     public function test_after_create_dispatches_import_gramps_xml_for_gramps_file(): void
     {
         Auth::login($this->user);
@@ -114,7 +136,7 @@ class GedcomResourceTest extends TestCase
         Queue::assertNotPushed(ImportGedcom::class);
     }
 
-    public function test_after_create_does_not_dispatch_when_filename_is_null(): void
+    public function test_after_create_does_not_dispatch_when_filename_is_empty(): void
     {
         Auth::login($this->user);
         Storage::fake('private');
@@ -129,6 +151,48 @@ class GedcomResourceTest extends TestCase
 
         Queue::assertNotPushed(ImportGedcom::class);
         Queue::assertNotPushed(ImportGrampsXml::class);
+    }
+
+    public function test_after_create_pre_creates_import_job_before_dispatch(): void
+    {
+        Auth::login($this->user);
+        Storage::fake('private');
+
+        $gedcom = Gedcom::create(['filename' => 'gedcom-form-imports/test.ged']);
+
+        $page = new CreateGedcom();
+        $page->record = $gedcom;
+
+        $method = new \ReflectionMethod($page, 'afterCreate');
+        $method->invoke($page);
+
+        // An ImportJob should be created in the database before the job runs
+        $this->assertDatabaseHas('importjobs', [
+            'user_id' => $this->user->id,
+            'status'  => 'queue',
+            'progress' => 0,
+        ]);
+    }
+
+    public function test_after_create_dispatches_gedcom_job_with_slug(): void
+    {
+        Auth::login($this->user);
+        Storage::fake('private');
+
+        $gedcom = Gedcom::create(['filename' => 'gedcom-form-imports/test.ged']);
+
+        $page = new CreateGedcom();
+        $page->record = $gedcom;
+
+        $method = new \ReflectionMethod($page, 'afterCreate');
+        $method->invoke($page);
+
+        // The dispatched ImportGedcom job must carry a slug matching the ImportJob
+        Queue::assertPushed(ImportGedcom::class, function (ImportGedcom $job): bool {
+            $importJob = ImportJob::where('slug', $job->slug)->first();
+
+            return $importJob !== null && $importJob->user_id === $this->user->id;
+        });
     }
 
     public function test_file_upload_component_accepts_ged_files_via_mime_type_map(): void

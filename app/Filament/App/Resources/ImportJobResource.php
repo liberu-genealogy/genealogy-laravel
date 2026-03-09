@@ -3,7 +3,9 @@
 namespace App\Filament\App\Resources;
 
 use App\Filament\App\Resources\ImportJobResource\Pages\ListImportJobs;
+use App\Filament\App\Resources\ImportJobResource\Pages\ViewImportJob;
 use App\Models\ImportJob;
+use Filament\Tables\Actions\ViewAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
@@ -41,28 +43,58 @@ class ImportJobResource extends AppResource
                 TextColumn::make('slug')
                     ->label('Import ID')
                     ->searchable()
-                    ->copyable(),
+                    ->copyable()
+                    ->limit(16),
                 TextColumn::make('status')
                     ->label('Status')
                     ->badge()
                     ->color(fn (string $state): string => match ($state) {
-                        'complete' => 'success',
-                        'failed'   => 'danger',
-                        'queue'    => 'warning',
-                        default    => 'gray',
+                        'complete'   => 'success',
+                        'failed'     => 'danger',
+                        'processing' => 'info',
+                        'queue'      => 'warning',
+                        default      => 'gray',
                     }),
+                TextColumn::make('progress')
+                    ->label('Progress')
+                    ->formatStateUsing(fn (int $state): string => $state . '%')
+                    ->color(fn (int $state): string => match (true) {
+                        $state === 100 => 'success',
+                        $state >= 50   => 'info',
+                        $state > 0     => 'warning',
+                        default        => 'gray',
+                    }),
+                TextColumn::make('people_imported')
+                    ->label('People')
+                    ->numeric()
+                    ->default(0)
+                    ->toggleable(),
+                TextColumn::make('families_imported')
+                    ->label('Families')
+                    ->numeric()
+                    ->default(0)
+                    ->toggleable(),
+                TextColumn::make('error_message')
+                    ->label('Error')
+                    ->limit(60)
+                    ->tooltip(fn (?string $state): string => $state ?? '')
+                    ->color('danger')
+                    ->toggleable(),
                 TextColumn::make('created_at')
-                    ->label('Started At')
+                    ->label('Queued At')
                     ->dateTime()
                     ->sortable(),
                 TextColumn::make('updated_at')
                     ->label('Last Updated')
                     ->dateTime()
-                    ->sortable(),
+                    ->sortable()
+                    ->since(),
             ])
             ->defaultSort('created_at', 'desc')
             ->filters([])
-            ->recordActions([])
+            ->recordActions([
+                ViewAction::make(),
+            ])
             ->toolbarActions([]);
     }
 
@@ -70,6 +102,7 @@ class ImportJobResource extends AppResource
     {
         return [
             'index' => ListImportJobs::route('/'),
+            'view'  => ViewImportJob::route('/{record}'),
         ];
     }
 }
