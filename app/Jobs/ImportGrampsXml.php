@@ -110,6 +110,28 @@ class ImportGrampsXml implements ShouldQueue
     }
 
     /**
+     * Handle a job failure that occurs outside the try/catch in handle()
+     * (e.g. serialisation errors, queue-worker crashes, max-attempts exceeded).
+     * Ensures the ImportJob record is always set to 'failed' with an error message.
+     */
+    public function failed(?Throwable $exception): void
+    {
+        if ($this->slug) {
+            ImportJob::where('slug', $this->slug)->update([
+                'status'        => 'failed',
+                'error_message' => $exception?->getMessage() ?? 'Job failed unexpectedly.',
+            ]);
+        }
+
+        Log::error('ImportGrampsXml job failed', [
+            'file_path' => $this->filePath,
+            'user_id'   => $this->user->getKey(),
+            'slug'      => $this->slug,
+            'error'     => $exception?->getMessage(),
+        ]);
+    }
+
+    /**
      * Convert GrampsXML data to GEDCOM format
      * This is a basic conversion that maps GrampsXML structure to GEDCOM
      *
