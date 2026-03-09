@@ -31,7 +31,7 @@
                         </svg>
                         Go to Dashboard
                     </a>
-                    <a href="{{ route('filament.app.tenant') }}/subscription"
+                    <a href="{{ url('/app/subscription') }}"
                        class="inline-flex items-center px-6 py-4 bg-white hover:bg-gray-50 text-emerald-600 font-semibold rounded-lg border-2 border-emerald-200 hover:border-emerald-300 transition-all duration-200">
                         ✨ Explore Premium Features
                     </a>
@@ -45,12 +45,9 @@
                         </svg>
                         Start Free Today
                     </a>
-                    <a href="{{ route('login') }}"
+                    <a href="{{ route('subscription') }}"
                        class="inline-flex items-center px-6 py-4 bg-white hover:bg-gray-50 text-emerald-600 font-semibold rounded-lg border-2 border-emerald-200 hover:border-emerald-300 transition-all duration-200">
-                        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"/>
-                        </svg>
-                        Sign In
+                        ✨ Explore Premium Features
                     </a>
                 </div>
 
@@ -225,8 +222,12 @@
                                     Start Free Trial
                                 </a>
                                 <p class="text-xs text-gray-500 mt-3">No credit card required</p>
+                                <a href="{{ route('subscription') }}"
+                                   class="block w-full mt-2 text-center text-emerald-600 hover:text-emerald-700 text-sm font-medium transition-colors duration-200">
+                                    Learn more about premium →
+                                </a>
                             @else
-                                <a href="{{ route('filament.app.tenant') }}/subscription"
+                                <a href="{{ url('/app/subscription') }}"
                                    class="block w-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-3 px-6 rounded-lg transition-colors duration-200">
                                     Upgrade to Premium
                                 </a>

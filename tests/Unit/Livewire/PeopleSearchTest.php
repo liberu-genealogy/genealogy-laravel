@@ -8,6 +8,13 @@ use Tests\TestCase;
 
 class PeopleSearchTest extends TestCase
 {
+    protected function setUp(): void
+    {
+        parent::setUp();
+        // ensure the database schema is prepared for the component
+        $this->artisan('migrate');
+    }
+
     public function testRenderFunctionReturnsCorrectViewWithData(): void
     {
         Livewire::test(PeopleSearch::class)

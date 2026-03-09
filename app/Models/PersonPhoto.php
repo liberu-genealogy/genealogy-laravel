@@ -27,6 +27,10 @@ class PersonPhoto extends Model
         'analyzed_at',
     ];
 
+    protected $attributes = [
+        'is_analyzed' => false,
+    ];
+
     protected $casts = [
         'is_analyzed' => 'boolean',
         'analyzed_at' => 'datetime',

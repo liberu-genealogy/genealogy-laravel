@@ -35,8 +35,8 @@ return new class extends Migration
             $table->timestamps();
             $table->softDeletes();
 
-            $table->index(['team_id', 'status']);
-            $table->index(['start_time', 'end_time']);
+            $table->index(['team_id', 'status'], 'virtual_events_team_status_idx');
+            $table->index(['start_time', 'end_time'], 'virtual_events_start_end_idx');
         });
     }
 

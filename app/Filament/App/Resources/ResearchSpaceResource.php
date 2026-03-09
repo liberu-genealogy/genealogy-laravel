@@ -12,17 +12,17 @@ use App\Models\ResearchSpace;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\Toggle;
-use Filament\Resources\Resource;
+use App\Filament\App\Resources\AppResource;
 use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
 
-class ResearchSpaceResource extends Resource
+class ResearchSpaceResource extends AppResource
 {
     protected static ?string $model = ResearchSpace::class;
 
     protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-users';
 
-    protected static string | \UnitEnum | null $navigationGroup = 'Collaboration';
+    protected static string | \UnitEnum | null $navigationGroup = '📋 Research Management';
 
     protected static ?string $navigationLabel = 'Research Spaces';
 

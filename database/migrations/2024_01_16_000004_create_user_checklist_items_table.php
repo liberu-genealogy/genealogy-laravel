@@ -27,9 +27,9 @@ return new class extends Migration
             $table->json('tips')->nullable()->comment('Helpful tips and notes');
             $table->timestamps();
 
-            $table->index(['user_checklist_id', 'order']);
-            $table->index(['user_checklist_id', 'is_completed']);
-            $table->index(['is_completed', 'completed_at']);
+            $table->index(['user_checklist_id', 'order'], 'user_checklist_items_checklist_order_idx');
+            $table->index(['user_checklist_id', 'is_completed'], 'user_checklist_items_checklist_completed_idx');
+            $table->index(['is_completed', 'completed_at'], 'user_checklist_items_completed_date_idx');
         });
     }
 

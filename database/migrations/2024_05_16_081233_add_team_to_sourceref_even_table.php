@@ -10,9 +10,11 @@ return new class() extends Migration {
      */
     public function up(): void
     {
-        Schema::table('sourceref_even', function (Blueprint $table) {
-            $table->foreignId('team_id')->nullable()->constrained()->onDelete('cascade');
-        });
+        if (!Schema::hasColumn('sourceref_even', 'team_id')) {
+            Schema::table('sourceref_even', function (Blueprint $table) {
+                $table->foreignId('team_id')->nullable()->constrained()->onDelete('cascade');
+            });
+        }
     }
 
     /**

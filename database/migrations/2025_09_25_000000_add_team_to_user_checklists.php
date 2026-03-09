@@ -10,9 +10,11 @@ return new class() extends Migration {
      */
     public function up(): void
     {
-        Schema::table('user_checklists', function (Blueprint $table) {
-            $table->foreignId('team_id')->nullable()->constrained()->onDelete('cascade');
-        });
+        if (!Schema::hasColumn('user_checklists', 'team_id')) {
+            Schema::table('user_checklists', function (Blueprint $table) {
+                $table->foreignId('team_id')->nullable()->constrained()->onDelete('cascade');
+            });
+        }
     }
 
     /**

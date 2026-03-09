@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use Livewire\Attributes\On;
 use Livewire\Component;
 use App\Models\Person;
 use App\Services\HistoricalEventService;
@@ -11,10 +12,6 @@ class TimelineComponent extends Component
     public ?int $personId = null;
     public array $events = [];
     public ?array $selectedEvent = null;
-
-    protected $listeners = [
-        'timelineItemClicked' => 'openEventFromJs',
-    ];
 
     protected HistoricalEventService $historicalEventService;
 
@@ -102,9 +99,10 @@ class TimelineComponent extends Component
     }
 
     /**
-     * JS calls Livewire via window.Livewire.emit('timelineItemClicked', id)
+     * JS calls Livewire via Livewire.dispatch('timelineItemClicked', { id: '...' })
      */
-    public function openEventFromJs($id)
+    #[On('timelineItemClicked')]
+    public function openEventFromJs(string $id)
     {
         $item = collect($this->events)->firstWhere('id', $id);
         if ($item) {

@@ -5,16 +5,20 @@ namespace App\Filament\App\Resources;
 use Filament\Actions\Action;
 use App\Filament\App\Resources\AIRecordMatchResource\Pages\ReviewMatches;
 use App\Models\AISuggestedMatch;
-use Filament\Resources\Resource;
+use App\Filament\App\Resources\AppResource;
 use Filament\Tables\Table;
 use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
 
-class AIRecordMatchResource extends Resource
+class AIRecordMatchResource extends AppResource
 {
     protected static ?string $model = AISuggestedMatch::class;
 
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-switch-horizontal';
+    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-cpu-chip';
+
+    protected static ?string $navigationLabel = 'AI Record Matches';
+
+    protected static string | \UnitEnum | null $navigationGroup = '🔍 Research & Analysis';
 
     public static function table(Table $table): Table
     {

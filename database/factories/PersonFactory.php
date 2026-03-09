@@ -26,13 +26,16 @@ class PersonFactory extends Factory
     public function definition()
     {
         return [
-            'name'         => fake()->name,
-            'appellative'  => fake()->firstName,
-            'email'        => fake()->unique()->safeEmail,
-            'phone'        => fake()->phoneNumber,
-            'birthday'     => Carbon::now()->subYears(rand(15, 40)),
-            'bank'         => fake()->word,
-            'bank_account' => fake()->bankAccountNumber,
+            'givn'         => fake()->firstName(),
+            'surn'         => fake()->lastName(),
+            'sex'          => fake()->randomElement(['M', 'F', 'U']),
+            'name'         => fake()->name(),
+            'appellative'  => fake()->firstName(),
+            'email'        => fake()->unique()->safeEmail(),
+            'phone'        => fake()->phoneNumber(),
+            'birthday'     => Carbon::now()->subYears(rand(15, 100))->format('Y-m-d'),
+            'bank'         => fake()->word(),
+            'bank_account' => fake()->numerify('##########'),
         ];
     }
 }

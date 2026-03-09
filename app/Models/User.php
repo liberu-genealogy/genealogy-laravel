@@ -17,11 +17,11 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use JoelButcher\Socialstream\HasConnectedAccounts;
-use JoelButcher\Socialstream\SetsProfilePhotoFromUrl;
+//use JoelButcher\Socialstream\HasConnectedAccounts;
+//use JoelButcher\Socialstream\SetsProfilePhotoFromUrl;
 use Laravel\Cashier\Billable;
 use Laravel\Fortify\TwoFactorAuthenticatable;
-use Laravel\Jetstream\HasProfilePhoto;
+//use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Jetstream\HasTeams;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
@@ -29,14 +29,14 @@ use Spatie\Permission\Traits\HasRoles;
 class User extends Authenticatable implements HasDefaultTenant, HasTenants, FilamentUser
 {
     use HasApiTokens;
-    use HasConnectedAccounts;
+//    use HasConnectedAccounts;
     use HasRoles;
     use HasFactory;
-    use HasProfilePhoto {
-        HasProfilePhoto::profilePhotoUrl as getPhotoUrl;
-    }
+  //  use HasProfilePhoto {
+    //    HasProfilePhoto::profilePhotoUrl as getPhotoUrl;
+//    }
     use Notifiable;
-    use SetsProfilePhotoFromUrl;
+//    use SetsProfilePhotoFromUrl;
     use TwoFactorAuthenticatable;
     use HasTeams;
     use Billable;
@@ -103,13 +103,40 @@ class User extends Authenticatable implements HasDefaultTenant, HasTenants, Fila
     }
 
     /**
+     * Delete the user's profile photo.
+     */
+    public function deleteProfilePhoto(): void
+    {
+        if (!is_null($this->profile_photo_path)) {
+            \Illuminate\Support\Facades\Storage::disk($this->profilePhotoDisk())->delete($this->profile_photo_path);
+            $this->forceFill(['profile_photo_path' => null])->save();
+        }
+    }
+
+    /**
+     * Get the disk used for storing profile photos.
+     */
+    protected function profilePhotoDisk(): string
+    {
+        return env('VAPOR_ARTIFACT_NAME') ? 's3' : config('jetstream.profile_photo_disk', 'public');
+    }
+
+    /**
      * Get the URL to the user's profile photo.
      */
     public function profilePhotoUrl(): Attribute
     {
         return filter_var($this->profile_photo_path, FILTER_VALIDATE_URL)
             ? Attribute::get(fn () => $this->profile_photo_path)
-            : $this->getPhotoUrl();
+            : $this->defaultPhotoUrl();
+    }
+
+    /**
+     * Get the default profile photo URL if no profile photo has been uploaded.
+     */
+    protected function defaultPhotoUrl(): Attribute
+    {
+        return Attribute::get(fn () => 'https://ui-avatars.com/api/?name='.urlencode($this->name).'&color=7F9CF5&background=EBF4FF');
     }
 
     /**
@@ -133,20 +160,26 @@ class User extends Authenticatable implements HasDefaultTenant, HasTenants, Fila
 
     public function canAccessPanel(Panel $panel): bool
     {
+        // always allow access to the `app` panel for any authenticated user;
+        // prior implementation required a `panel_user` role which caused
+        // 403 errors immediately after login/registration for new accounts.
+        if ($panel->getId() === 'app') {
+            return true;
+        }
+
         if ($this->hasRole('super_admin')) {
             return true;
         }
 
         return match ($panel->getId()) {
             'admin' => $this->hasRole('super_admin'),
-            'app' => $this->hasRole('panel_user'),
             default => false,
         };
     }
 
     public function getDefaultTenant(Panel $panel): ?Model
     {
-        return $this->latestTeam;
+        return $this->latestTeam ?? $this->ownedTeams()->first();
     }
 
     public function latestTeam(): BelongsTo
@@ -164,8 +197,34 @@ class User extends Authenticatable implements HasDefaultTenant, HasTenants, Fila
             return true;
         }
 
-        // Consider either an active Stripe subscription or a generic user trial
-        return $this->is_premium && ($this->subscribed('premium') || $this->onTrial());
+        // Active Stripe subscription (not cancelled / not expired)
+        if ($this->subscribed('premium')) {
+            return true;
+        }
+
+        // Local trial still running
+        if ($this->is_premium && $this->onTrial()) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * Check whether the user started a trial that has since expired and they
+     * have not yet set up a paid subscription.
+     */
+    public function hasExpiredTrial(): bool
+    {
+        if (config('premium.enabled')) {
+            return false;
+        }
+
+        // They went through the trial flow (is_premium was set) but the trial
+        // window has closed and there is no active Stripe subscription.
+        return $this->is_premium
+            && ! $this->onTrial()
+            && ! $this->subscribed('premium');
     }
 
     /**
@@ -419,6 +478,14 @@ class User extends Authenticatable implements HasDefaultTenant, HasTenants, Fila
     public function socialConnectionPrivacy(): HasOne
     {
         return $this->hasOne(SocialConnectionPrivacy::class);
+    }
+
+    /**
+     * Get the user's connected accounts.
+     */
+    public function connectedAccounts(): HasMany
+    {
+        return $this->hasMany(ConnectedAccount::class);
     }
 
     /**

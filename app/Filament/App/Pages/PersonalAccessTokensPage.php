@@ -14,7 +14,7 @@ class PersonalAccessTokensPage extends Page
     protected string $view = 'filament.pages.profile.personal-access-tokens';
 
     protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-key';
-
+    protected static ?string $navigationLabel = 'Personal Access Tokens';
     protected static string | \UnitEnum | null $navigationGroup = '👤 Account & Settings';
 
     protected static ?int $navigationSort = 3;

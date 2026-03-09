@@ -17,18 +17,18 @@ use App\Filament\App\Resources\PersonEventResource\Pages;
 use App\Models\PersonEvent;
 use Filament\Forms;
 use Filament\Forms\Form;
-use Filament\Resources\Resource;
+use App\Filament\App\Resources\AppResource;
 use Filament\Schemas\Schema;
 use Filament\Tables;
 use Filament\Actions;
 use Filament\Tables\Table;
 
-class PersonEventResource extends Resource
+class PersonEventResource extends AppResource
 {
     protected static ?string $model = PersonEvent::class;
 
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-rectangle-stack';
-
+    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-calendar';
+    protected static ?string $navigationLabel = 'Person Events';
     protected static string | \UnitEnum | null $navigationGroup = '👥 Family Tree';
 
     #[Override]

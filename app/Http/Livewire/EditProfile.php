@@ -31,9 +31,9 @@ final readonly class EditProfile extends Component
 
         try {
             Auth::user()?->update($validated);
-            $this->emit('profile-updated');
+            $this->dispatch('profile-updated');
         } catch (Throwable $e) {
-            $this->emit('profile-update-failed', message: $e->getMessage());
+            $this->dispatch('profile-update-failed', message: $e->getMessage());
             throw $e;
         }
     }

@@ -17,21 +17,21 @@ use App\Filament\App\Resources\ChanResource\Pages;
 use App\Models\Chan;
 use Filament\Forms;
 use Filament\Forms\Form;
-use Filament\Resources\Resource;
+use App\Filament\App\Resources\AppResource;
 use Filament\Schemas\Schema;
 use Filament\Tables;
 use Filament\Actions;
 use Filament\Tables\Table;
 
-class ChanResource extends Resource
+class ChanResource extends AppResource
 {
     protected static ?string $model = Chan::class;
 
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-clock';
 
     protected static string | \UnitEnum | null $navigationGroup = '👥 Family Tree';
 
-    protected static ?string $navigationLabel = ' Chan';
+    protected static ?string $navigationLabel = 'Chan';
 
     // protected static ?string $tenantRelationshipName = 'team';
 

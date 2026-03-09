@@ -5,7 +5,6 @@ namespace Database\Factories;
 use App\Models\Family;
 use App\Models\Person;
 use App\Models\Type;
-// use App\Models\Type;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -29,14 +28,13 @@ class FamilyFactory extends Factory
     {
         return [
             'description' => fake()->text(),
-            'is_active'   => fake()->randomDigit(),
-            'husband_id'  => fake()->randomDigit(),
-            'wife_id'     => fake()->randomDigit(),
-            // 'child_id'=> Person::create()->id,
-            'type_id' => Type::where('id', 1)->first(),
-            'chan'    => fake()->word(),
-            'nchi'    => fake()->word(),
-            'rin'     => fake()->word(),
+            'is_active'   => fake()->boolean(),
+            'husband_id'  => Person::factory(),
+            'wife_id'     => Person::factory(),
+            'type_id'     => Type::factory(),
+            'chan'         => fake()->word(),
+            'nchi'        => (string) fake()->randomDigit(),
+            'rin'         => fake()->word(),
         ];
     }
 }

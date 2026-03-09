@@ -16,19 +16,19 @@ use App\Filament\App\Resources\PersonNameRomnResource\Pages;
 use App\Models\PersonNameRomn;
 use Filament\Forms;
 use Filament\Forms\Form;
-use Filament\Resources\Resource;
+use App\Filament\App\Resources\AppResource;
 use Filament\Schemas\Schema;
 use Filament\Tables;
 use Filament\Actions;
 use Filament\Tables\Table;
 
-class PersonNameRomnResource extends Resource
+class PersonNameRomnResource extends AppResource
 {
     protected static ?string $model = PersonNameRomn::class;
 
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-rectangle-stack';
-
-    protected static string | \UnitEnum | null $navigationGroup = '\ud83d\udc65 Family Tree';
+    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-language';
+    protected static ?string $navigationLabel = 'Romanized Names';
+    protected static string | \UnitEnum | null $navigationGroup = '👥 Family Tree';
 
     #[Override]
     public static function form(Schema $schema): Schema

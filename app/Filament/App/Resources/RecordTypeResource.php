@@ -6,7 +6,7 @@ use App\Filament\App\Resources\RecordTypeResource\Pages;
 use App\Models\RecordType;
 use Filament\Forms;
 use Filament\Forms\Form;
-use Filament\Resources\Resource;
+use App\Filament\App\Resources\AppResource;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Filament\Forms\Components\TextInput;
@@ -18,15 +18,15 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\ToggleColumn;
 
-class RecordTypeResource extends Resource
+class RecordTypeResource extends AppResource
 {
     protected static ?string $model = RecordType::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-archive-box';
+    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-archive-box';
 
     protected static ?string $navigationLabel = 'Record Types';
 
-    protected static ?string $navigationGroup = '⚙️ Settings';
+    protected static string|\UnitEnum|null $navigationGroup = '⚙️ System Settings';
 
     protected static ?int $navigationSort = 90;
 

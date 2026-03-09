@@ -149,23 +149,26 @@ class DnaImportService
             }
 
             // Try to load with php-dna to validate
-            try {
-                $snps = new Snps($fullPath);
-                $snpCount = count($snps->getSnps());
-
-                return [
-                    'valid' => true,
-                    'format' => $format,
-                    'snp_count' => $snpCount,
-                ];
-            } catch (Exception $e) {
-                return [
-                    'valid' => false,
-                    'error' => 'Could not parse DNA file: ' . $e->getMessage(),
-                ];
+            $snpCount = 0;
+            if (class_exists(Snps::class)) {
+                try {
+                    $snps = new Snps($fullPath);
+                    $snpCount = count($snps->getSnps());
+                } catch (\Throwable $e) {
+                    return [
+                        'valid' => false,
+                        'error' => 'Could not parse DNA file: ' . $e->getMessage(),
+                    ];
+                }
             }
 
-        } catch (Exception $e) {
+            return [
+                'valid' => true,
+                'format' => $format,
+                'snp_count' => $snpCount,
+            ];
+
+        } catch (\Throwable $e) {
             return [
                 'valid' => false,
                 'error' => $e->getMessage(),

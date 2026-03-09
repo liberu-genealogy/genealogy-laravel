@@ -17,17 +17,17 @@ use App\Filament\App\Resources\PersonAssoResource\Pages;
 use App\Models\PersonAsso;
 use Filament\Forms;
 use Filament\Forms\Form;
-use Filament\Resources\Resource;
+use App\Filament\App\Resources\AppResource;
 use Filament\Schemas\Schema;
 use Filament\Tables;
 use Filament\Actions;
 use Filament\Tables\Table;
 
-class PersonAssoResource extends Resource
+class PersonAssoResource extends AppResource
 {
     protected static ?string $model = PersonAsso::class;
 
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-user-group';
 
     protected static ?string $navigationLabel = 'Person Associations';
 

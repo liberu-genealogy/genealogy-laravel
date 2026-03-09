@@ -16,18 +16,18 @@ use App\Filament\App\Resources\TypeResource\Pages;
 use App\Models\Type;
 use Filament\Forms;
 use Filament\Forms\Form;
-use Filament\Resources\Resource;
+use App\Filament\App\Resources\AppResource;
 use Filament\Schemas\Schema;
 use Filament\Tables;
 use Filament\Actions;
 use Filament\Tables\Table;
 
-class TypeResource extends Resource
+class TypeResource extends AppResource
 {
     protected static ?string $model = Type::class;
 
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-rectangle-stack';
-
+    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-tag';
+    protected static ?string $navigationLabel = 'Types';
     protected static string | \UnitEnum | null $navigationGroup = '🛠️ Data Management';
 
     #[Override]

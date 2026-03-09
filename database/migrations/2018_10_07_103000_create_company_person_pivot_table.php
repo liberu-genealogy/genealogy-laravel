@@ -11,7 +11,7 @@ class CreateCompanyPersonPivotTable extends Migration
         Schema::create('company_person', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->foreignId('company_id')->constrained('companies');
-            $table->foreignId('person_id')->constrained('persons');
+            $table->foreignId('person_id')->constrained('people');
             $table->string('position')->nullable();
             $table->boolean('is_main');
             $table->boolean('is_mandatary');

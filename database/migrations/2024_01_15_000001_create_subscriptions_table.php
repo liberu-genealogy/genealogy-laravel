@@ -20,7 +20,7 @@ return new class extends Migration
             $table->timestamp('ends_at')->nullable();
             $table->timestamps();
 
-            $table->index(['user_id', 'stripe_status']);
+            $table->index(['user_id', 'stripe_status'], 'subscriptions_user_id_status_idx');
         });
     }
 

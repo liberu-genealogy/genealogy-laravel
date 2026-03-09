@@ -31,21 +31,52 @@ class Person extends Model
         'titl',
         'name',
         'appellative',
+        'uid',
         'email',
         'phone',
         'photo_url',
+        // Name components (GEDCOM)
+        'npfx',
+        'nick',
+        'spfx',
+        'nsfx',
+        'type',
+        // Birth
         'birthday',
+        'birth_month',
+        'birth_year',
+        'birthday_dati',
+        'birthday_plac',
+        // Death
         'deathday',
+        'death_month',
+        'death_year',
+        'deathday_dati',
+        'deathday_plac',
+        'deathday_caus',
+        // Burial
         'burial_day',
+        'burial_month',
+        'burial_year',
+        'burial_day_dati',
+        'burial_day_plac',
+        // Christening / family refs
+        'chr',
+        'famc',
+        'fams',
+        // Finance
         'bank',
         'bank_account',
+        // GEDCOM metadata
         'chan',
         'rin',
         'resn',
         'rfn',
         'afn',
+        // App-specific
         'tree_position_x',
         'tree_position_y',
+        'team_id',
     ];
 
     protected $guarded = ['id'];
@@ -87,6 +118,11 @@ class Person extends Model
     public function familiesAsWife()
     {
         return $this->hasMany(Family::class, 'wife_id');
+    }
+
+    public function families(): \Illuminate\Support\Collection
+    {
+        return $this->familiesAsHusband->merge($this->familiesAsWife);
     }
 
     public function parents()
@@ -234,10 +270,10 @@ class Person extends Model
         try {
             $disk = \Illuminate\Support\Facades\Storage::disk('public');
             $candidates = [
-                "persons/{$this->id}.jpg",
-                "persons/{$this->id}.jpeg",
-                "persons/{$this->id}.png",
-                "persons/{$this->id}.webp",
+                "people/{$this->id}.jpg",
+                "people/{$this->id}.jpeg",
+                "people/{$this->id}.png",
+                "people/{$this->id}.webp",
                 "photos/{$this->id}.jpg",
                 "photos/{$this->id}.png",
             ];

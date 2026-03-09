@@ -16,18 +16,18 @@ use App\Filament\App\Resources\SourceRefResource\Pages;
 use App\Models\SourceRef;
 use Filament\Forms;
 use Filament\Forms\Form;
-use Filament\Resources\Resource;
+use App\Filament\App\Resources\AppResource;
 use Filament\Schemas\Schema;
 use Filament\Tables;
 use Filament\Actions;
 use Filament\Tables\Table;
 
-class SourceRefResource extends Resource
+class SourceRefResource extends AppResource
 {
     protected static ?string $model = SourceRef::class;
 
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-rectangle-stack';
-
+    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-link';
+    protected static ?string $navigationLabel = 'Source References';
     protected static string | \UnitEnum | null $navigationGroup = '🔍 Research & Analysis';
 
     #[Override]

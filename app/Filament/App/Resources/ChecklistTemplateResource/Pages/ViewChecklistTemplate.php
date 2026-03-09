@@ -4,8 +4,8 @@ namespace App\Filament\App\Resources\ChecklistTemplateResource\Pages;
 
 use Filament\Actions\EditAction;
 use Filament\Actions\Action;
-use Filament\Schemas\Components\Section;
-use Filament\Schemas\Components\Grid;
+use Filament\Forms\Components\Section;
+use Filament\Forms\Components\Grid;
 use App\Filament\App\Resources\ChecklistTemplateResource;
 use Filament\Actions;
 use Filament\Resources\Pages\ViewRecord;

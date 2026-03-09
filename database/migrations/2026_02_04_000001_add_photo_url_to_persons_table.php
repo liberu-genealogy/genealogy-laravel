@@ -11,18 +11,24 @@ return new class() extends Migration
      */
     public function up(): void
     {
-        if (! Schema::hasTable('persons')) {
+        if (! Schema::hasTable('people')) {
+            return;
+        }
+
+        // photo_url is added by 2026_03_09_000001_add_gedcom_columns_to_people_table if
+        // it doesn't already exist, so this migration is a no-op when that column is present.
+        if (Schema::hasColumn('people', 'photo_url')) {
             return;
         }
 
         // If the 'phone' column exists we keep the original intent and place
         // photo_url after it; otherwise add the column without the 'after'.
-        if (Schema::hasColumn('persons', 'phone')) {
-            Schema::table('persons', function (Blueprint $table) {
+        if (Schema::hasColumn('people', 'phone')) {
+            Schema::table('people', function (Blueprint $table) {
                 $table->string('photo_url')->nullable()->after('phone');
             });
         } else {
-            Schema::table('persons', function (Blueprint $table) {
+            Schema::table('people', function (Blueprint $table) {
                 $table->string('photo_url')->nullable();
             });
         }
@@ -33,12 +39,12 @@ return new class() extends Migration
      */
     public function down(): void
     {
-        if (! Schema::hasTable('persons')) {
+        if (! Schema::hasTable('people')) {
             return;
         }
 
-        if (Schema::hasColumn('persons', 'photo_url')) {
-            Schema::table('persons', function (Blueprint $table) {
+        if (Schema::hasColumn('people', 'photo_url')) {
+            Schema::table('people', function (Blueprint $table) {
                 $table->dropColumn('photo_url');
             });
         }

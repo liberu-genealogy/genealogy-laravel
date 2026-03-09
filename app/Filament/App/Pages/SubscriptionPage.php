@@ -5,10 +5,8 @@ namespace App\Filament\App\Pages;
 use Exception;
 use App\Services\SubscriptionService;
 use Filament\Actions\Action;
-use Filament\Forms\Components\TextInput;
 use Filament\Notifications\Notification;
 use Filament\Pages\Page;
-use Filament\Facades\Filament;
 use Illuminate\Support\Facades\Auth;
 
 class SubscriptionPage extends Page
@@ -30,12 +28,19 @@ class SubscriptionPage extends Page
     public function mount(): void
     {
         if (! config('premium.enabled')) {
-            $this->redirect(Filament::getUrl());
-            return;
-        }
-        // Redirect if user is already premium
-        if (Auth::user()->isPremium()) {
-            $this->redirect(route('filament.app.pages.premium-dashboard'));
+            $user = Auth::user();
+
+            // If trial has expired, redirect to the trial-expired page
+            if ($user->hasExpiredTrial()) {
+                $this->redirect(route('filament.app.pages.trial-expired'));
+                return;
+            }
+
+            // Redirect if user is already premium
+            if ($user->isPremium()) {
+                $this->redirect(route('filament.app.pages.premium-dashboard'));
+                return;
+            }
         }
     }
 
@@ -45,7 +50,8 @@ class SubscriptionPage extends Page
         if (config('premium.enabled')) {
             return false;
         }
-        return Auth::check() && ! Auth::user()->isPremium();
+        $user = Auth::user();
+        return Auth::check() && ! $user->isPremium() && ! $user->hasExpiredTrial();
     }
 
     protected function getHeaderActions(): array
@@ -71,10 +77,11 @@ class SubscriptionPage extends Page
 
             // Refresh user and show trial end date if available
             $user = $user->fresh();
+            $trialDays = config('subscription.premium.trial_days', 14);
             $endsAt = optional($user->trial_ends_at)->toFormattedDateString();
             $body = $endsAt
-                ? "Welcome to Premium! Your trial ends on {$endsAt}."
-                : 'Welcome to Premium! Your 7-day trial has begun.';
+                ? "Welcome to Premium! Your {$trialDays}-day trial ends on {$endsAt}."
+                : "Welcome to Premium! Your {$trialDays}-day trial has begun.";
 
             Notification::make()
                 ->title('Premium Trial Started!')

@@ -6,6 +6,7 @@ use App\Models\VirtualEvent;
 use App\Models\VirtualEventAttendee;
 use App\Models\Person;
 use App\Services\VideoConferencingService;
+use Livewire\Attributes\Rule;
 use Livewire\Component;
 use Livewire\WithPagination;
 use Illuminate\Support\Facades\Auth;
@@ -23,10 +24,18 @@ class VirtualEventRsvp extends Component
     public $showJoinModal = false;
 
     // RSVP form properties
+    #[Rule('required|in:accepted,declined,maybe')]
     public $rsvp_status = 'accepted';
+
+    #[Rule('nullable|string|max:500')]
     public $rsvp_notes = '';
+
+    #[Rule('nullable|string|max:255')]
     public $guest_name = '';
+
+    #[Rule('nullable|email|max:255')]
     public $guest_email = '';
+
     public $invite_person_id = '';
 
     // Invite form properties
@@ -37,13 +46,6 @@ class VirtualEventRsvp extends Component
     public $statusFilter = 'all';
     public $search = '';
     public $showAttendeeList = false;
-
-    protected $rules = [
-        'rsvp_status' => 'required|in:accepted,declined,maybe',
-        'rsvp_notes' => 'nullable|string|max:500',
-        'guest_name' => 'nullable|string|max:255',
-        'guest_email' => 'nullable|email|max:255',
-    ];
 
     protected $inviteRules = [
         'invite_emails' => 'required|array|min:1',
@@ -214,7 +216,7 @@ class VirtualEventRsvp extends Component
         };
 
         session()->flash('success', $statusMessage);
-        $this->emit('rsvp-updated');
+        $this->dispatch('rsvp-updated');
     }
 
     public function openInviteModal()
@@ -265,7 +267,7 @@ class VirtualEventRsvp extends Component
 
         $this->invite_person_id = '';
         session()->flash('success', 'Person has been invited successfully.');
-        $this->emit('attendee-invited');
+        $this->dispatch('attendee-invited');
     }
 
     public function sendInvitations()
@@ -321,7 +323,7 @@ class VirtualEventRsvp extends Component
             session()->flash('warning', implode(' ', $errors));
         }
 
-        $this->emit('invitations-sent');
+        $this->dispatch('invitations-sent');
     }
 
     public function joinEvent()

@@ -3,7 +3,7 @@
 namespace App\Filament\App\Pages;
 
 use Override;
-use Filament\Schemas\Components\Section;
+use Filament\Forms\Components\Section;
 use App\Models\Team;
 use App\Models\User;
 use Filament\Facades\Filament;

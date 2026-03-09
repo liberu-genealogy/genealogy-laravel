@@ -1,5 +1,5 @@
-# Accepted values: 8.3 - 8.2
-ARG PHP_VERSION=8.3
+# Accepted values: 8.3+
+ARG PHP_VERSION=8.4
 
 ARG COMPOSER_VERSION=latest
 
@@ -11,7 +11,21 @@ FROM composer:${COMPOSER_VERSION} AS vendor
 
 WORKDIR /app
 COPY composer.json composer.lock /app/
-RUN composer install --no-dev --no-interaction --prefer-dist --optimize-autoloader --no-ansi --no-scripts --no-progress
+COPY vendor-local/laravel-gramps-xml /app/vendor-local/laravel-gramps-xml
+RUN composer install --no-dev --no-interaction --prefer-dist --optimize-autoloader --no-ansi --no-scripts --no-progress --ignore-platform-req=php --ignore-platform-req=ext-intl --ignore-platform-req=ext-bcmath
+
+FROM node:${NODE_VERSION} AS node_modules
+
+WORKDIR /app
+COPY package.json package-lock.json ./
+RUN npm ci --only=prod && \
+    npm install --save-dev
+
+WORKDIR /app
+COPY . .
+COPY --from=vendor /app/vendor ./vendor
+RUN npm run build && \
+    rm -rf node_modules
 
 FROM php:${PHP_VERSION}-cli-alpine
 
@@ -28,7 +42,7 @@ ARG TZ=UTC
 ENV TERM=xterm-color \
     WITH_HORIZON=false \
     WITH_SCHEDULER=false \
-    OCTANE_SERVER=swoole \
+    OCTANE_SERVER=frankenphp \
     USER=octane \
     ROOT=/var/www/html \
     COMPOSER_FUND=0 \
@@ -72,11 +86,7 @@ RUN apk update && \
     intl \
     gd \
     redis \
-    rdkafka \
-    memcached \
-    igbinary \
     ldap \
-    swoole \
     && docker-php-source delete \
     && rm -rf /var/cache/apk/* /tmp/* /var/tmp/*
 
@@ -109,9 +119,10 @@ COPY  --chown=${USER}:${USER} --from=vendor /usr/bin/composer /usr/bin/composer
 COPY  --chown=${USER}:${USER} --from=vendor /app/vendor /var/www/html/vendor
 COPY  --chown=${USER}:${USER} composer.json composer.lock ./
 
-RUN composer dump-autoload --classmap-authoritative --no-dev --no-interaction --no-ansi
+RUN composer dump-autoload --classmap-authoritative --no-dev --no-interaction --no-ansi --ignore-platform-req=php --no-scripts
 
 COPY  --chown=${USER}:${USER} . .
+COPY  --chown=${USER}:${USER} --from=node_modules /app/public/build /var/www/html/public/build
 
 RUN mkdir -p \
     storage/framework/sessions \
@@ -123,6 +134,7 @@ RUN mkdir -p \
 
 COPY  --chown=${USER}:${USER} .docker/supervisord.conf /etc/supervisor/
 COPY  --chown=${USER}:${USER} .docker/octane/Swoole/supervisord.swoole.conf /etc/supervisor/conf.d/
+COPY  --chown=${USER}:${USER} .docker/octane/FrankenPHP/supervisord.frankenphp.conf /etc/supervisor/conf.d/
 COPY  --chown=${USER}:${USER} .docker/supervisord.*.conf /etc/supervisor/conf.d/
 COPY  --chown=${USER}:${USER} .docker/php.ini ${PHP_INI_DIR}/conf.d/99-octane.ini
 COPY  --chown=${USER}:${USER} .docker/start-container /usr/local/bin/start-container
@@ -132,6 +144,8 @@ RUN composer install \
     --no-interaction \
     --no-ansi \
     --no-dev \
+    --ignore-platform-req=php \
+    --no-scripts \
     && composer clear-cache
 
 COPY .env.example ./.env

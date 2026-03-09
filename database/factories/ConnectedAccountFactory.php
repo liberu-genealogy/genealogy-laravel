@@ -5,7 +5,6 @@ namespace Database\Factories;
 use App\Models\ConnectedAccount;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
-use JoelButcher\Socialstream\Providers;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\ConnectedAccount>
@@ -16,8 +15,10 @@ class ConnectedAccountFactory extends Factory
 
     public function definition(): array
     {
+        $providers = ['github', 'google', 'facebook', 'twitter', 'linkedin'];
+
         return [
-            'provider'      => fake()->randomElement(Providers::all()),
+            'provider'      => fake()->randomElement($providers),
             'provider_id'   => fake()->numerify('########'),
             'name'          => fake()->name(),
             'email'         => fake()->safeEmail(),

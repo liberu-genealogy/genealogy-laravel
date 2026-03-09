@@ -4,6 +4,49 @@ namespace App\Providers\Filament;
 
 use App\Filament\App\Pages;
 use App\Filament\App\Pages\EditProfile;
+use App\Filament\App\Resources\AIRecordMatchResource;
+use App\Filament\App\Resources\AddrResource;
+use App\Filament\App\Resources\AuthorResource;
+use App\Filament\App\Resources\ChanResource;
+use App\Filament\App\Resources\ChecklistTemplateResource;
+use App\Filament\App\Resources\CitationResource;
+use App\Filament\App\Resources\DatabaseResource;
+use App\Filament\App\Resources\DnaMatchingResource;
+use App\Filament\App\Resources\DnaResource;
+use App\Filament\App\Resources\DuplicateCheckResource;
+use App\Filament\App\Resources\FamilyEventResource;
+use App\Filament\App\Resources\FamilyResource;
+use App\Filament\App\Resources\FamilySlgsResource;
+use App\Filament\App\Resources\GedcomResource;
+use App\Filament\App\Resources\MediaObjectResource;
+use App\Filament\App\Resources\NoteResource;
+use App\Filament\App\Resources\PersonAliaResource;
+use App\Filament\App\Resources\PersonAnciResource;
+use App\Filament\App\Resources\PersonAssoResource;
+use App\Filament\App\Resources\PersonEventResource;
+use App\Filament\App\Resources\PersonLdsResource;
+use App\Filament\App\Resources\PersonNameFoneResource;
+use App\Filament\App\Resources\PersonNameResource;
+use App\Filament\App\Resources\PersonNameRomnResource;
+use App\Filament\App\Resources\PersonResource;
+use App\Filament\App\Resources\PersonSubmResource;
+use App\Filament\App\Resources\PlaceResource;
+use App\Filament\App\Resources\PublicationResource;
+use App\Filament\App\Resources\RecordTypeResource;
+use App\Filament\App\Resources\RefnResource;
+use App\Filament\App\Resources\RepositoryResource;
+use App\Filament\App\Resources\ResearchSpaceResource;
+use App\Filament\App\Resources\SmartMatchResource;
+use App\Filament\App\Resources\SourceDataEvenResource;
+use App\Filament\App\Resources\SourceDataResource;
+use App\Filament\App\Resources\SourceRefEvenResource;
+use App\Filament\App\Resources\SourceRefResource;
+use App\Filament\App\Resources\SourceRepoResource;
+use App\Filament\App\Resources\SourceResource;
+use App\Filament\App\Resources\SubmResource;
+use App\Filament\App\Resources\SubnResource;
+use App\Filament\App\Resources\TypeResource;
+use App\Filament\App\Resources\VirtualEventResource;
 use App\Http\Middleware\TeamsPermission;
 use App\Listeners\CreatePersonalTeam;
 use App\Listeners\SwitchTeam;
@@ -54,44 +97,34 @@ class AppPanelProvider extends PanelProvider
             ->brandName(fn () => app(\App\Settings\GeneralSettings::class)->site_name)
             ->brandLogo(asset('images/logo.svg'))
             ->favicon(asset('images/favicon.ico'))
-      /**      ->navigationGroups([
+            ->navigationGroups([
                 NavigationGroup::make()
-                    ->label('🏠 Dashboard')
-                    ->icon('heroicon-o-home'),
+                    ->label('🏠 Dashboard'),
                 NavigationGroup::make()
-                    ->label('👥 Family Tree')
-                    ->icon('heroicon-o-users'),
+                    ->label('👥 Family Tree'),
                 NavigationGroup::make()
-                    ->label('📊 Charts & Visualizations')
-                    ->icon('heroicon-o-chart-bar'),
+                    ->label('📊 Charts & Visualizations'),
                 NavigationGroup::make()
-                    ->label('Reports')
-                    ->icon('heroicon-o-document-text'),
+                    ->label('📄 Reports'),
                 NavigationGroup::make()
-                    ->label('🔍 Research & Analysis')
-                    ->icon('heroicon-o-magnifying-glass'),
+                    ->label('🔍 Research & Analysis'),
                 NavigationGroup::make()
-                    ->label('📋 Research Management')
-                    ->icon('heroicon-o-clipboard-document-check'),
+                    ->label('📋 Research Management'),
                 NavigationGroup::make()
-                    ->label('🧬 DNA & Genetics')
-                    ->icon('heroicon-o-beaker'),
+                    ->label('🧬 DNA & Genetics'),
                 NavigationGroup::make()
-                    ->label('📁 Media & Documents')
-                    ->icon('heroicon-o-folder'),
+                    ->label('📁 Media & Documents'),
                 NavigationGroup::make()
-                    ->label('⚙️ Data Management')
-                    ->icon('heroicon-o-cog-6-tooth'),
+                    ->label('🛠️ Data Management'),
                 NavigationGroup::make()
-                    ->label('👥 Family Reunions')
-                    ->icon('heroicon-o-calendar'),
+                    ->label('👥 Family Reunions'),
                 NavigationGroup::make()
-                    ->label('🎮 Gamification')
-                    ->icon('heroicon-o-trophy'),
+                    ->label('🎮 Gamification'),
                 NavigationGroup::make()
-                    ->label('👤 Account & Settings')
-                    ->icon('heroicon-o-user-circle'),
-            ])**/
+                    ->label('⚙️ System Settings'),
+                NavigationGroup::make()
+                    ->label('👤 Account & Settings'),
+            ])
             ->userMenuItems([
                 MenuItem::make()
                     ->label('Profile')
@@ -101,6 +134,51 @@ class AppPanelProvider extends PanelProvider
                         : url($panel->getPath())),
             ])
             ->discoverResources(in: app_path('Filament/App/Resources'), for: 'App\\Filament\\App\\Resources')
+            ->resources([
+                AIRecordMatchResource::class,
+                AddrResource::class,
+                AuthorResource::class,
+                ChanResource::class,
+                ChecklistTemplateResource::class,
+                CitationResource::class,
+                DatabaseResource::class,
+                DnaMatchingResource::class,
+                DnaResource::class,
+                DuplicateCheckResource::class,
+                FamilyEventResource::class,
+                FamilyResource::class,
+                FamilySlgsResource::class,
+                GedcomResource::class,
+                MediaObjectResource::class,
+                NoteResource::class,
+                PersonAliaResource::class,
+                PersonAnciResource::class,
+                PersonAssoResource::class,
+                PersonEventResource::class,
+                PersonLdsResource::class,
+                PersonNameFoneResource::class,
+                PersonNameResource::class,
+                PersonNameRomnResource::class,
+                PersonResource::class,
+                PersonSubmResource::class,
+                PlaceResource::class,
+                PublicationResource::class,
+                RecordTypeResource::class,
+                RefnResource::class,
+                RepositoryResource::class,
+                ResearchSpaceResource::class,
+                SmartMatchResource::class,
+                SourceDataEvenResource::class,
+                SourceDataResource::class,
+                SourceRefEvenResource::class,
+                SourceRefResource::class,
+                SourceRepoResource::class,
+                SourceResource::class,
+                SubmResource::class,
+                SubnResource::class,
+                TypeResource::class,
+                VirtualEventResource::class,
+            ])
             ->discoverPages(in: app_path('Filament/App/Pages'), for: 'App\\Filament\\App\\Pages')
             ->pages([
                 \App\Filament\App\Pages\Dashboard::class,
@@ -110,6 +188,7 @@ class AppPanelProvider extends PanelProvider
                 \App\Filament\App\Pages\GamificationPage::class,
                 \App\Filament\App\Pages\SubscriptionPage::class,
                 \App\Filament\App\Pages\PremiumDashboardPage::class,
+                \App\Filament\App\Pages\TrialExpiredPage::class,
                 EditProfile::class,
             ])
             ->discoverWidgets(in: app_path('Filament/App/Widgets'), for: 'App\\Filament\\App\\Widgets')
@@ -175,6 +254,23 @@ class AppPanelProvider extends PanelProvider
          * Disable Jetstream routes.
          */
         Jetstream::$registersRoutes = false;
+
+        /**
+         * Use a tenant-aware LoginResponse so that users without a team are
+         * redirected to /app/new (team creation) rather than landing on the
+         * bare /app panel root.  This binding is placed in boot() to run
+         * after Filament's own register() bindings so that ours takes
+         * precedence.
+         */
+        $this->app->singleton(
+            \Laravel\Fortify\Contracts\LoginResponse::class,
+            \App\Http\Responses\Auth\LoginResponse::class,
+        );
+
+        $this->app->singleton(
+            \Laravel\Fortify\Contracts\RegisterResponse::class,
+            \App\Http\Responses\Auth\RegisterResponse::class,
+        );
 
         /**
          * Listen and create personal team for new accounts.

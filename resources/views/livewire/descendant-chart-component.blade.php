@@ -144,7 +144,7 @@
             .attr("transform", d => `translate(${d.y},${d.x})`)
             .on("click", function(event, d) {
                 if (d.data.id) {
-                    @this.call('setRootPerson', d.data.id);
+                    $wire.call('setRootPerson', d.data.id);
                 }
             });
 
@@ -179,7 +179,7 @@
     }
 
     function setGenerations(generations) {
-        @this.call('setGenerations', generations);
+        $wire.call('setGenerations', generations);
     }
     </script>
 </div>

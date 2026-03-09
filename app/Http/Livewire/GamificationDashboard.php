@@ -56,7 +56,7 @@ class GamificationDashboard extends Component
     {
         $user = auth()->user();
         $user->update(['show_on_leaderboard' => !$user->show_on_leaderboard]);
-        $this->emit('leaderboard-updated');
+        $this->dispatch('leaderboard-updated');
     }
 
     public function render()

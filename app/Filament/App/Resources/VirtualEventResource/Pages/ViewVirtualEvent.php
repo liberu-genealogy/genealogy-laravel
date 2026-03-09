@@ -4,8 +4,8 @@ namespace App\Filament\App\Resources\VirtualEventResource\Pages;
 
 use Filament\Actions\Action;
 use Filament\Actions\EditAction;
-use Filament\Schemas\Components\Section;
-use Filament\Schemas\Components\Grid;
+use Filament\Forms\Components\Section;
+use Filament\Forms\Components\Grid;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Infolists\Components\IconEntry;
 use App\Filament\App\Resources\VirtualEventResource;

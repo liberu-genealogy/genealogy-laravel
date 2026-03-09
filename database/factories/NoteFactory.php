@@ -35,7 +35,7 @@ class NoteFactory extends Factory
             'date'        => fake()->date(),
             'description' => fake()->text(50),
             'is_active'   => fake()->randomDigit(),
-            'type_id'     => Type::where('id', fake()->randomElement([1, 2, 3, 4]))->first()->id,
+            'type_id'     => Type::inRandomOrder()->first()?->id ?? Type::factory()->create()->id,
         ];
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\ResearchSpace;
 
+use Livewire\Attributes\On;
 use Livewire\Component;
 use App\Models\ResearchSpace;
 use App\Events\ResearchSpaceUpdated;
@@ -12,16 +13,14 @@ class CollaboratorBoard extends Component
     use AuthorizesRequests;
 
     public ResearchSpace $space;
+    public int $spaceId = 0;
     public $content = '';
     public $userPermissions = [];
-
-    protected $listeners = [
-        'echo:research-space.{spaceId},ResearchSpaceUpdated' => 'onExternalUpdate',
-    ];
 
     public function mount($spaceId)
     {
         $this->space = ResearchSpace::with('collaborators.user')->findOrFail($spaceId);
+        $this->spaceId = $this->space->id;
 
         $this->authorize('view', $this->space);
 
@@ -30,11 +29,9 @@ class CollaboratorBoard extends Component
         $this->userPermissions = []; // can be populated from collaborators
     }
 
-    public function saveContent(string $updated)
+    public function saveContent()
     {
         $this->authorize('update', $this->space);
-
-        $this->content = $updated;
 
         $settings = $this->space->settings ?? [];
         $settings['board'] = array_merge($settings['board'] ?? [], ['content' => $this->content, 'updated_at' => now()->toDateTimeString()]);
@@ -45,11 +42,12 @@ class CollaboratorBoard extends Component
         event(new ResearchSpaceUpdated($this->space->id, ['content' => $this->content, 'user_id' => auth()->id()]));
     }
 
+    #[On('echo:research-space.{spaceId},ResearchSpaceUpdated')]
     public function onExternalUpdate($payload)
     {
         // When we get an external broadcast, update local content
         $this->content = data_get($payload, 'content', $this->content);
-        $this->emitSelf('contentUpdated');
+        $this->dispatch('contentUpdated');
     }
 
     public function render()

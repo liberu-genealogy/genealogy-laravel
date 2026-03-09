@@ -31,7 +31,7 @@
                 <div class="text-center mb-6">
                     <h3 class="text-xl font-semibold text-gray-900 dark:text-white">Standard</h3>
                     <p class="text-gray-500 dark:text-gray-400">Free forever</p>
-                    <div class="text-3xl font-bold text-gray-900 dark:text-white mt-2">£0</div>
+                    <div class="text-3xl font-bold text-gray-900 dark:text-white mt-2">$0</div>
                 </div>
 
                 <ul class="space-y-3">
@@ -155,7 +155,7 @@
                 <div>
                     <h4 class="font-medium text-gray-900 dark:text-white">What happens during the free trial?</h4>
                     <p class="text-sm text-gray-600 dark:text-gray-400 mt-1">
-                        You get full access to all premium features for 7 days. No payment required upfront.
+                        You get full access to all premium features for {{ config('subscription.premium.trial_days', 14) }} days. No payment required upfront.
                     </p>
                 </div>
 

@@ -19,7 +19,7 @@ class UpdatePasswordPage extends Page
     protected string $view = 'filament.pages.profile.update-password';
 
     protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-lock-closed';
-
+    protected static ?string $navigationLabel = 'Update Password';
     protected static string | \UnitEnum | null $navigationGroup = '👤 Account & Settings';
 
     protected static ?int $navigationSort = 1;

@@ -2,7 +2,7 @@
 
 namespace App\Filament\App\Resources\ChecklistTemplateResource\RelationManagers;
 
-use Filament\Schemas\Components\Grid;
+use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\Select;

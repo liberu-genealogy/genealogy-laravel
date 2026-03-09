@@ -25,8 +25,8 @@ return new class extends Migration
             $table->timestamps();
             $table->softDeletes();
 
-            $table->index(['category', 'is_public']);
-            $table->index(['is_default', 'is_public']);
+            $table->index(['category', 'is_public'], 'checklist_templates_category_public_idx');
+            $table->index(['is_default', 'is_public'], 'checklist_templates_default_public_idx');
         });
     }
 

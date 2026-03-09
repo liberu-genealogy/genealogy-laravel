@@ -8,7 +8,7 @@ use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
-use Filament\Forms\Form;
+use Filament\Schemas\Schema;
 use Filament\Notifications\Notification;
 use Filament\Pages\Page;
 use Illuminate\Support\Facades\Auth;
@@ -17,11 +17,11 @@ class DnaTriangulationPage extends Page implements HasForms
 {
     use InteractsWithForms;
 
-    protected static ?string $navigationIcon = 'heroicon-o-chart-bar';
+    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-chart-bar';
 
-    protected static string $view = 'filament.app.pages.dna-triangulation-page';
+    protected string $view = 'filament.app.pages.dna-triangulation-page';
 
-    protected static ?string $navigationGroup = '🧬 DNA & Genetics';
+    protected static string|\UnitEnum|null $navigationGroup = '🧬 DNA & Genetics';
 
     protected static ?string $navigationLabel = 'DNA Triangulation';
 
@@ -43,25 +43,25 @@ class DnaTriangulationPage extends Page implements HasForms
         $this->form->fill();
     }
 
-    public function form(Form $form): Form
+    public function form(Schema $schema): Schema
     {
         $userId = Auth::id();
         $userKits = Dna::where('user_id', $userId)->pluck('name', 'id')->toArray();
 
-        return $form
+        return $schema
             ->schema([
                 Select::make('base_kit_id')
                     ->label('Base DNA Kit')
                     ->options($userKits)
                     ->required()
                     ->helperText('Select the primary DNA kit to match against others'),
-                
+
                 Select::make('compare_kit_ids')
                     ->label('Compare Against Kits (Optional)')
                     ->options($userKits)
                     ->multiple()
                     ->helperText('Leave empty to compare against all kits'),
-                
+
                 TextInput::make('min_cm')
                     ->label('Minimum cM Threshold')
                     ->numeric()

@@ -21,7 +21,7 @@ use App\Filament\App\Resources\PersonResource\Pages;
 use App\Models\Person;
 use Filament\Forms;
 use Filament\Forms\Form;
-use Filament\Resources\Resource;
+use App\Filament\App\Resources\AppResource;
 use Filament\Schemas\Schema;
 use Filament\Tables;
 use Filament\Actions;
@@ -29,7 +29,7 @@ use Filament\Tables\Table;
 use Filament\Forms\Components\FileUpload;
 use Filament\Tables\Columns\ImageColumn;
 
-class PersonResource extends Resource
+class PersonResource extends AppResource
 {
     protected static ?string $model = Person::class;
 

@@ -26,8 +26,8 @@ return new class() extends Migration {
             $table->dateTime('expires_at')->nullable(); // OAuth2
             $table->timestamps();
 
-            $table->index(['user_id', 'id']);
-            $table->index(['provider', 'provider_id']);
+            $table->index(['user_id', 'id'], 'connected_accounts_user_id_id_idx');
+            $table->index(['provider', 'provider_id'], 'connected_accounts_provider_provider_id_idx');
         });
     }
 

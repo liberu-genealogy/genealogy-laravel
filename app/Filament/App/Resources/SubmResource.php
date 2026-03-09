@@ -16,18 +16,18 @@ use App\Filament\App\Resources\SubmResource\Pages;
 use App\Models\Subm;
 use Filament\Forms;
 use Filament\Forms\Form;
-use Filament\Resources\Resource;
+use App\Filament\App\Resources\AppResource;
 use Filament\Schemas\Schema;
 use Filament\Tables;
 use Filament\Actions;
 use Filament\Tables\Table;
 
-class SubmResource extends Resource
+class SubmResource extends AppResource
 {
     protected static ?string $model = Subm::class;
 
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-rectangle-stack';
-
+    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-user-group';
+    protected static ?string $navigationLabel = 'Submitters';
     protected static string | \UnitEnum | null $navigationGroup = '🛠️ Data Management';
 
     #[Override]

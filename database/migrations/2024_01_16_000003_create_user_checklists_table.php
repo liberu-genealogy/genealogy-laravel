@@ -28,10 +28,10 @@ return new class extends Migration
             $table->timestamps();
             $table->softDeletes();
 
-            $table->index(['user_id', 'status']);
-            $table->index(['subject_type', 'subject_id']);
-            $table->index(['priority', 'due_date']);
-            $table->index(['status', 'due_date']);
+            $table->index(['user_id', 'status'], 'user_checklists_user_status_idx');
+            $table->index(['subject_type', 'subject_id'], 'user_checklists_subject_type_id_idx');
+            $table->index(['priority', 'due_date'], 'user_checklists_priority_due_date_idx');
+            $table->index(['status', 'due_date'], 'user_checklists_status_due_date_idx');
         });
     }
 

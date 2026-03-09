@@ -21,8 +21,8 @@ return new class extends Migration
             $table->timestamp('reviewed_at')->nullable();
             $table->timestamps();
 
-            $table->index(['user_id', 'status']);
-            $table->index(['person_id', 'confidence_score']);
+            $table->index(['user_id', 'status'], 'smart_matches_user_id_status_idx');
+            $table->index(['person_id', 'confidence_score'], 'smart_matches_person_id_confidence_idx');
         });
     }
 

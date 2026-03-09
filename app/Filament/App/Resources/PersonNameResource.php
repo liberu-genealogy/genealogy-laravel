@@ -16,18 +16,18 @@ use App\Filament\App\Resources\PersonNameResource\Pages;
 use App\Models\PersonName;
 use Filament\Forms;
 use Filament\Forms\Form;
-use Filament\Resources\Resource;
+use App\Filament\App\Resources\AppResource;
 use Filament\Schemas\Schema;
 use Filament\Tables;
 use Filament\Actions;
 use Filament\Tables\Table;
 
-class PersonNameResource extends Resource
+class PersonNameResource extends AppResource
 {
     protected static ?string $model = PersonName::class;
 
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-rectangle-stack';
-
+    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-identification';
+    protected static ?string $navigationLabel = 'Person Names';
     protected static string | \UnitEnum | null $navigationGroup = '👥 Family Tree';
 
     #[Override]

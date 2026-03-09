@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\ConnectedAccount;
+use App\Models\Team;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
@@ -40,6 +41,29 @@ class UserFactory extends Factory
         return $this->state(fn (array $attributes) => [
             'email_verified_at' => null,
         ]);
+    }
+
+    /**
+     * Indicate that the user should have a personal team.
+     */
+    public function withPersonalTeam(callable $callback = null): static
+    {
+        return $this->has(
+            Team::factory()
+                ->state(fn (array $attributes, User $user) => [
+                    'name'          => $user->name . '\'s Team',
+                    'user_id'       => $user->id,
+                    'personal_team' => true,
+                ])
+                ->when(is_callable($callback), $callback),
+            'ownedTeams'
+        )->afterCreating(function (User $user): void {
+            $personalTeam = $user->ownedTeams()->where('personal_team', true)->first();
+            if ($personalTeam) {
+                $user->current_team_id = $personalTeam->id;
+                $user->save();
+            }
+        });
     }
 
     /**

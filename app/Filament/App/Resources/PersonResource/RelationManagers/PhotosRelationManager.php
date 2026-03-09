@@ -4,10 +4,10 @@ namespace App\Filament\App\Resources\PersonResource\RelationManagers;
 
 use App\Models\PersonPhoto;
 use App\Services\FacialRecognitionService;
-use Filament\Forms;
-use Filament\Forms\Form;
 use Filament\Notifications\Notification;
 use Filament\Resources\RelationManagers\RelationManager;
+use Filament\Forms\Components;
+use Filament\Schemas\Schema;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Support\Facades\Storage;
@@ -18,17 +18,17 @@ class PhotosRelationManager extends RelationManager
 
     protected static ?string $title = 'Photos';
 
-    public function form(Form $form): Form
+    public function form(Schema $schema): Schema
     {
-        return $form
+        return $schema
             ->schema([
-                Forms\Components\FileUpload::make('file_path')
+                Components\FileUpload::make('file_path')
                     ->label('Photo')
                     ->image()
                     ->directory('person-photos')
                     ->disk('public')
                     ->required(),
-                Forms\Components\TextInput::make('description')
+                Components\TextInput::make('description')
                     ->label('Description')
                     ->maxLength(500),
             ]);
@@ -66,7 +66,6 @@ class PhotosRelationManager extends RelationManager
             ->headerActions([
                 Tables\Actions\CreateAction::make()
                     ->mutateFormDataUsing(function (array $data): array {
-                        $data['team_id'] = auth()->user()->currentTeam?->id;
                         $data['person_id'] = $this->ownerRecord->id;
                         $data['file_name'] = basename($data['file_path']);
                         return $data;
@@ -74,7 +73,7 @@ class PhotosRelationManager extends RelationManager
                     ->after(function (PersonPhoto $record) {
                         $facialRecognitionService = app(FacialRecognitionService::class);
                         $result = $facialRecognitionService->analyzePhoto($record);
-                        
+
                         if ($result['success']) {
                             Notification::make()
                                 ->title('Photo analyzed')
@@ -93,7 +92,7 @@ class PhotosRelationManager extends RelationManager
                     ->action(function (PersonPhoto $record) {
                         $facialRecognitionService = app(FacialRecognitionService::class);
                         $result = $facialRecognitionService->analyzePhoto($record);
-                        
+
                         if ($result['success']) {
                             Notification::make()
                                 ->title('Photo analyzed')

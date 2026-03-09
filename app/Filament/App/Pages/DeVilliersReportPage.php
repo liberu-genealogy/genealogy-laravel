@@ -21,10 +21,8 @@ class DeVilliersReportPage extends Page
     protected static ?string $title = 'Devilliers Report';
 
     protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-chart-bar';
-
-    protected static string | \UnitEnum | null $navigationGroup = 'Reports';
-
-    //  public function mount(): void
+    protected static ?string $navigationLabel = 'De Villiers Report';
+    protected static string | \UnitEnum | null $navigationGroup = '📄 Reports';
     // {
     //     Livewire::mount('DeVilliersReportWidget');
     // }

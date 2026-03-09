@@ -3,7 +3,7 @@
 namespace App\Filament\App\Resources\VirtualEventResource\Pages;
 
 use Filament\Actions\CreateAction;
-use Filament\Schemas\Components\Tabs\Tab;
+use Filament\Forms\Components\Tabs\Tab;
 use App\Filament\App\Resources\VirtualEventResource;
 use Filament\Actions;
 use Filament\Resources\Pages\ListRecords;

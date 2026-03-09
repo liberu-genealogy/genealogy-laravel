@@ -16,18 +16,18 @@ use App\Filament\App\Resources\SourceDataEvenResource\Pages;
 use App\Models\SourceDataEven;
 use Filament\Forms;
 use Filament\Forms\Form;
-use Filament\Resources\Resource;
+use App\Filament\App\Resources\AppResource;
 use Filament\Schemas\Schema;
 use Filament\Tables;
 use Filament\Actions;
 use Filament\Tables\Table;
 
-class SourceDataEvenResource extends Resource
+class SourceDataEvenResource extends AppResource
 {
     protected static ?string $model = SourceDataEven::class;
 
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-rectangle-stack';
-
+    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-calendar-days';
+    protected static ?string $navigationLabel = 'Source Data Events';
     protected static string | \UnitEnum | null $navigationGroup = '🔍 Research & Analysis';
 
     #[Override]

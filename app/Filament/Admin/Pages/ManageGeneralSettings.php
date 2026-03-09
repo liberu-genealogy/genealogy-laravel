@@ -3,7 +3,7 @@
 namespace App\Filament\Admin\Pages;
 
 use Filament\Schemas\Schema;
-use Filament\Schemas\Components\Section;
+use Filament\Forms\Components\Section;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Textarea;
 use App\Settings\GeneralSettings;

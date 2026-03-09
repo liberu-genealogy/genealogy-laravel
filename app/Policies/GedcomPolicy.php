@@ -28,10 +28,11 @@ class GedcomPolicy
 
     /**
      * Determine whether the user can create models.
+     * Any authenticated user can upload GEDCOM files.
      */
     public function create(User $user): bool
     {
-        return $user->can('create_gedcom');
+        return true;
     }
 
     /**
