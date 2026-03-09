@@ -169,7 +169,7 @@
 
 <script>
 function expandPerson(personId) {
-    @this.call('expandPerson', personId);
+    $wire.call('expandPerson', personId);
 }
 
 document.addEventListener('livewire:init', () => {

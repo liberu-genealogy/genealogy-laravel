@@ -7,6 +7,7 @@ use App\Models\UserChecklist;
 use App\Models\UserChecklistItem;
 use App\Models\Person;
 use App\Models\Family;
+use Livewire\Attributes\Rule;
 use Livewire\Component;
 use Livewire\WithPagination;
 use Illuminate\Support\Facades\Auth;
@@ -23,12 +24,25 @@ class UserChecklistManager extends Component
     public $selectedTemplate = null;
 
     // Form properties
+    #[Rule('required|string|max:255')]
     public $name = '';
+
+    #[Rule('nullable|string')]
     public $description = '';
+
+    #[Rule('nullable|string')]
     public $subject_type = '';
+
+    #[Rule('nullable|integer')]
     public $subject_id = '';
+
+    #[Rule('required|in:low,medium,high,urgent')]
     public $priority = 'medium';
+
+    #[Rule('nullable|date')]
     public $due_date = '';
+
+    #[Rule('nullable|string')]
     public $notes = '';
 
     // Item form properties
@@ -43,16 +57,6 @@ class UserChecklistManager extends Component
     public $priorityFilter = 'all';
     public $subjectFilter = 'all';
     public $search = '';
-
-    protected $rules = [
-        'name' => 'required|string|max:255',
-        'description' => 'nullable|string',
-        'subject_type' => 'nullable|string',
-        'subject_id' => 'nullable|integer',
-        'priority' => 'required|in:low,medium,high,urgent',
-        'due_date' => 'nullable|date',
-        'notes' => 'nullable|string',
-    ];
 
     protected $itemRules = [
         'item_title' => 'required|string|max:255',
@@ -162,7 +166,7 @@ class UserChecklistManager extends Component
 
         $this->resetForm();
         $this->showCreateModal = false;
-        $this->emit('checklist-created');
+        $this->dispatch('checklist-created');
         session()->flash('message', 'Checklist created successfully!');
     }
 
@@ -195,14 +199,14 @@ class UserChecklistManager extends Component
 
         $this->resetForm();
         $this->showEditModal = false;
-        $this->emit('checklist-updated');
+        $this->dispatch('checklist-updated');
         session()->flash('message', 'Checklist updated successfully!');
     }
 
     public function deleteChecklist($checklistId)
     {
         UserChecklist::findOrFail($checklistId)->delete();
-        $this->emit('checklist-deleted');
+        $this->dispatch('checklist-deleted');
         session()->flash('message', 'Checklist deleted successfully!');
     }
 
@@ -216,7 +220,7 @@ class UserChecklistManager extends Component
             $item->markAsCompleted();
         }
 
-        $this->emit('item-toggled');
+        $this->dispatch('item-toggled');
     }
 
     public function editItem($itemId)
@@ -244,7 +248,7 @@ class UserChecklistManager extends Component
 
         $this->resetItemForm();
         $this->showItemModal = false;
-        $this->emit('item-updated');
+        $this->dispatch('item-updated');
         session()->flash('message', 'Item updated successfully!');
     }
 
@@ -260,7 +264,7 @@ class UserChecklistManager extends Component
             'order' => $maxOrder + 1,
         ]);
 
-        $this->emit('item-added');
+        $this->dispatch('item-added');
         session()->flash('message', 'Custom item added successfully!');
     }
 

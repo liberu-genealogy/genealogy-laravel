@@ -31,7 +31,7 @@
                 <p><a href="{{ $selectedEvent['source_url'] }}" target="_blank" rel="noopener">Source</a></p>
             @endif
             <div style="text-align:right;">
-                <button onclick="Livewire.emit('closeModal')" wire:click="closeModal()" class="filament-button">Close</button>
+                <button onclick="Livewire.dispatch('closeModal')" wire:click="closeModal()" class="filament-button">Close</button>
             </div>
         @endif
     </div>
@@ -81,7 +81,7 @@
             // click handler -> notify Livewire
             window._timeline.instance.on('itemclick', function (props) {
                 if (props.item) {
-                    Livewire.emit('timelineItemClicked', props.item.toString());
+                    Livewire.dispatch('timelineItemClicked', { id: props.item.toString() });
                 }
             });
 
@@ -118,11 +118,7 @@
             };
 
             // Wire up Livewire to show/hide modal when selectedEvent changes
-            Livewire.hook('message.processed', (message, component) => {
-                // After Livewire updates, show/hide modal based on presence of selectedEvent
-                @this.on('selectedEventChanged', () => {});
-                // simple DOM toggle handled by server-rendered inline style
-            });
+            // (DOM toggle handled by server-rendered inline style)
         })();
     </script>
 
