@@ -28,40 +28,51 @@ class ImportGrampsXml implements ShouldQueue
     public int $timeout = 0;
     public int $tries = 1;
 
-    public function __construct(protected User $user, protected string $filePath, protected ?string $slug = null)
+    public function __construct(protected User $user, protected string $filePath, public ?string $slug = null)
     {
     }
 
     public function handle(): int
     {
-        throw_unless(File::isFile($this->filePath), Exception::class, "{$this->filePath} does not exist.");
+        // Find or create the ImportJob record
+        $slug = $this->slug ?? (string) Str::uuid();
+        $importJob = ImportJob::firstOrCreate(
+            ['slug' => $slug],
+            [
+                'user_id'  => $this->user->getKey(),
+                'status'   => 'queue',
+                'progress' => 0,
+            ],
+        );
 
-        $slug = $this->slug ?? Str::uuid();
-
-        $job = ImportJob::create([
-            'user_id' => $this->user->getKey(),
-            'status'  => 'queue',
-            'slug'    => $slug,
-        ]);
+        $importJob->update(['status' => 'processing', 'progress' => 10]);
 
         try {
+            throw_unless(File::isFile($this->filePath), Exception::class, "{$this->filePath} does not exist.");
+
+            $importJob->update(['progress' => 20]);
+
             // Parse GrampsXML file
             $grampsXmlService = new GrampsXmlService();
             $grampsData = $grampsXmlService->parseGrampsXml($this->filePath);
 
             Log::info('GrampsXML parsed successfully', [
-                'people_count' => $grampsData['stats']['people_count'] ?? 0,
+                'people_count'   => $grampsData['stats']['people_count'] ?? 0,
                 'families_count' => $grampsData['stats']['families_count'] ?? 0,
             ]);
+
+            $importJob->update(['progress' => 40]);
 
             // Convert GrampsXML to GEDCOM format and import using existing parser
             // This leverages the existing GEDCOM import infrastructure
             $gedcomContent = $this->convertGrampsToGedcom($grampsData['data']);
             $tempGedcomPath = storage_path('app/private/temp/' . $slug . '.ged');
-            
+
             // Ensure temp directory exists
             File::ensureDirectoryExists(dirname($tempGedcomPath));
             File::put($tempGedcomPath, $gedcomContent);
+
+            $importJob->update(['progress' => 50]);
 
             // Use existing GEDCOM parser
             $parser = new GedcomParser();
@@ -71,7 +82,7 @@ class ImportGrampsXml implements ShouldQueue
             // Clean up temp file
             File::delete($tempGedcomPath);
 
-            $job->update(['status' => 'complete']);
+            $importJob->update(['progress' => 90]);
 
             // Clear application caches
             try {
@@ -84,11 +95,16 @@ class ImportGrampsXml implements ShouldQueue
         } catch (Throwable $e) {
             Log::error('GrampsXML import failed', [
                 'error' => $e->getMessage(),
-                'file' => $this->filePath,
+                'file'  => $this->filePath,
             ]);
-            $job->update(['status' => 'failed']);
+            $importJob->update([
+                'status'        => 'failed',
+                'error_message' => $e->getMessage(),
+            ]);
             throw $e;
         }
+
+        $importJob->update(['status' => 'complete', 'progress' => 100]);
 
         return 0;
     }
