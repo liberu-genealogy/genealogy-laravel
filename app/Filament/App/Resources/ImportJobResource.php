@@ -5,7 +5,7 @@ namespace App\Filament\App\Resources;
 use App\Filament\App\Resources\ImportJobResource\Pages\ListImportJobs;
 use App\Filament\App\Resources\ImportJobResource\Pages\ViewImportJob;
 use App\Models\ImportJob;
-use Filament\Tables\Actions\ViewAction;
+use Filament\Actions\ViewAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
