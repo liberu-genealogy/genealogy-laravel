@@ -3,9 +3,7 @@
 namespace App\Filament\App\Resources;
 
 use App\Filament\App\Resources\ImportJobResource\Pages\ListImportJobs;
-use App\Filament\App\Resources\ImportJobResource\Pages\ViewImportJob;
 use App\Models\ImportJob;
-use Filament\Actions\ViewAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
@@ -92,9 +90,7 @@ class ImportJobResource extends AppResource
             ])
             ->defaultSort('created_at', 'desc')
             ->filters([])
-            ->recordActions([
-                ViewAction::make(),
-            ])
+            ->recordActions([])
             ->toolbarActions([]);
     }
 
@@ -102,7 +98,6 @@ class ImportJobResource extends AppResource
     {
         return [
             'index' => ListImportJobs::route('/'),
-            'view'  => ViewImportJob::route('/{record}'),
         ];
     }
 }
