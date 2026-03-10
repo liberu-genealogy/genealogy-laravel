@@ -237,6 +237,73 @@ class Person extends Model
         return $query->select(['id', 'givn', 'surn', 'sex', 'child_in_family_id', 'birthday', 'deathday']);
     }
 
+    /**
+     * Determine if this person is considered "living" (no death record and born within 100 years).
+     */
+    public function isLiving(): bool
+    {
+        if ($this->deathday) {
+            return false;
+        }
+
+        $cutoff = now()->subYears(100);
+
+        if ($this->birthday) {
+            return $this->birthday->greaterThan($cutoff);
+        }
+
+        if ($this->birth_year) {
+            return (int) $this->birth_year > $cutoff->year;
+        }
+
+        // No death and no known birth — assume potentially living for privacy
+        return true;
+    }
+
+    /**
+     * Scope to only deceased / historically safe persons (dead or born 100+ years ago).
+     */
+    public function scopeDeceased($query)
+    {
+        $cutoffYear = now()->subYears(100)->year;
+
+        return $query->where(function ($q) use ($cutoffYear) {
+            $q->whereNotNull('deathday')
+              ->orWhere(function ($q2) use ($cutoffYear) {
+                  $q2->whereNotNull('birth_year')
+                     ->where('birth_year', '<=', $cutoffYear);
+              })
+              ->orWhere(function ($q2) use ($cutoffYear) {
+                  $q2->whereNotNull('birthday')
+                     ->where('birthday', '<=', now()->subYears(100));
+              });
+        });
+    }
+
+    /**
+     * Scope to living persons (no death record AND born within 100 years or unknown birth).
+     */
+    public function scopeLiving($query)
+    {
+        $cutoffYear = now()->subYears(100)->year;
+
+        return $query->whereNull('deathday')
+            ->where(function ($q) use ($cutoffYear) {
+                $q->where(function ($q2) use ($cutoffYear) {
+                    $q2->whereNotNull('birth_year')
+                       ->where('birth_year', '>', $cutoffYear);
+                })
+                ->orWhere(function ($q2) use ($cutoffYear) {
+                    $q2->whereNotNull('birthday')
+                       ->where('birthday', '>', now()->subYears(100));
+                })
+                ->orWhere(function ($q2) {
+                    $q2->whereNull('birth_year')
+                       ->whereNull('birthday');
+                });
+            });
+    }
+
     public static function getListOptimized()
     {
         return self::withBasicInfo()->get()->mapWithKeys(fn($person) => [$person->id => $person->fullname()]);

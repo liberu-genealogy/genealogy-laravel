@@ -2,7 +2,7 @@
 
 namespace App\Livewire;
 
-use App\Models\Person;
+use App\Services\PersonSearchService;
 use Livewire\Component;
 use Livewire\Attributes\On;
 
@@ -24,15 +24,15 @@ class PeopleSearch extends Component
     #[On('updatedQuery')]
     public function searchPeople(): void
     {
+        $service = app(PersonSearchService::class);
+
         if (empty($this->query)) {
-            $this->results = Person::limit(10)->get()->toArray();
+            $this->results = $service->searchOwnTeam('', 10)->items();
         } else {
-            $this->results = Person::where('givn', 'like', '%'.$this->query.'%')
-                                   ->orWhere('surn', 'like', '%'.$this->query.'%')
-                                   ->limit(20)
-                                   ->get()
-                                   ->toArray();
+            $this->results = $service->searchOwnTeam($this->query, 20)->items();
         }
+
+        $this->results = array_map(fn ($p) => is_object($p) ? $p->toArray() : $p, $this->results);
     }
 
     public function render()

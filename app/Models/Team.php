@@ -23,6 +23,7 @@ class Team extends JetstreamTeam
     protected $fillable = [
         'name',
         'personal_team',
+        'is_public',
         'stripe_id',
         'pm_type',
         'pm_last_four',
@@ -58,6 +59,7 @@ class Team extends JetstreamTeam
     {
         return [
             'personal_team' => 'boolean',
+            'is_public' => 'boolean',
         ];
     }
 

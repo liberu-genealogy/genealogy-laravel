@@ -80,6 +80,19 @@ class ImportGedcom implements ShouldQueue
             // swallow cache clear errors
         }
 
+        // Log indexing status — fulltext index is maintained automatically by MySQL.
+        // Clear any cached person lists so search results reflect the new data.
+        try {
+            cache()->forget('person_list');
+        } catch (Throwable $e) {
+            // swallow
+        }
+
+        Log::info('ImportGedcom: data indexed and caches cleared', [
+            'team_id' => $team_id,
+            'slug'    => $slug,
+        ]);
+
         return 0;
     }
 }
