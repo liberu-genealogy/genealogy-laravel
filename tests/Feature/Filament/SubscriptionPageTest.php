@@ -30,9 +30,16 @@ class SubscriptionPageTest extends TestCase
         $user = User::factory()->create();
         config(['subscription.premium.stripe_price_id' => 'page_price_456']);
 
-        $mockBuilder = new class {
+        // Simulate Cashier Checkout object which has a public ->url property
+        $mockCheckout = new class {
+            public string $url = 'https://stripe-example';
+        };
+
+        $mockBuilder = new class($mockCheckout) {
+            private $checkout;
+            public function __construct($checkout) { $this->checkout = $checkout; }
             public function trialDays($days) { return $this; }
-            public function checkout($data) { return redirect('https://stripe-example'); }
+            public function checkout($data) { return $this->checkout; }
         };
 
         $user = \Mockery::mock($user)->makePartial();

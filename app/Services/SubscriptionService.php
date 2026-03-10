@@ -138,7 +138,7 @@ class SubscriptionService
     public function createCheckoutRedirect($user)
     {
         $priceId = config('subscription.premium.stripe_price_id', self::PREMIUM_PRICE_ID);
-        $trialDays = config('subscription.premium.trial_days', 7);
+        $trialDays = config('subscription.premium.trial_days', 14);
 
         return $user
             ->newSubscription('premium', $priceId)

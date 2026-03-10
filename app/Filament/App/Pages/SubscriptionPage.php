@@ -27,20 +27,24 @@ class SubscriptionPage extends Page
 
     public function mount(): void
     {
-        if (! config('premium.enabled')) {
-            $user = Auth::user();
+        $user = Auth::user();
 
-            // If trial has expired, redirect to the trial-expired page
-            if ($user->hasExpiredTrial()) {
-                $this->redirect(route('filament.app.pages.trial-expired'));
-                return;
-            }
+        // When premium features are globally enabled, everyone is premium
+        if (config('premium.enabled')) {
+            $this->redirect(route('filament.app.pages.premium-dashboard'));
+            return;
+        }
 
-            // Redirect if user is already premium
-            if ($user->isPremium()) {
-                $this->redirect(route('filament.app.pages.premium-dashboard'));
-                return;
-            }
+        // If trial has expired, redirect to the trial-expired page
+        if ($user->hasExpiredTrial()) {
+            $this->redirect(route('filament.app.pages.trial-expired'));
+            return;
+        }
+
+        // Redirect if user is already premium
+        if ($user->isPremium()) {
+            $this->redirect(route('filament.app.pages.premium-dashboard'));
+            return;
         }
     }
 
@@ -125,7 +129,9 @@ class SubscriptionPage extends Page
         // configuration and the proper price identifier
         $checkout = app(SubscriptionService::class)->createCheckoutRedirect($user);
 
-        if ($checkout instanceof \Illuminate\Http\RedirectResponse) {
+        if (is_object($checkout) && property_exists($checkout, 'url') && $checkout->url) {
+            $this->redirect($checkout->url);
+        } elseif ($checkout instanceof \Illuminate\Http\RedirectResponse) {
             $this->redirect($checkout->getTargetUrl());
         } else {
             Notification::make()
