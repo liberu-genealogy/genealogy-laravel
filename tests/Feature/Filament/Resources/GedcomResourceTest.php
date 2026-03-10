@@ -84,6 +84,7 @@ class GedcomResourceTest extends TestCase
     {
         Auth::login($this->user);
         Storage::fake('private');
+        Storage::disk('private')->put('gedcom-form-imports/test.ged', 'dummy content');
 
         $gedcom = Gedcom::create(['filename' => 'gedcom-form-imports/test.ged']);
 
@@ -101,6 +102,7 @@ class GedcomResourceTest extends TestCase
     {
         Auth::login($this->user);
         Storage::fake('private');
+        Storage::disk('private')->put('gedcom-form-imports/test.gramps', 'dummy content');
 
         $gedcom = Gedcom::create(['filename' => 'gedcom-form-imports/test.gramps']);
 

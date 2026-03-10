@@ -17,39 +17,36 @@ class CreateGedcom extends CreateRecord
 
     protected function afterCreate(): void
     {
-        parent::afterCreate();
-
         $record = $this->getRecord();
+        $path = $record->filename;
 
-        $files = (array) data_get($record, 'filename', []);
-        if (empty($files)) {
+        if (empty($path)) {
             return;
         }
 
         $disk = Storage::disk('private');
 
-        foreach ($files as $path) {
-            if (! $disk->exists($path)) {
-                Log::warning("Gedcom upload exists on model but file missing: {$path}");
-                continue;
-            }
+        if (! $disk->exists($path)) {
+            Log::warning("Gedcom upload exists on model but file missing: {$path}");
 
-            $fullPath = $disk->path($path) ?? $path;
-            $extension = strtolower(pathinfo($fullPath, PATHINFO_EXTENSION));
-
-            if (in_array($extension, ['gramps', 'xml'], true)) {
-                ImportGrampsXml::dispatch(Auth::user(), $fullPath);
-                Log::info('Dispatched GrampsXML import', ['path' => $path, 'full_path' => $fullPath]);
-            } else {
-                ImportGedcom::dispatch(Auth::user(), $fullPath);
-                Log::info('Dispatched GEDCOM import', ['path' => $path, 'full_path' => $fullPath]);
-            }
-
-            Notification::make()
-                ->title('GEDCOM import queued')
-                ->body('Your file is being processed. Check Import Logs to monitor progress.')
-                ->success()
-                ->send();
+            return;
         }
+
+        $fullPath = $disk->path($path);
+        $extension = strtolower(pathinfo($fullPath, PATHINFO_EXTENSION));
+
+        if (in_array($extension, ['gramps', 'xml'], true)) {
+            ImportGrampsXml::dispatch(Auth::user(), $fullPath);
+            Log::info('Dispatched GrampsXML import', ['path' => $path, 'full_path' => $fullPath]);
+        } else {
+            ImportGedcom::dispatch(Auth::user(), $fullPath);
+            Log::info('Dispatched GEDCOM import', ['path' => $path, 'full_path' => $fullPath]);
+        }
+
+        Notification::make()
+            ->title('GEDCOM import queued')
+            ->body('Your file is being processed. Check Import Logs to monitor progress.')
+            ->success()
+            ->send();
     }
 }
