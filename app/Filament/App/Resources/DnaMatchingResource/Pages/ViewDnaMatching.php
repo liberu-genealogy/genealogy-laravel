@@ -11,6 +11,8 @@ use Filament\Infolists\Infolist;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Infolists\Components\ImageEntry;
 use Filament\Infolists\Components\KeyValueEntry;
+use Filament\Infolists\Components\Section;
+use Filament\Infolists\Components\Grid;
 
 class ViewDnaMatching extends ViewRecord
 {
@@ -24,8 +26,8 @@ class ViewDnaMatching extends ViewRecord
     }
     public function infolist(Schema $schema): Schema
     {
-        return $infolist
-            ->schema([
+        return $schema
+            ->components([
                 Section::make('Match Overview')
                     ->schema([
                         Grid::make(3)

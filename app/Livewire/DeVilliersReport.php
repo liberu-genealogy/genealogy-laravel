@@ -35,7 +35,7 @@ class DeVilliersReport extends Component
         ];
 
         $childNumber = 1;
-        foreach ($person->child_in_family as $child) {
+        foreach ($person->children as $child) {
             $this->traverseFamilyTree($child, $currentNumber.'.'.$childNumber);
             $childNumber++;
         }

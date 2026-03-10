@@ -49,7 +49,7 @@ class CollaboratorBoard extends Component
     {
         // When we get an external broadcast, update local content
         $this->content = data_get($payload, 'content', $this->content);
-        $this->emitSelf('contentUpdated');
+        $this->dispatch('contentUpdated');
     }
 
     public function render()

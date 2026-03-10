@@ -2,13 +2,10 @@
 
 namespace App\Filament\App\Pages;
 
-use BackedEnum;
 use App\Models\Message;
 use App\Models\User;
 use Filament\Pages\Page;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Request;
-use Illuminate\Support\Facades\Validator;
 
 class PrivateMessagingPage extends Page
 {
@@ -18,40 +15,53 @@ class PrivateMessagingPage extends Page
     protected static ?string $navigationLabel = 'Private Messaging';
     protected static string | \UnitEnum | null $navigationGroup = '👤 Account & Settings';
 
+    public ?int $selectedUserId = null;
+    public string $messageText = '';
+    public $users = [];
+    public $messages = [];
+
     public function mount(): void
     {
-        $selectedUserId = Request::get('user_id');
-
-        $this->data([
-            'user'     => Auth::user(),
-            'users'    => User::where('id', '!=', Auth::id())->get(),
-            'messages' => Message::where(function ($query) use ($selectedUserId): void {
-                $query->where('from_user_id', Auth::id())
-                    ->where('to_user_id', $selectedUserId);
-            })->orWhere(function ($query) use ($selectedUserId): void {
-                $query->where('from_user_id', $selectedUserId)
-                    ->where('to_user_id', Auth::id());
-            })->orderBy('created_at')->get(),
-        ]);
+        $this->selectedUserId = request()->query('user_id') ? (int) request()->query('user_id') : null;
+        $this->users = User::where('id', '!=', Auth::id())->get();
+        $this->loadMessages();
     }
 
-    public function sendMessage()
+    public function updatedSelectedUserId(): void
     {
-        $validator = Validator::make(Request::all(), [
-            'message'    => 'required|string',
-            'to_user_id' => 'required|exists:users,id',
-        ]);
+        $this->loadMessages();
+    }
 
-        if ($validator->fails()) {
-            // Handle validation errors
+    public function loadMessages(): void
+    {
+        if (! $this->selectedUserId) {
+            $this->messages = collect();
+            return;
         }
+
+        $this->messages = Message::where(function ($query) {
+            $query->where('from_user_id', Auth::id())
+                ->where('to_user_id', $this->selectedUserId);
+        })->orWhere(function ($query) {
+            $query->where('from_user_id', $this->selectedUserId)
+                ->where('to_user_id', Auth::id());
+        })->orderBy('created_at')->get();
+    }
+
+    public function sendMessage(): void
+    {
+        $this->validate([
+            'messageText' => 'required|string',
+            'selectedUserId' => 'required|integer|exists:users,id',
+        ]);
 
         $message = new Message();
         $message->from_user_id = Auth::id();
-        $message->to_user_id = Request::get('to_user_id');
-        $message->message = Request::get('message');
+        $message->to_user_id = $this->selectedUserId;
+        $message->message = $this->messageText;
         $message->save();
 
-        return redirect()->back();
+        $this->messageText = '';
+        $this->loadMessages();
     }
 }

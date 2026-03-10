@@ -83,25 +83,25 @@ class PedigreeChartWidget extends Widget
     public function setRootPerson($personId): void
     {
         $this->rootPersonId = $personId;
-        $this->emit('refreshChart');
+        $this->dispatch('refreshChart');
     }
 
     public function setGenerations($generations): void
     {
         $this->generations = max(1, min(6, $generations));
-        $this->emit('refreshChart');
+        $this->dispatch('refreshChart');
     }
 
     public function toggleDates(): void
     {
         $this->showDates = !$this->showDates;
-        $this->emit('refreshChart');
+        $this->dispatch('refreshChart');
     }
 
     public function togglePhotos(): void
     {
         $this->showPhotos = !$this->showPhotos;
-        $this->emit('refreshChart');
+        $this->dispatch('refreshChart');
     }
 
     public function expandPerson($personId): void
@@ -125,7 +125,7 @@ class PedigreeChartWidget extends Widget
         // Person box
         $sexClass = strtolower($tree['sex'] ?? 'unknown');
         $html .= '<div class="person-box ' . $sexClass . '" onclick="expandPerson(' . $tree['id'] . ')">';
-        $html .= '<button class="expand-btn" title="Expand from this person">↑</button>';
+        $html .= '<button class="expand-btn" title="Expand from this person">â†‘</button>';
         $html .= '<div class="person-name">' . htmlspecialchars($tree['name']) . '</div>';
 
         if ($this->showDates) {
