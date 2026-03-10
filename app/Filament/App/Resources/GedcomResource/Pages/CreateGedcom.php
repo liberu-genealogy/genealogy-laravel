@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 
 namespace App\Filament\App\Resources\GedcomResource\Pages;
 
@@ -10,7 +10,6 @@ use Filament\Resources\Pages\CreateRecord;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
-use Throwable;
 
 class CreateGedcom extends CreateRecord
 {
@@ -18,28 +17,27 @@ class CreateGedcom extends CreateRecord
 
     protected function afterCreate(): void
     {
+        parent::afterCreate();
+
         $record = $this->getRecord();
-        $path = $record->filename;
 
-        Log::info('CreateGedcom::afterCreate called', [
-            'gedcom_id' => $record->getKey(),
-            'filename'  => $path,
-        ]);
-
-        if (! $path) {
-            Log::warning('CreateGedcom::afterCreate: filename is empty, skipping dispatch', [
-                'gedcom_id' => $record->getKey(),
-            ]);
-
+        $files = (array) data_get($record, 'filename', []);
+        if (empty($files)) {
             return;
         }
 
-        $fullPath = Storage::disk('private')->path($path);
-        $extension = strtolower(pathinfo($fullPath, PATHINFO_EXTENSION));
+        $disk = Storage::disk('private');
 
-        try {
-            // Dispatch appropriate import job based on file extension
-            if (in_array($extension, ['gramps', 'xml'])) {
+        foreach ($files as $path) {
+            if (! $disk->exists($path)) {
+                Log::warning("Gedcom upload exists on model but file missing: {$path}");
+                continue;
+            }
+
+            $fullPath = $disk->path($path) ?? $path;
+            $extension = strtolower(pathinfo($fullPath, PATHINFO_EXTENSION));
+
+            if (in_array($extension, ['gramps', 'xml'], true)) {
                 ImportGrampsXml::dispatch(Auth::user(), $fullPath);
                 Log::info('Dispatched GrampsXML import', ['path' => $path, 'full_path' => $fullPath]);
             } else {
@@ -52,16 +50,6 @@ class CreateGedcom extends CreateRecord
                 ->body('Your file is being processed. Check Import Logs to monitor progress.')
                 ->success()
                 ->send();
-        } catch (Throwable $e) {
-            Log::error('Failed to dispatch GEDCOM import job', [
-                'gedcom_id'  => $record->getKey(),
-                'path'       => $path,
-                'full_path'  => $fullPath,
-                'error'      => $e->getMessage(),
-                'trace'      => $e->getTraceAsString(),
-            ]);
-
-            throw $e;
         }
     }
 }

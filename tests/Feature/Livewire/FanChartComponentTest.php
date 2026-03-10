@@ -2,7 +2,7 @@
 
 namespace Tests\Feature\Livewire;
 
-use App\Http\Livewire\FanChartComponent;
+use App\Livewire\FanChartComponent;
 use App\Models\Person;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Livewire\Livewire;

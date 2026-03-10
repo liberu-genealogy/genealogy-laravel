@@ -12,6 +12,8 @@ use Illuminate\Support\Facades\Validator;
 
 class PrivateMessagingPage extends Page
 {
+    protected string $view = 'filament.app.pages.private-messaging-page';
+
     protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-chat-bubble-left-right';
     protected static ?string $navigationLabel = 'Private Messaging';
     protected static string | \UnitEnum | null $navigationGroup = '👤 Account & Settings';
@@ -52,10 +54,4 @@ class PrivateMessagingPage extends Page
 
         return redirect()->back();
     }
-    /**
-     * public function render()
-     * {
-     * return view('filament.pages.private-messaging', $this->data());
-     * }.
-     **/
 }

@@ -2,7 +2,7 @@
 
 namespace Tests\Unit\Livewire;
 
-use App\Http\Livewire\PeopleSearch;
+use App\Livewire\PeopleSearch;
 use Livewire\Livewire;
 use Tests\TestCase;
 

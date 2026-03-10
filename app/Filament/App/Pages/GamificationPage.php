@@ -2,7 +2,7 @@
 
 namespace App\Filament\App\Pages;
 
-use App\Http\Livewire\GamificationDashboard;
+use App\Livewire\GamificationDashboard;
 use Filament\Pages\Page;
 
 class GamificationPage extends Page

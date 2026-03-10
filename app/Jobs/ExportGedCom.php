@@ -9,13 +9,13 @@ use App\Models\Family;
 use App\Models\Person;
 use App\Models\User;
 use App\Services\GedcomService;
-use App\Tenant\Manager;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 
 final class ExportGedCom implements ShouldQueue
 {
@@ -29,9 +29,6 @@ final class ExportGedCom implements ShouldQueue
     public function handle(): void
     {
         try {
-            $tenant = Manager::fromModel($this->user->company(), $this->user);
-            $tenant->connect();
-
             $people = Person::all();
             $families = Family::all();
 
@@ -40,9 +37,7 @@ final class ExportGedCom implements ShouldQueue
             $gedcomService = new GedcomService();
             $content = $gedcomService->generateGedcomContent($people, $families);
 
-            $tenant->storage()->put($this->file, $content);
-
-            chmod($tenant->storage()->path($this->file), 0600);
+            Storage::disk('private')->put($this->file, $content);
 
             Log::info('GEDCOM file generated and stored successfully.');
         } catch (Throwable $e) {

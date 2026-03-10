@@ -1,24 +1,24 @@
 <?php
 
-namespace App\Http\Livewire;
+namespace App\Livewire;
 
 use App\Models\Person;
 use Livewire\Component;
 
-class AhnentafelReport extends Component
+class DeVilliersReport extends Component
 {
     public $selectedPersonId;
     public $reportData = [];
 
     public function render()
     {
-        return view('livewire.ahnentafel-report');
+        return view('livewire.devilliers-report');
     }
 
     public function generateReport($personId): void
     {
         $this->selectedPersonId = $personId;
-        $person = Person::with('child_in_family.birth', 'child_in_family.death')->find($personId);
+        $person = Person::find($personId);
         if ($person) {
             $this->reportData = [];
             $this->traverseFamilyTree($person, '1');

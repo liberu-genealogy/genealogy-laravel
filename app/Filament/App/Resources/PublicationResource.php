@@ -2,6 +2,8 @@
 
 namespace App\Filament\App\Resources;
 
+require_once __DIR__ . '/NameDescriptionActiveResourceTrait.php';
+
 use Override;
 use Filament\Forms\Components\TextInput;
 use Filament\Tables\Columns\TextColumn;

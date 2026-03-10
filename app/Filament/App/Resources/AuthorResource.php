@@ -2,6 +2,8 @@
 
 namespace App\Filament\App\Resources;
 
+require_once __DIR__ . '/NameDescriptionActiveResourceTrait.php';
+
 use Filament\Schemas\Schema;
 use Filament\Forms\Components\TextInput;
 use App\Filament\App\Resources\AppResource;

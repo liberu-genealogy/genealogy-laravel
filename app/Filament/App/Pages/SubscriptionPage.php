@@ -57,6 +57,13 @@ class SubscriptionPage extends Page
     protected function getHeaderActions(): array
     {
         return [
+            Action::make('checkout')
+                ->label('Subscribe with Card')
+                ->icon('heroicon-o-credit-card')
+                ->color('success')
+                ->size('lg')
+                ->action('redirectToCheckout'),
+
             Action::make('subscribe')
                 ->label('Start Premium Trial')
                 ->icon('heroicon-o-star')
@@ -72,7 +79,7 @@ class SubscriptionPage extends Page
             $subscriptionService = app(SubscriptionService::class);
             $user = Auth::user();
 
-            // Create trial subscription (no assignment needed)
+            // Create trial subscription (no payment method provided)
             $subscriptionService->createPremiumSubscription($user);
 
             // Refresh user and show trial end date if available
@@ -104,6 +111,29 @@ class SubscriptionPage extends Page
     {
         $subscriptionService = app(SubscriptionService::class);
         return $subscriptionService->getPricingInfo();
+    }
+
+    /**
+     * Redirect the user to a Stripe Checkout session so they can enter a
+     * payment method and start a paid subscription (trial applied automatically).
+     */
+    public function redirectToCheckout(): void
+    {
+        $user = Auth::user();
+
+        // delegate the heavy lifting to our service which already knows about
+        // configuration and the proper price identifier
+        $checkout = app(SubscriptionService::class)->createCheckoutRedirect($user);
+
+        if ($checkout instanceof \Illuminate\Http\RedirectResponse) {
+            $this->redirect($checkout->getTargetUrl());
+        } else {
+            Notification::make()
+                ->title('Subscription Error')
+                ->body('Unable to start Stripe checkout.')
+                ->danger()
+                ->send();
+        }
     }
 
     public function getDnaLimitData(): array

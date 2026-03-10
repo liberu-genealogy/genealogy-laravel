@@ -9,7 +9,7 @@ use Filament\Actions\Contracts\HasActions;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
-use Filament\Forms\Schema;
+use Filament\Schemas\Schema;
 use Livewire\Component;
 
 class DevillierReport extends Component implements HasForms, HasActions
@@ -24,7 +24,7 @@ class DevillierReport extends Component implements HasForms, HasActions
         $this->form->fill();
     }
 
-    public function form(\Filament\Schemas\Schema $schema): \Filament\Schemas\Schema
+    public function form(Schema $schema): Schema
     {
         return $schema
             ->components([
@@ -50,7 +50,8 @@ class DevillierReport extends Component implements HasForms, HasActions
 
     public function generateReport(): void
     {
-        dd($this->form->getState());
+        $state = $this->form->getState();
+        // Report generation - state contains selected person and generation
     }
 
     public function render()

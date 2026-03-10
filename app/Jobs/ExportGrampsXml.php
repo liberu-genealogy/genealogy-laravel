@@ -9,29 +9,26 @@ use App\Models\Family;
 use App\Models\Person;
 use App\Models\User;
 use App\Services\GrampsXmlService;
-use App\Tenant\Manager;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 
-final readonly class ExportGrampsXml implements ShouldQueue
+final class ExportGrampsXml implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     public function __construct(
-        private readonly string $file,
-        private readonly User $user,
+        private string $file,
+        private User $user,
     ) {}
 
     public function handle(): void
     {
         try {
-            $tenant = Manager::fromModel($this->user->company(), $this->user);
-            $tenant->connect();
-
             $people = Person::all();
             $families = Family::all();
 
@@ -40,9 +37,7 @@ final readonly class ExportGrampsXml implements ShouldQueue
             $grampsXmlService = new GrampsXmlService();
             $content = $grampsXmlService->generateGrampsXmlContent($people, $families);
 
-            $tenant->storage()->put($this->file, $content);
-
-            chmod($tenant->storage()->path($this->file), 0600);
+            Storage::disk('private')->put($this->file, $content);
 
             Log::info('GrampsXML file generated and stored successfully.');
         } catch (Throwable $e) {

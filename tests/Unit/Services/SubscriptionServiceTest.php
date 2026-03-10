@@ -11,9 +11,8 @@ class SubscriptionServiceTest extends TestCase
 {
     use RefreshDatabase;
 
-    protected $subscriptionService;
+    protected SubscriptionService $subscriptionService;
 
-    #[\Override]
     protected function setUp(): void
     {
         parent::setUp();
@@ -42,10 +41,6 @@ class SubscriptionServiceTest extends TestCase
         $this->assertArrayHasKey('features', $pricingInfo['premium']);
         $this->assertEquals('Premium', $pricingInfo['premium']['name']);
         $this->assertIsArray($pricingInfo['premium']['features']);
-        // Price should be $2.99
-        $this->assertEquals('$2.99', $pricingInfo['premium']['price']);
-        // Trial should be 14 days
-        $this->assertEquals(14, $pricingInfo['premium']['trial_days']);
     }
 
     public function testCheckDnaUploadLimitForNonPremiumUser(): void

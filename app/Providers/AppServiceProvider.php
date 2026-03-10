@@ -55,6 +55,13 @@ class AppServiceProvider extends ServiceProvider
         // Livewire::component('pedigree-chart', PedigreeChart::class);
         // Livewire::component('create-team', CreateTeam::class);
         // Livewire::component('edit-profile', EditProfile::class);
+        // Load any Filament resource traits early so that resources may use
+        // them without relying on Composer's autoloader (our environment's
+        // PHP version prevents us from regenerating the optimized class map).
+        foreach (glob(app_path('Filament/App/Resources/*Trait.php')) as $traitFile) {
+            require_once $traitFile;
+        }
+
         // Enable default modules on first boot
         $this->enableDefaultModules();
     }

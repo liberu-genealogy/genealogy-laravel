@@ -224,12 +224,12 @@ class Person extends Model
 
     public function birth()
     {
-        return $this->dispatchesEvents->where('title', '=', 'BIRT')->first();
+        return $this->events()->where('title', '=', 'BIRT')->first();
     }
 
     public function death()
     {
-        return $this->dispatchesEvents->where('title', '=', 'DEAT')->first();
+        return $this->events()->where('title', '=', 'DEAT')->first();
     }
 
     public function scopeWithBasicInfo($query)

@@ -46,7 +46,8 @@ class DabovilleReport extends Component implements HasForms, HasActions
 
     public function generateReport(): void
     {
-        dd($this->form->getState());
+        $state = $this->form->getState();
+        // Report generation - state contains selected person
     }
 
     public function render(): View

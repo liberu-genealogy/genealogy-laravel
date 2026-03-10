@@ -40,7 +40,7 @@ Route::middleware([
     'verified',
 ])->group(function (): void {
     Route::get('/dashboard', fn() => view('dashboard'))->name('dashboard');
-    Route::get('/gamification', \App\Http\Livewire\GamificationDashboard::class)->name('gamification');
+    Route::get('/gamification', \App\Livewire\GamificationDashboard::class)->name('gamification');
     Route::get('/transcriptions', \App\Livewire\DocumentTranscriptionComponent::class)->name('transcriptions');
 });
 
@@ -48,3 +48,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('/ai/matches/{suggestion}/confirm', [AIMatchController::class, 'confirm'])->name('ai.matches.confirm');
     Route::post('/ai/matches/{suggestion}/reject', [AIMatchController::class, 'reject'])->name('ai.matches.reject');
 });
+
+// Stripe webhook endpoint used by Laravel Cashier
+Route::post('/stripe/webhook', '\\Laravel\\Cashier\\Http\\Controllers\\WebhookController@handleWebhook');

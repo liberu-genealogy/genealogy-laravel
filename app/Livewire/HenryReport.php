@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire;
+namespace App\Livewire;
 
 use App\Models\Person;
 use Livewire\Component;
@@ -18,7 +18,7 @@ class HenryReport extends Component
     public function generateReport($personId): void
     {
         $this->selectedPersonId = $personId;
-        $person = Person::with('child_in_family.birth', 'child_in_family.death')->find($personId);
+        $person = Person::with(['events', 'familiesAsHusband.children', 'familiesAsWife.children'])->find($personId);
         if ($person) {
             $this->reportData = [];
             $this->processHenryReportData($person);
@@ -33,10 +33,9 @@ class HenryReport extends Component
             'death' => optional($person->death())->date,
         ];
 
-        $childNumber = 1;
-        foreach ($person->child_in_family as $child) {
+        $children = $person->children ?? collect();
+        foreach ($children as $child) {
             $this->processHenryReportData($child);
-            $childNumber++;
         }
     }
 }

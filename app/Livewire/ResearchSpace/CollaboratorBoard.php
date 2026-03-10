@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire\ResearchSpace;
+namespace App\Livewire\ResearchSpace;
 
 use Livewire\Component;
 use App\Models\ResearchSpace;

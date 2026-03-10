@@ -18,8 +18,8 @@ return new class extends Migration
             $table->integer('current_progress')->default(0);
             $table->integer('target_progress');
             $table->json('progress_data')->nullable(); // Store detailed progress information
-            $table->timestamp('started_at');
-            $table->timestamp('last_updated_at');
+            $table->timestamp('started_at')->useCurrent();
+            $table->timestamp('last_updated_at')->useCurrent()->useCurrentOnUpdate();
             $table->timestamps();
 
             $table->unique(['user_id', 'achievement_id']);

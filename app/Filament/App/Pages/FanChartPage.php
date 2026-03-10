@@ -2,7 +2,7 @@
 
 namespace App\Filament\App\Pages;
 
-use App\Http\Livewire\FanChart;
+use App\Livewire\FanChart;
 use Filament\Pages\Page;
 
 class FanChartPage extends Page

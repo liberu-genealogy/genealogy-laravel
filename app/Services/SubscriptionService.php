@@ -7,8 +7,11 @@ use Laravel\Cashier\Subscription;
 
 class SubscriptionService
 {
-    public const PREMIUM_PRICE_ID = 'price_premium_monthly'; // Set this in Stripe
-    public const PREMIUM_PRODUCT_ID = 'prod_premium'; // Set this in Stripe
+    // Price/product identifiers are stored in configuration/environment so they can
+    // be adjusted without changing code. Constants remain as fallbacks primarily for
+    // legacy usage.
+    public const PREMIUM_PRICE_ID = 'price_premium_monthly'; // default, override via env
+    public const PREMIUM_PRODUCT_ID = 'prod_premium'; // default, override via env
 
     /**
      * Create premium subscription with trial
@@ -33,12 +36,15 @@ class SubscriptionService
             return null;
         }
 
-        // Real subscription flow using Stripe via Cashier
-        $subscriptionBuilder = $user->newSubscription('premium', self::PREMIUM_PRICE_ID)
-            ->trialDays(config('subscription.premium.trial_days', 14));
+        $priceId = config('subscription.premium.stripe_price_id', self::PREMIUM_PRICE_ID);
+        $trialDays = config('subscription.premium.trial_days', 14);
+
+        $subscriptionBuilder = $user->newSubscription('premium', $priceId)
+            ->trialDays($trialDays);
 
         $subscription = $subscriptionBuilder->create($paymentMethod);
 
+        // mark the user locally as premium; Cashier will also update stripe_id, etc.
         $user->update([
             'is_premium' => true,
             'premium_started_at' => now(),
@@ -97,7 +103,7 @@ class SubscriptionService
     }
 
     /**
-     * Get subscription pricing information
+     * Get subscription pricing information (display-only).
      */
     public function getPricingInfo(): array
     {
@@ -106,8 +112,8 @@ class SubscriptionService
         return [
             'premium' => [
                 'name' => 'Premium',
-                'price' => '$2.99',
-                'interval' => 'month',
+                'price' => config('subscription.premium.price', '$2.99'),
+                'interval' => config('subscription.premium.interval', 'month'),
                 'trial_days' => $trialDays,
                 'features' => [
                     'Premium user badge',
@@ -117,9 +123,30 @@ class SubscriptionService
                     'Priority support',
                     'Advanced charts and reports',
                 ],
-                'stripe_price_id' => self::PREMIUM_PRICE_ID,
+                'stripe_price_id' => config('subscription.premium.stripe_price_id', self::PREMIUM_PRICE_ID),
             ]
         ];
+    }
+
+    /**
+     * Build a Stripe Checkout session redirect response.
+     *
+     * This helper is used by the Filament page to send the user straight to
+     * Stripe's hosted checkout form. The returned redirect response may be
+     * inspected or sent directly to the browser.
+     */
+    public function createCheckoutRedirect($user)
+    {
+        $priceId = config('subscription.premium.stripe_price_id', self::PREMIUM_PRICE_ID);
+        $trialDays = config('subscription.premium.trial_days', 7);
+
+        return $user
+            ->newSubscription('premium', $priceId)
+            ->trialDays($trialDays)
+            ->checkout([
+                'success_url' => route('filament.app.pages.premium-dashboard'),
+                'cancel_url' => route('filament.app.pages.subscription'),
+            ]);
     }
 
     /**
