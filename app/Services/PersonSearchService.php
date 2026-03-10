@@ -15,14 +15,14 @@ class PersonSearchService
      * Search people within the current user's team only.
      * Living persons are included since this is the user's own data.
      */
-    public function searchOwnTeam(string $query, int $perPage = 20): LengthAwarePaginator
+    public function searchOwnTeam(string $query, int $perPage = 20, int $page = 1): LengthAwarePaginator
     {
         return Person::query()
             ->where(function (Builder $q) use ($query) {
                 $this->applySearchConditions($q, $query);
             })
             ->orderByDesc('id')
-            ->paginate($perPage);
+            ->paginate($perPage, ['*'], 'page', $page);
     }
 
     /**
@@ -30,7 +30,7 @@ class PersonSearchService
      * Living individuals (no death record + born < 100 years ago) are excluded
      * from other teams' results for privacy.
      */
-    public function searchGlobal(string $query, int $perPage = 20, bool $includeOwnTeam = true): LengthAwarePaginator
+    public function searchGlobal(string $query, int $perPage = 20, bool $includeOwnTeam = true, int $page = 1): LengthAwarePaginator
     {
         $currentTeamId = Auth::user()?->currentTeam?->id;
 
@@ -63,7 +63,7 @@ class PersonSearchService
                 }
             })
             ->orderByDesc('id')
-            ->paginate($perPage);
+            ->paginate($perPage, ['*'], 'page', $page);
     }
 
     /**

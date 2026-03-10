@@ -31,15 +31,6 @@ class Team extends JetstreamTeam
     ];
 
     /**
-     * The attributes that should be cast to native types.
-     *
-     * @var array
-     */
-    protected $casts = [
-        'trial_ends_at' => 'datetime',
-    ];
-
-    /**
      * The event map for the model.
      *
      * @var array<string, class-string>
@@ -60,6 +51,7 @@ class Team extends JetstreamTeam
         return [
             'personal_team' => 'boolean',
             'is_public' => 'boolean',
+            'trial_ends_at' => 'datetime',
         ];
     }
 

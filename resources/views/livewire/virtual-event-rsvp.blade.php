@@ -2,7 +2,7 @@
     {{-- RSVP Status --}}
     <div class="mb-4">
         @if($attendee)
-            <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-{{ $this->rsvpStatusColor }}-100 text-{{ $this->rsvpStatusColor }}-800">
+            <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium {{ $this->rsvpStatusClasses }}">
                 {{ $this->rsvpStatusText }}
             </span>
         @endif

@@ -6,6 +6,7 @@ use Filament\Tables\Actions\Action;
 use App\Filament\App\Resources\AIRecordMatchResource\Pages\ReviewMatches;
 use App\Models\AISuggestedMatch;
 use App\Filament\App\Resources\AppResource;
+use Filament\Notifications\Notification;
 use Filament\Tables\Table;
 use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
@@ -38,10 +39,18 @@ class AIRecordMatchResource extends AppResource
             ->actions([
                 Action::make('confirm')
                     ->label('Confirm')
-                    ->action(fn (AISuggestedMatch $record) => redirect()->route('filament.resources.ai-record-matches.review.confirm', ['record' => $record->id])),
+                    ->color('success')
+                    ->action(function (AISuggestedMatch $record) {
+                        $record->update(['status' => 'confirmed']);
+                        Notification::make()->title('Match Confirmed')->success()->send();
+                    }),
                 Action::make('reject')
                     ->label('Reject')
-                    ->action(fn (AISuggestedMatch $record) => redirect()->route('filament.resources.ai-record-matches.review.reject', ['record' => $record->id])),
+                    ->color('danger')
+                    ->action(function (AISuggestedMatch $record) {
+                        $record->update(['status' => 'rejected']);
+                        Notification::make()->title('Match Rejected')->success()->send();
+                    }),
             ]);
     }
 

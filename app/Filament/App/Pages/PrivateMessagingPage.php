@@ -2,6 +2,7 @@
 
 namespace App\Filament\App\Pages;
 
+use App\Models\Conversation;
 use App\Models\Message;
 use App\Models\User;
 use Filament\Pages\Page;
@@ -39,13 +40,16 @@ class PrivateMessagingPage extends Page
             return;
         }
 
-        $this->messages = Message::where(function ($query) {
-            $query->where('from_user_id', Auth::id())
-                ->where('to_user_id', $this->selectedUserId);
-        })->orWhere(function ($query) {
-            $query->where('from_user_id', $this->selectedUserId)
-                ->where('to_user_id', Auth::id());
-        })->orderBy('created_at')->get();
+        $conversation = $this->findConversation();
+
+        if (! $conversation) {
+            $this->messages = collect();
+            return;
+        }
+
+        $this->messages = Message::where('conversation_id', $conversation->id)
+            ->orderBy('created_at')
+            ->get();
     }
 
     public function sendMessage(): void
@@ -55,13 +59,34 @@ class PrivateMessagingPage extends Page
             'selectedUserId' => 'required|integer|exists:users,id',
         ]);
 
-        $message = new Message();
-        $message->from_user_id = Auth::id();
-        $message->to_user_id = $this->selectedUserId;
-        $message->message = $this->messageText;
-        $message->save();
+        $conversation = $this->findOrCreateConversation();
+
+        Message::create([
+            'message' => $this->messageText,
+            'user_id' => Auth::id(),
+            'conversation_id' => $conversation->id,
+        ]);
 
         $this->messageText = '';
         $this->loadMessages();
+    }
+
+    private function findConversation(): ?Conversation
+    {
+        return Conversation::where(function ($q) {
+            $q->where('user_one', Auth::id())
+              ->where('user_two', $this->selectedUserId);
+        })->orWhere(function ($q) {
+            $q->where('user_one', $this->selectedUserId)
+              ->where('user_two', Auth::id());
+        })->first();
+    }
+
+    private function findOrCreateConversation(): Conversation
+    {
+        return $this->findConversation() ?? Conversation::create([
+            'user_one' => Auth::id(),
+            'user_two' => $this->selectedUserId,
+        ]);
     }
 }

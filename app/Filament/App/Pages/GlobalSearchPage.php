@@ -35,8 +35,8 @@ class GlobalSearchPage extends Page
         $service = app(PersonSearchService::class);
 
         $paginator = $this->searchGlobal
-            ? $service->searchGlobal($this->query, 20)
-            : $service->searchOwnTeam($this->query, 20);
+            ? $service->searchGlobal($this->query, 20, true, $this->currentPage)
+            : $service->searchOwnTeam($this->query, 20, $this->currentPage);
 
         $this->results = $paginator->items();
         $this->currentPage = $paginator->currentPage();
@@ -46,6 +46,7 @@ class GlobalSearchPage extends Page
 
     public function updatedQuery(): void
     {
+        $this->currentPage = 1;
         if (strlen(trim($this->query)) >= 2) {
             $this->search();
         } else {
@@ -56,6 +57,7 @@ class GlobalSearchPage extends Page
 
     public function updatedSearchGlobal(): void
     {
+        $this->currentPage = 1;
         if (!empty(trim($this->query))) {
             $this->search();
         }

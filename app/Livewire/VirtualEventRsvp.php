@@ -8,6 +8,7 @@ use App\Models\Person;
 use App\Services\VideoConferencingService;
 use Livewire\Component;
 use Livewire\WithPagination;
+use Livewire\Attributes\Computed;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
@@ -387,7 +388,8 @@ class VirtualEventRsvp extends Component
     }
 
     // Computed properties for the view
-    public function getRsvpStatusColorProperty()
+    #[Computed]
+    public function rsvpStatusColor(): string
     {
         if (!$this->attendee) {
             return 'gray';
@@ -401,7 +403,23 @@ class VirtualEventRsvp extends Component
         };
     }
 
-    public function getRsvpStatusTextProperty()
+    #[Computed]
+    public function rsvpStatusClasses(): string
+    {
+        if (!$this->attendee) {
+            return 'bg-gray-100 text-gray-800';
+        }
+
+        return match ($this->attendee->rsvp_status) {
+            'accepted' => 'bg-green-100 text-green-800',
+            'declined' => 'bg-red-100 text-red-800',
+            'maybe' => 'bg-yellow-100 text-yellow-800',
+            default => 'bg-gray-100 text-gray-800',
+        };
+    }
+
+    #[Computed]
+    public function rsvpStatusText(): string
     {
         if (!$this->attendee) {
             return 'Not Responded';
@@ -415,7 +433,8 @@ class VirtualEventRsvp extends Component
         };
     }
 
-    public function getCanInviteProperty()
+    #[Computed]
+    public function canInvite(): bool
     {
         return Auth::check() &&
                ($this->event->creator->id === Auth::id() ||
