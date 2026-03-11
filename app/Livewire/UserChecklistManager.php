@@ -1,26 +1,31 @@
 <?php
 
-namespace App\Http\Livewire;
+namespace App\Livewire;
 
 use App\Models\ChecklistTemplate;
+use App\Models\Family;
+use App\Models\Person;
 use App\Models\UserChecklist;
 use App\Models\UserChecklistItem;
-use App\Models\Person;
-use App\Models\Family;
+use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\Rule;
 use Livewire\Component;
 use Livewire\WithPagination;
-use Illuminate\Support\Facades\Auth;
 
 class UserChecklistManager extends Component
 {
     use WithPagination;
 
     public $showCreateModal = false;
+
     public $showEditModal = false;
+
     public $showItemModal = false;
+
     public $selectedChecklist = null;
+
     public $selectedItem = null;
+
     public $selectedTemplate = null;
 
     // Form properties
@@ -47,15 +52,22 @@ class UserChecklistManager extends Component
 
     // Item form properties
     public $item_title = '';
+
     public $item_description = '';
+
     public $item_notes = '';
+
     public $item_estimated_time = '';
+
     public $item_actual_time = '';
 
     // Filters
     public $statusFilter = 'all';
+
     public $priorityFilter = 'all';
+
     public $subjectFilter = 'all';
+
     public $search = '';
 
     protected $itemRules = [
@@ -96,10 +108,10 @@ class UserChecklistManager extends Component
             ->with(['template', 'items', 'subject']);
 
         // Apply search filter
-        if (!empty($this->search)) {
+        if (! empty($this->search)) {
             $query->where(function ($q) {
-                $q->where('name', 'like', '%' . $this->search . '%')
-                  ->orWhere('description', 'like', '%' . $this->search . '%');
+                $q->where('name', 'like', '%'.$this->search.'%')
+                    ->orWhere('description', 'like', '%'.$this->search.'%');
             });
         }
 
@@ -320,4 +332,3 @@ class UserChecklistManager extends Component
         $this->resetPage();
     }
 }
-

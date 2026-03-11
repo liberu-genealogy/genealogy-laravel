@@ -1,20 +1,23 @@
 <?php
 
-namespace App\Http\Livewire\ResearchSpace;
+namespace App\Livewire\ResearchSpace;
 
+use App\Events\ResearchSpaceUpdated;
+use App\Models\ResearchSpace;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Livewire\Attributes\On;
 use Livewire\Component;
-use App\Models\ResearchSpace;
-use App\Events\ResearchSpaceUpdated;
-use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class CollaboratorBoard extends Component
 {
     use AuthorizesRequests;
 
     public ResearchSpace $space;
+
     public int $spaceId = 0;
+
     public $content = '';
+
     public $userPermissions = [];
 
     public function mount($spaceId)

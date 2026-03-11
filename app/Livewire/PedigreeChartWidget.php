@@ -2,18 +2,20 @@
 
 namespace App\Livewire;
 
-use Illuminate\Contracts\View\View;
 use App\Models\Person;
 use Filament\Widgets\Widget;
-use Livewire\Attributes\On;
+use Illuminate\Contracts\View\View;
 
 class PedigreeChartWidget extends Widget
 {
     protected string $view = 'filament.widgets.pedigree-chart-widget';
 
     public ?int $rootPersonId = null;
+
     public int $generations = 4;
+
     public bool $showDates = true;
+
     public bool $showPhotos = false;
 
     public function mount($rootPersonId = null, $generations = 4): void
@@ -24,7 +26,7 @@ class PedigreeChartWidget extends Widget
 
     public function getData(): array
     {
-        if (!$this->rootPersonId) {
+        if (! $this->rootPersonId) {
             return ['tree' => [], 'rootPerson' => null];
         }
 
@@ -42,7 +44,7 @@ class PedigreeChartWidget extends Widget
 
     private function buildPedigreeTree($person, $generations, $level = 0): array
     {
-        if (!$person || $level >= $generations) {
+        if (! $person || $level >= $generations) {
             return [];
         }
 
@@ -56,7 +58,7 @@ class PedigreeChartWidget extends Widget
             'death_date' => $person->deathday?->format('Y-m-d'),
             'level' => $level,
             'position' => pow(2, $level),
-            'parents' => []
+            'parents' => [],
         ];
 
         // Get parents through family relationship
@@ -94,13 +96,13 @@ class PedigreeChartWidget extends Widget
 
     public function toggleDates(): void
     {
-        $this->showDates = !$this->showDates;
+        $this->showDates = ! $this->showDates;
         $this->dispatch('refreshChart');
     }
 
     public function togglePhotos(): void
     {
-        $this->showPhotos = !$this->showPhotos;
+        $this->showPhotos = ! $this->showPhotos;
         $this->dispatch('refreshChart');
     }
 
@@ -115,7 +117,7 @@ class PedigreeChartWidget extends Widget
             return '';
         }
 
-        $html = '<div class="generation-level level-' . $level . '">';
+        $html = '<div class="generation-level level-'.$level.'">';
 
         // Add connection line if not root level
         if ($level > 0) {
@@ -124,28 +126,28 @@ class PedigreeChartWidget extends Widget
 
         // Person box
         $sexClass = strtolower($tree['sex'] ?? 'unknown');
-        $html .= '<div class="person-box ' . $sexClass . '" onclick="expandPerson(' . $tree['id'] . ')">';
-        $html .= '<button class="expand-btn" title="Expand from this person">↑</button>';
-        $html .= '<div class="person-name">' . htmlspecialchars($tree['name']) . '</div>';
+        $html .= '<div class="person-box '.$sexClass.'" onclick="expandPerson('.$tree['id'].')">';
+        $html .= '<button class="expand-btn" title="Expand from this person">â†‘</button>';
+        $html .= '<div class="person-name">'.htmlspecialchars($tree['name']).'</div>';
 
         if ($this->showDates) {
             $birthDate = $tree['birth_date'] ? date('Y', strtotime($tree['birth_date'])) : '?';
             $deathDate = $tree['death_date'] ? date('Y', strtotime($tree['death_date'])) : '';
-            $dateRange = $birthDate . ($deathDate ? ' - ' . $deathDate : ' - ');
-            $html .= '<div class="person-dates">' . $dateRange . '</div>';
+            $dateRange = $birthDate.($deathDate ? ' - '.$deathDate : ' - ');
+            $html .= '<div class="person-dates">'.$dateRange.'</div>';
         }
 
         $html .= '</div>';
 
         // Parents
-        if (!empty($tree['parents'])) {
+        if (! empty($tree['parents'])) {
             $html .= '<div class="parents-container">';
 
-            if (!empty($tree['parents']['father'])) {
+            if (! empty($tree['parents']['father'])) {
                 $html .= $this->renderPedigreeTree($tree['parents']['father'], $level + 1);
             }
 
-            if (!empty($tree['parents']['mother'])) {
+            if (! empty($tree['parents']['mother'])) {
                 $html .= $this->renderPedigreeTree($tree['parents']['mother'], $level + 1);
             }
 

@@ -1,26 +1,28 @@
 <?php
 
-namespace App\Http\Livewire;
+namespace App\Livewire;
 
+use App\Models\Person;
 use App\Models\VirtualEvent;
 use App\Models\VirtualEventAttendee;
-use App\Models\Person;
-use App\Services\VideoConferencingService;
+use Illuminate\Support\Facades\Auth;
+use Livewire\Attributes\Computed;
 use Livewire\Attributes\Rule;
 use Livewire\Component;
 use Livewire\WithPagination;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Str;
 
 class VirtualEventRsvp extends Component
 {
     use WithPagination;
 
     public $event;
+
     public $attendee;
+
     public $showRsvpModal = false;
+
     public $showInviteModal = false;
+
     public $showJoinModal = false;
 
     // RSVP form properties
@@ -40,11 +42,14 @@ class VirtualEventRsvp extends Component
 
     // Invite form properties
     public $invite_emails = [];
+
     public $invite_message = '';
 
     // Filters and search
     public $statusFilter = 'all';
+
     public $search = '';
+
     public $showAttendeeList = false;
 
     protected $inviteRules = [
@@ -78,7 +83,7 @@ class VirtualEventRsvp extends Component
 
     public function getUserAttendee()
     {
-        if (!Auth::check()) {
+        if (! Auth::check()) {
             return null;
         }
 
@@ -89,7 +94,7 @@ class VirtualEventRsvp extends Component
 
     public function canUserRsvp()
     {
-        if (!Auth::check()) {
+        if (! Auth::check()) {
             return false;
         }
 
@@ -101,16 +106,16 @@ class VirtualEventRsvp extends Component
             return false;
         }
 
-        if (!$this->event->require_rsvp) {
+        if (! $this->event->require_rsvp) {
             return true;
         }
 
-        return !$this->attendee || $this->attendee->rsvp_status === 'pending';
+        return ! $this->attendee || $this->attendee->rsvp_status === 'pending';
     }
 
     public function getFilteredAttendees()
     {
-        if (!$this->showAttendeeList) {
+        if (! $this->showAttendeeList) {
             return collect();
         }
 
@@ -118,19 +123,19 @@ class VirtualEventRsvp extends Component
             ->with(['user', 'person']);
 
         // Apply search filter
-        if (!empty($this->search)) {
+        if (! empty($this->search)) {
             $query->where(function ($q) {
                 $q->whereHas('user', function ($userQuery) {
-                    $userQuery->where('name', 'like', '%' . $this->search . '%')
-                             ->orWhere('email', 'like', '%' . $this->search . '%');
+                    $userQuery->where('name', 'like', '%'.$this->search.'%')
+                        ->orWhere('email', 'like', '%'.$this->search.'%');
                 })
-                ->orWhereHas('person', function ($personQuery) {
-                    $personQuery->where('name', 'like', '%' . $this->search . '%')
-                               ->orWhere('givn', 'like', '%' . $this->search . '%')
-                               ->orWhere('surn', 'like', '%' . $this->search . '%');
-                })
-                ->orWhere('guest_name', 'like', '%' . $this->search . '%')
-                ->orWhere('guest_email', 'like', '%' . $this->search . '%');
+                    ->orWhereHas('person', function ($personQuery) {
+                        $personQuery->where('name', 'like', '%'.$this->search.'%')
+                            ->orWhere('givn', 'like', '%'.$this->search.'%')
+                            ->orWhere('surn', 'like', '%'.$this->search.'%');
+                    })
+                    ->orWhere('guest_name', 'like', '%'.$this->search.'%')
+                    ->orWhere('guest_email', 'like', '%'.$this->search.'%');
             });
         }
 
@@ -171,19 +176,22 @@ class VirtualEventRsvp extends Component
     {
         $this->validate();
 
-        if (!Auth::check()) {
+        if (! Auth::check()) {
             session()->flash('error', 'You must be logged in to RSVP.');
+
             return;
         }
 
-        if (!$this->canUserRsvp() && !$this->attendee) {
+        if (! $this->canUserRsvp() && ! $this->attendee) {
             session()->flash('error', 'RSVP is not available for this event.');
+
             return;
         }
 
         // Check if event is at capacity
-        if ($this->rsvp_status === 'accepted' && $this->event->isAtCapacity() && !$this->attendee) {
+        if ($this->rsvp_status === 'accepted' && $this->event->isAtCapacity() && ! $this->attendee) {
             session()->flash('error', 'This event is at maximum capacity.');
+
             return;
         }
 
@@ -237,13 +245,14 @@ class VirtualEventRsvp extends Component
 
     public function invitePerson()
     {
-        if (!$this->invite_person_id) {
+        if (! $this->invite_person_id) {
             return;
         }
 
         $person = Person::find($this->invite_person_id);
-        if (!$person || !$person->email) {
+        if (! $person || ! $person->email) {
             session()->flash('error', 'Selected person does not have an email address.');
+
             return;
         }
 
@@ -254,6 +263,7 @@ class VirtualEventRsvp extends Component
 
         if ($existingAttendee) {
             session()->flash('error', 'This person has already been invited.');
+
             return;
         }
 
@@ -274,8 +284,9 @@ class VirtualEventRsvp extends Component
     {
         $this->validate($this->inviteRules);
 
-        if (!Auth::check()) {
+        if (! Auth::check()) {
             session()->flash('error', 'You must be logged in to send invitations.');
+
             return;
         }
 
@@ -297,6 +308,7 @@ class VirtualEventRsvp extends Component
 
             if ($existingAttendee) {
                 $errors[] = "Email {$email} has already been invited.";
+
                 continue;
             }
 
@@ -319,7 +331,7 @@ class VirtualEventRsvp extends Component
             session()->flash('success', "Successfully sent {$sent} invitation(s).");
         }
 
-        if (!empty($errors)) {
+        if (! empty($errors)) {
             session()->flash('warning', implode(' ', $errors));
         }
 
@@ -328,18 +340,20 @@ class VirtualEventRsvp extends Component
 
     public function joinEvent()
     {
-        if (!$this->event->canJoin()) {
+        if (! $this->event->canJoin()) {
             session()->flash('error', 'The event is not available to join at this time.');
+
             return;
         }
 
-        if (!$this->attendee || $this->attendee->rsvp_status !== 'accepted') {
+        if (! $this->attendee || $this->attendee->rsvp_status !== 'accepted') {
             session()->flash('error', 'You must RSVP as accepted to join this event.');
+
             return;
         }
 
         // Mark as joined if not already
-        if (!$this->attendee->joined_at) {
+        if (! $this->attendee->joined_at) {
             $this->attendee->update([
                 'joined_at' => now(),
                 'attended' => true,
@@ -356,7 +370,7 @@ class VirtualEventRsvp extends Component
 
     public function toggleAttendeeList()
     {
-        $this->showAttendeeList = !$this->showAttendeeList;
+        $this->showAttendeeList = ! $this->showAttendeeList;
     }
 
     public function resetRsvpForm()
@@ -383,15 +397,16 @@ class VirtualEventRsvp extends Component
 
     protected function loadDefaultInviteMessage()
     {
-        $this->invite_message = "You're invited to join our virtual family reunion: {$this->event->title}. " .
-                               "Date: {$this->event->formatted_start_time}. " .
-                               "Please RSVP at your earliest convenience.";
+        $this->invite_message = "You're invited to join our virtual family reunion: {$this->event->title}. ".
+                               "Date: {$this->event->formatted_start_time}. ".
+                               'Please RSVP at your earliest convenience.';
     }
 
     // Computed properties for the view
-    public function getRsvpStatusColorProperty()
+    #[Computed]
+    public function rsvpStatusColor(): string
     {
-        if (!$this->attendee) {
+        if (! $this->attendee) {
             return 'gray';
         }
 
@@ -403,9 +418,25 @@ class VirtualEventRsvp extends Component
         };
     }
 
-    public function getRsvpStatusTextProperty()
+    #[Computed]
+    public function rsvpStatusClasses(): string
     {
-        if (!$this->attendee) {
+        if (! $this->attendee) {
+            return 'bg-gray-100 text-gray-800';
+        }
+
+        return match ($this->attendee->rsvp_status) {
+            'accepted' => 'bg-green-100 text-green-800',
+            'declined' => 'bg-red-100 text-red-800',
+            'maybe' => 'bg-yellow-100 text-yellow-800',
+            default => 'bg-gray-100 text-gray-800',
+        };
+    }
+
+    #[Computed]
+    public function rsvpStatusText(): string
+    {
+        if (! $this->attendee) {
             return 'Not Responded';
         }
 
@@ -417,11 +448,11 @@ class VirtualEventRsvp extends Component
         };
     }
 
-    public function getCanInviteProperty()
+    #[Computed]
+    public function canInvite(): bool
     {
         return Auth::check() &&
                ($this->event->creator->id === Auth::id() ||
                 ($this->attendee && ($this->attendee->is_host || $this->attendee->is_moderator)));
     }
 }
-

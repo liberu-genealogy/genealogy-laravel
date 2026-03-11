@@ -2,7 +2,7 @@
 
 namespace Tests\Feature\Livewire;
 
-use App\Http\Livewire\FanChartComponent;
+use App\Livewire\FanChartComponent;
 use App\Models\Person;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Livewire\Livewire;
@@ -12,7 +12,7 @@ class FanChartComponentTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function testComponentCanBeRendered(): void
+    public function test_component_can_be_rendered(): void
     {
         Person::factory()->count(3)->create();
 
@@ -20,7 +20,7 @@ class FanChartComponentTest extends TestCase
             ->assertStatus(200);
     }
 
-    public function testComponentLoadsAllPeople(): void
+    public function test_component_loads_all_people(): void
     {
         $people = Person::factory()->count(5)->create();
 

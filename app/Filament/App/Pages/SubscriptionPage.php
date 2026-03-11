@@ -2,8 +2,8 @@
 
 namespace App\Filament\App\Pages;
 
-use Exception;
 use App\Services\SubscriptionService;
+use Exception;
 use Filament\Actions\Action;
 use Filament\Notifications\Notification;
 use Filament\Pages\Page;
@@ -11,11 +11,11 @@ use Illuminate\Support\Facades\Auth;
 
 class SubscriptionPage extends Page
 {
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-star';
+    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-star';
 
     protected static ?string $navigationLabel = 'Premium Subscription';
 
-    protected static string | \UnitEnum | null $navigationGroup = '👤 Account & Settings';
+    protected static string|\UnitEnum|null $navigationGroup = '👤 Account & Settings';
 
     protected static ?int $navigationSort = 2;
 
@@ -27,20 +27,27 @@ class SubscriptionPage extends Page
 
     public function mount(): void
     {
-        if (! config('premium.enabled')) {
-            $user = Auth::user();
+        $user = Auth::user();
 
-            // If trial has expired, redirect to the trial-expired page
-            if ($user->hasExpiredTrial()) {
-                $this->redirect(route('filament.app.pages.trial-expired'));
-                return;
-            }
+        // When premium features are globally enabled, everyone is premium
+        if (config('premium.enabled')) {
+            $this->redirect(route('filament.app.pages.premium-dashboard'));
 
-            // Redirect if user is already premium
-            if ($user->isPremium()) {
-                $this->redirect(route('filament.app.pages.premium-dashboard'));
-                return;
-            }
+            return;
+        }
+
+        // If trial has expired, redirect to the trial-expired page
+        if ($user->hasExpiredTrial()) {
+            $this->redirect(route('filament.app.pages.trial-expired'));
+
+            return;
+        }
+
+        // Redirect if user is already premium
+        if ($user->isPremium()) {
+            $this->redirect(route('filament.app.pages.premium-dashboard'));
+
+            return;
         }
     }
 
@@ -51,12 +58,20 @@ class SubscriptionPage extends Page
             return false;
         }
         $user = Auth::user();
+
         return Auth::check() && ! $user->isPremium() && ! $user->hasExpiredTrial();
     }
 
     protected function getHeaderActions(): array
     {
         return [
+            Action::make('checkout')
+                ->label('Subscribe with Card')
+                ->icon('heroicon-o-credit-card')
+                ->color('success')
+                ->size('lg')
+                ->action('redirectToCheckout'),
+
             Action::make('subscribe')
                 ->label('Start Premium Trial')
                 ->icon('heroicon-o-star')
@@ -72,7 +87,7 @@ class SubscriptionPage extends Page
             $subscriptionService = app(SubscriptionService::class);
             $user = Auth::user();
 
-            // Create trial subscription (no assignment needed)
+            // Create trial subscription (no payment method provided)
             $subscriptionService->createPremiumSubscription($user);
 
             // Refresh user and show trial end date if available
@@ -103,12 +118,39 @@ class SubscriptionPage extends Page
     public function getPricingData(): array
     {
         $subscriptionService = app(SubscriptionService::class);
+
         return $subscriptionService->getPricingInfo();
+    }
+
+    /**
+     * Redirect the user to a Stripe Checkout session so they can enter a
+     * payment method and start a paid subscription (trial applied automatically).
+     */
+    public function redirectToCheckout(): void
+    {
+        $user = Auth::user();
+
+        // delegate the heavy lifting to our service which already knows about
+        // configuration and the proper price identifier
+        $checkout = app(SubscriptionService::class)->createCheckoutRedirect($user);
+
+        if (is_object($checkout) && property_exists($checkout, 'url') && $checkout->url) {
+            $this->redirect($checkout->url);
+        } elseif ($checkout instanceof \Illuminate\Http\RedirectResponse) {
+            $this->redirect($checkout->getTargetUrl());
+        } else {
+            Notification::make()
+                ->title('Subscription Error')
+                ->body('Unable to start Stripe checkout.')
+                ->danger()
+                ->send();
+        }
     }
 
     public function getDnaLimitData(): array
     {
         $subscriptionService = app(SubscriptionService::class);
+
         return $subscriptionService->checkDnaUploadLimit(Auth::user());
     }
 }
