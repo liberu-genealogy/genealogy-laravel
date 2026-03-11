@@ -2,20 +2,14 @@
 
 namespace App\Filament\App\Pages;
 
-use Override;
-use App\Models\User;
-use Filament\Facades\Filament;
 use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\Checkbox;
 use Filament\Pages\Tenancy\RegisterTenant;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Auth;
-use App\Services\SubscriptionService;
 use Filament\Schemas\Schema;
+use Illuminate\Database\Eloquent\Model;
+use Override;
 
 class CreateTeam extends RegisterTenant
 {
-
     #[Override]
     public function form(Schema $schema): Schema
     {
@@ -32,7 +26,6 @@ class CreateTeam extends RegisterTenant
     protected function handleRegistration(array $data): Model
     {
         $team = app(\App\Actions\Jetstream\CreateTeam::class)->create(auth()->user(), $data);
-
 
         return $team;
     }

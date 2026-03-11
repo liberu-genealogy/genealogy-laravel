@@ -2,16 +2,15 @@
 
 namespace App\Filament\App\Pages;
 
-use App\Livewire\FanChart;
 use Filament\Pages\Page;
 
 class FanChartPage extends Page
 {
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-chart-pie';
+    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-chart-pie';
 
     protected string $view = 'filament.app.pages.fan-chart-page';
 
-    protected static string | \UnitEnum | null $navigationGroup = '📊 Charts & Visualizations';
+    protected static string|\UnitEnum|null $navigationGroup = '📊 Charts & Visualizations';
 
     protected static ?string $title = 'Fan Chart';
 

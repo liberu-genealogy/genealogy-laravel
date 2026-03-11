@@ -2,8 +2,6 @@
 
 namespace App\Filament\App\Pages;
 
-use UnitEnum;
-use BackedEnum;
 use App\Filament\App\Resources\MediaObjectResource;
 use App\Filament\App\Resources\NoteResource;
 use App\Filament\App\Resources\PublicationResource;
@@ -18,9 +16,11 @@ class DeVilliersReportPage extends Page
 
     protected static ?string $title = 'Devilliers Report';
 
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-chart-bar';
+    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-chart-bar';
+
     protected static ?string $navigationLabel = 'De Villiers Report';
-    protected static string | \UnitEnum | null $navigationGroup = '📄 Reports';
+
+    protected static string|\UnitEnum|null $navigationGroup = '📄 Reports';
     // {
     //     Livewire::mount('DeVilliersReportWidget');
     // }

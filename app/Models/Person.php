@@ -2,23 +2,25 @@
 
 namespace App\Models;
 
-//use App\Traits\ConnectionTrait;
+// use App\Traits\ConnectionTrait;
 
 use App\Traits\BelongsToTenant;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-//use Laravel\Scout\Searchable;
-//use LaravelLiberu\People\Models\Person as CorePerson;
+// use Laravel\Scout\Searchable;
+// use LaravelLiberu\People\Models\Person as CorePerson;
 
 class Person extends Model
 {
-    use HasFactory;
     use BelongsToTenant;
+    use HasFactory;
 
     // Gender constants
     public const GENDER_MALE = 'M';
+
     public const GENDER_FEMALE = 'F';
+
     public const GENDER_UNKNOWN = 'U';
 
     protected $fillable = [
@@ -81,24 +83,24 @@ class Person extends Model
 
     protected $guarded = ['id'];
 
-//    protected $fillable = [
-//        'gid',
-//        'givn',
-//        'surn',
-//        'sex',
-//        'child_in_family_id',
-//        'description',
-//        'title', 'name', 'appellative', 'uid', 'email', 'phone', 'birthday',
-//        'deathday', 'burial_day', 'bank', 'bank_account',
-//        'uid', 'chan', 'rin', 'resn', 'rfn', 'afn',
-//    ];
+    //    protected $fillable = [
+    //        'gid',
+    //        'givn',
+    //        'surn',
+    //        'sex',
+    //        'child_in_family_id',
+    //        'description',
+    //        'title', 'name', 'appellative', 'uid', 'email', 'phone', 'birthday',
+    //        'deathday', 'burial_day', 'bank', 'bank_account',
+    //        'uid', 'chan', 'rin', 'resn', 'rfn', 'afn',
+    //    ];
 
-//     public function __construct(array $attributes = [])
-//     {
-//         parent::__construct($attributes);
-//         // $this->setConnection(\Session::get('conn'));
-//    //     error_log('Person-'.($this->connection).'-'.\Session::get('conn').'-'.\Session::get('db'));
-//     }
+    //     public function __construct(array $attributes = [])
+    //     {
+    //         parent::__construct($attributes);
+    //         // $this->setConnection(\Session::get('conn'));
+    //    //     error_log('Person-'.($this->connection).'-'.\Session::get('conn').'-'.\Session::get('db'));
+    //     }
 
     public function events()
     {
@@ -127,7 +129,7 @@ class Person extends Model
 
     public function parents()
     {
-        if (!$this->childInFamily) {
+        if (! $this->childInFamily) {
             return collect();
         }
 
@@ -190,11 +192,11 @@ class Person extends Model
         $event = PersonEvent::updateOrCreate(
             [
                 'person_id' => $this->id,
-                'title'     => $title,
+                'title' => $title,
             ],
             [
-                'person_id'   => $this->id,
-                'title'       => $title,
+                'person_id' => $this->id,
+                'title' => $title,
                 'description' => $description,
             ]
         );
@@ -210,11 +212,11 @@ class Person extends Model
         }
 
         // add birthyear to person table ( for form builder )
-        if ($title === 'BIRT' && !empty($date)) {
+        if ($title === 'BIRT' && ! empty($date)) {
             $this->birthday = date('Y-m-d', strtotime((string) $date));
         }
         // add deathyear to person table ( for form builder )
-        if ($title === 'DEAT' && !empty($date)) {
+        if ($title === 'DEAT' && ! empty($date)) {
             $this->deathday = date('Y-m-d', strtotime((string) $date));
         }
         $this->save();
@@ -269,14 +271,14 @@ class Person extends Model
 
         return $query->where(function ($q) use ($cutoffYear) {
             $q->whereNotNull('deathday')
-              ->orWhere(function ($q2) use ($cutoffYear) {
-                  $q2->whereNotNull('birth_year')
-                     ->where('birth_year', '<=', $cutoffYear);
-              })
-              ->orWhere(function ($q2) use ($cutoffYear) {
-                  $q2->whereNotNull('birthday')
-                     ->where('birthday', '<=', now()->subYears(100));
-              });
+                ->orWhere(function ($q2) use ($cutoffYear) {
+                    $q2->whereNotNull('birth_year')
+                        ->where('birth_year', '<=', $cutoffYear);
+                })
+                ->orWhere(function ($q2) {
+                    $q2->whereNotNull('birthday')
+                        ->where('birthday', '<=', now()->subYears(100));
+                });
         });
     }
 
@@ -291,32 +293,32 @@ class Person extends Model
             ->where(function ($q) use ($cutoffYear) {
                 $q->where(function ($q2) use ($cutoffYear) {
                     $q2->whereNotNull('birth_year')
-                       ->where('birth_year', '>', $cutoffYear);
+                        ->where('birth_year', '>', $cutoffYear);
                 })
-                ->orWhere(function ($q2) use ($cutoffYear) {
-                    $q2->whereNotNull('birthday')
-                       ->where('birthday', '>', now()->subYears(100));
-                })
-                ->orWhere(function ($q2) {
-                    $q2->whereNull('birth_year')
-                       ->whereNull('birthday');
-                });
+                    ->orWhere(function ($q2) {
+                        $q2->whereNotNull('birthday')
+                            ->where('birthday', '>', now()->subYears(100));
+                    })
+                    ->orWhere(function ($q2) {
+                        $q2->whereNull('birth_year')
+                            ->whereNull('birthday');
+                    });
             });
     }
 
     public static function getListOptimized()
     {
-        return self::withBasicInfo()->get()->mapWithKeys(fn($person) => [$person->id => $person->fullname()]);
+        return self::withBasicInfo()->get()->mapWithKeys(fn ($person) => [$person->id => $person->fullname()]);
     }
 
     public static function getListCached()
     {
-        return cache()->remember('person_list', now()->addHours(1), fn() => self::getListOptimized());
+        return cache()->remember('person_list', now()->addHours(1), fn () => self::getListOptimized());
     }
 
     public static function getBasicInfoCached($id)
     {
-        return cache()->remember("person_basic_info_{$id}", now()->addHours(1), fn() => self::withBasicInfo()->find($id));
+        return cache()->remember("person_basic_info_{$id}", now()->addHours(1), fn () => self::withBasicInfo()->find($id));
     }
 
     /**
@@ -326,10 +328,10 @@ class Person extends Model
     public function profileImageUrl(): string
     {
         // 1) Prefer an explicit attribute if present (e.g. photo_url or image)
-        if (!empty($this->photo_url)) {
+        if (! empty($this->photo_url)) {
             return $this->photo_url;
         }
-        if (!empty($this->image)) {
+        if (! empty($this->image)) {
             return $this->image;
         }
 
@@ -405,7 +407,7 @@ class Person extends Model
     {
         return $this->checklists()->whereIn('status', [
             UserChecklist::STATUS_NOT_STARTED,
-            UserChecklist::STATUS_IN_PROGRESS
+            UserChecklist::STATUS_IN_PROGRESS,
         ]);
     }
 
@@ -428,6 +430,7 @@ class Person extends Model
         }
 
         $completedChecklists = $this->completedChecklists()->count();
+
         return round(($completedChecklists / $totalChecklists) * 100, 2);
     }
 
@@ -453,25 +456,24 @@ class Person extends Model
             'total_checklists' => $checklists->count(),
             'completed_checklists' => $checklists->where('status', UserChecklist::STATUS_COMPLETED)->count(),
             'in_progress_checklists' => $checklists->where('status', UserChecklist::STATUS_IN_PROGRESS)->count(),
-            'overdue_checklists' => $checklists->filter(fn($c) => $c->is_overdue)->count(),
-            'total_items' => $checklists->sum(fn($c) => $c->items->count()),
-            'completed_items' => $checklists->sum(fn($c) => $c->items->where('is_completed', true)->count()),
+            'overdue_checklists' => $checklists->filter(fn ($c) => $c->is_overdue)->count(),
+            'total_items' => $checklists->sum(fn ($c) => $c->items->count()),
+            'completed_items' => $checklists->sum(fn ($c) => $c->items->where('is_completed', true)->count()),
             'progress_percentage' => $this->research_progress,
         ];
     }
+
     /**
      * The attributes that should be mutated to dates.
-     *
-     * @return array
      */
     protected function casts(): array
     {
         return [
             'deleted_at' => 'datetime',
-            'birthday'   => 'datetime',
-            'deathday'   => 'datetime',
+            'birthday' => 'datetime',
+            'deathday' => 'datetime',
             'burial_day' => 'datetime',
-            'chan'       => 'datetime',
+            'chan' => 'datetime',
         ];
     }
 }

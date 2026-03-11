@@ -2,8 +2,8 @@
 
 namespace App\Filament\App\Pages;
 
-use Exception;
 use App\Services\SubscriptionService;
+use Exception;
 use Filament\Actions\Action;
 use Filament\Notifications\Notification;
 use Filament\Pages\Page;
@@ -11,11 +11,11 @@ use Illuminate\Support\Facades\Auth;
 
 class SubscriptionPage extends Page
 {
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-star';
+    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-star';
 
     protected static ?string $navigationLabel = 'Premium Subscription';
 
-    protected static string | \UnitEnum | null $navigationGroup = '👤 Account & Settings';
+    protected static string|\UnitEnum|null $navigationGroup = '👤 Account & Settings';
 
     protected static ?int $navigationSort = 2;
 
@@ -32,18 +32,21 @@ class SubscriptionPage extends Page
         // When premium features are globally enabled, everyone is premium
         if (config('premium.enabled')) {
             $this->redirect(route('filament.app.pages.premium-dashboard'));
+
             return;
         }
 
         // If trial has expired, redirect to the trial-expired page
         if ($user->hasExpiredTrial()) {
             $this->redirect(route('filament.app.pages.trial-expired'));
+
             return;
         }
 
         // Redirect if user is already premium
         if ($user->isPremium()) {
             $this->redirect(route('filament.app.pages.premium-dashboard'));
+
             return;
         }
     }
@@ -55,6 +58,7 @@ class SubscriptionPage extends Page
             return false;
         }
         $user = Auth::user();
+
         return Auth::check() && ! $user->isPremium() && ! $user->hasExpiredTrial();
     }
 
@@ -114,6 +118,7 @@ class SubscriptionPage extends Page
     public function getPricingData(): array
     {
         $subscriptionService = app(SubscriptionService::class);
+
         return $subscriptionService->getPricingInfo();
     }
 
@@ -145,6 +150,7 @@ class SubscriptionPage extends Page
     public function getDnaLimitData(): array
     {
         $subscriptionService = app(SubscriptionService::class);
+
         return $subscriptionService->checkDnaUploadLimit(Auth::user());
     }
 }

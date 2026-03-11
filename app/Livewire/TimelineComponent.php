@@ -2,15 +2,17 @@
 
 namespace App\Livewire;
 
-use Livewire\Attributes\On;
-use Livewire\Component;
 use App\Models\Person;
 use App\Services\HistoricalEventService;
+use Livewire\Attributes\On;
+use Livewire\Component;
 
 class TimelineComponent extends Component
 {
     public ?int $personId = null;
+
     public array $events = [];
+
     public ?array $selectedEvent = null;
 
     protected HistoricalEventService $historicalEventService;
@@ -40,7 +42,7 @@ class TimelineComponent extends Component
             if ($person) {
                 foreach ($person->events as $e) {
                     // Ensure a parsable date exists
-                    if (!$e->date) {
+                    if (! $e->date) {
                         continue;
                     }
 
@@ -59,7 +61,7 @@ class TimelineComponent extends Component
         }
 
         // Determine period to query historical events
-        if (!$start || !$end) {
+        if (! $start || ! $end) {
             if (isset($person) && ($person->birthday || $person->deathday)) {
                 $start = $person->birthday ?? ($person->deathday ? now()->subYears(120)->toDateString() : now()->subYears(120)->toDateString());
                 $end = $person->deathday ?? now()->toDateString();
@@ -72,7 +74,7 @@ class TimelineComponent extends Component
         $historical = $this->historicalEventService->fetchForPeriod($start, $end);
 
         foreach ($historical as $h) {
-            if (!$h->date) {
+            if (! $h->date) {
                 continue;
             }
 

@@ -8,6 +8,7 @@ use Livewire\Component;
 class HenryReport extends Component
 {
     public $selectedPersonId;
+
     public $reportData = [];
 
     public function render()
@@ -28,7 +29,7 @@ class HenryReport extends Component
     private function processHenryReportData($person): void
     {
         $this->reportData[$person->id] = [
-            'name'  => $person->fullname(),
+            'name' => $person->fullname(),
             'birth' => optional($person->birth())->date,
             'death' => optional($person->death())->date,
         ];

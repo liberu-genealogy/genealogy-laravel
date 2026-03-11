@@ -88,7 +88,7 @@ class GedcomResourceTest extends TestCase
 
         $gedcom = Gedcom::create(['filename' => 'gedcom-form-imports/test.ged']);
 
-        $page = new CreateGedcom();
+        $page = new CreateGedcom;
         $page->record = $gedcom;
 
         $method = new \ReflectionMethod($page, 'afterCreate');
@@ -110,7 +110,7 @@ class GedcomResourceTest extends TestCase
         // Simulate Filament storing the path as an array in the model instance
         $gedcom->setAttribute('filename', ['gedcom-form-imports/test.ged']);
 
-        $page = new CreateGedcom();
+        $page = new CreateGedcom;
         $page->record = $gedcom;
 
         $method = new \ReflectionMethod($page, 'afterCreate');
@@ -127,7 +127,7 @@ class GedcomResourceTest extends TestCase
 
         $gedcom = Gedcom::create(['filename' => 'gedcom-form-imports/test.gramps']);
 
-        $page = new CreateGedcom();
+        $page = new CreateGedcom;
         $page->record = $gedcom;
 
         $method = new \ReflectionMethod($page, 'afterCreate');
@@ -144,7 +144,7 @@ class GedcomResourceTest extends TestCase
 
         $gedcom = Gedcom::create(['filename' => '']);
 
-        $page = new CreateGedcom();
+        $page = new CreateGedcom;
         $page->record = $gedcom;
 
         $method = new \ReflectionMethod($page, 'afterCreate');
@@ -162,7 +162,7 @@ class GedcomResourceTest extends TestCase
 
         $gedcom = Gedcom::create(['filename' => 'gedcom-form-imports/missing.ged']);
 
-        $page = new CreateGedcom();
+        $page = new CreateGedcom;
         $page->record = $gedcom;
 
         $method = new \ReflectionMethod($page, 'afterCreate');
@@ -185,7 +185,7 @@ class GedcomResourceTest extends TestCase
 
         $gedcom = Gedcom::create(['filename' => $tmpPath]);
 
-        $page = new CreateGedcom();
+        $page = new CreateGedcom;
         $page->record = $gedcom;
 
         $method = new \ReflectionMethod($page, 'afterCreate');
@@ -210,7 +210,7 @@ class GedcomResourceTest extends TestCase
 
         $gedcom = Gedcom::create(['filename' => 'gedcom-form-imports/test.ged']);
 
-        $page = new CreateGedcom();
+        $page = new CreateGedcom;
         $page->record = $gedcom;
 
         $method = new \ReflectionMethod($page, 'afterCreate');
@@ -219,7 +219,7 @@ class GedcomResourceTest extends TestCase
         // An ImportJob should be created in the database before the job runs
         $this->assertDatabaseHas('importjobs', [
             'user_id' => $this->user->id,
-            'status'  => 'queue',
+            'status' => 'queue',
             'progress' => 0,
         ]);
     }
@@ -232,7 +232,7 @@ class GedcomResourceTest extends TestCase
 
         $gedcom = Gedcom::create(['filename' => 'gedcom-form-imports/test.ged']);
 
-        $page = new CreateGedcom();
+        $page = new CreateGedcom;
         $page->record = $gedcom;
 
         $method = new \ReflectionMethod($page, 'afterCreate');
@@ -273,4 +273,3 @@ class GedcomResourceTest extends TestCase
         $this->assertContains('text/plain', $acceptedTypes, 'FileUpload should accept text/plain MIME type');
     }
 }
-

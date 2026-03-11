@@ -12,13 +12,18 @@ class PrivateMessagingPage extends Page
 {
     protected string $view = 'filament.app.pages.private-messaging-page';
 
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-chat-bubble-left-right';
+    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-chat-bubble-left-right';
+
     protected static ?string $navigationLabel = 'Private Messaging';
-    protected static string | \UnitEnum | null $navigationGroup = '👤 Account & Settings';
+
+    protected static string|\UnitEnum|null $navigationGroup = '👤 Account & Settings';
 
     public ?int $selectedUserId = null;
+
     public string $messageText = '';
+
     public $users = [];
+
     public $messages = [];
 
     public function mount(): void
@@ -37,6 +42,7 @@ class PrivateMessagingPage extends Page
     {
         if (! $this->selectedUserId) {
             $this->messages = collect();
+
             return;
         }
 
@@ -44,6 +50,7 @@ class PrivateMessagingPage extends Page
 
         if (! $conversation) {
             $this->messages = collect();
+
             return;
         }
 
@@ -75,10 +82,10 @@ class PrivateMessagingPage extends Page
     {
         return Conversation::where(function ($q) {
             $q->where('user_one', Auth::id())
-              ->where('user_two', $this->selectedUserId);
+                ->where('user_two', $this->selectedUserId);
         })->orWhere(function ($q) {
             $q->where('user_one', $this->selectedUserId)
-              ->where('user_two', Auth::id());
+                ->where('user_two', Auth::id());
         })->first();
     }
 

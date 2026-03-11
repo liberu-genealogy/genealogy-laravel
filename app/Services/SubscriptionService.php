@@ -11,6 +11,7 @@ class SubscriptionService
     // be adjusted without changing code. Constants remain as fallbacks primarily for
     // legacy usage.
     public const PREMIUM_PRICE_ID = 'price_premium_monthly'; // default, override via env
+
     public const PREMIUM_PRODUCT_ID = 'prod_premium'; // default, override via env
 
     /**
@@ -21,7 +22,7 @@ class SubscriptionService
      * so premium checks work immediately. When a payment method is provided,
      * defer to Cashier to create a real Stripe subscription.
      */
-    public function createPremiumSubscription(User $user, string $paymentMethod = null)
+    public function createPremiumSubscription(User $user, ?string $paymentMethod = null)
     {
         // Trial-only flow without requiring a payment method / Stripe setup
         if (empty($paymentMethod)) {
@@ -124,7 +125,7 @@ class SubscriptionService
                     'Advanced charts and reports',
                 ],
                 'stripe_price_id' => config('subscription.premium.stripe_price_id', self::PREMIUM_PRICE_ID),
-            ]
+            ],
         ];
     }
 
@@ -189,7 +190,7 @@ class SubscriptionService
                 'smart_matching' => $isPremium,
                 'priority_support' => $isPremium,
                 'advanced_charts' => $isPremium,
-            ]
+            ],
         ];
     }
 }

@@ -2,24 +2,22 @@
 
 namespace App\Filament\App\Resources;
 
-use Filament\Tables\Actions\Action;
 use App\Filament\App\Resources\AIRecordMatchResource\Pages\ReviewMatches;
 use App\Models\AISuggestedMatch;
-use App\Filament\App\Resources\AppResource;
 use Filament\Notifications\Notification;
-use Filament\Tables\Table;
-use Filament\Tables;
+use Filament\Tables\Actions\Action;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Table;
 
 class AIRecordMatchResource extends AppResource
 {
     protected static ?string $model = AISuggestedMatch::class;
 
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-cpu-chip';
+    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-cpu-chip';
 
     protected static ?string $navigationLabel = 'AI Record Matches';
 
-    protected static string | \UnitEnum | null $navigationGroup = '🔍 Research & Analysis';
+    protected static string|\UnitEnum|null $navigationGroup = '🔍 Research & Analysis';
 
     public static function table(Table $table): Table
     {
@@ -29,7 +27,7 @@ class AIRecordMatchResource extends AppResource
                 TextColumn::make('local_person_id')->label('Local Person ID')->sortable(),
                 TextColumn::make('provider')->label('Provider')->sortable(),
                 TextColumn::make('external_record_id')->label('External ID'),
-                TextColumn::make('confidence')->label('Confidence')->formatStateUsing(fn($state) => round($state * 100, 1) . '%'),
+                TextColumn::make('confidence')->label('Confidence')->formatStateUsing(fn ($state) => round($state * 100, 1).'%'),
                 TextColumn::make('status')->label('Status')->sortable(),
                 TextColumn::make('created_at')->label('Created'),
             ])

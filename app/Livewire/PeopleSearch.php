@@ -3,12 +3,13 @@
 namespace App\Livewire;
 
 use App\Services\PersonSearchService;
-use Livewire\Component;
 use Livewire\Attributes\On;
+use Livewire\Component;
 
 class PeopleSearch extends Component
 {
     public string $query = '';
+
     public array $results = [];
 
     public function mount(): void

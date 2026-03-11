@@ -3,7 +3,6 @@
 namespace App\Livewire;
 
 use App\Models\Achievement;
-use App\Models\User;
 use App\Services\GamificationService;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -13,8 +12,11 @@ class GamificationDashboard extends Component
     use WithPagination;
 
     public $activeTab = 'overview';
+
     public $leaderboardPeriod = 'all_time';
+
     public $achievementCategory = 'all';
+
     public $showOnlyUnlocked = false;
 
     protected $gamificationService;
@@ -48,14 +50,14 @@ class GamificationDashboard extends Component
 
     public function toggleShowOnlyUnlocked()
     {
-        $this->showOnlyUnlocked = !$this->showOnlyUnlocked;
+        $this->showOnlyUnlocked = ! $this->showOnlyUnlocked;
         $this->resetPage();
     }
 
     public function toggleLeaderboardVisibility()
     {
         $user = auth()->user();
-        $user->update(['show_on_leaderboard' => !$user->show_on_leaderboard]);
+        $user->update(['show_on_leaderboard' => ! $user->show_on_leaderboard]);
         $this->dispatch('leaderboard-updated');
     }
 
@@ -119,7 +121,7 @@ class GamificationDashboard extends Component
                 'progress_percentage' => $progress ? $progress->getProgressPercentage() : 0,
             ];
         })->when($this->showOnlyUnlocked, function ($collection) {
-            return $collection->filter(fn($item) => $item['unlocked']);
+            return $collection->filter(fn ($item) => $item['unlocked']);
         });
     }
 
@@ -144,4 +146,3 @@ class GamificationDashboard extends Component
         ];
     }
 }
-

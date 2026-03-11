@@ -3,7 +3,6 @@
 namespace Tests\Feature\Filament;
 
 use App\Filament\App\Pages\SubscriptionPage;
-use App\Services\SubscriptionService;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Livewire\Livewire;
@@ -31,15 +30,29 @@ class SubscriptionPageTest extends TestCase
         config(['subscription.premium.stripe_price_id' => 'page_price_456']);
 
         // Simulate Cashier Checkout object which has a public ->url property
-        $mockCheckout = new class {
+        $mockCheckout = new class
+        {
             public string $url = 'https://stripe-example';
         };
 
-        $mockBuilder = new class($mockCheckout) {
+        $mockBuilder = new class($mockCheckout)
+        {
             private $checkout;
-            public function __construct($checkout) { $this->checkout = $checkout; }
-            public function trialDays($days) { return $this; }
-            public function checkout($data) { return $this->checkout; }
+
+            public function __construct($checkout)
+            {
+                $this->checkout = $checkout;
+            }
+
+            public function trialDays($days)
+            {
+                return $this;
+            }
+
+            public function checkout($data)
+            {
+                return $this->checkout;
+            }
         };
 
         $user = \Mockery::mock($user)->makePartial();

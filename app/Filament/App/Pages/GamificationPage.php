@@ -2,16 +2,15 @@
 
 namespace App\Filament\App\Pages;
 
-use App\Livewire\GamificationDashboard;
 use Filament\Pages\Page;
 
 class GamificationPage extends Page
 {
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-trophy';
+    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-trophy';
 
     protected string $view = 'filament.app.pages.gamification-page';
 
-    protected static string | \UnitEnum | null $navigationGroup = '🎮 Gamification';
+    protected static string|\UnitEnum|null $navigationGroup = '🎮 Gamification';
 
     protected static ?string $title = 'Achievements & Progress';
 

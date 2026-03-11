@@ -19,7 +19,7 @@ class PersonSearchServiceTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
-        $this->service = new PersonSearchService();
+        $this->service = new PersonSearchService;
     }
 
     private function actingAsUserWithTeam(?Team $team = null): User
@@ -37,7 +37,7 @@ class PersonSearchServiceTest extends TestCase
     // isLiving() on Person model
     // ---------------------------------------------------
 
-    public function testPersonIsLivingWhenNoDeathAndRecentBirth(): void
+    public function test_person_is_living_when_no_death_and_recent_birth(): void
     {
         $person = Person::factory()->make([
             'birthday' => now()->subYears(30),
@@ -47,7 +47,7 @@ class PersonSearchServiceTest extends TestCase
         $this->assertTrue($person->isLiving());
     }
 
-    public function testPersonIsNotLivingWhenDeathRecorded(): void
+    public function test_person_is_not_living_when_death_recorded(): void
     {
         $person = Person::factory()->make([
             'birthday' => now()->subYears(200),
@@ -57,7 +57,7 @@ class PersonSearchServiceTest extends TestCase
         $this->assertFalse($person->isLiving());
     }
 
-    public function testPersonIsNotLivingWhenBornOver100YearsAgo(): void
+    public function test_person_is_not_living_when_born_over100_years_ago(): void
     {
         $person = Person::factory()->make([
             'birthday' => now()->subYears(120),
@@ -67,7 +67,7 @@ class PersonSearchServiceTest extends TestCase
         $this->assertFalse($person->isLiving());
     }
 
-    public function testPersonIsLivingWhenNoBirthOrDeath(): void
+    public function test_person_is_living_when_no_birth_or_death(): void
     {
         $person = Person::factory()->make([
             'birthday' => null,
@@ -82,7 +82,7 @@ class PersonSearchServiceTest extends TestCase
     // searchOwnTeam()
     // ---------------------------------------------------
 
-    public function testSearchOwnTeamFindsMatchingPeople(): void
+    public function test_search_own_team_finds_matching_people(): void
     {
         $user = $this->actingAsUserWithTeam();
         $teamId = $user->currentTeam->id;
@@ -106,7 +106,7 @@ class PersonSearchServiceTest extends TestCase
         $this->assertContains('Bach', $names);
     }
 
-    public function testSearchOwnTeamDoesNotReturnOtherTeamData(): void
+    public function test_search_own_team_does_not_return_other_team_data(): void
     {
         $user = $this->actingAsUserWithTeam();
         $teamId = $user->currentTeam->id;
@@ -135,7 +135,7 @@ class PersonSearchServiceTest extends TestCase
     // searchGlobal() — cross-team with privacy
     // ---------------------------------------------------
 
-    public function testGlobalSearchIncludesDeceasedFromPublicTeams(): void
+    public function test_global_search_includes_deceased_from_public_teams(): void
     {
         $user = $this->actingAsUserWithTeam();
 
@@ -157,7 +157,7 @@ class PersonSearchServiceTest extends TestCase
         $this->assertContains('Lincoln', $names);
     }
 
-    public function testGlobalSearchExcludesLivingFromPublicTeams(): void
+    public function test_global_search_excludes_living_from_public_teams(): void
     {
         $user = $this->actingAsUserWithTeam();
 
@@ -178,7 +178,7 @@ class PersonSearchServiceTest extends TestCase
         $this->assertNotContains('PersonTest', $names);
     }
 
-    public function testGlobalSearchExcludesPrivateTeams(): void
+    public function test_global_search_excludes_private_teams(): void
     {
         $user = $this->actingAsUserWithTeam();
 
@@ -198,7 +198,7 @@ class PersonSearchServiceTest extends TestCase
         $this->assertNotContains('PersonHidden', $names);
     }
 
-    public function testGlobalSearchIncludesOwnTeamLivingPeople(): void
+    public function test_global_search_includes_own_team_living_people(): void
     {
         $user = $this->actingAsUserWithTeam();
         $teamId = $user->currentTeam->id;
@@ -222,7 +222,7 @@ class PersonSearchServiceTest extends TestCase
     // Person scopes
     // ---------------------------------------------------
 
-    public function testDeceasedScopeFiltersCorrectly(): void
+    public function test_deceased_scope_filters_correctly(): void
     {
         $user = $this->actingAsUserWithTeam();
         $teamId = $user->currentTeam->id;
@@ -263,7 +263,7 @@ class PersonSearchServiceTest extends TestCase
         $this->assertNotContains('Young', $deceasedNames);
     }
 
-    public function testLivingScopeFiltersCorrectly(): void
+    public function test_living_scope_filters_correctly(): void
     {
         $user = $this->actingAsUserWithTeam();
         $teamId = $user->currentTeam->id;
@@ -296,13 +296,13 @@ class PersonSearchServiceTest extends TestCase
     // Team is_public
     // ---------------------------------------------------
 
-    public function testTeamIsPublicDefaultsFalse(): void
+    public function test_team_is_public_defaults_false(): void
     {
         $team = Team::factory()->create();
         $this->assertFalse($team->is_public);
     }
 
-    public function testTeamCanBeSetPublic(): void
+    public function test_team_can_be_set_public(): void
     {
         $team = Team::factory()->create(['is_public' => true]);
         $this->assertTrue($team->fresh()->is_public);

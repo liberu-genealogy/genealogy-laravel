@@ -2,11 +2,10 @@
 
 namespace App\Jobs;
 
-use Artisan;
-use Exception;
-use Throwable;
 use App\Models\ImportJob;
 use App\Models\User;
+use Artisan;
+use Exception;
 use FamilyTree365\LaravelGedcom\Utils\GedcomParser;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -16,6 +15,7 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
+use Throwable;
 
 class ImportGedcom implements ShouldQueue
 {
@@ -25,17 +25,16 @@ class ImportGedcom implements ShouldQueue
     use SerializesModels;
 
     public int $timeout = 0;
+
     public int $tries = 1;
 
-    public function __construct(protected User $user, protected string $filePath, public ?string $slug = null)
-    {
-    }
+    public function __construct(protected User $user, protected string $filePath, public ?string $slug = null) {}
 
     public function handle(): int
     {
         Log::info('ImportGedcom job started', [
             'file_path' => $this->filePath,
-            'user_id'   => $this->user->getKey(),
+            'user_id' => $this->user->getKey(),
         ]);
 
         // Find or create the ImportJob record
@@ -44,7 +43,7 @@ class ImportGedcom implements ShouldQueue
             ['slug' => $slug],
             [
                 'user_id' => $this->user->getKey(),
-                'status'  => 'queue',
+                'status' => 'queue',
                 'progress' => 0,
             ],
         );
@@ -56,7 +55,7 @@ class ImportGedcom implements ShouldQueue
 
             $importJob->update(['progress' => 25]);
 
-            $parser = new GedcomParser();
+            $parser = new GedcomParser;
             $team_id = $this->user->currentTeam?->id;
 
             $importJob->update(['status' => 'processing', 'progress' => 50]);
@@ -66,14 +65,14 @@ class ImportGedcom implements ShouldQueue
             $importJob->update(['progress' => 90]);
         } catch (Throwable $e) {
             $importJob->update([
-                'status'        => 'failed',
+                'status' => 'failed',
                 'error_message' => $e->getMessage(),
             ]);
             Log::error('ImportGedcom parser failed', [
                 'file_path' => $this->filePath,
-                'user_id'   => $this->user->getKey(),
-                'error'     => $e->getMessage(),
-                'trace'     => $e->getTraceAsString(),
+                'user_id' => $this->user->getKey(),
+                'error' => $e->getMessage(),
+                'trace' => $e->getTraceAsString(),
             ]);
             throw $e;
         }
@@ -82,8 +81,8 @@ class ImportGedcom implements ShouldQueue
 
         Log::info('ImportGedcom job completed', [
             'file_path' => $this->filePath,
-            'user_id'   => $this->user->getKey(),
-            'slug'      => $slug,
+            'user_id' => $this->user->getKey(),
+            'slug' => $slug,
         ]);
 
         // Clear application caches so new records are visible immediately
@@ -105,7 +104,7 @@ class ImportGedcom implements ShouldQueue
 
         Log::info('ImportGedcom: data indexed and caches cleared', [
             'team_id' => $team_id,
-            'slug'    => $slug,
+            'slug' => $slug,
         ]);
 
         return 0;
@@ -120,16 +119,16 @@ class ImportGedcom implements ShouldQueue
     {
         if ($this->slug) {
             ImportJob::where('slug', $this->slug)->update([
-                'status'        => 'failed',
+                'status' => 'failed',
                 'error_message' => $exception?->getMessage() ?? 'Job failed unexpectedly.',
             ]);
         }
 
         Log::error('ImportGedcom job failed', [
             'file_path' => $this->filePath,
-            'user_id'   => $this->user->getKey(),
-            'slug'      => $this->slug,
-            'error'     => $exception?->getMessage(),
+            'user_id' => $this->user->getKey(),
+            'slug' => $this->slug,
+            'error' => $exception?->getMessage(),
         ]);
     }
 }

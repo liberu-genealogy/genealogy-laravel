@@ -84,18 +84,18 @@ class PersonSearchService
                     'MATCH(givn, surn, name, description) AGAINST(? IN BOOLEAN MODE)',
                     [$this->prepareFulltextTerm($term)]
                 )
-                ->orWhere('birthday_plac', 'LIKE', '%' . $term . '%')
-                ->orWhere('deathday_plac', 'LIKE', '%' . $term . '%');
+                    ->orWhere('birthday_plac', 'LIKE', '%'.$term.'%')
+                    ->orWhere('deathday_plac', 'LIKE', '%'.$term.'%');
             });
         } else {
-            $likeTerm = '%' . $term . '%';
+            $likeTerm = '%'.$term.'%';
             $query->where(function (Builder $q) use ($likeTerm) {
                 $q->where('givn', 'LIKE', $likeTerm)
-                  ->orWhere('surn', 'LIKE', $likeTerm)
-                  ->orWhere('name', 'LIKE', $likeTerm)
-                  ->orWhere('description', 'LIKE', $likeTerm)
-                  ->orWhere('birthday_plac', 'LIKE', $likeTerm)
-                  ->orWhere('deathday_plac', 'LIKE', $likeTerm);
+                    ->orWhere('surn', 'LIKE', $likeTerm)
+                    ->orWhere('name', 'LIKE', $likeTerm)
+                    ->orWhere('description', 'LIKE', $likeTerm)
+                    ->orWhere('birthday_plac', 'LIKE', $likeTerm)
+                    ->orWhere('deathday_plac', 'LIKE', $likeTerm);
             });
         }
     }
@@ -108,7 +108,7 @@ class PersonSearchService
         $words = preg_split('/\s+/', $term, -1, PREG_SPLIT_NO_EMPTY);
 
         // Add + prefix to each word for AND matching, * suffix for prefix matching
-        return implode(' ', array_map(fn ($w) => '+' . $w . '*', $words));
+        return implode(' ', array_map(fn ($w) => '+'.$w.'*', $words));
     }
 
     /**
@@ -129,6 +129,7 @@ class PersonSearchService
             }
 
             $indexes = DB::select("SHOW INDEX FROM people WHERE Key_name = 'people_fulltext_index'");
+
             return $supported = count($indexes) > 0;
         } catch (\Throwable) {
             return $supported = false;

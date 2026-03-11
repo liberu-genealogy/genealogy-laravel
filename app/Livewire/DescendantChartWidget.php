@@ -2,22 +2,27 @@
 
 namespace App\Livewire;
 
-use Illuminate\Contracts\View\View;
-use App\Models\Person;
 use App\Models\Family;
+use App\Models\Person;
 use Filament\Widgets\Widget;
-use Illuminate\Support\Collection;
+use Illuminate\Contracts\View\View;
 
 class DescendantChartWidget extends Widget
 {
     protected string $view = 'filament.widgets.descendant-chart-widget';
 
     public $rootPersonId = null;
+
     public $generations = 4;
+
     public $showSpouses = true;
+
     public $showDates = true;
+
     public $showPhotos = false;
+
     public $layout = 'vertical'; // vertical, horizontal, tree
+
     public $colorScheme = 'generation';
 
     public function mount($rootPersonId = null, $generations = 4)
@@ -28,7 +33,7 @@ class DescendantChartWidget extends Widget
 
     public function getData(): array
     {
-        if (!$this->rootPersonId) {
+        if (! $this->rootPersonId) {
             return ['descendantData' => [], 'rootPerson' => null];
         }
 
@@ -49,7 +54,7 @@ class DescendantChartWidget extends Widget
 
     private function buildDescendantTree($person, $maxGenerations, $generation = 1): array
     {
-        if (!$person || $generation > $maxGenerations) {
+        if (! $person || $generation > $maxGenerations) {
             return [];
         }
 
@@ -64,7 +69,7 @@ class DescendantChartWidget extends Widget
             'birth_year' => $person->birthday?->format('Y'),
             'death_year' => $person->deathday?->format('Y'),
             'generation' => $generation,
-            'families' => []
+            'families' => [],
         ];
 
         // Get all families where this person is a parent
@@ -80,7 +85,7 @@ class DescendantChartWidget extends Widget
             $familyData = [
                 'family_id' => $family->id,
                 'spouse' => null,
-                'children' => []
+                'children' => [],
             ];
 
             // Add spouse information
@@ -114,12 +119,12 @@ class DescendantChartWidget extends Widget
 
             foreach ($children as $child) {
                 $childData = $this->buildDescendantTree($child, $maxGenerations, $generation + 1);
-                if (!empty($childData)) {
+                if (! empty($childData)) {
                     $familyData['children'][] = $childData;
                 }
             }
 
-            if (!empty($familyData['children']) || $familyData['spouse']) {
+            if (! empty($familyData['children']) || $familyData['spouse']) {
                 $personData['families'][] = $familyData;
             }
         }
@@ -141,19 +146,19 @@ class DescendantChartWidget extends Widget
 
     public function toggleSpouses(): void
     {
-        $this->showSpouses = !$this->showSpouses;
+        $this->showSpouses = ! $this->showSpouses;
         $this->dispatch('refreshDescendantChart');
     }
 
     public function toggleDates(): void
     {
-        $this->showDates = !$this->showDates;
+        $this->showDates = ! $this->showDates;
         $this->dispatch('refreshDescendantChart');
     }
 
     public function togglePhotos(): void
     {
-        $this->showPhotos = !$this->showPhotos;
+        $this->showPhotos = ! $this->showPhotos;
         $this->dispatch('refreshDescendantChart');
     }
 

@@ -12,10 +12,10 @@ use Filament\Forms\Contracts\HasForms;
 use Filament\Schemas\Schema;
 use Livewire\Component;
 
-class DevillierReport extends Component implements HasForms, HasActions
+class DevillierReport extends Component implements HasActions, HasForms
 {
-    use InteractsWithForms;
     use InteractsWithActions;
+    use InteractsWithForms;
 
     public ?array $data = [];
 

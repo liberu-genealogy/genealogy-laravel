@@ -2,12 +2,12 @@
 
 namespace App\Livewire;
 
-use Override;
-use Laravel\Jetstream\Contracts\CreatesTeams;
-use Illuminate\Http\RedirectResponse;
 use App\Actions\Jetstream\CreateTeam as CreateTeamAction;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
+use Laravel\Jetstream\Contracts\CreatesTeams;
 use Laravel\Jetstream\Http\Livewire\CreateTeamForm;
+use Override;
 
 class CreateTeam extends CreateTeamForm
 {

@@ -8,6 +8,7 @@ use Livewire\Component;
 class DeVilliersReport extends Component
 {
     public $selectedPersonId;
+
     public $reportData = [];
 
     public function render()
@@ -29,9 +30,9 @@ class DeVilliersReport extends Component
     {
         $this->reportData[$person->id] = [
             'number' => $currentNumber,
-            'name'   => $person->fullname(),
-            'birth'  => optional($person->birth())->date,
-            'death'  => optional($person->death())->date,
+            'name' => $person->fullname(),
+            'birth' => optional($person->birth())->date,
+            'death' => optional($person->death())->date,
         ];
 
         $childNumber = 1;

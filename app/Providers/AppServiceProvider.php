@@ -2,13 +2,13 @@
 
 namespace App\Providers;
 
-use Exception;
-use Log;
 use App\Models\Family;
 use App\Models\Person;
 use App\Modules\ModuleManager;
 use App\Modules\ModuleServiceProvider;
+use Exception;
 use Illuminate\Support\ServiceProvider;
+use Log;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -26,7 +26,7 @@ class AppServiceProvider extends ServiceProvider
 
         // Register the module manager as a singleton
         $this->app->singleton(ModuleManager::class, function ($app) {
-            return new ModuleManager();
+            return new ModuleManager;
         });
 
         // Register the module service provider
@@ -75,12 +75,12 @@ class AppServiceProvider extends ServiceProvider
         $defaultModules = config('modules.default_enabled', []);
 
         foreach ($defaultModules as $moduleName) {
-            if ($moduleManager->has($moduleName) && !$moduleManager->get($moduleName)->isEnabled()) {
+            if ($moduleManager->has($moduleName) && ! $moduleManager->get($moduleName)->isEnabled()) {
                 try {
                     $moduleManager->enable($moduleName);
                 } catch (Exception $e) {
                     // Log error but don't break the application
-                    Log::warning("Failed to enable default module {$moduleName}: " . $e->getMessage());
+                    Log::warning("Failed to enable default module {$moduleName}: ".$e->getMessage());
                 }
             }
         }

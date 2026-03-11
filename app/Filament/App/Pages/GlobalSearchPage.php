@@ -18,10 +18,15 @@ class GlobalSearchPage extends Page
     protected static ?int $navigationSort = 1;
 
     public string $query = '';
+
     public bool $searchGlobal = true;
+
     public $results = [];
+
     public int $currentPage = 1;
+
     public int $lastPage = 1;
+
     public int $totalResults = 0;
 
     public function search(): void
@@ -29,6 +34,7 @@ class GlobalSearchPage extends Page
         if (empty(trim($this->query))) {
             $this->results = [];
             $this->totalResults = 0;
+
             return;
         }
 
@@ -58,7 +64,7 @@ class GlobalSearchPage extends Page
     public function updatedSearchGlobal(): void
     {
         $this->currentPage = 1;
-        if (!empty(trim($this->query))) {
+        if (! empty(trim($this->query))) {
             $this->search();
         }
     }

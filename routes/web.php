@@ -1,8 +1,8 @@
 <?php
 
-use App\Http\Controllers\TeamInvitationController;
-use App\Http\Controllers\ContactController;
 use App\Http\Controllers\AIMatchController;
+use App\Http\Controllers\ContactController;
+use App\Http\Controllers\TeamInvitationController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,22 +16,22 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', fn() => view('home'));
+Route::get('/', fn () => view('home'));
 
 Route::post('/send-invitation', [TeamInvitationController::class, 'sendInvitation'])->name('send.invitation');
 Route::post('/accept-invitation/{token}', [TeamInvitationController::class, 'acceptInvitation'])->name('accept.invitation');
 
-Route::get('/register', fn() => redirect('/app/register'))->name('register');
-Route::get('/login', fn() => redirect('/app/login'))->name('login');
+Route::get('/register', fn () => redirect('/app/register'))->name('register');
+Route::get('/login', fn () => redirect('/app/login'))->name('login');
 
-Route::get('/privacy', fn() => view('pages.privacy'))->name('privacy');
-Route::get('/terms-and-conditions', fn() => view('pages.termsandconditions'))->name('terms.and.conditions');
+Route::get('/privacy', fn () => view('pages.privacy'))->name('privacy');
+Route::get('/terms-and-conditions', fn () => view('pages.termsandconditions'))->name('terms.and.conditions');
 
-Route::get('/about', fn() => view('pages.aboutus'))->name('about');
+Route::get('/about', fn () => view('pages.aboutus'))->name('about');
 
-Route::get('/subscription', fn() => view('pages.subscription'))->name('subscription');
+Route::get('/subscription', fn () => view('pages.subscription'))->name('subscription');
 
-Route::get('/contact', fn() => view('contact'));
+Route::get('/contact', fn () => view('contact'));
 Route::post('/contact/send', [ContactController::class, 'sendEmail'])->name('contact.send');
 
 Route::middleware([
@@ -39,7 +39,7 @@ Route::middleware([
     config('jetstream.auth_session'),
     'verified',
 ])->group(function (): void {
-    Route::get('/dashboard', fn() => view('dashboard'))->name('dashboard');
+    Route::get('/dashboard', fn () => view('dashboard'))->name('dashboard');
     Route::get('/gamification', \App\Livewire\GamificationDashboard::class)->name('gamification');
     Route::get('/transcriptions', \App\Livewire\DocumentTranscriptionComponent::class)->name('transcriptions');
 });
