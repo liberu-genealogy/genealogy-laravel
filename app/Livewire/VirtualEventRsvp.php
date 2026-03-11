@@ -6,6 +6,7 @@ use App\Models\VirtualEvent;
 use App\Models\VirtualEventAttendee;
 use App\Models\Person;
 use App\Services\VideoConferencingService;
+use Livewire\Attributes\Rule;
 use Livewire\Component;
 use Livewire\WithPagination;
 use Livewire\Attributes\Computed;
@@ -24,10 +25,18 @@ class VirtualEventRsvp extends Component
     public $showJoinModal = false;
 
     // RSVP form properties
+    #[Rule('required|in:accepted,declined,maybe')]
     public $rsvp_status = 'accepted';
+
+    #[Rule('nullable|string|max:500')]
     public $rsvp_notes = '';
+
+    #[Rule('nullable|string|max:255')]
     public $guest_name = '';
+
+    #[Rule('nullable|email|max:255')]
     public $guest_email = '';
+
     public $invite_person_id = '';
 
     // Invite form properties
@@ -38,13 +47,6 @@ class VirtualEventRsvp extends Component
     public $statusFilter = 'all';
     public $search = '';
     public $showAttendeeList = false;
-
-    protected $rules = [
-        'rsvp_status' => 'required|in:accepted,declined,maybe',
-        'rsvp_notes' => 'nullable|string|max:500',
-        'guest_name' => 'nullable|string|max:255',
-        'guest_email' => 'nullable|email|max:255',
-    ];
 
     protected $inviteRules = [
         'invite_emails' => 'required|array|min:1',

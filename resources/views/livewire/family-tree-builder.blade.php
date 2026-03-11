@@ -2,7 +2,7 @@
 
 <div class="family-tree-builder">
     <div class="toolbar">
-        <button wire:click="$emit('addNewPerson')" class="btn btn-primary">
+        <button wire:click="$dispatch('addNewPerson')" class="btn btn-primary">
             Add Person
         </button>
     </div>
@@ -15,7 +15,7 @@
                 <div class="person-content">
                     <h4>{{ $person['name'] }}</h4>
                     <div class="person-actions">
-                        <button wire:click="$emit('editPerson', {{ $person['id'] }})"
+                        <button wire:click="$dispatch('editPerson', { id: {{ $person['id'] }} })"
                                 class="btn btn-sm btn-secondary">
                             Edit
                         </button>
@@ -60,7 +60,7 @@
 @push('scripts')
 <script src="https://cdn.jsdelivr.net/npm/interactjs/dist/interact.min.js"></script>
 <script>
-document.addEventListener('livewire:load', function () {
+document.addEventListener('livewire:init', function () {
     interact('.person-node').draggable({
         inertia: true,
         modifiers: [
@@ -92,7 +92,7 @@ document.addEventListener('livewire:load', function () {
         const x = parseFloat(target.getAttribute('data-x')) || 0;
         const y = parseFloat(target.getAttribute('data-y')) || 0;
 
-        @this.call('updatePersonPosition', personId, x, y);
+        $wire.call('updatePersonPosition', personId, x, y);
     }
 });
 </script>

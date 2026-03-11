@@ -36,5 +36,17 @@ class LaravelGedcomServiceProvider extends ServiceProvider
         $this->app->singleton('gedcomx-parser', fn($app) => new GedcomXParser());
         $this->app->alias('gedcom-parser', 'GedcomParser');
         $this->app->alias('gedcomx-parser', 'GedcomXParser');
+
+        // Bind vendor models to application models so that the GEDCOM parser
+        // uses the app's models (which include team_id in $fillable and proper
+        // type_id handling) when it calls app(Family::class) / app(Person::class).
+        $this->app->bind(
+            \FamilyTree365\LaravelGedcom\Models\Family::class,
+            \App\Models\Family::class,
+        );
+        $this->app->bind(
+            \FamilyTree365\LaravelGedcom\Models\Person::class,
+            \App\Models\Person::class,
+        );
     }
 }
