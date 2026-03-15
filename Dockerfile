@@ -1,5 +1,5 @@
 # Accepted values: 8.3+
-ARG PHP_VERSION=8.4
+ARG PHP_VERSION=8.5
 
 ARG COMPOSER_VERSION=latest
 
@@ -11,7 +11,12 @@ FROM composer:${COMPOSER_VERSION} AS vendor
 
 WORKDIR /app
 COPY composer.json composer.lock /app/
-COPY vendor-local/laravel-gramps-xml /app/vendor-local/laravel-gramps-xml
+# Optionally copy a local override of the laravel-gramps-xml package if present.
+# This directory is not included in the repository by default.
+RUN if [ -d vendor-local/laravel-gramps-xml ]; then \
+      mkdir -p /app/vendor-local && \
+      cp -R vendor-local/laravel-gramps-xml /app/vendor-local/; \
+    fi
 RUN composer install --no-dev --no-interaction --prefer-dist --optimize-autoloader --no-ansi --no-scripts --no-progress --ignore-platform-req=php --ignore-platform-req=ext-intl --ignore-platform-req=ext-bcmath
 
 FROM node:${NODE_VERSION} AS node_modules
@@ -130,7 +135,8 @@ RUN mkdir -p \
     storage/framework/cache \
     storage/framework/testing \
     storage/logs \
-    bootstrap/cache && chmod -R a+rw storage
+    bootstrap/cache \
+    /tmp/opcache && chmod -R a+rw storage /tmp/opcache
 
 COPY  --chown=${USER}:${USER} .docker/supervisord.conf /etc/supervisor/
 COPY  --chown=${USER}:${USER} .docker/octane/Swoole/supervisord.swoole.conf /etc/supervisor/conf.d/

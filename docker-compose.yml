@@ -4,7 +4,7 @@ services:
       context: .
       dockerfile: Dockerfile
       args:
-        PHP_VERSION: 8.4
+        PHP_VERSION: 8.5
         WWWUSER: 1000
         WWWGROUP: 1000
     image: genealogy-laravel
@@ -32,6 +32,7 @@ services:
       - ./storage/logs:/var/www/html/storage/logs
       - ./storage/app:/var/www/html/storage/app
       - ./public/build:/var/www/html/public/build
+      - ./public/hot:/var/www/html/public/hot
     depends_on:
       - mysql
       - redis
@@ -89,7 +90,7 @@ services:
       context: .
       dockerfile: Dockerfile
       args:
-        PHP_VERSION: 8.4
+        PHP_VERSION: 8.5
         WWWUSER: 1000
         WWWGROUP: 1000
     image: genealogy-laravel
@@ -122,7 +123,7 @@ services:
       context: .
       dockerfile: Dockerfile
       args:
-        PHP_VERSION: 8.4
+        PHP_VERSION: 8.5
         WWWUSER: 1000
         WWWGROUP: 1000
     image: genealogy-laravel
