@@ -44,8 +44,12 @@ class AdminPanelProvider extends PanelProvider
             ->viteTheme('resources/css/filament/admin/theme.css')
             ->brandName(fn () => app(\App\Settings\GeneralSettings::class)->site_name)
             ->colors([
-                'primary' => Color::Gray,
+                'primary' => Color::Emerald,
+                'gray' => Color::Slate,
             ])
+            ->brandName(fn () => app(\App\Settings\GeneralSettings::class)->site_name)
+            ->brandLogo(asset('images/logo.svg'))
+            ->favicon(asset('images/favicon.ico'))
             ->userMenuItems([
                 Action::make('profile')
                     ->label('Profile')
@@ -96,20 +100,20 @@ class AdminPanelProvider extends PanelProvider
         //     ]);
         // }
 
-        if (Features::hasTeamFeatures()) {
-            $panel
-                ->tenant(Team::class, ownershipRelationship: 'team')
-                ->tenantRegistration(CreateTeam::class)
-                ->tenantProfile(EditTeam::class)
-                ->userMenuItems([
-                    Action::make('team-settings')
-                        ->label('Team Settings')
-                        ->icon('heroicon-o-cog-6-tooth')
-                        ->url(fn () => $this->shouldRegisterMenuItem()
-                            ? url(EditTeam::getUrl())
-                            : url($panel->getPath())),
-                ]);
-        }
+        // if (Features::hasTeamFeatures()) {
+        //     $panel
+        //         ->tenant(Team::class, ownershipRelationship: 'team')
+        //         ->tenantRegistration(CreateTeam::class)
+        //         ->tenantProfile(EditTeam::class)
+        //         ->userMenuItems([
+        //             Action::make('team-settings')
+        //                 ->label('Team Settings')
+        //                 ->icon('heroicon-o-cog-6-tooth')
+        //                 ->url(fn () => $this->shouldRegisterMenuItem()
+        //                     ? url(EditTeam::getUrl())
+        //                     : url($panel->getPath())),
+        //         ]);
+        // }
 
         return $panel;
     }
