@@ -3,7 +3,7 @@
 namespace App\Filament\Admin\Pages;
 
 use Filament\Schemas\Schema;
-use Filament\Forms\Components\Section;
+use Filament\Schemas\Components\Section;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Textarea;
 use App\Settings\GeneralSettings;
@@ -25,6 +25,7 @@ class ManageGeneralSettings extends SettingsPage
     public function form(Schema $schema): Schema
     {
         return $schema
+            ->columns(1)
             ->components([
                 Section::make('Site Information')
                     ->schema([
