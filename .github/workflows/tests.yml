@@ -16,7 +16,7 @@ jobs:
         image: mysql:8.0
         env:
           MYSQL_ROOT_PASSWORD: root
-          MYSQL_DATABASE: liberu
+          MYSQL_DATABASE: liberu_genealogy_testing
         ports:
           - 3306:3306
         options: >-

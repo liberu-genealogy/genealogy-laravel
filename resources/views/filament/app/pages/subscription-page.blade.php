@@ -90,7 +90,7 @@
                     <x-filament::button
                         color="primary"
                         size="lg"
-                        class="w-full"
+                        class="w-full mb-2"
                         wire:click="startTrial"
                         wire:target="startTrial"
                         wire:loading.attr="disabled"
@@ -105,6 +105,26 @@
                             <span wire:loading wire:target="startTrial">Starting…</span>
                         </span>
                     </x-filament::button>
+
+                    <x-filament::button
+                        color="secondary"
+                        size="lg"
+                        class="w-full"
+                        wire:click="redirectToCheckout"
+                        wire:target="redirectToCheckout"
+                        wire:loading.attr="disabled"
+                        aria-label="Subscribe with card"
+                    >
+                        <span class="inline-flex items-center justify-center">
+                            <svg wire:loading wire:target="redirectToCheckout" class="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"></path>
+                            </svg>
+                            <span wire:loading.remove wire:target="redirectToCheckout">Subscribe with Card</span>
+                            <span wire:loading wire:target="redirectToCheckout">Redirecting…</span>
+                        </span>
+                    </x-filament::button>
+
                     <p class="text-xs text-gray-500 dark:text-gray-400 mt-2 text-center">No credit card required for the trial</p>
                 </div>
             </div>

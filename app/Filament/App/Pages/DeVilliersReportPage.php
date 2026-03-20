@@ -2,17 +2,13 @@
 
 namespace App\Filament\App\Pages;
 
-use UnitEnum;
-use BackedEnum;
-use App\Filament\Resources\GedcomResource as ResourcesGedcomResource;
-use App\Filament\Resources\MediaObjectResource as ResourcesMediaObjectResource;
-use App\Filament\Resources\NoteResource as ResourcesNoteResource;
-use App\Filament\Resources\PublicationResource as ResourcesPublicationResource;
-use App\Filament\Resources\RepositoryResource as ResourcesRepositoryResource;
-use App\Filament\Resources\SourceDataResource as ResourcesSourceDataResource;
-use App\Filament\Resources\TypeResource as ResourcesTypeResource;
+use App\Filament\App\Resources\MediaObjectResource;
+use App\Filament\App\Resources\NoteResource;
+use App\Filament\App\Resources\PublicationResource;
+use App\Filament\App\Resources\RepositoryResource;
+use App\Filament\App\Resources\SourceDataResource;
+use App\Filament\App\Resources\TypeResource;
 use Filament\Pages\Page;
-use Livewire\Livewire;
 
 class DeVilliersReportPage extends Page
 {
@@ -20,9 +16,11 @@ class DeVilliersReportPage extends Page
 
     protected static ?string $title = 'Devilliers Report';
 
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-chart-bar';
+    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-chart-bar';
+
     protected static ?string $navigationLabel = 'De Villiers Report';
-    protected static string | \UnitEnum | null $navigationGroup = '📄 Reports';
+
+    protected static string|\UnitEnum|null $navigationGroup = '📄 Reports';
     // {
     //     Livewire::mount('DeVilliersReportWidget');
     // }
@@ -30,14 +28,12 @@ class DeVilliersReportPage extends Page
     public function resources(): array
     {
         return [
-            ResourcesTypeResource::class,
-            // ResourcesGedcomResource::class,
-            ResourcesMediaObjectResource::class,
-            ResourcesNoteResource::class,
-            ResourcesRepositoryResource::class,
-            ResourcesPublicationResource::class,
-            ResourcesSourceDataResource::class,
-            ResourcesPublicationResource::class,
+            TypeResource::class,
+            MediaObjectResource::class,
+            NoteResource::class,
+            RepositoryResource::class,
+            PublicationResource::class,
+            SourceDataResource::class,
         ];
     }
 }

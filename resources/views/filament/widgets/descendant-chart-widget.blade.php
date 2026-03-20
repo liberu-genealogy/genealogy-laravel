@@ -362,7 +362,7 @@
                     })
                     .on("click", function(event, d) {
                         if (d.data.id) {
-                            @this.call('expandPerson', d.data.id);
+                            $wire.call('expandPerson', d.data.id);
                         }
                     })
                     .on("mouseover", function(event, d) {
@@ -394,7 +394,7 @@
                     .on("click", function(event, d) {
                         event.stopPropagation();
                         if (d.data.id) {
-                            @this.call('expandPerson', d.data.id);
+                            $wire.call('expandPerson', d.data.id);
                         }
                     });
 

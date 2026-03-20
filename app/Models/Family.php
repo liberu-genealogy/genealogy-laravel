@@ -42,6 +42,16 @@ class Family extends \FamilyTree365\LaravelGedcom\Models\Family
     ];
 
     /**
+     * Convert an invalid type_id of 0 (hardcoded by the vendor GEDCOM parser)
+     * to null so it satisfies the nullable FK constraint on the types table.
+     * MySQL rejects 0 because no types record exists with id = 0.
+     */
+    public function setTypeIdAttribute(mixed $value): void
+    {
+        $this->attributes['type_id'] = ($value === 0 || $value === '0') ? null : $value;
+    }
+
+    /**
      * Override the vendor's husband relationship to use App\Models\Person (people table).
      */
     public function husband(): HasOne

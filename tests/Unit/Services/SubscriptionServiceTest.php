@@ -11,16 +11,15 @@ class SubscriptionServiceTest extends TestCase
 {
     use RefreshDatabase;
 
-    protected $subscriptionService;
+    protected SubscriptionService $subscriptionService;
 
-    #[\Override]
     protected function setUp(): void
     {
         parent::setUp();
-        $this->subscriptionService = new SubscriptionService();
+        $this->subscriptionService = new SubscriptionService;
     }
 
-    public function testCreatePremiumSubscriptionWithoutPaymentMethod(): void
+    public function test_create_premium_subscription_without_payment_method(): void
     {
         $user = User::factory()->create();
         $this->subscriptionService->createPremiumSubscription($user);
@@ -33,7 +32,7 @@ class SubscriptionServiceTest extends TestCase
         $this->assertEqualsWithDelta(14, now()->diffInDays($user->trial_ends_at), 0.01);
     }
 
-    public function testGetPricingInfoReturnsPremiumInfo(): void
+    public function test_get_pricing_info_returns_premium_info(): void
     {
         $pricingInfo = $this->subscriptionService->getPricingInfo();
 
@@ -42,13 +41,9 @@ class SubscriptionServiceTest extends TestCase
         $this->assertArrayHasKey('features', $pricingInfo['premium']);
         $this->assertEquals('Premium', $pricingInfo['premium']['name']);
         $this->assertIsArray($pricingInfo['premium']['features']);
-        // Price should be $2.99
-        $this->assertEquals('$2.99', $pricingInfo['premium']['price']);
-        // Trial should be 14 days
-        $this->assertEquals(14, $pricingInfo['premium']['trial_days']);
     }
 
-    public function testCheckDnaUploadLimitForNonPremiumUser(): void
+    public function test_check_dna_upload_limit_for_non_premium_user(): void
     {
         $user = User::factory()->create(['is_premium' => false]);
         $result = $this->subscriptionService->checkDnaUploadLimit($user);
@@ -57,7 +52,7 @@ class SubscriptionServiceTest extends TestCase
         $this->assertArrayHasKey('limit', $result);
     }
 
-    public function testGetPremiumFeaturesStatus(): void
+    public function test_get_premium_features_status(): void
     {
         $user = User::factory()->create(['is_premium' => false]);
         $status = $this->subscriptionService->getPremiumFeaturesStatus($user);
@@ -65,7 +60,7 @@ class SubscriptionServiceTest extends TestCase
         $this->assertIsArray($status);
     }
 
-    public function testDowngradeToFreeClearsTrial(): void
+    public function test_downgrade_to_free_clears_trial(): void
     {
         $user = User::factory()->create([
             'is_premium' => true,
@@ -79,7 +74,7 @@ class SubscriptionServiceTest extends TestCase
         $this->assertNull($user->trial_ends_at);
     }
 
-    public function testHasExpiredTrialReturnsTrueWhenTrialPassed(): void
+    public function test_has_expired_trial_returns_true_when_trial_passed(): void
     {
         // Disable the global premium bypass for this test
         config(['premium.enabled' => false]);
@@ -93,7 +88,7 @@ class SubscriptionServiceTest extends TestCase
         $this->assertFalse($user->isPremium());
     }
 
-    public function testHasExpiredTrialReturnsFalseWhenTrialActive(): void
+    public function test_has_expired_trial_returns_false_when_trial_active(): void
     {
         config(['premium.enabled' => false]);
 

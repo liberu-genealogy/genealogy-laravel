@@ -2,60 +2,98 @@
 
 namespace App\Filament\App\Pages;
 
-use BackedEnum;
+use App\Models\Conversation;
 use App\Models\Message;
 use App\Models\User;
 use Filament\Pages\Page;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Request;
-use Illuminate\Support\Facades\Validator;
 
 class PrivateMessagingPage extends Page
 {
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-chat-bubble-left-right';
+    protected string $view = 'filament.app.pages.private-messaging-page';
+
+    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-chat-bubble-left-right';
+
     protected static ?string $navigationLabel = 'Private Messaging';
-    protected static string | \UnitEnum | null $navigationGroup = '👤 Account & Settings';
+
+    protected static string|\UnitEnum|null $navigationGroup = '👤 Account & Settings';
+
+    public ?int $selectedUserId = null;
+
+    public string $messageText = '';
+
+    public $users = [];
+
+    public $messages = [];
 
     public function mount(): void
     {
-        $selectedUserId = Request::get('user_id');
-
-        $this->data([
-            'user'     => Auth::user(),
-            'users'    => User::where('id', '!=', Auth::id())->get(),
-            'messages' => Message::where(function ($query) use ($selectedUserId): void {
-                $query->where('from_user_id', Auth::id())
-                    ->where('to_user_id', $selectedUserId);
-            })->orWhere(function ($query) use ($selectedUserId): void {
-                $query->where('from_user_id', $selectedUserId)
-                    ->where('to_user_id', Auth::id());
-            })->orderBy('created_at')->get(),
-        ]);
+        $this->selectedUserId = request()->query('user_id') ? (int) request()->query('user_id') : null;
+        $this->users = User::where('id', '!=', Auth::id())->get();
+        $this->loadMessages();
     }
 
-    public function sendMessage()
+    public function updatedSelectedUserId(): void
     {
-        $validator = Validator::make(Request::all(), [
-            'message'    => 'required|string',
-            'to_user_id' => 'required|exists:users,id',
-        ]);
+        $this->loadMessages();
+    }
 
-        if ($validator->fails()) {
-            // Handle validation errors
+    public function loadMessages(): void
+    {
+        if (! $this->selectedUserId) {
+            $this->messages = collect();
+
+            return;
         }
 
-        $message = new Message();
-        $message->from_user_id = Auth::id();
-        $message->to_user_id = Request::get('to_user_id');
-        $message->message = Request::get('message');
-        $message->save();
+        $conversation = $this->findConversation();
 
-        return redirect()->back();
+        if (! $conversation) {
+            $this->messages = collect();
+
+            return;
+        }
+
+        $this->messages = Message::where('conversation_id', $conversation->id)
+            ->orderBy('created_at')
+            ->get();
     }
-    /**
-     * public function render()
-     * {
-     * return view('filament.pages.private-messaging', $this->data());
-     * }.
-     **/
+
+    public function sendMessage(): void
+    {
+        $this->validate([
+            'messageText' => 'required|string',
+            'selectedUserId' => 'required|integer|exists:users,id',
+        ]);
+
+        $conversation = $this->findOrCreateConversation();
+
+        Message::create([
+            'message' => $this->messageText,
+            'user_id' => Auth::id(),
+            'conversation_id' => $conversation->id,
+        ]);
+
+        $this->messageText = '';
+        $this->loadMessages();
+    }
+
+    private function findConversation(): ?Conversation
+    {
+        return Conversation::where(function ($q) {
+            $q->where('user_one', Auth::id())
+                ->where('user_two', $this->selectedUserId);
+        })->orWhere(function ($q) {
+            $q->where('user_one', $this->selectedUserId)
+                ->where('user_two', Auth::id());
+        })->first();
+    }
+
+    private function findOrCreateConversation(): Conversation
+    {
+        return $this->findConversation() ?? Conversation::create([
+            'user_one' => Auth::id(),
+            'user_two' => $this->selectedUserId,
+        ]);
+    }
 }

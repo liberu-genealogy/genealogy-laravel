@@ -7,6 +7,8 @@ use App\Filament\Admin\Pages\EditProfile;
 use App\Filament\Admin\Pages\EditTeam;
 use App\Http\Middleware\TeamsPermission;
 use App\Models\Team;
+use BezhanSalleh\FilamentShield\FilamentShieldPlugin;
+use Filament\Actions\Action;
 use Filament\Facades\Filament;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\DisableBladeIconComponents;
@@ -42,10 +44,14 @@ class AdminPanelProvider extends PanelProvider
             ->viteTheme('resources/css/filament/admin/theme.css')
             ->brandName(fn () => app(\App\Settings\GeneralSettings::class)->site_name)
             ->colors([
-                'primary' => Color::Gray,
+                'primary' => Color::Emerald,
+                'gray' => Color::Slate,
             ])
+            ->brandName(fn () => app(\App\Settings\GeneralSettings::class)->site_name)
+            ->brandLogo(asset('images/logo.svg'))
+            ->favicon(asset('images/favicon.ico'))
             ->userMenuItems([
-                MenuItem::make()
+                Action::make('profile')
                     ->label('Profile')
                     ->icon('heroicon-o-user-circle')
                     ->url(fn () => $this->shouldRegisterMenuItem()
@@ -76,7 +82,11 @@ class AdminPanelProvider extends PanelProvider
             ->authMiddleware([
                 Authenticate::class,
                 TeamsPermission::class,
-                \App\Http\Middleware\EnsureUserHasAdminRole::class,
+                // \App\Http\Middleware\EnsureUserHasAdminRole::class,
+            ])
+            ->plugins([
+                FilamentShieldPlugin::make()
+                    ->navigationGroup('Administration')
             ]);
 
         // if (Features::hasApiFeatures()) {
@@ -90,20 +100,20 @@ class AdminPanelProvider extends PanelProvider
         //     ]);
         // }
 
-        if (Features::hasTeamFeatures()) {
-            $panel
-                ->tenant(Team::class, ownershipRelationship: 'team')
-                ->tenantRegistration(CreateTeam::class)
-                ->tenantProfile(EditTeam::class)
-                ->userMenuItems([
-                    MenuItem::make()
-                        ->label('Team Settings')
-                        ->icon('heroicon-o-cog-6-tooth')
-                        ->url(fn () => $this->shouldRegisterMenuItem()
-                            ? url(EditTeam::getUrl())
-                            : url($panel->getPath())),
-                ]);
-        }
+        // if (Features::hasTeamFeatures()) {
+        //     $panel
+        //         ->tenant(Team::class, ownershipRelationship: 'team')
+        //         ->tenantRegistration(CreateTeam::class)
+        //         ->tenantProfile(EditTeam::class)
+        //         ->userMenuItems([
+        //             Action::make('team-settings')
+        //                 ->label('Team Settings')
+        //                 ->icon('heroicon-o-cog-6-tooth')
+        //                 ->url(fn () => $this->shouldRegisterMenuItem()
+        //                     ? url(EditTeam::getUrl())
+        //                     : url($panel->getPath())),
+        //         ]);
+        // }
 
         return $panel;
     }

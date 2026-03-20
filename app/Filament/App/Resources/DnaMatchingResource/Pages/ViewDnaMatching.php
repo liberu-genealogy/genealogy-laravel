@@ -2,15 +2,15 @@
 
 namespace App\Filament\App\Resources\DnaMatchingResource\Pages;
 
-use Filament\Schemas\Schema;
-use Filament\Actions\EditAction;
 use App\Filament\App\Resources\DnaMatchingResource;
-use Filament\Actions;
-use Filament\Resources\Pages\ViewRecord;
-use Filament\Infolists\Infolist;
-use Filament\Infolists\Components\TextEntry;
+use Filament\Actions\EditAction;
+use Filament\Infolists\Components\Grid;
 use Filament\Infolists\Components\ImageEntry;
 use Filament\Infolists\Components\KeyValueEntry;
+use Filament\Infolists\Components\Section;
+use Filament\Infolists\Components\TextEntry;
+use Filament\Resources\Pages\ViewRecord;
+use Filament\Schemas\Schema;
 
 class ViewDnaMatching extends ViewRecord
 {
@@ -22,10 +22,11 @@ class ViewDnaMatching extends ViewRecord
             EditAction::make(),
         ];
     }
+
     public function infolist(Schema $schema): Schema
     {
-        return $infolist
-            ->schema([
+        return $schema
+            ->components([
                 Section::make('Match Overview')
                     ->schema([
                         Grid::make(3)
@@ -94,16 +95,17 @@ class ViewDnaMatching extends ViewRecord
                             ->keyLabel('Chromosome')
                             ->valueLabel('Shared cM')
                             ->formatStateUsing(function ($state) {
-                                if (!is_array($state)) {
+                                if (! is_array($state)) {
                                     return 'No chromosome data available';
                                 }
 
                                 $formatted = [];
                                 foreach ($state as $chr => $data) {
                                     if (isset($data['total_cm']) && $data['total_cm'] > 0) {
-                                        $formatted["Chr {$chr}"] = round($data['total_cm'], 2) . ' cM (' . $data['segment_count'] . ' segments)';
+                                        $formatted["Chr {$chr}"] = round($data['total_cm'], 2).' cM ('.$data['segment_count'].' segments)';
                                     }
                                 }
+
                                 return $formatted;
                             }),
                     ])
@@ -118,6 +120,7 @@ class ViewDnaMatching extends ViewRecord
                                 if (is_array($state)) {
                                     return implode("\n", $state);
                                 }
+
                                 return $state ?? 'No analysis notes available';
                             }),
                         Grid::make(2)

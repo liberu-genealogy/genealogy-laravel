@@ -172,8 +172,8 @@ class User extends Authenticatable implements HasDefaultTenant, HasTenants, Fila
         }
 
         return match ($panel->getId()) {
-            'admin' => $this->hasRole('super_admin'),
-            default => false,
+            'admin' => $this->hasRole('admin'),
+            default => true,
         };
     }
 

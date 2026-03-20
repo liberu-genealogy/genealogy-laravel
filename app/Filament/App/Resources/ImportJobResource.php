@@ -41,24 +41,52 @@ class ImportJobResource extends AppResource
                 TextColumn::make('slug')
                     ->label('Import ID')
                     ->searchable()
-                    ->copyable(),
+                    ->copyable()
+                    ->limit(16),
                 TextColumn::make('status')
                     ->label('Status')
                     ->badge()
                     ->color(fn (string $state): string => match ($state) {
-                        'complete' => 'success',
-                        'failed'   => 'danger',
-                        'queue'    => 'warning',
-                        default    => 'gray',
+                        'complete'   => 'success',
+                        'failed'     => 'danger',
+                        'processing' => 'info',
+                        'queue'      => 'warning',
+                        default      => 'gray',
                     }),
+                TextColumn::make('progress')
+                    ->label('Progress')
+                    ->formatStateUsing(fn (int $state): string => $state . '%')
+                    ->color(fn (int $state): string => match (true) {
+                        $state === 100 => 'success',
+                        $state >= 50   => 'info',
+                        $state > 0     => 'warning',
+                        default        => 'gray',
+                    }),
+                TextColumn::make('people_imported')
+                    ->label('People')
+                    ->numeric()
+                    ->default(0)
+                    ->toggleable(),
+                TextColumn::make('families_imported')
+                    ->label('Families')
+                    ->numeric()
+                    ->default(0)
+                    ->toggleable(),
+                TextColumn::make('error_message')
+                    ->label('Error')
+                    ->limit(60)
+                    ->tooltip(fn (?string $state): string => $state ?? '')
+                    ->color('danger')
+                    ->toggleable(),
                 TextColumn::make('created_at')
-                    ->label('Started At')
+                    ->label('Queued At')
                     ->dateTime()
                     ->sortable(),
                 TextColumn::make('updated_at')
                     ->label('Last Updated')
                     ->dateTime()
-                    ->sortable(),
+                    ->sortable()
+                    ->since(),
             ])
             ->defaultSort('created_at', 'desc')
             ->filters([])

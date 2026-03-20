@@ -2,8 +2,8 @@
 
 namespace App\Filament\App\Pages;
 
+use Filament\Infolists\Components\TextEntry;
 use Override;
-use Filament\Forms\Components\Section;
 use App\Models\Team;
 use App\Models\User;
 use Filament\Facades\Filament;
@@ -12,6 +12,7 @@ use Filament\Pages\Tenancy\EditTenantProfile;
 use Filament\Forms\Components\Placeholder;
 use App\Services\SubscriptionService;
 use Filament\Schemas\Schema;
+use Filament\Schemas\Components\Section;
 
 class EditTeam extends EditTenantProfile
 {
@@ -29,13 +30,13 @@ class EditTeam extends EditTenantProfile
         $subscriptionService = app(SubscriptionService::class);
         return $schema
             ->components([
-                Section::make('Subscription')
-                    ->schema([
-                        Placeholder::make('status')
-                            ->label('Subscription Status')
-                            ->content($subscriptionService->getSubscriptionStatus($team)),
-                        // Add more subscription-related fields here
-                    ]),
+                // Section::make('Subscription')
+                //     ->schema([
+                //         TextEntry::make('subscription_status')
+                //             ->label('Subscription Status')
+                //             ->state($subscriptionService->getSubscriptionStatus($team)),
+                //         // Add more subscription-related fields here
+                //     ]),
             ]);
     }
 

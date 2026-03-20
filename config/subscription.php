@@ -12,6 +12,12 @@ return [
         'trial_days' => (int) env('SUBSCRIPTION_PREMIUM_TRIAL_DAYS', 14),
 
         // Stripe price id for real subscriptions created via Cashier
-        'stripe_price_id' => env('SUBSCRIPTION_PREMIUM_STRIPE_PRICE_ID', env('CASHIER_STRIPE_SUBSCRIPTION_DEFAULT_PRICE_ID')),
+        'stripe_price_id' => env(
+            'SUBSCRIPTION_PREMIUM_STRIPE_PRICE_ID',
+            // the `.env.example` file historically used STRIPE_PREMIUM_PRICE_ID; keep
+            // the old name around for backwards compatibility so deployments that
+            // haven't updated yet still work.
+            env('STRIPE_PREMIUM_PRICE_ID', env('CASHIER_STRIPE_SUBSCRIPTION_DEFAULT_PRICE_ID'))
+        ),
     ],
 ];

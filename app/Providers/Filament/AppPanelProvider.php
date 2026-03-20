@@ -51,7 +51,8 @@ use App\Http\Middleware\TeamsPermission;
 use App\Listeners\CreatePersonalTeam;
 use App\Listeners\SwitchTeam;
 use App\Models\Team;
-use Filament\Events\Auth\Registered;
+use Filament\Actions\Action;
+use Filament\Auth\Events\Registered;
 use Filament\Events\TenantSet;
 use Filament\Facades\Filament;
 use Filament\Http\Middleware\Authenticate;
@@ -126,7 +127,7 @@ class AppPanelProvider extends PanelProvider
                     ->label('👤 Account & Settings'),
             ])
             ->userMenuItems([
-                MenuItem::make()
+                Action::make('profile')
                     ->label('Profile')
                     ->icon('heroicon-o-user-circle')
                     ->url(fn () => $this->shouldRegisterMenuItem()
@@ -209,9 +210,6 @@ class AppPanelProvider extends PanelProvider
             ->authMiddleware([
                 Authenticate::class,
                 TeamsPermission::class,
-            ])
-            ->plugins([
-                // \BezhanSalleh\FilamentShield\FilamentShieldPlugin::make()
             ]);
 
         // if (Features::hasApiFeatures()) {
@@ -231,7 +229,7 @@ class AppPanelProvider extends PanelProvider
                 ->tenantRegistration(Pages\CreateTeam::class)
                 ->tenantProfile(Pages\EditTeam::class)
                 ->userMenuItems([
-                    MenuItem::make()
+                    Action::make('team-settings')
                         ->label('Team Settings')
                         ->icon('heroicon-o-cog-6-tooth')
                         ->url(fn () => $this->shouldRegisterMenuItem()
@@ -265,6 +263,11 @@ class AppPanelProvider extends PanelProvider
         $this->app->singleton(
             \Laravel\Fortify\Contracts\LoginResponse::class,
             \App\Http\Responses\Auth\LoginResponse::class,
+        );
+
+        $this->app->singleton(
+            \Laravel\Fortify\Contracts\RegisterResponse::class,
+            \App\Http\Responses\Auth\RegisterResponse::class,
         );
 
         /**

@@ -288,7 +288,7 @@
                     .attr("d", arc)
                     .on("click", function(event, d) {
                         if (d.data.id) {
-                            @this.call('setRootPerson', d.data.id);
+                            $wire.call('setRootPerson', d.data.id);
                         }
                     })
                     .on("mouseover", function(event, d) {

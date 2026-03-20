@@ -188,7 +188,7 @@
             });
 
             function expandPerson(personId) {
-                @this.call('expandPerson', personId);
+                $wire.call('expandPerson', personId);
             }
         </script>
     @endpush
