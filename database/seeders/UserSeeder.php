@@ -2,8 +2,10 @@
 
 namespace Database\Seeders;
 
+use App\Models\Role;
 use App\Models\Team;
 use App\Models\User;
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 
@@ -14,23 +16,22 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
-        $user = User::factory()->withPersonalTeam()->create([
-            "name"=> "Admin",
-            "email"=> "joshuakisb@gmail.com",
-            "password"=> Hash::make("password"),
-            "email_verified_at"=> now(),
+
+        $adminPassword = Str::random(12);
+        $adminUser = User::create([
+            'name' => 'Admin User',
+            'email' => 'admin@example.com',
+            'password' => Hash::make($adminPassword),
+            'email_verified_at' => now(),
         ]);
-        //     ['email' => 'admin@example.com'],
-        //     [
-        //         'name' => 'Admin',
-        //         'password' => Hash::make('password'),
-        //         'email_verified_at' => now(),
-        //     ]
-        // );
 
-        
+        $team = Team::firstOrFail();
+        $adminUser->teams()->syncWithoutDetaching([$team->id]);
 
-        // $user->teams()->attach($team->id);
-        $user->assignRole('admin');
+        $role = Role::where('name', 'super_admin')->firstOrFail();
+        $adminUser->assignRole($role);
+
+        // Print passwords to console
+        echo "Admin password: {$adminPassword}\n";
     }
 }
