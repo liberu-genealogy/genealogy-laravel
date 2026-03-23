@@ -7,7 +7,7 @@
         <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
             <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">Quick Actions</h3>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <a href="{{ route('filament.app.pages.user-checklists', ['tenant' => auth()->user()->currentTeam]) }}" 
+                <a href="{{ route('filament.app.pages.user-checklists-page', ['tenant' => auth()->user()->currentTeam]) }}"
                    class="flex items-center p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg hover:bg-blue-100 dark:hover:bg-blue-900/30 transition-colors">
                     <div class="flex-shrink-0">
                         <svg class="w-8 h-8 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -20,7 +20,7 @@
                     </div>
                 </a>
 
-                <a href="{{ route('filament.app.resources.checklist-templates.index', ['tenant' => auth()->user()->currentTeam]) }}" 
+                <a href="{{ route('filament.app.resources.checklist-templates.index', ['tenant' => auth()->user()->currentTeam]) }}"
                    class="flex items-center p-4 bg-green-50 dark:bg-green-900/20 rounded-lg hover:bg-green-100 dark:hover:bg-green-900/30 transition-colors">
                     <div class="flex-shrink-0">
                         <svg class="w-8 h-8 text-green-600 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -33,7 +33,7 @@
                     </div>
                 </a>
 
-                <a href="{{ route('filament.app.pages.user-checklists', ['tenant' => auth()->user()->currentTeam]) }}?statusFilter=overdue" 
+                <a href="{{ route('filament.app.pages.user-checklists-page', ['tenant' => auth()->user()->currentTeam]) }}?statusFilter=overdue"
                    class="flex items-center p-4 bg-red-50 dark:bg-red-900/20 rounded-lg hover:bg-red-100 dark:hover:bg-red-900/30 transition-colors">
                     <div class="flex-shrink-0">
                         <svg class="w-8 h-8 text-red-600 dark:text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
