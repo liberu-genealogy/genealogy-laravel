@@ -31,21 +31,21 @@ class SubscriptionPage extends Page
 
         // When premium features are globally enabled, everyone is premium
         if (config('premium.enabled')) {
-            $this->redirect(route('filament.app.pages.premium-dashboard'));
+            $this->redirect(route('filament.app.pages.premium-dashboard', ['tenant' => auth()->user()->currentTeam]));
 
             return;
         }
 
         // If trial has expired, redirect to the trial-expired page
         if ($user->hasExpiredTrial()) {
-            $this->redirect(route('filament.app.pages.trial-expired'));
+            $this->redirect(route('filament.app.pages.trial-expired', ['tenant' => auth()->user()->currentTeam]));
 
             return;
         }
 
         // Redirect if user is already premium
         if ($user->isPremium()) {
-            $this->redirect(route('filament.app.pages.premium-dashboard'));
+            $this->redirect(route('filament.app.pages.premium-dashboard', ['tenant' => auth()->user()->currentTeam]));
 
             return;
         }
@@ -104,7 +104,7 @@ class SubscriptionPage extends Page
                 ->success()
                 ->send();
 
-            $this->redirect(route('filament.app.pages.premium-dashboard'));
+            $this->redirect(route('filament.app.pages.premium-dashboard', ['tenant' => auth()->user()->currentTeam]));
 
         } catch (Exception $e) {
             Notification::make()

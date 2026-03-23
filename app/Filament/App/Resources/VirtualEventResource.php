@@ -2,7 +2,7 @@
 
 namespace App\Filament\App\Resources;
 
-use Filament\Forms\Components\Section;
+use Filament\Schemas\Components\Section;
 use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Textarea;
@@ -11,7 +11,7 @@ use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Toggle;
 use Filament\Forms\Components\Hidden;
 use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Columns\BadgeColumn;
+
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Filters\Filter;
@@ -200,23 +200,24 @@ class VirtualEventResource extends AppResource
                     ->searchable()
                     ->sortable()
                     ->weight('bold'),
-                BadgeColumn::make('status')
-                    ->colors([
-                        'secondary' => 'draft',
-                        'success' => 'published',
-                        'warning' => 'started',
-                        'danger' => 'cancelled',
-                        'gray' => 'ended',
-                    ])
+                TextColumn::make('status')
+                    ->badge()
+                    ->color(fn (string $state): string => match ($state) {
+                        'published' => 'success',
+                        'started' => 'warning',
+                        'cancelled' => 'danger',
+                        'ended' => 'gray',
+                        default => 'secondary',
+                    })
                     ->sortable(),
                 TextColumn::make('platform')
                     ->badge()
-                    ->colors([
-                        'primary' => 'zoom',
-                        'success' => 'google_meet',
-                        'warning' => 'teams',
-                        'gray' => 'custom',
-                    ])
+                    ->color(fn (string $state): string => match ($state) {
+                        'zoom' => 'primary',
+                        'google_meet' => 'success',
+                        'teams' => 'warning',
+                        default => 'gray',
+                    })
                     ->formatStateUsing(fn (string $state): string => match ($state) {
                         'zoom' => 'Zoom',
                         'google_meet' => 'Google Meet',
