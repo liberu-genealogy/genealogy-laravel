@@ -21,6 +21,7 @@ class ResearchProgressWidget extends Component
         'total_checklists' => 0,
         'completed_checklists' => 0,
         'in_progress_checklists' => 0,
+        'overdue_checklists' => 0,
         'completion_rate' => 0,
         'overall_progress' => 0,
     ];
@@ -106,10 +107,13 @@ class ResearchProgressWidget extends Component
         // Overall progress approximated by completion rate when item-level data not available
         $overallProgress = $completionRate;
 
+        $overdue = (clone $base)->overdue()->count();
+
         $this->stats = [
             'total_checklists' => $total,
             'completed_checklists' => $completed,
             'in_progress_checklists' => $inProgress,
+            'overdue_checklists' => $overdue,
             'completion_rate' => $completionRate,
             'overall_progress' => $overallProgress,
         ];

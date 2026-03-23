@@ -15,7 +15,7 @@ class ChanPolicy
      */
     public function viewAny(User $user): bool
     {
-        return $user->can('view_any_chan');
+        return true;
     }
 
     /**
@@ -23,7 +23,7 @@ class ChanPolicy
      */
     public function view(User $user, Chan $chan): bool
     {
-        return $user->can('view_chan');
+        return true;
     }
 
     /**
@@ -31,7 +31,7 @@ class ChanPolicy
      */
     public function create(User $user): bool
     {
-        return $user->can('create_chan');
+        return true;
     }
 
     /**
@@ -39,7 +39,7 @@ class ChanPolicy
      */
     public function update(User $user, Chan $chan): bool
     {
-        return $user->can('update_chan');
+        return true;
     }
 
     /**

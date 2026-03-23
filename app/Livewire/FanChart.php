@@ -116,6 +116,6 @@ class FanChart extends Component
 
     public function getPeopleListProperty(): array
     {
-        return Person::getListOptimized();
+        return Person::getListOptimized()->toArray();
     }
 }

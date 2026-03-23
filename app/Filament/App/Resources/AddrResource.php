@@ -33,22 +33,33 @@ class AddrResource extends AppResource
 
     protected static string | \UnitEnum | null $navigationGroup = '👥 Family Tree';
 
+    public static function canCreate(): bool
+    {
+        return auth()->check();
+    }
+
     #[Override]
     public static function form(Schema $schema): Schema
     {
         return $schema
             ->components([
                 TextInput::make('adr1')
-                ->maxLength(255),
+                    ->label('Address Line 1')
+                    ->maxLength(255),
                 TextInput::make('adr2')
+                    ->label('Address Line 2')
                     ->maxLength(255),
                 TextInput::make('city')
+                    ->label('City')
                     ->maxLength(255),
                 TextInput::make('stae')
+                    ->label('State / County')
                     ->maxLength(255),
                 TextInput::make('post')
+                    ->label('Postal Code')
                     ->maxLength(255),
                 TextInput::make('ctry')
+                    ->label('Country')
                     ->maxLength(255),
             ]);
     }

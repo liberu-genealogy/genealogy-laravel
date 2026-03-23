@@ -92,7 +92,7 @@ class UserChecklistManager extends Component
             ->get();
 
         $persons = Person::orderBy('name')->get();
-        $families = Family::orderBy('name')->get();
+        $families = Family::orderBy('id')->get();
 
         return view('livewire.user-checklist-manager', [
             'checklists' => $checklists,
