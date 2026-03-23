@@ -11,6 +11,7 @@ use Filament\Actions;
 use Filament\Resources\Pages\ViewRecord;
 use Filament\Schemas\Schema;
 use Filament\Infolists\Components\TextEntry;
+use Filament\Infolists\Components\IconEntry;
 use Filament\Infolists\Components\RepeatableEntry;
 
 class ViewChecklistTemplate extends ViewRecord
@@ -72,10 +73,10 @@ class ViewChecklistTemplate extends ViewRecord
                                 TextEntry::make('templateItems_count')
                                     ->counts('templateItems')
                                     ->label('Total Items'),
-                                TextEntry::make('is_public')
+                                IconEntry::make('is_public')
                                     ->boolean()
                                     ->label('Public Template'),
-                                TextEntry::make('is_default')
+                                IconEntry::make('is_default')
                                     ->boolean()
                                     ->label('Default Template'),
                             ]),
@@ -107,7 +108,7 @@ class ViewChecklistTemplate extends ViewRecord
                                         TextEntry::make('category')
                                             ->badge()
                                             ->formatStateUsing(fn (string $state): string => ucfirst($state)),
-                                        TextEntry::make('is_required')
+                                        IconEntry::make('is_required')
                                             ->boolean()
                                             ->label('Required'),
                                         TextEntry::make('order')
