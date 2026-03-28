@@ -2,34 +2,64 @@
 
 namespace App\Models;
 
-use Override;
 use Exception;
 use Filament\Facades\Filament;
+use Illuminate\Support\Facades\Log;
 
-class BatchData extends \FamilyTree365\LaravelGedcom\Utils\BatchData
+/**
+ * Application-level BatchData helper.
+ *
+ * The vendor's FamilyTree365\LaravelGedcom\Utils\BatchData is declared final
+ * and therefore cannot be extended.  This class replicates the upsert logic
+ * from the vendor while injecting the current tenant's team_id so that all
+ * imported records are scoped to the right team.
+ */
+class BatchData
 {
-    #[Override]
-    public static function upsert($modelClass, $conn, array $values, array $uniqueBy, array $update = [])
+    private const int DEFAULT_CHUNK_SIZE = 1000;
+
+    public static function upsert(string $modelClass, string $conn, array $values, array $uniqueBy, array $update = []): bool
     {
-        // error_log("modi upsert");
+        if (empty($values)) {
+            return true;
+        }
+
         $teamId = null;
 
-        // Only try to get tenant if we're in a web context with auth and Filament is properly initialized
+        // Only try to get tenant in a web context where auth and Filament are available
         if (auth()->check() && app()->bound('filament') && Filament::hasTenancy()) {
             try {
                 $tenant = Filament::getTenant();
-                $teamId = $tenant ? $tenant->id : null;
-            } catch (Exception $e) {
-                // Silently handle cases where tenant context is not available
-                $teamId = null;
+                $teamId = $tenant?->id;
+            } catch (Exception) {
+                // Silently fall back when tenant context is unavailable (e.g. queue worker)
             }
         }
 
-        // Add team_id to each data item
+        // Inject team_id into every record so imports land in the correct team
         foreach ($values as &$value) {
             $value['team_id'] = $teamId;
         }
+        unset($value);
 
-        return parent::upsert($modelClass, $conn, $values, $uniqueBy, $update);
+        $chunks  = array_chunk($values, self::DEFAULT_CHUNK_SIZE);
+        $success = true;
+
+        foreach ($chunks as $chunk) {
+            try {
+                $result  = app($modelClass)->on($conn)->upsert($chunk, $uniqueBy, $update);
+                $success = $success && ($result !== false);
+            } catch (\Throwable $e) {
+                Log::error('BatchData::upsert chunk failed', [
+                    'model'      => $modelClass,
+                    'connection' => $conn,
+                    'chunk_size' => count($chunk),
+                    'error'      => $e->getMessage(),
+                ]);
+                $success = false;
+            }
+        }
+
+        return $success;
     }
 }
