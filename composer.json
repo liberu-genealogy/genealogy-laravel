@@ -10,6 +10,7 @@
     "license": "MIT",
     "require": {
         "php": "^8.3",
+        "cweagans/composer-patches": "^1.7",
         "bezhansalleh/filament-shield": "^4.0",
         "filament/filament": "^5.1",
         "filament/spatie-laravel-settings-plugin": "^5.0",
@@ -77,6 +78,14 @@
             "dont-discover": [
                 "liberu-genealogy/laravel-gedcom"
             ]
+        },
+        "patches": {
+            "liberu-genealogy/laravel-gedcom": {
+                "Fix ParentData uid empty string (use ?: instead of ??)": "patches/liberu-genealogy/laravel-gedcom/fix-parent-data-uid-empty-string.patch",
+                "Fix Even.php variable name collision (eventData)": "patches/liberu-genealogy/laravel-gedcom/fix-even-variable-collision.patch",
+                "Fix FamilyData husband/wife lookup by gid": "patches/liberu-genealogy/laravel-gedcom/fix-family-data-gid-lookup.patch",
+                "Fix Fam/Even.php array::class TypeError on non-object events": "patches/liberu-genealogy/laravel-gedcom/fix-fam-even-array-class-error.patch"
+            }
         }
     },
     "config": {
@@ -84,6 +93,7 @@
         "preferred-install": "dist",
         "sort-packages": true,
         "allow-plugins": {
+            "cweagans/composer-patches": true,
             "pestphp/pest-plugin": true,
             "php-http/discovery": true
         }
