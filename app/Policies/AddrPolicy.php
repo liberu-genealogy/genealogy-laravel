@@ -15,7 +15,7 @@ class AddrPolicy
      */
     public function viewAny(User $user): bool
     {
-        return $user->can('view_any_addr');
+        return true;
     }
 
     /**
@@ -23,7 +23,7 @@ class AddrPolicy
      */
     public function view(User $user, Addr $addr): bool
     {
-        return $user->can('view_addr');
+        return true;
     }
 
     /**
@@ -31,7 +31,7 @@ class AddrPolicy
      */
     public function create(User $user): bool
     {
-        return $user->can('create_addr');
+        return true;
     }
 
     /**
@@ -39,7 +39,7 @@ class AddrPolicy
      */
     public function update(User $user, Addr $addr): bool
     {
-        return $user->can('update_addr');
+        return true;
     }
 
     /**

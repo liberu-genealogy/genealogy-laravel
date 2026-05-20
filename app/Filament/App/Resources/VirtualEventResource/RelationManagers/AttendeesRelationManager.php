@@ -2,7 +2,7 @@
 
 namespace App\Filament\App\Resources\VirtualEventResource\RelationManagers;
 
-use Filament\Forms\Components\Section;
+use Filament\Schemas\Components\Section;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\TextInput;
@@ -10,7 +10,7 @@ use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\Toggle;
 use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Columns\BadgeColumn;
+
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Filters\TernaryFilter;
@@ -157,14 +157,15 @@ class AttendeesRelationManager extends RelationManager
                     ->label('Email')
                     ->searchable()
                     ->copyable(),
-                BadgeColumn::make('rsvp_status')
+                TextColumn::make('rsvp_status')
                     ->label('RSVP')
-                    ->colors([
-                        'success' => 'accepted',
-                        'danger' => 'declined',
-                        'warning' => 'maybe',
-                        'gray' => 'pending',
-                    ])
+                    ->badge()
+                    ->color(fn (string $state): string => match ($state) {
+                        'accepted' => 'success',
+                        'declined' => 'danger',
+                        'maybe' => 'warning',
+                        default => 'gray',
+                    })
                     ->formatStateUsing(fn (string $state): string => match ($state) {
                         'accepted' => 'Accepted',
                         'declined' => 'Declined',

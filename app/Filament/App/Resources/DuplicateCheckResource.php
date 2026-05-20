@@ -14,7 +14,7 @@ use App\Models\DuplicateCheck;
 use App\Services\DuplicateCheckerService;
 use Filament\Forms;
 use App\Filament\App\Resources\AppResource;
-use Filament\Forms\Components\Section;
+use Filament\Schemas\Components\Section;
 use Filament\Tables;
 use Filament\Actions;
 use Filament\Tables\Table;

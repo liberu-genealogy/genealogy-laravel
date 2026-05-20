@@ -10,6 +10,12 @@ use Filament\Forms\Components;
 use Filament\Schemas\Schema;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Filament\Actions\Action;
+use Filament\Actions\CreateAction;
+use Filament\Actions\EditAction;
+use Filament\Actions\DeleteAction;
+use Filament\Actions\DeleteBulkAction;
+use Filament\Actions\BulkActionGroup;
 use Illuminate\Support\Facades\Storage;
 
 class PhotosRelationManager extends RelationManager
@@ -64,7 +70,7 @@ class PhotosRelationManager extends RelationManager
                     ->label('Analyzed'),
             ])
             ->headerActions([
-                Tables\Actions\CreateAction::make()
+                CreateAction::make()
                     ->mutateFormDataUsing(function (array $data): array {
                         $data['person_id'] = $this->ownerRecord->id;
                         $data['file_name'] = basename($data['file_path']);
@@ -84,7 +90,7 @@ class PhotosRelationManager extends RelationManager
                     }),
             ])
             ->actions([
-                Tables\Actions\Action::make('analyze')
+                Action::make('analyze')
                     ->label('Analyze')
                     ->icon('heroicon-o-camera')
                     ->color('primary')
@@ -107,15 +113,15 @@ class PhotosRelationManager extends RelationManager
                                 ->send();
                         }
                     }),
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make()
+                EditAction::make(),
+                DeleteAction::make()
                     ->before(function (PersonPhoto $record) {
                         Storage::disk('public')->delete($record->file_path);
                     }),
             ])
             ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make()
+                BulkActionGroup::make([
+                    DeleteBulkAction::make()
                         ->before(function ($records) {
                             foreach ($records as $record) {
                                 Storage::disk('public')->delete($record->file_path);

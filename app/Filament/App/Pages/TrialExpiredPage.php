@@ -32,13 +32,13 @@ class TrialExpiredPage extends Page
 
         // If premium is globally enabled or user is actively premium, go to dashboard
         if (config('premium.enabled') || $user->isPremium()) {
-            $this->redirect(route('filament.app.pages.premium-dashboard'));
+            $this->redirect(route('filament.app.pages.premium-dashboard', ['tenant' => auth()->user()->currentTeam]));
             return;
         }
 
         // If user never started a trial, redirect to subscription page
         if (! $user->hasExpiredTrial()) {
-            $this->redirect(route('filament.app.pages.subscription'));
+            $this->redirect(route('filament.app.pages.subscription', ['tenant' => auth()->user()->currentTeam]));
         }
     }
 
@@ -75,8 +75,8 @@ class TrialExpiredPage extends Page
             $user = Auth::user();
             $priceId = config('subscription.premium.stripe_price_id', 'price_premium_monthly');
 
-            $successUrl = route('filament.app.pages.premium-dashboard');
-            $cancelUrl = route('filament.app.pages.trial-expired');
+            $successUrl = route('filament.app.pages.premium-dashboard', ['tenant' => auth()->user()->currentTeam]);
+            $cancelUrl = route('filament.app.pages.trial-expired', ['tenant' => auth()->user()->currentTeam]);
 
             // Use Cashier to create a Stripe Checkout Session for the subscription
             $checkout = $user->newSubscription('premium', $priceId)

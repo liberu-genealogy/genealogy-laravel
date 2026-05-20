@@ -34,13 +34,13 @@ class PremiumDashboardPage extends Page
 
             // Trial expired – send to the card-details / trial-expired page
             if ($user->hasExpiredTrial()) {
-                $this->redirect(route('filament.app.pages.trial-expired'));
+                $this->redirect(route('filament.app.pages.trial-expired', ['tenant' => auth()->user()->currentTeam]));
                 return;
             }
 
             // Not premium at all – send to subscription page
             if (! $user->isPremium()) {
-                $this->redirect(route('filament.app.pages.subscription'));
+                $this->redirect(route('filament.app.pages.subscription', ['tenant' => auth()->user()->currentTeam]));
                 return;
             }
         }

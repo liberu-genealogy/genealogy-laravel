@@ -23,6 +23,8 @@ class DatabaseResource extends AppResource
 {
     protected static ?string $model = Tree::class;
 
+    protected static bool $isScopedToTenant = false;
+
     protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-circle-stack';
 
     protected static ?string $navigationLabel = 'Databases';

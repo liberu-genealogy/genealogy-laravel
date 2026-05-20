@@ -110,6 +110,6 @@ final class DescendantChartComponent extends Component
 
     public function getPeopleListProperty(): array
     {
-        return Person::getListOptimized();
+        return Person::getListOptimized()->toArray();
     }
 }

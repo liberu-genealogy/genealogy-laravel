@@ -35,18 +35,27 @@ class ChanResource extends AppResource
 
     // protected static ?string $tenantRelationshipName = 'team';
 
+    public static function canCreate(): bool
+    {
+        return auth()->check();
+    }
+
     #[Override]
     public static function form(Schema $schema): Schema
     {
         return $schema
         ->components([
             TextInput::make('group')
+                ->label('Group')
                 ->maxLength(255),
             TextInput::make('gid')
+                ->label('Group ID')
                 ->numeric(),
             TextInput::make('date')
+                ->label('Change Date')
                 ->maxLength(255),
             TextInput::make('time')
+                ->label('Change Time')
                 ->maxLength(255),
         ]);
     }

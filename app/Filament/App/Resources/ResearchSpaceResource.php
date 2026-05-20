@@ -15,6 +15,7 @@ use Filament\Forms\Components\Toggle;
 use App\Filament\App\Resources\AppResource;
 use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Columns\IconColumn;
 
 class ResearchSpaceResource extends AppResource
 {
@@ -51,7 +52,7 @@ class ResearchSpaceResource extends AppResource
                 TextColumn::make('id')->label('ID')->sortable(),
                 TextColumn::make('name')->searchable()->sortable(),
                 TextColumn::make('owner.name')->label('Owner')->sortable(),
-                TextColumn::make('is_private')->boolean()->label('Private'),
+                IconColumn::make('is_private')->boolean()->label('Private'),
                 TextColumn::make('created_at')->label('Created')->dateTime(),
             ]);
     }
