@@ -12,7 +12,7 @@
         "axios": "^1.10.0",
         "concurrently": "^9.2.0",
         "laravel-vite-plugin": "^3.0.0",
-        "tailwindcss": "^4.1.11",
+        "tailwindcss": "^4.3.0",
         "vite": "^8.0.1"
     },
     "dependencies": {
