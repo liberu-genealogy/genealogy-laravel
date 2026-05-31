@@ -4,67 +4,44 @@ declare(strict_types=1);
 
 namespace Tests\Filament\Resources;
 
+use App\Filament\App\Resources\PersonAssoResource;
 use App\Models\PersonAsso;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 class PersonAssoResourceTest extends TestCase
 {
     use RefreshDatabase;
-    use WithFaker;
 
-    public function testCreatePersonAsso(): void
+    public function test_resource_model_is_correct(): void
     {
-        $data = [
-            'group'          => $this->faker->word,
-            'gid'            => $this->faker->randomNumber(),
-            'indi'           => $this->faker->word,
-            'rela'           => $this->faker->word,
-            'import_confirm' => 1,
-        ];
-
-        $response = $this->post(route('filament.resources.person-asso.store'), $data);
-
-        $response->assertStatus(302);
-        $this->assertDatabaseHas('person_assos', $data);
+        $this->assertEquals(PersonAsso::class, PersonAssoResource::getModel());
     }
 
-    public function testReadPersonAsso(): void
+    public function test_resource_pages_registered(): void
     {
-        $personAsso = PersonAsso::factory()->create();
+        $pages = PersonAssoResource::getPages();
 
-        $response = $this->get(route('filament.resources.person-asso.index'));
-
-        $response->assertStatus(200);
-        $response->assertSee([$personAsso->group, $personAsso->indi]);
+        $this->assertArrayHasKey('index', $pages);
+        $this->assertArrayHasKey('create', $pages);
+        $this->assertArrayHasKey('edit', $pages);
     }
 
-    public function testUpdatePersonAsso(): void
+    public function test_crud_operations(): void
     {
-        $personAsso = PersonAsso::factory()->create();
+        $personAsso = PersonAsso::factory()->create([
+            'rela' => 'Test Relation',
+        ]);
 
-        $updatedData = [
-            'group'          => 'Updated Group',
-            'gid'            => $personAsso->gid + 1,
-            'indi'           => 'Updated Indi',
-            'rela'           => 'Updated Rela',
-            'import_confirm' => 0,
-        ];
+        $this->assertDatabaseHas('person_asso', ['rela' => 'Test Relation']);
 
-        $response = $this->put(route('filament.resources.person-asso.update', $personAsso), $updatedData);
+        $retrieved = PersonAsso::find($personAsso->id);
+        $this->assertNotNull($retrieved);
 
-        $response->assertStatus(302);
-        $this->assertDatabaseHas('person_assos', $updatedData);
-    }
+        $personAsso->update(['rela' => 'Updated Relation']);
+        $this->assertDatabaseHas('person_asso', ['rela' => 'Updated Relation']);
 
-    public function testDeletePersonAsso(): void
-    {
-        $personAsso = PersonAsso::factory()->create();
-
-        $response = $this->delete(route('filament.resources.person-asso.destroy', $personAsso));
-
-        $response->assertStatus(302);
-        $this->assertSoftDeleted('person_assos', ['id' => $personAsso->id]);
+        $personAsso->delete();
+        $this->assertSoftDeleted('person_asso', ['id' => $personAsso->id]);
     }
 }

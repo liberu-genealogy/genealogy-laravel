@@ -21,9 +21,9 @@ class CreateRepositoriesTable extends Migration
             $table->text('description')->nullable();
             $table->dateTime('date')->nullable();
             $table->integer('is_active')->nullable();
-            $table->foreignId('type_id')->constrained('types')->nullable();
+            $table->foreignId('type_id')->nullable()->constrained('types');
             $table->string('repo')->nullable();
-            $table->foreignId('addr_id')->constrained('addrs')->nullable();
+            $table->foreignId('addr_id')->nullable()->constrained('addrs');
             $table->string('rin')->nullable();
             $table->string('phon')->nullable();
             $table->string('email')->nullable();

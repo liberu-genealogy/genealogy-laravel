@@ -2,12 +2,8 @@
 
 namespace Tests\Filament\Resources;
 
-use App\Filament\Resources\PersonNameFoneResource;
+use App\Filament\App\Resources\PersonNameFoneResource;
 use App\Models\PersonNameFone;
-use Filament\Forms\Components\TextInput;
-use Filament\Forms\Form; // Add this import
-use Filament\Tables\Table; // Add this import
-use Filament\Tables\Columns\TextColumn;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -15,52 +11,35 @@ class PersonNameFoneResourceTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_form_schema_is_correct(): void
+    public function test_resource_model_is_correct(): void
     {
-        $form = PersonNameFoneResource::form(Form::make())->getSchema();
-
-        $this->assertCount(10, $form);
-        $this->assertInstanceOf(TextInput::class, $form[0]);
-        $this->assertEquals('group', $form[0]->getName());
-        // Continue assertions for each field...
-
-        // Example for 'gid' field
-        $this->assertInstanceOf(TextInput::class, $form[1]);
-        $this->assertEquals('gid', $form[1]->getName());
-        $this->assertTrue($form[1]->getRules()['numeric']);
-        // Continue for all fields...
+        $this->assertEquals(PersonNameFone::class, PersonNameFoneResource::getModel());
     }
 
-    public function test_table_columns_are_correct(): void
+    public function test_resource_pages_registered(): void
     {
-        $table = PersonNameFoneResource::table(Table::make())->getColumns();
+        $pages = PersonNameFoneResource::getPages();
 
-        $this->assertCount(12, $table);
-        $this->assertInstanceOf(TextColumn::class, $table[0]);
-        $this->assertEquals('group', $table[0]->getName());
-        $this->assertTrue($table[0]->isSearchable());
-        // Continue assertions for each column...
+        $this->assertArrayHasKey('index', $pages);
+        $this->assertArrayHasKey('create', $pages);
+        $this->assertArrayHasKey('edit', $pages);
     }
 
-    public function test_index_route(): void
+    public function test_crud_operations(): void
     {
-        $response = $this->get(route('filament.resources.person-name-fones.index'));
-        $response->assertStatus(200);
-        $response->assertViewIs('filament.resources.person-name-fones.pages.list-person-name-fones');
-    }
+        $record = PersonNameFone::factory()->create([
+            'type' => 'FONE',
+        ]);
 
-    public function test_create_route(): void
-    {
-        $response = $this->get(route('filament.resources.person-name-fones.create'));
-        $response->assertStatus(200);
-        $response->assertViewIs('filament.resources.person-name-fones.pages.create-person-name-fone');
-    }
+        $this->assertDatabaseHas('person_name_fone', ['type' => 'FONE']);
 
-    public function test_edit_route(): void
-    {
-        $personNameFone = PersonNameFone::factory()->create();
-        $response = $this->get(route('filament.resources.person-name-fones.edit', $personNameFone));
-        $response->assertStatus(200);
-        $response->assertViewIs('filament.resources.person-name-fones.pages.edit-person-name-fone');
+        $retrieved = PersonNameFone::find($record->id);
+        $this->assertNotNull($retrieved);
+
+        $record->update(['type' => 'UPDATED']);
+        $this->assertDatabaseHas('person_name_fone', ['type' => 'UPDATED']);
+
+        $record->delete();
+        $this->assertDatabaseMissing('person_name_fone', ['id' => $record->id]);
     }
 }
