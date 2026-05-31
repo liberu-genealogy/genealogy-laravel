@@ -142,7 +142,6 @@ class DnaTriangulationServiceTest extends TestCase
 
         $reflection = new \ReflectionClass($this->service);
         $method = $reflection->getMethod('findTriangulatedChromosomes');
-        $method->setAccessible(true);
 
         $result = $method->invoke($this->service, $breakdown12, $breakdown13, $breakdown23);
 
@@ -165,7 +164,6 @@ class DnaTriangulationServiceTest extends TestCase
 
         $reflection = new \ReflectionClass($this->service);
         $method = $reflection->getMethod('calculateTriangulationScore');
-        $method->setAccessible(true);
 
         $score = $method->invoke($this->service, $triangulatedChromosomes);
 
@@ -176,7 +174,6 @@ class DnaTriangulationServiceTest extends TestCase
     {
         $reflection = new \ReflectionClass($this->service);
         $method = $reflection->getMethod('calculateTriangulationScore');
-        $method->setAccessible(true);
 
         $score = $method->invoke($this->service, []);
 

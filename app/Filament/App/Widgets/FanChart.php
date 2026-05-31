@@ -9,6 +9,7 @@ use Filament\Widgets\Widget;
 
 class FanChart extends Widget
 {
+    #[\Override]
     protected string $view = 'filament.widgets.fan-chart-widget';
 
     public function getData(): array

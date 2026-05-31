@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Modules\Person\Http\Controllers;
 
 use Illuminate\Http\Request;

@@ -6,9 +6,9 @@ use Illuminate\Support\Facades\Schema;
 
 class CreateLoginsTable extends Migration
 {
-    public function up()
+    public function up(): void
     {
-        Schema::create('logins', function (Blueprint $table) {
+        Schema::create('logins', function (Blueprint $table): void {
             $table->bigIncrements('id');
             $table->foreignId('user_id')->constrained('users')->index();
             $table->string('ip');
@@ -18,7 +18,7 @@ class CreateLoginsTable extends Migration
         });
     }
 
-    public function down()
+    public function down(): void
     {
         Schema::dropIfExists('logins');
     }

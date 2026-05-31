@@ -32,7 +32,7 @@ Broadcast::channel('research-space.{id}', function ($user, $id) {
         return ResearchSpaceCollaborator::where('research_space_id', $id)
             ->where('user_id', $user->id)
             ->exists();
-    } catch (\Throwable $e) {
+    } catch (\Throwable) {
         return false;
     }
 });

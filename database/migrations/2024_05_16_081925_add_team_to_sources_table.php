@@ -10,7 +10,7 @@ return new class() extends Migration {
      */
     public function up(): void
     {
-        Schema::table('sources', function (Blueprint $table) {
+        Schema::table('sources', function (Blueprint $table): void {
             $table->foreignId('team_id')->nullable()->constrained()->onDelete('cascade');
         });
     }
@@ -20,7 +20,7 @@ return new class() extends Migration {
      */
     public function down(): void
     {
-        Schema::table('sources', function (Blueprint $table) {
+        Schema::table('sources', function (Blueprint $table): void {
             //
         });
     }

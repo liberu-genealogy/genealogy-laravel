@@ -52,9 +52,7 @@ class DocumentTranscriptionComponentTest extends TestCase
         Livewire::test(DocumentTranscriptionComponent::class)
             ->assertStatus(200)
             ->call('loadTranscriptions')
-            ->assertSet('transcriptions', function ($value) use ($transcriptions) {
-                return count($value) === 3;
-            });
+            ->assertSet('transcriptions', fn($value) => count($value) === 3);
     }
 
     public function testCanUploadDocument(): void
@@ -66,9 +64,7 @@ class DocumentTranscriptionComponentTest extends TestCase
         Livewire::test(DocumentTranscriptionComponent::class)
             ->set('document', $file)
             ->call('uploadDocument')
-            ->assertSet('successMessage', function ($value) {
-                return str_contains($value, 'uploaded');
-            });
+            ->assertSet('successMessage', fn($value) => str_contains((string) $value, 'uploaded'));
 
         // Verify transcription was created
         $this->assertDatabaseHas('document_transcriptions', [
@@ -146,9 +142,7 @@ class DocumentTranscriptionComponentTest extends TestCase
             ->set('transcriptionText', $correctedText)
             ->call('saveCorrection')
             ->assertSet('isEditing', false)
-            ->assertSet('successMessage', function ($value) {
-                return str_contains($value, 'saved');
-            });
+            ->assertSet('successMessage', fn($value) => str_contains((string) $value, 'saved'));
 
         // Verify correction was saved
         $this->assertDatabaseHas('transcription_corrections', [
@@ -175,9 +169,7 @@ class DocumentTranscriptionComponentTest extends TestCase
 
         Livewire::test(DocumentTranscriptionComponent::class)
             ->call('deleteTranscription', $transcription->id)
-            ->assertSet('successMessage', function ($value) {
-                return str_contains($value, 'deleted');
-            });
+            ->assertSet('successMessage', fn($value) => str_contains((string) $value, 'deleted'));
 
         // Verify transcription was soft deleted
         $this->assertSoftDeleted('document_transcriptions', [
@@ -201,9 +193,7 @@ class DocumentTranscriptionComponentTest extends TestCase
             ->create(['team_id' => $otherTeam->id]);
 
         Livewire::test(DocumentTranscriptionComponent::class)
-            ->assertSet('transcriptions', function ($value) {
-                return count($value) === 2;
-            });
+            ->assertSet('transcriptions', fn($value) => count($value) === 2);
     }
 
     public function testStatsAreCalculatedCorrectly(): void

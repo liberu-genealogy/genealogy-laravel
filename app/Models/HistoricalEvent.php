@@ -11,8 +11,10 @@ class HistoricalEvent extends Model
 {
     use HasFactory;
 
+    #[\Override]
     protected $table = 'historical_events';
 
+    #[\Override]
     protected $fillable = [
         'title',
         'description',
@@ -27,6 +29,7 @@ class HistoricalEvent extends Model
         'source_url',
     ];
 
+    #[\Override]
     protected $casts = [
         'date' => 'date',
         'latitude' => 'decimal:6',
@@ -41,11 +44,11 @@ class HistoricalEvent extends Model
         return $query->whereBetween('date', [$start, $end]);
     }
 
-    public static function yearFromDate($date)
+    public static function yearFromDate(\DateTimeInterface|\Carbon\WeekDay|\Carbon\Month|string|int|float|null $date)
     {
         try {
             return Carbon::parse($date)->year;
-        } catch (Throwable $e) {
+        } catch (Throwable) {
             return null;
         }
     }

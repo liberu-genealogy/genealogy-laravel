@@ -9,6 +9,7 @@ use Filament\Widgets\Widget;
 
 class PedigreeChartWidget extends Widget
 {
+    #[\Override]
     protected string $view = 'filament.widgets.pedigree-chart-widget';
 
     public function getData(): array
@@ -44,6 +45,7 @@ class PedigreeChartWidget extends Widget
         $this->dispatch('pan', direction: $direction);
     }
 
+    #[\Override]
     protected function getListeners()
     {
         return [

@@ -10,9 +10,9 @@ return new class() extends Migration {
      *
      * @return void
      */
-    public function up()
+    public function up(): void
     {
-        Schema::create('tenant_people', function (Blueprint $table) {
+        Schema::create('tenant_people', function (Blueprint $table): void {
             $table->bigIncrements('id');
             $table->integer('tenant_person_id')->unique(); // unknown table
             $table->foreignId('tenant_id')->constrained('tenants')->unique();
@@ -71,7 +71,7 @@ return new class() extends Migration {
      *
      * @return void
      */
-    public function down()
+    public function down(): void
     {
         Schema::dropIfExists('tenant_people');
     }

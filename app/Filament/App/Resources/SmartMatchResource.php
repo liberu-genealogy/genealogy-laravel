@@ -25,16 +25,22 @@ use Illuminate\Support\Facades\Auth;
 
 class SmartMatchResource extends AppResource
 {
+    #[\Override]
     protected static ?string $model = SmartMatch::class;
 
+    #[\Override]
     protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-magnifying-glass';
 
+    #[\Override]
     protected static ?string $navigationLabel = 'Smart Matches';
 
+    #[\Override]
     protected static string | \UnitEnum | null $navigationGroup =  '🔍 Research & Analysis';
 
+    #[\Override]
     protected static ?int $navigationSort = 4;
 
+    #[\Override]
     public static function shouldRegisterNavigation(): bool
     {
         if (config('premium.enabled')) {
@@ -43,6 +49,7 @@ class SmartMatchResource extends AppResource
         return auth()->user()?->isPremium() ?? false;
     }
 
+    #[\Override]
     public static function canAccess(): bool
     {
         if (config('premium.enabled')) {
@@ -51,11 +58,13 @@ class SmartMatchResource extends AppResource
         return Auth::user()?->isPremium() ?? false;
     }
 
+    #[\Override]
     public static function form(Schema $schema): Schema
     {
         return $schema->components([]);
     }
 
+    #[\Override]
     public static function table(Table $table): Table
     {
         return $table
@@ -184,6 +193,7 @@ class SmartMatchResource extends AppResource
             ->modifyQueryUsing(fn (Builder $query) => $query->where('user_id', Auth::id()));
     }
 
+    #[\Override]
     public static function getPages(): array
     {
         return [

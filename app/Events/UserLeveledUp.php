@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Events;
 
 use App\Models\User;
@@ -15,18 +17,11 @@ class UserLeveledUp implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public User $user;
-    public int $oldLevel;
-    public int $newLevel;
-
     /**
      * Create a new event instance.
      */
-    public function __construct(User $user, int $oldLevel, int $newLevel)
+    public function __construct(public User $user, public int $oldLevel, public int $newLevel)
     {
-        $this->user = $user;
-        $this->oldLevel = $oldLevel;
-        $this->newLevel = $newLevel;
     }
 
     /**

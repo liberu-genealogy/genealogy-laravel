@@ -10,24 +10,28 @@ use App\Modules\BaseModule;
 
 class TreeModule extends BaseModule
 {
+    #[\Override]
     protected function onEnable(): void
     {
         // Register tree-specific services
         $this->registerTreeServices();
     }
 
+    #[\Override]
     protected function onDisable(): void
     {
         // Clean up tree-specific services
         $this->unregisterTreeServices();
     }
 
+    #[\Override]
     protected function onInstall(): void
     {
         // Install tree-related assets and configurations
         $this->installTreeAssets();
     }
 
+    #[\Override]
     protected function onUninstall(): void
     {
         // Remove tree-related assets
@@ -39,13 +43,9 @@ class TreeModule extends BaseModule
      */
     protected function registerTreeServices(): void
     {
-        app()->singleton('genealogy.tree.builder', function ($app) {
-            return new TreeBuilderService();
-        });
+        app()->singleton('genealogy.tree.builder', fn($app) => new TreeBuilderService());
 
-        app()->singleton('genealogy.tree.renderer', function ($app) {
-            return new TreeRenderService();
-        });
+        app()->singleton('genealogy.tree.renderer', fn($app) => new TreeRenderService());
     }
 
     /**

@@ -13,6 +13,7 @@ class ResearchSpace extends Model
 {
     use HasFactory, SoftDeletes, BelongsToTenant;
 
+    #[\Override]
     protected $fillable = [
         'name',
         'slug',
@@ -24,6 +25,7 @@ class ResearchSpace extends Model
         'team_id',
     ];
 
+    #[\Override]
     protected $casts = [
         'is_private' => 'boolean',
         'settings' => 'array',

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Database\Factories;
 
 use App\Models\CalendarEvent;
@@ -15,6 +17,7 @@ class CalendarEventFactory extends Factory
      *
      * @var string
      */
+    #[\Override]
     protected $model = CalendarEvent::class;
 
     /**

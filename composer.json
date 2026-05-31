@@ -11,30 +11,35 @@
     "require": {
         "php": "^8.5",
         "bezhansalleh/filament-shield": "^4.0",
-        "filament/filament": "^5.1",
-        "filament/spatie-laravel-settings-plugin": "^5.0",
+        "bursteri/socialstream": "^7.0",
+        "filament/filament": "^5.6",
+        "filament/spatie-laravel-settings-plugin": "^5.6",
         "guzzlehttp/guzzle": "^7.8",
         "laravel/cashier": "^16.0",
         "laravel/framework": "^13.0",
+        "laravel/horizon": "^5.0",
         "laravel/jetstream": "^5.0",
+        "laravel/octane": "^2.0",
+        "laravel/reverb": "^1.0",
         "laravel/sanctum": "^4.0",
         "laravel/tinker": "^3.0",
-        "bursteri/socialstream": "^7.0",
         "liberu-genealogy/laravel-dna": "^2.0",
         "liberu-genealogy/laravel-gedcom": "^8.5",
         "liberu/laravel-gramps-xml": "dev-main",
         "livewire/livewire": "^4.0",
         "spatie/laravel-menu": "^4.0",
-        "spatie/laravel-permission": "*"
+        "spatie/laravel-permission": "^7.0",
+        "spiral/roadrunner-cli": "^2.7",
+        "spiral/roadrunner-http": "^4.1"
     },
     "require-dev": {
         "fakerphp/faker": "^1.23",
         "laravel/pint": "^1.13",
         "laravel/sail": "^1.41",
         "mockery/mockery": "^1.6",
-        "nunomaduro/collision": "^8.6",
-        "phpunit/phpunit": "^12.1.5",
-        "rector/rector": "*"
+        "nunomaduro/collision": "^8.9",
+        "phpunit/phpunit": "^13.0",
+        "rector/rector": "^2.0"
     },
     "repositories": [
         {

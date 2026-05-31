@@ -8,7 +8,7 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('smart_matches', function (Blueprint $table) {
+        Schema::create('smart_matches', function (Blueprint $table): void {
             $table->id();
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
             $table->foreignId('person_id')->constrained()->cascadeOnDelete();

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
@@ -12,6 +14,7 @@ class SetupGamificationCommand extends Command
      *
      * @var string
      */
+    #[\Override]
     protected $signature = 'gamification:setup {--fresh : Run fresh migrations}';
 
     /**
@@ -19,12 +22,13 @@ class SetupGamificationCommand extends Command
      *
      * @var string
      */
+    #[\Override]
     protected $description = 'Set up the gamification system by running migrations and seeding achievements';
 
     /**
      * Execute the console command.
      */
-    public function handle()
+    public function handle(): int
     {
         $this->info('Setting up gamification system...');
 

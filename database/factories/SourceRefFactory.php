@@ -16,6 +16,7 @@ class SourceRefFactory extends Factory
      *
      * @var string
      */
+    #[\Override]
     protected $model = SourceRef::class;
 
     /**

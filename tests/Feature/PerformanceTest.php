@@ -46,6 +46,9 @@ class PerformanceTest extends TestCase
         $queries = DB::getQueryLog();
 
         $this->assertCount(1, $queries);
-        $this->assertStringContainsString('select `id`, `givn`, `surn`, `sex`, `child_in_family_id`, `birthday`, `deathday`', $queries[0]['query']);
+        // Quote character differs between drivers: MySQL uses backticks, SQLite uses double quotes
+        $query = $queries[0]['query'];
+        $normalized = str_replace(['"', '`'], '', $query);
+        $this->assertStringContainsString('select id, givn, surn, sex, child_in_family_id, birthday, deathday', $normalized);
     }
 }

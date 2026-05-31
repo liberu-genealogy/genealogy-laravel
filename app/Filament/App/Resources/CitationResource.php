@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Filament\App\Resources;
 
 use Override;
@@ -27,12 +29,16 @@ use Filament\Tables\Table;
 
 class CitationResource extends AppResource
 {
+    #[\Override]
     protected static ?string $model = Citation::class;
 
+    #[\Override]
     protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-academic-cap';
 
+    #[\Override]
     protected static ?string $navigationLabel = 'Citation';
 
+    #[\Override]
     protected static string | \UnitEnum | null $navigationGroup = '🔍 Research & Analysis';
 
     #[Override]
@@ -121,6 +127,7 @@ class CitationResource extends AppResource
         ];
     }
 
+    #[\Override]
     public static function getPages(): array
     {
         return [

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Filament\App\Pages;
 
 use App\Filament\App\Widgets\FamilyStatsWidget;
@@ -11,11 +13,16 @@ use Filament\Widgets\StatsOverviewWidget\Stat;
 
 class Dashboard extends BaseDashboard
 {
+    #[\Override]
     protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-home';
+    #[\Override]
     protected static ?string $navigationLabel = 'Dashboard';
+    #[\Override]
     protected static string | \UnitEnum | null $navigationGroup = '🏠 Dashboard';
+    #[\Override]
     protected static ?int $navigationSort = 1;
 
+    #[\Override]
     public function getWidgets(): array
     {
         return [
@@ -26,6 +33,7 @@ class Dashboard extends BaseDashboard
         ];
     }
 
+    #[\Override]
     public function getColumns(): int|array
     {
         return [

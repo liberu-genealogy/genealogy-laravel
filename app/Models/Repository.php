@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
 use App\Traits\BelongsToTenant;
@@ -16,16 +18,20 @@ class Repository extends Model
      *
      * @var string
      */
+    #[\Override]
     protected $keyType = 'integer';
 
+    #[\Override]
     protected $fillable = ['repo', 'name', 'addr_id', 'rin', 'phon', 'email', 'fax', 'www', 'name', 'description', 'type_id', 'is_active'];
 
+    #[\Override]
     protected $attributes = ['is_active' => false];
 
     public function sources()
     {
         return $this->hasMany(Source::class);
     }
+    #[\Override]
     protected function casts(): array
     {
         return ['is_active' => 'boolean'];

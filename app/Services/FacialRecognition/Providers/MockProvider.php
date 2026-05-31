@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Services\FacialRecognition\Providers;
 
 use App\Services\FacialRecognition\FacialRecognitionProviderInterface;
@@ -16,18 +18,18 @@ class MockProvider implements FacialRecognitionProviderInterface
         Log::info('MockProvider: Detecting faces in image', ['path' => $imagePath]);
 
         // Simulate detecting 1-3 random faces
-        $faceCount = rand(1, 3);
+        $faceCount = random_int(1, 3);
         $faces = [];
 
         for ($i = 0; $i < $faceCount; $i++) {
             $faces[] = [
                 'bounding_box' => [
-                    'left' => rand(10, 40) / 100,
-                    'top' => rand(10, 40) / 100,
-                    'width' => rand(15, 30) / 100,
-                    'height' => rand(20, 35) / 100,
+                    'left' => random_int(10, 40) / 100,
+                    'top' => random_int(10, 40) / 100,
+                    'width' => random_int(15, 30) / 100,
+                    'height' => random_int(20, 35) / 100,
                 ],
-                'confidence' => rand(85, 99) + (rand(0, 99) / 100),
+                'confidence' => random_int(85, 99) + (random_int(0, 99) / 100),
                 'face_id' => 'mock_face_' . uniqid(),
             ];
         }
@@ -47,11 +49,11 @@ class MockProvider implements FacialRecognitionProviderInterface
         // Simulate some matches with varying confidence
         foreach ($faceEncodings as $encoding) {
             // 60% chance of a match
-            if (rand(1, 100) <= 60) {
+            if (random_int(1, 100) <= 60) {
                 $matches[] = [
                     'person_id' => $encoding['person_id'],
-                    'confidence' => rand(70, 95) + (rand(0, 99) / 100),
-                    'face_index' => rand(0, 2),
+                    'confidence' => random_int(70, 95) + (random_int(0, 99) / 100),
+                    'face_index' => random_int(0, 2),
                 ];
             }
         }

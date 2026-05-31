@@ -9,14 +9,13 @@ use Carbon\Carbon;
 
 class GoogleMeetService implements VideoConferencingInterface
 {
-    protected string $baseUrl;
+    protected string $baseUrl = 'https://www.googleapis.com/calendar/v3';
     protected string $clientId;
     protected string $clientSecret;
     protected string $refreshToken;
 
     public function __construct()
     {
-        $this->baseUrl = 'https://www.googleapis.com/calendar/v3';
         $this->clientId = config('services.google.client_id', '');
         $this->clientSecret = config('services.google.client_secret', '');
         $this->refreshToken = config('services.google.refresh_token', '');
@@ -176,23 +175,19 @@ class GoogleMeetService implements VideoConferencingInterface
         $event = $response->json();
         $attendees = $event['attendees'] ?? [];
 
-        return array_map(function ($attendee) {
-            return [
-                'name' => $attendee['displayName'] ?? $attendee['email'],
-                'email' => $attendee['email'],
-                'response_status' => $attendee['responseStatus'] ?? 'needsAction',
-                'platform_data' => $attendee,
-            ];
-        }, $attendees);
+        return array_map(fn(array $attendee) => [
+            'name' => $attendee['displayName'] ?? $attendee['email'],
+            'email' => $attendee['email'],
+            'response_status' => $attendee['responseStatus'] ?? 'needsAction',
+            'platform_data' => $attendee,
+        ], $attendees);
     }
 
     public function sendInvitations(string $meetingId, array $attendeeEmails): bool
     {
         $this->validateConfiguration();
 
-        $attendees = array_map(function ($email) {
-            return ['email' => $email];
-        }, $attendeeEmails);
+        $attendees = array_map(fn($email) => ['email' => $email], $attendeeEmails);
 
         $response = Http::withHeaders([
             'Authorization' => 'Bearer ' . $this->getAccessToken(),
@@ -215,9 +210,9 @@ class GoogleMeetService implements VideoConferencingInterface
 
     public function isConfigured(): bool
     {
-        return !empty($this->clientId) && 
-               !empty($this->clientSecret) && 
-               !empty($this->refreshToken);
+        return $this->clientId !== '' && $this->clientId !== '0' && 
+               ($this->clientSecret !== '' && $this->clientSecret !== '0') && 
+               ($this->refreshToken !== '' && $this->refreshToken !== '0');
     }
 
     protected function validateConfiguration(): void

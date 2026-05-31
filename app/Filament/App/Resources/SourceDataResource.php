@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Filament\App\Resources;
 
 use Override;
@@ -24,10 +26,14 @@ use Filament\Tables\Table;
 
 class SourceDataResource extends AppResource
 {
+    #[\Override]
     protected static ?string $model = SourceData::class;
 
+    #[\Override]
     protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-circle-stack';
+    #[\Override]
     protected static ?string $navigationLabel = 'Source Data';
+    #[\Override]
     protected static string | \UnitEnum | null $navigationGroup = '🔍 Research & Analysis';
 
     #[Override]
@@ -94,6 +100,7 @@ class SourceDataResource extends AppResource
         ];
     }
 
+    #[\Override]
     public static function getPages(): array
     {
         return [

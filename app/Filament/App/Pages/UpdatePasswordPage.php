@@ -16,14 +16,20 @@ use Illuminate\Validation\Rules\Password;
 class UpdatePasswordPage extends Page
 {
     use InteractsWithForms;
+    #[\Override]
     protected string $view = 'filament.pages.profile.update-password';
 
+    #[\Override]
     protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-lock-closed';
+    #[\Override]
     protected static ?string $navigationLabel = 'Update Password';
+    #[\Override]
     protected static string | \UnitEnum | null $navigationGroup = '👤 Account & Settings';
 
+    #[\Override]
     protected static ?int $navigationSort = 1;
 
+    #[\Override]
     protected static ?string $title = 'Update Password';
 
     public ?array $data = [];

@@ -37,16 +37,14 @@ class FacialRecognitionReview extends Component implements HasForms
         $teamId = auth()->user()->currentTeam?->id;
         $tags = $this->facialRecognitionService->getPendingTags($teamId);
         
-        $this->pendingTags = $tags->map(function ($tag) {
-            return [
-                'id' => $tag->id,
-                'photo_url' => $tag->photo->url,
-                'person_id' => $tag->person_id,
-                'person_name' => $tag->person?->fullname(),
-                'confidence' => $tag->confidence,
-                'bounding_box' => $tag->bounding_box,
-            ];
-        })->toArray();
+        $this->pendingTags = $tags->map(fn($tag) => [
+            'id' => $tag->id,
+            'photo_url' => $tag->photo->url,
+            'person_id' => $tag->person_id,
+            'person_name' => $tag->person?->fullname(),
+            'confidence' => $tag->confidence,
+            'bounding_box' => $tag->bounding_box,
+        ])->toArray();
 
         $this->currentTagIndex = 0;
         $this->selectedPersonId = $this->pendingTags[0]['person_id'] ?? null;
@@ -147,7 +145,7 @@ class FacialRecognitionReview extends Component implements HasForms
         return $this->pendingTags[$this->currentTagIndex] ?? null;
     }
 
-    public function render()
+    public function render(): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
     {
         $currentTag = $this->getCurrentTag();
         $teamId = auth()->user()->currentTeam?->id;
@@ -155,7 +153,7 @@ class FacialRecognitionReview extends Component implements HasForms
         $peopleOptions = Person::query()
             ->when($teamId, fn($q) => $q->where('team_id', $teamId))
             ->get()
-            ->mapWithKeys(fn($person) => [$person->id => $person->fullname()])
+            ->mapWithKeys(fn($person): array => [$person->id => $person->fullname()])
             ->toArray();
 
         return view('livewire.facial-recognition-review', [

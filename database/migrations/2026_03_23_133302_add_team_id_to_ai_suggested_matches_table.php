@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('ai_suggested_matches', function (Blueprint $table) {
+        Schema::table('ai_suggested_matches', function (Blueprint $table): void {
             $table->unsignedBigInteger('team_id')->nullable()->after('id')->index();
             $table->foreign('team_id')->references('id')->on('teams')->onDelete('cascade');
         });
@@ -22,7 +22,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('ai_suggested_matches', function (Blueprint $table) {
+        Schema::table('ai_suggested_matches', function (Blueprint $table): void {
             $table->dropForeign(['team_id']);
             $table->dropColumn('team_id');
         });

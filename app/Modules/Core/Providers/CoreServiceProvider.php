@@ -12,6 +12,7 @@ class CoreServiceProvider extends ServiceProvider
     /**
      * Register any application services.
      */
+    #[\Override]
     public function register(): void
     {
         // Register core services
@@ -34,13 +35,9 @@ class CoreServiceProvider extends ServiceProvider
     protected function registerCoreServices(): void
     {
         // Register shared genealogy services
-        $this->app->singleton('genealogy.tree', function ($app) {
-            return new TreeService();
-        });
+        $this->app->singleton('genealogy.tree', fn($app) => new TreeService());
 
-        $this->app->singleton('genealogy.gedcom', function ($app) {
-            return new GedcomService();
-        });
+        $this->app->singleton('genealogy.gedcom', fn($app) => new GedcomService());
     }
 
     /**

@@ -11,18 +11,25 @@ use Illuminate\Support\Facades\Auth;
 
 class SubscriptionPage extends Page
 {
+    #[\Override]
     protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-star';
 
+    #[\Override]
     protected static ?string $navigationLabel = 'Premium Subscription';
 
+    #[\Override]
     protected static string|\UnitEnum|null $navigationGroup = '👤 Account & Settings';
 
+    #[\Override]
     protected static ?int $navigationSort = 2;
 
+    #[\Override]
     protected string $view = 'filament.app.pages.subscription-page';
 
+    #[\Override]
     protected static ?string $title = 'Premium Subscription';
 
+    #[\Override]
     protected static ?string $slug = 'subscription';
 
     public function mount(): void
@@ -51,6 +58,7 @@ class SubscriptionPage extends Page
         }
     }
 
+    #[\Override]
     public static function shouldRegisterNavigation(): bool
     {
         // Hide the subscription page when premium features are globally enabled
@@ -62,6 +70,7 @@ class SubscriptionPage extends Page
         return Auth::check() && ! $user->isPremium() && ! $user->hasExpiredTrial();
     }
 
+    #[\Override]
     protected function getHeaderActions(): array
     {
         return [
@@ -106,7 +115,7 @@ class SubscriptionPage extends Page
 
             $this->redirect(route('filament.app.pages.premium-dashboard', ['tenant' => auth()->user()->currentTeam]));
 
-        } catch (Exception $e) {
+        } catch (Exception) {
             Notification::make()
                 ->title('Subscription Error')
                 ->body('There was an error starting your trial. Please try again.')

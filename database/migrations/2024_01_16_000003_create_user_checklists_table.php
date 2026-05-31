@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('user_checklists', function (Blueprint $table) {
+        Schema::create('user_checklists', function (Blueprint $table): void {
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->foreignId('checklist_template_id')->nullable()->constrained()->onDelete('set null');

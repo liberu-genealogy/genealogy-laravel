@@ -30,12 +30,11 @@ class DnaImportServiceTest extends TestCase
         // Call the protected method via reflection
         $reflection = new \ReflectionClass($this->service);
         $method = $reflection->getMethod('generateUniqueVarName');
-        $method->setAccessible(true);
 
         $varName = $method->invoke($this->service);
 
         $this->assertStringStartsWith(DnaImportService::VAR_NAME_PREFIX, $varName);
-        $this->assertEquals(DnaImportService::EXPECTED_VAR_NAME_FULL_LENGTH, strlen($varName)); // var_ + 5 random chars
+        $this->assertEquals(DnaImportService::EXPECTED_VAR_NAME_FULL_LENGTH, strlen((string) $varName)); // var_ + 5 random chars
         $this->assertNotEquals('var_test1', $varName);
     }
 
@@ -154,7 +153,6 @@ class DnaImportServiceTest extends TestCase
     {
         $reflection = new \ReflectionClass($this->service);
         $method = $reflection->getMethod('detectFileFormat');
-        $method->setAccessible(true);
 
         $firstLine = "RSID,Chr,Position,Result\n";
         $secondLine = "rs12345,1,1000000,AA\n";
@@ -168,7 +166,6 @@ class DnaImportServiceTest extends TestCase
     {
         $reflection = new \ReflectionClass($this->service);
         $method = $reflection->getMethod('detectFileFormat');
-        $method->setAccessible(true);
 
         $firstLine = "RSID,CHROMOSOME,POSITION,RESULT\n";
         $secondLine = "rs12345,1,1000000,AA\n";

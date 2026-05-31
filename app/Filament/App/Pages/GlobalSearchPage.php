@@ -7,14 +7,19 @@ use Filament\Pages\Page;
 
 class GlobalSearchPage extends Page
 {
+    #[\Override]
     protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-magnifying-glass';
 
+    #[\Override]
     protected string $view = 'filament.app.pages.global-search-page';
 
+    #[\Override]
     protected static string|\UnitEnum|null $navigationGroup = '🔍 Research & Analysis';
 
+    #[\Override]
     protected static ?string $navigationLabel = 'Global Search';
 
+    #[\Override]
     protected static ?int $navigationSort = 1;
 
     public string $query = '';
@@ -31,7 +36,7 @@ class GlobalSearchPage extends Page
 
     public function search(): void
     {
-        if (empty(trim($this->query))) {
+        if (in_array(trim($this->query), ['', '0'], true)) {
             $this->results = [];
             $this->totalResults = 0;
 
@@ -64,7 +69,7 @@ class GlobalSearchPage extends Page
     public function updatedSearchGlobal(): void
     {
         $this->currentPage = 1;
-        if (! empty(trim($this->query))) {
+        if (!in_array(trim($this->query), ['', '0'], true)) {
             $this->search();
         }
     }

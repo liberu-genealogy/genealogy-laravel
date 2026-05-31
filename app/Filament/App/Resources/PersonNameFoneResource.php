@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Filament\App\Resources;
 
 use Override;
@@ -24,10 +26,14 @@ use Filament\Tables\Table;
 
 class PersonNameFoneResource extends AppResource
 {
+    #[\Override]
     protected static ?string $model = PersonNameFone::class;
 
+    #[\Override]
     protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-speaker-wave';
+    #[\Override]
     protected static ?string $navigationLabel = 'Phonetic Names';
+    #[\Override]
     protected static string | \UnitEnum | null $navigationGroup = '👥 Family Tree';
 
     #[Override]
@@ -114,6 +120,7 @@ class PersonNameFoneResource extends AppResource
         ];
     }
 
+    #[\Override]
     public static function getPages(): array
     {
         return [

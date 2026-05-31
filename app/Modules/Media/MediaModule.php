@@ -9,18 +9,21 @@ use App\Modules\BaseModule;
 
 class MediaModule extends BaseModule
 {
+    #[\Override]
     protected function onEnable(): void
     {
         // Register media-specific services
         $this->registerMediaServices();
     }
 
+    #[\Override]
     protected function onDisable(): void
     {
         // Clean up media-specific services
         $this->unregisterMediaServices();
     }
 
+    #[\Override]
     protected function onInstall(): void
     {
         // Install media-related database tables
@@ -28,6 +31,7 @@ class MediaModule extends BaseModule
         $this->publishMediaAssets();
     }
 
+    #[\Override]
     protected function onUninstall(): void
     {
         // Remove media-related data
@@ -39,13 +43,9 @@ class MediaModule extends BaseModule
      */
     protected function registerMediaServices(): void
     {
-        app()->singleton('genealogy.media', function ($app) {
-            return new MediaService();
-        });
+        app()->singleton('genealogy.media', fn($app) => new MediaService());
 
-        app()->singleton('genealogy.media.processor', function ($app) {
-            return new MediaProcessorService();
-        });
+        app()->singleton('genealogy.media.processor', fn($app) => new MediaProcessorService());
     }
 
     /**

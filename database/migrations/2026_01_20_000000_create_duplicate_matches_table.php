@@ -8,7 +8,7 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('duplicate_matches', function (Blueprint $table) {
+        Schema::create('duplicate_matches', function (Blueprint $table): void {
             $table->id();
             $table->foreignId('primary_person_id')->constrained('people')->cascadeOnDelete();
             $table->foreignId('duplicate_person_id')->constrained('people')->cascadeOnDelete();

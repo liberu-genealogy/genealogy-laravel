@@ -9,24 +9,28 @@ use App\Modules\BaseModule;
 
 class DNAModule extends BaseModule
 {
+    #[\Override]
     protected function onEnable(): void
     {
         // Register DNA-specific services
         $this->registerDNAServices();
     }
 
+    #[\Override]
     protected function onDisable(): void
     {
         // Clean up DNA-specific services
         $this->unregisterDNAServices();
     }
 
+    #[\Override]
     protected function onInstall(): void
     {
         // Install DNA-related database tables
         $this->installDNATables();
     }
 
+    #[\Override]
     protected function onUninstall(): void
     {
         // Remove DNA-related data
@@ -38,13 +42,9 @@ class DNAModule extends BaseModule
      */
     protected function registerDNAServices(): void
     {
-        app()->singleton('genealogy.dna', function ($app) {
-            return new DNAService();
-        });
+        app()->singleton('genealogy.dna', fn($app) => new DNAService());
 
-        app()->singleton('genealogy.dna.matcher', function ($app) {
-            return new DNAMatchService();
-        });
+        app()->singleton('genealogy.dna.matcher', fn($app) => new DNAMatchService());
     }
 
     /**

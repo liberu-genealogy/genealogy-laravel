@@ -31,14 +31,19 @@ use Illuminate\Database\Eloquent\Builder;
 
 class PersonResource extends Resource
 {
+    #[\Override]
     protected static ?string $model = Person::class;
 
+    #[\Override]
     protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-user';
 
+    #[\Override]
     protected static string | \UnitEnum | null $navigationGroup = 'Genealogy';
 
+    #[\Override]
     protected static ?string $navigationLabel = 'Persons';
 
+    #[\Override]
     public static function form(Schema $schema): Schema
     {
         return $schema
@@ -82,7 +87,7 @@ class PersonResource extends Resource
                     ->schema([
                         Select::make('child_in_family_id')
                             ->label('Child in Family')
-                            ->options(Family::with(['husband', 'wife'])->get()->mapWithKeys(function ($family) {
+                            ->options(Family::with(['husband', 'wife'])->get()->mapWithKeys(function ($family): array {
                                 $husbandName = $family->husband ? $family->husband->fullname() : 'Unknown';
                                 $wifeName = $family->wife ? $family->wife->fullname() : 'Unknown';
                                 return [$family->id => "{$husbandName} & {$wifeName}"];
@@ -105,6 +110,7 @@ class PersonResource extends Resource
             ]);
     }
 
+    #[\Override]
     public static function table(Table $table): Table
     {
         return $table
@@ -137,7 +143,7 @@ class PersonResource extends Resource
                 IconColumn::make('is_living')
                     ->label('Living')
                     ->boolean()
-                    ->getStateUsing(fn ($record) => !$record->deathday),
+                    ->getStateUsing(fn ($record): bool => !$record->deathday),
                 TextColumn::make('childInFamily.husband.fullname')
                     ->label('Father')
                     ->limit(20),
@@ -180,6 +186,7 @@ class PersonResource extends Resource
             ]);
     }
 
+    #[\Override]
     public static function getPages(): array
     {
         return [

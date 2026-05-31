@@ -11,16 +11,13 @@ class PlacesServiceProvider extends ServiceProvider
     /**
      * Register any application services.
      */
+    #[\Override]
     public function register(): void
     {
         // Register places services
-        $this->app->singleton(PlacesService::class, function ($app) {
-            return new PlacesService();
-        });
+        $this->app->singleton(PlacesService::class, fn($app) => new PlacesService());
 
-        $this->app->singleton(GeocodingService::class, function ($app) {
-            return new GeocodingService();
-        });
+        $this->app->singleton(GeocodingService::class, fn($app) => new GeocodingService());
 
         // Register places configuration
         // $this->mergeConfigFrom(__DIR__ . '/../config/places.php', 'places');

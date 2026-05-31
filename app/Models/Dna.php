@@ -12,6 +12,7 @@ class Dna extends Model
     use HasFactory;
     use BelongsToTenant;
 
+    #[\Override]
     protected $fillable = [
         'name',
         'file_name',

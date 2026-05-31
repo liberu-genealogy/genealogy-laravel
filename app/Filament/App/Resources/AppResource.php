@@ -9,21 +9,25 @@ use UnitEnum;
 
 abstract class AppResource extends Resource
 {
+    #[\Override]
     public static function canViewAny(): bool
     {
         return auth()->check();
     }
 
+    #[\Override]
     public static function canCreate(): bool
     {
         return auth()->check();
     }
 
+    #[\Override]
     public static function canAccess(): bool
     {
         return auth()->check();
     }
 
+    #[\Override]
     public static function getAuthorizationResponse(string | UnitEnum $action, ?Model $record = null): Response
     {
         if (! auth()->check()) {

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Exceptions;
 
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
@@ -12,6 +14,7 @@ class Handler extends ExceptionHandler
      *
      * @var array<int, string>
      */
+    #[\Override]
     protected $dontFlash = [
         'current_password',
         'password',
@@ -21,9 +24,10 @@ class Handler extends ExceptionHandler
     /**
      * Register the exception handling callbacks for the application.
      */
+    #[\Override]
     public function register(): void
     {
-        $this->reportable(function (Throwable $e) {
+        $this->reportable(function (Throwable $e): void {
             //
         });
     }

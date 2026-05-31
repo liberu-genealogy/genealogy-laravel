@@ -23,7 +23,7 @@ class UsersTable
                 ImageColumn::make('profile_photo_url')
                     ->label('Photo')
                     ->circular()
-                    ->defaultImageUrl(fn ($record) => 'https://ui-avatars.com/api/?name=' . urlencode($record->name) . '&color=7F9CF5&background=EBF4FF'),
+                    ->defaultImageUrl(fn ($record): string => 'https://ui-avatars.com/api/?name=' . urlencode((string) $record->name) . '&color=7F9CF5&background=EBF4FF'),
                 
                 TextColumn::make('name')
                     ->searchable()
@@ -37,7 +37,7 @@ class UsersTable
                     ->color('success')
                     ->searchable()
                     ->sortable()
-                    ->formatStateUsing(fn ($state) => ucfirst($state))
+                    ->formatStateUsing(fn ($state): string => ucfirst((string) $state))
                     ->placeholder('No roles assigned'),
                 
                 IconColumn::make('email_verified_at')
@@ -48,7 +48,7 @@ class UsersTable
                     ->trueColor('success')
                     ->falseColor('danger')
                     ->sortable()
-                    ->tooltip(fn ($record) => $record->email_verified_at 
+                    ->tooltip(fn ($record): string => $record->email_verified_at 
                         ? 'Verified on ' . $record->email_verified_at->format('M d, Y') 
                         : 'Not verified'),
                 

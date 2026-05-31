@@ -16,7 +16,7 @@ class FanChart extends Component
     public bool $showDates = false;
     public string $colorScheme = 'generation';
 
-    public function mount($rootPersonId = null, $generations = 5): void
+    public function mount($rootPersonId = null, int $generations = 5): void
     {
         $this->rootPersonId = $rootPersonId ?? Person::first()?->id;
         $this->generations = $generations;
@@ -41,7 +41,7 @@ class FanChart extends Component
         ];
     }
 
-    private function buildFanData($person, $maxGenerations, $generation = 0): array
+    private function buildFanData($person, $maxGenerations, int|float $generation = 0): array
     {
         if (!$person || $generation >= $maxGenerations) {
             return [];
@@ -79,7 +79,7 @@ class FanChart extends Component
         return $personData;
     }
 
-    public function setRootPerson($personId): void
+    public function setRootPerson(?int $personId): void
     {
         $this->rootPersonId = $personId;
         $this->dispatch('refreshFanChart');
@@ -103,7 +103,7 @@ class FanChart extends Component
         $this->dispatch('refreshFanChart');
     }
 
-    public function setColorScheme($scheme): void
+    public function setColorScheme(string $scheme): void
     {
         $this->colorScheme = $scheme;
         $this->dispatch('refreshFanChart');

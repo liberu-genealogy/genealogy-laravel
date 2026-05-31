@@ -7,7 +7,7 @@ use App\Models\Menu;
 
 class MenuSeeder extends Seeder
 {
-    public function run()
+    public function run(): void
     {
         $menus = [
             [
@@ -56,7 +56,7 @@ class MenuSeeder extends Seeder
         }
     }
 
-    private function createMenu($menuData, $parentId = null)
+    private function createMenu(array $menuData, $parentId = null): void
     {
         $children = $menuData['children'] ?? [];
         unset($menuData['children']);

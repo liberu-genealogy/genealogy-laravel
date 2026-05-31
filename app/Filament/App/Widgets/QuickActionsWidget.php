@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Filament\App\Widgets;
 
 use App\Filament\App\Resources\GedcomResource;
@@ -8,12 +10,16 @@ use Filament\Widgets\Widget;
 
 class QuickActionsWidget extends Widget
 {
+    #[\Override]
     protected string $view = 'filament.app.widgets.quick-actions';
 
+    #[\Override]
     protected int | string | array $columnSpan = 'full';
 
+    #[\Override]
     protected static ?int $sort = 2;
 
+    #[\Override]
     public function getViewData(): array
     {
         return [

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Filament\App\Pages;
 
 use Override;
@@ -12,10 +14,13 @@ use Illuminate\Support\Facades\Auth;
 
 class EditProfile extends Page
 {
+    #[\Override]
     protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-user-circle';
 
+    #[\Override]
     protected string $view = 'filament.pages.edit-profile';
 
+    #[\Override]
     protected static ?string $navigationLabel = 'Profile';
 
     #[Override]

@@ -11,6 +11,7 @@ class UserPoint extends Model
 {
     use HasFactory;
 
+    #[\Override]
     protected $fillable = [
         'user_id',
         'activity_type',
@@ -21,6 +22,7 @@ class UserPoint extends Model
         'related_model_type',
     ];
 
+    #[\Override]
     protected $casts = [
         'metadata' => 'array',
         'points' => 'integer',

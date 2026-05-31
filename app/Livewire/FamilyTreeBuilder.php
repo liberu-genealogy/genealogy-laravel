@@ -107,7 +107,7 @@ final class FamilyTreeBuilder extends Component
     {
         $this->selectedPerson = Person::find($personId);
         
-        if (!$this->selectedPerson) {
+        if (!$this->selectedPerson instanceof \App\Models\Person) {
             $this->dispatch('error', message: 'Person not found');
             return;
         }
@@ -115,7 +115,7 @@ final class FamilyTreeBuilder extends Component
         $this->dispatch('personSelected', personId: $personId);
     }
 
-    public function render()
+    public function render(): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
     {
         return view('livewire.family-tree-builder');
     }

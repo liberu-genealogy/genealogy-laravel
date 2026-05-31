@@ -25,16 +25,22 @@ use Illuminate\Support\Facades\Auth;
 class DuplicateCheckResource extends AppResource
 {
 
+    #[\Override]
     protected static ?string $model = DuplicateCheck::class;
 
+    #[\Override]
     protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-document-duplicate';
 
+    #[\Override]
     protected static ?string $navigationLabel = 'Duplicate Checker';
 
+    #[\Override]
     protected static string | \UnitEnum | null $navigationGroup =  '🔍 Research & Analysis';
 
+    #[\Override]
     protected static ?int $navigationSort = 3;
 
+    #[\Override]
     public static function shouldRegisterNavigation(): bool
     {
         if (config('premium.enabled')) {
@@ -43,6 +49,7 @@ class DuplicateCheckResource extends AppResource
         return auth()->user()?->isPremium() ?? false;
     }
 
+    #[\Override]
     public static function canAccess(): bool
     {
         if (config('premium.enabled')) {
@@ -51,11 +58,13 @@ class DuplicateCheckResource extends AppResource
         return Auth::user()?->isPremium() ?? false;
     }
 
+    #[\Override]
     public static function form(Schema $schema): Schema
     {
         return $schema->components([]);
     }
 
+    #[\Override]
     public static function table(Table $table): Table
     {
         return $table
@@ -107,6 +116,7 @@ class DuplicateCheckResource extends AppResource
             ->modifyQueryUsing(fn (Builder $query) => $query->where('user_id', Auth::id()));
     }
 
+    #[\Override]
     public static function getPages(): array
     {
         return [

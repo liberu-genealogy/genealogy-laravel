@@ -14,6 +14,7 @@ class UserChecklist extends Model
 {
     use HasFactory, BelongsToTenant, SoftDeletes;
 
+    #[\Override]
     protected $fillable = [
         'user_id',
         'checklist_template_id',
@@ -29,6 +30,7 @@ class UserChecklist extends Model
         'due_date',
     ];
 
+    #[\Override]
     protected $casts = [
         'started_at' => 'datetime',
         'completed_at' => 'datetime',

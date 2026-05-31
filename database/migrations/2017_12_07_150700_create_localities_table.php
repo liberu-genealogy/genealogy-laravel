@@ -1,14 +1,16 @@
 <?php
 
+declare(strict_types=1);
+
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
 class CreateLocalitiesTable extends Migration
 {
-    public function up()
+    public function up(): void
     {
-        Schema::create('localities', function (Blueprint $table) {
+        Schema::create('localities', function (Blueprint $table): void {
             $table->bigIncrements('id');
             $table->foreignId('region_id')->constrained('regions');
             $table->string('township')->nullable();
@@ -22,7 +24,7 @@ class CreateLocalitiesTable extends Migration
         });
     }
 
-    public function down()
+    public function down(): void
     {
         Schema::dropIfExists('localities');
     }

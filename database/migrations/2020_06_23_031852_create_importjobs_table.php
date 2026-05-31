@@ -11,9 +11,9 @@ class CreateImportjobsTable extends Migration
      *
      * @return void
      */
-    public function up()
+    public function up(): void
     {
-        Schema::create('importjobs', function (Blueprint $table) {
+        Schema::create('importjobs', function (Blueprint $table): void {
             $table->bigIncrements('id');
             $table->foreignId('user_id')->constrained('users')->nullable();
             $table->string('slug')->nullable();
@@ -28,7 +28,7 @@ class CreateImportjobsTable extends Migration
      *
      * @return void
      */
-    public function down()
+    public function down(): void
     {
         Schema::dropIfExists('importjobs');
     }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Console;
 
 use Illuminate\Console\Scheduling\Schedule;
@@ -11,6 +13,7 @@ class Kernel extends ConsoleKernel
     /**
      * Define the application's command schedule.
      */
+    #[\Override]
     protected function schedule(Schedule $schedule): void
     {
         // Run duplicate scanning once a day (adjust frequency as needed)
@@ -20,6 +23,7 @@ class Kernel extends ConsoleKernel
     /**
      * Register the commands for the application.
      */
+    #[\Override]
     protected function commands(): void
     {
         $this->load(__DIR__.'/Commands');

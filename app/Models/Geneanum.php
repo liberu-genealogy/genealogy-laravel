@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -15,6 +17,7 @@ class Geneanum extends Model
 
     // protected $connection = 'landlord';
 
+    #[\Override]
     protected $fillable = [
         'remote_id',
         'data',
@@ -22,6 +25,7 @@ class Geneanum extends Model
         'db_name',
     ];
 
+    #[\Override]
     protected function casts(): array
     {
         return [

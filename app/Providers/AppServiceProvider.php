@@ -15,6 +15,7 @@ class AppServiceProvider extends ServiceProvider
     /**
      * Register any application services.
      */
+    #[\Override]
     public function register(): void
     {
         // Bind vendor Person/Family models to the app's versions so that
@@ -25,9 +26,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(\FamilyTree365\LaravelGedcom\Models\Family::class, Family::class);
 
         // Register the module manager as a singleton
-        $this->app->singleton(ModuleManager::class, function ($app) {
-            return new ModuleManager;
-        });
+        $this->app->singleton(ModuleManager::class, fn($app) => new ModuleManager);
 
         // Register the module service provider
         $this->app->register(ModuleServiceProvider::class);

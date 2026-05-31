@@ -15,7 +15,7 @@ class CreateTenantsTable extends Migration
      */
     public function up(): void
     {
-        Schema::create('tenants', function (Blueprint $table) {
+        Schema::create('tenants', function (Blueprint $table): void {
             $table->bigIncrements('id');
             $table->json('data')->nullable(); // your custom columns may go here
 

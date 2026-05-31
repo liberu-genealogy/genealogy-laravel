@@ -23,18 +23,25 @@ use Filament\Tables\Table;
 
 class DnaResource extends AppResource
 {
+    #[\Override]
     protected static bool $isScopedToTenant = false;
 
+    #[\Override]
     protected static ?string $model = Dna::class;
 
+    #[\Override]
     protected static ?string $navigationLabel = 'DNA Records';
 
+    #[\Override]
     protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-beaker';
 
+    #[\Override]
     protected static string | \UnitEnum | null $navigationGroup = '🧬 DNA & Genetics';
 
+    #[\Override]
     protected static ?int $navigationSort = 1;
 
+    #[\Override]
     public static function shouldRegisterNavigation(): bool
     {
         // When premium is enabled globally, always show DNA navigation for all users
@@ -44,6 +51,7 @@ class DnaResource extends AppResource
         return auth()->user()?->isPremium() ?? false;
     }
 
+    #[\Override]
     public static function canCreate(): bool
     {
         $user = auth()->user();
@@ -116,6 +124,7 @@ class DnaResource extends AppResource
         ];
     }
 
+    #[\Override]
     public static function getPages(): array
     {
         return [

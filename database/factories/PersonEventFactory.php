@@ -17,6 +17,7 @@ class PersonEventFactory extends Factory
      *
      * @var string
      */
+    #[\Override]
     protected $model = PersonEvent::class;
 
     /**

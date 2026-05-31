@@ -26,7 +26,7 @@ class DuplicateCheckerService
 
         try {
             // Get all people for this user's team
-            $people = Person::whereHas('user', function ($query) use ($user) {
+            $people = Person::whereHas('user', function ($query) use ($user): void {
                 $query->where('current_team_id', $user->current_team_id);
             })->get();
 
@@ -65,7 +65,7 @@ class DuplicateCheckerService
 
             $potentialDuplicates = $this->findPotentialDuplicates($person, $people);
             
-            if (!empty($potentialDuplicates)) {
+            if ($potentialDuplicates !== []) {
                 $duplicates[] = [
                     'primary_person' => [
                         'id' => $person->id,

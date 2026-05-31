@@ -11,16 +11,19 @@ use Filament\Schemas\Schema;
 
 class ViewImportJob extends ViewRecord
 {
+    #[\Override]
     protected static string $resource = ImportJobResource::class;
 
     /** Auto-refresh every 3 seconds while import is in progress. */
     protected static ?string $pollingInterval = '3s';
 
+    #[\Override]
     protected function getHeaderActions(): array
     {
         return [];
     }
 
+    #[\Override]
     public function infolist(Schema $schema): Schema
     {
         return $schema

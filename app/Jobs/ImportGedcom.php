@@ -98,7 +98,7 @@ class ImportGedcom implements ShouldQueue
         // Clear any cached person lists so search results reflect the new data.
         try {
             cache()->forget('person_list');
-        } catch (Throwable $e) {
+        } catch (Throwable) {
             // swallow
         }
 

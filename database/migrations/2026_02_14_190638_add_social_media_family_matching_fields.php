@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         // Add fields to connected_accounts table for family matching
-        Schema::table('connected_accounts', function (Blueprint $table) {
+        Schema::table('connected_accounts', function (Blueprint $table): void {
             if (!Schema::hasColumn('connected_accounts', 'enable_family_matching')) {
                 $table->boolean('enable_family_matching')->default(false)->after('expires_at');
             }
@@ -26,7 +26,7 @@ return new class extends Migration
 
         // Create social_connection_privacy table for granular privacy controls
         if (!Schema::hasTable('social_connection_privacy')) {
-            Schema::create('social_connection_privacy', function (Blueprint $table) {
+            Schema::create('social_connection_privacy', function (Blueprint $table): void {
                 $table->id();
                 $table->foreignId('user_id')->constrained()->onDelete('cascade');
                 $table->boolean('allow_family_discovery')->default(true);
@@ -42,7 +42,7 @@ return new class extends Migration
 
         // Create social_family_connections table for storing identified connections
         if (!Schema::hasTable('social_family_connections')) {
-            Schema::create('social_family_connections', function (Blueprint $table) {
+            Schema::create('social_family_connections', function (Blueprint $table): void {
                 $table->id();
                 $table->foreignId('user_id')->constrained()->onDelete('cascade');
                 $table->foreignId('connected_account_id')->constrained()->onDelete('cascade');
@@ -69,7 +69,7 @@ return new class extends Migration
         Schema::dropIfExists('social_family_connections');
         Schema::dropIfExists('social_connection_privacy');
 
-        Schema::table('connected_accounts', function (Blueprint $table) {
+        Schema::table('connected_accounts', function (Blueprint $table): void {
             $table->dropColumn(['enable_family_matching', 'cached_profile_data', 'last_synced_at']);
         });
     }

@@ -77,7 +77,6 @@ class FamilyMatchingServiceTest extends TestCase
         // Use reflection to access protected method
         $reflection = new \ReflectionClass($this->service);
         $method = $reflection->getMethod('calculateConfidenceScore');
-        $method->setAccessible(true);
 
         // Test with 1 common surname (should be 20)
         $score = $method->invoke($this->service, ['Smith']);

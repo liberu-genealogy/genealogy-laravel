@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
 use App\Traits\BelongsToTenant;
@@ -11,10 +13,13 @@ class Type extends Model
     use HasFactory;
     use BelongsToTenant;
 
+    #[\Override]
     protected $fillable = ['name', 'description', 'is_active'];
 
+    #[\Override]
     protected $attributes = ['is_active' => false];
 
+    #[\Override]
     protected function casts(): array
     {
         return ['is_active' => 'boolean'];

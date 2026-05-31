@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -11,9 +13,9 @@ class CreateMediaObjectsTable extends Migration
      *
      * @return void
      */
-    public function up()
+    public function up(): void
     {
-        Schema::create('media_objects', function (Blueprint $table) {
+        Schema::create('media_objects', function (Blueprint $table): void {
             $table->bigIncrements('id');
             $table->integer('gid')->nullable();
             $table->string('group')->nullable();
@@ -30,7 +32,7 @@ class CreateMediaObjectsTable extends Migration
      *
      * @return void
      */
-    public function down()
+    public function down(): void
     {
         Schema::dropIfExists('media_objects');
     }

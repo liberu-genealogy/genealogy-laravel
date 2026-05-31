@@ -11,12 +11,9 @@ use Illuminate\Support\Collection;
 class DnaTriangulationService
 {
     const MAX_CHROMOSOME_NUMBER = 23;
-    
-    protected AdvancedDnaMatchingService $matchingService;
 
-    public function __construct(AdvancedDnaMatchingService $matchingService)
+    public function __construct(protected AdvancedDnaMatchingService $matchingService)
     {
-        $this->matchingService = $matchingService;
     }
 
     /**
@@ -78,7 +75,7 @@ class DnaTriangulationService
         }
 
         // Sort matches by shared cM
-        usort($results['matches'], fn($a, $b) => $b['total_cms'] <=> $a['total_cms']);
+        usort($results['matches'], fn(array $a, array $b): int => $b['total_cms'] <=> $a['total_cms']);
 
         return $results;
     }
@@ -190,7 +187,7 @@ class DnaTriangulationService
         }
 
         // Sort by triangulation score
-        usort($groups, fn($a, $b) => $b['triangulation_score'] <=> $a['triangulation_score']);
+        usort($groups, fn(array $a, array $b): int => $b['triangulation_score'] <=> $a['triangulation_score']);
 
         return $groups;
     }
@@ -254,7 +251,7 @@ class DnaTriangulationService
      */
     protected function calculateTriangulationScore(array $triangulatedChromosomes): float
     {
-        if (empty($triangulatedChromosomes)) {
+        if ($triangulatedChromosomes === []) {
             return 0.0;
         }
 

@@ -33,7 +33,7 @@ class FamilyMatchingService
         foreach ($connectedAccounts as $account) {
             $accountMatches = $this->findMatchesForAccount($user, $account);
             // Add account_id to each match for later processing
-            $accountMatches->each(function ($match) use ($account) {
+            $accountMatches->each(function (array $match) use ($account): void {
                 $match['account_id'] = $account->id;
             });
             $matches = $matches->merge($accountMatches);
@@ -81,7 +81,7 @@ class FamilyMatchingService
     protected function getUserFamilySurnames(User $user): array
     {
         // Get persons associated with user's teams
-        $surnames = Person::whereHas('gedcom', function ($query) use ($user) {
+        $surnames = Person::whereHas('gedcom', function ($query) use ($user): void {
             $query->whereIn('team_id', $user->allTeams()->pluck('id'));
         })
         ->whereNotNull('surname')
@@ -111,7 +111,7 @@ class FamilyMatchingService
             // Find common surnames
             $commonSurnames = array_intersect($surnames, $otherUserSurnames);
             
-            if (!empty($commonSurnames)) {
+            if ($commonSurnames !== []) {
                 // Check privacy settings of the other user
                 $otherPrivacy = SocialConnectionPrivacy::where('user_id', $otherAccount->user_id)->first();
                 

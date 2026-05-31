@@ -34,7 +34,7 @@ final class DescendantChartComponent extends Component
         }
     }
 
-    private function buildDescendantTree($person, $maxGenerations, $generation = 1): array
+    private function buildDescendantTree($person, $maxGenerations, int|float $generation = 1): array
     {
         if (!$person || $generation > $maxGenerations) {
             return [];
@@ -70,7 +70,7 @@ final class DescendantChartComponent extends Component
 
             foreach ($children as $child) {
                 $childData = $this->buildDescendantTree($child, $maxGenerations, $generation + 1);
-                if (!empty($childData)) {
+                if ($childData !== []) {
                     $personData['children'][] = $childData;
                 }
             }
@@ -84,7 +84,7 @@ final class DescendantChartComponent extends Component
         $this->rootPersonId = $personId;
         // reload data without remounting component lifecycle
         $this->descendantsData = [];
-        if ($this->rootPersonId) {
+        if ($this->rootPersonId !== 0) {
             $rootPerson = Person::find($this->rootPersonId);
             $this->descendantsData = $this->buildDescendantTree($rootPerson, $this->generations);
         }
@@ -103,7 +103,7 @@ final class DescendantChartComponent extends Component
         $this->dispatch('refreshDescendantChart');
     }
 
-    public function render()
+    public function render(): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
     {
         return view('livewire.descendant-chart-component');
     }

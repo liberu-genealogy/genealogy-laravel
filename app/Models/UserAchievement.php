@@ -10,6 +10,7 @@ class UserAchievement extends Model
 {
     use HasFactory;
 
+    #[\Override]
     protected $fillable = [
         'user_id',
         'achievement_id',
@@ -17,6 +18,7 @@ class UserAchievement extends Model
         'progress_data',
     ];
 
+    #[\Override]
     protected $casts = [
         'unlocked_at' => 'datetime',
         'progress_data' => 'array',
@@ -51,7 +53,7 @@ class UserAchievement extends Model
      */
     public function scopeByCategory($query, string $category)
     {
-        return $query->whereHas('achievement', function ($q) use ($category) {
+        return $query->whereHas('achievement', function ($q) use ($category): void {
             $q->where('category', $category);
         });
     }

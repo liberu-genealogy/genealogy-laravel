@@ -11,9 +11,9 @@ class CreateSourcesTable extends Migration
      *
      * @return void
      */
-    public function up()
+    public function up(): void
     {
-        Schema::create('sources', function (Blueprint $table) {
+        Schema::create('sources', function (Blueprint $table): void {
             $table->bigIncrements('id');
             $table->string('name')->nullable();
             $table->text('description')->nullable();
@@ -46,7 +46,7 @@ class CreateSourcesTable extends Migration
      *
      * @return void
      */
-    public function down()
+    public function down(): void
     {
         Schema::dropIfExists('sources');
     }

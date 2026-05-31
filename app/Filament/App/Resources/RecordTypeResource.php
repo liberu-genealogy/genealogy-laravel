@@ -25,18 +25,25 @@ use Filament\Actions\BulkActionGroup;
 
 class RecordTypeResource extends AppResource
 {
+    #[\Override]
     protected static ?string $model = RecordType::class;
 
+    #[\Override]
     protected static bool $isScopedToTenant = false;
 
+    #[\Override]
     protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-archive-box';
 
+    #[\Override]
     protected static ?string $navigationLabel = 'Record Types';
 
+    #[\Override]
     protected static string|\UnitEnum|null $navigationGroup = '⚙️ System Settings';
 
+    #[\Override]
     protected static ?int $navigationSort = 90;
 
+    #[\Override]
     public static function form(Form $form): Form
     {
         return $form
@@ -113,6 +120,7 @@ class RecordTypeResource extends AppResource
             ]);
     }
 
+    #[\Override]
     public static function table(Table $table): Table
     {
         return $table
@@ -175,6 +183,7 @@ class RecordTypeResource extends AppResource
             ->defaultSort('sort_order');
     }
 
+    #[\Override]
     public static function getRelations(): array
     {
         return [
@@ -182,6 +191,7 @@ class RecordTypeResource extends AppResource
         ];
     }
 
+    #[\Override]
     public static function getPages(): array
     {
         return [

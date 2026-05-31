@@ -30,10 +30,11 @@ class LaravelGedcomServiceProvider extends ServiceProvider
         // that already includes every column the vendor would add incrementally.
     }
 
+    #[\Override]
     public function register(): void
     {
-        $this->app->singleton('gedcom-parser', fn($app) => new GedcomParser());
-        $this->app->singleton('gedcomx-parser', fn($app) => new GedcomXParser());
+        $this->app->singleton('gedcom-parser', fn($app): \FamilyTree365\LaravelGedcom\Utils\GedcomParser => new GedcomParser());
+        $this->app->singleton('gedcomx-parser', fn($app): \FamilyTree365\LaravelGedcom\Utils\GedcomXParser => new GedcomXParser());
         $this->app->alias('gedcom-parser', 'GedcomParser');
         $this->app->alias('gedcomx-parser', 'GedcomXParser');
 

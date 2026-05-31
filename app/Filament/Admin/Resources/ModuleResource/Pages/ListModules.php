@@ -17,15 +17,17 @@ use Filament\Resources\Pages\ListRecords;
 
 class ListModules extends ListRecords
 {
+    #[\Override]
     protected static string $resource = ModuleResource::class;
 
+    #[\Override]
     protected function getHeaderActions(): array
     {
         return [
             Action::make('refresh')
                 ->label('Refresh Modules')
                 ->icon('heroicon-o-arrow-path')
-                ->action(function () {
+                ->action(function (): void {
                     // Clear module cache and reload
                     Cache::forget('modules');
                     
@@ -48,7 +50,7 @@ class ListModules extends ListRecords
                         ->label('Description')
                         ->required(),
                 ])
-                ->action(function (array $data) {
+                ->action(function (array $data): void {
                     try {
                         Artisan::call('module create', [
                             'name' => $data['name']
@@ -73,6 +75,7 @@ class ListModules extends ListRecords
     /**
      * Override to use custom data source.
      */
+    #[\Override]
     protected function getTableQuery(): Builder
     {
         return ModuleResource::getEloquentQuery();

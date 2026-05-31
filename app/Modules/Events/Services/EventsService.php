@@ -73,7 +73,7 @@ class EventsService
     {
         return PersonEvent::where('title', 'LIKE', "%{$query}%")
             ->orWhere('description', 'LIKE', "%{$query}%")
-            ->orWhereHas('person', function ($q) use ($query) {
+            ->orWhereHas('person', function ($q) use ($query): void {
                 $q->where('givn', 'LIKE', "%{$query}%")
                   ->orWhere('surn', 'LIKE', "%{$query}%");
             })

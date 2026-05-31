@@ -17,6 +17,7 @@ class NoteFactory extends Factory
      *
      * @var string
      */
+    #[\Override]
     protected $model = Note::class;
 
     /**

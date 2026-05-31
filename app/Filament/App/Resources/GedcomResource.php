@@ -33,25 +33,34 @@ use Illuminate\Support\Facades\Storage;
 
 class GedcomResource extends AppResource
 {
+    #[\Override]
     protected static bool $isScopedToTenant = false;
 
+    #[\Override]
     protected static ?string $model = Gedcom::class;
 
+    #[\Override]
     protected static ?string $navigationLabel = 'Gedcom';
 
+    #[\Override]
     protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-document';
 
+    #[\Override]
     protected static ?int $navigationSort = 10;
 
+    #[\Override]
     protected static bool $shouldRegisterNavigation = true;
 
+    #[\Override]
     protected static string | \UnitEnum | null $navigationGroup = "🛠️ Data Management";
 
+    #[\Override]
     public static function canCreate(): bool
     {
         return auth()->check();
     }
 
+    #[\Override]
     public static function getPages(): array
     {
         return [

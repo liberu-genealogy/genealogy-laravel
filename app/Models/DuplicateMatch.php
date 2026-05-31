@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class DuplicateMatch extends Model
 {
+    #[\Override]
     protected $fillable = [
         'primary_person_id',
         'duplicate_person_id',
@@ -17,6 +18,7 @@ class DuplicateMatch extends Model
         'reviewed_at',
     ];
 
+    #[\Override]
     protected $casts = [
         'match_data' => 'array',
         'confidence_score' => 'decimal:4',
@@ -42,7 +44,7 @@ class DuplicateMatch extends Model
     {
         $this->status = $status;
         $this->reviewed_at = now();
-        $this->reviewed_by = $user ? $user->id : null;
+        $this->reviewed_by = $user instanceof \App\Models\User ? $user->id : null;
         $this->save();
     }
 }

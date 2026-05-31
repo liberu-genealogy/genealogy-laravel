@@ -17,6 +17,7 @@ class CompanyFactory extends Factory
      *
      * @var string
      */
+    #[\Override]
     protected $model = Company::class;
 
     /**

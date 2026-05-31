@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'premium' => [
         // Display-only price string, e.g., "$2.99"

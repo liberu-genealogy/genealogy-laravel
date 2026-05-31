@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Database\Factories;
 
 // use App\Models\PersonDesi;
@@ -17,6 +19,7 @@ class PersonDesiFactory extends Factory
      *
      * @var string
      */
+    #[\Override]
     protected $model = PersonDesi::class;
 
     /**

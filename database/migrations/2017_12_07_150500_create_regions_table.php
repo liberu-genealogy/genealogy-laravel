@@ -6,9 +6,9 @@ use Illuminate\Support\Facades\Schema;
 
 class CreateRegionsTable extends Migration
 {
-    public function up()
+    public function up(): void
     {
-        Schema::create('regions', function (Blueprint $table) {
+        Schema::create('regions', function (Blueprint $table): void {
             $table->bigIncrements('id');
             $table->foreignId('country_id')->constrained('countries')->unique();
             $table->string('abbreviation', 2)->unique();
@@ -19,7 +19,7 @@ class CreateRegionsTable extends Migration
         });
     }
 
-    public function down()
+    public function down(): void
     {
         Schema::dropIfExists('regions');
     }

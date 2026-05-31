@@ -10,7 +10,7 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('reminder_settings', function (Blueprint $table) {
+        Schema::create('reminder_settings', function (Blueprint $table): void {
             $table->id();
             $table->integer('days_before_reminder')->default(3);
             $table->integer('reminder_frequency_days')->default(7);

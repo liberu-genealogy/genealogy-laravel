@@ -8,6 +8,7 @@ use Illuminate\Contracts\View\View;
 
 class PedigreeChartWidget extends Widget
 {
+    #[\Override]
     protected string $view = 'filament.widgets.pedigree-chart-widget';
 
     public ?int $rootPersonId = null;
@@ -18,7 +19,7 @@ class PedigreeChartWidget extends Widget
 
     public bool $showPhotos = false;
 
-    public function mount($rootPersonId = null, $generations = 4): void
+    public function mount($rootPersonId = null, int $generations = 4): void
     {
         $this->rootPersonId = $rootPersonId ?? Person::first()?->id;
         $this->generations = $generations;
@@ -42,7 +43,7 @@ class PedigreeChartWidget extends Widget
         ];
     }
 
-    private function buildPedigreeTree($person, $generations, $level = 0): array
+    private function buildPedigreeTree($person, $generations, int|float $level = 0): array
     {
         if (! $person || $level >= $generations) {
             return [];
@@ -57,7 +58,7 @@ class PedigreeChartWidget extends Widget
             'birth_date' => $person->birthday?->format('Y-m-d'),
             'death_date' => $person->deathday?->format('Y-m-d'),
             'level' => $level,
-            'position' => pow(2, $level),
+            'position' => 2 ** $level,
             'parents' => [],
         ];
 
@@ -77,12 +78,13 @@ class PedigreeChartWidget extends Widget
         return $personData;
     }
 
+    #[\Override]
     public function render(): View
     {
         return view(static::$view, $this->getData());
     }
 
-    public function setRootPerson($personId): void
+    public function setRootPerson(?int $personId): void
     {
         $this->rootPersonId = $personId;
         $this->dispatch('refreshChart');
@@ -128,12 +130,12 @@ class PedigreeChartWidget extends Widget
         $sexClass = strtolower($tree['sex'] ?? 'unknown');
         $html .= '<div class="person-box '.$sexClass.'" onclick="expandPerson('.$tree['id'].')">';
         $html .= '<button class="expand-btn" title="Expand from this person">â†‘</button>';
-        $html .= '<div class="person-name">'.htmlspecialchars($tree['name']).'</div>';
+        $html .= '<div class="person-name">'.htmlspecialchars((string) $tree['name']).'</div>';
 
         if ($this->showDates) {
-            $birthDate = $tree['birth_date'] ? date('Y', strtotime($tree['birth_date'])) : '?';
-            $deathDate = $tree['death_date'] ? date('Y', strtotime($tree['death_date'])) : '';
-            $dateRange = $birthDate.($deathDate ? ' - '.$deathDate : ' - ');
+            $birthDate = $tree['birth_date'] ? date('Y', strtotime((string) $tree['birth_date'])) : '?';
+            $deathDate = $tree['death_date'] ? date('Y', strtotime((string) $tree['death_date'])) : '';
+            $dateRange = $birthDate.($deathDate !== '' && $deathDate !== '0' ? ' - '.$deathDate : ' - ');
             $html .= '<div class="person-dates">'.$dateRange.'</div>';
         }
 

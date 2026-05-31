@@ -54,7 +54,7 @@ class DevillierReport extends Component implements HasActions, HasForms
         // Report generation - state contains selected person and generation
     }
 
-    public function render()
+    public function render(): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
     {
         return view('livewire.devilliers-report');
     }

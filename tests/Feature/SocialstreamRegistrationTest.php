@@ -15,9 +15,7 @@ class SocialstreamRegistrationTest extends TestCase
         $this->assertTrue(class_exists(Providers::class));
     }
 
-    /**
-     * @dataProvider socialMediaProviders
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('socialMediaProviders')]
     public function test_socialstream_config_has_social_media_providers(string $provider): void
     {
         $this->assertContains($provider, config('socialstream.providers'));

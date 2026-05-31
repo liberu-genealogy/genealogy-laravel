@@ -11,14 +11,20 @@ use Illuminate\Support\Facades\Auth;
 
 class TwoFactorAuthenticationPage extends Page
 {
+    #[\Override]
     protected string $view = 'filament.pages.profile.two-factor-authentication';
 
+    #[\Override]
     protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-shield-check';
+    #[\Override]
     protected static ?string $navigationLabel = 'Two-Factor Authentication';
+    #[\Override]
     protected static string | \UnitEnum | null $navigationGroup = '👤 Account & Settings';
 
+    #[\Override]
     protected static ?int $navigationSort = 4;
 
+    #[\Override]
     protected static ?string $title = 'Two Factor Authentication';
 
     public User $user;

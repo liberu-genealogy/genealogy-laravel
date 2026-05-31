@@ -9,14 +9,13 @@ use Carbon\Carbon;
 
 class TeamsService implements VideoConferencingInterface
 {
-    protected string $baseUrl;
+    protected string $baseUrl = 'https://graph.microsoft.com/v1.0';
     protected string $clientId;
     protected string $clientSecret;
     protected string $tenantId;
 
     public function __construct()
     {
-        $this->baseUrl = 'https://graph.microsoft.com/v1.0';
         $this->clientId = config('services.teams.client_id', '');
         $this->clientSecret = config('services.teams.client_secret', '');
         $this->tenantId = config('services.teams.tenant_id', '');
@@ -170,29 +169,25 @@ class TeamsService implements VideoConferencingInterface
         $event = $response->json();
         $attendees = $event['attendees'] ?? [];
 
-        return array_map(function ($attendee) {
-            return [
-                'name' => $attendee['emailAddress']['name'] ?? $attendee['emailAddress']['address'],
-                'email' => $attendee['emailAddress']['address'],
-                'response_status' => $attendee['status']['response'] ?? 'none',
-                'platform_data' => $attendee,
-            ];
-        }, $attendees);
+        return array_map(fn(array $attendee) => [
+            'name' => $attendee['emailAddress']['name'] ?? $attendee['emailAddress']['address'],
+            'email' => $attendee['emailAddress']['address'],
+            'response_status' => $attendee['status']['response'] ?? 'none',
+            'platform_data' => $attendee,
+        ], $attendees);
     }
 
     public function sendInvitations(string $meetingId, array $attendeeEmails): bool
     {
         $this->validateConfiguration();
 
-        $attendees = array_map(function ($email) {
-            return [
-                'emailAddress' => [
-                    'address' => $email,
-                    'name' => $email,
-                ],
-                'type' => 'required',
-            ];
-        }, $attendeeEmails);
+        $attendees = array_map(fn($email) => [
+            'emailAddress' => [
+                'address' => $email,
+                'name' => $email,
+            ],
+            'type' => 'required',
+        ], $attendeeEmails);
 
         $response = Http::withHeaders([
             'Authorization' => 'Bearer ' . $this->getAccessToken(),
@@ -217,9 +212,9 @@ class TeamsService implements VideoConferencingInterface
 
     public function isConfigured(): bool
     {
-        return !empty($this->clientId) && 
-               !empty($this->clientSecret) && 
-               !empty($this->tenantId);
+        return $this->clientId !== '' && $this->clientId !== '0' && 
+               ($this->clientSecret !== '' && $this->clientSecret !== '0') && 
+               ($this->tenantId !== '' && $this->tenantId !== '0');
     }
 
     protected function validateConfiguration(): void

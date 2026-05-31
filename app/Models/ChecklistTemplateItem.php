@@ -11,6 +11,7 @@ class ChecklistTemplateItem extends Model
 {
     use HasFactory;
 
+    #[\Override]
     protected $fillable = [
         'checklist_template_id',
         'title',
@@ -23,6 +24,7 @@ class ChecklistTemplateItem extends Model
         'tips',
     ];
 
+    #[\Override]
     protected $casts = [
         'is_required' => 'boolean',
         'estimated_time' => 'integer', // in minutes

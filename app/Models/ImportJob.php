@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
 use App\Traits\BelongsToTenant;
@@ -15,6 +17,7 @@ class ImportJob extends \FamilyTree365\LaravelGedcom\Models\ImportJob
      *
      * @var list<string>
      */
+    #[\Override]
     protected $fillable = [
         'team_id',
         'user_id',

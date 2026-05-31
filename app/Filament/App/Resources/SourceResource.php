@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Filament\App\Resources;
 
 use Override;
@@ -26,14 +28,19 @@ use Filament\Tables\Table;
 
 class SourceResource extends AppResource
 {
+    #[\Override]
     protected static ?string $model = Source::class;
 
+    #[\Override]
     protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-document-text';
 
+    #[\Override]
     protected static ?string $navigationLabel = 'Sources';
 
+    #[\Override]
     protected static string | \UnitEnum | null $navigationGroup = '🔍 Research & Analysis';
 
+    #[\Override]
     protected static ?int $navigationSort = 1;
 
     #[Override]
@@ -164,6 +171,7 @@ class SourceResource extends AppResource
         ];
     }
 
+    #[\Override]
     public static function getPages(): array
     {
         return [

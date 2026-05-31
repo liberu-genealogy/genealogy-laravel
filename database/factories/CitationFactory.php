@@ -16,6 +16,7 @@ class CitationFactory extends Factory
      *
      * @var string
      */
+    #[\Override]
     protected $model = Citation::class;
 
     /**

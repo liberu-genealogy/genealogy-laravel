@@ -49,6 +49,7 @@ class User extends Authenticatable implements HasDefaultTenant, HasTenants, Fila
      *
      * @var array<int, string>
      */
+    #[\Override]
     protected $fillable = [
         'name',
         'email',
@@ -68,6 +69,7 @@ class User extends Authenticatable implements HasDefaultTenant, HasTenants, Fila
      *
      * @var array<int, string>
      */
+    #[\Override]
     protected $hidden = [
         'password',
         'remember_token',
@@ -80,6 +82,7 @@ class User extends Authenticatable implements HasDefaultTenant, HasTenants, Fila
      *
      * @var array<int, string>
      */
+    #[\Override]
     protected $appends = [
         'profile_photo_url',
     ];
@@ -89,6 +92,7 @@ class User extends Authenticatable implements HasDefaultTenant, HasTenants, Fila
      *
      * @return array<string, string>
      */
+    #[\Override]
     protected function casts(): array
     {
         return [
@@ -138,7 +142,7 @@ class User extends Authenticatable implements HasDefaultTenant, HasTenants, Fila
      */
     protected function defaultPhotoUrl(): Attribute
     {
-        return Attribute::get(fn () => 'https://ui-avatars.com/api/?name='.urlencode($this->name).'&color=7F9CF5&background=EBF4FF');
+        return Attribute::get(fn (): string => 'https://ui-avatars.com/api/?name='.urlencode($this->name).'&color=7F9CF5&background=EBF4FF');
     }
 
     /**
@@ -203,13 +207,8 @@ class User extends Authenticatable implements HasDefaultTenant, HasTenants, Fila
         if ($this->subscribed('premium')) {
             return true;
         }
-
         // Local trial still running
-        if ($this->is_premium && $this->onTrial()) {
-            return true;
-        }
-
-        return false;
+        return $this->is_premium && $this->onTrial();
     }
 
     /**
@@ -391,7 +390,7 @@ class User extends Authenticatable implements HasDefaultTenant, HasTenants, Fila
         }
 
         // Exponential growth: level^2 * 100
-        return pow($level - 1, 2) * 100;
+        return ($level - 1) ** 2 * 100;
     }
 
     /**
@@ -429,7 +428,7 @@ class User extends Authenticatable implements HasDefaultTenant, HasTenants, Fila
     public function hasAchievement(string $achievementKey): bool
     {
         return $this->achievements()
-            ->whereHas('achievement', function ($query) use ($achievementKey) {
+            ->whereHas('achievement', function ($query) use ($achievementKey): void {
                 $query->where('key', $achievementKey);
             })
             ->exists();
@@ -441,7 +440,7 @@ class User extends Authenticatable implements HasDefaultTenant, HasTenants, Fila
     public function getAchievementProgress(string $achievementKey): ?UserProgress
     {
         return $this->progress()
-            ->whereHas('achievement', function ($query) use ($achievementKey) {
+            ->whereHas('achievement', function ($query) use ($achievementKey): void {
                 $query->where('key', $achievementKey);
             })
             ->first();

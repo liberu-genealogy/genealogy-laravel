@@ -10,6 +10,7 @@ class Achievement extends Model
 {
     use HasFactory;
 
+    #[\Override]
     protected $fillable = [
         'key',
         'name',
@@ -23,6 +24,7 @@ class Achievement extends Model
         'sort_order',
     ];
 
+    #[\Override]
     protected $casts = [
         'requirements' => 'array',
         'is_active' => 'boolean',

@@ -16,6 +16,7 @@ class ChatMessageFactory extends Factory
      *
      * @var string
      */
+    #[\Override]
     protected $model = ChatMessage::class;
 
     /**

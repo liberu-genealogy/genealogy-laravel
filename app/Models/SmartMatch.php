@@ -10,6 +10,7 @@ class SmartMatch extends Model
 {
     use HasFactory;
 
+    #[\Override]
     protected $fillable = [
         'user_id',
         'person_id',
@@ -25,6 +26,7 @@ class SmartMatch extends Model
         'reviewed_at',
     ];
 
+    #[\Override]
     protected $casts = [
         'match_data' => 'array',
         'search_criteria' => 'array',
@@ -76,10 +78,18 @@ class SmartMatch extends Model
     {
         $score = $this->confidence_score;
         
-        if ($score >= 0.9) return 'Very High';
-        if ($score >= 0.8) return 'High';
-        if ($score >= 0.7) return 'Medium';
-        if ($score >= 0.6) return 'Low';
+        if ($score >= 0.9) {
+            return 'Very High';
+        }
+        if ($score >= 0.8) {
+            return 'High';
+        }
+        if ($score >= 0.7) {
+            return 'Medium';
+        }
+        if ($score >= 0.6) {
+            return 'Low';
+        }
         
         return 'Very Low';
     }

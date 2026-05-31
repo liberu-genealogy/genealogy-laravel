@@ -79,15 +79,15 @@ class FindMyPastMatchingProvider
                 'record_type' => 'newspaper',
                 'record_subtype' => 'obituary',
                 'source' => 'findmypast',
-                'tree_id' => 'findmypast_news_' . rand(1000, 9999),
-                'person_id' => 'findmypast_obit_' . rand(10000, 99999),
+                'tree_id' => 'findmypast_news_' . random_int(1000, 9999),
+                'person_id' => 'findmypast_obit_' . random_int(10000, 99999),
                 'confidence_score' => $this->calculateNewspaperConfidence($person),
                 'data' => [
                     'type' => 'Newspaper Obituary',
                     'name' => $person->fullname(),
                     'publication' => $this->getRandomNewspaper(),
-                    'publication_date' => $person->deathday?->addDays(rand(1, 14))->format('Y-m-d'),
-                    'page' => rand(1, 24),
+                    'publication_date' => $person->deathday?->addDays(random_int(1, 14))->format('Y-m-d'),
+                    'page' => random_int(1, 24),
                     'death_date' => $person->deathday?->format('Y-m-d'),
                     'age_at_death' => $this->calculateAge($person),
                     'place' => $person->birthplace?->place ?? 'Unknown',
@@ -102,14 +102,14 @@ class FindMyPastMatchingProvider
                 'record_type' => 'newspaper',
                 'record_subtype' => 'notice',
                 'source' => 'findmypast',
-                'tree_id' => 'findmypast_news_' . rand(1000, 9999),
-                'person_id' => 'findmypast_notice_' . rand(10000, 99999),
+                'tree_id' => 'findmypast_news_' . random_int(1000, 9999),
+                'person_id' => 'findmypast_notice_' . random_int(10000, 99999),
                 'confidence_score' => 0.65,
                 'data' => [
                     'type' => 'Marriage Announcement',
                     'name' => $person->fullname(),
                     'publication' => $this->getRandomNewspaper(),
-                    'publication_date' => now()->subYears(rand(20, 80))->format('Y-m-d'),
+                    'publication_date' => now()->subYears(random_int(20, 80))->format('Y-m-d'),
                     'notice_type' => 'marriage',
                 ],
             ];
@@ -131,13 +131,13 @@ class FindMyPastMatchingProvider
                 'record_type' => 'parish',
                 'record_subtype' => 'baptism',
                 'source' => 'findmypast',
-                'tree_id' => 'findmypast_parish_' . rand(1000, 9999),
-                'person_id' => 'findmypast_baptism_' . rand(10000, 99999),
+                'tree_id' => 'findmypast_parish_' . random_int(1000, 9999),
+                'person_id' => 'findmypast_baptism_' . random_int(10000, 99999),
                 'confidence_score' => $this->calculateParishConfidence($person),
                 'data' => [
                     'type' => 'Parish Baptism',
                     'name' => $person->fullname(),
-                    'baptism_date' => $person->birthday?->addDays(rand(7, 90))->format('Y-m-d'),
+                    'baptism_date' => $person->birthday?->addDays(random_int(7, 90))->format('Y-m-d'),
                     'birth_date' => $person->birthday?->format('Y-m-d'),
                     'parish' => $this->getRandomParish(),
                     'fathers_name' => $this->getFatherName($person),
@@ -153,13 +153,13 @@ class FindMyPastMatchingProvider
                 'record_type' => 'parish',
                 'record_subtype' => 'burial',
                 'source' => 'findmypast',
-                'tree_id' => 'findmypast_parish_' . rand(1000, 9999),
-                'person_id' => 'findmypast_burial_' . rand(10000, 99999),
+                'tree_id' => 'findmypast_parish_' . random_int(1000, 9999),
+                'person_id' => 'findmypast_burial_' . random_int(10000, 99999),
                 'confidence_score' => $this->calculateParishConfidence($person),
                 'data' => [
                     'type' => 'Parish Burial',
                     'name' => $person->fullname(),
-                    'burial_date' => $person->deathday?->addDays(rand(3, 10))->format('Y-m-d'),
+                    'burial_date' => $person->deathday?->addDays(random_int(3, 10))->format('Y-m-d'),
                     'death_date' => $person->deathday?->format('Y-m-d'),
                     'age' => $this->calculateAge($person),
                     'parish' => $this->getRandomParish(),
@@ -182,30 +182,35 @@ class FindMyPastMatchingProvider
         $censusYears = [1841, 1851, 1861, 1871, 1881, 1891, 1901, 1911];
 
         foreach ($censusYears as $year) {
-            if ($person->birthday && $person->birthday->year < $year) {
-                if (!$person->deathday || $person->deathday->year >= $year) {
-                    $matches[] = [
-                        'record_type' => 'census',
-                        'record_subtype' => 'census',
-                        'source' => 'findmypast',
-                        'tree_id' => 'findmypast_census_' . $year,
-                        'person_id' => 'findmypast_census_' . $year . '_' . rand(10000, 99999),
-                        'confidence_score' => $this->calculateCensusConfidence($person, $year),
-                        'data' => [
-                            'type' => 'Census Record',
-                            'census_year' => $year,
-                            'name' => $person->fullname(),
-                            'age' => $year - $person->birthday->year,
-                            'birth_year' => $person->birthday->year,
-                            'birthplace' => $person->birthplace?->place ?? 'Unknown',
-                            'residence' => $this->getRandomPlace(),
-                            'county' => $this->getRandomCounty(),
-                            'household_members' => rand(2, 8),
-                            'occupation' => $this->getRandomOccupation(),
-                        ],
-                    ];
-                }
+            if (!$person->birthday) {
+                continue;
             }
+            if ($person->birthday->year >= $year) {
+                continue;
+            }
+            if ($person->deathday && $person->deathday->year < $year) {
+                continue;
+            }
+            $matches[] = [
+                'record_type' => 'census',
+                'record_subtype' => 'census',
+                'source' => 'findmypast',
+                'tree_id' => 'findmypast_census_' . $year,
+                'person_id' => 'findmypast_census_' . $year . '_' . random_int(10000, 99999),
+                'confidence_score' => $this->calculateCensusConfidence($person, $year),
+                'data' => [
+                    'type' => 'Census Record',
+                    'census_year' => $year,
+                    'name' => $person->fullname(),
+                    'age' => $year - $person->birthday->year,
+                    'birth_year' => $person->birthday->year,
+                    'birthplace' => $person->birthplace?->place ?? 'Unknown',
+                    'residence' => $this->getRandomPlace(),
+                    'county' => $this->getRandomCounty(),
+                    'household_members' => random_int(2, 8),
+                    'occupation' => $this->getRandomOccupation(),
+                ],
+            ];
         }
 
         return $matches;
@@ -224,13 +229,13 @@ class FindMyPastMatchingProvider
             $endYear = $person->deathday ? $person->deathday->year : min(1950, now()->year);
 
             // Sample a few years
-            for ($year = $startYear; $year <= $endYear; $year += rand(5, 10)) {
+            for ($year = $startYear; $year <= $endYear; $year += random_int(5, 10)) {
                 $matches[] = [
                     'record_type' => 'electoral',
                     'record_subtype' => 'register',
                     'source' => 'findmypast',
                     'tree_id' => 'findmypast_electoral_' . $year,
-                    'person_id' => 'findmypast_electoral_' . $year . '_' . rand(10000, 99999),
+                    'person_id' => 'findmypast_electoral_' . $year . '_' . random_int(10000, 99999),
                     'confidence_score' => 0.70,
                     'data' => [
                         'type' => 'Electoral Register',
@@ -261,8 +266,8 @@ class FindMyPastMatchingProvider
                 'record_type' => 'gro_index',
                 'record_subtype' => 'birth',
                 'source' => 'findmypast',
-                'tree_id' => 'findmypast_gro_' . rand(1000, 9999),
-                'person_id' => 'findmypast_gro_birth_' . rand(10000, 99999),
+                'tree_id' => 'findmypast_gro_' . random_int(1000, 9999),
+                'person_id' => 'findmypast_gro_birth_' . random_int(10000, 99999),
                 'confidence_score' => 0.85,
                 'data' => [
                     'type' => 'GRO Birth Index',
@@ -270,8 +275,8 @@ class FindMyPastMatchingProvider
                     'quarter' => $quarter,
                     'year' => $person->birthday->year,
                     'district' => $this->getRandomDistrict(),
-                    'volume' => rand(1, 27),
-                    'page' => rand(1, 999),
+                    'volume' => random_int(1, 27),
+                    'page' => random_int(1, 999),
                 ],
             ];
         }
@@ -283,8 +288,8 @@ class FindMyPastMatchingProvider
                 'record_type' => 'gro_index',
                 'record_subtype' => 'death',
                 'source' => 'findmypast',
-                'tree_id' => 'findmypast_gro_' . rand(1000, 9999),
-                'person_id' => 'findmypast_gro_death_' . rand(10000, 99999),
+                'tree_id' => 'findmypast_gro_' . random_int(1000, 9999),
+                'person_id' => 'findmypast_gro_death_' . random_int(10000, 99999),
                 'confidence_score' => 0.85,
                 'data' => [
                     'type' => 'GRO Death Index',
@@ -292,8 +297,8 @@ class FindMyPastMatchingProvider
                     'quarter' => $quarter,
                     'year' => $person->deathday->year,
                     'district' => $this->getRandomDistrict(),
-                    'volume' => rand(1, 27),
-                    'page' => rand(1, 999),
+                    'volume' => random_int(1, 27),
+                    'page' => random_int(1, 999),
                     'age_at_death' => $this->calculateAge($person),
                 ],
             ];
@@ -322,15 +327,15 @@ class FindMyPastMatchingProvider
                 'record_subtype' => 'service',
                 'source' => 'findmypast',
                 'tree_id' => 'findmypast_military_ww1',
-                'person_id' => 'findmypast_ww1_' . rand(10000, 99999),
+                'person_id' => 'findmypast_ww1_' . random_int(10000, 99999),
                 'confidence_score' => 0.60,
                 'data' => [
                     'type' => 'WWI Service Record',
                     'name' => $person->fullname(),
-                    'service_number' => rand(100000, 999999),
+                    'service_number' => random_int(100000, 999999),
                     'regiment' => $this->getRandomRegiment(),
                     'rank' => $this->getRandomRank(),
-                    'enlistment_date' => '191' . rand(4, 8) . '-' . sprintf('%02d', rand(1, 12)) . '-' . sprintf('%02d', rand(1, 28)),
+                    'enlistment_date' => '191' . random_int(4, 8) . '-' . sprintf('%02d', random_int(1, 12)) . '-' . sprintf('%02d', random_int(1, 28)),
                 ],
             ];
         }
@@ -342,15 +347,15 @@ class FindMyPastMatchingProvider
                 'record_subtype' => 'service',
                 'source' => 'findmypast',
                 'tree_id' => 'findmypast_military_ww2',
-                'person_id' => 'findmypast_ww2_' . rand(10000, 99999),
+                'person_id' => 'findmypast_ww2_' . random_int(10000, 99999),
                 'confidence_score' => 0.60,
                 'data' => [
                     'type' => 'WWII Service Record',
                     'name' => $person->fullname(),
-                    'service_number' => rand(1000000, 9999999),
+                    'service_number' => random_int(1000000, 9999999),
                     'regiment' => $this->getRandomRegiment(),
                     'rank' => $this->getRandomRank(),
-                    'enlistment_date' => '194' . rand(0, 5) . '-' . sprintf('%02d', rand(1, 12)) . '-' . sprintf('%02d', rand(1, 28)),
+                    'enlistment_date' => '194' . random_int(0, 5) . '-' . sprintf('%02d', random_int(1, 12)) . '-' . sprintf('%02d', random_int(1, 28)),
                 ],
             ];
         }
@@ -372,16 +377,16 @@ class FindMyPastMatchingProvider
                 'record_type' => 'probate',
                 'record_subtype' => 'will',
                 'source' => 'findmypast',
-                'tree_id' => 'findmypast_probate_' . rand(1000, 9999),
-                'person_id' => 'findmypast_probate_' . rand(10000, 99999),
+                'tree_id' => 'findmypast_probate_' . random_int(1000, 9999),
+                'person_id' => 'findmypast_probate_' . random_int(10000, 99999),
                 'confidence_score' => 0.65,
                 'data' => [
                     'type' => 'Probate Record',
                     'name' => $person->fullname(),
-                    'probate_date' => $person->deathday->addMonths(rand(6, 24))->format('Y-m-d'),
+                    'probate_date' => $person->deathday->addMonths(random_int(6, 24))->format('Y-m-d'),
                     'death_date' => $person->deathday->format('Y-m-d'),
                     'probate_court' => $this->getRandomProbateCourt(),
-                    'estate_value' => '£' . number_format(rand(100, 50000)),
+                    'estate_value' => '£' . number_format(random_int(100, 50000)),
                 ],
             ],
         ];
@@ -393,7 +398,7 @@ class FindMyPastMatchingProvider
     private function searchPoorLawRecords(Person $person): array
     {
         // Low probability match - only for certain periods
-        if (rand(1, 100) > 30) {
+        if (random_int(1, 100) > 30) {
             return [];
         }
 
@@ -402,15 +407,15 @@ class FindMyPastMatchingProvider
                 'record_type' => 'poor_law',
                 'record_subtype' => 'workhouse',
                 'source' => 'findmypast',
-                'tree_id' => 'findmypast_poorlaw_' . rand(1000, 9999),
-                'person_id' => 'findmypast_poorlaw_' . rand(10000, 99999),
+                'tree_id' => 'findmypast_poorlaw_' . random_int(1000, 9999),
+                'person_id' => 'findmypast_poorlaw_' . random_int(10000, 99999),
                 'confidence_score' => 0.50,
                 'data' => [
                     'type' => 'Workhouse Record',
                     'name' => $person->fullname(),
                     'workhouse' => $this->getRandomWorkhouse(),
                     'union' => $this->getRandomUnion(),
-                    'admission_date' => now()->subYears(rand(50, 150))->format('Y-m-d'),
+                    'admission_date' => now()->subYears(random_int(50, 150))->format('Y-m-d'),
                 ],
             ],
         ];
@@ -556,7 +561,7 @@ class FindMyPastMatchingProvider
 
     private function getRandomAddress(): string
     {
-        return rand(1, 200) . ' ' . ['High Street', 'Church Road', 'Station Road', 'Market Place'][array_rand(['High Street', 'Church Road', 'Station Road', 'Market Place'])];
+        return random_int(1, 200) . ' ' . ['High Street', 'Church Road', 'Station Road', 'Market Place'][array_rand(['High Street', 'Church Road', 'Station Road', 'Market Place'])];
     }
 
     private function getRandomConstituency(): string

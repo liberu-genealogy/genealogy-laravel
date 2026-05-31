@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration {
     public function up(): void
     {
-        Schema::create('transcription_corrections', function (Blueprint $table) {
+        Schema::create('transcription_corrections', function (Blueprint $table): void {
             $table->id();
             $table->foreignId('document_transcription_id')->constrained('document_transcriptions')->cascadeOnDelete();
             $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();

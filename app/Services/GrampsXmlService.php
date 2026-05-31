@@ -35,7 +35,7 @@ class GrampsXmlService
      */
     private function convertPeople(Collection $people): array
     {
-        return $people->map(function ($person) {
+        return $people->map(function ($person): array {
             $personData = [
                 'handle' => 'person_' . $person->id,
                 'id' => 'I' . str_pad((string)$person->id, 4, '0', STR_PAD_LEFT),
@@ -64,7 +64,7 @@ class GrampsXmlService
      */
     private function convertFamilies(Collection $families): array
     {
-        return $families->map(function ($family) {
+        return $families->map(function ($family): array {
             $familyData = [
                 'handle' => 'family_' . $family->id,
                 'id' => 'F' . str_pad((string)$family->id, 4, '0', STR_PAD_LEFT),

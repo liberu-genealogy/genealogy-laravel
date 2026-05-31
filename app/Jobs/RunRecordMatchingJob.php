@@ -22,7 +22,7 @@ class RunRecordMatchingJob implements ShouldQueue
 
     public int $timeout = 1200;
 
-    public function handle(RecordMatcherService $matcher)
+    public function handle(RecordMatcherService $matcher): void
     {
         // Initialize providers based on configuration
         $providers = [];
@@ -46,13 +46,13 @@ class RunRecordMatchingJob implements ShouldQueue
         }
 
         // If no providers configured, use example provider for testing
-        if (empty($providers)) {
+        if ($providers === []) {
             Log::warning('No genealogy providers configured, using example provider');
             $providers[] = new ExampleProvider();
         }
 
         Log::info('Record matching job started', [
-            'providers' => array_map(fn($p) => (new ReflectionClass($p))->getShortName(), $providers),
+            'providers' => array_map(fn($p): string => new ReflectionClass($p)->getShortName(), $providers),
         ]);
 
         // Fetch a sample of persons to run against (could be queued per-person)
@@ -73,7 +73,7 @@ class RunRecordMatchingJob implements ShouldQueue
                         if ($score >= config('ai_record_match.min_confidence', 0.45)) {
                             $matcher->persistSuggestion(
                                 $person->id, 
-                                (new ReflectionClass($provider))->getShortName(), 
+                                new ReflectionClass($provider)->getShortName(), 
                                 $candidate, 
                                 $score
                             );
@@ -83,7 +83,7 @@ class RunRecordMatchingJob implements ShouldQueue
                 } catch (\Exception $e) {
                     Log::error('Record matching failed for person', [
                         'person_id' => $person->id,
-                        'provider' => (new ReflectionClass($provider))->getShortName(),
+                        'provider' => new ReflectionClass($provider)->getShortName(),
                         'error' => $e->getMessage(),
                     ]);
                 }

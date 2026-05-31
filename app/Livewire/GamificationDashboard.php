@@ -21,47 +21,47 @@ class GamificationDashboard extends Component
 
     protected $gamificationService;
 
-    public function boot(GamificationService $gamificationService)
+    public function boot(GamificationService $gamificationService): void
     {
         $this->gamificationService = $gamificationService;
     }
 
-    public function mount()
+    public function mount(): void
     {
         // Initialize component
     }
 
-    public function setActiveTab($tab)
+    public function setActiveTab($tab): void
     {
         $this->activeTab = $tab;
         $this->resetPage();
     }
 
-    public function setLeaderboardPeriod($period)
+    public function setLeaderboardPeriod($period): void
     {
         $this->leaderboardPeriod = $period;
     }
 
-    public function setAchievementCategory($category)
+    public function setAchievementCategory($category): void
     {
         $this->achievementCategory = $category;
         $this->resetPage();
     }
 
-    public function toggleShowOnlyUnlocked()
+    public function toggleShowOnlyUnlocked(): void
     {
         $this->showOnlyUnlocked = ! $this->showOnlyUnlocked;
         $this->resetPage();
     }
 
-    public function toggleLeaderboardVisibility()
+    public function toggleLeaderboardVisibility(): void
     {
         $user = auth()->user();
         $user->update(['show_on_leaderboard' => ! $user->show_on_leaderboard]);
         $this->dispatch('leaderboard-updated');
     }
 
-    public function render()
+    public function render(): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
     {
         $user = auth()->user();
 
@@ -104,7 +104,7 @@ class GamificationDashboard extends Component
         $achievements = $query->get();
         $user = auth()->user();
 
-        return $achievements->map(function ($achievement) use ($user) {
+        return $achievements->map(function ($achievement) use ($user): array {
             $userAchievement = $user->achievements()
                 ->where('achievement_id', $achievement->id)
                 ->first();
@@ -120,12 +120,10 @@ class GamificationDashboard extends Component
                 'progress' => $progress,
                 'progress_percentage' => $progress ? $progress->getProgressPercentage() : 0,
             ];
-        })->when($this->showOnlyUnlocked, function ($collection) {
-            return $collection->filter(fn ($item) => $item['unlocked']);
-        });
+        })->when($this->showOnlyUnlocked, fn($collection) => $collection->filter(fn ($item) => $item['unlocked']));
     }
 
-    public function getAchievementCategories()
+    public function getAchievementCategories(): array
     {
         return [
             'all' => 'All Categories',
@@ -136,7 +134,7 @@ class GamificationDashboard extends Component
         ];
     }
 
-    public function getLeaderboardPeriods()
+    public function getLeaderboardPeriods(): array
     {
         return [
             'all_time' => 'All Time',

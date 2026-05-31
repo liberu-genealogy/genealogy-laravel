@@ -11,15 +11,14 @@ use Illuminate\Support\Facades\Log;
 
 class MatchKitsCommand extends Command
 {
+    #[\Override]
     protected $signature = 'dna:match {varName1} {fileName1} {varName2} {fileName2}';
+    #[\Override]
     protected $description = 'Matches two DNA kits using advanced DNA matching algorithms.';
 
-    protected AdvancedDnaMatchingService $advancedDnaMatchingService;
-
-    public function __construct(AdvancedDnaMatchingService $advancedDnaMatchingService)
+    public function __construct(protected AdvancedDnaMatchingService $advancedDnaMatchingService)
     {
         parent::__construct();
-        $this->advancedDnaMatchingService = $advancedDnaMatchingService;
     }
 
     public function handle(): void

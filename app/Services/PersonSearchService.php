@@ -18,7 +18,7 @@ class PersonSearchService
     public function searchOwnTeam(string $query, int $perPage = 20, int $page = 1): LengthAwarePaginator
     {
         return Person::query()
-            ->where(function (Builder $q) use ($query) {
+            ->where(function (Builder $q) use ($query): void {
                 $this->applySearchConditions($q, $query);
             })
             ->orderByDesc('id')
@@ -36,12 +36,12 @@ class PersonSearchService
 
         // Build query without the BelongsToTenant global scope
         return Person::withoutGlobalScope('team')
-            ->where(function (Builder $outer) use ($query, $currentTeamId, $includeOwnTeam) {
+            ->where(function (Builder $outer) use ($query, $currentTeamId, $includeOwnTeam): void {
                 // Own team — include all people (living + deceased)
                 if ($includeOwnTeam && $currentTeamId) {
-                    $outer->where(function (Builder $own) use ($query, $currentTeamId) {
+                    $outer->where(function (Builder $own) use ($query, $currentTeamId): void {
                         $own->where('people.team_id', $currentTeamId)
-                            ->where(function (Builder $q) use ($query) {
+                            ->where(function (Builder $q) use ($query): void {
                                 $this->applySearchConditions($q, $query);
                             });
                     });
@@ -53,10 +53,10 @@ class PersonSearchService
                     ->pluck('id');
 
                 if ($publicTeamIds->isNotEmpty()) {
-                    $outer->orWhere(function (Builder $pub) use ($query, $publicTeamIds) {
+                    $outer->orWhere(function (Builder $pub) use ($query, $publicTeamIds): void {
                         $pub->whereIn('people.team_id', $publicTeamIds)
                             ->deceased()
-                            ->where(function (Builder $q) use ($query) {
+                            ->where(function (Builder $q) use ($query): void {
                                 $this->applySearchConditions($q, $query);
                             });
                     });
@@ -73,13 +73,13 @@ class PersonSearchService
     {
         $term = trim($searchTerm);
 
-        if (empty($term)) {
+        if ($term === '' || $term === '0') {
             return;
         }
 
         // Try MySQL fulltext match first
         if ($this->supportsFulltext()) {
-            $query->where(function (Builder $q) use ($term) {
+            $query->where(function (Builder $q) use ($term): void {
                 $q->whereRaw(
                     'MATCH(givn, surn, name, description) AGAINST(? IN BOOLEAN MODE)',
                     [$this->prepareFulltextTerm($term)]
@@ -89,7 +89,7 @@ class PersonSearchService
             });
         } else {
             $likeTerm = '%'.$term.'%';
-            $query->where(function (Builder $q) use ($likeTerm) {
+            $query->where(function (Builder $q) use ($likeTerm): void {
                 $q->where('givn', 'LIKE', $likeTerm)
                     ->orWhere('surn', 'LIKE', $likeTerm)
                     ->orWhere('name', 'LIKE', $likeTerm)
@@ -108,7 +108,7 @@ class PersonSearchService
         $words = preg_split('/\s+/', $term, -1, PREG_SPLIT_NO_EMPTY);
 
         // Add + prefix to each word for AND matching, * suffix for prefix matching
-        return implode(' ', array_map(fn ($w) => '+'.$w.'*', $words));
+        return implode(' ', array_map(fn ($w): string => '+'.$w.'*', $words));
     }
 
     /**

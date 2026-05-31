@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('virtual_event_attendees', function (Blueprint $table) {
+        Schema::create('virtual_event_attendees', function (Blueprint $table): void {
             $table->id();
             $table->foreignId('virtual_event_id')->constrained()->onDelete('cascade');
             $table->foreignId('user_id')->nullable()->constrained()->onDelete('cascade');

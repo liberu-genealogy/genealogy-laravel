@@ -24,7 +24,7 @@ class GamificationService
         User $user,
         string $activityType,
         int $points,
-        string $description = null,
+        ?string $description = null,
         array $metadata = [],
         $relatedModel = null
     ): UserPoint {
@@ -37,7 +37,7 @@ class GamificationService
                 'description' => $description,
                 'metadata' => $metadata,
                 'related_model_id' => $relatedModel?->id,
-                'related_model_type' => $relatedModel ? get_class($relatedModel) : null,
+                'related_model_type' => $relatedModel ? $relatedModel::class : null,
             ]);
 
             // Update user's total points
@@ -57,13 +57,13 @@ class GamificationService
     /**
      * Check and unlock achievements for a user
      */
-    public function checkAchievements(User $user, string $activityType = null, array $metadata = []): array
+    public function checkAchievements(User $user, ?string $activityType = null, array $metadata = []): array
     {
         $unlockedAchievements = [];
 
         // Get all active achievements that the user hasn't unlocked yet
         $achievements = Achievement::active()
-            ->whereNotIn('id', function ($query) use ($user) {
+            ->whereNotIn('id', function ($query) use ($user): void {
                 $query->select('achievement_id')
                     ->from('user_achievements')
                     ->where('user_id', $user->id);
@@ -89,73 +89,34 @@ class GamificationService
     private function checkAchievementRequirements(
         User $user,
         Achievement $achievement,
-        string $activityType = null,
+        ?string $activityType = null,
         array $metadata = []
     ): bool {
         $requirements = $achievement->requirements ?? [];
 
         // Handle different types of achievements
-        switch ($achievement->key) {
-            case 'first_person_added':
-                return $this->getPersonCount($user) >= 1;
-
-            case 'family_builder':
-                return $this->getPersonCount($user) >= ($requirements['count'] ?? 10);
-
-            case 'genealogy_researcher':
-                return $this->getPersonCount($user) >= ($requirements['count'] ?? 50);
-
-            case 'family_historian':
-                return $this->getPersonCount($user) >= ($requirements['count'] ?? 100);
-
-            case 'first_family_created':
-                return $this->getFamilyCount($user) >= 1;
-
-            case 'family_connector':
-                return $this->getFamilyCount($user) >= ($requirements['count'] ?? 5);
-
-            case 'relationship_expert':
-                return $this->getFamilyCount($user) >= ($requirements['count'] ?? 20);
-
-            case 'event_chronicler':
-                return $this->getEventCount($user) >= ($requirements['count'] ?? 10);
-
-            case 'life_documenter':
-                return $this->getEventCount($user) >= ($requirements['count'] ?? 50);
-
-            case 'photo_archivist':
-                return $this->getPhotoCount($user) >= ($requirements['count'] ?? 5);
-
-            case 'memory_keeper':
-                return $this->getPhotoCount($user) >= ($requirements['count'] ?? 25);
-
-            case 'point_collector':
-                return $user->total_points >= ($requirements['points'] ?? 1000);
-
-            case 'high_achiever':
-                return $user->total_points >= ($requirements['points'] ?? 5000);
-
-            case 'legend':
-                return $user->total_points >= ($requirements['points'] ?? 10000);
-
-            case 'level_up':
-                return $user->level >= ($requirements['level'] ?? 5);
-
-            case 'experienced_researcher':
-                return $user->level >= ($requirements['level'] ?? 10);
-
-            case 'daily_researcher':
-                return $this->checkDailyActivity($user, $requirements['days'] ?? 7);
-
-            case 'dedicated_genealogist':
-                return $this->checkDailyActivity($user, $requirements['days'] ?? 30);
-
-            case 'achievement_hunter':
-                return $user->achievements()->count() >= ($requirements['count'] ?? 5);
-
-            default:
-                return false;
-        }
+        return match ($achievement->key) {
+            'first_person_added' => $this->getPersonCount($user) >= 1,
+            'family_builder' => $this->getPersonCount($user) >= ($requirements['count'] ?? 10),
+            'genealogy_researcher' => $this->getPersonCount($user) >= ($requirements['count'] ?? 50),
+            'family_historian' => $this->getPersonCount($user) >= ($requirements['count'] ?? 100),
+            'first_family_created' => $this->getFamilyCount($user) >= 1,
+            'family_connector' => $this->getFamilyCount($user) >= ($requirements['count'] ?? 5),
+            'relationship_expert' => $this->getFamilyCount($user) >= ($requirements['count'] ?? 20),
+            'event_chronicler' => $this->getEventCount($user) >= ($requirements['count'] ?? 10),
+            'life_documenter' => $this->getEventCount($user) >= ($requirements['count'] ?? 50),
+            'photo_archivist' => $this->getPhotoCount($user) >= ($requirements['count'] ?? 5),
+            'memory_keeper' => $this->getPhotoCount($user) >= ($requirements['count'] ?? 25),
+            'point_collector' => $user->total_points >= ($requirements['points'] ?? 1000),
+            'high_achiever' => $user->total_points >= ($requirements['points'] ?? 5000),
+            'legend' => $user->total_points >= ($requirements['points'] ?? 10000),
+            'level_up' => $user->level >= ($requirements['level'] ?? 5),
+            'experienced_researcher' => $user->level >= ($requirements['level'] ?? 10),
+            'daily_researcher' => $this->checkDailyActivity($user, $requirements['days'] ?? 7),
+            'dedicated_genealogist' => $this->checkDailyActivity($user, $requirements['days'] ?? 30),
+            'achievement_hunter' => $user->achievements()->count() >= ($requirements['count'] ?? 5),
+            default => false,
+        };
     }
 
     /**
@@ -208,7 +169,7 @@ class GamificationService
     private function updateAchievementProgress(
         User $user,
         Achievement $achievement,
-        string $activityType = null,
+        ?string $activityType = null,
         array $metadata = []
     ): void {
         $currentProgress = $this->calculateCurrentProgress($user, $achievement);
@@ -238,45 +199,18 @@ class GamificationService
      */
     private function calculateCurrentProgress(User $user, Achievement $achievement): int
     {
-        switch ($achievement->key) {
-            case 'family_builder':
-            case 'genealogy_researcher':
-            case 'family_historian':
-                return $this->getPersonCount($user);
-
-            case 'family_connector':
-            case 'relationship_expert':
-                return $this->getFamilyCount($user);
-
-            case 'event_chronicler':
-            case 'life_documenter':
-                return $this->getEventCount($user);
-
-            case 'photo_archivist':
-            case 'memory_keeper':
-                return $this->getPhotoCount($user);
-
-            case 'point_collector':
-            case 'high_achiever':
-            case 'legend':
-                return $user->total_points;
-
-            case 'level_up':
-            case 'experienced_researcher':
-                return $user->level;
-
-            case 'daily_researcher':
-                return $this->getDailyActivityStreak($user);
-
-            case 'dedicated_genealogist':
-                return $this->getDailyActivityStreak($user);
-
-            case 'achievement_hunter':
-                return $user->achievements()->count();
-
-            default:
-                return 0;
-        }
+        return match ($achievement->key) {
+            'family_builder', 'genealogy_researcher', 'family_historian' => $this->getPersonCount($user),
+            'family_connector', 'relationship_expert' => $this->getFamilyCount($user),
+            'event_chronicler', 'life_documenter' => $this->getEventCount($user),
+            'photo_archivist', 'memory_keeper' => $this->getPhotoCount($user),
+            'point_collector', 'high_achiever', 'legend' => $user->total_points,
+            'level_up', 'experienced_researcher' => $user->level,
+            'daily_researcher' => $this->getDailyActivityStreak($user),
+            'dedicated_genealogist' => $this->getDailyActivityStreak($user),
+            'achievement_hunter' => $user->achievements()->count(),
+            default => 0,
+        };
     }
 
     /**
@@ -327,7 +261,7 @@ class GamificationService
      */
     private function getEventCount(User $user): int
     {
-        return PersonEvent::whereHas('person', function ($query) use ($user) {
+        return PersonEvent::whereHas('person', function ($query) use ($user): void {
             $query->where('team_id', $user->current_team_id ?? $user->latestTeam?->id);
         })->count();
     }
@@ -381,44 +315,32 @@ class GamificationService
     {
         $query = User::where('show_on_leaderboard', true);
 
-        switch ($period) {
-            case 'today':
-                $query->withSum(['points as daily_points' => function ($q) {
-                    $q->whereDate('created_at', today());
-                }], 'points')
-                ->orderBy('daily_points', 'desc');
-                break;
-
-            case 'week':
-                $query->withSum(['points as weekly_points' => function ($q) {
-                    $q->where('created_at', '>=', now()->startOfWeek());
-                }], 'points')
-                ->orderBy('weekly_points', 'desc');
-                break;
-
-            case 'month':
-                $query->withSum(['points as monthly_points' => function ($q) {
-                    $q->where('created_at', '>=', now()->startOfMonth());
-                }], 'points')
-                ->orderBy('monthly_points', 'desc');
-                break;
-
-            default: // all_time
-                $query->orderBy('total_points', 'desc');
-                break;
-        }
+        match ($period) {
+            'today' => $query->withSum(['points as daily_points' => function ($q): void {
+                $q->whereDate('created_at', today());
+            }], 'points')
+            ->orderBy('daily_points', 'desc'),
+            'week' => $query->withSum(['points as weekly_points' => function ($q): void {
+                $q->where('created_at', '>=', now()->startOfWeek());
+            }], 'points')
+            ->orderBy('weekly_points', 'desc'),
+            'month' => $query->withSum(['points as monthly_points' => function ($q): void {
+                $q->where('created_at', '>=', now()->startOfMonth());
+            }], 'points')
+            ->orderBy('monthly_points', 'desc'),
+            // all_time
+            default => $query->orderBy('total_points', 'desc'),
+        };
 
         return $query->limit($limit)
             ->get()
-            ->map(function ($user, $index) use ($period) {
-                return [
-                    'rank' => $index + 1,
-                    'user' => $user,
-                    'points' => $this->getPointsForPeriod($user, $period),
-                    'level' => $user->level,
-                    'achievements_count' => $user->achievements()->count(),
-                ];
-            })
+            ->map(fn($user, $index) => [
+                'rank' => $index + 1,
+                'user' => $user,
+                'points' => $this->getPointsForPeriod($user, $period),
+                'level' => $user->level,
+                'achievements_count' => $user->achievements()->count(),
+            ])
             ->toArray();
     }
 
@@ -427,16 +349,12 @@ class GamificationService
      */
     private function getPointsForPeriod(User $user, string $period): int
     {
-        switch ($period) {
-            case 'today':
-                return $user->points()->whereDate('created_at', today())->sum('points');
-            case 'week':
-                return $user->points()->where('created_at', '>=', now()->startOfWeek())->sum('points');
-            case 'month':
-                return $user->points()->where('created_at', '>=', now()->startOfMonth())->sum('points');
-            default:
-                return $user->total_points;
-        }
+        return match ($period) {
+            'today' => $user->points()->whereDate('created_at', today())->sum('points'),
+            'week' => $user->points()->where('created_at', '>=', now()->startOfWeek())->sum('points'),
+            'month' => $user->points()->where('created_at', '>=', now()->startOfMonth())->sum('points'),
+            default => $user->total_points,
+        };
     }
 
     /**

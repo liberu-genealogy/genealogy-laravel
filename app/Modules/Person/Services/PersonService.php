@@ -141,14 +141,12 @@ class PersonService
             ->with('place')
             ->orderBy('date')
             ->get()
-            ->map(function ($event) {
-                return [
-                    'type' => $event->title,
-                    'date' => $event->date,
-                    'place' => $event->place?->name ?? '',
-                    'description' => $event->description,
-                ];
-            });
+            ->map(fn($event) => [
+                'type' => $event->title,
+                'date' => $event->date,
+                'place' => $event->place?->name ?? '',
+                'description' => $event->description,
+            ]);
     }
 
     /**
@@ -212,13 +210,13 @@ class PersonService
             ],
             'events' => $this->getPersonTimeline($person)->toArray(),
             'family_relationships' => [
-                'parents' => $person->parents()?->map(fn($p) => [
+                'parents' => $person->parents()?->map(fn($p): array => [
                     'id' => $p->id,
                     'name' => $p->fullname(),
                     'relationship' => $p->sex === 'M' ? 'Father' : 'Mother',
                 ])->toArray() ?? [],
                 'spouses' => $person->familiesAsHusband->merge($person->familiesAsWife)
-                    ->map(function ($family) use ($person) {
+                    ->map(function ($family) use ($person): ?array {
                         $spouse = $person->sex === 'M' ? $family->wife : $family->husband;
                         return $spouse ? [
                             'id' => $spouse->id,
@@ -229,7 +227,7 @@ class PersonService
                     ->filter()
                     ->values()
                     ->toArray(),
-                'children' => $person->children->map(fn($c) => [
+                'children' => $person->children->map(fn($c): array => [
                     'id' => $c->id,
                     'name' => $c->fullname(),
                     'relationship' => $c->sex === 'M' ? 'Son' : 'Daughter',

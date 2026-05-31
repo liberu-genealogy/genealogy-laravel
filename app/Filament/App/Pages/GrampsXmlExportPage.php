@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Filament\App\Pages;
 
 use Filament\Actions\Action;
@@ -10,20 +12,28 @@ use Illuminate\Support\Facades\Auth;
 
 class GrampsXmlExportPage extends Page
 {
+    #[\Override]
     protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-arrow-down-tray';
 
+    #[\Override]
     protected static ?string $navigationLabel = 'GrampsXML Export';
 
+    #[\Override]
     protected static string | \UnitEnum | null $navigationGroup = "🛠️ Data Management";
 
+    #[\Override]
     protected static ?int $navigationSort = 3;
 
+    #[\Override]
     protected static ?string $title = 'Export GrampsXML';
 
+    #[\Override]
     protected static ?string $slug = 'grampsxml-export';
 
+    #[\Override]
     protected string $view = 'filament.app.pages.grampsxml-export-page';
 
+    #[\Override]
     protected function getHeaderActions(): array
     {
         return [

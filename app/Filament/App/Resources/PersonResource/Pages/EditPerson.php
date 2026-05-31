@@ -12,8 +12,10 @@ use App\Models\MediaObject;
 
 class EditPerson extends EditRecord
 {
+    #[\Override]
     protected static string $resource = PersonResource::class;
 
+    #[\Override]
     protected function getHeaderActions(): array
     {
         return [
@@ -57,7 +59,7 @@ class EditPerson extends EditRecord
                     $url = $filePath;
                     try {
                         $startsWithHttp = str_starts_with(strtolower($filePath), 'http://') || str_starts_with(strtolower($filePath), 'https://');
-                    } catch (\Throwable $e) {
+                    } catch (\Throwable) {
                         $startsWithHttp = false;
                     }
 
@@ -70,7 +72,7 @@ class EditPerson extends EditRecord
                             if ($disk->exists($filePath)) {
                                 $url = $disk->url($filePath);
                             }
-                        } catch (\Throwable $e) {
+                        } catch (\Throwable) {
                             // leave original value if disk check fails
                         }
                     }

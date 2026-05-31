@@ -27,10 +27,14 @@ use Filament\Tables\Table;
 
 final class SourceRepoResource extends AppResource
 {
+    #[\Override]
     protected static ?string $model = SourceRepo::class;
 
+    #[\Override]
     protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-building-library';
+    #[\Override]
     protected static ?string $navigationLabel = 'Source Repositories';
+    #[\Override]
     protected static string | \UnitEnum | null $navigationGroup = '🔍 Research & Analysis';
 
     #[Override]
@@ -92,6 +96,7 @@ final class SourceRepoResource extends AppResource
         return [];
     }
 
+    #[\Override]
     public static function getPages(): array
     {
         return [

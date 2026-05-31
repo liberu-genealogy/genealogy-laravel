@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Filament\App\Pages;
 
 use App\Filament\App\Resources\MediaObjectResource;
@@ -12,14 +14,19 @@ use Filament\Pages\Page;
 
 class DeVilliersReportPage extends Page
 {
+    #[\Override]
     protected string $view = 'de-villiers-report-page';
 
+    #[\Override]
     protected static ?string $title = 'Devilliers Report';
 
+    #[\Override]
     protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-chart-bar';
 
+    #[\Override]
     protected static ?string $navigationLabel = 'De Villiers Report';
 
+    #[\Override]
     protected static string|\UnitEnum|null $navigationGroup = '📄 Reports';
     // {
     //     Livewire::mount('DeVilliersReportWidget');

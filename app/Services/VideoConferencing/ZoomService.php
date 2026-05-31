@@ -166,16 +166,14 @@ class ZoomService implements VideoConferencingInterface
         $data = $response->json();
         $participants = $data['participants'] ?? [];
 
-        return array_map(function ($participant) {
-            return [
-                'name' => $participant['name'],
-                'email' => $participant['user_email'] ?? '',
-                'joined_at' => $participant['join_time'] ?? null,
-                'left_at' => $participant['leave_time'] ?? null,
-                'duration' => $participant['duration'] ?? 0,
-                'platform_data' => $participant,
-            ];
-        }, $participants);
+        return array_map(fn(array $participant) => [
+            'name' => $participant['name'],
+            'email' => $participant['user_email'] ?? '',
+            'joined_at' => $participant['join_time'] ?? null,
+            'left_at' => $participant['leave_time'] ?? null,
+            'duration' => $participant['duration'] ?? 0,
+            'platform_data' => $participant,
+        ], $participants);
     }
 
     public function sendInvitations(string $meetingId, array $attendeeEmails): bool
@@ -188,9 +186,9 @@ class ZoomService implements VideoConferencingInterface
 
     public function isConfigured(): bool
     {
-        return !empty($this->apiKey) && 
-               !empty($this->apiSecret) && 
-               !empty($this->accountId);
+        return $this->apiKey !== '' && $this->apiKey !== '0' && 
+               ($this->apiSecret !== '' && $this->apiSecret !== '0') && 
+               ($this->accountId !== '' && $this->accountId !== '0');
     }
 
     protected function validateConfiguration(): void
@@ -207,8 +205,6 @@ class ZoomService implements VideoConferencingInterface
         $response = Http::asForm()->post('https://zoom.us/oauth/token', [
             'grant_type' => 'account_credentials',
             'account_id' => $this->accountId,
-        ], [
-            'Authorization' => 'Basic ' . base64_encode($this->apiKey . ':' . $this->apiSecret),
         ]);
 
         if (!$response->successful()) {

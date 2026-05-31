@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Filament\App\Resources;
 
 use Override;
@@ -24,12 +26,17 @@ use Filament\Tables\Table;
 
 class RefnResource extends AppResource
 {
+    #[\Override]
     protected static ?string $model = Refn::class;
 
+    #[\Override]
     protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-hashtag';
+    #[\Override]
     protected static ?string $navigationLabel = 'Reference Numbers';
+    #[\Override]
     protected static string | \UnitEnum | null $navigationGroup = "🛠️ Data Management";
 
+    #[\Override]
     protected static ?int $navigationSort = 3;
 
     #[Override]
@@ -92,6 +99,7 @@ class RefnResource extends AppResource
         ];
     }
 
+    #[\Override]
     public static function getPages(): array
     {
         return [

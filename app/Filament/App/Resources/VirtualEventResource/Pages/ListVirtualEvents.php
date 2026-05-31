@@ -11,8 +11,10 @@ use Illuminate\Database\Eloquent\Builder;
 
 class ListVirtualEvents extends ListRecords
 {
+    #[\Override]
     protected static string $resource = VirtualEventResource::class;
 
+    #[\Override]
     protected function getHeaderActions(): array
     {
         return [
@@ -20,6 +22,7 @@ class ListVirtualEvents extends ListRecords
         ];
     }
 
+    #[\Override]
     public function getTabs(): array
     {
         return [

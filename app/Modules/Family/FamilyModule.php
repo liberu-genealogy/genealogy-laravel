@@ -8,18 +8,21 @@ use App\Modules\BaseModule;
 
 class FamilyModule extends BaseModule
 {
+    #[\Override]
     protected function onEnable(): void
     {
         // Register family-specific services
         $this->registerFamilyServices();
     }
 
+    #[\Override]
     protected function onDisable(): void
     {
         // Clean up family-specific services
         $this->unregisterFamilyServices();
     }
 
+    #[\Override]
     protected function onInstall(): void
     {
         // Install family-related database tables
@@ -27,6 +30,7 @@ class FamilyModule extends BaseModule
         $this->seedFamilyData();
     }
 
+    #[\Override]
     protected function onUninstall(): void
     {
         // Remove family-related data
@@ -38,9 +42,7 @@ class FamilyModule extends BaseModule
      */
     protected function registerFamilyServices(): void
     {
-        app()->singleton('genealogy.family', function ($app) {
-            return new FamilyService();
-        });
+        app()->singleton('genealogy.family', fn($app) => new FamilyService());
     }
 
     /**

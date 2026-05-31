@@ -7,16 +7,22 @@ use Filament\Pages\Page;
 
 class UserChecklistsPage extends Page
 {
+    #[\Override]
     protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-clipboard-document-check';
 
+    #[\Override]
     protected string $view = 'filament.app.pages.user-checklists-page';
 
+    #[\Override]
     protected static ?string $navigationLabel = 'My Checklists';
 
+    #[\Override]
     protected static string | \UnitEnum | null $navigationGroup = '📋 Research Management';
 
+    #[\Override]
     protected static ?int $navigationSort = 2;
 
+    #[\Override]
     protected static ?string $title = 'My Research Checklists';
 
     public static function getNavigationBadge(): ?string

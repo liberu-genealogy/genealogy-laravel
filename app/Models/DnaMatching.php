@@ -12,6 +12,7 @@ class DnaMatching extends Model
     use HasFactory;
     use BelongsToTenant;
 
+    #[\Override]
     protected $fillable = [
         'user_id',
         'file1',
@@ -30,6 +31,7 @@ class DnaMatching extends Model
         'analysis_date',
     ];
 
+    #[\Override]
     protected $casts = [
         'detailed_report' => 'array',
         'chromosome_breakdown' => 'array',

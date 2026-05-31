@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Database\Factories;
 
 use App\Models\PersonAsso;
@@ -15,6 +17,7 @@ class PersonAssoFactory extends Factory
      *
      * @var string
      */
+    #[\Override]
     protected $model = PersonAsso::class;
 
     /**

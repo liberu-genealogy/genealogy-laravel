@@ -13,6 +13,7 @@ class DocumentTranscription extends Model
     use HasFactory;
     use SoftDeletes;
 
+    #[\Override]
     protected $fillable = [
         'team_id',
         'user_id',
@@ -25,6 +26,7 @@ class DocumentTranscription extends Model
         'processed_at',
     ];
 
+    #[\Override]
     protected $casts = [
         'metadata' => 'array',
         'processed_at' => 'datetime',

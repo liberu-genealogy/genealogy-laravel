@@ -17,12 +17,17 @@ use Illuminate\Database\Eloquent\Builder;
 
 class DuplicateMatchResource extends Resource
 {
+    #[\Override]
     protected static ?string $model = DuplicateMatch::class;
 
+    #[\Override]
     protected static ?string $navigationLabel = 'Duplicate Suggestions';
+    #[\Override]
     protected static string | \UnitEnum | null $navigationGroup = 'Genealogy';
+    #[\Override]
     protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-identification';
 
+    #[\Override]
     public static function table(Table $table): Table
     {
         return $table
@@ -37,7 +42,7 @@ class DuplicateMatchResource extends Resource
                     ->wrap(),
                 TextColumn::make('confidence_score')
                     ->label('Confidence')
-                    ->formatStateUsing(fn($state) => sprintf('%.1f%%', $state * 100))
+                    ->formatStateUsing(fn($state): string => sprintf('%.1f%%', $state * 100))
                     ->sortable(),
                 TextColumn::make('status')
                     ->label('Status')
@@ -65,7 +70,7 @@ class DuplicateMatchResource extends Resource
                     ->label('Review')
                     ->icon('heroicon-o-eye')
                     ->modalHeading('Review duplicate suggestion')
-                    ->modalSubheading(fn (DuplicateMatch $record) => 'Confidence: ' . sprintf('%.1f%%', $record->confidence_score * 100))
+                    ->modalSubheading(fn (DuplicateMatch $record): string => 'Confidence: ' . sprintf('%.1f%%', $record->confidence_score * 100))
                     ->modalContent(function (DuplicateMatch $record): string {
                         $p = $record->primaryPerson;
                         $d = $record->duplicatePerson;
@@ -100,7 +105,7 @@ class DuplicateMatchResource extends Resource
                             ->label('Reject')
                             ->color('danger')
                             ->requiresConfirmation()
-                            ->action(function (DuplicateMatch $record) {
+                            ->action(function (DuplicateMatch $record): void {
                                 $record->status = 'rejected';
                                 $record->reviewed_at = now();
                                 $record->save();
@@ -108,13 +113,13 @@ class DuplicateMatchResource extends Resource
                     ]),
                 Action::make('open')
                     ->label('Open persons')
-                    ->url(fn (DuplicateMatch $record) => route('filament.resources.persons.edit', ['record' => $record->primary_person_id]))
+                    ->url(fn (DuplicateMatch $record): string => route('filament.resources.persons.edit', ['record' => $record->primary_person_id]))
                     ->openUrlInNewTab(),
             ])
             ->bulkActions([
                 BulkAction::make('merge_selected')
                     ->label('Merge selected (pairwise)')
-                    ->action(function (Collection $records) {
+                    ->action(function (Collection $records): void {
                         $service = app(PersonMergeService::class);
                         foreach ($records as $record) {
                             if ($record->status === 'merged') {
@@ -132,6 +137,7 @@ class DuplicateMatchResource extends Resource
             ]);
     }
 
+    #[\Override]
     public static function getPages(): array
     {
         return [

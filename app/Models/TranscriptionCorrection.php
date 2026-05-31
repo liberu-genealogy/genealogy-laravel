@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class TranscriptionCorrection extends Model
 {
+    #[\Override]
     protected $fillable = [
         'document_transcription_id',
         'user_id',
@@ -17,6 +18,7 @@ class TranscriptionCorrection extends Model
         'correction_metadata',
     ];
 
+    #[\Override]
     protected $casts = [
         'correction_metadata' => 'array',
     ];

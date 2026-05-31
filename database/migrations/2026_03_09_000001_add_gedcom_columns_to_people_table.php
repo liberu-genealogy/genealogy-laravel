@@ -14,7 +14,7 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::table('people', function (Blueprint $table) {
+        Schema::table('people', function (Blueprint $table): void {
             // GEDCOM identifier
             if (!Schema::hasColumn('people', 'gid')) {
                 $table->string('gid')->nullable();
@@ -160,7 +160,7 @@ return new class extends Migration
 
     public function down(): void
     {
-        Schema::table('people', function (Blueprint $table) {
+        Schema::table('people', function (Blueprint $table): void {
             $table->dropColumn(array_filter([
                 Schema::hasColumn('people', 'gid') ? 'gid' : null,
                 Schema::hasColumn('people', 'givn') ? 'givn' : null,

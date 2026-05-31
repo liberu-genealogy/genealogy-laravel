@@ -20,10 +20,13 @@ use Illuminate\Support\Facades\Storage;
 
 class PhotosRelationManager extends RelationManager
 {
+    #[\Override]
     protected static string $relationship = 'photos';
 
+    #[\Override]
     protected static ?string $title = 'Photos';
 
+    #[\Override]
     public function form(Schema $schema): Schema
     {
         return $schema
@@ -73,10 +76,10 @@ class PhotosRelationManager extends RelationManager
                 CreateAction::make()
                     ->mutateFormDataUsing(function (array $data): array {
                         $data['person_id'] = $this->ownerRecord->id;
-                        $data['file_name'] = basename($data['file_path']);
+                        $data['file_name'] = basename((string) $data['file_path']);
                         return $data;
                     })
-                    ->after(function (PersonPhoto $record) {
+                    ->after(function (PersonPhoto $record): void {
                         $facialRecognitionService = app(FacialRecognitionService::class);
                         $result = $facialRecognitionService->analyzePhoto($record);
 
@@ -94,8 +97,8 @@ class PhotosRelationManager extends RelationManager
                     ->label('Analyze')
                     ->icon('heroicon-o-camera')
                     ->color('primary')
-                    ->visible(fn (PersonPhoto $record) => !$record->is_analyzed)
-                    ->action(function (PersonPhoto $record) {
+                    ->visible(fn (PersonPhoto $record): bool => !$record->is_analyzed)
+                    ->action(function (PersonPhoto $record): void {
                         $facialRecognitionService = app(FacialRecognitionService::class);
                         $result = $facialRecognitionService->analyzePhoto($record);
 
@@ -115,14 +118,14 @@ class PhotosRelationManager extends RelationManager
                     }),
                 EditAction::make(),
                 DeleteAction::make()
-                    ->before(function (PersonPhoto $record) {
+                    ->before(function (PersonPhoto $record): void {
                         Storage::disk('public')->delete($record->file_path);
                     }),
             ])
             ->bulkActions([
                 BulkActionGroup::make([
                     DeleteBulkAction::make()
-                        ->before(function ($records) {
+                        ->before(function ($records): void {
                             foreach ($records as $record) {
                                 Storage::disk('public')->delete($record->file_path);
                             }

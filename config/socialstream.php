@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'middleware' => ['web'],
     'prompt'     => 'Or continue with',

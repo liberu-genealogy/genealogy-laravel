@@ -10,12 +10,11 @@ class AdminServiceProvider extends ServiceProvider
     /**
      * Register any application services.
      */
+    #[\Override]
     public function register(): void
     {
         // Register admin services
-        $this->app->singleton(AdminService::class, function ($app) {
-            return new AdminService();
-        });
+        $this->app->singleton(AdminService::class, fn($app) => new AdminService());
 
         // Register admin configuration
         // $this->mergeConfigFrom(__DIR__ . '/../config/admin.php', 'admin');

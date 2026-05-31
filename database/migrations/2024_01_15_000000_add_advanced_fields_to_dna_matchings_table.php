@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('dna_matchings', function (Blueprint $table) {
+        Schema::table('dna_matchings', function (Blueprint $table): void {
             $table->float('confidence_level')->nullable()->after('largest_cm_segment');
             $table->string('predicted_relationship')->nullable()->after('confidence_level');
             $table->integer('shared_segments_count')->nullable()->after('predicted_relationship');
@@ -27,7 +27,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('dna_matchings', function (Blueprint $table) {
+        Schema::table('dna_matchings', function (Blueprint $table): void {
             $table->dropColumn([
                 'confidence_level',
                 'predicted_relationship',

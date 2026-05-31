@@ -10,7 +10,7 @@ class AhnentafelReport extends Component
     public ?int $selectedPersonId = null;
     public array $reportData = [];
 
-    public function render()
+    public function render(): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
     {
         return view('livewire.ahnentafel-report');
     }

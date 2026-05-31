@@ -11,10 +11,10 @@ class CreateSubmsTable extends Migration
      *
      * @return void
      */
-    public function up()
+    public function up(): void
     {
         if (!Schema::hasTable('subms')) {
-            Schema::create('subms', function (Blueprint $table) {
+            Schema::create('subms', function (Blueprint $table): void {
                 $table->bigIncrements('id');
                 $table->string('group')->nullable();
                 $table->integer('gid')->nullable();
@@ -38,7 +38,7 @@ class CreateSubmsTable extends Migration
      *
      * @return void
      */
-    public function down()
+    public function down(): void
     {
         Schema::dropIfExists('subms');
     }

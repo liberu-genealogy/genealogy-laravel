@@ -17,24 +17,19 @@ class DnaServiceProvider extends ServiceProvider
     /**
      * Register services.
      */
+    #[\Override]
     public function register(): void
     {
         // Register the AdvancedDnaMatchingService
-        $this->app->singleton(AdvancedDnaMatchingService::class, function ($app) {
-            return new AdvancedDnaMatchingService();
-        });
+        $this->app->singleton(AdvancedDnaMatchingService::class, fn($app) => new AdvancedDnaMatchingService());
 
         // Register the DnaImportService
-        $this->app->singleton(DnaImportService::class, function ($app) {
-            return new DnaImportService();
-        });
+        $this->app->singleton(DnaImportService::class, fn($app) => new DnaImportService());
 
         // Register the DnaTriangulationService
-        $this->app->singleton(DnaTriangulationService::class, function ($app) {
-            return new DnaTriangulationService(
-                $app->make(AdvancedDnaMatchingService::class)
-            );
-        });
+        $this->app->singleton(DnaTriangulationService::class, fn($app) => new DnaTriangulationService(
+            $app->make(AdvancedDnaMatchingService::class)
+        ));
     }
     /**
      * Bootstrap services.

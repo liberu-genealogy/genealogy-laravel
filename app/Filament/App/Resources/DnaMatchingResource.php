@@ -32,18 +32,25 @@ use Filament\Tables\Table;
 
 class DnaMatchingResource extends AppResource
 {
+    #[\Override]
     protected static bool $isScopedToTenant = false;
 
+    #[\Override]
     protected static ?string $model = DnaMatching::class;
 
+    #[\Override]
     protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-puzzle-piece';
 
+    #[\Override]
     protected static ?string $navigationLabel = 'DNA Matches';
 
+    #[\Override]
     protected static string | \UnitEnum | null $navigationGroup = '🧬 DNA & Genetics';
 
+    #[\Override]
     protected static ?int $navigationSort = 2;
 
+    #[\Override]
     public static function shouldRegisterNavigation(): bool
     {
         if (config('premium.enabled')) {
@@ -52,6 +59,7 @@ class DnaMatchingResource extends AppResource
         return auth()->user()?->isPremium() ?? false;
     }
 
+       #[\Override]
        public static function form(Schema $schema): Schema
        {
            return $schema
@@ -122,6 +130,7 @@ class DnaMatchingResource extends AppResource
              ]);
      }
 
+     #[\Override]
      public static function table(Table $table): Table
      {
          return $table
@@ -237,6 +246,7 @@ class DnaMatchingResource extends AppResource
              ->defaultSort('total_shared_cm', 'desc');
      }
 
+     #[\Override]
      public static function getRelations(): array
      {
          return [
@@ -244,6 +254,7 @@ class DnaMatchingResource extends AppResource
          ];
      }
 
+     #[\Override]
      public static function getPages(): array
      {
          return [

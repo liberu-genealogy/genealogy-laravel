@@ -17,8 +17,10 @@ use Filament\Schemas\Schema;
 
 class ViewVirtualEvent extends ViewRecord
 {
+    #[\Override]
     protected static string $resource = VirtualEventResource::class;
 
+    #[\Override]
     protected function getHeaderActions(): array
     {
         return [
@@ -27,11 +29,12 @@ class ViewVirtualEvent extends ViewRecord
                 ->color('success')
                 ->url(fn () => $this->getRecord()->join_url ?? '#')
                 ->openUrlInNewTab()
-                ->visible(fn () => $this->getRecord()->canJoin() && !empty($this->getRecord()->join_url)),
+                ->visible(fn (): bool => $this->getRecord()->canJoin() && !empty($this->getRecord()->join_url)),
             EditAction::make(),
         ];
     }
 
+    #[\Override]
     public function infolist(Schema $schema): Schema
     {
         return $infolist
@@ -116,17 +119,17 @@ class ViewVirtualEvent extends ViewRecord
                             ->openUrlInNewTab()
                             ->copyable()
                             ->columnSpanFull()
-                            ->visible(fn ($record) => !empty($record->join_url)),
+                            ->visible(fn ($record): bool => !empty($record->join_url)),
                         TextEntry::make('meeting_password')
                             ->label('Meeting Password')
                             ->copyable()
-                            ->visible(fn ($record) => !empty($record->meeting_password)),
+                            ->visible(fn ($record): bool => !empty($record->meeting_password)),
                         TextEntry::make('instructions')
                             ->label('Special Instructions')
                             ->columnSpanFull()
-                            ->visible(fn ($record) => !empty($record->instructions)),
+                            ->visible(fn ($record): bool => !empty($record->instructions)),
                     ])
-                    ->visible(fn ($record) => !empty($record->meeting_id) || !empty($record->join_url)),
+                    ->visible(fn ($record): bool => !empty($record->meeting_id) || !empty($record->join_url)),
 
                 Section::make('Attendance Summary')
                     ->schema([

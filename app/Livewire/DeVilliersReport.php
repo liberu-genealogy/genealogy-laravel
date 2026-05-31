@@ -11,7 +11,7 @@ class DeVilliersReport extends Component
 
     public $reportData = [];
 
-    public function render()
+    public function render(): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
     {
         return view('livewire.devilliers-report');
     }

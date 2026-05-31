@@ -14,6 +14,7 @@ class Source extends \FamilyTree365\LaravelGedcom\Models\Source
     /**
      * The attributes that should be cast.
      */
+    #[\Override]
     protected $casts = [
         'archive_metadata' => 'array',
     ];

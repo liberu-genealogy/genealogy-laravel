@@ -8,18 +8,21 @@ use App\Modules\BaseModule;
 
 class PersonModule extends BaseModule
 {
+    #[\Override]
     protected function onEnable(): void
     {
         // Register person-specific services and configurations
         $this->registerPersonServices();
     }
 
+    #[\Override]
     protected function onDisable(): void
     {
         // Clean up person-specific services
         $this->unregisterPersonServices();
     }
 
+    #[\Override]
     protected function onInstall(): void
     {
         // Install person-related database tables
@@ -27,6 +30,7 @@ class PersonModule extends BaseModule
         $this->seedPersonData();
     }
 
+    #[\Override]
     protected function onUninstall(): void
     {
         // Remove person-related data (with confirmation)
@@ -38,9 +42,7 @@ class PersonModule extends BaseModule
      */
     protected function registerPersonServices(): void
     {
-        app()->singleton('genealogy.person', function ($app) {
-            return new PersonService();
-        });
+        app()->singleton('genealogy.person', fn($app) => new PersonService());
     }
 
     /**

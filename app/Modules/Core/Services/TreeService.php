@@ -110,7 +110,7 @@ class TreeService
     public function getLivingDescendants(Person $person): Collection
     {
         return $this->getAllDescendants($person)
-            ->filter(fn($descendant) => !$descendant->deathday);
+            ->filter(fn($descendant): bool => !$descendant->deathday);
     }
 
     /**

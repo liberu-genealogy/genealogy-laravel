@@ -25,16 +25,21 @@ use Filament\Tables\Table;
 
 class ChanResource extends AppResource
 {
+    #[\Override]
     protected static ?string $model = Chan::class;
 
+    #[\Override]
     protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-clock';
 
+    #[\Override]
     protected static string | \UnitEnum | null $navigationGroup = '👥 Family Tree';
 
+    #[\Override]
     protected static ?string $navigationLabel = 'Chan';
 
     // protected static ?string $tenantRelationshipName = 'team';
 
+    #[\Override]
     public static function canCreate(): bool
     {
         return auth()->check();
@@ -104,6 +109,7 @@ class ChanResource extends AppResource
         ];
     }
 
+    #[\Override]
     public static function getPages(): array
     {
         return [

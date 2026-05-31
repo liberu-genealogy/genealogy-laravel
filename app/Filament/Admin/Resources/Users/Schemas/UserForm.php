@@ -46,7 +46,7 @@ class UserForm
                                         TextInput::make('password')
                                             ->password()
                                             ->dehydrateStateUsing(fn ($state) => filled($state) ? Hash::make($state) : null)
-                                            ->dehydrated(fn ($state) => filled($state))
+                                            ->dehydrated(fn ($state): bool => filled($state))
                                             ->required(fn (string $context): bool => $context === 'create')
                                             ->maxLength(255)
                                             ->placeholder('Enter password')

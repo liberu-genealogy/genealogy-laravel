@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Log;
 
 class TriangulateDnaCommand extends Command
 {
+    #[\Override]
     protected $signature = 'dna:triangulate 
                             {base_kit_id : The primary DNA kit ID to match against}
                             {--kits=* : Specific kit IDs to compare (optional, defaults to all kits)}
@@ -17,14 +18,12 @@ class TriangulateDnaCommand extends Command
                             {--three-way-kits=* : Exactly three kit IDs required for three-way triangulation (used with --three-way)}
                             {--store : Store results in database}';
 
+    #[\Override]
     protected $description = 'Perform DNA triangulation analysis to match one kit against many or find triangulated groups';
 
-    protected DnaTriangulationService $triangulationService;
-
-    public function __construct(DnaTriangulationService $triangulationService)
+    public function __construct(protected DnaTriangulationService $triangulationService)
     {
         parent::__construct();
-        $this->triangulationService = $triangulationService;
     }
 
     public function handle(): int
@@ -56,7 +55,7 @@ class TriangulateDnaCommand extends Command
         $this->info("Minimum cM threshold: {$minCm}");
         $this->newLine();
 
-        $compareKitIds = !empty($compareKits) ? array_map('intval', $compareKits) : null;
+        $compareKitIds = $compareKits === [] ? null : array_map(intval(...), $compareKits);
 
         try {
             $results = $this->triangulationService->triangulateOneAgainstMany(
@@ -89,7 +88,7 @@ class TriangulateDnaCommand extends Command
             return Command::FAILURE;
         }
 
-        $kitIds = array_map('intval', $threeWayKits);
+        $kitIds = array_map(intval(...), $threeWayKits);
         
         $this->info("Starting three-way triangulation for kits: " . implode(', ', $kitIds));
         $this->newLine();
@@ -127,9 +126,9 @@ class TriangulateDnaCommand extends Command
         $this->info('Top Matches:');
         $this->table(
             ['Kit ID', 'Kit Name', 'Shared cM', 'Largest Segment', 'Relationship', 'Confidence', 'Quality Score'],
-            array_map(fn($match) => [
+            array_map(fn(array $match): array => [
                 $match['kit_id'],
-                substr($match['kit_name'], 0, 30),
+                substr((string) $match['kit_name'], 0, 30),
                 $match['total_cms'],
                 $match['largest_cm'],
                 $match['predicted_relationship'],
@@ -169,7 +168,7 @@ class TriangulateDnaCommand extends Command
             $this->info('Chromosome Breakdown:');
             $this->table(
                 ['Chr', 'Kit1-Kit2 cM', 'Kit1-Kit3 cM', 'Kit2-Kit3 cM', 'Min cM', 'Avg cM'],
-                array_map(fn($chr) => [
+                array_map(fn(array $chr): array => [
                     $chr['chromosome'],
                     $chr['kit1_kit2_cm'],
                     $chr['kit1_kit3_cm'],

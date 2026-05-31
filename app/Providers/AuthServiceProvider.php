@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Providers;
 
 use App\Models\Activation;
@@ -117,6 +119,7 @@ class AuthServiceProvider extends ServiceProvider
      *
      * @var array<class-string, class-string>
      */
+    #[\Override]
     protected $policies = [
         Activation::class       => ActivationPolicy::class,
         Addr::class             => AddrPolicy::class,

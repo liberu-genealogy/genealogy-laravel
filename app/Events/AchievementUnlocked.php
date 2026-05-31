@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Events;
 
 use App\Models\Achievement;
@@ -16,16 +18,11 @@ class AchievementUnlocked implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public User $user;
-    public Achievement $achievement;
-
     /**
      * Create a new event instance.
      */
-    public function __construct(User $user, Achievement $achievement)
+    public function __construct(public User $user, public Achievement $achievement)
     {
-        $this->user = $user;
-        $this->achievement = $achievement;
     }
 
     /**

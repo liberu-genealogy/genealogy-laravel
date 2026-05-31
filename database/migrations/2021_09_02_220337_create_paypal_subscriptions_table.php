@@ -11,9 +11,9 @@ class CreatePaypalSubscriptionsTable extends Migration
      *
      * @return void
      */
-    public function up()
+    public function up(): void
     {
-        Schema::create('paypal_subscriptions', function (Blueprint $table) {
+        Schema::create('paypal_subscriptions', function (Blueprint $table): void {
             $table->bigIncrements('id');
             $table->string('paypal_id')->unique()->nullable();  // unknown table
             $table->string('user_email')->nullable();
@@ -30,7 +30,7 @@ class CreatePaypalSubscriptionsTable extends Migration
      *
      * @return void
      */
-    public function down()
+    public function down(): void
     {
         Schema::dropIfExists('paypal_subscriptions');
     }

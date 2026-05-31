@@ -42,15 +42,21 @@ use Carbon\Carbon;
 
 class VirtualEventResource extends AppResource
 {
+    #[\Override]
     protected static ?string $model = VirtualEvent::class;
 
+    #[\Override]
     protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-video-camera';
 
+    #[\Override]
     protected static ?string $navigationLabel = 'Virtual Events';
 
+    #[\Override]
     protected static string | \UnitEnum | null $navigationGroup = '👥 Family Reunions';
 
+    #[\Override]
     protected static ?int $navigationSort = 1;
+ #[\Override]
  public static function form(Schema $schema): Schema
     {
         return $schema
@@ -77,7 +83,7 @@ class VirtualEventResource extends AppResource
                                     ->required()
                                     ->native(false)
                                     ->live()
-                                    ->afterStateUpdated(function ($state, callable $set, callable $get) {
+                                    ->afterStateUpdated(function ($state, callable $set, callable $get): void {
                                         if ($state && !$get('end_time')) {
                                             $set('end_time', Carbon::parse($state)->addHours(2));
                                         }
@@ -139,13 +145,13 @@ class VirtualEventResource extends AppResource
 
                                 return collect($platforms)
                                     ->filter(fn($platform) => $platform['enabled'])
-                                    ->mapWithKeys(fn($platform, $key) => [$key => $platform['name']])
+                                    ->mapWithKeys(fn($platform, $key): array => [$key => $platform['name']])
                                     ->toArray();
                             })
                             ->required()
                             ->default('zoom')
                             ->live()
-                            ->afterStateUpdated(function ($state, callable $set) {
+                            ->afterStateUpdated(function ($state, callable $set): void {
                                 // Clear meeting data when platform changes
                                 $set('meeting_url', null);
                                 $set('join_url', null);
@@ -171,14 +177,14 @@ class VirtualEventResource extends AppResource
                                     ->url()
                                     ->disabled()
                                     ->dehydrated(false)
-                                    ->visible(fn($get) => $get('platform') === 'custom'),
+                                    ->visible(fn($get): bool => $get('platform') === 'custom'),
                                 TextInput::make('join_url')
                                     ->label('Join URL')
                                     ->url()
                                     ->disabled()
                                     ->dehydrated(false)
                                     ->columnSpanFull()
-                                    ->visible(fn($get) => !empty($get('join_url'))),
+                                    ->visible(fn($get): bool => !empty($get('join_url'))),
                             ]),
                         Textarea::make('instructions')
                             ->label('Special Instructions')
@@ -192,6 +198,7 @@ class VirtualEventResource extends AppResource
             ]);
     }
 
+    #[\Override]
     public static function table(Table $table): Table
     {
         return $table
@@ -283,7 +290,7 @@ class VirtualEventResource extends AppResource
                 Action::make('create_meeting')
                     ->icon('heroicon-o-plus-circle')
                     ->color('primary')
-                    ->action(function (VirtualEvent $record) {
+                    ->action(function (VirtualEvent $record): void {
                         try {
                             $service = app(VideoConferencingService::class);
                             $service->createMeeting($record);
@@ -313,6 +320,7 @@ class VirtualEventResource extends AppResource
             ->defaultSort('start_time', 'desc');
     }
 
+    #[\Override]
     public static function getRelations(): array
     {
         return [
@@ -320,6 +328,7 @@ class VirtualEventResource extends AppResource
         ];
     }
 
+    #[\Override]
     public static function getPages(): array
     {
         return [
@@ -330,6 +339,7 @@ class VirtualEventResource extends AppResource
         ];
     }
 
+    #[\Override]
     public static function getEloquentQuery(): Builder
     {
         return parent::getEloquentQuery()

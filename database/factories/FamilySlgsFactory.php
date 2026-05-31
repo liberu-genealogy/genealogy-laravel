@@ -16,6 +16,7 @@ class FamilySlgsFactory extends Factory
      *
      * @var string
      */
+    #[\Override]
     protected $model = FamilySlgs::class;
 
     /**

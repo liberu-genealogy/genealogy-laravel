@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('achievements', function (Blueprint $table) {
+        Schema::create('achievements', function (Blueprint $table): void {
             $table->id();
             $table->string('key')->unique(); // e.g., 'first_person_added', 'genealogy_researcher'
             $table->string('name'); // Display name

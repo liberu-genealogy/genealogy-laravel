@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -11,7 +13,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware(['web'])->group(function () {
+Route::middleware(['web'])->group(function (): void {
     // Core genealogy routes can be added here
     // These would be shared routes used by multiple modules
 });

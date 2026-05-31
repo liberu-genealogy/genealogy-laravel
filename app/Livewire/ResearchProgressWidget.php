@@ -128,12 +128,10 @@ class ResearchProgressWidget extends Component
 
         // Map to objects with userChecklist relation-like structure expected by the Blade
         $this->recentActivity = [
-            'items' => $recentCompleted->map(function (UserChecklist $c) {
-                return (object) [
-                    'userChecklist' => $c,
-                    'completed_at' => $c->completed_at,
-                ];
-            }),
+            'items' => $recentCompleted->map(fn(UserChecklist $c) => (object) [
+                'userChecklist' => $c,
+                'completed_at' => $c->completed_at,
+            ]),
         ];
 
         // Upcoming deadlines

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Database\Factories;
 
 use App\Models\Author;
@@ -15,6 +17,7 @@ class AuthorFactory extends Factory
      *
      * @var string
      */
+    #[\Override]
     protected $model = Author::class;
 
     /**

@@ -6,10 +6,10 @@ use Illuminate\Support\Facades\Schema;
 
 class CreateDefaultPeopleTable extends Migration
 {
-    public function up()
+    public function up(): void
     {
         if (!Schema::hasTable('people')) {
-            Schema::create('people', function (Blueprint $table) {
+            Schema::create('people', function (Blueprint $table): void {
                 $table->bigIncrements('id');
                 $table->tinyInteger('title')->nullable();
                 $table->string('name')->index();
@@ -29,7 +29,7 @@ class CreateDefaultPeopleTable extends Migration
         }
     }
 
-    public function down()
+    public function down(): void
     {
         Schema::dropIfExists('people');
     }

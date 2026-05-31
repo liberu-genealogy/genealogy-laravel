@@ -12,18 +12,25 @@ use Illuminate\Support\Facades\Auth;
 
 class TrialExpiredPage extends Page
 {
+    #[\Override]
     protected static string|\BackedEnum|null $navigationIcon = null;
 
+    #[\Override]
     protected static ?string $navigationLabel = 'Trial Expired';
 
+    #[\Override]
     protected static string|\UnitEnum|null $navigationGroup = '👤 Account & Settings';
 
+    #[\Override]
     protected static ?int $navigationSort = 3;
 
+    #[\Override]
     protected string $view = 'filament.app.pages.trial-expired-page';
 
+    #[\Override]
     protected static ?string $title = 'Your Trial Has Ended';
 
+    #[\Override]
     protected static ?string $slug = 'trial-expired';
 
     public function mount(): void
@@ -42,11 +49,13 @@ class TrialExpiredPage extends Page
         }
     }
 
+    #[\Override]
     public static function shouldRegisterNavigation(): bool
     {
         return false; // Never show in navigation; accessed via redirect only
     }
 
+    #[\Override]
     protected function getHeaderActions(): array
     {
         return [
@@ -87,7 +96,7 @@ class TrialExpiredPage extends Page
 
             // Mark as premium upon successful checkout (webhook will also handle this)
             $this->redirect($checkout->url);
-        } catch (Exception $e) {
+        } catch (Exception) {
             Notification::make()
                 ->title('Payment Error')
                 ->body('Unable to start the checkout process. Please try again or contact support.')
@@ -109,7 +118,7 @@ class TrialExpiredPage extends Page
                 ->send();
 
             $this->redirect(Filament::getUrl());
-        } catch (Exception $e) {
+        } catch (Exception) {
             Notification::make()
                 ->title('Error')
                 ->body('There was an error processing your request. Please try again.')

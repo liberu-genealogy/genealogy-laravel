@@ -11,7 +11,7 @@ return new class() extends Migration {
     public function up(): void
     {
         if (!Schema::hasColumn('user_checklists', 'team_id')) {
-            Schema::table('user_checklists', function (Blueprint $table) {
+            Schema::table('user_checklists', function (Blueprint $table): void {
                 $table->foreignId('team_id')->nullable()->constrained()->onDelete('cascade');
             });
         }
@@ -22,7 +22,7 @@ return new class() extends Migration {
      */
     public function down(): void
     {
-        Schema::table('user_checklists', function (Blueprint $table) {
+        Schema::table('user_checklists', function (Blueprint $table): void {
             //
         });
     }

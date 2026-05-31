@@ -17,6 +17,7 @@ class FamilyEventFactory extends Factory
      *
      * @var string
      */
+    #[\Override]
     protected $model = FamilyEvent::class;
 
     /**

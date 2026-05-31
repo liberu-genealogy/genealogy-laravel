@@ -13,8 +13,10 @@ use Illuminate\Support\Facades\Auth;
 
 class CreateDna extends CreateRecord
 {
+    #[\Override]
     protected static string $resource = DnaResource::class;
 
+    #[\Override]
     protected function handleRecordCreation(array $data): Model
     {
         $files = $data['attachment'] ?? [];
@@ -55,7 +57,7 @@ class CreateDna extends CreateRecord
             $this->halt();
         }
 
-        if (!empty($errors)) {
+        if ($errors !== []) {
             Notification::make()
                 ->title("Imported {$successCount} kit(s) with " . count($errors) . ' error(s)')
                 ->warning()

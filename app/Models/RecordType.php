@@ -10,6 +10,7 @@ class RecordType extends Model
 {
     use HasFactory;
 
+    #[\Override]
     protected $fillable = [
         'name',
         'slug',
@@ -22,6 +23,7 @@ class RecordType extends Model
         'sort_order',
     ];
 
+    #[\Override]
     protected $casts = [
         'metadata_schema' => 'array',
         'is_active' => 'boolean',

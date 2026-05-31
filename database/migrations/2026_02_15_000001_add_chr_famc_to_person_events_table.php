@@ -10,10 +10,10 @@ return new class() extends Migration {
      *
      * @return void
      */
-    public function up()
+    public function up(): void
     {
         if (!Schema::hasColumn('person_events', 'chr_famc')) {
-            Schema::table('person_events', function (Blueprint $table) {
+            Schema::table('person_events', function (Blueprint $table): void {
                 $table->string('chr_famc')->nullable()->after('birt_famc');
             });
         }
@@ -24,10 +24,10 @@ return new class() extends Migration {
      *
      * @return void
      */
-    public function down()
+    public function down(): void
     {
         if (Schema::hasColumn('person_events', 'chr_famc')) {
-            Schema::table('person_events', function (Blueprint $table) {
+            Schema::table('person_events', function (Blueprint $table): void {
                 $table->dropColumn('chr_famc');
             });
         }

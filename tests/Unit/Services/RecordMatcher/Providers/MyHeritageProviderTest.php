@@ -94,11 +94,9 @@ class MyHeritageProviderTest extends TestCase
 
         $results = $this->provider->search($person);
 
-        Http::assertSent(function ($request) {
-            return $request->hasHeader('Authorization', 'Bearer test-api-key') &&
-                   $request->hasHeader('Accept', 'application/json') &&
-                   str_contains($request->url(), 'api.myheritage.test');
-        });
+        Http::assertSent(fn($request) => $request->hasHeader('Authorization', 'Bearer test-api-key') &&
+               $request->hasHeader('Accept', 'application/json') &&
+               str_contains((string) $request->url(), 'api.myheritage.test'));
 
         $this->assertIsArray($results);
         $this->assertNotEmpty($results);

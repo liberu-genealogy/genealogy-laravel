@@ -14,7 +14,7 @@ class PremiumFeatureMiddleware
     /**
      * Handle an incoming request.
      */
-    public function handle(Request $request, Closure $next, string $feature = null): mixed
+    public function handle(Request $request, Closure $next, ?string $feature = null): mixed
     {
         // If premium is globally enabled, allow access for everyone
         if (config('premium.enabled')) {

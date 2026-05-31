@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Database\Factories;
 
 use App\Models\Family;
@@ -17,6 +19,7 @@ class FamilyFactory extends Factory
      *
      * @var string
      */
+    #[\Override]
     protected $model = Family::class;
 
     /**

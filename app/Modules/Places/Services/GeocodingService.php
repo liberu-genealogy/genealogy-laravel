@@ -17,9 +17,7 @@ class GeocodingService
     {
         $cacheKey = 'geocode_' . md5($placeName);
         
-        return Cache::remember($cacheKey, 86400, function () use ($placeName) {
-            return $this->performGeocoding($placeName);
-        });
+        return Cache::remember($cacheKey, 86400, fn() => $this->performGeocoding($placeName));
     }
 
     /**
@@ -29,9 +27,7 @@ class GeocodingService
     {
         $cacheKey = 'reverse_geocode_' . md5("{$latitude},{$longitude}");
         
-        return Cache::remember($cacheKey, 86400, function () use ($latitude, $longitude) {
-            return $this->performReverseGeocoding($latitude, $longitude);
-        });
+        return Cache::remember($cacheKey, 86400, fn() => $this->performReverseGeocoding($latitude, $longitude));
     }
 
     /**

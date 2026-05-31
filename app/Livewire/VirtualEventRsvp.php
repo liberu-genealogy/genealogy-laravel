@@ -58,14 +58,14 @@ class VirtualEventRsvp extends Component
         'invite_message' => 'nullable|string|max:1000',
     ];
 
-    public function mount(VirtualEvent $event)
+    public function mount(VirtualEvent $event): void
     {
         $this->event = $event;
         $this->attendee = $this->getUserAttendee();
         $this->loadDefaultInviteMessage();
     }
 
-    public function render()
+    public function render(): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
     {
         $attendees = $this->getFilteredAttendees();
         $persons = Person::orderBy('name')->get();
@@ -124,12 +124,12 @@ class VirtualEventRsvp extends Component
 
         // Apply search filter
         if (! empty($this->search)) {
-            $query->where(function ($q) {
-                $q->whereHas('user', function ($userQuery) {
+            $query->where(function ($q): void {
+                $q->whereHas('user', function ($userQuery): void {
                     $userQuery->where('name', 'like', '%'.$this->search.'%')
                         ->orWhere('email', 'like', '%'.$this->search.'%');
                 })
-                    ->orWhereHas('person', function ($personQuery) {
+                    ->orWhereHas('person', function ($personQuery): void {
                         $personQuery->where('name', 'like', '%'.$this->search.'%')
                             ->orWhere('givn', 'like', '%'.$this->search.'%')
                             ->orWhere('surn', 'like', '%'.$this->search.'%');
@@ -147,7 +147,7 @@ class VirtualEventRsvp extends Component
         return $query->orderBy('created_at', 'desc')->paginate(20);
     }
 
-    public function getEventStats()
+    public function getEventStats(): array
     {
         return [
             'total_attendees' => $this->event->attendee_count,
@@ -159,7 +159,7 @@ class VirtualEventRsvp extends Component
         ];
     }
 
-    public function openRsvpModal()
+    public function openRsvpModal(): void
     {
         if ($this->attendee) {
             $this->rsvp_status = $this->attendee->rsvp_status;
@@ -172,7 +172,7 @@ class VirtualEventRsvp extends Component
         $this->showRsvpModal = true;
     }
 
-    public function submitRsvp()
+    public function submitRsvp(): void
     {
         $this->validate();
 
@@ -227,23 +227,23 @@ class VirtualEventRsvp extends Component
         $this->dispatch('rsvp-updated');
     }
 
-    public function openInviteModal()
+    public function openInviteModal(): void
     {
         $this->showInviteModal = true;
     }
 
-    public function addInviteEmail()
+    public function addInviteEmail(): void
     {
         $this->invite_emails[] = '';
     }
 
-    public function removeInviteEmail($index)
+    public function removeInviteEmail($index): void
     {
         unset($this->invite_emails[$index]);
         $this->invite_emails = array_values($this->invite_emails);
     }
 
-    public function invitePerson()
+    public function invitePerson(): void
     {
         if (! $this->invite_person_id) {
             return;
@@ -280,7 +280,7 @@ class VirtualEventRsvp extends Component
         $this->dispatch('attendee-invited');
     }
 
-    public function sendInvitations()
+    public function sendInvitations(): void
     {
         $this->validate($this->inviteRules);
 
@@ -301,7 +301,7 @@ class VirtualEventRsvp extends Component
             // Check if email is already invited
             $existingAttendee = $this->event->attendees()
                 ->where('guest_email', $email)
-                ->orWhereHas('user', function ($query) use ($email) {
+                ->orWhereHas('user', function ($query) use ($email): void {
                     $query->where('email', $email);
                 })
                 ->first();
@@ -316,7 +316,7 @@ class VirtualEventRsvp extends Component
             VirtualEventAttendee::create([
                 'virtual_event_id' => $this->event->id,
                 'guest_email' => $email,
-                'guest_name' => explode('@', $email)[0],
+                'guest_name' => explode('@', (string) $email)[0],
                 'rsvp_status' => 'pending',
                 'invitation_sent_at' => now(),
             ]);
@@ -331,7 +331,7 @@ class VirtualEventRsvp extends Component
             session()->flash('success', "Successfully sent {$sent} invitation(s).");
         }
 
-        if (! empty($errors)) {
+        if ($errors !== []) {
             session()->flash('warning', implode(' ', $errors));
         }
 
@@ -368,12 +368,12 @@ class VirtualEventRsvp extends Component
         session()->flash('error', 'Meeting link is not available.');
     }
 
-    public function toggleAttendeeList()
+    public function toggleAttendeeList(): void
     {
         $this->showAttendeeList = ! $this->showAttendeeList;
     }
 
-    public function resetRsvpForm()
+    public function resetRsvpForm(): void
     {
         $this->rsvp_status = 'accepted';
         $this->rsvp_notes = '';
@@ -381,14 +381,14 @@ class VirtualEventRsvp extends Component
         $this->guest_email = '';
     }
 
-    public function resetInviteForm()
+    public function resetInviteForm(): void
     {
         $this->invite_emails = [''];
         $this->invite_message = '';
         $this->loadDefaultInviteMessage();
     }
 
-    public function resetFilters()
+    public function resetFilters(): void
     {
         $this->statusFilter = 'all';
         $this->search = '';

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Filament\App\Resources;
 
 use Override;
@@ -24,10 +26,14 @@ use Filament\Tables\Table;
 
 class PersonSubmResource extends AppResource
 {
+    #[\Override]
     protected static ?string $model = PersonSubm::class;
 
+    #[\Override]
     protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-paper-airplane';
+    #[\Override]
     protected static ?string $navigationLabel = 'Person Submissions';
+    #[\Override]
     protected static string | \UnitEnum | null $navigationGroup = '👥 Family Tree';
 
     #[Override]
@@ -86,6 +92,7 @@ class PersonSubmResource extends AppResource
         ];
     }
 
+    #[\Override]
     public static function getPages(): array
     {
         return [

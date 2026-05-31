@@ -11,21 +11,28 @@ use Override;
 
 class ImportJobResource extends AppResource
 {
+    #[\Override]
     protected static ?string $model = ImportJob::class;
 
+    #[\Override]
     protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-clipboard-document-list';
 
+    #[\Override]
     protected static ?string $navigationLabel = 'Import Logs';
 
+    #[\Override]
     protected static string|\UnitEnum|null $navigationGroup = '🛠️ Data Management';
 
+    #[\Override]
     protected static ?int $navigationSort = 11;
 
+    #[\Override]
     public static function canCreate(): bool
     {
         return false;
     }
 
+    #[\Override]
     public static function getEloquentQuery(): Builder
     {
         return parent::getEloquentQuery()
@@ -94,6 +101,7 @@ class ImportJobResource extends AppResource
             ->toolbarActions([]);
     }
 
+    #[\Override]
     public static function getPages(): array
     {
         return [

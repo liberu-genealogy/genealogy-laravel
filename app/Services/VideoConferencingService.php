@@ -68,7 +68,7 @@ class VideoConferencingService
                 'error' => $e->getMessage(),
             ]);
 
-            throw new Exception("Failed to create {$event->platform} meeting: " . $e->getMessage());
+            throw new Exception("Failed to create {$event->platform} meeting: " . $e->getMessage(), $e->getCode(), $e);
         }
     }
 
@@ -115,7 +115,7 @@ class VideoConferencingService
                 'error' => $e->getMessage(),
             ]);
 
-            throw new Exception("Failed to update {$event->platform} meeting: " . $e->getMessage());
+            throw new Exception("Failed to update {$event->platform} meeting: " . $e->getMessage(), $e->getCode(), $e);
         }
     }
 
@@ -208,7 +208,7 @@ class VideoConferencingService
         try {
             $service = $this->getService($event->platform);
 
-            if (empty($attendeeEmails)) {
+            if ($attendeeEmails === []) {
                 $attendeeEmails = $event->attendees()
                     ->whereNotNull('user_id')
                     ->with('user')
@@ -296,7 +296,7 @@ class VideoConferencingService
         try {
             $service = $this->getService($platform);
             return $service->isConfigured();
-        } catch (Exception $e) {
+        } catch (Exception) {
             return false;
         }
     }

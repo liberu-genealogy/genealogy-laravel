@@ -8,7 +8,7 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::table('sources', function (Blueprint $table) {
+        Schema::table('sources', function (Blueprint $table): void {
             $table->foreignId('record_type_id')->nullable()->after('id')->constrained('record_types')->nullOnDelete();
             $table->json('archive_metadata')->nullable()->after('text'); // Store type-specific metadata
             $table->index('record_type_id');
@@ -17,7 +17,7 @@ return new class extends Migration
 
     public function down(): void
     {
-        Schema::table('sources', function (Blueprint $table) {
+        Schema::table('sources', function (Blueprint $table): void {
             $table->dropForeign(['record_type_id']);
             $table->dropColumn(['record_type_id', 'archive_metadata']);
         });

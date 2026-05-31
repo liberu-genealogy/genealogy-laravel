@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Database\Factories;
 
 use App\Models\Person;
@@ -16,6 +18,7 @@ class PersonFactory extends Factory
      *
      * @var string
      */
+    #[\Override]
     protected $model = Person::class;
 
     /**
@@ -33,7 +36,7 @@ class PersonFactory extends Factory
             'appellative'  => fake()->firstName(),
             'email'        => fake()->unique()->safeEmail(),
             'phone'        => fake()->phoneNumber(),
-            'birthday'     => Carbon::now()->subYears(rand(15, 100))->format('Y-m-d'),
+            'birthday'     => Carbon::now()->subYears(random_int(15, 100))->format('Y-m-d'),
             'bank'         => fake()->word(),
             'bank_account' => fake()->numerify('##########'),
         ];

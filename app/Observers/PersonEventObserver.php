@@ -7,11 +7,8 @@ use App\Services\GamificationService;
 
 class PersonEventObserver
 {
-    protected $gamificationService;
-
-    public function __construct(GamificationService $gamificationService)
+    public function __construct(protected \App\Services\GamificationService $gamificationService)
     {
-        $this->gamificationService = $gamificationService;
     }
 
     /**
