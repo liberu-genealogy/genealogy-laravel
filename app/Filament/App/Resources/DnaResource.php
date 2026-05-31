@@ -65,9 +65,10 @@ class DnaResource extends AppResource
                     ->required()
                     ->multiple()
                     ->maxSize(100000)
+                    ->disk('private')
                     ->directory('dna-form-imports')
                     ->visibility('private')
-                    ->acceptedFileTypes(['text/plain', 'text/csv', 'application/zip']),
+                    ->acceptedFileTypes(['text/plain', 'text/csv', 'application/zip', 'application/octet-stream']),
             ]);
     }
 

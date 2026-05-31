@@ -21,8 +21,7 @@ use App\Jobs\ImportGedcom;
 use App\Jobs\ImportGrampsXml;
 use App\Models\Gedcom;
 use Filament\Forms\Components\FileUpload;
-use Filament\Forms\Components\Placeholder;
-use Filament\Forms\Form;
+use Filament\Schemas\Components\Section;
 use App\Filament\App\Resources\AppResource;
 use Filament\Schemas\Schema;
 use Filament\Actions;
@@ -31,7 +30,6 @@ use Filament\Tables\Table;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\HtmlString;
 
 class GedcomResource extends AppResource
 {
@@ -69,48 +67,32 @@ class GedcomResource extends AppResource
     {
         return $schema
             ->components([
-                Placeholder::make('import_info')
-                    ->label('')
-                    ->content(new HtmlString(
-                        '<p class="text-sm text-gray-600 dark:text-gray-400">'
-                        . 'Import your family tree data by uploading a GEDCOM (<code>.ged</code>) or GrampsXML '
-                        . '(<code>.gramps</code>, <code>.xml</code>) file. The file will be processed in the background '
-                        . 'and you will be redirected to the Import Logs page to monitor progress.</p>'
-                    ))
+                Section::make('Import Family Tree')
+                    ->description(
+                        'Import your family tree data by uploading a GEDCOM (.ged) or GrampsXML (.gramps, .xml) file. '
+                        . 'The file will be processed in the background and you will be redirected to the Import Logs page to monitor progress.'
+                    )
+                    ->schema([
+                        FileUpload::make('filename')
+                            ->label('Family tree file')
+                            ->required()
+                            ->acceptedFileTypes(['text/plain', 'application/xml', 'text/xml', 'application/octet-stream'])
+                            ->mimeTypeMap(['ged' => 'text/plain', 'gramps' => 'application/xml', 'xml' => 'application/xml'])
+                            ->maxSize(100000)
+                            ->disk('private')
+                            ->directory('gedcom-form-imports')
+                            ->visibility('private')
+                            ->helperText('Supported formats: GEDCOM (.ged), GrampsXML (.gramps, .xml) — max 100 MB')
+                            ->columnSpanFull(),
+                    ])
                     ->columnSpanFull(),
 
-                Placeholder::make('supported_formats')
-                    ->label('Supported file formats')
-                    ->content(new HtmlString(
-                        '<ul class="list-disc list-inside text-sm space-y-1">'
-                        . '<li><strong>.ged</strong> – Standard GEDCOM format (most genealogy software)</li>'
-                        . '<li><strong>.gramps</strong> – Gramps native XML format</li>'
-                        . '<li><strong>.xml</strong> – GrampsXML format</li>'
-                        . '</ul>'
-                    ))
-                    ->columnSpanFull(),
-
-                FileUpload::make('filename')
-                    ->multiple(false)
-                    ->required()
-                    ->acceptedFileTypes(['.ged', '.gramps', 'text/plain', 'application/xml', 'text/xml'])
-                    ->mimeTypeMap(['ged' => 'text/plain', 'gramps' => 'application/xml'])
-                    ->maxSize(100000)
-                    ->disk('private')
-                    ->directory('gedcom-form-imports')
-                    ->visibility('private')
-                    ->helperText('Upload GEDCOM (.ged) or GrampsXML (.gramps, .xml) files')
-                    ->columnSpanFull(),
-
-                Placeholder::make('processing_note')
-                    ->label('')
-                    ->content(new HtmlString(
-                        '<p class="text-sm text-yellow-800 dark:text-yellow-200">'
-                        . '<strong>Note:</strong> After submitting, your file will be queued for processing '
-                        . 'and you will be redirected to the <strong>Import Logs</strong> page where you can '
-                        . 'monitor the import progress in real time. Large files may take several minutes to process.'
-                        . '</p>'
-                    ))
+                Section::make('Processing note')
+                    ->description(
+                        'After submitting, your file will be queued for processing and you will be redirected to the '
+                        . 'Import Logs page where you can monitor the import progress in real time. '
+                        . 'Large files may take several minutes to process.'
+                    )
                     ->columnSpanFull(),
             ]);
     }
