@@ -17,8 +17,8 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-//use JoelButcher\Socialstream\HasConnectedAccounts;
-//use JoelButcher\Socialstream\SetsProfilePhotoFromUrl;
+use JoelButcher\Socialstream\HasConnectedAccounts;
+use JoelButcher\Socialstream\SetsProfilePhotoFromUrl;
 use Laravel\Cashier\Billable;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 //use Laravel\Jetstream\HasProfilePhoto;
@@ -29,7 +29,7 @@ use Spatie\Permission\Traits\HasRoles;
 class User extends Authenticatable implements HasDefaultTenant, HasTenants, FilamentUser
 {
     use HasApiTokens;
-//    use HasConnectedAccounts;
+    use HasConnectedAccounts;
     use HasRoles, HasTeams {
         HasTeams::teams insteadof HasRoles;
         HasRoles::teams as roleTeams;
@@ -39,7 +39,7 @@ class User extends Authenticatable implements HasDefaultTenant, HasTenants, Fila
     //    HasProfilePhoto::profilePhotoUrl as getPhotoUrl;
 //    }
     use Notifiable;
-//    use SetsProfilePhotoFromUrl;
+    use SetsProfilePhotoFromUrl;
     use TwoFactorAuthenticatable;
     use Billable;
     // use HasPanelShield;

@@ -33,6 +33,22 @@
                 @livewire('profile.logout-other-browser-sessions-form')
             </div>
 
+            @if (JoelButcher\Socialstream\Socialstream::hasConnectedAccountsFeatures())
+                <x-section-border />
+
+                <div class="mt-10 sm:mt-0">
+                    @livewire('profile.connected-accounts-form')
+                </div>
+
+                @if (JoelButcher\Socialstream\Socialstream::canSetPasswords())
+                    <x-section-border />
+
+                    <div class="mt-10 sm:mt-0">
+                        @livewire('profile.set-password-form')
+                    </div>
+                @endif
+            @endif
+
             @if (Laravel\Jetstream\Jetstream::hasAccountDeletionFeatures())
                 <x-section-border />
 
