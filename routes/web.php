@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 use App\Http\Controllers\AIMatchController;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\FanChartController;
+use App\Http\Controllers\PedigreeChartController;
 use App\Http\Controllers\TeamInvitationController;
 use Illuminate\Support\Facades\Route;
 
@@ -44,6 +46,9 @@ Route::middleware([
     Route::get('/dashboard', fn (): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View => view('dashboard'))->name('dashboard');
     Route::get('/gamification', \App\Livewire\GamificationDashboard::class)->name('gamification');
     Route::get('/transcriptions', \App\Livewire\DocumentTranscriptionComponent::class)->name('transcriptions');
+    Route::get('/fan-chart', [FanChartController::class, 'show'])->name('fan-chart');
+    Route::get('/pedigree-chart', [PedigreeChartController::class, 'show'])->name('pedigree-chart');
+    Route::get('/family-tree', \App\Livewire\FamilyTreeBuilder::class)->name('family-tree');
 });
 
 Route::middleware(['auth', 'verified'])->group(function (): void {

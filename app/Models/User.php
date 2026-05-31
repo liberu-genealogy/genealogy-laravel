@@ -364,19 +364,22 @@ class User extends Authenticatable implements HasDefaultTenant, HasTenants, Fila
      */
     public function getLevelInfo(): array
     {
-        $pointsForNextLevel = $this->getPointsRequiredForLevel($this->level + 1);
-        $pointsForCurrentLevel = $this->getPointsRequiredForLevel($this->level);
-        $progressToNextLevel = $this->total_points - $pointsForCurrentLevel;
+        $level       = (int) ($this->level ?? 1);
+        $totalPoints = (int) ($this->total_points ?? 0);
+
+        $pointsForNextLevel    = $this->getPointsRequiredForLevel($level + 1);
+        $pointsForCurrentLevel = $this->getPointsRequiredForLevel($level);
+        $progressToNextLevel   = $totalPoints - $pointsForCurrentLevel;
         $pointsNeededForNextLevel = $pointsForNextLevel - $pointsForCurrentLevel;
 
         return [
-            'current_level' => $this->level,
-            'total_points' => $this->total_points,
-            'points_for_current_level' => $pointsForCurrentLevel,
-            'points_for_next_level' => $pointsForNextLevel,
-            'progress_to_next_level' => $progressToNextLevel,
+            'current_level'               => $level,
+            'total_points'                => $totalPoints,
+            'points_for_current_level'    => $pointsForCurrentLevel,
+            'points_for_next_level'       => $pointsForNextLevel,
+            'progress_to_next_level'      => $progressToNextLevel,
             'points_needed_for_next_level' => max(0, $pointsNeededForNextLevel - $progressToNextLevel),
-            'progress_percentage' => $pointsNeededForNextLevel > 0 ? min(100, ($progressToNextLevel / $pointsNeededForNextLevel) * 100) : 100,
+            'progress_percentage'         => $pointsNeededForNextLevel > 0 ? min(100, ($progressToNextLevel / $pointsNeededForNextLevel) * 100) : 100,
         ];
     }
 
@@ -413,9 +416,10 @@ class User extends Authenticatable implements HasDefaultTenant, HasTenants, Fila
     /**
      * Calculate level from total points
      */
-    private function calculateLevelFromPoints(int $points): int
+    private function calculateLevelFromPoints(?int $points): int
     {
-        $level = 1;
+        $points = $points ?? 0;
+        $level  = 1;
         while ($this->getPointsRequiredForLevel($level + 1) <= $points) {
             $level++;
         }
@@ -451,8 +455,10 @@ class User extends Authenticatable implements HasDefaultTenant, HasTenants, Fila
      */
     public function getLeaderboardRank(): int
     {
+        $totalPoints = (int) ($this->total_points ?? 0);
+
         return User::where('show_on_leaderboard', true)
-            ->where('total_points', '>', $this->total_points)
+            ->where('total_points', '>', $totalPoints)
             ->count() + 1;
     }
 

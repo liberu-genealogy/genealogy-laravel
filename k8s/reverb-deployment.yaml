@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: genealogy-reverb
+  namespace: genealogy
+  labels:
+    app: genealogy-app
+    component: reverb
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: genealogy-app
+      component: reverb
+  template:
+    metadata:
+      labels:
+        app: genealogy-app
+        component: reverb
+    spec:
+      securityContext:
+        runAsUser: 1000
+        runAsGroup: 1000
+      containers:
+        - name: reverb
+          image: liberu/genealogy:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8080
+              name: ws
+          env:
+            - name: CONTAINER_MODE
+              value: "reverb"
+          envFrom:
+            - configMapRef:
+                name: genealogy-config
+            - secretRef:
+                name: genealogy-secrets
+          resources:
+            requests:
+              cpu: "50m"
+              memory: "64Mi"
+            limits:
+              cpu: "200m"
+              memory: "256Mi"

@@ -11,20 +11,6 @@ jobs:
   tests:
     runs-on: ubuntu-latest
 
-    services:
-      mysql:
-        image: mysql:8.0
-        env:
-          MYSQL_ROOT_PASSWORD: root
-          MYSQL_DATABASE: liberu_genealogy_testing
-        ports:
-          - 3306:3306
-        options: >-
-          --health-cmd="mysqladmin ping"
-          --health-interval=10s
-          --health-timeout=5s
-          --health-retries=3
-
     steps:
     - uses: actions/checkout@v4
 
@@ -32,7 +18,7 @@ jobs:
       uses: shivammathur/setup-php@v2
       with:
         php-version: '8.5'
-        extensions: mbstring, bcmath, pdo_mysql, redis, intl, gd, zip
+        extensions: mbstring, bcmath, pdo_sqlite, sqlite3, redis, intl, gd, zip
         coverage: xdebug
         tools: composer:v2
 
@@ -55,12 +41,6 @@ jobs:
 
     - name: Generate application key
       run: php artisan key:generate
-
-    - name: Run database migrations
-      run: php artisan migrate --force
-
-    - name: Seed database
-      run: php artisan db:seed --force
 
     - name: Run tests
       run: vendor/bin/phpunit --coverage-clover=coverage.xml
