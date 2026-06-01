@@ -1,0 +1,57 @@
+<?php
+
+namespace App\Filament\App\Widgets;
+
+use Override;
+use Illuminate\Contracts\View\View;
+use App\Models\Person;
+use Filament\Widgets\Widget;
+
+class PedigreeChartWidget extends Widget
+{
+    #[\Override]
+    protected string $view = 'filament.widgets.pedigree-chart-widget';
+
+    public function getData(): array
+    {
+        return [
+            'people' => Person::with('parents')->get(),
+        ];
+    }
+
+    #[Override]
+    public function render(): View
+    {
+        return view(static::$view, $this->getData());
+    }
+
+    public function initializeChart(): void
+    {
+        $this->dispatch('initializeChart', people: $this->getData()['people']->toJson());
+    }
+
+    public function zoomIn(): void
+    {
+        $this->dispatch('zoomIn');
+    }
+
+    public function zoomOut(): void
+    {
+        $this->dispatch('zoomOut');
+    }
+
+    public function pan($direction): void
+    {
+        $this->dispatch('pan', direction: $direction);
+    }
+
+    #[\Override]
+    protected function getListeners()
+    {
+        return [
+            'zoomIn'  => 'zoomIn',
+            'zoomOut' => 'zoomOut',
+            'pan'     => 'pan',
+        ];
+    }
+}

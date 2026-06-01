@@ -1,0 +1,12 @@
+{
+    "name": "Tree",
+    "version": "1.0.0",
+    "description": "Family tree visualization and management module",
+    "dependencies": ["Core", "Person", "Family"],
+    "config": {
+        "default_tree_layout": "vertical",
+        "max_tree_generations": 6,
+        "enable_interactive_tree": true,
+        "enable_tree_export": true
+    }
+}

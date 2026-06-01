@@ -1,0 +1,80 @@
+# Horizon worker Deployment — processes background jobs from Redis queues
+# Horizon provides a dashboard at /horizon for queue monitoring.
+# Only 1 replica is needed; Horizon manages its own worker pool internally.
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: genealogy-horizon
+  namespace: genealogy
+  labels:
+    app.kubernetes.io/name: genealogy
+    app.kubernetes.io/component: horizon
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: genealogy
+      app.kubernetes.io/component: horizon
+  strategy:
+    # Recreate avoids two Horizon supervisors competing for the same queues
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: genealogy
+        app.kubernetes.io/component: horizon
+    spec:
+      securityContext:
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+
+      containers:
+        - name: horizon
+          image: liberu-genealogy/genealogy-laravel:latest
+          imagePullPolicy: Always
+
+          # Override the default entrypoint; run Horizon directly.
+          # The start-container script also supports CONTAINER_MODE=horizon,
+          # but calling artisan directly is simpler for Kubernetes.
+          command: ["php", "artisan", "horizon"]
+
+          envFrom:
+            - configMapRef:
+                name: genealogy-config
+            - secretRef:
+                name: genealogy-secrets
+
+          # No HTTP liveness probe — Horizon is a long-running CLI process.
+          # Use a process-based check instead: verify the artisan process is alive.
+          livenessProbe:
+            exec:
+              command:
+                - php
+                - artisan
+                - horizon:status
+            initialDelaySeconds: 30
+            periodSeconds: 60
+            timeoutSeconds: 10
+            failureThreshold: 3
+
+          resources:
+            requests:
+              cpu: 100m
+              memory: 256Mi
+            limits:
+              cpu: 500m
+              memory: 512Mi
+
+          volumeMounts:
+            - name: app-storage
+              mountPath: /var/www/html/storage/app/public
+              subPath: public
+
+      volumes:
+        - name: app-storage
+          persistentVolumeClaim:
+            claimName: genealogy-storage
+
+      # Give Horizon time to finish processing the current job before terminating
+      terminationGracePeriodSeconds: 120

@@ -1,0 +1,12 @@
+{
+    "name": "Import",
+    "version": "1.0.0",
+    "description": "GEDCOM and data import/export functionality",
+    "dependencies": ["Core", "Person", "Family", "Places", "Sources", "Events"],
+    "config": {
+        "supported_formats": ["gedcom", "csv", "json"],
+        "max_import_file_size": "50MB",
+        "enable_batch_processing": true,
+        "chunk_size": 1000
+    }
+}

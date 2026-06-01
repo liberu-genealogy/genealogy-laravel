@@ -1,0 +1,11 @@
+# Namespace for the Liberu Genealogy application
+# All resources for this application should be deployed into this namespace
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: genealogy
+  labels:
+    app.kubernetes.io/name: genealogy
+    app.kubernetes.io/managed-by: kubectl
+    # Label used by control-panel-laravel to discover managed namespaces
+    liberu.io/managed: "true"

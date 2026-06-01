@@ -1,0 +1,133 @@
+# Main application Deployment — runs Laravel Octane via RoadRunner on port 8000
+# Handles HTTP traffic for the web UI and API.
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: genealogy-app
+  namespace: genealogy
+  labels:
+    app.kubernetes.io/name: genealogy
+    app.kubernetes.io/component: app
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: genealogy
+      app.kubernetes.io/component: app
+  # Replace at most 1 old pod at a time to preserve availability during rollouts
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: genealogy
+        app.kubernetes.io/component: app
+      annotations:
+        # Trigger a rollout when the configmap or secret changes (via Helm/kustomize hash annotations)
+        checksum/configmap: "genealogy-config"
+        checksum/secret: "genealogy-secrets"
+    spec:
+      # Run as the unprivileged octane user (UID 1000) defined in the Dockerfile
+      securityContext:
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+
+      # ---------------------------------------------------------------
+      # Init container: run database migrations before the app starts.
+      # Using --isolated ensures only one pod runs migrations at a time.
+      # ---------------------------------------------------------------
+      initContainers:
+        - name: migrate
+          image: liberu-genealogy/genealogy-laravel:latest
+          imagePullPolicy: Always
+          command: ["php", "artisan", "migrate", "--force", "--isolated"]
+          envFrom:
+            - configMapRef:
+                name: genealogy-config
+            - secretRef:
+                name: genealogy-secrets
+          resources:
+            requests:
+              cpu: 100m
+              memory: 128Mi
+            limits:
+              cpu: 500m
+              memory: 256Mi
+
+      containers:
+        - name: app
+          image: liberu-genealogy/genealogy-laravel:latest
+          imagePullPolicy: Always
+
+          # Pass CONTAINER_MODE so start-container launches Octane/RoadRunner
+          env:
+            - name: CONTAINER_MODE
+              value: "http"
+
+          envFrom:
+            - configMapRef:
+                name: genealogy-config
+            - secretRef:
+                name: genealogy-secrets
+
+          ports:
+            - name: http
+              containerPort: 8000
+              protocol: TCP
+
+          # ------------------------------------------------------------------
+          # Readiness probe: pod receives traffic only after Octane is healthy.
+          # Laravel ships a built-in /up health-check route since v11.
+          # ------------------------------------------------------------------
+          readinessProbe:
+            httpGet:
+              path: /up
+              port: 8000
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            timeoutSeconds: 5
+            failureThreshold: 3
+            successThreshold: 1
+
+          # ------------------------------------------------------------------
+          # Liveness probe: restart the pod if Octane stops responding.
+          # A longer initialDelay gives RoadRunner time to fully start.
+          # ------------------------------------------------------------------
+          livenessProbe:
+            httpGet:
+              path: /up
+              port: 8000
+            initialDelaySeconds: 30
+            periodSeconds: 20
+            timeoutSeconds: 5
+            failureThreshold: 3
+            successThreshold: 1
+
+          resources:
+            requests:
+              cpu: 100m
+              memory: 256Mi
+            limits:
+              cpu: 500m
+              memory: 512Mi
+
+          # Mount shared application storage (uploads, GEDCOM files, etc.)
+          volumeMounts:
+            - name: app-storage
+              mountPath: /var/www/html/storage/app/public
+              subPath: public
+            - name: app-storage
+              mountPath: /var/www/html/storage/app/gedcom
+              subPath: gedcom
+
+      volumes:
+        - name: app-storage
+          persistentVolumeClaim:
+            claimName: genealogy-storage
+
+      # Allow up to 60 s for graceful shutdown so in-flight requests complete
+      terminationGracePeriodSeconds: 60

@@ -1,0 +1,12 @@
+{
+    "name": "Sources",
+    "version": "1.0.0",
+    "description": "Source citations, repositories, and reference management module",
+    "dependencies": ["Core"],
+    "config": {
+        "enable_source_validation": true,
+        "enable_repository_management": true,
+        "citation_formats": ["chicago", "mla", "apa"],
+        "default_citation_format": "chicago"
+    }
+}

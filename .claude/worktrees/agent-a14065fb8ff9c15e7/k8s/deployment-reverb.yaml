@@ -1,0 +1,82 @@
+# Reverb WebSocket server Deployment
+# Handles real-time broadcasting on port 8080.
+# Clients connect via the /ws path (see ingress.yaml for WebSocket upgrade annotations).
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: genealogy-reverb
+  namespace: genealogy
+  labels:
+    app.kubernetes.io/name: genealogy
+    app.kubernetes.io/component: reverb
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: genealogy
+      app.kubernetes.io/component: reverb
+  # Recreate ensures no split-brain between two Reverb instances sharing state via Redis
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: genealogy
+        app.kubernetes.io/component: reverb
+    spec:
+      securityContext:
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+
+      containers:
+        - name: reverb
+          image: liberu-genealogy/genealogy-laravel:latest
+          imagePullPolicy: Always
+
+          # Bind to all interfaces so the Kubernetes Service can reach it
+          command:
+            - php
+            - artisan
+            - reverb:start
+            - --host=0.0.0.0
+            - --port=8080
+            - --no-interaction
+
+          envFrom:
+            - configMapRef:
+                name: genealogy-config
+            - secretRef:
+                name: genealogy-secrets
+
+          ports:
+            - name: ws
+              containerPort: 8080
+              protocol: TCP
+
+          # Reverb exposes a health endpoint on the same port
+          readinessProbe:
+            tcpSocket:
+              port: 8080
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            timeoutSeconds: 5
+            failureThreshold: 3
+
+          livenessProbe:
+            tcpSocket:
+              port: 8080
+            initialDelaySeconds: 30
+            periodSeconds: 20
+            timeoutSeconds: 5
+            failureThreshold: 3
+
+          resources:
+            requests:
+              cpu: 100m
+              memory: 128Mi
+            limits:
+              cpu: 500m
+              memory: 256Mi
+
+      terminationGracePeriodSeconds: 30

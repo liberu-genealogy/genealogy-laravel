@@ -1,0 +1,12 @@
+{
+    "name": "Media",
+    "version": "1.0.0",
+    "description": "Media object management for photos, documents, and multimedia files",
+    "dependencies": ["Core"],
+    "config": {
+        "allowed_file_types": ["jpg", "jpeg", "png", "gif", "pdf", "doc", "docx"],
+        "max_file_size": "10MB",
+        "enable_image_processing": true,
+        "thumbnail_sizes": [150, 300, 600]
+    }
+}

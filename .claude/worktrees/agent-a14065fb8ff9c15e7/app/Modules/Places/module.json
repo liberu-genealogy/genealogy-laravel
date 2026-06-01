@@ -1,0 +1,12 @@
+{
+    "name": "Places",
+    "version": "1.0.0",
+    "description": "Geographic places and location management module",
+    "dependencies": ["Core"],
+    "config": {
+        "enable_geocoding": true,
+        "enable_place_hierarchy": true,
+        "default_country": null,
+        "coordinate_precision": 6
+    }
+}

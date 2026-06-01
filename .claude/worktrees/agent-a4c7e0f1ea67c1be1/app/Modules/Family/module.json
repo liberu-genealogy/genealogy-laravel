@@ -1,0 +1,11 @@
+{
+    "name": "Family",
+    "version": "1.0.0",
+    "description": "Family management module for genealogy application",
+    "dependencies": ["Core", "Person"],
+    "config": {
+        "enable_family_tree": true,
+        "enable_family_statistics": true,
+        "max_children_per_family": null
+    }
+}

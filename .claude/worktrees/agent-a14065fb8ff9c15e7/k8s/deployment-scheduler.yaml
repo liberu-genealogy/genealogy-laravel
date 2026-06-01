@@ -1,0 +1,65 @@
+# CronJob for the Laravel task scheduler
+# Runs `php artisan schedule:run` every minute, matching the standard cron frequency.
+# concurrencyPolicy: Forbid ensures overlapping runs are skipped rather than stacked.
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: genealogy-scheduler
+  namespace: genealogy
+  labels:
+    app.kubernetes.io/name: genealogy
+    app.kubernetes.io/component: scheduler
+spec:
+  # Run every minute — equivalent to the supercronic entry in the Dockerfile
+  schedule: "* * * * *"
+
+  # Do not start a new job while the previous one is still running
+  concurrencyPolicy: Forbid
+
+  # Keep the last 3 successful and 1 failed job for debugging
+  successfulJobsHistoryLimit: 3
+  failedJobsHistoryLimit: 1
+
+  # If a scheduled run is missed by more than 60 s (e.g. cluster downtime), skip it
+  startingDeadlineSeconds: 60
+
+  jobTemplate:
+    spec:
+      # Retry once on transient failures before marking the job failed
+      backoffLimit: 1
+
+      # Kill the job if it runs longer than 55 s (just before the next schedule tick)
+      activeDeadlineSeconds: 55
+
+      template:
+        metadata:
+          labels:
+            app.kubernetes.io/name: genealogy
+            app.kubernetes.io/component: scheduler
+        spec:
+          restartPolicy: OnFailure
+
+          securityContext:
+            runAsUser: 1000
+            runAsGroup: 1000
+            fsGroup: 1000
+
+          containers:
+            - name: scheduler
+              image: liberu-genealogy/genealogy-laravel:latest
+              imagePullPolicy: Always
+              command: ["php", "artisan", "schedule:run", "--no-interaction"]
+
+              envFrom:
+                - configMapRef:
+                    name: genealogy-config
+                - secretRef:
+                    name: genealogy-secrets
+
+              resources:
+                requests:
+                  cpu: 50m
+                  memory: 128Mi
+                limits:
+                  cpu: 250m
+                  memory: 256Mi

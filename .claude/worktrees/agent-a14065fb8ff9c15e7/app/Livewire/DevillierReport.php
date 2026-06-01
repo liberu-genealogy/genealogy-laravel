@@ -1,0 +1,61 @@
+<?php
+
+namespace App\Livewire;
+
+use App\Models\Person;
+use Filament\Actions\Action;
+use Filament\Actions\Concerns\InteractsWithActions;
+use Filament\Actions\Contracts\HasActions;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Concerns\InteractsWithForms;
+use Filament\Forms\Contracts\HasForms;
+use Filament\Schemas\Schema;
+use Livewire\Component;
+
+class DevillierReport extends Component implements HasActions, HasForms
+{
+    use InteractsWithActions;
+    use InteractsWithForms;
+
+    public ?array $data = [];
+
+    public function mount(): void
+    {
+        $this->form->fill();
+    }
+
+    public function form(Schema $schema): Schema
+    {
+        return $schema
+            ->components([
+                Select::make('person')
+                    ->hiddenLabel()
+                    ->options(Person::all()->pluck('name', 'id'))
+                    ->placeholder('Select a Person:')
+                    ->native(false),
+                Select::make('generation')
+                    ->hiddenLabel()
+                    ->placeholder('Select Generation')
+                    ->options([1, 2, 3, 4, 5])
+                    ->native(false),
+            ])
+            ->statePath('data');
+    }
+
+    public function generateAction(): Action
+    {
+        return Action::make('generate')
+            ->action(fn (): null => null);
+    }
+
+    public function generateReport(): void
+    {
+        $state = $this->form->getState();
+        // Report generation - state contains selected person and generation
+    }
+
+    public function render(): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+    {
+        return view('livewire.devilliers-report');
+    }
+}

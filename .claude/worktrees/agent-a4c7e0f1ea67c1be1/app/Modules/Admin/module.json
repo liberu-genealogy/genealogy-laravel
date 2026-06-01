@@ -1,0 +1,12 @@
+{
+    "name": "Admin",
+    "version": "1.0.0",
+    "description": "Administrative functions, types, and system management",
+    "dependencies": ["Core"],
+    "config": {
+        "enable_change_tracking": true,
+        "enable_type_management": true,
+        "enable_reference_management": true,
+        "audit_retention_days": 365
+    }
+}

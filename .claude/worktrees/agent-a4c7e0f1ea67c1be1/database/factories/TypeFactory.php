@@ -1,0 +1,47 @@
+<?php
+
+namespace Database\Factories;
+
+use App\Models\Type;
+use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Str;
+
+/**
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Type>
+ */
+class TypeFactory extends Factory
+{
+    #[\Override]
+    protected $model = Type::class;
+
+    public function definition()
+    {
+        return [
+            'name' => fake()->text(20),
+            // 'folder' => 'null',
+            // 'model' => $this->faker->text(20),
+            // 'icon' => 'folder',
+            // 'endpoint' => null,
+            'description' => fake()->text(),
+            // 'is_browsable' => false,
+            // 'is_system' => false,
+            'is_active' => fake()->boolean(),
+        ];
+    }
+
+    public function model(string $model): self
+    {
+        $name = Str::of($model)->afterLast('\\')
+            ->snake()
+            ->replace('_', ' ')
+            ->title()
+            ->plural();
+
+        return $this->state(fn (): array => [
+            'name'        => $name,
+            'folder'      => $name->camel(),
+            'model'       => $model,
+            'description' => "Liberu {$name}",
+        ]);
+    }
+}

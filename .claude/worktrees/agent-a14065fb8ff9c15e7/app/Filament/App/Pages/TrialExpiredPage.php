@@ -1,0 +1,134 @@
+<?php
+
+namespace App\Filament\App\Pages;
+
+use App\Services\SubscriptionService;
+use Exception;
+use Filament\Actions\Action;
+use Filament\Facades\Filament;
+use Filament\Notifications\Notification;
+use Filament\Pages\Page;
+use Illuminate\Support\Facades\Auth;
+
+class TrialExpiredPage extends Page
+{
+    #[\Override]
+    protected static string|\BackedEnum|null $navigationIcon = null;
+
+    #[\Override]
+    protected static ?string $navigationLabel = 'Trial Expired';
+
+    #[\Override]
+    protected static string|\UnitEnum|null $navigationGroup = '👤 Account & Settings';
+
+    #[\Override]
+    protected static ?int $navigationSort = 3;
+
+    #[\Override]
+    protected string $view = 'filament.app.pages.trial-expired-page';
+
+    #[\Override]
+    protected static ?string $title = 'Your Trial Has Ended';
+
+    #[\Override]
+    protected static ?string $slug = 'trial-expired';
+
+    public function mount(): void
+    {
+        $user = Auth::user();
+
+        // If premium is globally enabled or user is actively premium, go to dashboard
+        if (config('premium.enabled') || $user->isPremium()) {
+            $this->redirect(route('filament.app.pages.premium-dashboard', ['tenant' => auth()->user()->currentTeam]));
+            return;
+        }
+
+        // If user never started a trial, redirect to subscription page
+        if (! $user->hasExpiredTrial()) {
+            $this->redirect(route('filament.app.pages.subscription', ['tenant' => auth()->user()->currentTeam]));
+        }
+    }
+
+    #[\Override]
+    public static function shouldRegisterNavigation(): bool
+    {
+        return false; // Never show in navigation; accessed via redirect only
+    }
+
+    #[\Override]
+    protected function getHeaderActions(): array
+    {
+        return [
+            Action::make('subscribe')
+                ->label('Subscribe Now – $2.99/month')
+                ->icon('heroicon-o-credit-card')
+                ->color('primary')
+                ->size('lg')
+                ->action('redirectToStripeCheckout'),
+
+            Action::make('downgrade')
+                ->label('Continue with Free Plan')
+                ->icon('heroicon-o-arrow-down-circle')
+                ->color('gray')
+                ->requiresConfirmation()
+                ->modalHeading('Downgrade to Free Plan')
+                ->modalDescription('You will lose access to premium features (Duplicate Checker, Smart Matching, unlimited DNA uploads). All your family tree data is kept. Are you sure?')
+                ->modalSubmitActionLabel('Yes, downgrade to free')
+                ->action('downgradeToFree'),
+        ];
+    }
+
+    public function redirectToStripeCheckout(): void
+    {
+        try {
+            $user = Auth::user();
+            $priceId = config('subscription.premium.stripe_price_id', 'price_premium_monthly');
+
+            $successUrl = route('filament.app.pages.premium-dashboard', ['tenant' => auth()->user()->currentTeam]);
+            $cancelUrl = route('filament.app.pages.trial-expired', ['tenant' => auth()->user()->currentTeam]);
+
+            // Use Cashier to create a Stripe Checkout Session for the subscription
+            $checkout = $user->newSubscription('premium', $priceId)
+                ->checkout([
+                    'success_url' => $successUrl,
+                    'cancel_url' => $cancelUrl,
+                ]);
+
+            // Mark as premium upon successful checkout (webhook will also handle this)
+            $this->redirect($checkout->url);
+        } catch (Exception) {
+            Notification::make()
+                ->title('Payment Error')
+                ->body('Unable to start the checkout process. Please try again or contact support.')
+                ->danger()
+                ->send();
+        }
+    }
+
+    public function downgradeToFree(): void
+    {
+        try {
+            $subscriptionService = app(SubscriptionService::class);
+            $subscriptionService->downgradeToFree(Auth::user());
+
+            Notification::make()
+                ->title('Downgraded to Free Plan')
+                ->body('You now have access to all standard features. You can upgrade again at any time.')
+                ->success()
+                ->send();
+
+            $this->redirect(Filament::getUrl());
+        } catch (Exception) {
+            Notification::make()
+                ->title('Error')
+                ->body('There was an error processing your request. Please try again.')
+                ->danger()
+                ->send();
+        }
+    }
+
+    public function getPricingData(): array
+    {
+        return app(SubscriptionService::class)->getPricingInfo();
+    }
+}

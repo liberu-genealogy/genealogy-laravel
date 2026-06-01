@@ -1,0 +1,12 @@
+{
+    "name": "DNA",
+    "version": "1.0.0",
+    "description": "DNA analysis and genetic genealogy module",
+    "dependencies": ["Core", "Person"],
+    "config": {
+        "enable_dna_matching": true,
+        "enable_ethnicity_estimates": true,
+        "supported_test_types": ["autosomal", "y-dna", "mtdna"],
+        "min_match_threshold": 7.0
+    }
+}
