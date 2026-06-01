@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Database\Factories;
 
 use App\Models\User;
@@ -21,6 +23,7 @@ class TeamFactory extends Factory
             'name'          => fake()->unique()->company(),
             'user_id'       => User::factory(),
             'personal_team' => true,
+            'is_public'     => false,
         ];
     }
 }

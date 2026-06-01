@@ -58,7 +58,7 @@ class SmartMatchingService
         // Get people with missing parent information
         $peopleWithMissingParents = Person::where('team_id', $user->current_team_id)
         ->whereNull('child_in_family_id')
-        ->orWhereHas('childInFamily', function ($query) {
+        ->orWhereHas('childInFamily', function ($query): void {
             $query->whereNull('husband_id')->orWhereNull('wife_id');
         })
         ->get();
@@ -106,9 +106,7 @@ class SmartMatchingService
         }
 
         // Sort by confidence score
-        usort($matches, function ($a, $b) {
-            return $b['confidence_score'] <=> $a['confidence_score'];
-        });
+        usort($matches, fn(array $a, array $b) => $b['confidence_score'] <=> $a['confidence_score']);
 
         // Return top 10 matches
         return array_slice($matches, 0, 10);
@@ -248,10 +246,10 @@ class SmartMatchingService
         $matches = [];
         
         // Generate some realistic-looking matches
-        for ($i = 0; $i < rand(2, 8); $i++) {
+        for ($i = 0; $i < random_int(2, 8); $i++) {
             $matches[] = [
-                'tree_id' => $source . '_tree_' . rand(1000, 9999),
-                'person_id' => $source . '_person_' . rand(10000, 99999),
+                'tree_id' => $source . '_tree_' . random_int(1000, 9999),
+                'person_id' => $source . '_person_' . random_int(10000, 99999),
                 'name' => $this->generateSimilarName($person->fullname()),
                 'birth_date' => $this->generateSimilarDate($person->birthday),
                 'death_date' => $this->generateSimilarDate($person->deathday),
@@ -262,9 +260,9 @@ class SmartMatchingService
                     'mother' => $this->generateRandomName('female'),
                 ],
                 'spouse' => $this->generateRandomName($person->sex === 'M' ? 'female' : 'male'),
-                'children' => array_map(fn() => $this->generateRandomName(), range(1, rand(0, 4))),
-                'source_url' => "https://{$source}.com/tree/" . rand(1000, 9999),
-                'last_updated' => now()->subDays(rand(1, 365))->format('Y-m-d'),
+                'children' => array_map($this->generateRandomName(...), range(1, random_int(0, 4))),
+                'source_url' => "https://{$source}.com/tree/" . random_int(1000, 9999),
+                'last_updated' => now()->subDays(random_int(1, 365))->format('Y-m-d'),
             ];
         }
 
@@ -335,9 +333,15 @@ class SmartMatchingService
         $diff = abs($date1->getTimestamp() - $date2->getTimestamp());
         $daysDiff = $diff / (60 * 60 * 24);
 
-        if ($daysDiff === 0) return 1.0;
-        if ($daysDiff <= 365) return 0.9;
-        if ($daysDiff <= 1825) return 0.7;
+        if ($daysDiff === 0) {
+            return 1.0;
+        }
+        if ($daysDiff <= 365) {
+            return 0.9;
+        }
+        if ($daysDiff <= 1825) {
+            return 0.7;
+        }
         return 0.3;
     }
 
@@ -348,7 +352,7 @@ class SmartMatchingService
     {
         // This would compare places, family members, etc.
         // For simulation, return a random score
-        return rand(30, 90) / 100;
+        return random_int(30, 90) / 100;
     }
 
     /**
@@ -361,11 +365,7 @@ class SmartMatchingService
 
         foreach ($names as $name) {
             // Sometimes use the exact name, sometimes a variation
-            if (rand(0, 100) < 70) {
-                $variations[] = $name;
-            } else {
-                $variations[] = $this->getNameVariation($name);
-            }
+            $variations[] = random_int(0, 100) < 70 ? $name : $this->getNameVariation($name);
         }
 
         return implode(' ', $variations);
@@ -386,10 +386,12 @@ class SmartMatchingService
 
     private function generateSimilarDate(?DateTime $originalDate): ?string
     {
-        if (!$originalDate) return null;
+        if (!$originalDate instanceof \DateTime) {
+            return null;
+        }
 
         // Generate a date within 5 years of the original
-        $variation = rand(-5, 5);
+        $variation = random_int(-5, 5);
         return $originalDate->modify("{$variation} years")->format('Y-m-d');
     }
 
@@ -411,7 +413,7 @@ class SmartMatchingService
         return $places[array_rand($places)];
     }
 
-    private function generateRandomName(string $gender = null): string
+    private function generateRandomName(?string $gender = null): string
     {
         $maleNames = ['John', 'William', 'James', 'George', 'Thomas', 'Henry', 'Charles', 'Robert'];
         $femaleNames = ['Mary', 'Elizabeth', 'Sarah', 'Margaret', 'Jane', 'Catherine', 'Anne', 'Emma'];

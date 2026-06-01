@@ -8,7 +8,7 @@ use App\Jobs\ExportGedCom;
 
 class GedcomResource
 {
-    public static function exportGedcom()
+    public static function exportGedcom(): void
     {
         $user = Auth::user();
         if ($user) {

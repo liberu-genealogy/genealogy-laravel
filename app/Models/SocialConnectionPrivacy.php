@@ -10,8 +10,10 @@ class SocialConnectionPrivacy extends Model
 {
     use HasFactory;
 
+    #[\Override]
     protected $table = 'social_connection_privacy';
 
+    #[\Override]
     protected $fillable = [
         'user_id',
         'allow_family_discovery',
@@ -21,6 +23,7 @@ class SocialConnectionPrivacy extends Model
         'blocked_users',
     ];
 
+    #[\Override]
     protected function casts(): array
     {
         return [
@@ -67,7 +70,7 @@ class SocialConnectionPrivacy extends Model
     public function unblockUser(int $userId): void
     {
         $blockedUsers = $this->blocked_users ?? [];
-        $this->blocked_users = array_values(array_filter($blockedUsers, fn($id) => $id !== $userId));
+        $this->blocked_users = array_values(array_filter($blockedUsers, fn($id): bool => $id !== $userId));
         $this->save();
     }
 }

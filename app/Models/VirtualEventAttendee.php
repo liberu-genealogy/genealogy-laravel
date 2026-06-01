@@ -11,6 +11,7 @@ class VirtualEventAttendee extends Model
 {
     use HasFactory;
 
+    #[\Override]
     protected $fillable = [
         'virtual_event_id',
         'user_id',
@@ -31,6 +32,7 @@ class VirtualEventAttendee extends Model
         'invitation_sent_at',
     ];
 
+    #[\Override]
     protected $casts = [
         'rsvp_date' => 'datetime',
         'joined_at' => 'datetime',
@@ -42,6 +44,7 @@ class VirtualEventAttendee extends Model
         'invitation_sent_at' => 'datetime',
     ];
 
+    #[\Override]
     protected $attributes = [
         'rsvp_status' => 'pending',
         'attended' => false,
@@ -49,11 +52,12 @@ class VirtualEventAttendee extends Model
         'is_moderator' => false,
     ];
 
+    #[\Override]
     protected static function boot()
     {
         parent::boot();
 
-        static::creating(function ($attendee) {
+        static::creating(function ($attendee): void {
             if (!$attendee->invitation_token) {
                 $attendee->invitation_token = Str::random(32);
             }
@@ -186,7 +190,7 @@ class VirtualEventAttendee extends Model
     }
 
     // Helper methods
-    public function accept(string $notes = null): void
+    public function accept(?string $notes = null): void
     {
         $this->update([
             'rsvp_status' => 'accepted',
@@ -195,7 +199,7 @@ class VirtualEventAttendee extends Model
         ]);
     }
 
-    public function decline(string $notes = null): void
+    public function decline(?string $notes = null): void
     {
         $this->update([
             'rsvp_status' => 'declined',
@@ -204,7 +208,7 @@ class VirtualEventAttendee extends Model
         ]);
     }
 
-    public function maybe(string $notes = null): void
+    public function maybe(?string $notes = null): void
     {
         $this->update([
             'rsvp_status' => 'maybe',

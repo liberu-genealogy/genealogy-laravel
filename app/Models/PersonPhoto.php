@@ -13,6 +13,7 @@ class PersonPhoto extends Model
     use HasFactory;
     use BelongsToTenant;
 
+    #[\Override]
     protected $fillable = [
         'person_id',
         'team_id',
@@ -27,10 +28,12 @@ class PersonPhoto extends Model
         'analyzed_at',
     ];
 
+    #[\Override]
     protected $attributes = [
         'is_analyzed' => false,
     ];
 
+    #[\Override]
     protected $casts = [
         'is_analyzed' => 'boolean',
         'analyzed_at' => 'datetime',

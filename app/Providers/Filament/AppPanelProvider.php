@@ -130,7 +130,7 @@ class AppPanelProvider extends PanelProvider
                 Action::make('profile')
                     ->label('Profile')
                     ->icon('heroicon-o-user-circle')
-                    ->url(fn () => $this->shouldRegisterMenuItem()
+                    ->url(fn (): \Illuminate\Contracts\Routing\UrlGenerator|string => $this->shouldRegisterMenuItem()
                         ? url(EditProfile::getUrl())
                         : url($panel->getPath())),
             ])
@@ -232,7 +232,7 @@ class AppPanelProvider extends PanelProvider
                     Action::make('team-settings')
                         ->label('Team Settings')
                         ->icon('heroicon-o-cog-6-tooth')
-                        ->url(fn () => $this->shouldRegisterMenuItem()
+                        ->url(fn (): \Illuminate\Contracts\Routing\UrlGenerator|string => $this->shouldRegisterMenuItem()
                             ? url(Pages\EditTeam::getUrl())
                             : url($panel->getPath())),
                 ]);
@@ -300,7 +300,7 @@ class AppPanelProvider extends PanelProvider
             return Filament::hasTenancy()
                 ? $hasVerifiedEmail && Filament::getTenant()
                 : $hasVerifiedEmail;
-        } catch (\Exception $e) {
+        } catch (\Exception) {
             // Fallback if facade is not ready
             return $hasVerifiedEmail;
         }

@@ -12,6 +12,7 @@ class PhotoTag extends Model
     use HasFactory;
     use BelongsToTenant;
 
+    #[\Override]
     protected $fillable = [
         'photo_id',
         'person_id',
@@ -23,6 +24,7 @@ class PhotoTag extends Model
         'confirmed_at',
     ];
 
+    #[\Override]
     protected $casts = [
         'confidence' => 'decimal:2',
         'bounding_box' => 'array',

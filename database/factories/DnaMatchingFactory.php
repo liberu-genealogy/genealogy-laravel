@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Database\Factories;
 
 use App\Models\DnaMatching;
@@ -15,6 +17,7 @@ class DnaMatchingFactory extends Factory
      *
      * @var string
      */
+    #[\Override]
     protected $model = DnaMatching::class;
 
     /**

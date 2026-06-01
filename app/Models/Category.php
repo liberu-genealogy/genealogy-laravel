@@ -7,8 +7,10 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Category extends Model
 {
+    #[\Override]
     protected $table = 'categories';
 
+    #[\Override]
     protected $fillable = [
         'name',
         'description',

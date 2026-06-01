@@ -17,19 +17,25 @@ class DnaTriangulationPage extends Page implements HasForms
 {
     use InteractsWithForms;
 
+    #[\Override]
     protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-chart-bar';
 
+    #[\Override]
     protected string $view = 'filament.app.pages.dna-triangulation-page';
 
+    #[\Override]
     protected static string|\UnitEnum|null $navigationGroup = '🧬 DNA & Genetics';
 
+    #[\Override]
     protected static ?string $navigationLabel = 'DNA Triangulation';
 
+    #[\Override]
     protected static ?int $navigationSort = 3;
 
     public ?array $data = [];
     public ?array $results = null;
 
+    #[\Override]
     public static function shouldRegisterNavigation(): bool
     {
         if (config('premium.enabled')) {

@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class SocialFamilyConnectionFactory extends Factory
 {
+    #[\Override]
     protected $model = SocialFamilyConnection::class;
 
     /**
@@ -41,7 +42,7 @@ class SocialFamilyConnectionFactory extends Factory
      */
     public function accepted(): static
     {
-        return $this->state(fn (array $attributes) => [
+        return $this->state(fn (array $attributes): array => [
             'status' => 'accepted',
         ]);
     }
@@ -51,7 +52,7 @@ class SocialFamilyConnectionFactory extends Factory
      */
     public function rejected(): static
     {
-        return $this->state(fn (array $attributes) => [
+        return $this->state(fn (array $attributes): array => [
             'status' => 'rejected',
         ]);
     }

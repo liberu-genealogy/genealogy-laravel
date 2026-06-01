@@ -10,24 +10,28 @@ use App\Modules\BaseModule;
 
 class AdminModule extends BaseModule
 {
+    #[\Override]
     protected function onEnable(): void
     {
         // Register admin-specific services
         $this->registerAdminServices();
     }
 
+    #[\Override]
     protected function onDisable(): void
     {
         // Clean up admin-specific services
         $this->unregisterAdminServices();
     }
 
+    #[\Override]
     protected function onInstall(): void
     {
         // Install admin-related database tables
         $this->installAdminTables();
     }
 
+    #[\Override]
     protected function onUninstall(): void
     {
         // Remove admin-related data
@@ -39,17 +43,11 @@ class AdminModule extends BaseModule
      */
     protected function registerAdminServices(): void
     {
-        app()->singleton('genealogy.admin', function ($app) {
-            return new AdminService();
-        });
+        app()->singleton('genealogy.admin', fn($app) => new AdminService());
 
-        app()->singleton('genealogy.admin.types', function ($app) {
-            return new TypeService();
-        });
+        app()->singleton('genealogy.admin.types', fn($app) => new TypeService());
 
-        app()->singleton('genealogy.admin.changes', function ($app) {
-            return new ChangeService();
-        });
+        app()->singleton('genealogy.admin.changes', fn($app) => new ChangeService());
     }
 
     /**

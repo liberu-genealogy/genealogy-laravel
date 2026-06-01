@@ -16,7 +16,7 @@ class MenuService
             ->addClass('flex items-center space-x-4')
             ->addItemClass('px-4 py-2 rounded-md bg-green-700 text-white hover:bg-green-600 transition duration-300 ease-in-out');
 
-        $this->createMenuItems($menuItems)->each(function ($item) use ($menu): void {
+        $this->createMenuItems($menuItems)->each(function (\Spatie\Menu\Item $item) use ($menu): void {
             $menu->add($item);
         });
 
@@ -31,7 +31,7 @@ class MenuService
                     ->addClass('absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1')
                     ->addItemClass('block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100');
     
-                $this->createMenuItems($item->children)->each(function ($subItem) use ($submenu): void {
+                $this->createMenuItems($item->children)->each(function (\Spatie\Menu\Item $subItem) use ($submenu): void {
                     $submenu->add($subItem);
                 });
     

@@ -29,6 +29,7 @@ class Family extends \FamilyTree365\LaravelGedcom\Models\Family
      * Include team_id (multi-tenancy) alongside the vendor's base fillable
      * list so that the GEDCOM importer can mass-assign it.
      */
+    #[\Override]
     protected $fillable = [
         'description',
         'is_active',
@@ -54,6 +55,7 @@ class Family extends \FamilyTree365\LaravelGedcom\Models\Family
     /**
      * Override the vendor's husband relationship to use App\Models\Person (people table).
      */
+    #[\Override]
     public function husband(): HasOne
     {
         return $this->hasOne(Person::class, 'id', 'husband_id');
@@ -62,6 +64,7 @@ class Family extends \FamilyTree365\LaravelGedcom\Models\Family
     /**
      * Override the vendor's wife relationship to use App\Models\Person (people table).
      */
+    #[\Override]
     public function wife(): HasOne
     {
         return $this->hasOne(Person::class, 'id', 'wife_id');

@@ -1,0 +1,27 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: genealogy-ingress
+  namespace: genealogy
+  annotations:
+    nginx.ingress.kubernetes.io/proxy-body-size: "400m"
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "300"
+    nginx.ingress.kubernetes.io/proxy-connect-timeout: "30"
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+spec:
+  ingressClassName: nginx
+  tls:
+    - hosts:
+        - genealogy.example.com
+      secretName: genealogy-tls
+  rules:
+    - host: genealogy.example.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: genealogy-app
+                port:
+                  number: 80

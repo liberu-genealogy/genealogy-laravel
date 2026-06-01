@@ -1,0 +1,21 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: genealogy
+
+resources:
+  - namespace.yaml
+  - configmap.yaml
+  - secret.yaml
+  - pvc.yaml
+  - deployment.yaml
+  - horizon-deployment.yaml
+  - reverb-deployment.yaml
+  - service.yaml
+  - ingress.yaml
+  - hpa.yaml
+  - scheduler-cronjob.yaml
+
+commonLabels:
+  app.kubernetes.io/name: genealogy
+  app.kubernetes.io/managed-by: kustomize

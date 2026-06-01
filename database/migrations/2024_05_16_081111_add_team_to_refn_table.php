@@ -11,7 +11,7 @@ return new class() extends Migration {
     public function up(): void
     {
         if (!Schema::hasColumn('refn', 'team_id')) {
-            Schema::table('refn', function (Blueprint $table) {
+            Schema::table('refn', function (Blueprint $table): void {
                 $table->foreignId('team_id')->nullable()->constrained()->onDelete('cascade');
             });
         }
@@ -22,7 +22,7 @@ return new class() extends Migration {
      */
     public function down(): void
     {
-        Schema::table('refn', function (Blueprint $table) {
+        Schema::table('refn', function (Blueprint $table): void {
             //
         });
     }

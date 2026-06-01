@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Filament\Admin\Resources;
 
 use Override;
@@ -21,14 +23,19 @@ use Filament\Tables\Table;
 
 class MenuResource extends Resource
 {
+    #[\Override]
     protected static ?string $model = Menu::class;
 
+    #[\Override]
     protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-bars-3';
 
+    #[\Override]
     protected static ?string $navigationLabel = 'Menus';
 
+    #[\Override]
     protected static string | \UnitEnum | null $navigationGroup = '🛠️ System';
 
+    #[\Override]
     protected static ?int $navigationSort = 20;
 
     #[Override]
@@ -97,6 +104,7 @@ class MenuResource extends Resource
         ];
     }
 
+    #[\Override]
     public static function getPages(): array
     {
         return [

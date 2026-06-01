@@ -11,6 +11,7 @@ use Illuminate\Support\Str;
  */
 class TypeFactory extends Factory
 {
+    #[\Override]
     protected $model = Type::class;
 
     public function definition()
@@ -36,7 +37,7 @@ class TypeFactory extends Factory
             ->title()
             ->plural();
 
-        return $this->state(fn () => [
+        return $this->state(fn (): array => [
             'name'        => $name,
             'folder'      => $name->camel(),
             'model'       => $model,

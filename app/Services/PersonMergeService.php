@@ -50,7 +50,7 @@ class PersonMergeService
             }
 
             // Save primary if changed
-            if (!empty($updated)) {
+            if ($updated !== []) {
                 $primary->save();
             }
 

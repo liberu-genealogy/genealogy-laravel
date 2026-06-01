@@ -67,6 +67,10 @@
                         </button>
                     </div>
                 </form>
+
+                @if (\JoelButcher\Socialstream\Socialstream::show())
+                    <x-socialstream />
+                @endif
             </div>
 
             <div class="px-8 py-4 bg-gray-50 border-t border-gray-100 text-center">

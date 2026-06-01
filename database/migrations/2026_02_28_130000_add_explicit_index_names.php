@@ -80,7 +80,7 @@ return new class extends Migration
                                 WHERE TABLE_SCHEMA = ? AND TABLE_NAME = ? AND INDEX_NAME = ?',
                             [$dbName, $tableName, $longName]
                         );
-                    } catch (\Exception $e) {
+                    } catch (\Exception) {
                         $idxExists = false;
                     }
                     if ($idxExists) {
@@ -96,7 +96,7 @@ return new class extends Migration
                                 WHERE TABLE_SCHEMA = ? AND TABLE_NAME = ? AND INDEX_NAME = ?',
                             [$dbName, $tableName, $name]
                         );
-                    } catch (\Exception $e) {
+                    } catch (\Exception) {
                         $nameExists = false;
                     }
                 } else {
@@ -104,7 +104,7 @@ return new class extends Migration
                 }
                 if (!$nameExists) {
                     try {
-                        Schema::table($tableName, function (Blueprint $table) use ($columns, $name) {
+                        Schema::table($tableName, function (Blueprint $table) use ($columns, $name): void {
                             $table->index($columns, $name);
                         });
                     } catch (\Illuminate\Database\QueryException $e) {
@@ -157,7 +157,7 @@ return new class extends Migration
                             WHERE TABLE_SCHEMA = ? AND TABLE_NAME = ? AND INDEX_NAME = ?',
                         [$dbName, $tableName, $idx]
                     );
-                } catch (\Exception $e) {
+                } catch (\Exception) {
                     $idxExists = false;
                 }
                 if ($idxExists) {
@@ -167,7 +167,7 @@ return new class extends Migration
                 // fall back to blind drop; errors will be caught by the caller
                 try {
                     DB::statement("ALTER TABLE `$tableName` DROP INDEX `$idx`");
-                } catch (\Exception $e) {
+                } catch (\Exception) {
                     // ignore failures on sqlite
                 }
             }

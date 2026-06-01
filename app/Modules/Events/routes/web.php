@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use Illuminate\Support\Facades\Route;
 use App\Modules\Events\Http\Controllers\EventsController;
 
@@ -12,7 +14,7 @@ use App\Modules\Events\Http\Controllers\EventsController;
 |
 */
 
-Route::middleware(['web'])->prefix('events')->name('events.')->group(function () {
+Route::middleware(['web'])->prefix('events')->name('events.')->group(function (): void {
     Route::get('/', [EventsController::class, 'index'])->name('index');
     Route::get('/create', [EventsController::class, 'create'])->name('create');
     Route::post('/', [EventsController::class, 'store'])->name('store');
@@ -20,7 +22,7 @@ Route::middleware(['web'])->prefix('events')->name('events.')->group(function ()
     Route::get('/{event}/edit', [EventsController::class, 'edit'])->name('edit');
     Route::put('/{event}', [EventsController::class, 'update'])->name('update');
     Route::delete('/{event}', [EventsController::class, 'destroy'])->name('destroy');
-    
+
     // Events-specific routes
     Route::get('/type/{type}', [EventsController::class, 'byType'])->name('by-type');
     Route::get('/timeline/view', [EventsController::class, 'timeline'])->name('timeline');

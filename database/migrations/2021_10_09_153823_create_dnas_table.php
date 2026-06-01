@@ -10,9 +10,9 @@ return new class() extends Migration {
      *
      * @return void
      */
-    public function up()
+    public function up(): void
     {
-        Schema::create('dnas', function (Blueprint $table) {
+        Schema::create('dnas', function (Blueprint $table): void {
             $table->bigIncrements('id');
             $table->string('name');
             $table->foreignId('user_id')->constrained('users');
@@ -28,7 +28,7 @@ return new class() extends Migration {
      *
      * @return void
      */
-    public function down()
+    public function down(): void
     {
         Schema::dropIfExists('dnas');
     }

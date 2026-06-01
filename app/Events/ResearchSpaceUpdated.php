@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Events;
 
 use Illuminate\Broadcasting\InteractsWithSockets;
@@ -11,13 +13,8 @@ class ResearchSpaceUpdated implements ShouldBroadcastNow
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public int $researchSpaceId;
-    public array $payload;
-
-    public function __construct(int $researchSpaceId, array $payload = [])
+    public function __construct(public int $researchSpaceId, public array $payload = [])
     {
-        $this->researchSpaceId = $researchSpaceId;
-        $this->payload = $payload;
     }
 
     public function broadcastAs(): string

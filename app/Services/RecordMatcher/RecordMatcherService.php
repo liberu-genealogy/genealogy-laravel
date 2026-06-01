@@ -49,7 +49,7 @@ class RecordMatcherService
             $results[] = ['candidate' => $cand, 'score' => $score];
         }
 
-        usort($results, fn($a, $b) => $b['score'] <=> $a['score']);
+        usort($results, fn(array $a, array $b): int => $b['score'] <=> $a['score']);
 
         return $results;
     }
@@ -82,9 +82,13 @@ class RecordMatcherService
             $sim = 0.0;
             if ($py && $cy) {
                 $diff = abs($py - $cy);
-                if ($diff === 0) $sim = 1.0;
-                elseif ($diff <= 2) $sim = 0.7;
-                elseif ($diff <= 5) $sim = 0.4;
+                if ($diff === 0) {
+                    $sim = 1.0;
+                } elseif ($diff <= 2) {
+                    $sim = 0.7;
+                } elseif ($diff <= 5) {
+                    $sim = 0.4;
+                }
             }
             $score += $this->weights['birth_year'] * $sim;
         }

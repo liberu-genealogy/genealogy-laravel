@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Filament\App\Resources;
 
 use Override;
@@ -24,10 +26,14 @@ use Filament\Tables\Table;
 
 class SubmResource extends AppResource
 {
+    #[\Override]
     protected static ?string $model = Subm::class;
 
+    #[\Override]
     protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-user-group';
+    #[\Override]
     protected static ?string $navigationLabel = 'Submitters';
+    #[\Override]
     protected static string | \UnitEnum | null $navigationGroup = '🛠️ Data Management';
 
     #[Override]
@@ -120,6 +126,7 @@ class SubmResource extends AppResource
         ];
     }
 
+    #[\Override]
     public static function getPages(): array
     {
         return [

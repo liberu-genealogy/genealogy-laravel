@@ -63,7 +63,7 @@ class FacialRecognitionService
                 'face_count' => count($detectedFaces),
             ]);
 
-            if (empty($detectedFaces)) {
+            if ($detectedFaces === []) {
                 $photo->update([
                     'is_analyzed' => true,
                     'analyzed_at' => now(),
@@ -81,7 +81,7 @@ class FacialRecognitionService
 
             // Try to match detected faces with known people
             $matches = [];
-            if (!empty($existingEncodings)) {
+            if ($existingEncodings !== []) {
                 $matches = $this->provider->matchFaces($imagePath, $existingEncodings);
             }
 
@@ -124,13 +124,11 @@ class FacialRecognitionService
             $query->where('team_id', $teamId);
         }
 
-        return $query->get()->map(function ($encoding) {
-            return [
-                'person_id' => $encoding->person_id,
-                'person_name' => $encoding->person->fullname(),
-                'encoding' => $encoding->encoding,
-            ];
-        })->toArray();
+        return $query->get()->map(fn($encoding) => [
+            'person_id' => $encoding->person_id,
+            'person_name' => $encoding->person->fullname(),
+            'encoding' => $encoding->encoding,
+        ])->toArray();
     }
 
     /**

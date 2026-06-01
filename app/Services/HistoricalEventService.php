@@ -18,7 +18,7 @@ class HistoricalEventService
      * @param  string|null  $country
      * @return Collection
      */
-    public function fetchForPeriod($start, $end, ?string $country = null): Collection
+    public function fetchForPeriod(\DateTimeInterface|\Carbon\WeekDay|\Carbon\Month|string|int|float|null $start, \DateTimeInterface|\Carbon\WeekDay|\Carbon\Month|string|int|float|null $end, ?string $country = null): Collection
     {
         $query = HistoricalEvent::query()
             ->betweenDates(Carbon::parse($start)->toDateString(), Carbon::parse($end)->toDateString());

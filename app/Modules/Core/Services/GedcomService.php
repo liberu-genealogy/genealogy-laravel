@@ -13,10 +13,10 @@ class GedcomService
     /**
      * Export genealogy data to GEDCOM format.
      */
-    public function exportToGedcom(Collection $persons = null, Collection $families = null): string
+    public function exportToGedcom(?Collection $persons = null, ?Collection $families = null): string
     {
-        $persons = $persons ?? Person::all();
-        $families = $families ?? Family::all();
+        $persons ??= Person::all();
+        $families ??= Family::all();
 
         $gedcom = $this->generateGedcomHeader();
         $gedcom .= $this->generatePersonRecords($persons);
@@ -156,8 +156,11 @@ class GedcomService
         $currentRecord = null;
         
         foreach ($lines as $line) {
-            $line = trim($line);
-            if ($line === '' || $line === '0') {
+            $line = trim((string) $line);
+            if ($line === '') {
+                continue;
+            }
+            if ($line === '0') {
                 continue;
             }
             
@@ -234,14 +237,14 @@ class GedcomService
         foreach ($record['data'] as $data) {
             switch ($data['tag']) {
                 case 'HUSB':
-                    $husbandGid = trim($data['value'], '@');
+                    $husbandGid = trim((string) $data['value'], '@');
                     $husband = Person::where('gid', $husbandGid)->first();
                     if ($husband) {
                         $familyData['husband_id'] = $husband->id;
                     }
                     break;
                 case 'WIFE':
-                    $wifeGid = trim($data['value'], '@');
+                    $wifeGid = trim((string) $data['value'], '@');
                     $wife = Person::where('gid', $wifeGid)->first();
                     if ($wife) {
                         $familyData['wife_id'] = $wife->id;

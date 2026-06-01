@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Schema;
 return new class () extends Migration {
     public function up(): void
     {
-        Schema::table('importjobs', function (Blueprint $table) {
+        Schema::table('importjobs', function (Blueprint $table): void {
             $table->unsignedTinyInteger('progress')->default(0)->after('status');
             $table->text('error_message')->nullable()->after('progress');
             $table->unsignedInteger('people_imported')->default(0)->after('error_message');
@@ -17,7 +17,7 @@ return new class () extends Migration {
 
     public function down(): void
     {
-        Schema::table('importjobs', function (Blueprint $table) {
+        Schema::table('importjobs', function (Blueprint $table): void {
             $table->dropColumn(['progress', 'error_message', 'people_imported', 'families_imported']);
         });
     }

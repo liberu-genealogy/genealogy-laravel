@@ -7,7 +7,7 @@ use App\Settings\GeneralSettings;
 
 class SiteSettingsSeeder extends Seeder
 {
-    public function run()
+    public function run(): void
     {
         $settings = app(GeneralSettings::class);
 

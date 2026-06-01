@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Feature\Filament;
 
 use App\Filament\App\Resources\SubmResource;

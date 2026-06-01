@@ -12,14 +12,11 @@ class AchievementUnlockedNotification extends Notification implements ShouldQueu
 {
     use Queueable;
 
-    protected Achievement $achievement;
-
     /**
      * Create a new notification instance.
      */
-    public function __construct(Achievement $achievement)
+    public function __construct(protected Achievement $achievement)
     {
-        $this->achievement = $achievement;
     }
 
     /**

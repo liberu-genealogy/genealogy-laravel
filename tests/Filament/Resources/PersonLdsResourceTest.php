@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Filament\Resources;
 
 use App\Models\PersonLds;

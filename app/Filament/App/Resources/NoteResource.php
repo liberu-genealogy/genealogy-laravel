@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Filament\App\Resources;
 
 use Override;
@@ -27,12 +29,16 @@ use Filament\Tables\Table;
 
 class NoteResource extends AppResource
 {
+    #[\Override]
     protected static ?string $model = Note::class;
 
+    #[\Override]
     protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-pencil-square';
 
+    #[\Override]
     protected static ?string $navigationLabel = 'Add Notes';
 
+    #[\Override]
     protected static string | \UnitEnum | null $navigationGroup = '👥 Family Tree';
 
     #[Override]
@@ -113,6 +119,7 @@ class NoteResource extends AppResource
         ];
     }
 
+    #[\Override]
     public static function getPages(): array
     {
         return [

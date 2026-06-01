@@ -12,11 +12,8 @@ class UserLeveledUpListener implements ShouldQueue
 {
     use InteractsWithQueue;
 
-    protected $gamificationService;
-
-    public function __construct(GamificationService $gamificationService)
+    public function __construct(protected \App\Services\GamificationService $gamificationService)
     {
-        $this->gamificationService = $gamificationService;
     }
 
     /**

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
@@ -39,10 +41,12 @@ class Activation extends Model
      *
      * @var string
      */
+    #[\Override]
     protected $keyType = 'integer';
 
     /**
      * @var array
      */
+    #[\Override]
     protected $fillable = ['user_id', 'token', 'ip_address', 'created_at', 'updated_at'];
 }

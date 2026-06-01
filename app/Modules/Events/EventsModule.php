@@ -9,18 +9,21 @@ use App\Modules\BaseModule;
 
 class EventsModule extends BaseModule
 {
+    #[\Override]
     protected function onEnable(): void
     {
         // Register events-specific services
         $this->registerEventsServices();
     }
 
+    #[\Override]
     protected function onDisable(): void
     {
         // Clean up events-specific services
         $this->unregisterEventsServices();
     }
 
+    #[\Override]
     protected function onInstall(): void
     {
         // Install events-related database tables
@@ -28,6 +31,7 @@ class EventsModule extends BaseModule
         $this->seedEventsData();
     }
 
+    #[\Override]
     protected function onUninstall(): void
     {
         // Remove events-related data
@@ -39,13 +43,9 @@ class EventsModule extends BaseModule
      */
     protected function registerEventsServices(): void
     {
-        app()->singleton('genealogy.events', function ($app) {
-            return new EventsService();
-        });
+        app()->singleton('genealogy.events', fn($app) => new EventsService());
 
-        app()->singleton('genealogy.events.timeline', function ($app) {
-            return new TimelineService();
-        });
+        app()->singleton('genealogy.events.timeline', fn($app) => new TimelineService());
     }
 
     /**

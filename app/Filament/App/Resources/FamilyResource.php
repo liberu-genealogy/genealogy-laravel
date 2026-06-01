@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Filament\App\Resources;
 
 use Override;
@@ -29,11 +31,16 @@ use Filament\Tables\Table;
 
 class FamilyResource extends AppResource
 {
+    #[\Override]
     protected static ?string $model = Family::class;
 
+    #[\Override]
     protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-home';
+    #[\Override]
     protected static ?string $navigationLabel = 'Families';
+    #[\Override]
     protected static string | \UnitEnum | null $navigationGroup = '👥 Family Tree';
+    #[\Override]
     protected static ?int $navigationSort = 2;
 
     #[Override]
@@ -141,6 +148,7 @@ class FamilyResource extends AppResource
         ];
     }
 
+    #[\Override]
     public static function getPages(): array
     {
         return [

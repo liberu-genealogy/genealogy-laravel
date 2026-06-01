@@ -1,0 +1,29 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: genealogy-config
+  namespace: genealogy
+data:
+  APP_ENV: "production"
+  APP_DEBUG: "false"
+  APP_URL: "https://genealogy.example.com"
+  LOG_CHANNEL: "stderr"
+  LOG_LEVEL: "error"
+  DB_CONNECTION: "mysql"
+  DB_HOST: "mysql"
+  DB_PORT: "3306"
+  DB_DATABASE: "genealogy"
+  CACHE_STORE: "redis"
+  QUEUE_CONNECTION: "redis"
+  SESSION_DRIVER: "redis"
+  REDIS_HOST: "redis"
+  REDIS_PORT: "6379"
+  OCTANE_SERVER: "roadrunner"
+  CONTAINER_MODE: "http"
+  WITH_HORIZON: "false"
+  WITH_SCHEDULER: "false"
+  WITH_REVERB: "false"
+  BROADCAST_CONNECTION: "reverb"
+  MAIL_MAILER: "smtp"
+  FILESYSTEM_DISK: "s3"
+  SCOUT_DRIVER: "database"

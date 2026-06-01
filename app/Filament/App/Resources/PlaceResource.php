@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Filament\App\Resources;
 
 use Override;
@@ -25,12 +27,17 @@ use Filament\Tables\Table;
 
 class PlaceResource extends AppResource
 {
+    #[\Override]
     protected static ?string $model = Place::class;
 
+    #[\Override]
     protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-map-pin';
+    #[\Override]
     protected static ?string $navigationLabel = 'Places';
+    #[\Override]
     protected static string | \UnitEnum | null $navigationGroup = '👥 Family Tree';
 
+    #[\Override]
     protected static ?int $navigationSort = 3;
 
     #[Override]
@@ -88,6 +95,7 @@ class PlaceResource extends AppResource
         ];
     }
 
+    #[\Override]
     public static function getPages(): array
     {
         return [

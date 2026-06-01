@@ -11,9 +11,9 @@ class CreateNotesTable extends Migration
      *
      * @return void
      */
-    public function up()
+    public function up(): void
     {
-        Schema::create('notes', function (Blueprint $table) {
+        Schema::create('notes', function (Blueprint $table): void {
             $table->bigIncrements('id');
             $table->string('name')->nullable();
             $table->text('description')->nullable();
@@ -34,7 +34,7 @@ class CreateNotesTable extends Migration
      *
      * @return void
      */
-    public function down()
+    public function down(): void
     {
         Schema::dropIfExists('notes');
     }

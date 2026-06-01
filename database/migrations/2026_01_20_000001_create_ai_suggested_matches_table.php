@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration {
     public function up(): void
     {
-        Schema::create('ai_suggested_matches', function (Blueprint $table) {
+        Schema::create('ai_suggested_matches', function (Blueprint $table): void {
             $table->id();
             $table->unsignedBigInteger('local_person_id')->nullable()->index();
             $table->string('provider')->index();

@@ -12,20 +12,28 @@ use Livewire\Attributes\Computed;
 
 class GedcomExportPage extends Page
 {
+    #[\Override]
     protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-arrow-down-tray';
 
+    #[\Override]
     protected static ?string $navigationLabel = 'GEDCOM Export';
 
+    #[\Override]
     protected static string | \UnitEnum | null $navigationGroup = "🛠️ Data Management";
 
+    #[\Override]
     protected static ?int $navigationSort = 2;
 
+    #[\Override]
     protected static ?string $title = 'Export GEDCOM';
 
+    #[\Override]
     protected static ?string $slug = 'gedcom-export';
 
+    #[\Override]
     protected string $view = 'filament.app.pages.gedcom-export-page';
 
+    #[\Override]
     protected function getHeaderActions(): array
     {
         return [
@@ -71,16 +79,14 @@ class GedcomExportPage extends Page
         $disk = Storage::disk('private');
 
         return collect($disk->files('/'))
-            ->filter(fn (string $file) => str_ends_with($file, '_family_tree.ged'))
-            ->map(function (string $file) use ($disk) {
-                return [
-                    'name'      => basename($file),
-                    'size'      => $this->formatBytes($disk->size($file)),
-                    'modified'  => date('d M Y, H:i', $disk->lastModified($file)),
-                    'timestamp' => $disk->lastModified($file),
-                    'url'       => $disk->temporaryUrl($file, now()->addMinutes(30)),
-                ];
-            })
+            ->filter(fn (string $file): bool => str_ends_with($file, '_family_tree.ged'))
+            ->map(fn(string $file) => [
+                'name'      => basename($file),
+                'size'      => $this->formatBytes($disk->size($file)),
+                'modified'  => date('d M Y, H:i', $disk->lastModified($file)),
+                'timestamp' => $disk->lastModified($file),
+                'url'       => $disk->temporaryUrl($file, now()->addMinutes(30)),
+            ])
             ->sortByDesc('timestamp')
             ->values()
             ->toArray();

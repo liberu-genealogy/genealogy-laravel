@@ -9,6 +9,7 @@ class Conversation extends Model
 {
     use HasFactory;
 
+    #[\Override]
     protected $fillable = ['user_one', 'user_two', 'status'];
 
     // public function user()

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Feature\Filament\Resources;
 
 use App\Filament\App\Resources\MediaObjectResource;

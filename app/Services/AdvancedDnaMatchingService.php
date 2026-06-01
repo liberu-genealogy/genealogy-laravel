@@ -163,8 +163,8 @@ class AdvancedDnaMatchingService
      */
     protected function snpsMatch(array $snp1, array $snp2): bool
     {
-        $genotype1 = str_split($snp1['genotype']);
-        $genotype2 = str_split($snp2['genotype']);
+        $genotype1 = str_split((string) $snp1['genotype']);
+        $genotype2 = str_split((string) $snp2['genotype']);
 
         // Check for exact match or reverse match
         return ($genotype1[0] === $genotype2[0] && $genotype1[1] === $genotype2[1]) ||
@@ -189,7 +189,7 @@ class AdvancedDnaMatchingService
 
         foreach ($chromosomes as $chr => $snps) {
             // Sort by position
-            usort($snps, fn($a, $b) => $a['position'] <=> $b['position']);
+            usort($snps, fn(array $a, array $b): int => $a['position'] <=> $b['position']);
 
             $currentSegment = null;
 
@@ -271,7 +271,7 @@ class AdvancedDnaMatchingService
      */
     protected function findLargestSegment(array $ibdSegments): float
     {
-        if (empty($ibdSegments)) {
+        if ($ibdSegments === []) {
             return 0.0;
         }
 
@@ -303,11 +303,11 @@ class AdvancedDnaMatchingService
         $breakdown = [];
 
         for ($chr = 1; $chr <= self::MAX_CHROMOSOME_NUMBER; $chr++) {
-            $chrSegments = array_filter($ibdSegments, fn($seg) => $seg['chromosome'] == $chr);
+            $chrSegments = array_filter($ibdSegments, fn(array $seg): bool => $seg['chromosome'] == $chr);
             $breakdown[$chr] = [
                 'segment_count' => count($chrSegments),
                 'total_cm' => array_sum(array_column($chrSegments, 'length_cm')),
-                'largest_segment' => empty($chrSegments) ? 0 : max(array_column($chrSegments, 'length_cm'))
+                'largest_segment' => $chrSegments === [] ? 0 : max(array_column($chrSegments, 'length_cm'))
             ];
         }
 
@@ -483,8 +483,9 @@ class AdvancedDnaMatchingService
     protected function processBatch(array $batch): array
     {
         $results = [];
+        $counter = count($batch);
 
-        for ($i = 0; $i < count($batch); $i++) {
+        for ($i = 0; $i < $counter; $i++) {
             for ($j = $i + 1; $j < count($batch); $j++) {
                 $kit1 = $batch[$i];
                 $kit2 = $batch[$j];

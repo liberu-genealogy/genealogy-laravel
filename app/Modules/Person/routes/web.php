@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use Illuminate\Support\Facades\Route;
 use App\Modules\Person\Http\Controllers\PersonController;
 
@@ -12,7 +14,7 @@ use App\Modules\Person\Http\Controllers\PersonController;
 |
 */
 
-Route::middleware(['web'])->prefix('persons')->name('persons.')->group(function () {
+Route::middleware(['web'])->prefix('persons')->name('persons.')->group(function (): void {
     Route::get('/', [PersonController::class, 'index'])->name('index');
     Route::get('/create', [PersonController::class, 'create'])->name('create');
     Route::post('/', [PersonController::class, 'store'])->name('store');
@@ -20,7 +22,7 @@ Route::middleware(['web'])->prefix('persons')->name('persons.')->group(function 
     Route::get('/{person}/edit', [PersonController::class, 'edit'])->name('edit');
     Route::put('/{person}', [PersonController::class, 'update'])->name('update');
     Route::delete('/{person}', [PersonController::class, 'destroy'])->name('destroy');
-    
+
     // Additional person routes
     Route::get('/{person}/timeline', [PersonController::class, 'timeline'])->name('timeline');
     Route::get('/{person}/tree', [PersonController::class, 'tree'])->name('tree');

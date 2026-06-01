@@ -16,6 +16,7 @@ class ForumTopicFactory extends Factory
      *
      * @var string
      */
+    #[\Override]
     protected $model = ForumTopic::class;
 
     /**

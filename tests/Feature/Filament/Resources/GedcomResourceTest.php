@@ -84,7 +84,8 @@ class GedcomResourceTest extends TestCase
     public function test_after_create_dispatches_import_gedcom_for_ged_file(): void
     {
         Auth::login($this->user);
-        Storage::fake('private');
+        $disk = Storage::fake('private');
+        $disk->put('gedcom-form-imports/test.ged', '0 HEAD');
 
         $gedcom = Gedcom::create(['filename' => 'gedcom-form-imports/test.ged']);
 
@@ -123,7 +124,8 @@ class GedcomResourceTest extends TestCase
     public function test_after_create_dispatches_import_gramps_xml_for_gramps_file(): void
     {
         Auth::login($this->user);
-        Storage::fake('private');
+        $disk = Storage::fake('private');
+        $disk->put('gedcom-form-imports/test.gramps', '<gramps/>');
 
         $gedcom = Gedcom::create(['filename' => 'gedcom-form-imports/test.gramps']);
 

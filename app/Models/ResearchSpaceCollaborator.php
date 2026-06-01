@@ -10,8 +10,10 @@ class ResearchSpaceCollaborator extends Model
 {
     use HasFactory;
 
+    #[\Override]
     protected $table = 'research_space_collaborators';
 
+    #[\Override]
     protected $fillable = [
         'research_space_id',
         'user_id',
@@ -21,6 +23,7 @@ class ResearchSpaceCollaborator extends Model
         'accepted_at',
     ];
 
+    #[\Override]
     protected $casts = [
         'permissions' => 'array',
         'accepted_at' => 'datetime',

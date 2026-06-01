@@ -10,24 +10,28 @@ use App\Modules\BaseModule;
 
 class ImportModule extends BaseModule
 {
+    #[\Override]
     protected function onEnable(): void
     {
         // Register import-specific services
         $this->registerImportServices();
     }
 
+    #[\Override]
     protected function onDisable(): void
     {
         // Clean up import-specific services
         $this->unregisterImportServices();
     }
 
+    #[\Override]
     protected function onInstall(): void
     {
         // Install import-related database tables
         $this->installImportTables();
     }
 
+    #[\Override]
     protected function onUninstall(): void
     {
         // Remove import-related data
@@ -39,17 +43,11 @@ class ImportModule extends BaseModule
      */
     protected function registerImportServices(): void
     {
-        app()->singleton('genealogy.import', function ($app) {
-            return new ImportService();
-        });
+        app()->singleton('genealogy.import', fn($app) => new ImportService());
 
-        app()->singleton('genealogy.import.gedcom', function ($app) {
-            return new GedcomImportService();
-        });
+        app()->singleton('genealogy.import.gedcom', fn($app) => new GedcomImportService());
 
-        app()->singleton('genealogy.export', function ($app) {
-            return new ExportService();
-        });
+        app()->singleton('genealogy.export', fn($app) => new ExportService());
     }
 
     /**

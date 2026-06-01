@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -11,7 +13,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware(['api'])->prefix('api/genealogy')->group(function () {
+Route::middleware(['api'])->prefix('api/genealogy')->group(function (): void {
     // Core genealogy API routes can be added here
     // These would be shared API endpoints used by multiple modules
 });

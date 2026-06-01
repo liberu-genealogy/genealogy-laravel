@@ -12,6 +12,7 @@ class Addr extends Model
     use HasFactory;
     use BelongsToTenant;
 
+    #[\Override]
     protected $fillable = [
         'adr1',
         'adr2',

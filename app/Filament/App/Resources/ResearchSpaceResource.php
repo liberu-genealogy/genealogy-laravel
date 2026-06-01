@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Filament\App\Resources;
 
 use Filament\Schemas\Schema;
@@ -19,14 +21,19 @@ use Filament\Tables\Columns\IconColumn;
 
 class ResearchSpaceResource extends AppResource
 {
+    #[\Override]
     protected static ?string $model = ResearchSpace::class;
 
+    #[\Override]
     protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-users';
 
+    #[\Override]
     protected static string | \UnitEnum | null $navigationGroup = '📋 Research Management';
 
+    #[\Override]
     protected static ?string $navigationLabel = 'Research Spaces';
 
+    #[\Override]
     public static function form(Schema $schema): Schema
     {
         return $schema
@@ -45,6 +52,7 @@ class ResearchSpaceResource extends AppResource
             ]);
     }
 
+    #[\Override]
     public static function table(Table $table): Table
     {
         return $table
@@ -57,6 +65,7 @@ class ResearchSpaceResource extends AppResource
             ]);
     }
 
+    #[\Override]
     public static function getPages(): array
     {
         return [

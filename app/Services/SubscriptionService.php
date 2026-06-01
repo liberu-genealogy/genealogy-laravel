@@ -25,7 +25,7 @@ class SubscriptionService
     public function createPremiumSubscription(User $user, ?string $paymentMethod = null)
     {
         // Trial-only flow without requiring a payment method / Stripe setup
-        if (empty($paymentMethod)) {
+        if (in_array($paymentMethod, [null, '', '0'], true)) {
             $trialDays = config('subscription.premium.trial_days', 14);
             $user->forceFill([
                 'is_premium' => true,

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Jobs;
 
 use App\Services\DuplicateDetectionService;
@@ -12,16 +14,11 @@ class ScanForDuplicatePersons implements ShouldQueue
 {
     use InteractsWithQueue, Queueable, SerializesModels;
 
-    public float $threshold;
-    public int $limitPerPerson;
-
-    public function __construct(float $threshold = 0.7, int $limitPerPerson = 10)
+    public function __construct(public float $threshold = 0.7, public int $limitPerPerson = 10)
     {
-        $this->threshold = $threshold;
-        $this->limitPerPerson = $limitPerPerson;
     }
 
-    public function handle(DuplicateDetectionService $detector)
+    public function handle(DuplicateDetectionService $detector): void
     {
         // scan and persist DuplicateMatch records
         $detector->scan($this->threshold, $this->limitPerPerson);

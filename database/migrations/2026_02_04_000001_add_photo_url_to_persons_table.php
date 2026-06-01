@@ -24,11 +24,11 @@ return new class() extends Migration
         // If the 'phone' column exists we keep the original intent and place
         // photo_url after it; otherwise add the column without the 'after'.
         if (Schema::hasColumn('people', 'phone')) {
-            Schema::table('people', function (Blueprint $table) {
+            Schema::table('people', function (Blueprint $table): void {
                 $table->string('photo_url')->nullable()->after('phone');
             });
         } else {
-            Schema::table('people', function (Blueprint $table) {
+            Schema::table('people', function (Blueprint $table): void {
                 $table->string('photo_url')->nullable();
             });
         }
@@ -44,7 +44,7 @@ return new class() extends Migration
         }
 
         if (Schema::hasColumn('people', 'photo_url')) {
-            Schema::table('people', function (Blueprint $table) {
+            Schema::table('people', function (Blueprint $table): void {
                 $table->dropColumn('photo_url');
             });
         }

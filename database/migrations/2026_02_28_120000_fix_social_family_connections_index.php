@@ -36,7 +36,7 @@ return new class extends Migration
                             WHERE TABLE_SCHEMA = ? AND TABLE_NAME = ? AND INDEX_NAME = ?',
                         [$dbName, 'social_family_connections', 'sfc_account_social_id_idx']
                     );
-                } catch (\Exception $e) {
+                } catch (\Exception) {
                     // safe to ignore if the query fails for any reason
                     $exists = false;
                 }
@@ -46,7 +46,7 @@ return new class extends Migration
 
             if (!$exists) {
                 try {
-                    Schema::table('social_family_connections', function (Blueprint $table) {
+                    Schema::table('social_family_connections', function (Blueprint $table): void {
                         // the previously-added index already has the correct short name.
                         // dropping it can fail if MySQL is using it for the foreign-key
                         // on connected_account_id, so we simply avoid removing it here.
@@ -73,7 +73,7 @@ return new class extends Migration
     public function down(): void
     {
         if (Schema::hasTable('social_family_connections')) {
-            Schema::table('social_family_connections', function (Blueprint $table) {
+            Schema::table('social_family_connections', function (Blueprint $table): void {
                 // simply remove the fixed index; the original long-named index
                 // cannot be created on MySQL, so we don't attempt to recreate it
                 // during rollback. This keeps the rollback safe and idempotent.

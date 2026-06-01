@@ -31,7 +31,7 @@ class TreeBuilderService
         // Add siblings if requested
         if ($includeSiblings) {
             $tree['siblings'] = $this->getSiblings($rootPerson)
-                ->map(fn($sibling) => $this->formatPersonNode($sibling))
+                ->map(fn(\App\Models\Person $sibling): array => $this->formatPersonNode($sibling))
                 ->toArray();
         }
         
@@ -142,7 +142,7 @@ class TreeBuilderService
     {
         $data = [
             'generation' => $currentGeneration,
-            'position' => pow(2, $currentGeneration - 1),
+            'position' => 2 ** ($currentGeneration - 1),
             'person' => $this->formatPersonNode($person),
         ];
 
@@ -409,10 +409,10 @@ class TreeBuilderService
             'total_ancestors' => $ancestors->count(),
             'total_descendants' => $descendants->count(),
             'total_siblings' => $siblings->count(),
-            'living_people' => $allPeople->filter(fn($p) => !$p->deathday)->count(),
+            'living_people' => $allPeople->filter(fn($p): bool => !$p->deathday)->count(),
             'deceased_people' => $allPeople->filter(fn($p) => $p->deathday)->count(),
-            'males' => $allPeople->filter(fn($p) => $p->sex === 'M')->count(),
-            'females' => $allPeople->filter(fn($p) => $p->sex === 'F')->count(),
+            'males' => $allPeople->filter(fn($p): bool => $p->sex === 'M')->count(),
+            'females' => $allPeople->filter(fn($p): bool => $p->sex === 'F')->count(),
             'max_ancestor_depth' => $this->getMaxAncestorDepth($person),
             'max_descendant_depth' => $this->getMaxDescendantDepth($person),
         ];
@@ -440,7 +440,7 @@ class TreeBuilderService
         }
 
         if ($person->childInFamily->wife) {
-            $maxDepth = max($maxDepth, $this->getMaxAncestorDepth($person->childInFamily->wife, $depth + 1, $visited));
+            return max($maxDepth, $this->getMaxAncestorDepth($person->childInFamily->wife, $depth + 1, $visited));
         }
 
         return $maxDepth;

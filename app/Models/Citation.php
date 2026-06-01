@@ -12,8 +12,10 @@ class Citation extends Model
     use HasFactory;
     use BelongsToTenant;
 
+    #[\Override]
     protected $fillable = ['name', 'description', 'repository_id', 'volume', 'page', 'is_active', 'confidence', 'source_id'];
 
+    #[\Override]
     protected $attributes = ['is_active' => false];
 
     public function sources()
@@ -25,6 +27,7 @@ class Citation extends Model
     {
         return $this->belongsTo(User::class, 'user_id', 'id');
     }
+    #[\Override]
     protected function casts(): array
     {
         return ['is_active' => 'boolean'];

@@ -17,12 +17,12 @@ class TimelineComponent extends Component
 
     protected HistoricalEventService $historicalEventService;
 
-    public function boot(HistoricalEventService $historicalEventService)
+    public function boot(HistoricalEventService $historicalEventService): void
     {
         $this->historicalEventService = $historicalEventService;
     }
 
-    public function mount(?int $personId = null)
+    public function mount(?int $personId = null): void
     {
         $this->personId = $personId;
         $this->loadEvents();
@@ -32,7 +32,7 @@ class TimelineComponent extends Component
      * Load person events and historical events, merge them into $this->events
      * in the format expected by the front-end timeline library.
      */
-    public function loadEvents($start = null, $end = null)
+    public function loadEvents($start = null, $end = null): void
     {
         $items = [];
 
@@ -93,9 +93,7 @@ class TimelineComponent extends Component
         }
 
         // Sort items by start date
-        usort($items, function ($a, $b) {
-            return strcmp($a['start'] ?? '', $b['start'] ?? '');
-        });
+        usort($items, fn(array $a, array $b) => strcmp($a['start'] ?? '', $b['start'] ?? ''));
 
         $this->events = $items;
     }
@@ -104,7 +102,7 @@ class TimelineComponent extends Component
      * JS calls Livewire via Livewire.dispatch('timelineItemClicked', { id: '...' })
      */
     #[On('timelineItemClicked')]
-    public function openEventFromJs(string $id)
+    public function openEventFromJs(string $id): void
     {
         $item = collect($this->events)->firstWhere('id', $id);
         if ($item) {
@@ -112,12 +110,12 @@ class TimelineComponent extends Component
         }
     }
 
-    public function closeModal()
+    public function closeModal(): void
     {
         $this->selectedEvent = null;
     }
 
-    public function render()
+    public function render(): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
     {
         return view('livewire.timeline-component', [
             'events' => $this->events,

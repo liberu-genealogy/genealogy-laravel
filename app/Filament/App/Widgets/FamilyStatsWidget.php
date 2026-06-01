@@ -9,6 +9,7 @@ use Filament\Widgets\StatsOverviewWidget\Stat;
 
 class FamilyStatsWidget extends BaseWidget
 {
+    #[\Override]
     protected function getStats(): array
     {
         $totalPeople = Person::count();

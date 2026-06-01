@@ -10,6 +10,7 @@ class DuplicateCheck extends Model
 {
     use HasFactory;
 
+    #[\Override]
     protected $fillable = [
         'user_id',
         'results',
@@ -18,6 +19,7 @@ class DuplicateCheck extends Model
         'completed_at',
     ];
 
+    #[\Override]
     protected $casts = [
         'results' => 'array',
         'completed_at' => 'datetime',

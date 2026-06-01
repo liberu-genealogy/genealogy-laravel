@@ -17,6 +17,7 @@ class ForumPostFactory extends Factory
      *
      * @var string
      */
+    #[\Override]
     protected $model = ForumPost::class;
 
     /**

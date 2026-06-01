@@ -17,6 +17,7 @@ class RepositoryFactory extends Factory
      *
      * @var string
      */
+    #[\Override]
     protected $model = Repository::class;
 
     /**

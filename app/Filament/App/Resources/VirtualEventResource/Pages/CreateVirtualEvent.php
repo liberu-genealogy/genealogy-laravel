@@ -11,8 +11,10 @@ use Filament\Notifications\Notification;
 
 class CreateVirtualEvent extends CreateRecord
 {
+    #[\Override]
     protected static string $resource = VirtualEventResource::class;
 
+    #[\Override]
     protected function getRedirectUrl(): string
     {
         return $this->getResource()::getUrl('edit', ['record' => $this->getRecord()]);

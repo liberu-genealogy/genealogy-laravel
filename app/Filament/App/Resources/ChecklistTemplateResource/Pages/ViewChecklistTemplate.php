@@ -16,8 +16,10 @@ use Filament\Infolists\Components\RepeatableEntry;
 
 class ViewChecklistTemplate extends ViewRecord
 {
+    #[\Override]
     protected static string $resource = ChecklistTemplateResource::class;
 
+    #[\Override]
     protected function getHeaderActions(): array
     {
         return [
@@ -26,11 +28,12 @@ class ViewChecklistTemplate extends ViewRecord
                 ->label('Use This Template')
                 ->icon('heroicon-o-plus')
                 ->color('success')
-                ->url(fn () => route('filament.app.pages.create-user-checklist', ['template' => $this->getRecord()->id]))
+                ->url(fn (): string => route('filament.app.pages.create-user-checklist', ['template' => $this->getRecord()->id]))
                 ->openUrlInNewTab(),
         ];
     }
 
+    #[\Override]
     public function infolist(Schema $schema): Schema
     {
         return $schema
@@ -83,7 +86,7 @@ class ViewChecklistTemplate extends ViewRecord
                         TextEntry::make('tags')
                             ->badge()
                             ->columnSpanFull()
-                            ->visible(fn ($state) => !empty($state)),
+                            ->visible(fn ($state): bool => !empty($state)),
                     ]),
 
                 Section::make('Checklist Items')
@@ -102,7 +105,7 @@ class ViewChecklistTemplate extends ViewRecord
                                     ]),
                                 TextEntry::make('description')
                                     ->columnSpanFull()
-                                    ->visible(fn ($state) => !empty($state)),
+                                    ->visible(fn ($state): bool => !empty($state)),
                                 Grid::make(3)
                                     ->schema([
                                         TextEntry::make('category')
@@ -119,12 +122,12 @@ class ViewChecklistTemplate extends ViewRecord
                                     ->badge()
                                     ->label('Resources')
                                     ->columnSpanFull()
-                                    ->visible(fn ($state) => !empty($state)),
+                                    ->visible(fn ($state): bool => !empty($state)),
                                 TextEntry::make('tips')
                                     ->badge()
                                     ->label('Tips')
                                     ->columnSpanFull()
-                                    ->visible(fn ($state) => !empty($state)),
+                                    ->visible(fn ($state): bool => !empty($state)),
                             ])
                             ->contained(false),
                     ]),

@@ -124,15 +124,13 @@ class FamilyService
                 'birth_date' => $family->wife->birthday?->format('Y-m-d'),
                 'death_date' => $family->wife->deathday?->format('Y-m-d'),
             ] : null,
-            'children' => $this->getFamilyChildren($family)->map(function ($child) {
-                return [
-                    'id' => $child->id,
-                    'name' => $child->fullname(),
-                    'sex' => $child->sex,
-                    'birth_date' => $child->birthday?->format('Y-m-d'),
-                    'death_date' => $child->deathday?->format('Y-m-d'),
-                ];
-            })->toArray(),
+            'children' => $this->getFamilyChildren($family)->map(fn($child) => [
+                'id' => $child->id,
+                'name' => $child->fullname(),
+                'sex' => $child->sex,
+                'birth_date' => $child->birthday?->format('Y-m-d'),
+                'death_date' => $child->deathday?->format('Y-m-d'),
+            ])->toArray(),
             'marriage_date' => $family->marriage_date,
             'marriage_place' => $family->marriage_place,
             'divorce_date' => $family->divorce_date,
@@ -144,11 +142,11 @@ class FamilyService
      */
     public function searchFamilies(string $query): Collection
     {
-        return Family::whereHas('husband', function ($q) use ($query) {
+        return Family::whereHas('husband', function ($q) use ($query): void {
                 $q->where('givn', 'LIKE', "%{$query}%")
                   ->orWhere('surn', 'LIKE', "%{$query}%");
             })
-            ->orWhereHas('wife', function ($q) use ($query) {
+            ->orWhereHas('wife', function ($q) use ($query): void {
                 $q->where('givn', 'LIKE', "%{$query}%")
                   ->orWhere('surn', 'LIKE', "%{$query}%");
             })
@@ -161,10 +159,10 @@ class FamilyService
      */
     public function getFamiliesBySurname(string $surname): Collection
     {
-        return Family::whereHas('husband', function ($q) use ($surname) {
+        return Family::whereHas('husband', function ($q) use ($surname): void {
                 $q->where('surn', $surname);
             })
-            ->orWhereHas('wife', function ($q) use ($surname) {
+            ->orWhereHas('wife', function ($q) use ($surname): void {
                 $q->where('surn', $surname);
             })
             ->with(['husband', 'wife', 'children'])
@@ -227,15 +225,13 @@ class FamilyService
                     'death_date' => $family->wife->deathday?->format('Y-m-d'),
                 ] : null,
             ],
-            'children' => $this->getFamilyChildren($family)->map(function ($child) {
-                return [
-                    'id' => $child->id,
-                    'name' => $child->fullname(),
-                    'sex' => $child->getSex(),
-                    'birth_date' => $child->birthday?->format('Y-m-d'),
-                    'death_date' => $child->deathday?->format('Y-m-d'),
-                ];
-            })->toArray(),
+            'children' => $this->getFamilyChildren($family)->map(fn($child) => [
+                'id' => $child->id,
+                'name' => $child->fullname(),
+                'sex' => $child->getSex(),
+                'birth_date' => $child->birthday?->format('Y-m-d'),
+                'death_date' => $child->deathday?->format('Y-m-d'),
+            ])->toArray(),
         ];
     }
 }

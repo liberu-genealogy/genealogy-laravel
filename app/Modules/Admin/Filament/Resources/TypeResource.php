@@ -18,14 +18,19 @@ use App\Models\Type;
 
 class TypeResource extends Resource
 {
+    #[\Override]
     protected static ?string $model = Type::class;
 
+    #[\Override]
     protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-tag';
 
+    #[\Override]
     protected static string | \UnitEnum | null $navigationGroup = 'Administration';
 
+    #[\Override]
     protected static ?string $navigationLabel = 'Types';
 
+    #[\Override]
     public static function form(Schema $schema): Schema
     {
         return $schema
@@ -42,6 +47,7 @@ class TypeResource extends Resource
             ]);
     }
 
+    #[\Override]
     public static function table(Table $table): Table
     {
         return $table
@@ -51,9 +57,7 @@ class TypeResource extends Resource
                     ->sortable(),
                 TextColumn::make('description')
                     ->limit(50)
-                    ->tooltip(function ($record) {
-                        return $record->description;
-                    }),
+                    ->tooltip(fn($record) => $record->description),
                 IconColumn::make('is_active')
                     ->boolean()
                     ->sortable(),
@@ -84,6 +88,7 @@ class TypeResource extends Resource
             ]);
     }
 
+    #[\Override]
     public static function getPages(): array
     {
         return [

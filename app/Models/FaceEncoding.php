@@ -12,6 +12,7 @@ class FaceEncoding extends Model
     use HasFactory;
     use BelongsToTenant;
 
+    #[\Override]
     protected $fillable = [
         'person_id',
         'team_id',
@@ -20,6 +21,7 @@ class FaceEncoding extends Model
         'provider',
     ];
 
+    #[\Override]
     protected $casts = [
         'encoding' => 'encrypted',
     ];

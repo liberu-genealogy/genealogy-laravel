@@ -137,9 +137,9 @@ class HandwritingRecognitionService
             }
         }
 
-        $avgConfidence = !empty($confidenceScores) 
-            ? round(array_sum($confidenceScores) / count($confidenceScores), 2)
-            : 0.85; // Default confidence if not provided
+        $avgConfidence = $confidenceScores === [] 
+            ? 0.85
+            : round(array_sum($confidenceScores) / count($confidenceScores), 2); // Default confidence if not provided
 
         // Detect language
         $language = $data['responses'][0]['fullTextAnnotation']['pages'][0]['property']['detectedLanguages'][0]['languageCode'] ?? 'en';
@@ -247,7 +247,7 @@ class HandwritingRecognitionService
             ->first();
 
         // Get total corrections count
-        $totalCorrections = TranscriptionCorrection::whereHas('documentTranscription', function ($query) use ($teamId) {
+        $totalCorrections = TranscriptionCorrection::whereHas('documentTranscription', function ($query) use ($teamId): void {
             $query->where('team_id', $teamId);
         })->count();
 

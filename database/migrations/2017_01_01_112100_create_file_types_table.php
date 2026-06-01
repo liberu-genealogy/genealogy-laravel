@@ -5,9 +5,9 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
 return new class() extends Migration {
-    public function up()
+    public function up(): void
     {
-        Schema::create('file_types', function (Blueprint $table) {
+        Schema::create('file_types', function (Blueprint $table): void {
             $table->bigIncrements('id');
             $table->string('name')->unique();
             $table->string('model')->unique()->nullable();
@@ -22,7 +22,7 @@ return new class() extends Migration {
         });
     }
 
-    public function down()
+    public function down(): void
     {
         Schema::dropIfExists('file_types');
     }

@@ -10,18 +10,21 @@ use App\Modules\BaseModule;
 
 class SourcesModule extends BaseModule
 {
+    #[\Override]
     protected function onEnable(): void
     {
         // Register sources-specific services
         $this->registerSourcesServices();
     }
 
+    #[\Override]
     protected function onDisable(): void
     {
         // Clean up sources-specific services
         $this->unregisterSourcesServices();
     }
 
+    #[\Override]
     protected function onInstall(): void
     {
         // Install sources-related database tables
@@ -29,6 +32,7 @@ class SourcesModule extends BaseModule
         $this->seedSourcesData();
     }
 
+    #[\Override]
     protected function onUninstall(): void
     {
         // Remove sources-related data
@@ -40,17 +44,11 @@ class SourcesModule extends BaseModule
      */
     protected function registerSourcesServices(): void
     {
-        app()->singleton('genealogy.sources', function ($app) {
-            return new SourcesService();
-        });
+        app()->singleton('genealogy.sources', fn($app) => new SourcesService());
 
-        app()->singleton('genealogy.citations', function ($app) {
-            return new CitationService();
-        });
+        app()->singleton('genealogy.citations', fn($app) => new CitationService());
 
-        app()->singleton('genealogy.repositories', function ($app) {
-            return new RepositoryService();
-        });
+        app()->singleton('genealogy.repositories', fn($app) => new RepositoryService());
     }
 
     /**

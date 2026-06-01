@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Database\Factories;
 
 use App\Models\TranscriptionCorrection;
@@ -9,6 +11,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 
 class TranscriptionCorrectionFactory extends Factory
 {
+    #[\Override]
     protected $model = TranscriptionCorrection::class;
 
     public function definition(): array

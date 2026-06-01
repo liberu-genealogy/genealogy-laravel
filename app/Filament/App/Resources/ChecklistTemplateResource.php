@@ -50,16 +50,22 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 class ChecklistTemplateResource extends AppResource
 {
 
+    #[\Override]
     protected static ?string $model = ChecklistTemplate::class;
 
+    #[\Override]
     protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-clipboard-document-list';
 
+    #[\Override]
     protected static ?string $navigationLabel = 'Checklist Templates';
 
+    #[\Override]
     protected static string | \UnitEnum | null $navigationGroup = '📋 Research Management';
 
+    #[\Override]
     protected static ?int $navigationSort = 1;
 
+    #[\Override]
     public static function form(Schema $schema): Schema
     {
         return $schema
@@ -72,7 +78,7 @@ class ChecklistTemplateResource extends AppResource
                                     ->required()
                                     ->maxLength(255)
                                     ->live(onBlur: true)
-                                    ->afterStateUpdated(function (string $context, $state, callable $set) {
+                                    ->afterStateUpdated(function (string $context, $state, callable $set): void {
                                         if ($context === 'create') {
                                             $set('description', "Research checklist for {$state}");
                                         }
@@ -146,7 +152,7 @@ class ChecklistTemplateResource extends AppResource
                                             ->columnSpan(2),
                                         TextInput::make('order')
                                             ->numeric()
-                                            ->default(function (callable $get) {
+                                            ->default(function (callable $get): int {
                                                 $items = $get('../../templateItems') ?? [];
                                                 return count($items) + 1;
                                             }),
@@ -189,6 +195,7 @@ class ChecklistTemplateResource extends AppResource
             ]);
     }
 
+    #[\Override]
     public static function table(Table $table): Table
     {
         return $table
@@ -309,6 +316,7 @@ class ChecklistTemplateResource extends AppResource
             ->defaultSort('created_at', 'desc');
     }
 
+    #[\Override]
     public static function getRelations(): array
     {
         return [
@@ -316,6 +324,7 @@ class ChecklistTemplateResource extends AppResource
         ];
     }
 
+    #[\Override]
     public static function getPages(): array
     {
         return [
@@ -326,6 +335,7 @@ class ChecklistTemplateResource extends AppResource
         ];
     }
 
+    #[\Override]
     public static function getEloquentQuery(): Builder
     {
         return parent::getEloquentQuery()

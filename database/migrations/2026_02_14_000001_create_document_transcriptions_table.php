@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration {
     public function up(): void
     {
-        Schema::create('document_transcriptions', function (Blueprint $table) {
+        Schema::create('document_transcriptions', function (Blueprint $table): void {
             $table->id();
             $table->foreignId('team_id')->constrained('teams')->cascadeOnDelete();
             $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();

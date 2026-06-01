@@ -36,10 +36,13 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class AttendeesRelationManager extends RelationManager
 {
+    #[\Override]
     protected static string $relationship = 'attendees';
 
+    #[\Override]
     protected static ?string $title = 'Event Attendees';
 
+    #[\Override]
     public function form(Schema $schema): Schema
     {
         return $schema
@@ -51,7 +54,7 @@ class AttendeesRelationManager extends RelationManager
                             ->options(User::all()->pluck('name', 'id'))
                             ->searchable()
                             ->live()
-                            ->afterStateUpdated(function ($state, callable $set) {
+                            ->afterStateUpdated(function ($state, callable $set): void {
                                 if ($state) {
                                     $set('person_id', null);
                                     $set('guest_name', null);
@@ -63,25 +66,25 @@ class AttendeesRelationManager extends RelationManager
                             ->options(Person::all()->pluck('name', 'id'))
                             ->searchable()
                             ->live()
-                            ->afterStateUpdated(function ($state, callable $set) {
+                            ->afterStateUpdated(function ($state, callable $set): void {
                                 if ($state) {
                                     $set('user_id', null);
                                     $set('guest_name', null);
                                     $set('guest_email', null);
                                 }
                             })
-                            ->visible(fn (callable $get) => !$get('user_id')),
+                            ->visible(fn (callable $get): bool => !$get('user_id')),
                         Grid::make(2)
                             ->schema([
                                 TextInput::make('guest_name')
                                     ->label('Guest Name')
                                     ->maxLength(255)
-                                    ->visible(fn (callable $get) => !$get('user_id') && !$get('person_id')),
+                                    ->visible(fn (callable $get): bool => !$get('user_id') && !$get('person_id')),
                                 TextInput::make('guest_email')
                                     ->label('Guest Email')
                                     ->email()
                                     ->maxLength(255)
-                                    ->visible(fn (callable $get) => !$get('user_id') && !$get('person_id')),
+                                    ->visible(fn (callable $get): bool => !$get('user_id') && !$get('person_id')),
                             ]),
                     ]),
 
@@ -139,7 +142,7 @@ class AttendeesRelationManager extends RelationManager
                                     ->visible(fn (callable $get) => $get('attended')),
                             ]),
                     ])
-                    ->visible(fn () => $this->getOwnerRecord()->is_past || $this->getOwnerRecord()->is_active),
+                    ->visible(fn (): bool => $this->getOwnerRecord()->is_past || $this->getOwnerRecord()->is_active),
             ]);
     }
 
@@ -182,7 +185,7 @@ class AttendeesRelationManager extends RelationManager
                     ->label('Attended')
                     ->boolean()
                     ->alignCenter()
-                    ->visible(fn () => $this->getOwnerRecord()->is_past || $this->getOwnerRecord()->is_active),
+                    ->visible(fn (): bool => $this->getOwnerRecord()->is_past || $this->getOwnerRecord()->is_active),
                 TextColumn::make('attendance_duration')
                     ->label('Duration')
                     ->visible(fn () => $this->getOwnerRecord()->is_past)
@@ -213,7 +216,7 @@ class AttendeesRelationManager extends RelationManager
                     ]),
                 TernaryFilter::make('attended')
                     ->label('Actually Attended')
-                    ->visible(fn () => $this->getOwnerRecord()->is_past || $this->getOwnerRecord()->is_active),
+                    ->visible(fn (): bool => $this->getOwnerRecord()->is_past || $this->getOwnerRecord()->is_active),
                 TernaryFilter::make('is_host')
                     ->label('Event Hosts'),
                 TernaryFilter::make('is_moderator')
@@ -241,7 +244,7 @@ class AttendeesRelationManager extends RelationManager
                             ->label('Guest Email Addresses')
                             ->placeholder('Enter email addresses'),
                     ])
-                    ->action(function (array $data) {
+                    ->action(function (array $data): void {
                         $event = $this->getOwnerRecord();
                         $added = 0;
 
@@ -298,17 +301,17 @@ class AttendeesRelationManager extends RelationManager
                     ->icon('heroicon-o-check')
                     ->color('success')
                     ->action(fn (VirtualEventAttendee $record) => $record->accept())
-                    ->visible(fn (VirtualEventAttendee $record) => $record->rsvp_status !== 'accepted'),
+                    ->visible(fn (VirtualEventAttendee $record): bool => $record->rsvp_status !== 'accepted'),
                 Action::make('decline')
                     ->icon('heroicon-o-x-mark')
                     ->color('danger')
                     ->action(fn (VirtualEventAttendee $record) => $record->decline())
-                    ->visible(fn (VirtualEventAttendee $record) => $record->rsvp_status !== 'declined'),
+                    ->visible(fn (VirtualEventAttendee $record): bool => $record->rsvp_status !== 'declined'),
                 Action::make('mark_attended')
                     ->icon('heroicon-o-user-check')
                     ->color('primary')
                     ->action(fn (VirtualEventAttendee $record) => $record->markAsAttended())
-                    ->visible(fn (VirtualEventAttendee $record) => !$record->attended && ($this->getOwnerRecord()->is_past || $this->getOwnerRecord()->is_active)),
+                    ->visible(fn (VirtualEventAttendee $record): bool => !$record->attended && ($this->getOwnerRecord()->is_past || $this->getOwnerRecord()->is_active)),
                 EditAction::make(),
                 DeleteAction::make(),
             ])
@@ -318,7 +321,7 @@ class AttendeesRelationManager extends RelationManager
                         ->label('Accept All')
                         ->icon('heroicon-o-check')
                         ->color('success')
-                        ->action(function ($records) {
+                        ->action(function ($records): void {
                             foreach ($records as $record) {
                                 $record->accept();
                             }
@@ -332,7 +335,7 @@ class AttendeesRelationManager extends RelationManager
                         ->label('Mark All as Attended')
                         ->icon('heroicon-o-user-check')
                         ->color('primary')
-                        ->action(function ($records) {
+                        ->action(function ($records): void {
                             foreach ($records as $record) {
                                 $record->markAsAttended();
                             }
@@ -342,7 +345,7 @@ class AttendeesRelationManager extends RelationManager
                                 ->success()
                                 ->send();
                         })
-                        ->visible(fn () => $this->getOwnerRecord()->is_past || $this->getOwnerRecord()->is_active),
+                        ->visible(fn (): bool => $this->getOwnerRecord()->is_past || $this->getOwnerRecord()->is_active),
                     DeleteBulkAction::make(),
                 ]),
             ])

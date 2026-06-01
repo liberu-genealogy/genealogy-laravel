@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration {
     public function up(): void
     {
-        Schema::create('ai_match_feedbacks', function (Blueprint $table) {
+        Schema::create('ai_match_feedbacks', function (Blueprint $table): void {
             $table->id();
             $table->foreignId('suggested_match_id')->constrained('ai_suggested_matches')->cascadeOnDelete();
             $table->foreignId('user_id')->nullable()->constrained('users')->nullOnDelete();

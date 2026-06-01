@@ -27,16 +27,22 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class ModuleResource extends Resource
 {
+    #[\Override]
     protected static ?string $model = null; // We don't use a traditional model
 
+    #[\Override]
     protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-puzzle-piece';
 
+    #[\Override]
     protected static string | \UnitEnum | null $navigationGroup = '🛠️ System';
 
+    #[\Override]
     protected static ?string $navigationLabel = 'Modules';
 
+    #[\Override]
     protected static ?int $navigationSort = 10;
 
+    #[\Override]
     public static function form(Schema $schema): Schema
     {
         return $schema
@@ -55,6 +61,7 @@ class ModuleResource extends Resource
             ]);
     }
 
+    #[\Override]
     public static function table(Table $table): Table
     {
         return $table
@@ -70,9 +77,7 @@ class ModuleResource extends Resource
                 TextColumn::make('description')
                     ->label('Description')
                     ->limit(50)
-                    ->tooltip(function ($record) {
-                        return $record['description'];
-                    }),
+                    ->tooltip(fn($record) => $record['description']),
                 TagsColumn::make('dependencies')
                     ->label('Dependencies'),
                 IconColumn::make('enabled')
@@ -92,14 +97,14 @@ class ModuleResource extends Resource
             ])
             ->recordActions([
                 Action::make('toggle')
-                    ->label(fn ($record) => $record['enabled'] ? 'Disable' : 'Enable')
-                    ->icon(fn ($record) => $record['enabled'] ? 'heroicon-o-pause' : 'heroicon-o-play')
-                    ->color(fn ($record) => $record['enabled'] ? 'warning' : 'success')
+                    ->label(fn ($record): string => $record['enabled'] ? 'Disable' : 'Enable')
+                    ->icon(fn ($record): string => $record['enabled'] ? 'heroicon-o-pause' : 'heroicon-o-play')
+                    ->color(fn ($record): string => $record['enabled'] ? 'warning' : 'success')
                     ->requiresConfirmation()
-                    ->modalHeading(fn ($record) => ($record['enabled'] ? 'Disable' : 'Enable') . ' Module')
-                    ->modalDescription(fn ($record) => 'Are you sure you want to ' .
+                    ->modalHeading(fn ($record): string => ($record['enabled'] ? 'Disable' : 'Enable') . ' Module')
+                    ->modalDescription(fn ($record): string => 'Are you sure you want to ' .
                         ($record['enabled'] ? 'disable' : 'enable') . ' the ' . $record['name'] . ' module?')
-                    ->action(function ($record) {
+                    ->action(function (array $record): void {
                         $moduleManager = app(ModuleManager::class);
 
                         try {
@@ -130,18 +135,17 @@ class ModuleResource extends Resource
                     ->label('Info')
                     ->icon('heroicon-o-information-circle')
                     ->color('info')
-                    ->modalHeading(fn ($record) => $record['name'] . ' Module Information')
-                    ->modalContent(function ($record) {
-                        return view('filament.admin.resources.module-resource.info-modal', [
-                            'module' => $record
-                        ]);
-                    }),
+                    ->modalHeading(fn ($record): string => $record['name'] . ' Module Information')
+                    ->modalContent(fn($record) => view('filament.admin.resources.module-resource.info-modal', [
+                        'module' => $record
+                    ])),
             ])
             ->toolbarActions([
                 // No bulk actions for modules
             ]);
     }
 
+    #[\Override]
     public static function getRelations(): array
     {
         return [
@@ -149,6 +153,7 @@ class ModuleResource extends Resource
         ];
     }
 
+    #[\Override]
     public static function getPages(): array
     {
         return [
@@ -159,6 +164,7 @@ class ModuleResource extends Resource
     /**
      * Get the Eloquent query for modules.
      */
+    #[\Override]
     public static function getEloquentQuery(): Builder
     {
         // Create a fake query builder that returns module data
@@ -166,17 +172,12 @@ class ModuleResource extends Resource
         $modules = $moduleManager->getAllModulesInfo();
 
         // Convert to a collection and create a fake query
-        $collection = collect($modules)->map(function ($module) {
-            return (object) $module;
-        });
+        $collection = collect($modules)->map(fn($module) => (object) $module);
 
         // Return a custom query builder
         return new class($collection) extends Builder {
-            protected $modules;
-
-            public function __construct($modules)
+            public function __construct(protected $modules)
             {
-                $this->modules = $modules;
             }
 
             public function get($columns = ['*'])
@@ -184,7 +185,7 @@ class ModuleResource extends Resource
                 return $this->modules;
             }
 
-            public function paginate($perPage = 15, $columns = ['*'], $pageName = 'page', $page = null)
+            public function paginate($perPage = 15, $columns = ['*'], $pageName = 'page', $page = null, $total = null)
             {
                 return new LengthAwarePaginator(
                     $this->modules->forPage($page ?? 1, $perPage),
@@ -201,14 +202,12 @@ class ModuleResource extends Resource
             public function where($column, $operator = null, $value = null, $boolean = 'and')
             {
                 if ($column === 'enabled' && $value !== null) {
-                    $this->modules = $this->modules->filter(function ($module) use ($value) {
-                        return $module->enabled === (bool) $value;
-                    });
+                    $this->modules = $this->modules->filter(fn($module) => $module->enabled === (bool) $value);
                 }
                 return $this;
             }
 
-            public function orderBy($column, $direction = 'asc')
+            public function orderBy($column, $direction = 'asc'): self
             {
                 $this->modules = $this->modules->sortBy($column, SORT_REGULAR, $direction === 'desc');
                 return $this;
@@ -222,16 +221,19 @@ class ModuleResource extends Resource
         };
     }
 
+    #[\Override]
     public static function canCreate(): bool
     {
         return false; // Modules are created via artisan command
     }
 
+    #[\Override]
     public static function canEdit($record): bool
     {
         return false; // Modules are managed via toggle actions
     }
 
+    #[\Override]
     public static function canDelete($record): bool
     {
         return false; // Modules are not deleted through the UI

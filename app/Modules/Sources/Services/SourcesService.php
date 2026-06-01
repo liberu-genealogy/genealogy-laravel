@@ -242,7 +242,7 @@ class SourcesService
             $errors[] = 'Invalid URL format';
         }
 
-        if (!empty($data['publication_date']) && !strtotime($data['publication_date'])) {
+        if (!empty($data['publication_date']) && !strtotime((string) $data['publication_date'])) {
             $errors[] = 'Invalid publication date format';
         }
 

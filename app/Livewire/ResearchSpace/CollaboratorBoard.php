@@ -20,7 +20,7 @@ class CollaboratorBoard extends Component
 
     public $userPermissions = [];
 
-    public function mount($spaceId)
+    public function mount($spaceId): void
     {
         $this->space = ResearchSpace::with('collaborators.user')->findOrFail($spaceId);
         $this->spaceId = $this->space->id;
@@ -32,7 +32,7 @@ class CollaboratorBoard extends Component
         $this->userPermissions = []; // can be populated from collaborators
     }
 
-    public function saveContent()
+    public function saveContent(): void
     {
         $this->authorize('update', $this->space);
 
@@ -46,14 +46,14 @@ class CollaboratorBoard extends Component
     }
 
     #[On('echo:research-space.{spaceId},ResearchSpaceUpdated')]
-    public function onExternalUpdate($payload)
+    public function onExternalUpdate($payload): void
     {
         // When we get an external broadcast, update local content
         $this->content = data_get($payload, 'content', $this->content);
         $this->dispatch('contentUpdated');
     }
 
-    public function render()
+    public function render(): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
     {
         return view('livewire.research-space.collaborator-board', [
             'space' => $this->space,

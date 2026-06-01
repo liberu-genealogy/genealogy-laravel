@@ -39,7 +39,7 @@ class FamilySearchProvider implements ExternalRecordProviderInterface
         }
 
         // If API key is not configured, return empty results
-        if (empty($this->apiKey)) {
+        if ($this->apiKey === '' || $this->apiKey === '0') {
             Log::warning('FamilySearch API key not configured');
             return [];
         }
@@ -226,6 +226,6 @@ class FamilySearchProvider implements ExternalRecordProviderInterface
      */
     public function isConfigured(): bool
     {
-        return !empty($this->apiKey);
+        return $this->apiKey !== '' && $this->apiKey !== '0';
     }
 }

@@ -19,8 +19,10 @@ use Throwable;
 
 class CreateGedcom extends CreateRecord
 {
+    #[\Override]
     protected static string $resource = GedcomResource::class;
 
+    #[\Override]
     protected function handleRecordCreation(array $data): Model
     {
         $path = $data['filename'] ?? null;
@@ -48,7 +50,7 @@ class CreateGedcom extends CreateRecord
 
         $path = (string) ($path ?? '');
 
-        if (! $path) {
+        if ($path === '' || $path === '0') {
             return;
         }
 
@@ -124,6 +126,7 @@ class CreateGedcom extends CreateRecord
     /**
      * After creation, redirect to Import Logs so the user can watch progress.
      */
+    #[\Override]
     protected function getRedirectUrl(): string
     {
         return ImportJobResource::getUrl('index');

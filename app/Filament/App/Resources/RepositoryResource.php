@@ -29,12 +29,16 @@ use Filament\Tables\Table;
 
 final class RepositoryResource extends AppResource
 {
+    #[\Override]
     protected static ?string $model = Repository::class;
 
+    #[\Override]
     protected static ?string $navigationLabel = 'Repository';
 
+    #[\Override]
     protected static string | \UnitEnum | null $navigationGroup = '🔍 Research & Analysis';
 
+    #[\Override]
     protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-building-library';
 
     #[Override]
@@ -137,6 +141,7 @@ final class RepositoryResource extends AppResource
         return [];
     }
 
+    #[\Override]
     public static function getPages(): array
     {
         return [

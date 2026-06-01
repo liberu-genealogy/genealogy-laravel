@@ -1,0 +1,34 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: genealogy-scheduler
+  namespace: genealogy
+spec:
+  schedule: "*/1 * * * *"
+  concurrencyPolicy: Forbid
+  successfulJobsHistoryLimit: 3
+  failedJobsHistoryLimit: 3
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          securityContext:
+            runAsUser: 1000
+            runAsGroup: 1000
+          restartPolicy: OnFailure
+          containers:
+            - name: scheduler
+              image: liberu/genealogy:latest
+              command: ["php", "/var/www/html/artisan", "schedule:run", "--no-interaction"]
+              envFrom:
+                - configMapRef:
+                    name: genealogy-config
+                - secretRef:
+                    name: genealogy-secrets
+              resources:
+                requests:
+                  cpu: "50m"
+                  memory: "64Mi"
+                limits:
+                  cpu: "200m"
+                  memory: "256Mi"

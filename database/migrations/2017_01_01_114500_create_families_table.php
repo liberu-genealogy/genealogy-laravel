@@ -11,10 +11,10 @@ class CreateFamiliesTable extends Migration
      *
      * @return void
      */
-    public function up()
+    public function up(): void
     {
         if (! Schema::hasTable('families')) {
-            Schema::create('families', function (Blueprint $table) {
+            Schema::create('families', function (Blueprint $table): void {
                 $table->bigIncrements('id');
                 $table->text('description')->nullable();
                 $table->integer('is_active')->nullable();
@@ -36,7 +36,7 @@ class CreateFamiliesTable extends Migration
      *
      * @return void
      */
-    public function down()
+    public function down(): void
     {
         Schema::dropIfExists('families');
     }

@@ -9,6 +9,7 @@ use App\Settings\GeneralSettings;
 
 class SocialLinksWidget extends Widget
 {
+    #[\Override]
     protected string $view = 'filament.app.widgets.social-links-widget';
 
     #[Override]

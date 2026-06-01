@@ -78,12 +78,12 @@ class UserChecklistManager extends Component
         'item_actual_time' => 'nullable|integer|min:1',
     ];
 
-    public function mount()
+    public function mount(): void
     {
         $this->resetFilters();
     }
 
-    public function render()
+    public function render(): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
     {
         $checklists = $this->getFilteredChecklists();
         $templates = ChecklistTemplate::where('is_public', true)
@@ -109,7 +109,7 @@ class UserChecklistManager extends Component
 
         // Apply search filter
         if (! empty($this->search)) {
-            $query->where(function ($q) {
+            $query->where(function ($q): void {
                 $q->where('name', 'like', '%'.$this->search.'%')
                     ->orWhere('description', 'like', '%'.$this->search.'%');
             });
@@ -133,7 +133,7 @@ class UserChecklistManager extends Component
         return $query->orderBy('created_at', 'desc')->paginate(10);
     }
 
-    public function createFromTemplate($templateId)
+    public function createFromTemplate($templateId): void
     {
         $template = ChecklistTemplate::with('templateItems')->findOrFail($templateId);
 
@@ -143,7 +143,7 @@ class UserChecklistManager extends Component
         $this->showCreateModal = true;
     }
 
-    public function createChecklist()
+    public function createChecklist(): void
     {
         $this->validate();
 
@@ -182,7 +182,7 @@ class UserChecklistManager extends Component
         session()->flash('message', 'Checklist created successfully!');
     }
 
-    public function editChecklist($checklistId)
+    public function editChecklist($checklistId): void
     {
         $this->selectedChecklist = UserChecklist::findOrFail($checklistId);
         $this->name = $this->selectedChecklist->name;
@@ -195,7 +195,7 @@ class UserChecklistManager extends Component
         $this->showEditModal = true;
     }
 
-    public function updateChecklist()
+    public function updateChecklist(): void
     {
         $this->validate();
 
@@ -215,14 +215,14 @@ class UserChecklistManager extends Component
         session()->flash('message', 'Checklist updated successfully!');
     }
 
-    public function deleteChecklist($checklistId)
+    public function deleteChecklist($checklistId): void
     {
         UserChecklist::findOrFail($checklistId)->delete();
         $this->dispatch('checklist-deleted');
         session()->flash('message', 'Checklist deleted successfully!');
     }
 
-    public function toggleItemCompletion($itemId)
+    public function toggleItemCompletion($itemId): void
     {
         $item = UserChecklistItem::findOrFail($itemId);
 
@@ -235,7 +235,7 @@ class UserChecklistManager extends Component
         $this->dispatch('item-toggled');
     }
 
-    public function editItem($itemId)
+    public function editItem($itemId): void
     {
         $this->selectedItem = UserChecklistItem::findOrFail($itemId);
         $this->item_title = $this->selectedItem->title;
@@ -246,7 +246,7 @@ class UserChecklistManager extends Component
         $this->showItemModal = true;
     }
 
-    public function updateItem()
+    public function updateItem(): void
     {
         $this->validate($this->itemRules);
 
@@ -264,7 +264,7 @@ class UserChecklistManager extends Component
         session()->flash('message', 'Item updated successfully!');
     }
 
-    public function addCustomItem($checklistId)
+    public function addCustomItem($checklistId): void
     {
         $checklist = UserChecklist::findOrFail($checklistId);
         $maxOrder = $checklist->items()->max('order') ?? 0;
@@ -280,7 +280,7 @@ class UserChecklistManager extends Component
         session()->flash('message', 'Custom item added successfully!');
     }
 
-    public function resetFilters()
+    public function resetFilters(): void
     {
         $this->statusFilter = 'all';
         $this->priorityFilter = 'all';
@@ -289,7 +289,7 @@ class UserChecklistManager extends Component
         $this->resetPage();
     }
 
-    public function resetForm()
+    public function resetForm(): void
     {
         $this->name = '';
         $this->description = '';
@@ -302,7 +302,7 @@ class UserChecklistManager extends Component
         $this->selectedChecklist = null;
     }
 
-    public function resetItemForm()
+    public function resetItemForm(): void
     {
         $this->item_title = '';
         $this->item_description = '';
@@ -312,22 +312,22 @@ class UserChecklistManager extends Component
         $this->selectedItem = null;
     }
 
-    public function updatedSearch()
+    public function updatedSearch(): void
     {
         $this->resetPage();
     }
 
-    public function updatedStatusFilter()
+    public function updatedStatusFilter(): void
     {
         $this->resetPage();
     }
 
-    public function updatedPriorityFilter()
+    public function updatedPriorityFilter(): void
     {
         $this->resetPage();
     }
 
-    public function updatedSubjectFilter()
+    public function updatedSubjectFilter(): void
     {
         $this->resetPage();
     }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Filament\App\Resources;
 
 use Override;
@@ -24,10 +26,14 @@ use Filament\Tables\Table;
 
 class SourceDataEvenResource extends AppResource
 {
+    #[\Override]
     protected static ?string $model = SourceDataEven::class;
 
+    #[\Override]
     protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-calendar-days';
+    #[\Override]
     protected static ?string $navigationLabel = 'Source Data Events';
+    #[\Override]
     protected static string | \UnitEnum | null $navigationGroup = '🔍 Research & Analysis';
 
     #[Override]
@@ -89,6 +95,7 @@ class SourceDataEvenResource extends AppResource
         ];
     }
 
+    #[\Override]
     public static function getPages(): array
     {
         return [

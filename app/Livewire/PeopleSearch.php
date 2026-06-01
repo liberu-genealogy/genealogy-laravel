@@ -27,7 +27,7 @@ class PeopleSearch extends Component
     {
         $service = app(PersonSearchService::class);
 
-        if (empty($this->query)) {
+        if ($this->query === '' || $this->query === '0') {
             $this->results = $service->searchOwnTeam('', 10)->items();
         } else {
             $this->results = $service->searchOwnTeam($this->query, 20)->items();
@@ -36,7 +36,7 @@ class PeopleSearch extends Component
         $this->results = array_map(fn ($p) => is_object($p) ? $p->toArray() : $p, $this->results);
     }
 
-    public function render()
+    public function render(): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
     {
         return view('livewire.people-search', [
             'results' => $this->results,

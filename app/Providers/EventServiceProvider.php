@@ -18,6 +18,7 @@ use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvi
 
 class EventServiceProvider extends ServiceProvider
 {
+    #[\Override]
     protected $listen = [
         Registered::class => [
             SendEmailVerificationNotification::class,

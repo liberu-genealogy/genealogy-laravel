@@ -12,9 +12,9 @@ return new class() extends Migration {
      *
      * @return void
      */
-    public function up()
+    public function up(): void
     {
-        Schema::create($this->table, function (Blueprint $table) {
+        Schema::create($this->table, function (Blueprint $table): void {
             $table->id();
             $table->string('title');
             $table->foreignId('category_id')->constrained('categories')->onUpdate('cascade')->onDelete('cascade');
@@ -29,7 +29,7 @@ return new class() extends Migration {
      *
      * @return void
      */
-    public function down()
+    public function down(): void
     {
         Schema::dropIfExists($this->table);
     }

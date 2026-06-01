@@ -28,14 +28,19 @@ use Illuminate\Database\Eloquent\Builder;
 
 class SourceResource extends Resource
 {
+    #[\Override]
     protected static ?string $model = Source::class;
 
+    #[\Override]
     protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-document-text';
 
+    #[\Override]
     protected static string | \UnitEnum | null $navigationGroup = 'Research';
 
+    #[\Override]
     protected static ?string $navigationLabel = 'Sources';
 
+    #[\Override]
     public static function form(Schema $schema): Schema
     {
         return $schema
@@ -62,6 +67,7 @@ class SourceResource extends Resource
             ]);
     }
 
+    #[\Override]
     public static function table(Table $table): Table
     {
         return $table
@@ -84,7 +90,7 @@ class SourceResource extends Resource
                 IconColumn::make('has_url')
                     ->label('Online')
                     ->boolean()
-                    ->getStateUsing(fn ($record) => !empty($record->url)),
+                    ->getStateUsing(fn ($record): bool => !empty($record->url)),
                 TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
@@ -115,6 +121,7 @@ class SourceResource extends Resource
             ]);
     }
 
+    #[\Override]
     public static function getPages(): array
     {
         return [

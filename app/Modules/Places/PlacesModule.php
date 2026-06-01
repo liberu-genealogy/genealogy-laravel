@@ -9,18 +9,21 @@ use App\Modules\BaseModule;
 
 class PlacesModule extends BaseModule
 {
+    #[\Override]
     protected function onEnable(): void
     {
         // Register places-specific services
         $this->registerPlacesServices();
     }
 
+    #[\Override]
     protected function onDisable(): void
     {
         // Clean up places-specific services
         $this->unregisterPlacesServices();
     }
 
+    #[\Override]
     protected function onInstall(): void
     {
         // Install places-related database tables
@@ -28,6 +31,7 @@ class PlacesModule extends BaseModule
         $this->seedPlacesData();
     }
 
+    #[\Override]
     protected function onUninstall(): void
     {
         // Remove places-related data
@@ -39,13 +43,9 @@ class PlacesModule extends BaseModule
      */
     protected function registerPlacesServices(): void
     {
-        app()->singleton('genealogy.places', function ($app) {
-            return new PlacesService();
-        });
+        app()->singleton('genealogy.places', fn($app) => new PlacesService());
 
-        app()->singleton('genealogy.places.geocoder', function ($app) {
-            return new GeocodingService();
-        });
+        app()->singleton('genealogy.places.geocoder', fn($app) => new GeocodingService());
     }
 
     /**

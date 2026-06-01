@@ -15,14 +15,20 @@ class UpdateProfileInformationPage extends Page
 {
     use InteractsWithForms;
 
+    #[\Override]
     protected string $view = 'filament.pages.profile.update-profile-information';
 
+    #[\Override]
     protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-user';
+    #[\Override]
     protected static ?string $navigationLabel = 'Update Profile';
+    #[\Override]
     protected static string | \UnitEnum | null $navigationGroup = '👤 Account & Settings';
 
+    #[\Override]
     protected static ?int $navigationSort = 0;
 
+    #[\Override]
     protected static ?string $title = 'Profile';
 
     public ?array $data = [];

@@ -25,14 +25,19 @@ use Filament\Tables\Table;
 
 class AddrResource extends AppResource
 {
+    #[\Override]
     protected static ?string $model = Addr::class;
 
+    #[\Override]
     protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-map-pin';
 
+    #[\Override]
     protected static ?string $navigationLabel = 'Address';
 
+    #[\Override]
     protected static string | \UnitEnum | null $navigationGroup = '👥 Family Tree';
 
+    #[\Override]
     public static function canCreate(): bool
     {
         return auth()->check();
@@ -111,6 +116,7 @@ class AddrResource extends AppResource
         ];
     }
 
+    #[\Override]
     public static function getPages(): array
     {
         return [

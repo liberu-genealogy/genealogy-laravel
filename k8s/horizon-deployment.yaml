@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: genealogy-horizon
+  namespace: genealogy
+  labels:
+    app: genealogy-app
+    component: horizon
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: genealogy-app
+      component: horizon
+  template:
+    metadata:
+      labels:
+        app: genealogy-app
+        component: horizon
+    spec:
+      securityContext:
+        runAsUser: 1000
+        runAsGroup: 1000
+      containers:
+        - name: horizon
+          image: liberu/genealogy:latest
+          imagePullPolicy: Always
+          env:
+            - name: CONTAINER_MODE
+              value: "horizon"
+          envFrom:
+            - configMapRef:
+                name: genealogy-config
+            - secretRef:
+                name: genealogy-secrets
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "128Mi"
+            limits:
+              cpu: "500m"
+              memory: "512Mi"
+          livenessProbe:
+            exec:
+              command: ["php", "/var/www/html/artisan", "horizon:status"]
+            initialDelaySeconds: 30
+            periodSeconds: 30

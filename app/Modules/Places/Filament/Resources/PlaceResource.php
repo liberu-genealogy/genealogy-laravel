@@ -22,14 +22,19 @@ use Illuminate\Database\Eloquent\Builder;
 
 class PlaceResource extends Resource
 {
+    #[\Override]
     protected static ?string $model = Place::class;
 
+    #[\Override]
     protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-map-pin';
 
+    #[\Override]
     protected static string | \UnitEnum | null $navigationGroup = 'Geography';
 
+    #[\Override]
     protected static ?string $navigationLabel = 'Places';
 
+    #[\Override]
     public static function form(Schema $schema): Schema
     {
         return $schema
@@ -45,6 +50,7 @@ class PlaceResource extends Resource
             ]);
     }
 
+    #[\Override]
     public static function table(Table $table): Table
     {
         return $table
@@ -64,7 +70,7 @@ class PlaceResource extends Resource
                 IconColumn::make('has_coordinates')
                     ->label('Coordinates')
                     ->boolean()
-                    ->getStateUsing(fn ($record) => $record->latitude && $record->longitude),
+                    ->getStateUsing(fn ($record): bool => $record->latitude && $record->longitude),
                 TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
@@ -94,6 +100,7 @@ class PlaceResource extends Resource
             ]);
     }
 
+    #[\Override]
     public static function getPages(): array
     {
         return [

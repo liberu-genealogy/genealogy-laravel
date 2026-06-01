@@ -23,6 +23,7 @@ class Person extends Model
 
     public const GENDER_UNKNOWN = 'U';
 
+    #[\Override]
     protected $fillable = [
         'gid',
         'givn',
@@ -81,6 +82,7 @@ class Person extends Model
         'team_id',
     ];
 
+    #[\Override]
     protected $guarded = ['id'];
 
     //    protected $fillable = [
@@ -175,7 +177,7 @@ class Person extends Model
         return 'Male';
     }
 
-    public static function getList()
+    public static function getList(): \Illuminate\Support\Collection
     {
         $persons = self::get();
         $result = [];
@@ -269,13 +271,13 @@ class Person extends Model
     {
         $cutoffYear = now()->subYears(100)->year;
 
-        return $query->where(function ($q) use ($cutoffYear) {
+        return $query->where(function ($q) use ($cutoffYear): void {
             $q->whereNotNull('deathday')
-                ->orWhere(function ($q2) use ($cutoffYear) {
+                ->orWhere(function ($q2) use ($cutoffYear): void {
                     $q2->whereNotNull('birth_year')
                         ->where('birth_year', '<=', $cutoffYear);
                 })
-                ->orWhere(function ($q2) {
+                ->orWhere(function ($q2): void {
                     $q2->whereNotNull('birthday')
                         ->where('birthday', '<=', now()->subYears(100));
                 });
@@ -290,16 +292,16 @@ class Person extends Model
         $cutoffYear = now()->subYears(100)->year;
 
         return $query->whereNull('deathday')
-            ->where(function ($q) use ($cutoffYear) {
-                $q->where(function ($q2) use ($cutoffYear) {
+            ->where(function ($q) use ($cutoffYear): void {
+                $q->where(function ($q2) use ($cutoffYear): void {
                     $q2->whereNotNull('birth_year')
                         ->where('birth_year', '>', $cutoffYear);
                 })
-                    ->orWhere(function ($q2) {
+                    ->orWhere(function ($q2): void {
                         $q2->whereNotNull('birthday')
                             ->where('birthday', '>', now()->subYears(100));
                     })
-                    ->orWhere(function ($q2) {
+                    ->orWhere(function ($q2): void {
                         $q2->whereNull('birth_year')
                             ->whereNull('birthday');
                     });
@@ -308,7 +310,7 @@ class Person extends Model
 
     public static function getListOptimized()
     {
-        return self::withBasicInfo()->get()->mapWithKeys(fn ($person) => [$person->id => $person->fullname()]);
+        return self::withBasicInfo()->get()->mapWithKeys(fn ($person): array => [$person->id => $person->fullname()]);
     }
 
     public static function getListCached()
@@ -352,7 +354,7 @@ class Person extends Model
                     return $disk->url($path);
                 }
             }
-        } catch (\Exception $e) {
+        } catch (\Exception) {
             // ignore storage errors and continue to fallback
         }
 
@@ -466,6 +468,7 @@ class Person extends Model
     /**
      * The attributes that should be mutated to dates.
      */
+    #[\Override]
     protected function casts(): array
     {
         return [

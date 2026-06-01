@@ -9,6 +9,7 @@ use Illuminate\Contracts\View\View;
 
 class DescendantChartWidget extends Widget
 {
+    #[\Override]
     protected string $view = 'filament.widgets.descendant-chart-widget';
 
     public $rootPersonId = null;
@@ -25,7 +26,7 @@ class DescendantChartWidget extends Widget
 
     public $colorScheme = 'generation';
 
-    public function mount($rootPersonId = null, $generations = 4)
+    public function mount($rootPersonId = null, $generations = 4): void
     {
         $this->rootPersonId = $rootPersonId ?? Person::first()?->id;
         $this->generations = $generations;
@@ -52,7 +53,7 @@ class DescendantChartWidget extends Widget
         ];
     }
 
-    private function buildDescendantTree($person, $maxGenerations, $generation = 1): array
+    private function buildDescendantTree($person, $maxGenerations, int|float $generation = 1): array
     {
         if (! $person || $generation > $maxGenerations) {
             return [];
@@ -119,12 +120,12 @@ class DescendantChartWidget extends Widget
 
             foreach ($children as $child) {
                 $childData = $this->buildDescendantTree($child, $maxGenerations, $generation + 1);
-                if (! empty($childData)) {
+                if ($childData !== []) {
                     $familyData['children'][] = $childData;
                 }
             }
 
-            if (! empty($familyData['children']) || $familyData['spouse']) {
+            if (isset($familyData['children']) && $familyData['children'] !== [] || $familyData['spouse']) {
                 $personData['families'][] = $familyData;
             }
         }
@@ -179,6 +180,7 @@ class DescendantChartWidget extends Widget
         $this->setRootPerson($personId);
     }
 
+    #[\Override]
     public function render(): View
     {
         return view(static::$view, $this->getData());

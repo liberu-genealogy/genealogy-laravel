@@ -16,11 +16,10 @@ class GamificationServiceProvider extends ServiceProvider
     /**
      * Register services.
      */
+    #[\Override]
     public function register(): void
     {
-        $this->app->singleton(GamificationService::class, function ($app) {
-            return new GamificationService();
-        });
+        $this->app->singleton(GamificationService::class, fn($app) => new GamificationService());
     }
 
     /**

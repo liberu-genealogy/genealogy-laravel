@@ -7,12 +7,16 @@ use Filament\Widgets\Widget;
 
 class FamilyTreeOverviewWidget extends Widget
 {
+    #[\Override]
     protected string $view = 'filament.app.widgets.family-tree-overview';
 
+    #[\Override]
     protected int | string | array $columnSpan = 'full';
 
+    #[\Override]
     protected static ?int $sort = 4;
 
+    #[\Override]
     public function getViewData(): array
     {
         // Get a sample of people for the mini tree view
@@ -34,7 +38,7 @@ class FamilyTreeOverviewWidget extends Widget
         ];
     }
 
-    private function buildMiniTree($person, $maxGenerations, $currentGen = 1): array
+    private function buildMiniTree($person, $maxGenerations, int|float $currentGen = 1): array
     {
         if (!$person || $currentGen > $maxGenerations) {
             return [];

@@ -15,7 +15,7 @@ class CreateDomainsTable extends Migration
      */
     public function up(): void
     {
-        Schema::create('domains', function (Blueprint $table) {
+        Schema::create('domains', function (Blueprint $table): void {
             $table->bigIncrements('id');
             $table->string('domain', 255)->unique();
             $table->foreignId('tenant_id')->constrained('tenants');

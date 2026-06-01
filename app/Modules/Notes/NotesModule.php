@@ -8,24 +8,28 @@ use App\Modules\BaseModule;
 
 class NotesModule extends BaseModule
 {
+    #[\Override]
     protected function onEnable(): void
     {
         // Register notes-specific services
         $this->registerNotesServices();
     }
 
+    #[\Override]
     protected function onDisable(): void
     {
         // Clean up notes-specific services
         $this->unregisterNotesServices();
     }
 
+    #[\Override]
     protected function onInstall(): void
     {
         // Install notes-related database tables
         $this->installNotesTables();
     }
 
+    #[\Override]
     protected function onUninstall(): void
     {
         // Remove notes-related data
@@ -37,9 +41,7 @@ class NotesModule extends BaseModule
      */
     protected function registerNotesServices(): void
     {
-        app()->singleton('genealogy.notes', function ($app) {
-            return new NotesService();
-        });
+        app()->singleton('genealogy.notes', fn($app) => new NotesService());
     }
 
     /**

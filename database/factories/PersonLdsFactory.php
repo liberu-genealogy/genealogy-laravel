@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Database\Factories;
 
 use App\Models\PersonLds;
@@ -15,6 +17,7 @@ class PersonLdsFactory extends Factory
      *
      * @var string
      */
+    #[\Override]
     protected $model = PersonLds::class;
 
     /**

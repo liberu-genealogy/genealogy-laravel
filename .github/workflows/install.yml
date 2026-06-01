@@ -11,20 +11,6 @@ jobs:
   install:
     runs-on: ubuntu-latest
 
-    services:
-      mysql:
-        image: mysql:8.0
-        env:
-          MYSQL_ROOT_PASSWORD: root
-          MYSQL_DATABASE: liberu
-        ports:
-          - 3306:3306
-        options: >-
-          --health-cmd="mysqladmin ping"
-          --health-interval=10s
-          --health-timeout=5s
-          --health-retries=3
-
     steps:
     - uses: actions/checkout@v4
 
@@ -32,13 +18,13 @@ jobs:
       uses: shivammathur/setup-php@v2
       with:
         php-version: '8.5'
-        extensions: mbstring, bcmath, pdo_mysql, redis, intl, gd, zip
+        extensions: mbstring, bcmath, pdo_sqlite, sqlite3, redis, intl, gd, zip
         tools: composer:v2
 
     - name: Setup Node.js
       uses: actions/setup-node@v4
       with:
-        node-version: '24'
+        node-version: '22'
         cache: 'npm'
 
     - name: Get Composer cache directory
@@ -61,6 +47,9 @@ jobs:
     - name: Generate application key
       run: php artisan key:generate
 
+    - name: Create SQLite database
+      run: touch database/database.sqlite
+
     - name: Run database migrations
       run: php artisan migrate --force
 
@@ -72,4 +61,3 @@ jobs:
 
     - name: Build frontend assets
       run: npm run build
-

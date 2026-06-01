@@ -10,11 +10,11 @@ return new class() extends Migration {
      *
      * @return void
      */
-    public function up()
+    public function up(): void
     {
         //
         if (Schema::hasColumn('person_events', 'attr')) {
-            Schema::table('person_events', function (Blueprint $table) {
+            Schema::table('person_events', function (Blueprint $table): void {
                 $table->text('attr')->nullable()->change();
             });
         }
@@ -25,10 +25,10 @@ return new class() extends Migration {
      *
      * @return void
      */
-    public function down()
+    public function down(): void
     {
         //
-        Schema::table('person_events', function (Blueprint $table) {
+        Schema::table('person_events', function (Blueprint $table): void {
             $table->text('attr')->nullable(false)->change();
         });
     }

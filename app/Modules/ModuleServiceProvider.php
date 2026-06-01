@@ -11,6 +11,7 @@ class ModuleServiceProvider extends ServiceProvider
     /**
      * Register any application services.
      */
+    #[\Override]
     public function register(): void
     {
         $this->registerModules();
@@ -38,7 +39,7 @@ class ModuleServiceProvider extends ServiceProvider
         $modules = File::directories($modulesPath);
 
         foreach ($modules as $modulePath) {
-            $moduleName = basename($modulePath);
+            $moduleName = basename((string) $modulePath);
             $this->registerModule($moduleName, $modulePath);
         }
     }
@@ -133,7 +134,7 @@ class ModuleServiceProvider extends ServiceProvider
         $modules = File::directories($modulesPath);
 
         foreach ($modules as $modulePath) {
-            $moduleName = basename($modulePath);
+            $moduleName = basename((string) $modulePath);
             $this->bootModule($moduleName, $modulePath);
         }
     }

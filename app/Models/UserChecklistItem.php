@@ -10,6 +10,7 @@ class UserChecklistItem extends Model
 {
     use HasFactory;
 
+    #[\Override]
     protected $fillable = [
         'user_checklist_id',
         'checklist_template_item_id',
@@ -25,6 +26,7 @@ class UserChecklistItem extends Model
         'tips',
     ];
 
+    #[\Override]
     protected $casts = [
         'is_completed' => 'boolean',
         'completed_at' => 'datetime',
@@ -53,7 +55,7 @@ class UserChecklistItem extends Model
     /**
      * Mark item as completed
      */
-    public function markAsCompleted(int $actualTime = null): void
+    public function markAsCompleted(?int $actualTime = null): void
     {
         $this->update([
             'is_completed' => true,

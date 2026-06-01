@@ -10,6 +10,7 @@ class UserProgress extends Model
 {
     use HasFactory;
 
+    #[\Override]
     protected $fillable = [
         'user_id',
         'achievement_id',
@@ -20,6 +21,7 @@ class UserProgress extends Model
         'last_updated_at',
     ];
 
+    #[\Override]
     protected $casts = [
         'current_progress' => 'integer',
         'target_progress' => 'integer',
@@ -80,7 +82,7 @@ class UserProgress extends Model
         $this->current_progress += $amount;
         $this->last_updated_at = now();
 
-        if (!empty($additionalData)) {
+        if ($additionalData !== []) {
             $currentData = $this->progress_data ?? [];
             $this->progress_data = array_merge($currentData, $additionalData);
         }
@@ -96,7 +98,7 @@ class UserProgress extends Model
         $this->current_progress = $progress;
         $this->last_updated_at = now();
 
-        if (!empty($additionalData)) {
+        if ($additionalData !== []) {
             $currentData = $this->progress_data ?? [];
             $this->progress_data = array_merge($currentData, $additionalData);
         }

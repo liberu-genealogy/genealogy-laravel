@@ -89,7 +89,7 @@ class DocumentTranscriptionComponent extends Component
     {
         $this->currentTranscription = DocumentTranscription::find($transcriptionId);
         
-        if ($this->currentTranscription) {
+        if ($this->currentTranscription instanceof \App\Models\DocumentTranscription) {
             $this->transcriptionText = $this->currentTranscription->getCurrentTranscription() ?? '';
             $this->isEditing = false;
             $this->errorMessage = null;
@@ -103,7 +103,7 @@ class DocumentTranscriptionComponent extends Component
 
     public function cancelEditing(): void
     {
-        if ($this->currentTranscription) {
+        if ($this->currentTranscription instanceof \App\Models\DocumentTranscription) {
             $this->transcriptionText = $this->currentTranscription->getCurrentTranscription() ?? '';
         }
         $this->isEditing = false;
@@ -114,7 +114,7 @@ class DocumentTranscriptionComponent extends Component
         $this->errorMessage = null;
         $this->successMessage = null;
 
-        if (!$this->currentTranscription) {
+        if (!$this->currentTranscription instanceof \App\Models\DocumentTranscription) {
             $this->errorMessage = 'No transcription selected';
             return;
         }
@@ -162,7 +162,7 @@ class DocumentTranscriptionComponent extends Component
     #[On('transcriptionUpdated')]
     public function refreshTranscription(): void
     {
-        if ($this->currentTranscription) {
+        if ($this->currentTranscription instanceof \App\Models\DocumentTranscription) {
             $this->currentTranscription->refresh();
             if (!$this->isEditing) {
                 $this->transcriptionText = $this->currentTranscription->getCurrentTranscription() ?? '';
@@ -171,7 +171,7 @@ class DocumentTranscriptionComponent extends Component
         $this->loadTranscriptions();
     }
 
-    public function render()
+    public function render(): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
     {
         return view('livewire.document-transcription-component', [
             'stats' => $this->getStats(),

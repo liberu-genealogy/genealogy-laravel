@@ -25,7 +25,7 @@ class DuplicateDetectionService
 
         // Index persons by email and phone for cheap exact matches
         $emailIndex = $persons->filter(fn($p) => $p->email)->groupBy(fn($p) => Str::lower($p->email));
-        $phoneIndex = $persons->filter(fn($p) => $p->phone)->groupBy(fn($p) => preg_replace('/\D+/', '', $p->phone));
+        $phoneIndex = $persons->filter(fn($p) => $p->phone)->groupBy(fn($p): string|array|null => preg_replace('/\D+/', '', (string) $p->phone));
 
         foreach ($persons as $primary) {
             $candidates = collect();
@@ -34,7 +34,9 @@ class DuplicateDetectionService
             if ($primary->email) {
                 $email = Str::lower($primary->email);
                 foreach ($emailIndex->get($email, []) as $p) {
-                    if ($p->id === $primary->id) continue;
+                    if ($p->id === $primary->id) {
+                        continue;
+                    }
                     $score = 0.95;
                     $candidates->push([$p, $score, ['reason' => 'email_exact']]);
                 }
@@ -42,9 +44,11 @@ class DuplicateDetectionService
 
             // exact phone matches
             if ($primary->phone) {
-                $phone = preg_replace('/\D+/', '', $primary->phone);
+                $phone = preg_replace('/\D+/', '', (string) $primary->phone);
                 foreach ($phoneIndex->get($phone, []) as $p) {
-                    if ($p->id === $primary->id) continue;
+                    if ($p->id === $primary->id) {
+                        continue;
+                    }
                     $score = 0.93;
                     $candidates->push([$p, $score, ['reason' => 'phone_exact']]);
                 }
@@ -52,10 +56,14 @@ class DuplicateDetectionService
 
             // naive pass comparing birthdays and name similarity (O(n^2) but acceptable for small/medium datasets)
             foreach ($persons as $other) {
-                if ($other->id === $primary->id) continue;
+                if ($other->id === $primary->id) {
+                    continue;
+                }
 
                 // skip if already added by exact match
-                if ($candidates->first(fn($t) => $t[0]->id === $other->id)) continue;
+                if ($candidates->first(fn($t): bool => $t[0]->id === $other->id)) {
+                    continue;
+                }
 
                 $score = $this->computeScore($primary, $other);
                 if ($score >= $threshold) {
@@ -71,7 +79,9 @@ class DuplicateDetectionService
                 $duplicateId = $other->id;
 
                 // do not create self-pairs
-                if ($primaryId === $duplicateId) continue;
+                if ($primaryId === $duplicateId) {
+                    continue;
+                }
 
                 // choose canonical ordering to avoid creating both (A,B) and (B,A)
                 if ($primaryId > $duplicateId) {
@@ -110,7 +120,7 @@ class DuplicateDetectionService
                             'birthday' => $other->birthday,
                         ],
                     ]);
-                    $record->status = $record->status ?? 'pending';
+                    $record->status ??= 'pending';
                     $record->save();
                 }
 
@@ -166,10 +176,12 @@ class DuplicateDetectionService
 
     protected function normalizeName(?string $s): string
     {
-        if (!$s) return '';
+        if (!$s) {
+            return '';
+        }
         $s = Str::lower($s);
         $s = preg_replace('/[^a-z0-9 ]+/', '', $s);
-        $s = preg_replace('/\s+/', ' ', trim($s));
+        $s = preg_replace('/\s+/', ' ', trim((string) $s));
         return $s;
     }
 }

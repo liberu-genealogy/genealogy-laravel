@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('trees', function (Blueprint $table) {
+        Schema::table('trees', function (Blueprint $table): void {
             $table->foreignId('root_person_id')->nullable()->after('description')->constrained('people')->nullOnDelete();
         });
     }
@@ -21,7 +21,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('trees', function (Blueprint $table) {
+        Schema::table('trees', function (Blueprint $table): void {
             $table->dropForeign(['root_person_id']);
             $table->dropColumn('root_person_id');
         });

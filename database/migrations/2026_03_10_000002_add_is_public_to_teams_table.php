@@ -9,7 +9,7 @@ return new class extends Migration
     public function up(): void
     {
         if (! Schema::hasColumn('teams', 'is_public')) {
-            Schema::table('teams', function (Blueprint $table) {
+            Schema::table('teams', function (Blueprint $table): void {
                 $table->boolean('is_public')->default(false)->after('personal_team');
             });
         }
@@ -18,7 +18,7 @@ return new class extends Migration
     public function down(): void
     {
         if (Schema::hasColumn('teams', 'is_public')) {
-            Schema::table('teams', function (Blueprint $table) {
+            Schema::table('teams', function (Blueprint $table): void {
                 $table->dropColumn('is_public');
             });
         }

@@ -8,7 +8,7 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('research_space_collaborators', function (Blueprint $table) {
+        Schema::create('research_space_collaborators', function (Blueprint $table): void {
             $table->id();
             $table->foreignId('research_space_id')->constrained('research_spaces')->onDelete('cascade');
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');

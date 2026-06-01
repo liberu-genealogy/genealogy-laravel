@@ -16,6 +16,7 @@ class ConnectedAccount extends Model
      *
      * @var array
      */
+    #[\Override]
     protected $fillable = [
         'user_id',
         'provider',
@@ -38,6 +39,7 @@ class ConnectedAccount extends Model
      *
      * @return array
      */
+    #[\Override]
     protected function casts(): array
     {
         return [

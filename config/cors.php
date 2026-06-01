@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
 
     /*
@@ -7,28 +9,31 @@ return [
     | Cross-Origin Resource Sharing (CORS) Configuration
     |--------------------------------------------------------------------------
     |
-    | Here you may configure your settings for cross-origin resource sharing
-    | or "CORS". This determines what cross-origin operations may execute
-    | in web browsers. You are free to adjust these settings as needed.
+    | Configure cross-origin resource sharing (CORS) for the application API.
+    | In production, restrict allowed_origins to your own domain(s) via the
+    | CORS_ALLOWED_ORIGINS environment variable.
     |
-    | To learn more: https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS
+    | Example: CORS_ALLOWED_ORIGINS=https://app.example.com,https://admin.example.com
     |
     */
 
     'paths' => ['api/*', 'sanctum/csrf-cookie'],
 
-    'allowed_methods' => ['*'],
+    'allowed_methods' => ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
 
-    'allowed_origins' => ['*'],
+    // In production set CORS_ALLOWED_ORIGINS to your domain(s)
+    'allowed_origins' => array_filter(
+        explode(',', env('CORS_ALLOWED_ORIGINS', 'http://localhost,http://localhost:3000,http://localhost:8000'))
+    ),
 
     'allowed_origins_patterns' => [],
 
-    'allowed_headers' => ['*'],
+    'allowed_headers' => ['Content-Type', 'X-Requested-With', 'Authorization', 'Accept', 'X-CSRF-TOKEN'],
 
-    'exposed_headers' => [],
+    'exposed_headers' => ['X-RateLimit-Limit', 'X-RateLimit-Remaining'],
 
-    'max_age' => 0,
+    'max_age' => 600,
 
-    'supports_credentials' => false,
+    'supports_credentials' => true,
 
 ];

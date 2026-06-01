@@ -7,6 +7,7 @@ use App\Filament\App\Resources\ResearchSpaceResource;
 
 class CreateResearchSpace extends CreateRecord
 {
+    #[\Override]
     protected static string $resource = ResearchSpaceResource::class;
 
     protected function beforeCreate(): void

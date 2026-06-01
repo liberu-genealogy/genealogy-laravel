@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
@@ -7,8 +9,10 @@ use App\Models\Team;
 
 class AISuggestedMatch extends Model
 {
+    #[\Override]
     protected $table = 'ai_suggested_matches';
 
+    #[\Override]
     protected $fillable = [
         'team_id',
         'local_person_id',
@@ -19,6 +23,7 @@ class AISuggestedMatch extends Model
         'status',
     ];
 
+    #[\Override]
     protected $casts = [
         'candidate_data' => 'array',
         'confidence' => 'float',

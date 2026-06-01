@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
 
     /*
@@ -63,7 +65,7 @@ return [
         'private' => [
             'driver'  => 'local',
             'root'    => storage_path('app/private'),
-            'serve'   => true,
+            'serve'   => false,
             'throw'   => false,
             'report'  => false,
         ],

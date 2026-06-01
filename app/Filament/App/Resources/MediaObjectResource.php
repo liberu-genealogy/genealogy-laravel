@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Filament\App\Resources;
 
 use Override;
@@ -25,14 +27,19 @@ use Filament\Tables\Table;
 
 class MediaObjectResource extends AppResource
 {
+    #[\Override]
     protected static ?string $model = MediaObject::class;
 
+    #[\Override]
     protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-photo';
 
+    #[\Override]
     protected static ?string $navigationLabel = 'Photos & Documents';
 
+    #[\Override]
     protected static string | \UnitEnum | null $navigationGroup = '📁 Media & Documents';
 
+    #[\Override]
     protected static ?int $navigationSort = 1;
 
     #[Override]
@@ -99,6 +106,7 @@ class MediaObjectResource extends AppResource
         ];
     }
 
+    #[\Override]
     public static function getPages(): array
     {
         return [

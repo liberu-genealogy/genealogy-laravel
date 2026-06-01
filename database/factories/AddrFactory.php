@@ -16,6 +16,7 @@ class AddrFactory extends Factory
      *
      * @var string
      */
+    #[\Override]
     protected $model = Addr::class;
 
     /**

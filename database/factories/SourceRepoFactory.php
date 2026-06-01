@@ -17,6 +17,7 @@ class SourceRepoFactory extends Factory
      *
      * @var string
      */
+    #[\Override]
     protected $model = SourceRepo::class;
 
     /**

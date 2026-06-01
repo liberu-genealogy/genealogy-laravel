@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class SocialConnectionPrivacyFactory extends Factory
 {
+    #[\Override]
     protected $model = SocialConnectionPrivacy::class;
 
     /**
@@ -35,7 +36,7 @@ class SocialConnectionPrivacyFactory extends Factory
      */
     public function discoveryDisabled(): static
     {
-        return $this->state(fn (array $attributes) => [
+        return $this->state(fn (array $attributes): array => [
             'allow_family_discovery' => false,
         ]);
     }

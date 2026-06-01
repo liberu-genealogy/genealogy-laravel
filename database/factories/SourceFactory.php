@@ -19,6 +19,7 @@ class SourceFactory extends Factory
      *
      * @var string
      */
+    #[\Override]
     protected $model = Source::class;
 
     /**

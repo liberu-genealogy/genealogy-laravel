@@ -69,7 +69,7 @@ class PedigreeChart extends Component
 
         $root = $this->fetchPersonWithParents($this->rootPersonId);
 
-        if (! $root) {
+        if (!$root instanceof \App\Models\Person) {
             $this->tree = [];
             return;
         }
@@ -110,16 +110,16 @@ class PedigreeChart extends Component
      */
     public function renderPedigreeTree(array $node, int $generation = 1): string
     {
-        if (empty($node)) {
+        if ($node === []) {
             return '<div class="empty-person-box">No data</div>';
         }
 
         $sexClass = $node['sex'] === 'F' ? 'female' : 'male';
         $datesHtml = '';
         if ($this->showDates) {
-            $birth = $node['birth'] ? htmlspecialchars($node['birth'], ENT_QUOTES, 'UTF-8') : '';
-            $death = $node['death'] ? htmlspecialchars($node['death'], ENT_QUOTES, 'UTF-8') : '';
-            $datesHtml = "<div class=\"person-dates\">{$birth}" . ($birth && $death ? ' – ' : ($death ? ' – ' : '')) . "{$death}</div>";
+            $birth = $node['birth'] ? htmlspecialchars((string) $node['birth'], ENT_QUOTES, 'UTF-8') : '';
+            $death = $node['death'] ? htmlspecialchars((string) $node['death'], ENT_QUOTES, 'UTF-8') : '';
+            $datesHtml = "<div class=\"person-dates\">{$birth}" . ($birth && $death ? ' – ' : ($death !== '' && $death !== '0' ? ' – ' : '')) . "{$death}</div>";
         }
 
         $name = htmlspecialchars($node['name'] ?? 'Unknown', ENT_QUOTES, 'UTF-8');
@@ -136,12 +136,12 @@ class PedigreeChart extends Component
 
         $parentsHtml = '';
         if (!empty($node['father']) || !empty($node['mother'])) {
-            $fatherHtml = !empty($node['father'])
-                ? $this->renderPedigreeTree($node['father'], $generation + 1)
-                : '<div class="empty-person-box">Father unknown</div>';
-            $motherHtml = !empty($node['mother'])
-                ? $this->renderPedigreeTree($node['mother'], $generation + 1)
-                : '<div class="empty-person-box">Mother unknown</div>';
+            $fatherHtml = empty($node['father'])
+                ? '<div class="empty-person-box">Father unknown</div>'
+                : $this->renderPedigreeTree($node['father'], $generation + 1);
+            $motherHtml = empty($node['mother'])
+                ? '<div class="empty-person-box">Mother unknown</div>'
+                : $this->renderPedigreeTree($node['mother'], $generation + 1);
 
             $parentsHtml = "<div class=\"parents-container\">".
                 "<div class=\"parent-branch father-branch\">{$fatherHtml}</div>".
@@ -178,7 +178,7 @@ class PedigreeChart extends Component
     {
         try {
             return PersonResource::getUrl('edit', ['record' => $id]);
-        } catch (Throwable $e) {
+        } catch (Throwable) {
             return url('/');
         }
     }

@@ -238,7 +238,6 @@ class TreeBuilderServiceTest extends TestCase
         // Use reflection to access protected method
         $reflection = new \ReflectionClass($this->service);
         $method = $reflection->getMethod('formatPersonNode');
-        $method->setAccessible(true);
 
         $formattedNode = $method->invoke($this->service, $person);
 

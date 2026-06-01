@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 
 class PersonPhotoFactory extends Factory
 {
+    #[\Override]
     protected $model = PersonPhoto::class;
 
     public function definition(): array
@@ -26,7 +27,7 @@ class PersonPhotoFactory extends Factory
 
     public function unanalyzed(): static
     {
-        return $this->state(fn (array $attributes) => [
+        return $this->state(fn (array $attributes): array => [
             'is_analyzed' => false,
             'analyzed_at' => null,
         ]);
@@ -34,7 +35,7 @@ class PersonPhotoFactory extends Factory
 
     public function analyzed(): static
     {
-        return $this->state(fn (array $attributes) => [
+        return $this->state(fn (array $attributes): array => [
             'is_analyzed' => true,
             'analyzed_at' => now(),
         ]);

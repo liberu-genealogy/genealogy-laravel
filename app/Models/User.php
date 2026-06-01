@@ -17,8 +17,8 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-//use JoelButcher\Socialstream\HasConnectedAccounts;
-//use JoelButcher\Socialstream\SetsProfilePhotoFromUrl;
+use JoelButcher\Socialstream\HasConnectedAccounts;
+use JoelButcher\Socialstream\SetsProfilePhotoFromUrl;
 use Laravel\Cashier\Billable;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 //use Laravel\Jetstream\HasProfilePhoto;
@@ -29,16 +29,18 @@ use Spatie\Permission\Traits\HasRoles;
 class User extends Authenticatable implements HasDefaultTenant, HasTenants, FilamentUser
 {
     use HasApiTokens;
-//    use HasConnectedAccounts;
-    use HasRoles;
+    use HasConnectedAccounts;
+    use HasRoles, HasTeams {
+        HasTeams::teams insteadof HasRoles;
+        HasRoles::teams as roleTeams;
+    }
     use HasFactory;
   //  use HasProfilePhoto {
     //    HasProfilePhoto::profilePhotoUrl as getPhotoUrl;
 //    }
     use Notifiable;
-//    use SetsProfilePhotoFromUrl;
+    use SetsProfilePhotoFromUrl;
     use TwoFactorAuthenticatable;
-    use HasTeams;
     use Billable;
     // use HasPanelShield;
 
@@ -47,6 +49,7 @@ class User extends Authenticatable implements HasDefaultTenant, HasTenants, Fila
      *
      * @var array<int, string>
      */
+    #[\Override]
     protected $fillable = [
         'name',
         'email',
@@ -66,6 +69,7 @@ class User extends Authenticatable implements HasDefaultTenant, HasTenants, Fila
      *
      * @var array<int, string>
      */
+    #[\Override]
     protected $hidden = [
         'password',
         'remember_token',
@@ -78,6 +82,7 @@ class User extends Authenticatable implements HasDefaultTenant, HasTenants, Fila
      *
      * @var array<int, string>
      */
+    #[\Override]
     protected $appends = [
         'profile_photo_url',
     ];
@@ -87,6 +92,7 @@ class User extends Authenticatable implements HasDefaultTenant, HasTenants, Fila
      *
      * @return array<string, string>
      */
+    #[\Override]
     protected function casts(): array
     {
         return [
@@ -136,7 +142,7 @@ class User extends Authenticatable implements HasDefaultTenant, HasTenants, Fila
      */
     protected function defaultPhotoUrl(): Attribute
     {
-        return Attribute::get(fn () => 'https://ui-avatars.com/api/?name='.urlencode($this->name).'&color=7F9CF5&background=EBF4FF');
+        return Attribute::get(fn (): string => 'https://ui-avatars.com/api/?name='.urlencode($this->name).'&color=7F9CF5&background=EBF4FF');
     }
 
     /**
@@ -201,13 +207,8 @@ class User extends Authenticatable implements HasDefaultTenant, HasTenants, Fila
         if ($this->subscribed('premium')) {
             return true;
         }
-
         // Local trial still running
-        if ($this->is_premium && $this->onTrial()) {
-            return true;
-        }
-
-        return false;
+        return $this->is_premium && $this->onTrial();
     }
 
     /**
@@ -363,19 +364,22 @@ class User extends Authenticatable implements HasDefaultTenant, HasTenants, Fila
      */
     public function getLevelInfo(): array
     {
-        $pointsForNextLevel = $this->getPointsRequiredForLevel($this->level + 1);
-        $pointsForCurrentLevel = $this->getPointsRequiredForLevel($this->level);
-        $progressToNextLevel = $this->total_points - $pointsForCurrentLevel;
+        $level       = (int) ($this->level ?? 1);
+        $totalPoints = (int) ($this->total_points ?? 0);
+
+        $pointsForNextLevel    = $this->getPointsRequiredForLevel($level + 1);
+        $pointsForCurrentLevel = $this->getPointsRequiredForLevel($level);
+        $progressToNextLevel   = $totalPoints - $pointsForCurrentLevel;
         $pointsNeededForNextLevel = $pointsForNextLevel - $pointsForCurrentLevel;
 
         return [
-            'current_level' => $this->level,
-            'total_points' => $this->total_points,
-            'points_for_current_level' => $pointsForCurrentLevel,
-            'points_for_next_level' => $pointsForNextLevel,
-            'progress_to_next_level' => $progressToNextLevel,
+            'current_level'               => $level,
+            'total_points'                => $totalPoints,
+            'points_for_current_level'    => $pointsForCurrentLevel,
+            'points_for_next_level'       => $pointsForNextLevel,
+            'progress_to_next_level'      => $progressToNextLevel,
             'points_needed_for_next_level' => max(0, $pointsNeededForNextLevel - $progressToNextLevel),
-            'progress_percentage' => $pointsNeededForNextLevel > 0 ? min(100, ($progressToNextLevel / $pointsNeededForNextLevel) * 100) : 100,
+            'progress_percentage'         => $pointsNeededForNextLevel > 0 ? min(100, ($progressToNextLevel / $pointsNeededForNextLevel) * 100) : 100,
         ];
     }
 
@@ -389,7 +393,7 @@ class User extends Authenticatable implements HasDefaultTenant, HasTenants, Fila
         }
 
         // Exponential growth: level^2 * 100
-        return pow($level - 1, 2) * 100;
+        return ($level - 1) ** 2 * 100;
     }
 
     /**
@@ -412,9 +416,10 @@ class User extends Authenticatable implements HasDefaultTenant, HasTenants, Fila
     /**
      * Calculate level from total points
      */
-    private function calculateLevelFromPoints(int $points): int
+    private function calculateLevelFromPoints(?int $points): int
     {
-        $level = 1;
+        $points = $points ?? 0;
+        $level  = 1;
         while ($this->getPointsRequiredForLevel($level + 1) <= $points) {
             $level++;
         }
@@ -427,7 +432,7 @@ class User extends Authenticatable implements HasDefaultTenant, HasTenants, Fila
     public function hasAchievement(string $achievementKey): bool
     {
         return $this->achievements()
-            ->whereHas('achievement', function ($query) use ($achievementKey) {
+            ->whereHas('achievement', function ($query) use ($achievementKey): void {
                 $query->where('key', $achievementKey);
             })
             ->exists();
@@ -439,7 +444,7 @@ class User extends Authenticatable implements HasDefaultTenant, HasTenants, Fila
     public function getAchievementProgress(string $achievementKey): ?UserProgress
     {
         return $this->progress()
-            ->whereHas('achievement', function ($query) use ($achievementKey) {
+            ->whereHas('achievement', function ($query) use ($achievementKey): void {
                 $query->where('key', $achievementKey);
             })
             ->first();
@@ -450,8 +455,10 @@ class User extends Authenticatable implements HasDefaultTenant, HasTenants, Fila
      */
     public function getLeaderboardRank(): int
     {
+        $totalPoints = (int) ($this->total_points ?? 0);
+
         return User::where('show_on_leaderboard', true)
-            ->where('total_points', '>', $this->total_points)
+            ->where('total_points', '>', $totalPoints)
             ->count() + 1;
     }
 

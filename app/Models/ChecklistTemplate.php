@@ -13,6 +13,7 @@ class ChecklistTemplate extends Model
 {
     use HasFactory, BelongsToTenant, SoftDeletes;
 
+    #[\Override]
     protected $fillable = [
         'name',
         'description',
@@ -25,6 +26,7 @@ class ChecklistTemplate extends Model
         'estimated_time',
     ];
 
+    #[\Override]
     protected $casts = [
         'is_public' => 'boolean',
         'is_default' => 'boolean',
@@ -67,7 +69,7 @@ class ChecklistTemplate extends Model
         }
 
         $completedItems = $this->templateItems()
-            ->whereHas('userChecklistItems', function ($query) {
+            ->whereHas('userChecklistItems', function ($query): void {
                 $query->where('is_completed', true);
             })
             ->count();

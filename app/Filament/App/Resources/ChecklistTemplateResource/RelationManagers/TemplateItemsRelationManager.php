@@ -26,10 +26,13 @@ use Filament\Schemas\Schema;
 
 class TemplateItemsRelationManager extends RelationManager
 {
+    #[\Override]
     protected static string $relationship = 'templateItems';
 
+    #[\Override]
     protected static ?string $title = 'Checklist Items';
 
+   #[\Override]
    public function form(Schema $schema): Schema
        {
         return $schema
@@ -41,7 +44,7 @@ class TemplateItemsRelationManager extends RelationManager
                             ->columnSpan(2),
                         TextInput::make('order')
                             ->numeric()
-                            ->default(fn () => $this->getOwnerRecord()->templateItems()->max('order') + 1),
+                            ->default(fn (): int|float => $this->getOwnerRecord()->templateItems()->max('order') + 1),
                     ]),
                 Textarea::make('description')
                     ->rows(3)

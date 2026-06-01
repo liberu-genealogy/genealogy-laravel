@@ -11,6 +11,7 @@ use Illuminate\Support\Str;
  */
 class ConnectedAccountFactory extends Factory
 {
+    #[\Override]
     protected $model = ConnectedAccount::class;
 
     public function definition(): array
@@ -35,7 +36,7 @@ class ConnectedAccountFactory extends Factory
      */
     public function withFamilyMatching(): static
     {
-        return $this->state(fn (array $attributes) => [
+        return $this->state(fn (array $attributes): array => [
             'enable_family_matching' => true,
             'last_synced_at' => now(),
         ]);

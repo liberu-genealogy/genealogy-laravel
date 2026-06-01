@@ -12,18 +12,25 @@ use Illuminate\Support\Facades\Auth;
 
 class PremiumDashboardPage extends Page
 {
+    #[\Override]
     protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-star';
 
+    #[\Override]
     protected static ?string $navigationLabel = 'Premium Dashboard';
 
+    #[\Override]
     protected static string | \UnitEnum | null $navigationGroup = '👤 Account & Settings';
 
+    #[\Override]
     protected static ?int $navigationSort = 1;
 
+    #[\Override]
     protected string $view = 'filament.app.pages.premium-dashboard-page';
 
+    #[\Override]
     protected static ?string $title = 'Premium Dashboard';
 
+    #[\Override]
     protected static ?string $slug = 'premium-dashboard';
 
     public function mount(): void
@@ -46,6 +53,7 @@ class PremiumDashboardPage extends Page
         }
     }
 
+    #[\Override]
     protected function getHeaderActions(): array
     {
         $user = Auth::user();
@@ -93,7 +101,7 @@ class PremiumDashboardPage extends Page
 
             $this->redirect(Filament::getUrl() . '/subscription');
 
-        } catch (Exception $e) {
+        } catch (Exception) {
             Notification::make()
                 ->title('Cancellation Error')
                 ->body('There was an error cancelling your subscription. Please try again.')
@@ -115,7 +123,7 @@ class PremiumDashboardPage extends Page
                 ->send();
 
             $this->redirect(Filament::getUrl());
-        } catch (Exception $e) {
+        } catch (Exception) {
             Notification::make()
                 ->title('Error')
                 ->body('There was an error processing your request. Please try again.')
@@ -136,7 +144,7 @@ class PremiumDashboardPage extends Page
                 ->success()
                 ->send();
 
-        } catch (Exception $e) {
+        } catch (Exception) {
             Notification::make()
                 ->title('Resume Error')
                 ->body('There was an error resuming your subscription. Please try again.')

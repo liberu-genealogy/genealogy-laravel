@@ -27,7 +27,11 @@ trait BelongsToTenant
         });
 
         static::creating(function ($model): void {
-            // Set team_id on create only if the table has the column and a tenant is present
+            // Only auto-assign team_id when the record doesn't already have one set
+            if (! empty($model->team_id)) {
+                return;
+            }
+
             $tenantId = static::getTenantId();
             if (empty($tenantId)) {
                 return;

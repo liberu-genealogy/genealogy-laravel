@@ -8,20 +8,19 @@ use Illuminate\Support\Facades\Storage;
 
 class BulkImportDnaCommand extends Command
 {
+    #[\Override]
     protected $signature = 'dna:import 
                             {user_id : The user ID to import kits for}
                             {--directory= : Directory containing DNA files to import}
                             {--files=* : Specific file paths to import}
                             {--no-match : Skip automatic matching after import}';
 
+    #[\Override]
     protected $description = 'Bulk import DNA kits from files';
 
-    protected DnaImportService $importService;
-
-    public function __construct(DnaImportService $importService)
+    public function __construct(protected DnaImportService $importService)
     {
         parent::__construct();
-        $this->importService = $importService;
     }
 
     public function handle(): int
@@ -54,7 +53,7 @@ class BulkImportDnaCommand extends Command
             $filesToImport = array_merge($filesToImport, $files);
         }
 
-        if (empty($filesToImport)) {
+        if ($filesToImport === []) {
             $this->error('No files to import. Use --directory or --files option.');
             return Command::FAILURE;
         }
@@ -117,7 +116,7 @@ class BulkImportDnaCommand extends Command
             $this->info('Successfully imported kits:');
             $this->table(
                 ['DNA ID', 'Variable Name', 'SNP Count', 'Format'],
-                array_map(fn($r) => [
+                array_map(fn(array $r): array => [
                     $r['dna_id'],
                     $r['variable_name'],
                     $r['snp_count'] ?? 'N/A',
@@ -131,7 +130,7 @@ class BulkImportDnaCommand extends Command
             $this->error('Failed imports:');
             $this->table(
                 ['File', 'Error'],
-                array_map(fn($r) => [$r['file'], $r['error']], $results['failed'])
+                array_map(fn(array $r): array => [$r['file'], $r['error']], $results['failed'])
             );
         }
     }

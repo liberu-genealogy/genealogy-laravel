@@ -12,21 +12,16 @@ class PersonServiceProvider extends ServiceProvider
     /**
      * Register any application services.
      */
+    #[\Override]
     public function register(): void
     {
         // Register person service
-        $this->app->singleton(PersonService::class, function ($app) {
-            return new PersonService();
-        });
+        $this->app->singleton(PersonService::class, fn($app) => new PersonService());
 
         // Duplicate detection + merge services
-        $this->app->singleton(DuplicateDetectionService::class, function ($app) {
-            return new DuplicateDetectionService();
-        });
+        $this->app->singleton(DuplicateDetectionService::class, fn($app) => new DuplicateDetectionService());
 
-        $this->app->singleton(PersonMergeService::class, function ($app) {
-            return new PersonMergeService();
-        });
+        $this->app->singleton(PersonMergeService::class, fn($app) => new PersonMergeService());
 
         // Register person configuration
         $this->mergeConfigFrom(__DIR__ . '/../config/person.php', 'person');

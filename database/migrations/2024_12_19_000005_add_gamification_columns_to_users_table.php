@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('users', function (Blueprint $table) {
+        Schema::table('users', function (Blueprint $table): void {
             $table->integer('total_points')->default(0)->after('premium_started_at');
             $table->integer('level')->default(1)->after('total_points');
             $table->integer('level_progress')->default(0)->after('level'); // Progress towards next level
@@ -28,7 +28,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('users', function (Blueprint $table) {
+        Schema::table('users', function (Blueprint $table): void {
             $table->dropColumn([
                 'total_points',
                 'level',

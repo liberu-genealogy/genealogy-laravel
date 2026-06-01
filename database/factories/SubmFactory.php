@@ -16,6 +16,7 @@ class SubmFactory extends Factory
      *
      * @var string
      */
+    #[\Override]
     protected $model = Subm::class;
 
     /**

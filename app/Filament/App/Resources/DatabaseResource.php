@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Filament\App\Resources;
 
 use Override;
@@ -21,16 +23,22 @@ use Filament\Tables\Table;
 
 class DatabaseResource extends AppResource
 {
+    #[\Override]
     protected static ?string $model = Tree::class;
 
+    #[\Override]
     protected static bool $isScopedToTenant = false;
 
+    #[\Override]
     protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-circle-stack';
 
+    #[\Override]
     protected static ?string $navigationLabel = 'Databases';
 
+    #[\Override]
     protected static string | \UnitEnum | null $navigationGroup = '🛠️ Data Management';
 
+    #[\Override]
     protected static ?int $navigationSort = 1;
 
     #[Override]
@@ -86,6 +94,7 @@ class DatabaseResource extends AppResource
         ];
     }
 
+    #[\Override]
     public static function getPages(): array
     {
         return [

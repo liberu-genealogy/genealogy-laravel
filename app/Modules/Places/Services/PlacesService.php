@@ -158,7 +158,7 @@ class PlacesService
     public function standardizePlaceName(string $placeName): string
     {
         // Basic standardization - can be enhanced
-        $parts = array_map('trim', explode(',', $placeName));
+        $parts = array_map(trim(...), explode(',', $placeName));
         $parts = array_filter($parts);
         
         return implode(', ', $parts);

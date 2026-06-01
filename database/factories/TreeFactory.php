@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Database\Factories;
 
 use App\Models\Tree;
@@ -16,6 +18,7 @@ class TreeFactory extends Factory
      *
      * @var string
      */
+    #[\Override]
     protected $model = Tree::class;
 
     /**

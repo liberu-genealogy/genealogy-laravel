@@ -6,9 +6,9 @@ use Illuminate\Support\Facades\Schema;
 
 class CreateCompaniesTable extends Migration
 {
-    public function up()
+    public function up(): void
     {
-        Schema::create('companies', function (Blueprint $table) {
+        Schema::create('companies', function (Blueprint $table): void {
             $table->bigIncrements('id');
             $table->string('name')->index();
             $table->string('reg_com_nr')->nullable();
@@ -33,7 +33,7 @@ class CreateCompaniesTable extends Migration
         });
     }
 
-    public function down()
+    public function down(): void
     {
         Schema::disableForeignKeyConstraints();
         Schema::dropIfExists('companies');

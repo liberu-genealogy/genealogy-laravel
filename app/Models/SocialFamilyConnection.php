@@ -10,8 +10,10 @@ class SocialFamilyConnection extends Model
 {
     use HasFactory;
 
+    #[\Override]
     protected $table = 'social_family_connections';
 
+    #[\Override]
     protected $fillable = [
         'user_id',
         'connected_account_id',
@@ -24,6 +26,7 @@ class SocialFamilyConnection extends Model
         'status',
     ];
 
+    #[\Override]
     protected function casts(): array
     {
         return [

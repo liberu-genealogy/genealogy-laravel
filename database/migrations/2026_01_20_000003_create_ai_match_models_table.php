@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration {
     public function up(): void
     {
-        Schema::create('ai_match_models', function (Blueprint $table) {
+        Schema::create('ai_match_models', function (Blueprint $table): void {
             $table->id();
             $table->string('name')->default('default');
             $table->json('weights')->nullable(); // JSON of field weights and meta

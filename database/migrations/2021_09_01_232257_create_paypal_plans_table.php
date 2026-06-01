@@ -11,9 +11,9 @@ class CreatePaypalPlansTable extends Migration
      *
      * @return void
      */
-    public function up()
+    public function up(): void
     {
-        Schema::create('paypal_plans', function (Blueprint $table) {
+        Schema::create('paypal_plans', function (Blueprint $table): void {
             $table->bigIncrements('id');
             $table->foreignId('paypal_id')->unique()->nullable();  // unknown table
             $table->string('paypal_product_id')->constrained('paypal_products')->nullable();
@@ -32,7 +32,7 @@ class CreatePaypalPlansTable extends Migration
      *
      * @return void
      */
-    public function down()
+    public function down(): void
     {
         Schema::dropIfExists('paypal_plans');
     }

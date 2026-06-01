@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 
 class PhotoTagFactory extends Factory
 {
+    #[\Override]
     protected $model = PhotoTag::class;
 
     public function definition(): array
@@ -27,7 +28,7 @@ class PhotoTagFactory extends Factory
 
     public function pending(): static
     {
-        return $this->state(fn (array $attributes) => [
+        return $this->state(fn (array $attributes): array => [
             'status' => 'pending',
             'confirmed_by' => null,
             'confirmed_at' => null,
@@ -36,7 +37,7 @@ class PhotoTagFactory extends Factory
 
     public function confirmed(): static
     {
-        return $this->state(fn (array $attributes) => [
+        return $this->state(fn (array $attributes): array => [
             'status' => 'confirmed',
             'confirmed_at' => now(),
         ]);
@@ -44,7 +45,7 @@ class PhotoTagFactory extends Factory
 
     public function rejected(): static
     {
-        return $this->state(fn (array $attributes) => [
+        return $this->state(fn (array $attributes): array => [
             'status' => 'rejected',
         ]);
     }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Filament\App\Pages;
 
 use Filament\Infolists\Components\TextEntry;
@@ -16,6 +18,7 @@ use Filament\Schemas\Components\Section;
 
 class EditTeam extends EditTenantProfile
 {
+    #[\Override]
     protected string $view = 'filament.pages.edit-team';
 
     public static function getLabel(): string

@@ -14,15 +14,17 @@ use Filament\Notifications\Notification;
 
 class EditVirtualEvent extends EditRecord
 {
+    #[\Override]
     protected static string $resource = VirtualEventResource::class;
 
+    #[\Override]
     protected function getHeaderActions(): array
     {
         return [
             Action::make('create_meeting')
                 ->icon('heroicon-o-plus-circle')
                 ->color('primary')
-                ->action(function () {
+                ->action(function (): void {
                     try {
                         $service = app(VideoConferencingService::class);
                         $service->createMeeting($this->getRecord());
@@ -42,11 +44,11 @@ class EditVirtualEvent extends EditRecord
                             ->send();
                     }
                 })
-                ->visible(fn () => empty($this->getRecord()->meeting_id) && $this->getRecord()->platform !== 'custom'),
+                ->visible(fn (): bool => empty($this->getRecord()->meeting_id) && $this->getRecord()->platform !== 'custom'),
             Action::make('update_meeting')
                 ->icon('heroicon-o-arrow-path')
                 ->color('warning')
-                ->action(function () {
+                ->action(function (): void {
                     try {
                         $service = app(VideoConferencingService::class);
                         $service->updateMeeting($this->getRecord());
@@ -66,13 +68,13 @@ class EditVirtualEvent extends EditRecord
                             ->send();
                     }
                 })
-                ->visible(fn () => !empty($this->getRecord()->meeting_id) && $this->getRecord()->platform !== 'custom'),
+                ->visible(fn (): bool => !empty($this->getRecord()->meeting_id) && $this->getRecord()->platform !== 'custom'),
             Action::make('join_meeting')
                 ->icon('heroicon-o-video-camera')
                 ->color('success')
                 ->url(fn () => $this->getRecord()->join_url ?? '#')
                 ->openUrlInNewTab()
-                ->visible(fn () => $this->getRecord()->canJoin() && !empty($this->getRecord()->join_url)),
+                ->visible(fn (): bool => $this->getRecord()->canJoin() && !empty($this->getRecord()->join_url)),
             ViewAction::make(),
             DeleteAction::make(),
         ];

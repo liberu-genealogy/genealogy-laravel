@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 
 class DocumentTranscriptionFactory extends Factory
 {
+    #[\Override]
     protected $model = DocumentTranscription::class;
 
     public function definition(): array
@@ -32,7 +33,7 @@ class DocumentTranscriptionFactory extends Factory
 
     public function pending(): static
     {
-        return $this->state(fn (array $attributes) => [
+        return $this->state(fn (array $attributes): array => [
             'status' => 'pending',
             'raw_transcription' => null,
             'processed_at' => null,
@@ -41,7 +42,7 @@ class DocumentTranscriptionFactory extends Factory
 
     public function processing(): static
     {
-        return $this->state(fn (array $attributes) => [
+        return $this->state(fn (array $attributes): array => [
             'status' => 'processing',
             'raw_transcription' => null,
             'processed_at' => null,
@@ -50,7 +51,7 @@ class DocumentTranscriptionFactory extends Factory
 
     public function failed(): static
     {
-        return $this->state(fn (array $attributes) => [
+        return $this->state(fn (array $attributes): array => [
             'status' => 'failed',
             'raw_transcription' => null,
             'metadata' => [
@@ -62,7 +63,7 @@ class DocumentTranscriptionFactory extends Factory
 
     public function corrected(): static
     {
-        return $this->state(fn (array $attributes) => [
+        return $this->state(fn (array $attributes): array => [
             'corrected_transcription' => fake()->paragraphs(3, true),
         ]);
     }

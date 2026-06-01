@@ -14,8 +14,10 @@ use Filament\Schemas\Schema;
 
 class ViewDnaMatching extends ViewRecord
 {
+    #[\Override]
     protected static string $resource = DnaMatchingResource::class;
 
+    #[\Override]
     protected function getHeaderActions(): array
     {
         return [
@@ -23,6 +25,7 @@ class ViewDnaMatching extends ViewRecord
         ];
     }
 
+    #[\Override]
     public function infolist(Schema $schema): Schema
     {
         return $schema
@@ -94,7 +97,7 @@ class ViewDnaMatching extends ViewRecord
                             ->label('')
                             ->keyLabel('Chromosome')
                             ->valueLabel('Shared cM')
-                            ->formatStateUsing(function ($state) {
+                            ->formatStateUsing(function ($state): string|array {
                                 if (! is_array($state)) {
                                     return 'No chromosome data available';
                                 }
@@ -128,7 +131,7 @@ class ViewDnaMatching extends ViewRecord
                                 TextEntry::make('detailed_report.shared_snps_count')
                                     ->label('Shared SNPs Count')
                                     ->numeric()
-                                    ->formatStateUsing(fn ($state) => number_format($state ?? 0)),
+                                    ->formatStateUsing(fn ($state): string => number_format($state ?? 0)),
                                 TextEntry::make('analysis_date')
                                     ->label('Analysis Date')
                                     ->dateTime(),

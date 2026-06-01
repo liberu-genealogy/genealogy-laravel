@@ -19,14 +19,19 @@ use Filament\Actions\DeleteBulkAction;
 
 class AuthorResource extends AppResource
 {
+    #[\Override]
     protected static ?string $model = Author::class;
 
+    #[\Override]
     protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-pencil';
 
+    #[\Override]
     protected static ?string $navigationLabel = 'Author';
 
+    #[\Override]
     protected static string | \UnitEnum | null $navigationGroup = '🔍 Research & Analysis';
 
+    #[\Override]
     public static function form(Schema $schema): Schema
     {
         return $schema
@@ -44,6 +49,7 @@ class AuthorResource extends AppResource
     }
 
     #[Override]
+    #[\Override]
     public static function table(Table $table): Table
     {
         return $table
@@ -78,6 +84,7 @@ class AuthorResource extends AppResource
     }
 
     #[Override]
+    #[\Override]
     public static function getRelations(): array
     {
         return [
@@ -85,6 +92,7 @@ class AuthorResource extends AppResource
         ];
     }
 
+    #[\Override]
     public static function getPages(): array
     {
         return [

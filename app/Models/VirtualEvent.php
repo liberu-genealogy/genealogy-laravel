@@ -14,6 +14,7 @@ class VirtualEvent extends Model
 {
     use HasFactory, BelongsToTenant, SoftDeletes;
 
+    #[\Override]
     protected $fillable = [
         'title',
         'description',
@@ -35,6 +36,7 @@ class VirtualEvent extends Model
         'created_by',
     ];
 
+    #[\Override]
     protected $casts = [
         'start_time' => 'datetime',
         'end_time' => 'datetime',
@@ -43,6 +45,7 @@ class VirtualEvent extends Model
         'allow_guests' => 'boolean',
     ];
 
+    #[\Override]
     protected $attributes = [
         'status' => 'draft',
         'platform' => 'zoom',

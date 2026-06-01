@@ -54,7 +54,7 @@ class AdminPanelProvider extends PanelProvider
                 Action::make('profile')
                     ->label('Profile')
                     ->icon('heroicon-o-user-circle')
-                    ->url(fn () => $this->shouldRegisterMenuItem()
+                    ->url(fn (): \Illuminate\Contracts\Routing\UrlGenerator|string => $this->shouldRegisterMenuItem()
                         ? url(EditProfile::getUrl())
                         : url($panel->getPath())),
             ])
@@ -144,7 +144,7 @@ class AdminPanelProvider extends PanelProvider
             return Filament::hasTenancy()
                 ? $hasVerifiedEmail && Filament::getTenant()
                 : $hasVerifiedEmail;
-        } catch (\Exception $e) {
+        } catch (\Exception) {
             // Fallback if facade is not ready
             return $hasVerifiedEmail;
         }

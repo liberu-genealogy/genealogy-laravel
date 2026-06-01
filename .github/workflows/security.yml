@@ -8,11 +8,6 @@ on:
   deployment:
   workflow_dispatch:
 
-env:
-  DB_DATABASE: liberu
-  DB_USERNAME: liberu
-  DB_PASSWORD: secret
-
 jobs:
 
   phpcpd:

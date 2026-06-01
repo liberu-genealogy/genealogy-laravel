@@ -14,7 +14,7 @@ class BatchData
 
     public static function upsert(string $modelClass, string $conn, array $values, array $uniqueBy, array $update = []): bool
     {
-        if (empty($values)) {
+        if ($values === []) {
             return true;
         }
 

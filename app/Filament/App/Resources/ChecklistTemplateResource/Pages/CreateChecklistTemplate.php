@@ -8,8 +8,10 @@ use Filament\Resources\Pages\CreateRecord;
 
 class CreateChecklistTemplate extends CreateRecord
 {
+    #[\Override]
     protected static string $resource = ChecklistTemplateResource::class;
 
+    #[\Override]
     protected function mutateFormDataBeforeCreate(array $data): array
     {
         $data['created_by'] = auth()->id();
@@ -17,6 +19,7 @@ class CreateChecklistTemplate extends CreateRecord
         return $data;
     }
 
+    #[\Override]
     protected function getRedirectUrl(): string
     {
         return $this->getResource()::getUrl('edit', ['record' => $this->getRecord()]);

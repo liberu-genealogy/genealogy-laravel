@@ -14,6 +14,7 @@ class Tree extends Model
     /**
      * @var array
      */
+    #[\Override]
     protected $fillable = [
         'user_id',
         'name',
@@ -106,7 +107,7 @@ class Tree extends Model
         }
 
         if ($person->childInFamily->wife) {
-            $maxDepth = max($maxDepth, $this->getAncestorDepth($person->childInFamily->wife, $depth + 1));
+            return max($maxDepth, $this->getAncestorDepth($person->childInFamily->wife, $depth + 1));
         }
 
         return $maxDepth;
