@@ -30,7 +30,7 @@ class SourceRepoFactory extends Factory
         return [
             'group'      => fake()->word(),
             'gid'        => fake()->randomElement(['1', '2']),
-            'repo_id'    => Repository::where('id', 1)->first()->id,
+            'repo_id'    => Repository::factory()->create()->id,
             'caln'       => fake()->word(),
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),

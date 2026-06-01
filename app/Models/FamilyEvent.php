@@ -14,9 +14,7 @@ class FamilyEvent extends \FamilyTree365\LaravelGedcom\Models\FamilyEvent
 
     public static function boot(): void
     {
-        // Call base Model::boot() directly to bypass vendor's observe() during boot,
-        // which causes circular boot issues in Laravel 13 (observe() creates new static instance)
-        \Illuminate\Database\Eloquent\Model::boot();
+        static::bootTraits();
     }
 
     protected static function booted(): void

@@ -15,9 +15,10 @@ class PersonEvent extends \FamilyTree365\LaravelGedcom\Models\PersonEvent
 
     public static function boot(): void
     {
-        // Call base Model::boot() directly to bypass vendor's observe() during boot,
-        // which causes circular boot issues in Laravel 13 (observe() creates new static instance)
-        \Illuminate\Database\Eloquent\Model::boot();
+        // Use static:: (forwarding call) so bootTraits() registers trait initializers
+        // for this class, not the base Model class. Skip vendor's boot to avoid double
+        // observer registration; the observer is registered in booted() instead.
+        static::bootTraits();
     }
 
     protected static function booted(): void

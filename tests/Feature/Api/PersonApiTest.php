@@ -108,7 +108,7 @@ class PersonApiTest extends TestCase
 
         $this->deleteJson("/api/people/{$person->id}")->assertNoContent();
 
-        $this->assertDatabaseMissing('people', ['id' => $person->id]);
+        $this->assertSoftDeleted('people', ['id' => $person->id]);
     }
 
     public function test_unauthenticated_request_returns_401(): void
