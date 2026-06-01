@@ -3,13 +3,13 @@
 [![](https://avatars.githubusercontent.com/u/158830885?s=200&v=4)](https://www.liberu.co.uk)
 
 ![](https://img.shields.io/badge/PHP-8.5-informational?style=flat&logo=php&color=4f5b93)
-![](https://img.shields.io/badge/Laravel-12-informational?style=flat&logo=laravel&color=ef3b2d)
+![](https://img.shields.io/badge/Laravel-13-informational?style=flat&logo=laravel&color=ef3b2d)
 ![](https://img.shields.io/badge/Filament-5-informational?style=flat&logo=data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0OCIgaGVpZ2h0PSI0OCIgeG1sbnM6dj0iaHR0cHM6Ly92ZWN0YS5pby9uYW5vIj48cGF0aCBkPSJNMCAwaDQ4djQ4SDBWMHoiIGZpbGw9IiNmNGIyNWUiLz48cGF0aCBkPSJNMjggN2wtMSA2LTMuNDM3LjgxM0wyMCAxNWwtMSAzaDZ2NWgtN2wtMyAxOEg4Yy41MTUtNS44NTMgMS40NTQtMTEuMzMgMy0xN0g4di01bDUtMSAuMjUtMy4yNUMxNCAxMSAxNCAxMSAxNS40MzggOC41NjMgMTkuNDI5IDYuMTI4IDIzLjQ0MiA2LjY4NyAyOCA3eiIgZmlsbD0iIzI4MjQxZSIvPjxwYXRoIGQ9Ik0zMCAxOGg0YzIuMjMzIDUuMzM0IDIuMjMzIDUuMzM0IDEuMTI1IDguNUwzNCAyOWMtLjE2OCAzLjIwOS0uMTY4IDMuMjA5IDAgNmwtMiAxIDEgM2gtNXYyaC0yYy44NzUtNy42MjUuODc1LTcuNjI1IDItMTFoMnYtMmgtMnYtMmwyLTF2LTQtM3oiIGZpbGw9IiMyYTIwMTIiLz48cGF0aCBkPSJNMzUuNTYzIDYuODEzQzM4IDcgMzggNyAzOSA4Yy4xODggMi40MzguMTg4IDIuNDM4IDAgNWwtMiAyYy0yLjYyNS0uMzc1LTIuNjI1LS4zNzUtNS0xLS42MjUtMi4zNzUtLjYyNS0yLjM3NS0xLTUgMi0yIDItMiA0LjU2My0yLjE4N3oiIGZpbGw9IiM0MDM5MzEiLz48cGF0aCBkPSJNMzAgMThoNGMyLjA1NSA1LjMxOSAyLjA1NSA1LjMxOSAxLjgxMyA4LjMxM0wzNSAyOGwtMyAxdi0ybC00IDF2LTJsMi0xdi00LTN6IiBmaWxsPSIjMzEyODFlIi8+PHBhdGggZD0iTTI5IDI3aDN2MmgydjJoLTJ2MmwtNC0xdi0yaDJsLTEtM3oiIGZpbGw9IiMxNTEzMTAiLz48cGF0aCBkPSJNMzAgMThoNHYzaC0ydjJsLTMgMSAxLTZ6IiBmaWxsPSIjNjA0YjMyIi8+PC9zdmc+&&color=fdae4b&link=https://filamentphp.com)
 ![](https://img.shields.io/badge/Livewire-4-informational?style=flat&logo=Livewire&color=fb70a9)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Open Source Love](https://img.shields.io/badge/Open%20Source-%E2%9D%A4-red.svg)](https://opensource.org/licenses/MIT)
 
-## Discover, preserve and share your family history — powered by Laravel 12, PHP 8.5 and Filament 5.
+## Discover, preserve and share your family history — powered by Laravel 13, PHP 8.5 and Filament 5.
 
 [![Contact us on WhatsApp](https://img.shields.io/badge/WhatsApp-25D366?style=for-the-badge&logo=whatsapp&logoColor=white)](https://wa.me/+441793200950)
 [![YouTube](https://img.shields.io/badge/YouTube-%23FF0000.svg?style=for-the-badge&logo=YouTube&logoColor=white)](https://www.youtube.com/@liberusoftware)
@@ -27,7 +27,7 @@
 
 ---
 
-**Liberu Genealogy** is a free, open-source genealogy platform that makes it easy to build, explore and share family trees. It is built on the latest versions of [Laravel 12](https://laravel.com), [PHP 8.5](https://www.php.net), [Filament 5](https://filamentphp.com) and [Livewire 4](https://livewire.laravel.com), providing a fast, modern, and accessible web application for everyone from hobbyists to professional genealogists.
+**Liberu Genealogy** is a free, open-source genealogy platform that makes it easy to build, explore and share family trees. It is built on the latest versions of [Laravel 13](https://laravel.com), [PHP 8.5](https://www.php.net), [Filament 5](https://filamentphp.com) and [Livewire 4](https://livewire.laravel.com), providing a fast, modern, and accessible web application for everyone from hobbyists to professional genealogists.
 
 The platform integrates with leading genealogy services (MyHeritage, Ancestry, FamilySearch, FindMyPast), supports GEDCOM file import/export, DNA-match analysis, facial-recognition-assisted photo tagging, and a rich set of research tools — all within a modular, developer-friendly codebase designed to grow with your needs.
 
@@ -58,7 +58,7 @@ The platform integrates with leading genealogy services (MyHeritage, Ancestry, F
 
 ### Developer Experience
 
-- Built on **Laravel 12** with **Filament 5** admin panels and **Livewire 4** reactive components.
+- Built on **Laravel 13** with **Filament 5** admin panels and **Livewire 4** reactive components.
 - **Modular architecture** — features are cleanly separated into service classes and Filament resources.
 - Full **Docker** and **Laravel Sail** support for reproducible local environments.
 - Comprehensive **PHPUnit** test suite with code-coverage reporting via Codecov.
