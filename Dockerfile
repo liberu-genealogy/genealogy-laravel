@@ -27,7 +27,7 @@ RUN composer install \
     --no-ansi \
     --no-scripts \
     --prefer-dist \
-    --ignore-platform-req=ext-pcntl,bcmath
+    --ignore-platform-req=ext-pcntl,ext-bcmath
 
 ###########################################
 # Main application stage
