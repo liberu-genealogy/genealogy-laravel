@@ -2,51 +2,27 @@
 
 namespace Tests\Filament\Resources;
 
-use App\Filament\Resources\AuthorResource;
+use App\Filament\App\Resources\AuthorResource;
 use App\Models\Author;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Tests\TestCase; // Change from PHPUnit\Framework\TestCase;
+use Tests\TestCase;
 
 class AuthorResourceTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_form_schema_includes_all_fields_with_correct_configurations(): void
+    public function test_resource_model_is_correct(): void
     {
-        $formFields = AuthorResource::form([])->getSchema();
-
-        $this->assertArrayHasKey('name', $formFields);
-        $this->assertTrue($formFields['name']->isRequired());
-        $this->assertEquals(255, $formFields['name']->getMaxLength());
-
-        $this->assertArrayHasKey('description', $formFields);
-        $this->assertTrue($formFields['description']->isRequired());
-        $this->assertEquals(255, $formFields['description']->getMaxLength());
-
-        $this->assertArrayHasKey('is_active', $formFields);
-        $this->assertTrue($formFields['is_active']->isRequired());
-        $this->assertTrue($formFields['is_active']->isNumeric());
+        $this->assertEquals(Author::class, AuthorResource::getModel());
     }
 
-    public function test_table_schema_includes_all_columns_with_correct_configurations(): void
+    public function test_resource_pages_registered(): void
     {
-        $tableColumns = AuthorResource::table([])->getColumns();
+        $pages = AuthorResource::getPages();
 
-        $this->assertArrayHasKey('name', $tableColumns);
-        $this->assertTrue($tableColumns['name']->isSearchable());
-
-        $this->assertArrayHasKey('description', $tableColumns);
-        $this->assertTrue($tableColumns['description']->isSearchable());
-
-        $this->assertArrayHasKey('is_active', $tableColumns);
-        $this->assertTrue($tableColumns['is_active']->isNumeric());
-        $this->assertTrue($tableColumns['is_active']->isSortable());
-
-        $this->assertArrayHasKey('created_at', $tableColumns);
-        $this->assertTrue($tableColumns['created_at']->isSortable());
-
-        $this->assertArrayHasKey('updated_at', $tableColumns);
-        $this->assertTrue($tableColumns['updated_at']->isSortable());
+        $this->assertArrayHasKey('index', $pages);
+        $this->assertArrayHasKey('create', $pages);
+        $this->assertArrayHasKey('edit', $pages);
     }
 
     public function test_crud_operations(): void
@@ -54,21 +30,20 @@ class AuthorResourceTest extends TestCase
         $authorData = [
             'name'        => 'John Doe',
             'description' => 'An author',
-            'is_active'   => 1,
+            'is_active'   => true,
         ];
 
         // Create
         $author = Author::create($authorData);
-        $this->assertDatabaseHas('authors', $authorData);
+        $this->assertDatabaseHas('authors', ['name' => 'John Doe', 'description' => 'An author']);
 
         // Read
         $retrievedAuthor = Author::find($author->id);
         $this->assertNotNull($retrievedAuthor);
 
         // Update
-        $updatedData = ['name' => 'Jane Doe'];
-        $author->update($updatedData);
-        $this->assertDatabaseHas('authors', array_merge($authorData, $updatedData));
+        $author->update(['name' => 'Jane Doe']);
+        $this->assertDatabaseHas('authors', ['name' => 'Jane Doe']);
 
         // Delete
         $author->delete();

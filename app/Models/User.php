@@ -404,7 +404,7 @@ class User extends Authenticatable implements HasDefaultTenant, HasTenants, Fila
         $newLevel = $this->calculateLevelFromPoints($this->total_points);
 
         if ($newLevel > $this->level) {
-            $oldLevel = $this->level;
+            $oldLevel = (int) $this->level;
             $this->level = $newLevel;
             $this->save();
 

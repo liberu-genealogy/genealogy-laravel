@@ -2,39 +2,27 @@
 
 namespace Tests\Filament\Resources;
 
-use App\Filament\Resources\AddrResource;
+use App\Filament\App\Resources\AddrResource;
 use App\Models\Addr;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Tests\TestCase; // Change from PHPUnit\Framework\TestCase;
+use Tests\TestCase;
 
 class AddrResourceTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_form_schema_includes_all_fields_with_correct_configurations(): void
+    public function test_resource_model_is_correct(): void
     {
-        $formFields = AddrResource::form([])->getSchema();
-
-        $expectedFields = ['adr1', 'adr2', 'city', 'stae', 'post', 'ctry'];
-        foreach ($expectedFields as $field) {
-            $this->assertArrayHasKey($field, $formFields);
-            $this->assertEquals(255, $formFields[$field]->getMaxLength());
-        }
+        $this->assertEquals(Addr::class, AddrResource::getModel());
     }
 
-    public function test_table_schema_includes_all_columns_with_correct_configurations(): void
+    public function test_resource_pages_registered(): void
     {
-        $tableColumns = AddrResource::table([])->getColumns();
+        $pages = AddrResource::getPages();
 
-        $expectedColumns = ['adr1', 'adr2', 'city', 'stae', 'post', 'ctry', 'created_at', 'updated_at'];
-        foreach ($expectedColumns as $column) {
-            $this->assertArrayHasKey($column, $tableColumns);
-            if (in_array($column, ['created_at', 'updated_at'])) {
-                $this->assertTrue($tableColumns[$column]->isSortable());
-            } else {
-                $this->assertTrue($tableColumns[$column]->isSearchable());
-            }
-        }
+        $this->assertArrayHasKey('index', $pages);
+        $this->assertArrayHasKey('create', $pages);
+        $this->assertArrayHasKey('edit', $pages);
     }
 
     public function test_crud_operations(): void

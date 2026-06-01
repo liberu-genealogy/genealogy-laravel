@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Addr;
 use App\Models\Person;
 use App\Models\PersonEvent;
 use App\Models\Place;
@@ -12,41 +13,24 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class PersonEventFactory extends Factory
 {
-    /**
-     * The name of the factory's corresponding model.
-     *
-     * @var string
-     */
     #[\Override]
     protected $model = PersonEvent::class;
 
-    /**
-     * Define the model's default state.
-     *
-     * @return array
-     */
     public function definition()
     {
         return [
-            'person_id' => Person::create([
-                'name'  => fake()->name(),
-                'email' => fake()->email(),
-                'phone' => fake()->phoneNumber(),
-            ])->id,
-            'title'     => fake()->title(),
-            'type'      => fake()->word(),
-            'attr'      => fake()->text(),
-            'date'      => fake()->date(),
-            'plac'      => fake()->address(),
-            'phon'      => fake()->phoneNumber(),
-            'caus'      => fake()->text(),
-            'age'       => fake()->randomDigit(),
-            'agnc'      => fake()->word(),
-            'places_id' => Place::create([
-                'description' => fake()->text(50),
-                'title'       => fake()->word(),
-                'date'        => fake()->date(),
-            ])->id,
+            'person_id'   => Person::factory()->create()->id,
+            'addr_id'     => Addr::factory()->create()->id,
+            'places_id'   => Place::factory()->create()->id,
+            'title'       => fake()->title(),
+            'type'        => fake()->word(),
+            'attr'        => fake()->text(),
+            'date'        => fake()->date(),
+            'plac'        => fake()->address(),
+            'phon'        => fake()->phoneNumber(),
+            'caus'        => fake()->text(),
+            'age'         => fake()->randomDigit(),
+            'agnc'        => fake()->word(),
             'description' => fake()->text(50),
             'year'        => fake()->year(),
             'month'       => fake()->month(),

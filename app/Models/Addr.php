@@ -17,7 +17,7 @@ class Addr extends Model
         'adr1',
         'adr2',
         'city',
-        'state',
+        'stae',
         'post',
         'ctry',
     ];

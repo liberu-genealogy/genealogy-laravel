@@ -2,63 +2,44 @@
 
 namespace Tests\Filament\Resources;
 
+use App\Filament\App\Resources\PersonAnciResource;
 use App\Models\PersonAnci;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 class PersonAnciResourceTest extends TestCase
 {
     use RefreshDatabase;
-    use WithFaker;
 
-    public function testCreatePersonAnci(): void
+    public function test_resource_model_is_correct(): void
     {
-        $data = [
-            'group' => $this->faker->word,
-            'gid'   => $this->faker->randomNumber(),
-            'anci'  => $this->faker->word,
-        ];
-
-        $response = $this->post(route('filament.resources.person-anci.store'), $data);
-
-        $response->assertStatus(302);
-        $this->assertDatabaseHas('person_ancis', $data);
+        $this->assertEquals(PersonAnci::class, PersonAnciResource::getModel());
     }
 
-    public function testReadPersonAnci(): void
+    public function test_resource_pages_registered(): void
     {
-        $personAnci = PersonAnci::factory()->create();
+        $pages = PersonAnciResource::getPages();
 
-        $response = $this->get(route('filament.resources.person-anci.index'));
-
-        $response->assertStatus(200);
-        $response->assertSee($personAnci->group);
+        $this->assertArrayHasKey('index', $pages);
+        $this->assertArrayHasKey('create', $pages);
+        $this->assertArrayHasKey('edit', $pages);
     }
 
-    public function testUpdatePersonAnci(): void
+    public function test_crud_operations(): void
     {
-        $personAnci = PersonAnci::factory()->create();
+        $personAnci = PersonAnci::factory()->create([
+            'anci' => 'Test Anci',
+        ]);
 
-        $updatedData = [
-            'group' => 'Updated Group',
-            'gid'   => $personAnci->gid + 1,
-            'anci'  => 'Updated Anci',
-        ];
+        $this->assertDatabaseHas('person_anci', ['anci' => 'Test Anci']);
 
-        $response = $this->put(route('filament.resources.person-anci.update', $personAnci), $updatedData);
+        $retrieved = PersonAnci::find($personAnci->id);
+        $this->assertNotNull($retrieved);
 
-        $response->assertStatus(302);
-        $this->assertDatabaseHas('person_ancis', $updatedData);
-    }
+        $personAnci->update(['anci' => 'Updated Anci']);
+        $this->assertDatabaseHas('person_anci', ['anci' => 'Updated Anci']);
 
-    public function testDeletePersonAnci(): void
-    {
-        $personAnci = PersonAnci::factory()->create();
-
-        $response = $this->delete(route('filament.resources.person-anci.destroy', $personAnci));
-
-        $response->assertStatus(302);
-        $this->assertSoftDeleted($personAnci);
+        $personAnci->delete();
+        $this->assertDatabaseMissing('person_anci', ['id' => $personAnci->id]);
     }
 }

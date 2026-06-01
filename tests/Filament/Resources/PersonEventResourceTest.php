@@ -4,79 +4,44 @@ declare(strict_types=1);
 
 namespace Tests\Filament\Resources;
 
+use App\Filament\App\Resources\PersonEventResource;
 use App\Models\PersonEvent;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 class PersonEventResourceTest extends TestCase
 {
     use RefreshDatabase;
-    use WithFaker;
 
-    public function testCreatePersonEvent(): void
+    public function test_resource_model_is_correct(): void
     {
-        $data = [
-            'converted_date' => $this->faker->date,
-            'year'           => $this->faker->year,
-            'month'          => $this->faker->month,
-            'day'            => $this->faker->dayOfMonth,
-            'type'           => $this->faker->word,
-            'attr'           => $this->faker->sentence,
-            'plac'           => $this->faker->city,
-            'addr_id'        => $this->faker->randomNumber(),
-            'phon'           => $this->faker->phoneNumber,
-            'caus'           => $this->faker->sentence,
-            'age'            => $this->faker->randomDigitNotNull,
-            'agnc'           => $this->faker->company,
-            'adop'           => $this->faker->word,
-            'adop_famc'      => $this->faker->word,
-            'birt_famc'      => $this->faker->word,
-            'person_id'      => $this->faker->randomNumber(),
-            'title'          => $this->faker->sentence,
-            'date'           => $this->faker->date,
-            'description'    => $this->faker->sentence,
-            'places_id'      => $this->faker->randomNumber(),
-        ];
-
-        $response = $this->post(route('filament.resources.person-events.store'), $data);
-
-        $response->assertStatus(302);
-        $this->assertDatabaseHas('person_events', $data);
+        $this->assertEquals(PersonEvent::class, PersonEventResource::getModel());
     }
 
-    public function testReadPersonEvent(): void
+    public function test_resource_pages_registered(): void
     {
-        $personEvent = PersonEvent::factory()->create();
+        $pages = PersonEventResource::getPages();
 
-        $response = $this->get(route('filament.resources.person-events.index'));
-
-        $response->assertStatus(200);
-        $response->assertSee([$personEvent->type, $personEvent->date]);
+        $this->assertArrayHasKey('index', $pages);
+        $this->assertArrayHasKey('create', $pages);
+        $this->assertArrayHasKey('edit', $pages);
     }
 
-    public function testUpdatePersonEvent(): void
+    public function test_crud_operations(): void
     {
-        $personEvent = PersonEvent::factory()->create();
+        $event = PersonEvent::factory()->create([
+            'type' => 'BIRT',
+        ]);
 
-        $updatedData = [
-            'type' => 'Updated Type',
-            'date' => $this->faker->date,
-        ];
+        $this->assertDatabaseHas('person_events', ['type' => 'BIRT']);
 
-        $response = $this->put(route('filament.resources.person-events.update', $personEvent), $updatedData);
+        $retrieved = PersonEvent::find($event->id);
+        $this->assertNotNull($retrieved);
 
-        $response->assertStatus(302);
-        $this->assertDatabaseHas('person_events', $updatedData);
-    }
+        $event->update(['type' => 'DEAT']);
+        $this->assertDatabaseHas('person_events', ['type' => 'DEAT']);
 
-    public function testDeletePersonEvent(): void
-    {
-        $personEvent = PersonEvent::factory()->create();
-
-        $response = $this->delete(route('filament.resources.person-events.destroy', $personEvent));
-
-        $response->assertStatus(302);
-        $this->assertSoftDeleted('person_events', ['id' => $personEvent->id]);
+        $event->delete();
+        $this->assertSoftDeleted('person_events', ['id' => $event->id]);
     }
 }

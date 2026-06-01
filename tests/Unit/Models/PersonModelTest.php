@@ -67,7 +67,9 @@ class PersonModelTest extends TestCase
         $id = $person->id;
 
         $person->delete();
+        $this->assertSoftDeleted('people', ['id' => $id]);
 
+        $person->forceDelete();
         $this->assertDatabaseMissing('people', ['id' => $id]);
     }
 

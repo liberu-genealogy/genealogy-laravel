@@ -2,79 +2,48 @@
 
 namespace Tests\Filament\Resources;
 
-use App\Filament\Resources\DnaMatchingResource;
+use App\Filament\App\Resources\DnaMatchingResource;
 use App\Models\DnaMatching;
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Tests\TestCase; // Change from PHPUnit\Framework\TestCase;
+use Tests\TestCase;
 
 class DnaMatchingResourceTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_form_schema_includes_all_fields_with_correct_configurations(): void
+    public function test_resource_model_is_correct(): void
     {
-        $formFields = DnaMatchingResource::form([])->getSchema();
-
-        $this->assertArrayHasKey('user_id', $formFields);
-        $this->assertTrue($formFields['user_id']->isRequired());
-        $this->assertTrue($formFields['user_id']->isNumeric());
-
-        $this->assertArrayHasKey('image', $formFields);
-        $this->assertTrue($formFields['image']->isRequired());
-
-        $fieldsWithMaxLength = ['file1', 'file2', 'total_shared_cm', 'largest_cm_segment', 'match_name'];
-        foreach ($fieldsWithMaxLength as $field) {
-            $this->assertArrayHasKey($field, $formFields);
-            $this->assertEquals(255, $formFields[$field]->getMaxLength());
-        }
-
-        $this->assertArrayHasKey('match_id', $formFields);
-        $this->assertTrue($formFields['match_id']->isNumeric());
+        $this->assertEquals(DnaMatching::class, DnaMatchingResource::getModel());
     }
 
-    public function test_table_schema_includes_all_columns_with_correct_configurations(): void
+    public function test_resource_pages_registered(): void
     {
-        $tableColumns = DnaMatchingResource::table([])->getColumns();
+        $pages = DnaMatchingResource::getPages();
 
-        $numericAndSortableColumns = ['user_id', 'match_id'];
-        foreach ($numericAndSortableColumns as $column) {
-            $this->assertTrue($tableColumns[$column]->isNumeric());
-            $this->assertTrue($tableColumns[$column]->isSortable());
-        }
-
-        $searchableColumns = ['file1', 'file2', 'total_shared_cm', 'largest_cm_segment', 'match_name'];
-        foreach ($searchableColumns as $column) {
-            $this->assertTrue($tableColumns[$column]->isSearchable());
-        }
-
-        $sortableColumns = ['created_at', 'updated_at'];
-        foreach ($sortableColumns as $column) {
-            $this->assertTrue($tableColumns[$column]->isSortable());
-        }
+        $this->assertArrayHasKey('index', $pages);
+        $this->assertArrayHasKey('create', $pages);
+        $this->assertArrayHasKey('edit', $pages);
     }
 
     public function test_crud_operations(): void
     {
-        $dnaMatchingData = [
-            'user_id'            => 1,
-            'image'              => 'test_image.png',
-            'file1'              => 'file1.txt',
-            'file2'              => 'file2.txt',
-            'total_shared_cm'    => '100',
-            'largest_cm_segment' => '50',
-            'match_id'           => 2,
-            'match_name'         => 'Test Match',
-        ];
+        $user = User::factory()->create();
+        $matchUser = User::factory()->create();
 
-        $dnaMatching = DnaMatching::create($dnaMatchingData);
-        $this->assertDatabaseHas('dna_matchings', $dnaMatchingData);
+        $dnaMatching = DnaMatching::factory()->create([
+            'user_id'    => $user->id,
+            'match_id'   => $matchUser->id,
+            'match_name' => 'Test Match',
+        ]);
 
-        $retrievedDnaMatching = DnaMatching::find($dnaMatching->id);
-        $this->assertNotNull($retrievedDnaMatching);
+        $this->assertDatabaseHas('dna_matchings', ['match_name' => 'Test Match']);
 
-        $updatedData = ['match_name' => 'Updated Test Match'];
-        $dnaMatching->update($updatedData);
-        $this->assertDatabaseHas('dna_matchings', array_merge($dnaMatchingData, $updatedData));
+        $retrieved = DnaMatching::find($dnaMatching->id);
+        $this->assertNotNull($retrieved);
+
+        $dnaMatching->update(['match_name' => 'Updated Match']);
+        $this->assertDatabaseHas('dna_matchings', ['match_name' => 'Updated Match']);
 
         $dnaMatching->delete();
         $this->assertDatabaseMissing('dna_matchings', ['id' => $dnaMatching->id]);

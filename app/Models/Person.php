@@ -7,6 +7,7 @@ namespace App\Models;
 use App\Traits\BelongsToTenant;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 // use Laravel\Scout\Searchable;
 // use LaravelLiberu\People\Models\Person as CorePerson;
@@ -15,6 +16,7 @@ class Person extends Model
 {
     use BelongsToTenant;
     use HasFactory;
+    use SoftDeletes;
 
     // Gender constants
     public const GENDER_MALE = 'M';

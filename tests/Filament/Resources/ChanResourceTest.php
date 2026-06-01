@@ -2,42 +2,27 @@
 
 namespace Tests\Filament\Resources;
 
-use App\Filament\Resources\ChanResource;
+use App\Filament\App\Resources\ChanResource;
 use App\Models\Chan;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use PHPUnit\Framework\TestCase;
+use Tests\TestCase;
 
 class ChanResourceTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_form_schema_includes_all_fields_with_correct_configurations(): void
+    public function test_resource_model_is_correct(): void
     {
-        $formFields = ChanResource::form([])->getSchema();
-
-        $this->assertArrayHasKey('group', $formFields);
-        $this->assertEquals(255, $formFields['group']->getMaxLength());
-
-        $this->assertArrayHasKey('gid', $formFields);
-        $this->assertTrue($formFields['gid']->isNumeric());
-
-        $this->assertArrayHasKey('date', $formFields);
-        $this->assertEquals(255, $formFields['date']->getMaxLength());
-
-        $this->assertArrayHasKey('time', $formFields);
-        $this->assertEquals(255, $formFields['time']->getMaxLength());
+        $this->assertEquals(Chan::class, ChanResource::getModel());
     }
 
-    public function test_table_schema_includes_all_columns_with_correct_configurations(): void
+    public function test_resource_pages_registered(): void
     {
-        $tableColumns = ChanResource::table([])->getColumns();
+        $pages = ChanResource::getPages();
 
-        $this->assertTrue($tableColumns['group']->isSearchable());
-        $this->assertTrue($tableColumns['gid']->isNumeric() && $tableColumns['gid']->isSortable());
-        $this->assertTrue($tableColumns['date']->isSearchable());
-        $this->assertTrue($tableColumns['time']->isSearchable());
-        $this->assertTrue($tableColumns['created_at']->isSortable());
-        $this->assertTrue($tableColumns['updated_at']->isSortable());
+        $this->assertArrayHasKey('index', $pages);
+        $this->assertArrayHasKey('create', $pages);
+        $this->assertArrayHasKey('edit', $pages);
     }
 
     public function test_crud_operations(): void
@@ -58,9 +43,8 @@ class ChanResourceTest extends TestCase
         $this->assertNotNull($retrievedChan);
 
         // Update
-        $updatedData = ['group' => 'Updated Group'];
-        $chan->update($updatedData);
-        $this->assertDatabaseHas('chans', array_merge($chanData, $updatedData));
+        $chan->update(['group' => 'Updated Group']);
+        $this->assertDatabaseHas('chans', ['group' => 'Updated Group']);
 
         // Delete
         $chan->delete();

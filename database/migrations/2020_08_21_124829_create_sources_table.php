@@ -19,10 +19,10 @@ class CreateSourcesTable extends Migration
             $table->text('description')->nullable();
             $table->string('date')->nullable();
             $table->integer('is_active')->nullable();
-            $table->foreignId('author_id')->constrained('authors')->nullable();
-            $table->foreignId('repository_id')->constrained('repositories')->nullable();
-            $table->foreignId('publication_id')->constrained('publications')->nullable();
-            $table->foreignId('type_id')->constrained('types')->nullable();
+            $table->foreignId('author_id')->nullable()->constrained('authors');
+            $table->foreignId('repository_id')->nullable()->constrained('repositories');
+            $table->foreignId('publication_id')->nullable()->constrained('publications');
+            $table->foreignId('type_id')->nullable()->constrained('types');
             $table->string('sour')->nullable();
             $table->text('titl')->nullable();
             $table->string('auth')->nullable();

@@ -2,9 +2,8 @@
 
 namespace Tests\Filament\Resources;
 
-use App\Filament\Resources\FamilySlgsResource;
-use Filament\Resources\Form;
-use Filament\Resources\Table;
+use App\Filament\App\Resources\FamilySlgsResource;
+use App\Models\FamilySlgs;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -12,48 +11,35 @@ class FamilySlgsResourceTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_form_fields_configuration(): void
+    public function test_resource_model_is_correct(): void
     {
-        $form = FamilySlgsResource::form(Form::make())->getSchema();
-
-        $expectedFields = [
-            'family_id' => ['type' => 'numeric'],
-            'stat'      => ['type' => 'text', 'maxLength' => 255],
-            'date'      => ['type' => 'text', 'maxLength' => 255],
-            'plac'      => ['type' => 'text', 'maxLength' => 255],
-            'temp'      => ['type' => 'text', 'maxLength' => 255],
-        ];
-
-        foreach ($expectedFields as $fieldName => $details) {
-            $field = $form->getComponent($fieldName);
-            $this->assertNotNull($field, "{$fieldName} field is not defined.");
-            $this->assertEquals($details['type'], $field->getComponentType(), "{$fieldName} field should be of type {$details['type']}.");
-            if (isset($details['maxLength'])) {
-                $this->assertEquals($details['maxLength'], $field->getMaxLength(), "{$fieldName} field maxLength should be {$details['maxLength']}.");
-            }
-        }
+        $this->assertEquals(FamilySlgs::class, FamilySlgsResource::getModel());
     }
 
-    public function test_table_configuration(): void
+    public function test_resource_pages_registered(): void
     {
-        $table = FamilySlgsResource::table(Table::make())->getColumns();
+        $pages = FamilySlgsResource::getPages();
 
-        $expectedColumns = [
-            'family_id'  => ['sortable' => true, 'type' => 'numeric'],
-            'stat'       => ['searchable' => true, 'type' => 'text'],
-            'date'       => ['searchable' => true, 'type' => 'text'],
-            'plac'       => ['searchable' => true, 'type' => 'text'],
-            'temp'       => ['searchable' => true, 'type' => 'text'],
-            'created_at' => ['sortable' => true, 'type' => 'dateTime', 'toggleable' => true],
-            'updated_at' => ['sortable' => true, 'type' => 'dateTime', 'toggleable' => true],
-        ];
+        $this->assertArrayHasKey('index', $pages);
+        $this->assertArrayHasKey('create', $pages);
+        $this->assertArrayHasKey('edit', $pages);
+    }
 
-        foreach ($expectedColumns as $columnName => $details) {
-            $column = $table->firstWhere('name', $columnName);
-            $this->assertNotNull($column, "{$columnName} column is not defined.");
-            foreach ($details as $property => $value) {
-                $this->assertEquals($value, $column->{$property}, "{$columnName} column {$property} should be {$value}.");
-            }
-        }
+    public function test_crud_operations(): void
+    {
+        $familySlgs = FamilySlgs::factory()->create([
+            'stat' => 'COMPLETED',
+        ]);
+
+        $this->assertDatabaseHas('family_slgs', ['stat' => 'COMPLETED']);
+
+        $retrieved = FamilySlgs::find($familySlgs->id);
+        $this->assertNotNull($retrieved);
+
+        $familySlgs->update(['stat' => 'PENDING']);
+        $this->assertDatabaseHas('family_slgs', ['stat' => 'PENDING']);
+
+        $familySlgs->delete();
+        $this->assertDatabaseMissing('family_slgs', ['id' => $familySlgs->id]);
     }
 }

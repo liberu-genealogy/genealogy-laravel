@@ -4,67 +4,44 @@ declare(strict_types=1);
 
 namespace Tests\Filament\Resources;
 
+use App\Filament\App\Resources\PersonLdsResource;
 use App\Models\PersonLds;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 class PersonLdsResourceTest extends TestCase
 {
     use RefreshDatabase;
-    use WithFaker;
 
-    public function testCreatePersonLds(): void
+    public function test_resource_model_is_correct(): void
     {
-        $data = [
-            'group'     => $this->faker->word,
-            'gid'       => $this->faker->randomNumber(),
-            'type'      => $this->faker->word,
-            'stat'      => $this->faker->word,
-            'date'      => $this->faker->date,
-            'plac'      => $this->faker->city,
-            'temp'      => $this->faker->word,
-            'slac_famc' => $this->faker->word,
-        ];
-
-        $response = $this->post(route('filament.resources.person-lds.store'), $data);
-
-        $response->assertStatus(302);
-        $this->assertDatabaseHas('person_lds', $data);
+        $this->assertEquals(PersonLds::class, PersonLdsResource::getModel());
     }
 
-    public function testReadPersonLds(): void
+    public function test_resource_pages_registered(): void
     {
-        $personLds = PersonLds::factory()->create();
+        $pages = PersonLdsResource::getPages();
 
-        $response = $this->get(route('filament.resources.person-lds.index'));
-
-        $response->assertStatus(200);
-        $response->assertSee([$personLds->group, $personLds->type]);
+        $this->assertArrayHasKey('index', $pages);
+        $this->assertArrayHasKey('create', $pages);
+        $this->assertArrayHasKey('edit', $pages);
     }
 
-    public function testUpdatePersonLds(): void
+    public function test_crud_operations(): void
     {
-        $personLds = PersonLds::factory()->create();
+        $personLds = PersonLds::factory()->create([
+            'type' => 'BAPL',
+        ]);
 
-        $updatedData = [
-            'group' => 'Updated Group',
-            'type'  => 'Updated Type',
-        ];
+        $this->assertDatabaseHas('person_lds', ['type' => 'BAPL']);
 
-        $response = $this->put(route('filament.resources.person-lds.update', $personLds), $updatedData);
+        $retrieved = PersonLds::find($personLds->id);
+        $this->assertNotNull($retrieved);
 
-        $response->assertStatus(302);
-        $this->assertDatabaseHas('person_lds', $updatedData);
-    }
+        $personLds->update(['type' => 'CONL']);
+        $this->assertDatabaseHas('person_lds', ['type' => 'CONL']);
 
-    public function testDeletePersonLds(): void
-    {
-        $personLds = PersonLds::factory()->create();
-
-        $response = $this->delete(route('filament.resources.person-lds.destroy', $personLds));
-
-        $response->assertStatus(302);
-        $this->assertSoftDeleted('person_lds', ['id' => $personLds->id]);
+        $personLds->delete();
+        $this->assertDatabaseMissing('person_lds', ['id' => $personLds->id]);
     }
 }

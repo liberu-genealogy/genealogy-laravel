@@ -17,14 +17,14 @@ class CreateCitationsTable extends Migration
     {
         Schema::create('citations', function (Blueprint $table): void {
             $table->bigIncrements('id');
-            $table->string('name');
-            $table->text('description');
+            $table->string('name')->nullable();
+            $table->text('description')->nullable();
             $table->dateTime('date')->nullable();
-            $table->integer('is_active');
-            $table->integer('volume');
-            $table->integer('page');
-            $table->integer('confidence');
-            $table->integer('source_id'); // unknown table
+            $table->integer('is_active')->nullable();
+            $table->integer('volume')->nullable();
+            $table->integer('page')->nullable();
+            $table->integer('confidence')->nullable();
+            $table->integer('source_id')->nullable();
 
             $table->timestamps();
         });
