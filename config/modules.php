@@ -168,4 +168,30 @@ return [
     |
     */
     'route_path' => 'routes',
+
+    /*
+    |--------------------------------------------------------------------------
+    | External Module Paths
+    |--------------------------------------------------------------------------
+    |
+    | Additional directories to scan for modules, keyed by absolute path with
+    | the base PSR-4 namespace as value. The app-modules/ root directory is
+    | always scanned automatically; add further paths here if needed.
+    |
+    | Example:
+    |   base_path('custom-modules') => 'Custom\\Modules',
+    |
+    */
+    'external_paths' => [],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Load Composer Modules
+    |--------------------------------------------------------------------------
+    |
+    | When enabled, modules installed as Composer packages (vendor) will also
+    | be discovered if they expose a module class.
+    |
+    */
+    'load_composer_modules' => false,
 ];

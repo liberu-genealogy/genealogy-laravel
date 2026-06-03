@@ -68,7 +68,7 @@
                     </div>
                 </form>
 
-                @if (\JoelButcher\Socialstream\Socialstream::show())
+                @if (\JoelButcher\Socialstream\Socialstream::show() && ! empty(\JoelButcher\Socialstream\Socialstream::providers()))
                     <x-socialstream />
                 @endif
             </div>

@@ -5,13 +5,13 @@ metadata:
   namespace: genealogy
   labels:
     app: genealogy-app
-    component: web
+    component: application
 spec:
   replicas: 2
   selector:
     matchLabels:
       app: genealogy-app
-      component: web
+      component: application
   strategy:
     type: RollingUpdate
     rollingUpdate:
@@ -21,12 +21,40 @@ spec:
     metadata:
       labels:
         app: genealogy-app
-        component: web
+        component: application
     spec:
       securityContext:
         runAsUser: 1000
         runAsGroup: 1000
         fsGroup: 1000
+      initContainers:
+        - name: wait-for-db
+          image: busybox:1.36
+          command: ['sh', '-c', 'until nc -z $DB_HOST $DB_PORT; do echo waiting for database; sleep 2; done']
+          envFrom:
+            - configMapRef:
+                name: genealogy-config
+            - secretRef:
+                name: genealogy-secrets
+        - name: migrations
+          image: liberu/genealogy:latest
+          imagePullPolicy: Always
+          command:
+            - sh
+            - -c
+            - |
+              php artisan migrate --force &&
+              php artisan config:cache &&
+              php artisan route:cache &&
+              php artisan view:cache
+          envFrom:
+            - configMapRef:
+                name: genealogy-config
+            - secretRef:
+                name: genealogy-secrets
+          volumeMounts:
+            - name: storage
+              mountPath: /var/www/html/storage/app
       containers:
         - name: app
           image: liberu/genealogy:latest
@@ -58,7 +86,7 @@ spec:
             httpGet:
               path: /up
               port: 8000
-            initialDelaySeconds: 10
+            initialDelaySeconds: 5
             periodSeconds: 5
             timeoutSeconds: 3
             failureThreshold: 3
@@ -66,6 +94,7 @@ spec:
             httpGet:
               path: /up
               port: 8000
+            initialDelaySeconds: 10
             failureThreshold: 30
             periodSeconds: 5
           volumeMounts:

@@ -6,7 +6,7 @@ metadata:
 spec:
   selector:
     app: genealogy-app
-    component: web
+    component: application
   ports:
     - name: http
       protocol: TCP

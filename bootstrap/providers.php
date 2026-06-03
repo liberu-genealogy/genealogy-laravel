@@ -12,4 +12,5 @@ return [
     App\Providers\HorizonServiceProvider::class,
     App\Providers\JetstreamServiceProvider::class,
     App\Providers\LaravelGedcomServiceProvider::class,
+    App\Providers\SocialstreamServiceProvider::class,
 ];

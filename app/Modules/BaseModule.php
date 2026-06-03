@@ -2,14 +2,24 @@
 
 namespace App\Modules;
 
-use ReflectionClass;
-use Artisan;
+use App\Events\ModuleDisabled;
+use App\Events\ModuleEnabled;
+use App\Events\ModuleInstalled;
+use App\Events\ModuleUninstalled;
 use App\Modules\Contracts\ModuleInterface;
+use App\Modules\Traits\Configurable;
+use App\Modules\Traits\HasModuleHooks;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\File;
+use ReflectionClass;
 
 abstract class BaseModule implements ModuleInterface
 {
+    use Configurable;
+    use HasModuleHooks;
+
     protected string $name;
     protected string $version;
     protected string $description;
@@ -21,160 +31,115 @@ abstract class BaseModule implements ModuleInterface
         $this->loadModuleInfo();
     }
 
-    /**
-     * Get the module name.
-     */
     public function getName(): string
     {
         return $this->name;
     }
 
-    /**
-     * Get the module version.
-     */
     public function getVersion(): string
     {
         return $this->version;
     }
 
-    /**
-     * Get the module description.
-     */
     public function getDescription(): string
     {
         return $this->description;
     }
 
-    /**
-     * Get the module dependencies.
-     */
     public function getDependencies(): array
     {
         return $this->dependencies;
     }
 
-    /**
-     * Check if the module is enabled.
-     */
     public function isEnabled(): bool
     {
-        return Cache::get("module.{$this->name}.enabled", false);
+        return (bool) Cache::get("module.{$this->name}.enabled", false);
     }
 
-    /**
-     * Enable the module.
-     */
     public function enable(): void
     {
-        Cache::put("module.{$this->name}.enabled", true);
+        $ttl = config('modules.cache_ttl', 3600);
+        Cache::put("module.{$this->name}.enabled", true, $ttl);
         $this->onEnable();
+        Event::dispatch(new ModuleEnabled($this));
     }
 
-    /**
-     * Disable the module.
-     */
     public function disable(): void
     {
-        Cache::put("module.{$this->name}.enabled", false);
+        $ttl = config('modules.cache_ttl', 3600);
+        Cache::put("module.{$this->name}.enabled", false, $ttl);
         $this->onDisable();
+        Event::dispatch(new ModuleDisabled($this));
     }
 
-    /**
-     * Install the module.
-     */
     public function install(): void
     {
         $this->runMigrations();
         $this->publishAssets();
         $this->onInstall();
         $this->enable();
+        Event::dispatch(new ModuleInstalled($this));
     }
 
-    /**
-     * Uninstall the module.
-     */
     public function uninstall(): void
     {
         $this->disable();
         $this->rollbackMigrations();
         $this->removeAssets();
         $this->onUninstall();
+        Event::dispatch(new ModuleUninstalled($this));
     }
 
-    /**
-     * Get module configuration.
-     */
     public function getConfig(): array
     {
         return $this->config;
     }
 
-    /**
-     * Load module information from module.json file.
-     */
     protected function loadModuleInfo(): void
     {
-        $modulePath = $this->getModulePath();
-        $moduleInfoPath = $modulePath . '/module.json';
+        $moduleInfoPath = $this->getModulePath() . '/module.json';
 
         if (File::exists($moduleInfoPath)) {
-            $moduleInfo = json_decode(File::get($moduleInfoPath), true);
-            
-            $this->name = $moduleInfo['name'] ?? class_basename($this);
-            $this->version = $moduleInfo['version'] ?? '1.0.0';
+            $moduleInfo = json_decode(File::get($moduleInfoPath), true) ?? [];
+
+            $this->name        = $moduleInfo['name'] ?? class_basename($this);
+            $this->version     = $moduleInfo['version'] ?? '1.0.0';
             $this->description = $moduleInfo['description'] ?? '';
             $this->dependencies = $moduleInfo['dependencies'] ?? [];
-            $this->config = $moduleInfo['config'] ?? [];
+            $this->config      = $moduleInfo['config'] ?? [];
+        } else {
+            $this->name        = $this->name ?? class_basename($this);
+            $this->version     = $this->version ?? '1.0.0';
+            $this->description = $this->description ?? '';
         }
     }
 
-    /**
-     * Get the module path.
-     */
     protected function getModulePath(): string
     {
         $reflection = new ReflectionClass($this);
         return dirname($reflection->getFileName());
     }
 
-    /**
-     * Run module migrations.
-     */
     protected function runMigrations(): void
     {
         $migrationsPath = $this->getModulePath() . '/database/migrations';
-        
+
         if (File::exists($migrationsPath)) {
-            Artisan::call('migrate', [
-                '--path' => 'app/Modules/' . $this->name . '/database/migrations',
-                '--force' => true,
-            ]);
+            $relative = str_replace(base_path() . '/', '', $migrationsPath);
+            Artisan::call('migrate', ['--path' => $relative, '--force' => true]);
         }
     }
 
-    /**
-     * Rollback module migrations.
-     */
-    protected function rollbackMigrations(): void
-    {
-        // Implementation depends on specific requirements
-        // Could use migration tags or custom rollback logic
-    }
+    protected function rollbackMigrations(): void {}
 
-    /**
-     * Publish module assets.
-     */
     protected function publishAssets(): void
     {
         Artisan::call('vendor:publish', [
-            '--tag' => strtolower($this->name) . '-assets',
+            '--tag'   => strtolower($this->name) . '-assets',
             '--force' => true,
         ]);
     }
 
-    /**
-     * Remove module assets.
-     */
     protected function removeAssets(): void
     {
         $assetsPath = public_path("modules/{$this->name}");
@@ -183,35 +148,11 @@ abstract class BaseModule implements ModuleInterface
         }
     }
 
-    /**
-     * Hook called when module is enabled.
-     */
-    protected function onEnable(): void
-    {
-        // Override in child classes
-    }
+    protected function onEnable(): void {}
 
-    /**
-     * Hook called when module is disabled.
-     */
-    protected function onDisable(): void
-    {
-        // Override in child classes
-    }
+    protected function onDisable(): void {}
 
-    /**
-     * Hook called when module is installed.
-     */
-    protected function onInstall(): void
-    {
-        // Override in child classes
-    }
+    protected function onInstall(): void {}
 
-    /**
-     * Hook called when module is uninstalled.
-     */
-    protected function onUninstall(): void
-    {
-        // Override in child classes
-    }
+    protected function onUninstall(): void {}
 }

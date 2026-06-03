@@ -5,6 +5,7 @@ namespace: genealogy
 
 resources:
   - namespace.yaml
+  - resource-quota.yaml
   - configmap.yaml
   - secret.yaml
   - pvc.yaml
@@ -12,10 +13,12 @@ resources:
   - horizon-deployment.yaml
   - reverb-deployment.yaml
   - service.yaml
+  - network-policy.yaml
   - ingress.yaml
   - hpa.yaml
   - scheduler-cronjob.yaml
 
 commonLabels:
   app.kubernetes.io/name: genealogy
+  app.kubernetes.io/part-of: liberu-genealogy
   app.kubernetes.io/managed-by: kustomize

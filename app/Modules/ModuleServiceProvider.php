@@ -2,149 +2,109 @@
 
 namespace App\Modules;
 
-use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Str;
 
 class ModuleServiceProvider extends ServiceProvider
 {
-    /**
-     * Register any application services.
-     */
     #[\Override]
     public function register(): void
     {
-        $this->registerModules();
+        $this->registerFromPath(app_path('Modules'), 'App\\Modules');
+
+        if (File::exists(base_path('app-modules'))) {
+            $this->registerFromPath(base_path('app-modules'), 'Modules');
+        }
+
+        foreach (config('modules.external_paths', []) as $path => $namespace) {
+            if (File::exists($path)) {
+                $this->registerFromPath($path, $namespace);
+            }
+        }
     }
 
-    /**
-     * Bootstrap any application services.
-     */
     public function boot(): void
     {
-        $this->bootModules();
+        $this->bootFromPath(app_path('Modules'), 'App\\Modules');
+
+        if (File::exists(base_path('app-modules'))) {
+            $this->bootFromPath(base_path('app-modules'), 'Modules');
+        }
+
+        foreach (config('modules.external_paths', []) as $path => $namespace) {
+            if (File::exists($path)) {
+                $this->bootFromPath($path, $namespace);
+            }
+        }
     }
 
-    /**
-     * Register all modules found in the modules directory.
-     */
-    protected function registerModules(): void
+    protected function registerFromPath(string $basePath, string $namespace): void
     {
-        $modulesPath = app_path('Modules');
-        
-        if (!File::exists($modulesPath)) {
+        if (! File::exists($basePath)) {
             return;
         }
 
-        $modules = File::directories($modulesPath);
-
-        foreach ($modules as $modulePath) {
+        foreach (File::directories($basePath) as $modulePath) {
             $moduleName = basename((string) $modulePath);
-            $this->registerModule($moduleName, $modulePath);
+            $this->registerModule($moduleName, $modulePath, $namespace);
         }
     }
 
     /**
-     * Register a specific module.
+     * Register phase: service providers, config merges, and migrations only.
+     * Routes/views/translations are deferred to boot() where cache is available.
      */
-    protected function registerModule(string $moduleName, string $modulePath): void
+    protected function registerModule(string $moduleName, string $modulePath, string $namespace): void
     {
-        // Register module service provider if it exists
-        $providerPath = $modulePath . '/Providers/' . $moduleName . 'ServiceProvider.php';
-        if (File::exists($providerPath)) {
-            $providerClass = "App\\Modules\\{$moduleName}\\Providers\\{$moduleName}ServiceProvider";
-            if (class_exists($providerClass)) {
-                $this->app->register($providerClass);
-            }
+        $providerClass = "{$namespace}\\{$moduleName}\\Providers\\{$moduleName}ServiceProvider";
+        if (class_exists($providerClass)) {
+            $this->app->register($providerClass);
         }
 
-        // Register module configuration
         $configPath = $modulePath . '/config';
         if (File::exists($configPath)) {
-            $configFiles = File::files($configPath);
-            foreach ($configFiles as $configFile) {
-                $configName = Str::snake($moduleName) . '.' . $configFile->getFilenameWithoutExtension();
-                $this->mergeConfigFrom($configFile->getPathname(), $configName);
+            foreach (File::files($configPath) as $configFile) {
+                $key = Str::snake($moduleName) . '.' . $configFile->getFilenameWithoutExtension();
+                $this->mergeConfigFrom($configFile->getPathname(), $key);
             }
         }
 
-        // Register module routes
-        $this->registerModuleRoutes($moduleName, $modulePath);
-
-        // Register module views
-        $viewsPath = $modulePath . '/resources/views';
-        if (File::exists($viewsPath)) {
-            $this->loadViewsFrom($viewsPath, Str::snake($moduleName));
-        }
-
-        // Register module translations
-        $langPath = $modulePath . '/resources/lang';
-        if (File::exists($langPath)) {
-            $this->loadTranslationsFrom($langPath, Str::snake($moduleName));
-        }
-
-        // Register module migrations
-        $migrationsPath = $modulePath . '/database/migrations';
-        if (File::exists($migrationsPath)) {
-            $this->loadMigrationsFrom($migrationsPath);
-        }
+        // Migrations are always registered so `artisan migrate` works unconditionally.
+        $this->loadMigrationsFrom($modulePath . '/database/migrations');
     }
 
-    /**
-     * Register module routes.
-     */
     protected function registerModuleRoutes(string $moduleName, string $modulePath): void
     {
         $routesPath = $modulePath . '/routes';
-        
-        if (!File::exists($routesPath)) {
+
+        if (! File::exists($routesPath)) {
             return;
         }
 
-        // Web routes
-        $webRoutesPath = $routesPath . '/web.php';
-        if (File::exists($webRoutesPath)) {
-            $this->loadRoutesFrom($webRoutesPath);
-        }
-
-        // API routes
-        $apiRoutesPath = $routesPath . '/api.php';
-        if (File::exists($apiRoutesPath)) {
-            $this->loadRoutesFrom($apiRoutesPath);
-        }
-
-        // Admin routes (for Filament integration)
-        $adminRoutesPath = $routesPath . '/admin.php';
-        if (File::exists($adminRoutesPath)) {
-            $this->loadRoutesFrom($adminRoutesPath);
+        foreach (['web.php', 'api.php', 'admin.php'] as $routeFile) {
+            $fullPath = $routesPath . '/' . $routeFile;
+            if (File::exists($fullPath)) {
+                $this->loadRoutesFrom($fullPath);
+            }
         }
     }
 
-    /**
-     * Boot all registered modules.
-     */
-    protected function bootModules(): void
+    protected function bootFromPath(string $basePath, string $namespace): void
     {
-        $modulesPath = app_path('Modules');
-        
-        if (!File::exists($modulesPath)) {
+        if (! File::exists($basePath)) {
             return;
         }
 
-        $modules = File::directories($modulesPath);
-
-        foreach ($modules as $modulePath) {
+        foreach (File::directories($basePath) as $modulePath) {
             $moduleName = basename((string) $modulePath);
             $this->bootModule($moduleName, $modulePath);
         }
     }
 
-    /**
-     * Boot a specific module.
-     */
     protected function bootModule(string $moduleName, string $modulePath): void
     {
-        // Publish module assets
         $assetsPath = $modulePath . '/resources/assets';
         if (File::exists($assetsPath)) {
             $this->publishes([
@@ -152,15 +112,50 @@ class ModuleServiceProvider extends ServiceProvider
             ], Str::snake($moduleName) . '-assets');
         }
 
-        // Publish module configuration
         $configPath = $modulePath . '/config';
         if (File::exists($configPath)) {
-            $configFiles = File::files($configPath);
-            foreach ($configFiles as $configFile) {
+            foreach (File::files($configPath) as $configFile) {
                 $this->publishes([
                     $configFile->getPathname() => config_path(Str::snake($moduleName) . '.' . $configFile->getFilename()),
                 ], Str::snake($moduleName) . '-config');
             }
         }
+
+        // Routes, views, and translations are gated behind enabled state.
+        // Cache is available during boot() so this is safe.
+        if (! $this->isModuleEnabled($moduleName)) {
+            return;
+        }
+
+        $this->registerModuleRoutes($moduleName, $modulePath);
+
+        $viewsPath = $modulePath . '/resources/views';
+        if (File::exists($viewsPath)) {
+            $this->loadViewsFrom($viewsPath, Str::snake($moduleName));
+        }
+
+        $langPath = $modulePath . '/resources/lang';
+        if (File::exists($langPath)) {
+            $this->loadTranslationsFrom($langPath, Str::snake($moduleName));
+        }
+    }
+
+    /**
+     * Checks cache first (runtime enabled/disabled state), then falls back to
+     * the default_enabled config list (module is enabled by default if listed).
+     */
+    protected function isModuleEnabled(string $moduleName): bool
+    {
+        $cacheKey = "module.{$moduleName}.enabled";
+
+        try {
+            if (Cache::has($cacheKey)) {
+                return (bool) Cache::get($cacheKey);
+            }
+        } catch (\Throwable) {
+            // Cache may not be available in all environments (e.g. during tests).
+        }
+
+        return in_array($moduleName, config('modules.default_enabled', []), true);
     }
 }
