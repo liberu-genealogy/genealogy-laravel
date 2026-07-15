@@ -2,6 +2,14 @@
 @import './site.css';
 
 /*
+ * The typography plugin was in tailwind.config.js, which Tailwind 4 ignores —
+ * so `prose` on the legal pages compiled to nothing and every element carried
+ * its own colour classes instead. Loading it here makes long-form documents
+ * (privacy, terms) style themselves from the tokens below.
+ */
+@plugin "@tailwindcss/typography";
+
+/*
  * The Registry palette + type scale. See docs/DESIGN.md.
  * Tailwind 4 reads theme config from CSS, not tailwind.config.js — a JS config
  * is ignored without an @config directive, which is why Figtree never rendered.
@@ -67,6 +75,27 @@
     --z-modal: 40;
     --z-toast: 50;
     --z-tooltip: 60;
+}
+
+/*
+ * Long-form documents (privacy, terms) — the Registry palette applied to the
+ * typography plugin, so legal text inherits the system instead of hand-rolling
+ * a colour on every element. Measure stays at the plugin's ~65ch.
+ */
+.prose {
+    --tw-prose-body: var(--color-ink-muted);
+    --tw-prose-headings: var(--color-ink);
+    --tw-prose-lead: var(--color-ink-muted);
+    --tw-prose-links: var(--color-registry-green);
+    --tw-prose-bold: var(--color-ink);
+    --tw-prose-counters: var(--color-ink-faint);
+    --tw-prose-bullets: var(--color-ink-faint);
+    --tw-prose-hr: var(--color-rule);
+    --tw-prose-quotes: var(--color-ink);
+    --tw-prose-quote-borders: var(--color-rule);
+    --tw-prose-captions: var(--color-ink-faint);
+    --tw-prose-th-borders: var(--color-rule);
+    --tw-prose-td-borders: var(--color-rule);
 }
 
 /*
