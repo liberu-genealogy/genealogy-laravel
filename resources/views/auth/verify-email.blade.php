@@ -1,45 +1,42 @@
-<x-guest-layout>
-    <x-authentication-card>
-        <x-slot name="logo">
-            <x-authentication-card-logo />
-        </x-slot>
+{{-- Was <x-guest-layout>; see auth/card.blade.php for why all seven now share one shell. --}}
+@extends('layouts.home')
 
-        <div class="mb-4 text-sm text-gray-600">
-            {{ __('Before continuing, could you verify your email address by clicking on the link we just emailed to you? If you didn\'t receive the email, we will gladly send you another.') }}
-        </div>
-
+@section('content')
+    <x-auth.card
+        :title="__('Verify your email')"
+        :subtitle="__('We sent a link to the address you signed up with. Click it and you are in.')"
+    >
         @if (session('status') == 'verification-link-sent')
-            <div class="mb-4 font-medium text-sm text-green-600">
-                {{ __('A new verification link has been sent to the email address you provided in your profile settings.') }}
-            </div>
+            <p role="status" class="mb-6 rounded-md border border-registry-green bg-registry-tint px-4 py-3 text-body text-registry-green-deep">
+                {{ __('A new verification link has been sent to your email address.') }}
+            </p>
         @endif
 
-        <div class="mt-4 flex items-center justify-between">
-            <form method="POST" action="{{ route('verification.send') }}">
+        <p class="text-pretty text-body text-ink-muted">
+            {{ __("If it hasn't arrived, check your spam folder — or send another.") }}
+        </p>
+
+        <form method="POST" action="{{ route('verification.send') }}" class="mt-6">
+            @csrf
+            <button type="submit"
+                    class="inline-flex min-h-11 w-full items-center justify-center rounded-md bg-registry-green px-5 py-3 text-label text-paper transition-colors duration-150 ease-out-quart hover:bg-registry-green-deep focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-registry-green">
+                {{ __('Resend verification email') }}
+            </button>
+        </form>
+
+        <div class="mt-6 flex items-center justify-between gap-4 border-t border-rule pt-6">
+            <a href="{{ route('profile.show') }}"
+               class="inline-flex min-h-11 items-center rounded-sm text-label text-registry-green transition-colors duration-150 ease-out-quart hover:text-registry-green-deep focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-registry-green">
+                {{ __('Edit profile') }}
+            </a>
+
+            <form method="POST" action="{{ route('logout') }}">
                 @csrf
-
-                <div>
-                    <x-button type="submit">
-                        {{ __('Resend Verification Email') }}
-                    </x-button>
-                </div>
+                <button type="submit"
+                        class="inline-flex min-h-11 items-center rounded-sm text-label text-ink-muted transition-colors duration-150 ease-out-quart hover:text-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-registry-green">
+                    {{ __('Sign out') }}
+                </button>
             </form>
-
-            <div>
-                <a
-                    href="{{ route('profile.show') }}"
-                    class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                >
-                    {{ __('Edit Profile') }}</a>
-
-                <form method="POST" action="{{ route('logout') }}" class="inline">
-                    @csrf
-
-                    <button type="submit" class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 ms-2">
-                        {{ __('Log Out') }}
-                    </button>
-                </form>
-            </div>
         </div>
-    </x-authentication-card>
-</x-guest-layout>
+    </x-auth.card>
+@endsection

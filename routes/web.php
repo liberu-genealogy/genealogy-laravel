@@ -36,7 +36,11 @@ Route::get('/about', fn (): \Illuminate\Contracts\View\Factory|\Illuminate\Contr
 Route::get('/subscription', fn (): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View => view('pages.subscription'))->name('subscription');
 
 Route::get('/contact', fn (): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View => view('contact'));
-Route::post('/contact/send', [ContactController::class, 'sendEmail'])->name('contact.send');
+// throttle: this endpoint drives mail from an unauthenticated public form. With
+// no limit it is an open relay pointed at whoever contact.to is.
+Route::post('/contact/send', [ContactController::class, 'sendEmail'])
+    ->middleware('throttle:5,1')
+    ->name('contact.send');
 
 Route::middleware([
     'auth:sanctum',

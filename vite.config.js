@@ -28,6 +28,11 @@ export default defineConfig({
                 {
                     src: "resources/images/*",
                     dest: "images",
+                    // Without stripBase the matched path is preserved in full, so
+                    // files landed at build/images/resources/images/* while blade
+                    // asked for build/images/* — every image 404'd. Strip the two
+                    // leading segments only, so corners/ and emails/ keep theirs.
+                    rename: { stripBase: 2 },
                 },
             ],
         }),

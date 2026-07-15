@@ -41,6 +41,9 @@ class AdminPanelProvider extends PanelProvider
             ->login([AuthenticatedSessionController::class, 'create'])
             ->passwordReset()
             ->emailVerification()
+            // DESIGN.md is light-only; Filament ships dark mode on and follows
+            // the OS, serving a theme with no defined palette or verified contrast.
+            ->darkMode(false)
             ->viteTheme('resources/css/filament/admin/theme.css')
             ->brandName(fn () => app(\App\Settings\GeneralSettings::class)->site_name)
             ->colors([
@@ -48,8 +51,8 @@ class AdminPanelProvider extends PanelProvider
                 'gray' => Color::Slate,
             ])
             ->brandName(fn () => app(\App\Settings\GeneralSettings::class)->site_name)
-            ->brandLogo(asset('images/logo.svg'))
-            ->favicon(asset('images/favicon.ico'))
+            ->brandLogo(asset('build/images/logo.svg')) // vite-plugin-static-copy writes to build/images/; asset('images/..') was 404 on every panel page
+            ->favicon(asset('favicon.ico')) // public/favicon.ico is the only .ico that exists; images/favicon.ico was 404
             ->userMenuItems([
                 Action::make('profile')
                     ->label('Profile')

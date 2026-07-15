@@ -1,28 +1,28 @@
-<x-guest-layout>
-    <x-authentication-card>
-        <x-slot name="logo">
-            <x-authentication-card-logo />
-        </x-slot>
+{{-- Was <x-guest-layout>; see auth/card.blade.php for why all seven now share one shell. --}}
+@extends('layouts.home')
 
-        <div class="mb-4 text-sm text-gray-600">
-            {{ __('This is a secure area of the application. Please confirm your password before continuing.') }}
-        </div>
+@section('content')
+    <x-auth.card
+        :title="__('Confirm your password')"
+        :subtitle="__('This is a secure area. Please confirm your password before continuing.')"
+    >
+        <x-validation-errors class="mb-6" />
 
-        <x-validation-errors class="mb-4" />
-
-        <form method="POST" action="{{ route('password.confirm') }}">
+        <form method="POST" action="{{ route('password.confirm') }}" class="flex flex-col gap-5">
             @csrf
 
-            <div>
-                <x-label for="password" value="{{ __('Password') }}" />
-                <x-input id="password" class="block mt-1 w-full" type="password" name="password" required autocomplete="current-password" autofocus />
-            </div>
+            <x-auth.field
+                name="password"
+                :label="__('Password')"
+                type="password"
+                autocomplete="current-password"
+                autofocus
+            />
 
-            <div class="flex justify-end mt-4">
-                <x-button class="ms-4">
-                    {{ __('Confirm') }}
-                </x-button>
-            </div>
+            <button type="submit"
+                    class="inline-flex min-h-11 w-full items-center justify-center rounded-md bg-registry-green px-5 py-3 text-label text-paper transition-colors duration-150 ease-out-quart hover:bg-registry-green-deep focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-registry-green">
+                {{ __('Confirm') }}
+            </button>
         </form>
-    </x-authentication-card>
-</x-guest-layout>
+    </x-auth.card>
+@endsection

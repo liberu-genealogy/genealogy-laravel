@@ -1,323 +1,241 @@
-@extends('layouts.home')
+@extends('layouts.home', ['fieldHero' => true])
 
-@section('content')
 @php
-    $trialDays = config('subscription.premium.trial_days', 14);
+    $settings = app(\App\Settings\GeneralSettings::class);
     $price = config('subscription.premium.price', '$2.99');
     $interval = config('subscription.premium.interval', 'month');
+    $trialDays = (int) config('subscription.premium.trial_days', 14);
+    $repo = 'https://github.com/liberu-genealogy/genealogy-laravel';
+
+    // Every line below was checked against the code that enforces it.
+    //
+    // Free is everything that is NOT behind isPremium(): PersonResource,
+    // FamilyResource, GedcomResource, MediaObjectResource and the chart pages
+    // carry no premium check at all.
+    //
+    // Premium is exactly the set that does: DnaResource, DnaMatchingResource,
+    // SmartMatchResource, DuplicateCheckResource, DnaTriangulationPage.
+    //
+    // Deliberately NOT listed, because nothing implements them: "priority
+    // support" (a boolean in SubscriptionService's feature map, no support
+    // system behind it), "advanced charts" (chart pages are free for everyone),
+    // and media storage tiers (no limit exists in the codebase). The old page
+    // sold all three, and also promised free users "1 DNA kit upload" when
+    // DnaResource is gated outright — free gets none.
+    $free = [
+        'Build the tree — people, families, events, places',
+        'Sources and citations under every fact',
+        'Pedigree, fan and descendant charts',
+        'Photos, documents and media',
+        'GEDCOM import and export, always',
+    ];
+
+    $premium = [
+        'Upload DNA from any testing company',
+        'DNA matching against other kits',
+        'Segment triangulation',
+        'Smart matching across public trees',
+        'Duplicate detection and assisted merging',
+    ];
+
+    $faqs = [
+        [
+            'q' => 'What happens when the trial ends?',
+            'a' => "Nothing is taken from you. The DNA tools stop, and everything else — your tree, your sources, your media, your export — carries on working exactly as before. No card is required to start the trial, so nothing can be charged at the end of it.",
+        ],
+        [
+            'q' => 'Can I cancel?',
+            'a' => "Yes, at any time, and premium runs to the end of the period you already paid for. There is no cancellation fee and no retention flow designed to wear you down.",
+        ],
+        [
+            'q' => 'What happens to my data if I stop paying?',
+            'a' => 'It stays yours and it stays readable. Downgrading locks the DNA tools, not your records — and GEDCOM export is free forever, so you can take the whole tree elsewhere on the way out if you want to.',
+        ],
+        [
+            // The one answer that carries its own artifact — the evidence sits
+            // where the question is actually asked, not bolted to the CTA.
+            'q' => 'How do payments work?',
+            'a' => 'Cards are handled by Stripe. Card details never touch our servers, and you can ',
+            'link' => ['read the subscription code', $repo.'/blob/main/app/Services/SubscriptionService.php'],
+            'tail' => ' yourself.',
+        ],
+        [
+            'q' => 'Why is any of it paid?',
+            'a' => 'DNA matching and triangulation are the parts that burn real CPU on our side, so they are the parts that cost money. Building, citing and exporting your tree does not, so it does not.',
+        ],
+    ];
 @endphp
-<!-- Hero Section -->
-<section class="relative bg-gradient-to-br from-purple-50 via-white to-pink-50 py-20 overflow-hidden">
-    <div class="container mx-auto px-4 relative z-10">
-        <div class="text-center mb-16">
-            <div class="inline-flex items-center px-4 py-2 bg-gradient-to-r from-yellow-400 to-orange-400 text-white rounded-full text-sm font-medium mb-6">
-                ✨ Premium Features
-            </div>
-            <h1 class="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-                Upgrade to Premium
-            </h1>
-            <p class="text-xl text-gray-600 max-w-2xl mx-auto">
-                Unlock powerful genealogy tools and unlimited features. Start with a {{ $trialDays }}-day free trial — no credit card required.
-            </p>
-        </div>
 
-        <!-- Pricing Cards -->
-        <div class="max-w-4xl mx-auto grid md:grid-cols-2 gap-8 mb-16">
-            <!-- Standard Plan -->
-            <div class="bg-white rounded-2xl border border-gray-200 p-8 shadow-sm">
-                <div class="text-center mb-8">
-                    <h2 class="text-2xl font-bold text-gray-900 mb-1">Standard</h2>
-                    <p class="text-gray-500 mb-4">Free forever</p>
-                    <div class="text-4xl font-bold text-gray-900">$0</div>
-                </div>
+@section('content')
 
-                <ul class="space-y-4">
-                    <li class="flex items-center">
-                        <div class="w-5 h-5 bg-green-100 rounded-full flex items-center justify-center mr-3 flex-shrink-0">
-                            <svg class="w-3 h-3 text-green-600" fill="currentColor" viewBox="0 0 20 20">
-                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+{{-- The field. The pricing argument in one line. --}}
+<section class="bg-registry-field">
+    <div class="mx-auto max-w-6xl px-6 py-20 lg:py-24">
+        <h1 class="max-w-[22ch] text-display text-balance text-paper">
+            The tree is free. The DNA work isn't.
+        </h1>
+        <p class="mt-6 max-w-[58ch] text-pretty text-body text-emerald-100">
+            Building, citing and exporting your family tree costs nothing, forever, with no row limit
+            and no export paywall. Premium pays for the work that runs on our processors instead of
+            your patience.
+        </p>
+    </div>
+</section>
+
+{{-- The two plans. Not a card grid: one ledger, two columns, a shared rule
+     between them — the same register grammar as the record. --}}
+<section class="border-b border-rule bg-paper" aria-labelledby="plans-heading">
+    <div class="mx-auto max-w-6xl px-6 py-20 lg:py-24">
+        <h2 id="plans-heading" class="sr-only">Plans</h2>
+
+        <div class="grid gap-px overflow-hidden rounded-lg border border-rule bg-rule lg:grid-cols-2">
+            {{-- Free --}}
+            <div class="flex flex-col bg-paper p-8 lg:p-10">
+                <h3 class="text-title text-ink">Free</h3>
+                <p class="mt-1 text-label text-ink-muted">Forever, and not a trial of anything.</p>
+
+                <p class="mt-6 flex items-baseline gap-2">
+                    <span class="text-headline tabular-nums text-ink">$0</span>
+                </p>
+
+                <ul class="mt-8 flex flex-col gap-3 text-body text-ink">
+                    @foreach ($free as $item)
+                        <li class="flex items-start gap-3">
+                            <svg class="mt-1.5 size-4 shrink-0 text-registry-green" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                <path d="M2.5 8.5l3.5 3.5 7.5-7.5"/>
                             </svg>
-                        </div>
-                        <span class="text-gray-700">Basic family tree</span>
-                    </li>
-                    <li class="flex items-center">
-                        <div class="w-5 h-5 bg-green-100 rounded-full flex items-center justify-center mr-3 flex-shrink-0">
-                            <svg class="w-3 h-3 text-green-600" fill="currentColor" viewBox="0 0 20 20">
-                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
-                            </svg>
-                        </div>
-                        <span class="text-gray-700">Standard charts</span>
-                    </li>
-                    <li class="flex items-center">
-                        <div class="w-5 h-5 bg-green-100 rounded-full flex items-center justify-center mr-3 flex-shrink-0">
-                            <svg class="w-3 h-3 text-green-600" fill="currentColor" viewBox="0 0 20 20">
-                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
-                            </svg>
-                        </div>
-                        <span class="text-gray-700">1 DNA kit upload</span>
-                    </li>
-                    <li class="flex items-center">
-                        <div class="w-5 h-5 bg-red-100 rounded-full flex items-center justify-center mr-3 flex-shrink-0">
-                            <svg class="w-3 h-3 text-red-500" fill="currentColor" viewBox="0 0 20 20">
-                                <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"/>
-                            </svg>
-                        </div>
-                        <span class="text-gray-400 line-through">Premium badge</span>
-                    </li>
-                    <li class="flex items-center">
-                        <div class="w-5 h-5 bg-red-100 rounded-full flex items-center justify-center mr-3 flex-shrink-0">
-                            <svg class="w-3 h-3 text-red-500" fill="currentColor" viewBox="0 0 20 20">
-                                <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"/>
-                            </svg>
-                        </div>
-                        <span class="text-gray-400 line-through">Duplicate checker</span>
-                    </li>
-                    <li class="flex items-center">
-                        <div class="w-5 h-5 bg-red-100 rounded-full flex items-center justify-center mr-3 flex-shrink-0">
-                            <svg class="w-3 h-3 text-red-500" fill="currentColor" viewBox="0 0 20 20">
-                                <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"/>
-                            </svg>
-                        </div>
-                        <span class="text-gray-400 line-through">Smart matching</span>
-                    </li>
+                            {{ $item }}
+                        </li>
+                    @endforeach
                 </ul>
 
-                <div class="mt-8">
-                    <a href="{{ route('register') }}"
-                       class="block w-full text-center bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold py-3 px-6 rounded-lg transition-colors duration-200">
-                        Get Started Free
-                    </a>
-                </div>
-            </div>
-
-            <!-- Premium Plan -->
-            <div class="bg-gradient-to-br from-purple-50 to-pink-50 rounded-2xl border-2 border-purple-300 p-8 relative shadow-lg">
-                <div class="absolute -top-4 left-1/2 transform -translate-x-1/2">
-                    <span class="bg-gradient-to-r from-purple-500 to-pink-500 text-white px-4 py-1 rounded-full text-sm font-semibold">
-                        Most Popular
-                    </span>
-                </div>
-
-                <div class="text-center mb-8">
-                    <h2 class="text-2xl font-bold text-gray-900 mb-1">Premium</h2>
-                    <p class="text-gray-500 mb-4">{{ $trialDays }}-day free trial</p>
-                    <div class="text-4xl font-bold text-gray-900">{{ $price }}</div>
-                    <p class="text-sm text-gray-500">per {{ $interval }}</p>
-                    <div class="mt-3 bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full text-sm font-medium inline-block">
-                        🎉 {{ $trialDays }}-Day Free Trial
-                    </div>
-                </div>
-
-                <ul class="space-y-4">
-                    <li class="flex items-center">
-                        <div class="w-5 h-5 bg-green-100 rounded-full flex items-center justify-center mr-3 flex-shrink-0">
-                            <svg class="w-3 h-3 text-green-600" fill="currentColor" viewBox="0 0 20 20">
-                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
-                            </svg>
-                        </div>
-                        <span class="text-gray-700">Everything in Standard</span>
-                    </li>
-                    <li class="flex items-center">
-                        <div class="w-5 h-5 bg-green-100 rounded-full flex items-center justify-center mr-3 flex-shrink-0">
-                            <svg class="w-3 h-3 text-green-600" fill="currentColor" viewBox="0 0 20 20">
-                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
-                            </svg>
-                        </div>
-                        <span class="text-gray-700">Unlimited DNA uploads</span>
-                    </li>
-                    <li class="flex items-center">
-                        <div class="w-5 h-5 bg-green-100 rounded-full flex items-center justify-center mr-3 flex-shrink-0">
-                            <svg class="w-3 h-3 text-green-600" fill="currentColor" viewBox="0 0 20 20">
-                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
-                            </svg>
-                        </div>
-                        <span class="text-gray-700">Smart duplicate checker</span>
-                    </li>
-                    <li class="flex items-center">
-                        <div class="w-5 h-5 bg-green-100 rounded-full flex items-center justify-center mr-3 flex-shrink-0">
-                            <svg class="w-3 h-3 text-green-600" fill="currentColor" viewBox="0 0 20 20">
-                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
-                            </svg>
-                        </div>
-                        <span class="text-gray-700">Smart matching across trees</span>
-                    </li>
-                    <li class="flex items-center">
-                        <div class="w-5 h-5 bg-green-100 rounded-full flex items-center justify-center mr-3 flex-shrink-0">
-                            <svg class="w-3 h-3 text-green-600" fill="currentColor" viewBox="0 0 20 20">
-                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
-                            </svg>
-                        </div>
-                        <span class="text-gray-700">Premium badge</span>
-                    </li>
-                    <li class="flex items-center">
-                        <div class="w-5 h-5 bg-green-100 rounded-full flex items-center justify-center mr-3 flex-shrink-0">
-                            <svg class="w-3 h-3 text-green-600" fill="currentColor" viewBox="0 0 20 20">
-                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
-                            </svg>
-                        </div>
-                        <span class="text-gray-700">Priority support</span>
-                    </li>
-                </ul>
-
-                <div class="mt-8">
-                    @auth
-                        <a href="{{ url('/app/subscription') }}"
-                           class="block w-full text-center bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white font-semibold py-3 px-6 rounded-lg transition-all duration-200 shadow-md hover:shadow-lg">
-                            Upgrade to Premium
+                <div class="mt-auto pt-10">
+                    @guest
+                        <a href="{{ route('register') }}"
+                           class="inline-flex min-h-11 w-full items-center justify-center rounded-md border border-ink-faint px-5 py-3 text-label text-registry-green transition-colors duration-150 ease-out-quart hover:bg-surface hover:text-registry-green-deep focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-registry-green">
+                            Start a tree
                         </a>
                     @else
-                        <a href="{{ route('register') }}"
-                           class="block w-full text-center bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white font-semibold py-3 px-6 rounded-lg transition-all duration-200 shadow-md hover:shadow-lg">
-                            Start Free Trial
+                        <a href="{{ route('filament.app.tenant') }}"
+                           class="inline-flex min-h-11 w-full items-center justify-center rounded-md border border-ink-faint px-5 py-3 text-label text-registry-green transition-colors duration-150 ease-out-quart hover:bg-surface hover:text-registry-green-deep focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-registry-green">
+                            Open your tree
                         </a>
-                        <p class="text-xs text-gray-500 mt-2 text-center">No credit card required</p>
-                    @endauth
+                    @endguest
+                </div>
+            </div>
+
+            {{-- Premium. No "most popular" sticker: there is no data behind one,
+                 and manufactured popularity is the pattern this product rejects. --}}
+            <div class="flex flex-col bg-surface p-8 lg:p-10">
+                <h3 class="text-title text-ink">Premium</h3>
+                <p class="mt-1 text-label text-ink-muted">
+                    <span class="tabular-nums">{{ $trialDays }}</span>-day trial. No card to start.
+                </p>
+
+                <p class="mt-6 flex items-baseline gap-2">
+                    <span class="text-headline tabular-nums text-ink">{{ $price }}</span>
+                    <span class="text-body text-ink-muted">per {{ $interval }}</span>
+                </p>
+
+                <ul class="mt-8 flex flex-col gap-3 text-body text-ink">
+                    <li class="flex items-start gap-3 text-ink-muted">
+                        <svg class="mt-1.5 size-4 shrink-0 text-registry-green" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <path d="M2.5 8.5l3.5 3.5 7.5-7.5"/>
+                        </svg>
+                        Everything in Free, unchanged
+                    </li>
+                    @foreach ($premium as $item)
+                        <li class="flex items-start gap-3">
+                            <svg class="mt-1.5 size-4 shrink-0 text-registry-green" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                <path d="M2.5 8.5l3.5 3.5 7.5-7.5"/>
+                            </svg>
+                            {{ $item }}
+                        </li>
+                    @endforeach
+                </ul>
+
+                <div class="mt-auto pt-10">
+                    @guest
+                        <a href="{{ route('register') }}"
+                           class="inline-flex min-h-11 w-full items-center justify-center rounded-md bg-registry-green px-5 py-3 text-label text-paper transition-colors duration-150 ease-out-quart hover:bg-registry-green-deep focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-registry-green">
+                            Start the trial
+                        </a>
+                    @else
+                        <a href="{{ url('/app/subscription') }}"
+                           class="inline-flex min-h-11 w-full items-center justify-center rounded-md bg-registry-green px-5 py-3 text-label text-paper transition-colors duration-150 ease-out-quart hover:bg-registry-green-deep focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-registry-green">
+                            Upgrade to premium
+                        </a>
+                    @endguest
                 </div>
             </div>
         </div>
+
+        <p class="mt-6 max-w-[68ch] text-pretty text-label text-ink-muted">
+            That is the whole list. There is no third tier, no seat count, and nothing on this page
+            that isn't enforced in code you can read.
+        </p>
     </div>
 </section>
 
-<!-- Features Detail Section -->
-<section class="py-20 bg-white">
-    <div class="container mx-auto px-4">
-        <div class="text-center mb-12">
-            <h2 class="text-3xl font-bold text-gray-900 mb-4">Everything Premium Includes</h2>
-            <p class="text-xl text-gray-600 max-w-2xl mx-auto">
-                Take your genealogy research to the next level with advanced tools designed for serious family historians
+{{-- FAQ. The questions a paying researcher actually asks, answered without hedging. --}}
+<section class="border-b border-rule bg-surface" aria-labelledby="faq-heading">
+    <div class="mx-auto grid max-w-6xl gap-12 px-6 py-20 lg:grid-cols-12 lg:gap-16 lg:py-24">
+        <div class="lg:col-span-4">
+            <h2 id="faq-heading" class="text-headline text-balance text-ink">
+                The questions worth asking
+            </h2>
+            <p class="mt-4 max-w-[38ch] text-pretty text-body text-ink-muted">
+                Mostly variations on one question: what happens to my research if I stop paying.
             </p>
         </div>
 
-        <div class="max-w-5xl mx-auto grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <div class="text-center p-6">
-                <div class="w-14 h-14 bg-purple-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
-                    <svg class="w-7 h-7 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"/>
-                    </svg>
+        <dl class="divide-y divide-rule border-y border-rule lg:col-span-8">
+            @foreach ($faqs as $faq)
+                <div class="py-7">
+                    <dt class="text-title text-balance text-ink">{{ $faq['q'] }}</dt>
+                    <dd class="mt-2 max-w-[64ch] text-pretty text-body text-ink-muted">{{ $faq['a'] }}@isset($faq['link'])<a
+                            href="{{ $faq['link'][1] }}"
+                            class="rounded-sm text-registry-green underline underline-offset-2 transition-colors duration-150 ease-out-quart hover:text-registry-green-deep focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-registry-green"
+                        >{{ $faq['link'][0] }}</a>{{ $faq['tail'] ?? '' }}@endisset</dd>
                 </div>
-                <h3 class="text-lg font-semibold text-gray-900 mb-2">Unlimited DNA Uploads</h3>
-                <p class="text-gray-600 text-sm">Upload DNA results from any testing company — AncestryDNA, 23andMe, MyHeritage, and more.</p>
-            </div>
+            @endforeach
+        </dl>
+    </div>
+</section>
 
-            <div class="text-center p-6">
-                <div class="w-14 h-14 bg-blue-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
-                    <svg class="w-7 h-7 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/>
-                    </svg>
-                </div>
-                <h3 class="text-lg font-semibold text-gray-900 mb-2">Smart Duplicate Checker</h3>
-                <p class="text-gray-600 text-sm">Automatically detect and merge duplicate person entries, keeping your family tree clean and accurate.</p>
-            </div>
+{{-- Close on the field. --}}
+<section class="bg-registry-field" aria-labelledby="sub-cta-heading">
+    <div class="mx-auto grid max-w-6xl gap-10 px-6 py-20 lg:grid-cols-12 lg:items-center lg:gap-16 lg:py-24">
+        <div class="lg:col-span-7">
+            <h2 id="sub-cta-heading" class="text-headline text-balance text-paper">
+                Start free. Add DNA when you need it.
+            </h2>
+            <p class="mt-4 max-w-[52ch] text-pretty text-body text-emerald-100">
+                The trial takes no card, and the free tier isn't a countdown. If premium turns out
+                not to be worth it, the tree you built is still yours and still exports.
+            </p>
+        </div>
 
-            <div class="text-center p-6">
-                <div class="w-14 h-14 bg-emerald-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
-                    <svg class="w-7 h-7 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
-                    </svg>
-                </div>
-                <h3 class="text-lg font-semibold text-gray-900 mb-2">Smart Matching</h3>
-                <p class="text-gray-600 text-sm">Find potential matches and relatives across public family trees to expand your research.</p>
-            </div>
-
-            <div class="text-center p-6">
-                <div class="w-14 h-14 bg-yellow-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
-                    <svg class="w-7 h-7 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"/>
-                    </svg>
-                </div>
-                <h3 class="text-lg font-semibold text-gray-900 mb-2">Premium Badge</h3>
-                <p class="text-gray-600 text-sm">Display your premium status and show your commitment to serious genealogy research.</p>
-            </div>
-
-            <div class="text-center p-6">
-                <div class="w-14 h-14 bg-rose-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
-                    <svg class="w-7 h-7 text-rose-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192l-3.536 3.536M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-5 0a4 4 0 11-8 0 4 4 0 018 0z"/>
-                    </svg>
-                </div>
-                <h3 class="text-lg font-semibold text-gray-900 mb-2">Priority Support</h3>
-                <p class="text-gray-600 text-sm">Get faster responses and dedicated assistance from our genealogy research support team.</p>
-            </div>
-
-            <div class="text-center p-6">
-                <div class="w-14 h-14 bg-indigo-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
-                    <svg class="w-7 h-7 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
-                    </svg>
-                </div>
-                <h3 class="text-lg font-semibold text-gray-900 mb-2">Advanced Media Storage</h3>
-                <p class="text-gray-600 text-sm">Store more photos, documents, and media files to build a richer family archive.</p>
+        {{-- One action. A pricing page's last block is where someone decides to
+             pay; a second button sending them to GitHub only competes with it,
+             and this audience is genealogists, not developers. The source link
+             lives in the FAQ, where the question is actually asked. --}}
+        <div class="lg:col-span-5">
+            <div class="flex flex-wrap items-center gap-3 lg:justify-end">
+                @guest
+                    <a href="{{ route('register') }}"
+                       class="inline-flex min-h-11 items-center rounded-md bg-paper px-5 py-3 text-label text-registry-green-deep transition-colors duration-150 ease-out-quart hover:bg-registry-tint focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-registry-tint">
+                        Start free
+                    </a>
+                @else
+                    <a href="{{ url('/app/subscription') }}"
+                       class="inline-flex min-h-11 items-center rounded-md bg-paper px-5 py-3 text-label text-registry-green-deep transition-colors duration-150 ease-out-quart hover:bg-registry-tint focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-registry-tint">
+                        Upgrade to premium
+                    </a>
+                @endguest
             </div>
         </div>
     </div>
 </section>
 
-<!-- FAQ Section -->
-<section class="py-20 bg-gray-50">
-    <div class="container mx-auto px-4">
-        <div class="max-w-3xl mx-auto">
-            <h2 class="text-3xl font-bold text-gray-900 text-center mb-12">Frequently Asked Questions</h2>
-
-            <div class="space-y-6">
-                <div class="bg-white rounded-xl p-6 shadow-sm">
-                    <h3 class="text-lg font-semibold text-gray-900 mb-2">What happens during the free trial?</h3>
-                    <p class="text-gray-600">
-                        You get full access to all premium features for {{ $trialDays }} days. No payment information is required upfront — just sign up and start exploring.
-                    </p>
-                </div>
-
-                <div class="bg-white rounded-xl p-6 shadow-sm">
-                    <h3 class="text-lg font-semibold text-gray-900 mb-2">Can I cancel anytime?</h3>
-                    <p class="text-gray-600">
-                        Yes, you can cancel your subscription at any time. You'll continue to have access to premium features until the end of your billing period with no hidden fees.
-                    </p>
-                </div>
-
-                <div class="bg-white rounded-xl p-6 shadow-sm">
-                    <h3 class="text-lg font-semibold text-gray-900 mb-2">What payment methods do you accept?</h3>
-                    <p class="text-gray-600">
-                        We accept all major credit and debit cards through Stripe's secure payment processing. Your payment information is never stored on our servers.
-                    </p>
-                </div>
-
-                <div class="bg-white rounded-xl p-6 shadow-sm">
-                    <h3 class="text-lg font-semibold text-gray-900 mb-2">What happens to my data if I downgrade?</h3>
-                    <p class="text-gray-600">
-                        Your family tree data is always safe. If you downgrade to the free plan, you'll retain all your existing data but will lose access to premium-only features until you re-subscribe.
-                    </p>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- CTA Section -->
-<section class="py-20 bg-gradient-to-r from-purple-600 to-pink-600">
-    <div class="container mx-auto px-4 text-center">
-        <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">
-            Ready to Unlock Premium?
-        </h2>
-        <p class="text-xl text-purple-100 mb-8 max-w-2xl mx-auto">
-            Start your {{ $trialDays }}-day free trial today and discover what premium genealogy research can do for you.
-        </p>
-        @auth
-            <a href="{{ url('/app/subscription') }}"
-               class="inline-flex items-center px-8 py-4 bg-white hover:bg-gray-100 text-purple-600 font-semibold rounded-lg shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-200">
-                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
-                </svg>
-                Upgrade Now
-            </a>
-        @else
-            <a href="{{ route('register') }}"
-               class="inline-flex items-center px-8 py-4 bg-white hover:bg-gray-100 text-purple-600 font-semibold rounded-lg shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-200">
-                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
-                </svg>
-                Start Free Trial
-            </a>
-            <p class="text-purple-200 text-sm mt-3">No credit card required • Cancel anytime</p>
-        @endauth
-    </div>
-</section>
 @endsection

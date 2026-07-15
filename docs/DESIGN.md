@@ -4,6 +4,7 @@ description: A records office, rebuilt — precise, fast, evidence-first family 
 colors:
   registry-green: "#047857"
   registry-green-deep: "#065f46"
+  registry-field: "#064e3b"
   registry-tint: "#ecfdf5"
   ink: "#0f172a"
   ink-muted: "#475569"
@@ -18,10 +19,10 @@ colors:
 typography:
   display:
     fontFamily: "Figtree, ui-sans-serif, system-ui, sans-serif"
-    fontSize: "clamp(2.5rem, 5vw + 1rem, 3.75rem)"
-    fontWeight: 700
-    lineHeight: 1.1
-    letterSpacing: "-0.02em"
+    fontSize: "clamp(2.75rem, 6vw + 0.5rem, 4.5rem)"
+    fontWeight: 800
+    lineHeight: 1.05
+    letterSpacing: "-0.025em"
   headline:
     fontFamily: "Figtree, ui-sans-serif, system-ui, sans-serif"
     fontSize: "2rem"
@@ -127,6 +128,7 @@ A single green ramp against a cool slate neutral: the green marks what is live, 
 ### Primary
 - **Registry Green** (`#047857`, `oklch(50.8% 0.105 165.6)`): The single interactive voice. Primary buttons, links, the current selection, the "verified" state. It clears 5.48:1 on paper, so it is safe as text *and* as a fill behind white labels. This is the green the Filament panels' `Color::Emerald` resolves toward; the identity is inherited, not invented.
 - **Registry Green Deep** (`#065f46`, `oklch(43.2% 0.086 166.9)`): Hover and active deepening, and the color of headings that need to carry brand without shouting. 7.68:1 on paper.
+- **Registry Field** (`#064e3b`, `oklch(37.8% 0.073 168.9)`): **Marketing surface only.** The drenched hero and closing band — the office the white record lies on. White reads 9.72:1 against it. It is never a fill in the app, and never a panel behind product UI; see The Committed Field Rule.
 - **Registry Tint** (`#ecfdf5`, `oklch(97.9% 0.021 166.1)`): The selected-row wash, the active nav-item bed. Ink on it reads 16.95:1.
 
 `emerald-600` (`#059669`) is **not a token in this system.** It is 3.77:1 on paper — it fails AA as text and as a fill behind white labels — and a token whose entire definition is "never use this" is a lint rule wearing a token's clothes. It is named once, in the Don'ts, because it is the green on the landing page's primary CTA today. It does not get a slot in the palette.
@@ -166,7 +168,15 @@ If dark mode is ever wanted, it is a designed piece of work with its own verifie
 
 **The 4.5 Floor Rule.** No color carries text below 4.5:1 against its own background — placeholders and disabled labels included. If a token is close, it moves toward ink. "Light gray for elegance" is how interfaces become unreadable, and this product's users are the ones who feel it first.
 
-**The Rarity Rule.** Registry Green appears on ≤10% of any screen. It means live, selected, or verified. A green thing the user cannot act on or trust is a lie about the color.
+**The Rarity Rule.** *In the app*, Registry Green appears on ≤10% of any screen. It means live, selected, or verified. A green thing the user cannot act on or trust is a lie about the color. This rule is scoped to the product surface on purpose: a tool earns trust by spending colour rarely.
+
+**The Committed Field Rule.** *The marketing surface is exempt, and deliberately so.* That surface is brand register, where a Restrained palette reads as timid rather than disciplined — a near-white page with a 10% accent is invisible, and invisible is not a design. There, **Registry Field** (`#064e3b`, `oklch(37.8% 0.073 168.9)`) drenches the hero and the closing band: roughly a third of the page, which is Committed, not decoration.
+
+The composition it exists to make is literal: **the office is green, the paper is white.** The record card sits on the field as a document on a registrar's desk, and the contrast between the drenched field and the white record *is* the design — not a treatment applied to it.
+
+**The field is flat, and it stays flat.** It was briefly ruled with 1px lines at 6% white, in the way a register is ruled. The idea was sound and the execution was not: at 1:1 the lines were too faint to read as deliberate, and under any downscaling — a screenshot, a retina downsample, a link preview — they smeared into what looked like banding. A texture that is invisible when it renders correctly and looks like a fault when it doesn't is costing more than it earns. The first person to see it asked whether it was a bug, which settled it. If the field ever wants texture again, the bar is that nobody has to ask.
+
+White on the field is 9.72:1; Registry Tint and `emerald-100` (8.57:1) carry secondary text there. Nothing on the field may hedge back toward neutral — a grey panel floating in the green is the failure mode this rule exists to prevent.
 
 **The Never Hue-Alone Rule.** DNA confidence, match strength, and record status must never be encoded in color alone. Every such indicator carries a label, a value, or a shape alongside its hue. This is not a colorblind accommodation bolted on; it is the only honest way to state a confidence.
 
@@ -186,7 +196,7 @@ Figtree is **already configured and already downloaded, and has never once been 
 
 **Display is the one exception, and only on the marketing hero.** That surface is brand register, where the page *is* the product and type is expected to scale with the viewport. Everything from Headline down is app type and stays fixed.
 
-- **Display** (700, `clamp(2.5rem, 5vw + 1rem, 3.75rem)` → 40–60px, 1.1, -0.02em): Marketing hero only. Never inside the app. The ceiling matches the hero's current `md:text-6xl` (60px) so reviving Figtree doesn't quietly shrink the page; the floor keeps it from overflowing at 320px. Well under the 6rem ceiling — a hero should land, not shout.
+- **Display** (800, `clamp(2.75rem, 6vw + 0.5rem, 4.5rem)` → 44–72px, 1.05, -0.025em): Marketing hero only. Never inside the app. Weight 800 against a 400 body is the weight contrast the brand surface needs — 700-against-400 is the timid pairing. Still under the 6rem ceiling: a hero should land, not shout. The floor keeps it from overflowing at 320px.
 - **Headline** (600, 2rem/32px, 1.15, -0.015em): Page titles, section heads on marketing.
 - **Title** (600, 1.375rem/22px, 1.3, -0.01em): Panel headings, card titles, resource names.
 - **Body** (400, 1.0625rem/17px, 1.6): All prose and record content. Prose caps at 65–75ch; data tables may run to 120ch+.

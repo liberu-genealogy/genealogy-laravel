@@ -1,271 +1,317 @@
-@extends('layouts.home')
+@extends('layouts.home', ['fieldHero' => true])
+
+@php
+    // Real values, not hardcoded. The old page claimed "£4.99" and a "7-day"
+    // trial while config said $2.99 / 14 days.
+    $settings = app(\App\Settings\GeneralSettings::class);
+    $price = config('subscription.premium.price', '$2.99');
+    $interval = config('subscription.premium.interval', 'month');
+    $trialDays = (int) config('subscription.premium.trial_days', 14);
+@endphp
 
 @section('content')
-<!-- Hero Section -->
-<section class="relative bg-gradient-to-br from-emerald-50 via-white to-blue-50 py-20 overflow-hidden">
-    <div class="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"%3E%3Cg fill="none" fill-rule="evenodd"%3E%3Cg fill="%23059669" fill-opacity="0.05"%3E%3Ccircle cx="30" cy="30" r="4"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')] opacity-40"></div>
 
-    <div class="container mx-auto px-4 relative z-10">
-        <div class="max-w-4xl mx-auto text-center">
-            <div class="mb-8">
-                <div class="inline-flex items-center px-4 py-2 bg-emerald-100 text-emerald-800 rounded-full text-sm font-medium mb-6">
-                    🌳 Discover Your Heritage
-                </div>
-                <h1 class="text-5xl md:text-6xl font-bold text-gray-900 mb-6 leading-tight">
-                    Build Your
-                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-600 to-blue-600">
-                        Family Tree
-                    </span>
-                </h1>
-                <p class="text-xl text-gray-600 mb-8 max-w-2xl mx-auto leading-relaxed">
-                    Uncover your family's story with powerful genealogy tools. Connect generations, preserve memories, and discover your roots with our comprehensive family history platform.
-                </p>
-            </div>
+{{-- Hero. The office is green, the paper is white: the drenched field with the
+     record lying on it as a document on a registrar's desk. DESIGN.md §2,
+     The Committed Field Rule. --}}
+<section class="bg-registry-field">
+    <div class="mx-auto grid max-w-6xl gap-14 px-6 py-20 lg:grid-cols-12 lg:items-center lg:gap-16 lg:py-28">
+        <div class="lg:col-span-7">
+            <h1 class="text-display text-balance text-paper">
+                Every name, with the record that proves it.
+            </h1>
 
-            @auth
-                <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+            <p class="mt-6 max-w-[58ch] text-pretty text-body text-emerald-100">
+                {{ $settings->site_name }} is a free, open-source platform for
+                building a family tree out of evidence. GEDCOM in, GEDCOM out. DNA matches with their
+                confidence stated in words, not colours. A citation under every claim.
+            </p>
+
+            <div class="mt-9 flex flex-wrap items-center gap-3">
+                {{-- On the field the primary action inverts: white paper is the
+                     strongest thing you can put on green. --}}
+                @auth
                     <a href="{{ route('filament.app.tenant') }}"
-                       class="inline-flex items-center px-8 py-4 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold rounded-lg shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-200">
-                        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
-                        </svg>
-                        Go to Dashboard
+                       class="inline-flex min-h-11 items-center rounded-md bg-paper px-5 py-3 text-label text-registry-green-deep transition-colors duration-150 ease-out-quart hover:bg-registry-tint focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-registry-tint">
+                        Open your tree
                     </a>
-                    <a href="{{ url('/app/subscription') }}"
-                       class="inline-flex items-center px-6 py-4 bg-white hover:bg-gray-50 text-emerald-600 font-semibold rounded-lg border-2 border-emerald-200 hover:border-emerald-300 transition-all duration-200">
-                        ✨ Explore Premium Features
-                    </a>
-                </div>
-            @else
-                <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                @else
                     <a href="{{ route('register') }}"
-                       class="inline-flex items-center px-8 py-4 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold rounded-lg shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-200">
-                        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"/>
-                        </svg>
-                        Start Free Today
+                       class="inline-flex min-h-11 items-center rounded-md bg-paper px-5 py-3 text-label text-registry-green-deep transition-colors duration-150 ease-out-quart hover:bg-registry-tint focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-registry-tint">
+                        Start free
                     </a>
-                    <a href="{{ route('subscription') }}"
-                       class="inline-flex items-center px-6 py-4 bg-white hover:bg-gray-50 text-emerald-600 font-semibold rounded-lg border-2 border-emerald-200 hover:border-emerald-300 transition-all duration-200">
-                        ✨ Explore Premium Features
-                    </a>
+                @endauth
+
+                <a href="{{ route('subscription') }}"
+                   class="inline-flex min-h-11 items-center rounded-md border border-emerald-400 px-5 py-3 text-label text-paper transition-colors duration-150 ease-out-quart hover:bg-white/10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-registry-tint">
+                    See pricing
+                </a>
+            </div>
+
+            <p class="mt-5 text-label text-emerald-200">
+                Free forever · No credit card required · MIT licensed
+            </p>
+        </div>
+
+        {{-- The record IS the hero image: real markup, no stock photography.
+             No border, no shadow — white against the field is its own edge. --}}
+        <div class="lg:col-span-5">
+            <figure class="rounded-lg bg-paper">
+                <div class="flex items-baseline justify-between gap-4 border-b border-rule px-5 py-4">
+                    <h2 class="text-title text-ink">Eleanor Whitfield</h2>
+                    <span class="whitespace-nowrap text-label tabular-nums text-ink-muted">1834&ndash;1901</span>
                 </div>
 
-                <p class="text-sm text-gray-500 mt-4">
-                    Free forever • No credit card required • 7-day premium trial
+                <dl class="divide-y divide-rule text-label">
+                    <div class="grid grid-cols-3 gap-4 px-5 py-3">
+                        <dt class="text-ink-faint">Baptism</dt>
+                        <dd class="col-span-2 tabular-nums text-ink">12 March 1834</dd>
+                    </div>
+                    <div class="grid grid-cols-3 gap-4 px-5 py-3">
+                        <dt class="text-ink-faint">Parish</dt>
+                        <dd class="col-span-2 text-ink">St Peter Mancroft, Norwich</dd>
+                    </div>
+                    <div class="grid grid-cols-3 gap-4 px-5 py-3">
+                        <dt class="text-ink-faint">Source</dt>
+                        <dd class="col-span-2 text-ink">Norfolk Parish Registers, <span class="tabular-nums">PD&nbsp;26/12</span></dd>
+                    </div>
+                </dl>
+
+                <div class="flex flex-wrap items-center gap-3 border-t border-rule bg-surface px-5 py-4">
+                    <span class="text-label text-ink-faint">DNA match</span>
+                    <span class="text-body font-semibold tabular-nums text-ink">87.3 cM</span>
+                    {{-- Confidence never rides on hue alone: value + word + shape. --}}
+                    <span class="rounded-sm bg-registry-tint px-2 py-0.5 text-label font-semibold text-registry-green-deep">High</span>
+                    <span class="h-1.5 w-16 overflow-hidden rounded-full bg-rule" aria-hidden="true">
+                        <span class="block h-full w-[82%] rounded-full bg-registry-green"></span>
+                    </span>
+                </div>
+
+                <figcaption class="border-t border-rule px-5 py-3 text-label text-ink-faint">
+                    An example record. Every fact carries its source.
+                </figcaption>
+            </figure>
+        </div>
+    </div>
+</section>
+
+{{-- The research loop. Three unequal blocks separated by hairlines — not a card grid. --}}
+<section class="border-b border-rule bg-surface" aria-labelledby="loop-heading">
+    <div class="mx-auto max-w-6xl px-6 py-20 lg:py-24">
+        <div class="max-w-[54ch]">
+            <h2 id="loop-heading" class="text-headline text-balance text-ink">
+                How a name earns its place in your tree
+            </h2>
+            <p class="mt-4 text-pretty text-body text-ink-muted">
+                Three steps, in this order. Nothing is asserted before it is sourced.
+            </p>
+        </div>
+
+        <div class="mt-12 grid gap-px overflow-hidden rounded-lg border border-rule bg-rule lg:grid-cols-5">
+            {{-- flex-col + mt-auto: the citation sits on the block's floor rather
+                 than leaving dead space under it when the row stretches. --}}
+            <div class="flex flex-col bg-paper p-8 lg:col-span-3">
+                <h3 class="text-title text-ink">It starts with a record</h3>
+                <p class="mt-3 max-w-[52ch] text-body text-ink-muted">
+                    A baptism, a census line, a headstone. You cite where it came from, and the
+                    citation stays attached to the fact forever — not to a hint you can't inspect.
                 </p>
-            @endauth
+                <p class="mt-auto pt-6">
+                    <span class="inline-block rounded-sm bg-surface-sunk p-3 text-label text-ink">
+                        <span class="text-ink-faint">Source</span>
+                        &nbsp;Norfolk Parish Registers, <span class="tabular-nums">PD&nbsp;26/12</span>
+                    </span>
+                </p>
+            </div>
+
+            <div class="bg-paper p-8 lg:col-span-2">
+                <h3 class="text-title text-ink">It lands in the tree</h3>
+                <p class="mt-3 text-body text-ink-muted">
+                    Placed against parents, spouses and children, where a contradiction shows up
+                    immediately.
+                </p>
+                <svg class="mt-6 w-full max-w-[16rem]" viewBox="0 0 240 96" role="img" aria-label="A pedigree fragment: Eleanor Whitfield linked to her parents, Thomas and Mary." fill="none">
+                    <rect x="0.5" y="36.5" width="92" height="23" rx="3" fill="#ecfdf5" stroke="#047857"/>
+                    <text x="46" y="52" text-anchor="middle" font-size="11" font-weight="600" fill="#065f46" font-family="Figtree, sans-serif">Eleanor</text>
+                    <path d="M93 48h28M121 48V14h26M121 48v34h26" stroke="#64748b" stroke-width="1.25"/>
+                    <rect x="147.5" y="2.5" width="92" height="23" rx="3" fill="#ffffff" stroke="#e2e8f0"/>
+                    <text x="193" y="18" text-anchor="middle" font-size="11" fill="#0f172a" font-family="Figtree, sans-serif">Thomas</text>
+                    <rect x="147.5" y="70.5" width="92" height="23" rx="3" fill="#ffffff" stroke="#e2e8f0"/>
+                    <text x="193" y="86" text-anchor="middle" font-size="11" fill="#0f172a" font-family="Figtree, sans-serif">Mary</text>
+                </svg>
+            </div>
+
+            <div class="bg-paper p-8 lg:col-span-5">
+                <div class="flex flex-col gap-8 lg:flex-row lg:items-center lg:justify-between">
+                    <div class="max-w-[52ch]">
+                        <h3 class="text-title text-ink">The match argues for itself</h3>
+                        <p class="mt-3 text-body text-ink-muted">
+                            A DNA match arrives with the shared centimorgans, a confidence in plain
+                            words, and the segments it's built from. No blurring, no counter telling
+                            you there are discoveries you haven't paid for.
+                        </p>
+                    </div>
+
+                    <ul class="flex shrink-0 flex-col gap-2 text-label">
+                        {{-- Widths are utility classes, not inline styles: the app sends a
+                             CSP, and style-src would have to allow 'unsafe-inline' for them. --}}
+                        @foreach ([['87.3 cM', 'High', 'w-[82%]'], ['41.6 cM', 'Probable', 'w-[48%]'], ['12.2 cM', 'Speculative', 'w-[16%]']] as [$cm, $label, $barWidth])
+                            <li class="flex items-center gap-3">
+                                <span class="w-20 font-semibold tabular-nums text-ink">{{ $cm }}</span>
+                                <span class="w-24 text-ink-muted">{{ $label }}</span>
+                                <span class="h-1.5 w-24 overflow-hidden rounded-full bg-rule" aria-hidden="true">
+                                    <span class="block h-full rounded-full bg-registry-green {{ $barWidth }}"></span>
+                                </span>
+                            </li>
+                        @endforeach
+                    </ul>
+                </div>
+            </div>
         </div>
     </div>
 </section>
 
-<!-- Features Section -->
-<section class="py-20 bg-white">
-    <div class="container mx-auto px-4">
-        <div class="text-center mb-16">
-            <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-                Everything You Need for Family Research
+{{-- Portability. The argument no competitor makes. --}}
+<section class="border-b border-rule bg-paper" aria-labelledby="portability-heading">
+    <div class="mx-auto max-w-6xl px-6 py-20 lg:py-24">
+        <div class="max-w-[46ch]">
+            <h2 id="portability-heading" class="text-headline text-balance text-ink">
+                Leaving is a feature
             </h2>
-            <p class="text-xl text-gray-600 max-w-2xl mx-auto">
-                Powerful tools and features to help you discover, document, and share your family history
+            <p class="mt-4 text-pretty text-body text-ink-muted">
+                A decade of research should never be hostage to a subscription. Everything you put in
+                comes back out in a format other software can read.
             </p>
         </div>
 
-        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <!-- Feature 1 -->
-            <div class="bg-gradient-to-br from-emerald-50 to-emerald-100 p-8 rounded-2xl hover:shadow-lg transition-shadow duration-300">
-                <div class="w-12 h-12 bg-emerald-600 rounded-lg flex items-center justify-center mb-6">
-                    <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
-                    </svg>
-                </div>
-                <h3 class="text-xl font-semibold text-gray-900 mb-3">Family Tree Builder</h3>
-                <p class="text-gray-600">Create beautiful, interactive family trees with unlimited people and generations. Add photos, documents, and stories.</p>
+        {{-- Three across at lg only: below that the measure collapses to ~20ch
+             and the rag falls apart. --}}
+        <dl class="mt-12 grid gap-x-12 gap-y-10 border-t border-rule pt-10 sm:grid-cols-2 lg:grid-cols-3">
+            <div class="max-w-[38ch]">
+                <dt class="text-title text-ink">GEDCOM, both ways</dt>
+                <dd class="mt-2 text-pretty text-body text-ink-muted">
+                    Import and export the industry standard. The same file you brought in is the file
+                    you can take out.
+                </dd>
             </div>
-
-            <!-- Feature 2 -->
-            <div class="bg-gradient-to-br from-blue-50 to-blue-100 p-8 rounded-2xl hover:shadow-lg transition-shadow duration-300">
-                <div class="w-12 h-12 bg-blue-600 rounded-lg flex items-center justify-center mb-6">
-                    <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
-                    </svg>
-                </div>
-                <h3 class="text-xl font-semibold text-gray-900 mb-3">Interactive Charts</h3>
-                <p class="text-gray-600">Visualize your family history with pedigree charts, descendant trees, and fan charts. Export and share with family.</p>
+            <div class="max-w-[38ch]">
+                <dt class="text-title text-ink">MIT licensed</dt>
+                <dd class="mt-2 text-pretty text-body text-ink-muted">
+                    The whole platform is open source. Read it, fork it, audit what it does with your
+                    family's data.
+                </dd>
             </div>
-
-            <!-- Feature 3 -->
-            <div class="bg-gradient-to-br from-purple-50 to-purple-100 p-8 rounded-2xl hover:shadow-lg transition-shadow duration-300">
-                <div class="w-12 h-12 bg-purple-600 rounded-lg flex items-center justify-center mb-6">
-                    <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"/>
-                    </svg>
-                </div>
-                <h3 class="text-xl font-semibold text-gray-900 mb-3">DNA Analysis</h3>
-                <p class="text-gray-600">Upload and analyze DNA results to find genetic matches and discover new family connections across multiple platforms.</p>
+            <div class="max-w-[38ch]">
+                <dt class="text-title text-ink">Self-host it</dt>
+                <dd class="mt-2 text-pretty text-body text-ink-muted">
+                    Run it on your own server and the question of who owns the records stops being a
+                    question.
+                </dd>
             </div>
+        </dl>
+    </div>
+</section>
 
-            <!-- Feature 4 -->
-            <div class="bg-gradient-to-br from-orange-50 to-orange-100 p-8 rounded-2xl hover:shadow-lg transition-shadow duration-300">
-                <div class="w-12 h-12 bg-orange-600 rounded-lg flex items-center justify-center mb-6">
-                    <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
-                    </svg>
-                </div>
-                <h3 class="text-xl font-semibold text-gray-900 mb-3">Media & Documents</h3>
-                <p class="text-gray-600">Store and organize family photos, documents, certificates, and stories. Create a digital family archive.</p>
-            </div>
+{{-- Premium. Real numbers, read from config — no invented pricing. --}}
+<section class="border-b border-rule bg-surface" aria-labelledby="premium-heading">
+    <div class="mx-auto grid max-w-6xl gap-12 px-6 py-20 lg:grid-cols-12 lg:gap-16 lg:py-24">
+        <div class="lg:col-span-6">
+            <h2 id="premium-heading" class="text-headline text-balance text-ink">
+                The free tier is the product. Premium is the heavy lifting.
+            </h2>
+            <p class="mt-4 max-w-[54ch] text-pretty text-body text-ink-muted">
+                Building, citing and exporting your tree costs nothing, forever. Premium pays for the
+                work that burns CPU on our side.
+            </p>
 
-            <!-- Feature 5 -->
-            <div class="bg-gradient-to-br from-teal-50 to-teal-100 p-8 rounded-2xl hover:shadow-lg transition-shadow duration-300">
-                <div class="w-12 h-12 bg-teal-600 rounded-lg flex items-center justify-center mb-6">
-                    <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
-                    </svg>
-                </div>
-                <h3 class="text-xl font-semibold text-gray-900 mb-3">Research Tools</h3>
-                <p class="text-gray-600">Advanced search capabilities, source citations, and research tracking to help you discover your family's story.</p>
-            </div>
+            <ul class="mt-8 flex flex-col gap-3 text-body text-ink">
+                @foreach ([
+                    'Unlimited DNA uploads across testing companies',
+                    'Duplicate detection and assisted merging',
+                    'Smart matching against public trees',
+                    'Automated background record discovery',
+                ] as $benefit)
+                    <li class="flex items-start gap-3">
+                        <svg class="mt-1.5 size-4 shrink-0 text-registry-green" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <path d="M2.5 8.5l3.5 3.5 7.5-7.5"/>
+                        </svg>
+                        {{ $benefit }}
+                    </li>
+                @endforeach
+            </ul>
+        </div>
 
-            <!-- Feature 6 -->
-            <div class="bg-gradient-to-br from-rose-50 to-rose-100 p-8 rounded-2xl hover:shadow-lg transition-shadow duration-300">
-                <div class="w-12 h-12 bg-rose-600 rounded-lg flex items-center justify-center mb-6">
-                    <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.367 2.684 3 3 0 00-5.367-2.684z"/>
-                    </svg>
-                </div>
-                <h3 class="text-xl font-semibold text-gray-900 mb-3">Share & Collaborate</h3>
-                <p class="text-gray-600">Share your family tree with relatives, collaborate on research, and export data in standard GEDCOM format.</p>
+        <div class="lg:col-span-6 lg:justify-self-end">
+            <div class="rounded-lg border border-rule bg-paper p-8 sm:min-w-[22rem]">
+                <p class="flex items-baseline gap-2">
+                    <span class="text-headline tabular-nums text-ink">{{ $price }}</span>
+                    <span class="text-body text-ink-muted">per {{ $interval }}</span>
+                </p>
+
+                <p class="mt-3 text-label text-ink-muted">
+                    <span class="tabular-nums">{{ $trialDays }}</span>-day free trial. No card required to start.
+                </p>
+
+                @guest
+                    <a href="{{ route('register') }}"
+                       class="mt-7 inline-flex min-h-11 w-full items-center justify-center rounded-md bg-registry-green px-5 py-3 text-label text-paper transition-colors duration-150 ease-out-quart hover:bg-registry-green-deep focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-registry-green">
+                        Start the trial
+                    </a>
+                @else
+                    <a href="{{ url('/app/subscription') }}"
+                       class="mt-7 inline-flex min-h-11 w-full items-center justify-center rounded-md bg-registry-green px-5 py-3 text-label text-paper transition-colors duration-150 ease-out-quart hover:bg-registry-green-deep focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-registry-green">
+                        Upgrade to premium
+                    </a>
+                @endguest
+
+                <a href="{{ route('subscription') }}"
+                   class="mt-3 inline-flex min-h-11 w-full items-center justify-center rounded-sm px-2 text-label text-registry-green transition-colors duration-150 ease-out-quart hover:text-registry-green-deep focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-registry-green">
+                    What's included
+                </a>
             </div>
         </div>
     </div>
 </section>
 
-<!-- Premium Features Section -->
-<section class="py-20 bg-gradient-to-br from-gray-50 to-gray-100">
-    <div class="container mx-auto px-4">
-        <div class="text-center mb-16">
-            <div class="inline-flex items-center px-4 py-2 bg-gradient-to-r from-yellow-400 to-orange-400 text-white rounded-full text-sm font-medium mb-6">
-                ✨ Premium Features
-            </div>
-            <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-                Unlock Advanced Genealogy Tools
+{{-- Close on the field, bookending the hero: you enter and leave through the
+     office. Committed, ~a third of the page. --}}
+<section class="bg-registry-field" aria-labelledby="cta-heading">
+    {{-- Two columns so the band doesn't end as a lonely left block against an
+         empty right half. --}}
+    <div class="mx-auto grid max-w-6xl gap-10 px-6 py-20 lg:grid-cols-12 lg:items-center lg:gap-16 lg:py-24">
+        <div class="lg:col-span-7">
+            <h2 id="cta-heading" class="text-headline text-balance text-paper">
+                Start with one name and the record behind it.
             </h2>
-            <p class="text-xl text-gray-600 max-w-2xl mx-auto">
-                Take your family research to the next level with premium features designed for serious genealogists
+            <p class="mt-4 max-w-[52ch] text-pretty text-body text-emerald-100">
+                Import a GEDCOM you already have, or begin from a single person. Either way, you can
+                take the whole thing with you when you go.
             </p>
         </div>
 
-        <div class="max-w-4xl mx-auto">
-            <div class="bg-white rounded-2xl shadow-xl overflow-hidden">
-                <div class="grid md:grid-cols-2 gap-8 p-8">
-                    <div>
-                        <h3 class="text-2xl font-bold text-gray-900 mb-6">Premium Benefits</h3>
-                        <div class="space-y-4">
-                            <div class="flex items-start">
-                                <div class="w-6 h-6 bg-emerald-100 rounded-full flex items-center justify-center mr-3 mt-0.5">
-                                    <svg class="w-4 h-4 text-emerald-600" fill="currentColor" viewBox="0 0 20 20">
-                                        <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
-                                    </svg>
-                                </div>
-                                <div>
-                                    <h4 class="font-semibold text-gray-900">Unlimited DNA Uploads</h4>
-                                    <p class="text-gray-600 text-sm">Upload DNA results from multiple testing companies</p>
-                                </div>
-                            </div>
-                            <div class="flex items-start">
-                                <div class="w-6 h-6 bg-emerald-100 rounded-full flex items-center justify-center mr-3 mt-0.5">
-                                    <svg class="w-4 h-4 text-emerald-600" fill="currentColor" viewBox="0 0 20 20">
-                                        <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
-                                    </svg>
-                                </div>
-                                <div>
-                                    <h4 class="font-semibold text-gray-900">Smart Duplicate Checker</h4>
-                                    <p class="text-gray-600 text-sm">Automatically find and merge duplicate entries</p>
-                                </div>
-                            </div>
-                            <div class="flex items-start">
-                                <div class="w-6 h-6 bg-emerald-100 rounded-full flex items-center justify-center mr-3 mt-0.5">
-                                    <svg class="w-4 h-4 text-emerald-600" fill="currentColor" viewBox="0 0 20 20">
-                                        <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
-                                    </svg>
-                                </div>
-                                <div>
-                                    <h4 class="font-semibold text-gray-900">Smart Matching</h4>
-                                    <p class="text-gray-600 text-sm">Find potential matches across public family trees</p>
-                                </div>
-                            </div>
-                            <div class="flex items-start">
-                                <div class="w-6 h-6 bg-emerald-100 rounded-full flex items-center justify-center mr-3 mt-0.5">
-                                    <svg class="w-4 h-4 text-emerald-600" fill="currentColor" viewBox="0 0 20 20">
-                                        <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
-                                    </svg>
-                                </div>
-                                <div>
-                                    <h4 class="font-semibold text-gray-900">Premium Badge</h4>
-                                    <p class="text-gray-600 text-sm">Show your commitment to family research</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+        <div class="lg:col-span-5">
+            {{-- Retuned to the field: a registry-green button here would be 1.77:1
+                 against it, and slate greys read as a hedge in the green. --}}
+            <div class="flex flex-wrap items-center gap-3 lg:justify-end">
+                @guest
+                    <a href="{{ route('register') }}"
+                       class="inline-flex min-h-11 items-center rounded-md bg-paper px-5 py-3 text-label text-registry-green-deep transition-colors duration-150 ease-out-quart hover:bg-registry-tint focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-registry-tint">
+                        Start free
+                    </a>
+                @else
+                    <a href="{{ route('filament.app.tenant') }}"
+                       class="inline-flex min-h-11 items-center rounded-md bg-paper px-5 py-3 text-label text-registry-green-deep transition-colors duration-150 ease-out-quart hover:bg-registry-tint focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-registry-tint">
+                        Continue your tree
+                    </a>
+                @endguest
 
-                    <div class="bg-gradient-to-br from-emerald-50 to-blue-50 p-6 rounded-xl">
-                        <div class="text-center">
-                            <div class="text-4xl font-bold text-gray-900 mb-2">£4.99</div>
-                            <div class="text-gray-600 mb-6">per month</div>
-                            <div class="bg-emerald-100 text-emerald-800 px-3 py-1 rounded-full text-sm font-medium mb-6">
-                                7-day free trial
-                            </div>
-                            @guest
-                                <a href="{{ route('register') }}"
-                                   class="block w-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-3 px-6 rounded-lg transition-colors duration-200">
-                                    Start Free Trial
-                                </a>
-                                <p class="text-xs text-gray-500 mt-3">No credit card required</p>
-                                <a href="{{ route('subscription') }}"
-                                   class="block w-full mt-2 text-center text-emerald-600 hover:text-emerald-700 text-sm font-medium transition-colors duration-200">
-                                    Learn more about premium →
-                                </a>
-                            @else
-                                <a href="{{ url('/app/subscription') }}"
-                                   class="block w-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-3 px-6 rounded-lg transition-colors duration-200">
-                                    Upgrade to Premium
-                                </a>
-                            @endguest
-                        </div>
-                    </div>
-                </div>
+                <a href="https://github.com/liberu-genealogy/genealogy-laravel"
+                   class="inline-flex min-h-11 items-center rounded-md border border-emerald-400 px-5 py-3 text-label text-paper transition-colors duration-150 ease-out-quart hover:bg-white/10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-registry-tint">
+                    Read the source
+                </a>
             </div>
         </div>
     </div>
 </section>
 
-<!-- CTA Section -->
-<section class="py-20 bg-emerald-600">
-    <div class="container mx-auto px-4 text-center">
-        <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">
-            Start Your Family History Journey Today
-        </h2>
-        <p class="text-xl text-emerald-100 mb-8 max-w-2xl mx-auto">
-            Join thousands of genealogy enthusiasts who trust Liberu Genealogy to preserve their family stories
-        </p>
-        @guest
-            <a href="{{ route('register') }}"
-               class="inline-flex items-center px-8 py-4 bg-white hover:bg-gray-100 text-emerald-600 font-semibold rounded-lg shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-200">
-                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
-                </svg>
-                Get Started Free
-            </a>
-        @else
-            <a href="{{ route('filament.app.tenant') }}"
-               class="inline-flex items-center px-8 py-4 bg-white hover:bg-gray-100 text-emerald-600 font-semibold rounded-lg shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-200">
-                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
-                </svg>
-                Continue Building Your Tree
-            </a>
-        @endguest
-    </div>
-</section>
 @endsection
