@@ -52,8 +52,12 @@
             'a' => 'It stays yours and it stays readable. Downgrading locks the DNA tools, not your records — and GEDCOM export is free forever, so you can take the whole tree elsewhere on the way out if you want to.',
         ],
         [
+            // The one answer that carries its own artifact — the evidence sits
+            // where the question is actually asked, not bolted to the CTA.
             'q' => 'How do payments work?',
-            'a' => 'Cards are handled by Stripe. Card details never touch our servers, and you can read the subscription code yourself.',
+            'a' => 'Cards are handled by Stripe. Card details never touch our servers, and you can ',
+            'link' => ['read the subscription code', $repo.'/blob/main/app/Services/SubscriptionService.php'],
+            'tail' => ' yourself.',
         ],
         [
             'q' => 'Why is any of it paid?',
@@ -189,7 +193,10 @@
             @foreach ($faqs as $faq)
                 <div class="py-7">
                     <dt class="text-title text-balance text-ink">{{ $faq['q'] }}</dt>
-                    <dd class="mt-2 max-w-[64ch] text-pretty text-body text-ink-muted">{{ $faq['a'] }}</dd>
+                    <dd class="mt-2 max-w-[64ch] text-pretty text-body text-ink-muted">{{ $faq['a'] }}@isset($faq['link'])<a
+                            href="{{ $faq['link'][1] }}"
+                            class="rounded-sm text-registry-green underline underline-offset-2 transition-colors duration-150 ease-out-quart hover:text-registry-green-deep focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-registry-green"
+                        >{{ $faq['link'][0] }}</a>{{ $faq['tail'] ?? '' }}@endisset</dd>
                 </div>
             @endforeach
         </dl>
@@ -209,6 +216,10 @@
             </p>
         </div>
 
+        {{-- One action. A pricing page's last block is where someone decides to
+             pay; a second button sending them to GitHub only competes with it,
+             and this audience is genealogists, not developers. The source link
+             lives in the FAQ, where the question is actually asked. --}}
         <div class="lg:col-span-5">
             <div class="flex flex-wrap items-center gap-3 lg:justify-end">
                 @guest
@@ -222,11 +233,6 @@
                         Upgrade to premium
                     </a>
                 @endguest
-
-                <a href="{{ $repo }}/blob/main/app/Services/SubscriptionService.php"
-                   class="inline-flex min-h-11 items-center rounded-md border border-emerald-400 px-5 py-3 text-label text-paper transition-colors duration-150 ease-out-quart hover:bg-white/10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-registry-tint">
-                    Read the billing code
-                </a>
             </div>
         </div>
     </div>
