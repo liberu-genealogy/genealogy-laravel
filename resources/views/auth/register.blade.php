@@ -1,93 +1,74 @@
 @extends('layouts.home')
 
 @section('content')
-    <div class="min-h-[calc(100vh-8rem)] flex flex-col sm:justify-center items-center py-12 px-4 bg-gradient-to-br from-emerald-50 via-white to-blue-50">
-        <div class="mb-8 text-center">
-            <h1 class="text-3xl font-bold text-gray-900">Create your account</h1>
-            <p class="mt-2 text-gray-600">Start building your family tree for free</p>
-        </div>
+    <x-auth.card
+        :title="__('Start your tree')"
+        :subtitle="__('Free forever. No card, and nothing to cancel.')"
+    >
+        <x-validation-errors class="mb-6" />
 
-        <div class="w-full sm:max-w-md bg-white rounded-2xl shadow-lg overflow-hidden border border-gray-100">
-            <div class="px-8 py-8">
-                <form method="POST" action="{{ route('register') }}">
-                    @csrf
+        <form method="POST" action="{{ route('register') }}" class="flex flex-col gap-5">
+            @csrf
 
-                    <div class="space-y-5">
-                        <div>
-                            <label class="block font-medium text-sm text-gray-700 mb-1.5" for="name">
-                                {{ __('Full name') }}
-                            </label>
-                            <input class="w-full border border-gray-300 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-200 rounded-lg px-4 py-2.5 text-gray-900 bg-white transition-colors placeholder-gray-400 text-sm"
-                                   id="name" type="text" name="name"
-                                   value="{{ old('name') }}" required autofocus
-                                   placeholder="Jane Smith">
-                            @error('name')
-                                <p class="mt-1 text-xs text-red-600">{{ $message }}</p>
-                            @enderror
-                        </div>
+            <x-auth.field
+                name="name"
+                :label="__('Your name')"
+                :value="old('name')"
+                autocomplete="name"
+                autofocus
+            />
 
-                        <div>
-                            <label class="block font-medium text-sm text-gray-700 mb-1.5" for="email">
-                                {{ __('Email address') }}
-                            </label>
-                            <input class="w-full border border-gray-300 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-200 rounded-lg px-4 py-2.5 text-gray-900 bg-white transition-colors placeholder-gray-400 text-sm"
-                                   id="email" type="email" name="email"
-                                   value="{{ old('email') }}" required
-                                   placeholder="you@example.com">
-                            @error('email')
-                                <p class="mt-1 text-xs text-red-600">{{ $message }}</p>
-                            @enderror
-                        </div>
+            <x-auth.field
+                name="email"
+                :label="__('Email address')"
+                type="email"
+                :value="old('email')"
+                autocomplete="username"
+            />
 
-                        <div>
-                            <label class="block font-medium text-sm text-gray-700 mb-1.5" for="password">
-                                {{ __('Password') }}
-                            </label>
-                            <input class="w-full border border-gray-300 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-200 rounded-lg px-4 py-2.5 text-gray-900 bg-white transition-colors text-sm"
-                                   id="password" type="password" name="password" required
-                                   autocomplete="new-password"
-                                   placeholder="Min. 8 characters">
-                            @error('password')
-                                <p class="mt-1 text-xs text-red-600">{{ $message }}</p>
-                            @enderror
-                        </div>
+            <x-auth.field
+                name="password"
+                :label="__('Password')"
+                type="password"
+                :hint="__('At least 8 characters.')"
+                autocomplete="new-password"
+            />
 
-                        <div>
-                            <label class="block font-medium text-sm text-gray-700 mb-1.5" for="password_confirmation">
-                                {{ __('Confirm password') }}
-                            </label>
-                            <input class="w-full border border-gray-300 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-200 rounded-lg px-4 py-2.5 text-gray-900 bg-white transition-colors text-sm"
-                                   id="password_confirmation" type="password" name="password_confirmation" required
-                                   placeholder="Re-enter your password">
-                        </div>
+            <x-auth.field
+                name="password_confirmation"
+                :label="__('Confirm password')"
+                type="password"
+                autocomplete="new-password"
+            />
 
-                        <button type="submit"
-                                class="w-full flex justify-center items-center px-6 py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold rounded-lg shadow-sm hover:shadow transition-all duration-200 text-sm">
-                            {{ __('Create account') }}
-                        </button>
-                    </div>
-                </form>
+            <button type="submit"
+                    class="inline-flex min-h-11 w-full items-center justify-center rounded-md bg-registry-green px-5 py-3 text-label text-paper transition-colors duration-150 ease-out-quart hover:bg-registry-green-deep focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-registry-green">
+                {{ __('Create account') }}
+            </button>
 
-                @if (\JoelButcher\Socialstream\Socialstream::show() && ! empty(\JoelButcher\Socialstream\Socialstream::providers()))
-                    <x-socialstream />
-                @endif
-            </div>
+            {{-- Informational, not a checkbox: Features::termsAndPrivacyPolicy() is
+                 disabled in config/jetstream.php and CreateNewUser does not
+                 validate acceptance, so a required-looking control would be a lie. --}}
+            <p class="text-label text-ink-muted">
+                {{ __('By creating an account you agree to our') }}
+                <a href="{{ route('terms.and.conditions') }}"
+                   class="rounded-sm text-registry-green underline underline-offset-2 transition-colors duration-150 ease-out-quart hover:text-registry-green-deep focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-registry-green">{{ __('Terms of Service') }}</a>
+                {{ __('and') }}
+                <a href="{{ route('privacy') }}"
+                   class="rounded-sm text-registry-green underline underline-offset-2 transition-colors duration-150 ease-out-quart hover:text-registry-green-deep focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-registry-green">{{ __('Privacy Policy') }}</a>.
+            </p>
+        </form>
 
-            <div class="px-8 py-4 bg-gray-50 border-t border-gray-100 text-center">
-                <p class="text-sm text-gray-600">
-                    Already have an account?
-                    <a href="{{ route('login') }}" class="font-medium text-emerald-600 hover:text-emerald-700">
-                        Sign in
-                    </a>
-                </p>
-            </div>
-        </div>
+        @if (\JoelButcher\Socialstream\Socialstream::show() && ! empty(\JoelButcher\Socialstream\Socialstream::providers()))
+            <x-socialstream />
+        @endif
 
-        <p class="mt-4 text-xs text-gray-500 text-center max-w-sm">
-            By creating an account, you agree to our
-            <a href="/terms-and-conditions" class="underline hover:text-gray-700">Terms of Service</a>
-            and
-            <a href="/privacy" class="underline hover:text-gray-700">Privacy Policy</a>.
-        </p>
-    </div>
+        <x-slot name="footer">
+            {{ __('Already have an account?') }}
+            <a href="{{ route('login') }}"
+               class="rounded-sm font-semibold text-registry-green transition-colors duration-150 ease-out-quart hover:text-registry-green-deep focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-registry-green">
+                {{ __('Sign in') }}
+            </a>
+        </x-slot>
+    </x-auth.card>
 @endsection

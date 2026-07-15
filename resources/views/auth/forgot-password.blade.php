@@ -1,37 +1,41 @@
 @extends('layouts.home')
 
 @section('content')
-    <div class="h-full flex flex-col sm:justify-center items-center pt-3 sm:pt-0">
-        <div class="w-full sm:max-w-md px-6 py-4 bg-white shadow-md overflow-hidden sm:rounded-lg">
+    <x-auth.card
+        :title="__('Reset your password')"
+        :subtitle="__('Give us the email address on your account and we will send a link to choose a new password.')"
+    >
+        @session('status')
+            <p role="status" class="mb-6 rounded-md border border-registry-green bg-registry-tint px-4 py-3 text-body text-registry-green-deep">
+                {{ $value }}
+            </p>
+        @endsession
 
-            <div class="mb-4 text-sm text-gray-600">
-                {{ __('Forgot your password? No problem. Just let us know your email address and we will email you a password reset link that will allow you to choose a new one.') }}
-            </div>
+        <x-validation-errors class="mb-6" />
 
-            @session('status')
-                <div class="mb-4 font-medium text-sm text-green-600">
-                    {{ $value }}
-                </div>
-            @endsession
+        <form method="POST" action="{{ route('password.email') }}" class="flex flex-col gap-5">
+            @csrf
 
-            <x-validation-errors class="mb-4" />
+            <x-auth.field
+                name="email"
+                :label="__('Email address')"
+                type="email"
+                :value="old('email')"
+                autocomplete="username"
+                autofocus
+            />
 
-            <form method="POST" action="{{ route('password.email') }}">
-                @csrf
+            <button type="submit"
+                    class="inline-flex min-h-11 w-full items-center justify-center rounded-md bg-registry-green px-5 py-3 text-label text-paper transition-colors duration-150 ease-out-quart hover:bg-registry-green-deep focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-registry-green">
+                {{ __('Email password reset link') }}
+            </button>
+        </form>
 
-                <div class="block">
-                    <x-label for="email" value="{{ __('Email') }}" />
-                    <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')"
-                        required autofocus autocomplete="username" />
-                </div>
-
-                <div class="flex items-center justify-end mt-4">
-                    <x-button>
-                        {{ __('Email Password Reset Link') }}
-                    </x-button>
-                </div>
-            </form>
-        </div>
-    </div>
-
+        <x-slot name="footer">
+            <a href="{{ route('login') }}"
+               class="rounded-sm font-semibold text-registry-green transition-colors duration-150 ease-out-quart hover:text-registry-green-deep focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-registry-green">
+                {{ __('Back to sign in') }}
+            </a>
+        </x-slot>
+    </x-auth.card>
 @endsection

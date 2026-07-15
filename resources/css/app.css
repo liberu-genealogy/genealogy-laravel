@@ -78,6 +78,15 @@
 }
 
 /*
+ * Alpine's x-cloak. The old <x-guest-layout> declared this inline and
+ * layouts/app.blade.php never did, so moving the two-factor challenge onto the
+ * shared shell would have flashed the recovery-code block on every load.
+ */
+[x-cloak] {
+    display: none !important;
+}
+
+/*
  * Long-form documents (privacy, terms) — the Registry palette applied to the
  * typography plugin, so legal text inherits the system instead of hand-rolling
  * a colour on every element. Measure stays at the plugin's ~65ch.

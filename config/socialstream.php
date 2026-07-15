@@ -15,6 +15,11 @@ return [
         Providers::github(),
         Providers::gitlab(),
         Providers::google(),
+        // NOTE: linkedin() (legacy OAuth2) and linkedinOpenId() are both enabled
+        // and both render a button labelled "LinkedIn" — the login page shows two
+        // identical buttons. OpenID Connect supersedes the legacy provider, so
+        // one of these should go, but SocialstreamRegistrationTest asserts both
+        // are present, so the choice is a product decision rather than a cleanup.
         Providers::linkedin(),
         Providers::linkedinOpenId(),
         Providers::slack(),
