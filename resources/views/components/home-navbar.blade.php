@@ -19,7 +19,7 @@
 {{-- DESIGN.md §2, The Committed Field Rule. --}}
 <header @class([
     'sticky top-0 z-[var(--z-sticky)]',
-    'field-ruled bg-registry-field' => $onField,
+    'bg-registry-field' => $onField,
     'border-b border-rule bg-paper' => ! $onField,
 ])>
     <nav aria-label="Primary" class="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-x-6 px-6 py-3">

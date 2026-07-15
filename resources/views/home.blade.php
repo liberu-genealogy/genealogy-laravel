@@ -14,7 +14,7 @@
 {{-- Hero. The office is green, the paper is white: the drenched field with the
      record lying on it as a document on a registrar's desk. DESIGN.md §2,
      The Committed Field Rule. --}}
-<section class="field-ruled bg-registry-field">
+<section class="bg-registry-field">
     <div class="mx-auto grid max-w-6xl gap-14 px-6 py-20 lg:grid-cols-12 lg:items-center lg:gap-16 lg:py-28">
         <div class="lg:col-span-7">
             <h1 class="text-display text-balance text-paper">
@@ -275,7 +275,7 @@
 
 {{-- Close on the field, bookending the hero: you enter and leave through the
      office. Committed, ~a third of the page. --}}
-<section class="field-ruled bg-registry-field" aria-labelledby="cta-heading">
+<section class="bg-registry-field" aria-labelledby="cta-heading">
     {{-- Two columns so the band doesn't end as a lonely left block against an
          empty right half. --}}
     <div class="mx-auto grid max-w-6xl gap-10 px-6 py-20 lg:grid-cols-12 lg:items-center lg:gap-16 lg:py-24">

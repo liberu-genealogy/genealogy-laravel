@@ -16,7 +16,7 @@
 
 @section('content')
 
-<section class="field-ruled bg-registry-field">
+<section class="bg-registry-field">
     <div class="mx-auto max-w-6xl px-6 py-16 lg:py-20">
         <h1 class="text-display text-balance text-paper">Terms and Conditions</h1>
         <p class="mt-4 text-label text-emerald-100">Last updated: {{ $lastUpdated }}</p>

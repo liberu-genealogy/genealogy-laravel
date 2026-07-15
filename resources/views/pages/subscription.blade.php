@@ -69,7 +69,7 @@
 @section('content')
 
 {{-- The field. The pricing argument in one line. --}}
-<section class="field-ruled bg-registry-field">
+<section class="bg-registry-field">
     <div class="mx-auto max-w-6xl px-6 py-20 lg:py-24">
         <h1 class="max-w-[22ch] text-display text-balance text-paper">
             The tree is free. The DNA work isn't.
@@ -204,7 +204,7 @@
 </section>
 
 {{-- Close on the field. --}}
-<section class="field-ruled bg-registry-field" aria-labelledby="sub-cta-heading">
+<section class="bg-registry-field" aria-labelledby="sub-cta-heading">
     <div class="mx-auto grid max-w-6xl gap-10 px-6 py-20 lg:grid-cols-12 lg:items-center lg:gap-16 lg:py-24">
         <div class="lg:col-span-7">
             <h2 id="sub-cta-heading" class="text-headline text-balance text-paper">

@@ -6,7 +6,7 @@
 
 @section('content')
 
-<section class="field-ruled bg-registry-field">
+<section class="bg-registry-field">
     <div class="mx-auto max-w-6xl px-6 py-20 lg:py-24">
         <h1 class="max-w-[16ch] text-display text-balance text-paper">
             Ask us something.

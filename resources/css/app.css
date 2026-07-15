@@ -98,19 +98,6 @@
     --tw-prose-td-borders: var(--color-rule);
 }
 
-/*
- * The register rule — DESIGN.md §2, The Committed Field Rule. Faint horizontal
- * lines across the drenched field, the way a register is ruled. 6% white, so it
- * never touches the 9.72:1 the field gives white type. Marketing surface only.
- */
-.field-ruled {
-    background-image: repeating-linear-gradient(
-        to bottom,
-        transparent 0 2.25rem,
-        rgb(255 255 255 / 0.06) 2.25rem calc(2.25rem + 1px)
-    );
-}
-
 /* Reduced motion is not optional — DESIGN.md §5. Marketing transitions are
    colour-only today, but this covers whatever gets added next. */
 @media (prefers-reduced-motion: reduce) {

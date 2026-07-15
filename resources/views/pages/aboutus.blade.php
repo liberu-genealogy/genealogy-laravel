@@ -56,7 +56,7 @@
 @section('content')
 
 {{-- The field. Short: this page is the citations, not the claim. --}}
-<section class="field-ruled bg-registry-field">
+<section class="bg-registry-field">
     <div class="mx-auto max-w-6xl px-6 py-20 lg:py-24">
         <h1 class="max-w-[18ch] text-display text-balance text-paper">
             Don't take our word for it.
@@ -132,7 +132,7 @@
 </section>
 
 {{-- Close on the field, same grammar as the homepage. --}}
-<section class="field-ruled bg-registry-field" aria-labelledby="about-cta-heading">
+<section class="bg-registry-field" aria-labelledby="about-cta-heading">
     <div class="mx-auto grid max-w-6xl gap-10 px-6 py-20 lg:grid-cols-12 lg:items-center lg:gap-16 lg:py-24">
         <div class="lg:col-span-7">
             <h2 id="about-cta-heading" class="text-headline text-balance text-paper">
