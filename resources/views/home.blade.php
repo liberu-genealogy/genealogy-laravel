@@ -1,4 +1,4 @@
-@extends('layouts.home')
+@extends('layouts.home', ['fieldHero' => true])
 
 @php
     // Real values, not hardcoded. The old page claimed "£4.99" and a "7-day"

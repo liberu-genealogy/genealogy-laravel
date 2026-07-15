@@ -5,8 +5,10 @@
     // The bar joins the field only where there IS a field, so the hero reads as
     // one continuous surface instead of a green band pinned under a white rule.
     // Elsewhere the bar is paper chrome — a lone green bar over a light page is
-    // not commitment, just a stripe. Only the homepage has a field today.
-    $onField = $currentPath === '/';
+    // not commitment, just a stripe. The page declares this via
+    // @extends('layouts.home', ['fieldHero' => true]); don't switch on the path
+    // here, or a new field page silently gets the wrong bar.
+    $onField = $onField ?? false;
 
     $navLinkClass = fn (string $path) => 'rounded-sm px-1 py-2 text-label transition-colors duration-150 ease-out-quart focus-visible:outline-2 focus-visible:outline-offset-2 ' .
         ($onField ? 'focus-visible:outline-registry-tint ' : 'focus-visible:outline-registry-green ') .
