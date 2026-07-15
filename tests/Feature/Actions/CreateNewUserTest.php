@@ -5,11 +5,9 @@ declare(strict_types=1);
 namespace Tests\Feature\Actions;
 
 use App\Actions\Fortify\CreateNewUser;
-use App\Models\Team;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
-use Spatie\Permission\Models\Role;
 use Tests\TestCase;
 
 class CreateNewUserTest extends TestCase
@@ -20,7 +18,12 @@ class CreateNewUserTest extends TestCase
     {
         parent::setUp();
         $this->action = new CreateNewUser();
-        Role::firstOrCreate(['name' => 'panel_user', 'guard_name' => 'web']);
+
+        // Deliberately does NOT create a panel_user role. It used to, which is
+        // why this suite stayed green while every real registration returned
+        // 500: RolesSeeder seeds only super_admin, so the role existed in tests
+        // and nowhere else. The test manufactured the precondition production
+        // lacked. CreateNewUser no longer assigns it.
     }
 
     public function test_user_can_be_created_with_valid_data(): void
@@ -91,7 +94,13 @@ class CreateNewUserTest extends TestCase
         $this->assertEquals($user->ownedTeams->first()->id, $user->currentTeam->id);
     }
 
-    public function test_user_is_assigned_panel_user_role(): void
+    /**
+     * Replaces test_user_is_assigned_panel_user_role, which asserted the line
+     * that broke registration. This asserts what actually has to hold: a new
+     * account can be created without any role being seeded, because
+     * User::canAccessPanel() grants the app panel to any authenticated user.
+     */
+    public function test_user_is_created_without_requiring_a_seeded_role(): void
     {
         $user = $this->action->create([
             'name'                  => 'John Doe',
@@ -100,7 +109,8 @@ class CreateNewUserTest extends TestCase
             'password_confirmation' => 'Password1!',
         ]);
 
-        $this->assertTrue($user->hasRole('panel_user'));
+        $this->assertTrue($user->exists);
+        $this->assertCount(0, $user->roles);
     }
 
     public function test_validation_fails_when_name_is_missing(): void

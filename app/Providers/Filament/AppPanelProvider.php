@@ -76,6 +76,7 @@ use Illuminate\View\Middleware\ShareErrorsFromSession;
 use JoelButcher\Socialstream\Filament\SocialstreamPlugin;
 use Laravel\Fortify\Fortify;
 use Laravel\Fortify\Http\Controllers\AuthenticatedSessionController;
+use Laravel\Fortify\Http\Controllers\RegisteredUserController;
 use Laravel\Jetstream\Features;
 use Laravel\Jetstream\Jetstream;
 
@@ -88,8 +89,18 @@ class AppPanelProvider extends PanelProvider
             ->id('app')
             ->path('app')
             ->login([AuthenticatedSessionController::class, 'create'])
-            ->registration()
+            // Symmetric with login. Without the action, Filament renders its own
+            // built-in register page, so /register looked nothing like /login and
+            // auth/register.blade.php was orphaned. Safe for tenancy:
+            // App\Actions\Fortify\CreateNewUser creates the personal team,
+            // switches to it, sets the permissions team id and assigns
+            // panel_user — it does not rely on Filament's Registered event.
+            ->registration([RegisteredUserController::class, 'create'])
             ->passwordReset()
+            // DESIGN.md is light-only. Filament ships dark mode on and follows
+            // the OS, so the panel was serving a theme with no defined palette
+            // and no contrast verification.
+            ->darkMode(false)
             ->emailVerification()
             ->plugin(new SocialstreamPlugin())
             ->viteTheme('resources/css/filament/app/theme.css')
@@ -98,8 +109,8 @@ class AppPanelProvider extends PanelProvider
                 'gray' => Color::Slate,
             ])
             ->brandName(fn () => app(\App\Settings\GeneralSettings::class)->site_name)
-            ->brandLogo(asset('images/logo.svg'))
-            ->favicon(asset('images/favicon.ico'))
+            ->brandLogo(asset('build/images/logo.svg')) // vite-plugin-static-copy writes to build/images/; asset('images/..') was 404 on every panel page
+            ->favicon(asset('favicon.ico')) // public/favicon.ico is the only .ico that exists; images/favicon.ico was 404
             ->navigationGroups([
                 NavigationGroup::make()
                     ->label('🏠 Dashboard'),

@@ -41,7 +41,12 @@ class CreateNewUser implements CreatesNewUsers
             $team = $this->createTeam($user);
             $user->switchTeam($team);
             setPermissionsTeamId($team->id);
-            $user->assignRole('panel_user');
+            // No assignRole('panel_user'): RolesSeeder seeds only super_admin, so
+            // that call threw RoleDoesNotExist and 500'd every registration that
+            // reached this action. It is vestigial too — User::canAccessPanel()
+            // grants the app panel to any authenticated user precisely because
+            // requiring panel_user "caused 403 errors immediately after
+            // login/registration for new accounts". Nothing checks for it.
         }));
     }
 
