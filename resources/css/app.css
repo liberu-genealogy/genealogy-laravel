@@ -1,3 +1,82 @@
 @import './tailwind.css';
 @import './site.css';
-@import './navbar.css';
+
+/*
+ * The Registry palette + type scale. See docs/DESIGN.md.
+ * Tailwind 4 reads theme config from CSS, not tailwind.config.js — a JS config
+ * is ignored without an @config directive, which is why Figtree never rendered.
+ */
+@theme {
+    /* Typeface — DESIGN.md §3. One family, separated by weight. */
+    --font-sans: 'Figtree', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+
+    /* Colours — DESIGN.md §2. Every ratio measured against paper (#fff). */
+    --color-registry-green: #047857;      /* 5.48:1 — interactive, verified, links */
+    --color-registry-green-deep: #065f46; /* 7.68:1 — hover/active, brand headings */
+    --color-registry-tint: #ecfdf5;       /* selected wash, active nav bed */
+    --color-ink: #0f172a;                 /* 17.85:1 — body text */
+    --color-ink-muted: #475569;           /* 7.58:1 — secondary text */
+    --color-ink-faint: #64748b;           /* 4.76:1 — placeholders + control borders */
+    --color-rule: #e2e8f0;                /* hairline dividers only, never a boundary */
+    --color-paper: #ffffff;
+    --color-surface: #f8fafc;
+    --color-surface-sunk: #f1f5f9;
+    --color-flag-error: #b91c1c;
+    --color-flag-warning: #b45309;
+    --color-flag-info: #1d4ed8;
+
+    /* Type scale. Display is fluid (marketing hero only); everything else fixed. */
+    --text-display: clamp(2.5rem, 5vw + 1rem, 3.75rem);
+    --text-display--line-height: 1.1;
+    --text-display--letter-spacing: -0.02em;
+    --text-display--font-weight: 700;
+
+    --text-headline: 2rem;
+    --text-headline--line-height: 1.15;
+    --text-headline--letter-spacing: -0.015em;
+    --text-headline--font-weight: 600;
+
+    --text-title: 1.375rem;
+    --text-title--line-height: 1.3;
+    --text-title--letter-spacing: -0.01em;
+    --text-title--font-weight: 600;
+
+    --text-body: 1.0625rem; /* 17px — the floor. Does not shrink for density. */
+    --text-body--line-height: 1.6;
+
+    --text-label: 0.9375rem;
+    --text-label--line-height: 1.4;
+    --text-label--font-weight: 500;
+
+    --radius-sm: 4px;
+    --radius-md: 6px;
+    --radius-lg: 10px;
+
+    --ease-out-quart: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/*
+ * Semantic stacking order — DESIGN.md §4. Tailwind has no z-index theme
+ * namespace, so these stay plain properties, used as z-[var(--z-sticky)].
+ */
+:root {
+    --z-dropdown: 10;
+    --z-sticky: 20;
+    --z-modal-backdrop: 30;
+    --z-modal: 40;
+    --z-toast: 50;
+    --z-tooltip: 60;
+}
+
+/* Reduced motion is not optional — DESIGN.md §5. Marketing transitions are
+   colour-only today, but this covers whatever gets added next. */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}

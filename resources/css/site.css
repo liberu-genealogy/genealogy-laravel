@@ -1,7 +1,10 @@
-
-footer {
-  @apply text-white bg-green-900;
-}
+/*
+ * TODO(one-green-rule): .btn (blue-500, 3.68:1), .card / .card-header /
+ * .card-body / .manage-section (green-800) and .form-input (gray-300 border,
+ * 1.48:1) all fail docs/DESIGN.md and are left here deliberately — .card alone
+ * is used in 24 files, so re-pointing them is its own change, not this one.
+ * The <footer> element rule was removed: the footer component owns its colours.
+ */
 
 .navbar-nav {
   @apply text-white shadow-md;
