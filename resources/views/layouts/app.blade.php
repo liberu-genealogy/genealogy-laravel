@@ -14,7 +14,9 @@
     {{-- Figtree. Was configured in tailwind.config.js and fetched only on the
          auth layout, so it never actually rendered. See docs/DESIGN.md §3. --}}
     <link rel="preconnect" href="https://fonts.bunny.net">
-    <link href="https://fonts.bunny.net/css?family=figtree:400,500,600,700&display=swap" rel="stylesheet" />
+    {{-- Four weights, no more: 400 body, 500 label, 600 headline/title, 800 display.
+         800-against-400 is the weight contrast the brand surface needs; 700 is unused. --}}
+    <link href="https://fonts.bunny.net/css?family=figtree:400,500,600,800&display=swap" rel="stylesheet" />
 
     @vite('resources/css/app.css')
     @stack('styles')

@@ -11,47 +11,52 @@
 
 @section('content')
 
-{{-- Hero. Asymmetric: the argument on the left, the evidence on the right. --}}
-<section class="border-b border-rule bg-paper">
+{{-- Hero. The office is green, the paper is white: the drenched field with the
+     record lying on it as a document on a registrar's desk. DESIGN.md §2,
+     The Committed Field Rule. --}}
+<section class="field-ruled bg-registry-field">
     <div class="mx-auto grid max-w-6xl gap-14 px-6 py-20 lg:grid-cols-12 lg:items-center lg:gap-16 lg:py-28">
         <div class="lg:col-span-7">
-            <h1 class="text-display text-balance text-ink">
+            <h1 class="text-display text-balance text-paper">
                 Every name, with the record that proves it.
             </h1>
 
-            <p class="mt-6 max-w-[62ch] text-pretty text-body text-ink-muted">
+            <p class="mt-6 max-w-[58ch] text-pretty text-body text-emerald-100">
                 {{ $settings->site_name }} is a free, open-source platform for
                 building a family tree out of evidence. GEDCOM in, GEDCOM out. DNA matches with their
                 confidence stated in words, not colours. A citation under every claim.
             </p>
 
             <div class="mt-9 flex flex-wrap items-center gap-3">
+                {{-- On the field the primary action inverts: white paper is the
+                     strongest thing you can put on green. --}}
                 @auth
                     <a href="{{ route('filament.app.tenant') }}"
-                       class="inline-flex min-h-11 items-center rounded-md bg-registry-green px-5 py-3 text-label text-paper transition-colors duration-150 ease-out-quart hover:bg-registry-green-deep focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-registry-green">
+                       class="inline-flex min-h-11 items-center rounded-md bg-paper px-5 py-3 text-label text-registry-green-deep transition-colors duration-150 ease-out-quart hover:bg-registry-tint focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-registry-tint">
                         Open your tree
                     </a>
                 @else
                     <a href="{{ route('register') }}"
-                       class="inline-flex min-h-11 items-center rounded-md bg-registry-green px-5 py-3 text-label text-paper transition-colors duration-150 ease-out-quart hover:bg-registry-green-deep focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-registry-green">
+                       class="inline-flex min-h-11 items-center rounded-md bg-paper px-5 py-3 text-label text-registry-green-deep transition-colors duration-150 ease-out-quart hover:bg-registry-tint focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-registry-tint">
                         Start free
                     </a>
                 @endauth
 
                 <a href="{{ route('subscription') }}"
-                   class="inline-flex min-h-11 items-center rounded-md border border-ink-faint px-5 py-3 text-label text-registry-green transition-colors duration-150 ease-out-quart hover:bg-surface hover:text-registry-green-deep focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-registry-green">
+                   class="inline-flex min-h-11 items-center rounded-md border border-emerald-400 px-5 py-3 text-label text-paper transition-colors duration-150 ease-out-quart hover:bg-white/10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-registry-tint">
                     See pricing
                 </a>
             </div>
 
-            <p class="mt-5 text-label text-ink-faint">
+            <p class="mt-5 text-label text-emerald-200">
                 Free forever · No credit card required · MIT licensed
             </p>
         </div>
 
-        {{-- The record IS the hero image: real markup, no stock photography. --}}
+        {{-- The record IS the hero image: real markup, no stock photography.
+             No border, no shadow — white against the field is its own edge. --}}
         <div class="lg:col-span-5">
-            <figure class="rounded-lg border border-rule bg-paper">
+            <figure class="rounded-lg bg-paper">
                 <div class="flex items-baseline justify-between gap-4 border-b border-rule px-5 py-4">
                     <h2 class="text-title text-ink">Eleanor Whitfield</h2>
                     <span class="whitespace-nowrap text-label tabular-nums text-ink-muted">1834&ndash;1901</span>
@@ -268,8 +273,9 @@
     </div>
 </section>
 
-{{-- Close. Ink, not green: the Rarity Rule holds even here. --}}
-<section class="bg-ink" aria-labelledby="cta-heading">
+{{-- Close on the field, bookending the hero: you enter and leave through the
+     office. Committed, ~a third of the page. --}}
+<section class="field-ruled bg-registry-field" aria-labelledby="cta-heading">
     {{-- Two columns so the band doesn't end as a lonely left block against an
          empty right half. --}}
     <div class="mx-auto grid max-w-6xl gap-10 px-6 py-20 lg:grid-cols-12 lg:items-center lg:gap-16 lg:py-24">
@@ -277,30 +283,30 @@
             <h2 id="cta-heading" class="text-headline text-balance text-paper">
                 Start with one name and the record behind it.
             </h2>
-            <p class="mt-4 max-w-[52ch] text-pretty text-body text-slate-300">
+            <p class="mt-4 max-w-[52ch] text-pretty text-body text-emerald-100">
                 Import a GEDCOM you already have, or begin from a single person. Either way, you can
                 take the whole thing with you when you go.
             </p>
         </div>
 
         <div class="lg:col-span-5">
+            {{-- Retuned to the field: a registry-green button here would be 1.77:1
+                 against it, and slate greys read as a hedge in the green. --}}
             <div class="flex flex-wrap items-center gap-3 lg:justify-end">
                 @guest
                     <a href="{{ route('register') }}"
-                       class="inline-flex min-h-11 items-center rounded-md bg-registry-green px-5 py-3 text-label text-paper transition-colors duration-150 ease-out-quart hover:bg-registry-green-deep focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-registry-tint">
+                       class="inline-flex min-h-11 items-center rounded-md bg-paper px-5 py-3 text-label text-registry-green-deep transition-colors duration-150 ease-out-quart hover:bg-registry-tint focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-registry-tint">
                         Start free
                     </a>
                 @else
                     <a href="{{ route('filament.app.tenant') }}"
-                       class="inline-flex min-h-11 items-center rounded-md bg-registry-green px-5 py-3 text-label text-paper transition-colors duration-150 ease-out-quart hover:bg-registry-green-deep focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-registry-tint">
+                       class="inline-flex min-h-11 items-center rounded-md bg-paper px-5 py-3 text-label text-registry-green-deep transition-colors duration-150 ease-out-quart hover:bg-registry-tint focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-registry-tint">
                         Continue your tree
                     </a>
                 @endguest
 
                 <a href="https://github.com/liberu-genealogy/genealogy-laravel"
-                   {{-- slate-500, not slate-600: a control boundary needs 3:1 and
-                        slate-600 on ink is 2.36:1. --}}
-                   class="inline-flex min-h-11 items-center rounded-md border border-slate-500 px-5 py-3 text-label text-slate-200 transition-colors duration-150 ease-out-quart hover:border-slate-300 hover:text-paper focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-registry-tint">
+                   class="inline-flex min-h-11 items-center rounded-md border border-emerald-400 px-5 py-3 text-label text-paper transition-colors duration-150 ease-out-quart hover:bg-white/10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-registry-tint">
                     Read the source
                 </a>
             </div>

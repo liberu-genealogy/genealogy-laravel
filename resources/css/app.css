@@ -13,6 +13,7 @@
     /* Colours — DESIGN.md §2. Every ratio measured against paper (#fff). */
     --color-registry-green: #047857;      /* 5.48:1 — interactive, verified, links */
     --color-registry-green-deep: #065f46; /* 7.68:1 — hover/active, brand headings */
+    --color-registry-field: #064e3b;      /* 9.72:1 w/ white — MARKETING ONLY, the drenched field */
     --color-registry-tint: #ecfdf5;       /* selected wash, active nav bed */
     --color-ink: #0f172a;                 /* 17.85:1 — body text */
     --color-ink-muted: #475569;           /* 7.58:1 — secondary text */
@@ -26,10 +27,10 @@
     --color-flag-info: #1d4ed8;
 
     /* Type scale. Display is fluid (marketing hero only); everything else fixed. */
-    --text-display: clamp(2.5rem, 5vw + 1rem, 3.75rem);
-    --text-display--line-height: 1.1;
-    --text-display--letter-spacing: -0.02em;
-    --text-display--font-weight: 700;
+    --text-display: clamp(2.75rem, 6vw + 0.5rem, 4.5rem);
+    --text-display--line-height: 1.05;
+    --text-display--letter-spacing: -0.025em;
+    --text-display--font-weight: 800;
 
     --text-headline: 2rem;
     --text-headline--line-height: 1.15;
@@ -66,6 +67,19 @@
     --z-modal: 40;
     --z-toast: 50;
     --z-tooltip: 60;
+}
+
+/*
+ * The register rule — DESIGN.md §2, The Committed Field Rule. Faint horizontal
+ * lines across the drenched field, the way a register is ruled. 6% white, so it
+ * never touches the 9.72:1 the field gives white type. Marketing surface only.
+ */
+.field-ruled {
+    background-image: repeating-linear-gradient(
+        to bottom,
+        transparent 0 2.25rem,
+        rgb(255 255 255 / 0.06) 2.25rem calc(2.25rem + 1px)
+    );
 }
 
 /* Reduced motion is not optional — DESIGN.md §5. Marketing transitions are

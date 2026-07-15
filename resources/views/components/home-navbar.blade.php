@@ -1,25 +1,45 @@
 @php
     $settings = app(\App\Settings\GeneralSettings::class);
     $currentPath = '/' . ltrim(request()->path(), '/');
-    $navLinkClass = fn (string $path) => 'rounded-sm px-1 py-2 text-label transition-colors duration-150 ease-out-quart focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-registry-green ' .
+
+    // The bar joins the field only where there IS a field, so the hero reads as
+    // one continuous surface instead of a green band pinned under a white rule.
+    // Elsewhere the bar is paper chrome — a lone green bar over a light page is
+    // not commitment, just a stripe. Only the homepage has a field today.
+    $onField = $currentPath === '/';
+
+    $navLinkClass = fn (string $path) => 'rounded-sm px-1 py-2 text-label transition-colors duration-150 ease-out-quart focus-visible:outline-2 focus-visible:outline-offset-2 ' .
+        ($onField ? 'focus-visible:outline-registry-tint ' : 'focus-visible:outline-registry-green ') .
         ($currentPath === $path
-            ? 'font-semibold text-registry-green-deep'
-            : 'text-ink-muted hover:text-ink');
+            ? ($onField ? 'font-semibold text-paper' : 'font-semibold text-registry-green-deep')
+            : ($onField ? 'text-emerald-100 hover:text-paper' : 'text-ink-muted hover:text-ink'));
 @endphp
-<header class="sticky top-0 z-[var(--z-sticky)] border-b border-rule bg-paper">
+{{-- DESIGN.md §2, The Committed Field Rule. --}}
+<header @class([
+    'sticky top-0 z-[var(--z-sticky)]',
+    'field-ruled bg-registry-field' => $onField,
+    'border-b border-rule bg-paper' => ! $onField,
+])>
     <nav aria-label="Primary" class="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-x-6 px-6 py-3">
         {{-- A text wordmark, not logo1.svg. That file is a white "Family Tree 365"
-             lockup: it was invisible on this white bar, and it names a different
-             brand than $settings->site_name, which self-hosters configure. Set a
-             real mark here once one exists for the configured name. --}}
+             lockup naming a different brand than $settings->site_name, which
+             self-hosters configure. Set a real mark here once one exists. --}}
         <a href="/"
-           class="order-1 flex-none rounded-sm text-title text-ink transition-colors duration-150 ease-out-quart hover:text-registry-green-deep focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-registry-green">
+           @class([
+               'order-1 flex-none rounded-sm text-title transition-colors duration-150 ease-out-quart focus-visible:outline-2 focus-visible:outline-offset-2',
+               'text-paper hover:text-registry-tint focus-visible:outline-registry-tint' => $onField,
+               'text-ink hover:text-registry-green-deep focus-visible:outline-registry-green' => ! $onField,
+           ])>
             {{ $settings->site_name }}
         </a>
 
         <div class="order-3 flex items-center gap-x-2">
             <button type="button"
-                    class="flex size-11 items-center justify-center rounded-md text-ink-muted transition-colors duration-150 ease-out-quart hover:bg-surface-sunk hover:text-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-registry-green sm:hidden"
+                    @class([
+                        'flex size-11 items-center justify-center rounded-md transition-colors duration-150 ease-out-quart focus-visible:outline-2 focus-visible:outline-offset-2 sm:hidden',
+                        'text-paper hover:bg-white/10 focus-visible:outline-registry-tint' => $onField,
+                        'text-ink-muted hover:bg-surface-sunk hover:text-ink focus-visible:outline-registry-green' => ! $onField,
+                    ])
                     id="navbar-mobile-toggle"
                     aria-expanded="false"
                     aria-controls="navbar-mobile-menu">
@@ -29,20 +49,25 @@
                 <span class="sr-only">Toggle navigation</span>
             </button>
 
+            @php
+                // On the field the primary action inverts to white paper: a
+                // registry-green button on the field would be 1.77:1.
+                $cta = $onField
+                    ? 'inline-flex min-h-11 items-center rounded-md bg-paper px-4 py-2 text-label text-registry-green-deep transition-colors duration-150 ease-out-quart hover:bg-registry-tint focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-registry-tint'
+                    : 'inline-flex min-h-11 items-center rounded-md bg-registry-green px-4 py-2 text-label text-paper transition-colors duration-150 ease-out-quart hover:bg-registry-green-deep focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-registry-green';
+            @endphp
             @auth
-                <a href="{{ route('filament.app.tenant') }}"
-                   class="inline-flex min-h-11 items-center rounded-md bg-registry-green px-4 py-2 text-label text-paper transition-colors duration-150 ease-out-quart hover:bg-registry-green-deep focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-registry-green">
-                    Open your tree
-                </a>
+                <a href="{{ route('filament.app.tenant') }}" class="{{ $cta }}">Open your tree</a>
             @else
                 <a href="/login"
-                   class="hidden min-h-11 items-center rounded-sm px-2 text-label text-ink-muted transition-colors duration-150 ease-out-quart hover:text-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-registry-green sm:inline-flex">
+                   @class([
+                       'hidden min-h-11 items-center rounded-sm px-2 text-label transition-colors duration-150 ease-out-quart focus-visible:outline-2 focus-visible:outline-offset-2 sm:inline-flex',
+                       'text-emerald-100 hover:text-paper focus-visible:outline-registry-tint' => $onField,
+                       'text-ink-muted hover:text-ink focus-visible:outline-registry-green' => ! $onField,
+                   ])>
                     Sign in
                 </a>
-                <a href="/register"
-                   class="inline-flex min-h-11 items-center rounded-md bg-registry-green px-4 py-2 text-label text-paper transition-colors duration-150 ease-out-quart hover:bg-registry-green-deep focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-registry-green">
-                    Start free
-                </a>
+                <a href="/register" class="{{ $cta }}">Start free</a>
             @endauth
         </div>
 
