@@ -2,7 +2,6 @@
 
 namespace App\Jobs;
 
-use Exception;
 use App\Models\Dna;
 use App\Models\DnaMatching as DM;
 use App\Models\User;
@@ -65,9 +64,11 @@ class DnaMatching implements ShouldQueue
                 $dm->user_id = $user->id;
                 $dm->match_id = $dna->user_id;
                 $dm->match_name = $match_name;
-                $dm->image = env('APP_URL').'/storage/dna/output/shared_dna_'.$this->var_name.'_'.$dna->variable_name.'_0p75cM_1100snps_GRCh37_HapMap2.png';
-                $dm->file1 = 'discordant_snps_'.$this->var_name.'_'.$dna->variable_name.'_GRCh37.csv';
-                $dm->file2 = 'shared_dna_one_chrom_'.$this->var_name.'_'.$dna->variable_name.'_0p75cM_1100snps_GRCh37_HapMap2.csv';
+                // ponytail: no plot/CSV output is generated yet (real php-dna export is TODO C7),
+                // so don't advertise files that don't exist. image is nullable; file1/file2 are NOT NULL.
+                $dm->image = null;
+                $dm->file1 = '';
+                $dm->file2 = '';
 
                 // Store advanced matching results
                 $dm->total_shared_cm = $matchResult['total_cms'];
@@ -91,9 +92,10 @@ class DnaMatching implements ShouldQueue
                     $dm2->user_id = $dna->user_id;
                     $dm2->match_id = $user->id;
                     $dm2->match_name = $current_name;
-                    $dm2->image = env('APP_URL').'/storage/dna/output/shared_dna_'.$this->var_name.'_'.$dna->variable_name.'_0p75cM_1100snps_GRCh37_HapMap2.png';
-                    $dm2->file1 = 'discordant_snps_'.$this->var_name.'_'.$dna->variable_name.'_GRCh37.csv';
-                    $dm2->file2 = 'shared_dna_one_chrom_'.$this->var_name.'_'.$dna->variable_name.'_0p75cM_1100snps_GRCh37_HapMap2.csv';
+                    // ponytail: same as above - no output files generated yet (TODO C7).
+                    $dm2->image = null;
+                    $dm2->file1 = '';
+                    $dm2->file2 = '';
 
                     // Store same advanced matching results
                     $dm2->total_shared_cm = $matchResult['total_cms'];
@@ -141,7 +143,9 @@ class DnaMatching implements ShouldQueue
                 // $dm->save();
 
                 // $data = writeCSV(storage_path('app'.DIRECTORY_SEPARATOR.'dna'.DIRECTORY_SEPARATOR.'output'.DIRECTORY_SEPARATOR.$dm->file2), $data);
-            } catch (Exception $e) {
+            } catch (\Throwable $e) {
+                // Throwable, not Exception: keep one bad pairing (Error included)
+                // from aborting the whole job; log and move to the next record.
                 Log::error('Error in DNA matching job: ' . $e->getMessage());
                 continue; // Skip to next DNA record on error
             }

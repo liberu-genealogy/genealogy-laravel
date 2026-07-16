@@ -9,13 +9,17 @@ use App\Models\User;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 //use LiberuGenealogy\LaravelDna\Services\DnaAnalysisService;
-use LiberuGenealogy\PhpDna\DnaKit;
-use LiberuGenealogy\PhpDna\Snps;
-use LiberuGenealogy\PhpDna\Individual;
+// TODO(C7): real php-dna integration. The installed php-dna package uses
+// namespace Dna\ and has no DnaKit/Snps/Individual, so the classes this service
+// was written against do not exist. Until they are wired up, loadDnaKit() raises
+// a class-not-found Error and matching degrades to performBasicMatching().
 
 class AdvancedDnaMatchingService
 {
   //  protected DnaAnalysisService $dnaAnalysisService;
+
+    /** Autosomal chromosomes 1-22 (matches DnaTriangulationService's scan range). */
+    private const MAX_CHROMOSOME_NUMBER = 22;
 
     //public function __construct(DnaAnalysisService $dnaAnalysisService)
     //{
@@ -57,7 +61,10 @@ class AdvancedDnaMatchingService
                 'ibd_segments' => $matchResults['ibd_segments']
             ];
 
-        } catch (Exception $e) {
+        } catch (\Throwable $e) {
+            // Catch Throwable, not Exception: a missing php-dna class or the
+            // undefined-const bug raises Error, which Exception would miss and
+            // let the fallback never run.
             Log::error('Advanced DNA matching failed: ' . $e->getMessage());
 
             // Fallback to basic matching if advanced fails
@@ -88,7 +95,9 @@ class AdvancedDnaMatchingService
 
             return $dnaKit;
 
-        } catch (Exception $e) {
+        } catch (\Throwable $e) {
+            // Throwable, not Exception: the php-dna classes do not exist yet, so
+            // instantiating them raises Error. Swallow it and report "no kit".
             Log::error("Failed to load DNA kit from {$fileName}: " . $e->getMessage());
             return null;
         }
