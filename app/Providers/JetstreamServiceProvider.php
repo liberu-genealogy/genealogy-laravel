@@ -49,17 +49,41 @@ class JetstreamServiceProvider extends ServiceProvider
     {
         Jetstream::defaultApiTokenPermissions(['read']);
 
+        // Every permission the tiers below reference. `manage-team` is the only
+        // privilege that separates admin from editor once records-CRUD is shared.
+        Jetstream::permissions([
+            'create',
+            'read',
+            'update',
+            'delete',
+            'manage-team',
+        ]);
+
+        // Collaboration tiers, most -> least privileged. Each tier is a strict
+        // superset of the one below it (SCOPE §10).
         Jetstream::role('admin', 'Administrator', [
             'create',
             'read',
             'update',
             'delete',
-        ])->description('Administrator users can perform any action.');
+            'manage-team',
+        ])->description('Administrators can perform any action, including managing team members.');
 
         Jetstream::role('editor', 'Editor', [
-            'read',
             'create',
+            'read',
             'update',
-        ])->description('Editor users have the ability to read, create, and update.');
+            'delete',
+        ])->description('Editors can create, read, update, and delete records.');
+
+        Jetstream::role('contributor', 'Contributor', [
+            'create',
+            'read',
+            'update',
+        ])->description('Contributors can create, read, and update records, but cannot delete them or manage the team.');
+
+        Jetstream::role('viewer', 'Viewer', [
+            'read',
+        ])->description('Viewers have read-only access.');
     }
 }
