@@ -21,6 +21,9 @@ return Application::configure(basePath: dirname(__DIR__))
             'stripe/*',
         ]);
         $middleware->statefulApi();
+        // api RateLimiter lives in RouteServiceProvider, which is never registered;
+        // inline 60/min throttle avoids that dependency (mirrors its perMinute(60)).
+        $middleware->throttleApi('60,1');
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //

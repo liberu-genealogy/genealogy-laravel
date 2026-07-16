@@ -19,6 +19,27 @@ class GedcomService
         return $generator->getGedcomPerson() . $generator->getGedcomFamily();
     }
 
+    /**
+     * Generate a complete GEDCOM document (the whole tree) as a single
+     * HEAD..TRLR string, suitable for writing to a file for download.
+     *
+     * The generator queries the database itself (person id 0 = every person
+     * and family), so no models are passed in.
+     */
+    public function generateGedcomContent(): string
+    {
+        // ponytail: reuse getGedcomPerson() — it already emits one full HEAD..TRLR
+        // document for the whole tree. generateGedcomString() concatenates a second
+        // getGedcomFamily() pass, which re-emits a duplicate HEAD (invalid in a file).
+        $gedcom = (new GedcomGenerator(0, 0, 0, 0))->getGedcomPerson();
+
+        // The vendor generator prepends a "Format: gedcom5.5" marker line; a valid
+        // GEDCOM file must begin at the 0 HEAD record, so drop anything before it.
+        $head = strpos($gedcom, '0 HEAD');
+
+        return $head === false ? $gedcom : substr($gedcom, $head);
+    }
+
     public function queueImport(UploadedFile $file, ?int $treeId = null): ImportJob
     {
         $path = $file->store('gedcom-form-imports', 'private');

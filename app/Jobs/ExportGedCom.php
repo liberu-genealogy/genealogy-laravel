@@ -35,7 +35,7 @@ final class ExportGedCom implements ShouldQueue
             Log::info("Exporting {$people->count()} people and {$families->count()} families.");
 
             $gedcomService = new GedcomService;
-            $content = $gedcomService->generateGedcomContent($people, $families);
+            $content = $gedcomService->generateGedcomContent();
 
             Storage::disk('private')->put($this->file, $content);
 
