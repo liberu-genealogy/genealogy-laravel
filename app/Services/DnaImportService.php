@@ -8,7 +8,6 @@ use App\Jobs\DnaMatching;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
-use LiberuGenealogy\PhpDna\Snps;
 
 class DnaImportService
 {
@@ -56,18 +55,22 @@ class DnaImportService
      * @param bool $autoMatch Whether to dispatch matching job
      * @return array Import result
      */
-    public function importSingleKit(string $filePath, int $userId, bool $autoMatch = true): array
+    public function importSingleKit(string $filePath, int $userId, bool $autoMatch = true, bool $consentGiven = false): array
     {
         // Validate file exists
         if (!Storage::disk('private')->exists($filePath)) {
             throw new Exception("DNA file not found: {$filePath}");
         }
 
-        // Validate file format
+        // Validate file format (on the plaintext, before it is encrypted below)
         $validation = $this->validateDnaFile($filePath);
         if (!$validation['valid']) {
             throw new Exception("Invalid DNA file format: " . $validation['error']);
         }
+
+        // Encrypt the raw DNA file at rest now that it is validated (SCOPE §20).
+        $vault = app(\App\Services\Dna\DnaFileVault::class);
+        $vault->store(Storage::disk('private')->get($filePath), $filePath);
 
         // Generate unique variable name
         $varName = $this->generateUniqueVarName();
@@ -78,10 +81,14 @@ class DnaImportService
         $dna->user_id = $userId;
         $dna->variable_name = $varName;
         $dna->file_name = $filePath;
+        if ($consentGiven) {
+            $dna->consent_given = true;
+            $dna->consent_given_at = now();
+        }
         $dna->save();
 
-        // Dispatch matching job if requested
-        if ($autoMatch) {
+        // Dispatch matching only for a consented kit — never match DNA without consent.
+        if ($autoMatch && $dna->hasConsent()) {
             $user = \App\Models\User::find($userId);
             if ($user) {
                 DnaMatching::dispatch($user, $varName, $filePath);
@@ -148,18 +155,19 @@ class DnaImportService
                 ];
             }
 
-            // Try to load with php-dna to validate
+            // Count SNPs with the real parser. (The vendor php-dna Snps class does
+            // not exist / is non-functional, so this replaces the old guarded
+            // class_exists(Snps::class) block that always left the count at 0.)
             $snpCount = 0;
-            if (class_exists(Snps::class)) {
-                try {
-                    $snps = new Snps($fullPath);
-                    $snpCount = count($snps->getSnps());
-                } catch (\Throwable $e) {
-                    return [
-                        'valid' => false,
-                        'error' => 'Could not parse DNA file: ' . $e->getMessage(),
-                    ];
+            try {
+                foreach (app(\App\Services\Dna\RawDnaParser::class)->parse($fullPath) as $positions) {
+                    $snpCount += count($positions);
                 }
+            } catch (\Throwable $e) {
+                return [
+                    'valid' => false,
+                    'error' => 'Could not parse DNA file: ' . $e->getMessage(),
+                ];
             }
 
             return [
