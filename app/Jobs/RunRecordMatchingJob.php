@@ -4,6 +4,8 @@ namespace App\Jobs;
 
 use ReflectionClass;
 use App\Models\Person;
+use App\Models\Team;
+use App\Notifications\RecordSuggestionNotification;
 use App\Services\RecordMatcher\Providers\ExampleProvider;
 use App\Services\RecordMatcher\Providers\MyHeritageProvider;
 use App\Services\RecordMatcher\Providers\AncestryProvider;
@@ -59,6 +61,8 @@ class RunRecordMatchingJob implements ShouldQueue
         $persons = Person::whereNotNull('last_name')->limit(200)->get();
 
         $totalMatches = 0;
+        $newByTeam = [];
+        $unowned = 0;
 
         foreach ($persons as $person) {
             foreach ($providers as $provider) {
@@ -71,13 +75,23 @@ class RunRecordMatchingJob implements ShouldQueue
                         $score = $entry['score'];
                         // Only persist suggestions above a threshold (e.g., 0.45)
                         if ($score >= config('ai_record_match.min_confidence', 0.45)) {
-                            $matcher->persistSuggestion(
-                                $person->id, 
-                                new ReflectionClass($provider)->getShortName(), 
-                                $candidate, 
+                            $suggestion = $matcher->persistSuggestion(
+                                $person->id,
+                                new ReflectionClass($provider)->getShortName(),
+                                $candidate,
                                 $score
                             );
                             $totalMatches++;
+
+                            // Group brand-new suggestions by the person's owning team so
+                            // we send one summary per owner instead of one email per record.
+                            if ($suggestion->wasRecentlyCreated) {
+                                if ($person->team_id) {
+                                    $newByTeam[$person->team_id] = ($newByTeam[$person->team_id] ?? 0) + 1;
+                                } else {
+                                    $unowned++;
+                                }
+                            }
                         }
                     }
                 } catch (\Exception $e) {
@@ -88,6 +102,20 @@ class RunRecordMatchingJob implements ShouldQueue
                     ]);
                 }
             }
+        }
+
+        // Notify each affected team's owner once, summarising their new suggestions.
+        foreach ($newByTeam as $teamId => $count) {
+            $owner = Team::find($teamId)?->owner;
+            if ($owner) {
+                $owner->notify(new RecordSuggestionNotification($count));
+            } else {
+                Log::info('Record matching: team has no owner to notify', ['team_id' => $teamId, 'new_suggestions' => $count]);
+            }
+        }
+
+        if ($unowned > 0) {
+            Log::info('Record matching: new suggestions with no owning team; notification skipped', ['count' => $unowned]);
         }
 
         Log::info('Record matching job completed', [
