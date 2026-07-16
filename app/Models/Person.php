@@ -25,6 +25,16 @@ class Person extends Model
 
     public const GENDER_UNKNOWN = 'U';
 
+    /**
+     * Single source of truth for sex code => label. Add codes here (e.g. 'X' => 'Unspecified')
+     * to extend; forms, filters and getSex() all read from this map.
+     */
+    public const SEX_OPTIONS = [
+        self::GENDER_MALE => 'Male',
+        self::GENDER_FEMALE => 'Female',
+        self::GENDER_UNKNOWN => 'Unknown',
+    ];
+
     #[\Override]
     protected $fillable = [
         'gid',
@@ -172,11 +182,7 @@ class Person extends Model
 
     public function getSex(): string
     {
-        if ($this->sex === 'F') {
-            return 'Female';
-        }
-
-        return 'Male';
+        return self::SEX_OPTIONS[$this->sex] ?? 'Unknown';
     }
 
     public static function getList(): \Illuminate\Support\Collection
