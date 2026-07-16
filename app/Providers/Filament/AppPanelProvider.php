@@ -47,6 +47,11 @@ use App\Filament\App\Resources\SubmResource;
 use App\Filament\App\Resources\SubnResource;
 use App\Filament\App\Resources\TypeResource;
 use App\Filament\App\Resources\VirtualEventResource;
+// Person-merge UI. Lives under app/Modules/* (autoloadable via App\ PSR-4) and is
+// registered explicitly rather than by discovering app/Modules, because a broad
+// discover would also pick up the module PersonResource/PlaceResource/SourceResource/
+// TypeResource that duplicate the App-panel resources above (double nav / conflicts).
+use App\Modules\Person\Filament\Resources\DuplicateMatchResource;
 use App\Http\Middleware\TeamsPermission;
 use App\Listeners\CreatePersonalTeam;
 use App\Listeners\SwitchTeam;
@@ -159,6 +164,7 @@ class AppPanelProvider extends PanelProvider
                 DnaMatchingResource::class,
                 DnaResource::class,
                 DuplicateCheckResource::class,
+                DuplicateMatchResource::class,
                 FamilyEventResource::class,
                 FamilyResource::class,
                 FamilySlgsResource::class,

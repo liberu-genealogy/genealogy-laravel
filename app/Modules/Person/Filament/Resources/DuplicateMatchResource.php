@@ -10,10 +10,12 @@ use App\Services\PersonMergeService;
 use App\Models\Person;
 use Filament\Resources\Resource;
 use Filament\Tables;
-use Filament\Resources\Table;
+use Filament\Tables\Table;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Collection;
+use Illuminate\Support\HtmlString;
 
 class DuplicateMatchResource extends Resource
 {
@@ -71,16 +73,19 @@ class DuplicateMatchResource extends Resource
                     ->icon('heroicon-o-eye')
                     ->modalHeading('Review duplicate suggestion')
                     ->modalSubheading(fn (DuplicateMatch $record): string => 'Confidence: ' . sprintf('%.1f%%', $record->confidence_score * 100))
-                    ->modalContent(function (DuplicateMatch $record): string {
+                    ->modalContent(function (DuplicateMatch $record): HtmlString {
                         $p = $record->primaryPerson;
                         $d = $record->duplicatePerson;
                         $data = $record->match_data ?? [];
                         $md = htmlspecialchars(json_encode($data, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
-                        return "<div>
-                            <p><strong>Primary</strong>: {$p->name} (ID: {$p->id})</p>
-                            <p><strong>Candidate</strong>: {$d->name} (ID: {$d->id})</p>
+                        $pName = e($p?->name);
+                        $dName = e($d?->name);
+                        // v5 getModalContent() must return View|Htmlable, not a raw string.
+                        return new HtmlString("<div>
+                            <p><strong>Primary</strong>: {$pName} (ID: {$p?->id})</p>
+                            <p><strong>Candidate</strong>: {$dName} (ID: {$d?->id})</p>
                             <pre style=\"max-height:250px;overflow:auto;background:#f6f8fa;padding:8px;border-radius:4px;\">{$md}</pre>
-                        </div>";
+                        </div>");
                     })
                     ->modalActions([
                         Action::make('merge')
@@ -111,10 +116,6 @@ class DuplicateMatchResource extends Resource
                                 $record->save();
                             }),
                     ]),
-                Action::make('open')
-                    ->label('Open persons')
-                    ->url(fn (DuplicateMatch $record): string => route('filament.resources.persons.edit', ['record' => $record->primary_person_id]))
-                    ->openUrlInNewTab(),
             ])
             ->bulkActions([
                 BulkAction::make('merge_selected')
