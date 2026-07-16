@@ -5,6 +5,9 @@ declare(strict_types=1);
 namespace App\Filament\App\Resources;
 
 use Override;
+use App\Enums\MediaType;
+use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Actions\EditAction;
@@ -47,6 +50,15 @@ class MediaObjectResource extends AppResource
     {
         return $schema
                 ->components([
+                    Select::make('media_type')
+                        ->options(MediaType::options())
+                        ->native(false),
+                    FileUpload::make('file_path')
+                        ->label('File')
+                        ->disk('private')
+                        ->directory('media-objects')
+                        ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp', 'application/pdf'])
+                        ->maxSize(10240),
                     TextInput::make('gid')
                         ->numeric(),
                     TextInput::make('group')
@@ -65,6 +77,9 @@ class MediaObjectResource extends AppResource
     {
         return $table
             ->columns([
+                TextColumn::make('media_type')
+                    ->badge()
+                    ->searchable(),
                 TextColumn::make('gid')
                     ->numeric()
                     ->sortable(),
