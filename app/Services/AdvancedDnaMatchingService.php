@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Services\Dna\DnaFileVault;
 use App\Services\Dna\RawDnaParser;
 use App\Services\Dna\RelationshipEstimator;
 use App\Services\Dna\SegmentMatcher;
@@ -24,6 +25,7 @@ class AdvancedDnaMatchingService
         private RawDnaParser $parser = new RawDnaParser(),
         private SegmentMatcher $matcher = new SegmentMatcher(),
         private RelationshipEstimator $estimator = new RelationshipEstimator(),
+        private DnaFileVault $vault = new DnaFileVault(),
     ) {}
 
     /**
@@ -74,15 +76,18 @@ class AdvancedDnaMatchingService
      */
     protected function loadKit(string $fileName): array
     {
-        $path = Storage::disk('private')->path($fileName);
-
-        if (! is_file($path)) {
-            Log::warning("DNA file not found: {$path}");
+        if (! Storage::disk('private')->exists($fileName)) {
+            Log::warning("DNA file not found: {$fileName}");
 
             return [];
         }
 
-        return $this->parser->parse($path);
+        // DNA files are encrypted at rest (SCOPE §20); read + decrypt in memory
+        // and parse the content — never write plaintext back to disk. The vault
+        // transparently returns legacy plaintext files unchanged.
+        $content = $this->vault->read($fileName);
+
+        return $content === '' ? [] : $this->parser->parseContent($content);
     }
 
     /**

@@ -40,6 +40,10 @@ class RawDnaParser
     /**
      * Parse a raw-DNA file into the normalized kit map.
      *
+     * Thin wrapper: reads the file (missing/unreadable → []) and hands the
+     * contents to parseContent(), which does the actual work. The matching
+     * path parses decrypted bytes in memory via parseContent() directly.
+     *
      * @return array<string, array<int, string>> chromosome => (position => genotype); [] on unreadable/empty input.
      */
     public function parse(string $absoluteFilePath): array
@@ -48,17 +52,31 @@ class RawDnaParser
             return [];
         }
 
-        $handle = @fopen($absoluteFilePath, 'rb');
-        if ($handle === false) {
+        $raw = @file_get_contents($absoluteFilePath);
+        if ($raw === false) {
             return [];
         }
 
+        return $this->parseContent($raw);
+    }
+
+    /**
+     * Parse an in-memory raw-DNA string into the normalized kit map.
+     *
+     * Same output as parse(), but works on decrypted contents held in memory
+     * (the matcher never touches the disk in plaintext).
+     *
+     * @return array<string, array<int, string>> chromosome => (position => genotype); [] on empty input.
+     */
+    public function parseContent(string $raw): array
+    {
         $format = null;      // resolved once, from the header; drives allele handling
         $comments = '';      // 23andMe advertises itself in a comment line
         $map = [];
 
-        while (($raw = fgets($handle)) !== false) {
-            $line = trim($raw);
+        // trim() on each line strips the trailing \r, so \r\n and \n both work.
+        foreach (explode("\n", $raw) as $rawLine) {
+            $line = trim($rawLine);
 
             if ($line === '') {
                 continue;
@@ -111,8 +129,6 @@ class RawDnaParser
 
             $map[$chromosome][$position] = $genotype;
         }
-
-        fclose($handle);
 
         return $map;
     }

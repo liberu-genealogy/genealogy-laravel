@@ -14,7 +14,9 @@ use UnitEnum;
 use BackedEnum;
 use App\Filament\App\Resources\DnaResource\Pages;
 use App\Models\Dna;
+use Filament\Forms\Components\Checkbox;
 use Filament\Forms\Components\FileUpload;
+use Filament\Tables\Columns\IconColumn;
 use App\Filament\App\Resources\AppResource;
 use Filament\Schemas\Schema;
 use Filament\Tables;
@@ -77,6 +79,11 @@ class DnaResource extends AppResource
                     ->directory('dna-form-imports')
                     ->visibility('private')
                     ->acceptedFileTypes(['text/plain', 'text/csv', 'application/zip', 'application/octet-stream']),
+                Checkbox::make('consent_given')
+                    ->label('I consent to my DNA data being stored and used for relative matching')
+                    ->helperText('Required. Your genetic data will not be stored or matched without this consent.')
+                    ->accepted()
+                    ->required(),
             ]);
     }
 
@@ -94,6 +101,10 @@ class DnaResource extends AppResource
                     ->searchable(),
                 TextColumn::make('file_name')
                     ->searchable(),
+                IconColumn::make('consent_given')
+                    ->label('Consent')
+                    ->boolean()
+                    ->sortable(),
                 TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()

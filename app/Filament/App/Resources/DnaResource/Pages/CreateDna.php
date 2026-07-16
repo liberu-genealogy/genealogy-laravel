@@ -32,13 +32,14 @@ class CreateDna extends CreateRecord
 
         $importService = app(DnaImportService::class);
         $files = is_array($files) ? $files : [$files];
+        $consentGiven = (bool) ($data['consent_given'] ?? false);
         $firstDna = null;
         $successCount = 0;
         $errors = [];
 
         foreach ($files as $filePath) {
             try {
-                $result = $importService->importSingleKit($filePath, Auth::id(), true);
+                $result = $importService->importSingleKit($filePath, Auth::id(), true, $consentGiven);
                 $successCount++;
                 if ($firstDna === null) {
                     $firstDna = Dna::find($result['dna_id']);

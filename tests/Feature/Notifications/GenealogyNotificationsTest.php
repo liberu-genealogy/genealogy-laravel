@@ -29,7 +29,9 @@ class GenealogyNotificationsTest extends TestCase
         Notification::fake();
 
         $owner = User::factory()->create();
-        // Another kit for the job to match the owner's kit against.
+        // The owner's own consented kit (the job's consent gate requires it to
+        // exist + have consent), plus another consented kit to match against.
+        Dna::factory()->create(['variable_name' => 'kit_mine', 'user_id' => $owner->id]);
         Dna::factory()->create(['variable_name' => 'kit_other']);
 
         // Stub the heavy matching service so handle() creates a match deterministically.

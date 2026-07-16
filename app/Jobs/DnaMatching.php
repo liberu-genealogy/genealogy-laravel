@@ -42,7 +42,17 @@ class DnaMatching implements ShouldQueue
     public function handle(): void
     {
         $user = $this->current_user;
-        $dnas = Dna::where('variable_name', '!=', $this->var_name)->get();
+
+        // Consent gate (SCOPE §20): never match a kit that hasn't consented, and
+        // only compare against other consented kits.
+        $ownKit = Dna::where('variable_name', $this->var_name)->first();
+        if (! $ownKit || ! $ownKit->hasConsent()) {
+            Log::info("DNA matching skipped for {$this->var_name}: no consent on record.");
+
+            return;
+        }
+
+        $dnas = Dna::where('variable_name', '!=', $this->var_name)->consented()->get();
         $newMatches = 0;
 
         foreach ($dnas as $dna) {

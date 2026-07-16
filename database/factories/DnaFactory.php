@@ -32,6 +32,10 @@ class DnaFactory extends Factory
             'file_name' => 'dna-test-files/' . $this->faker->uuid . '.txt',
             'variable_name' => 'var_' . $this->faker->unique()->bothify('?????'),
             'user_id' => \App\Models\User::factory(),
+            // Factory kits consent by default so matching/notification tests run;
+            // real uploads must tick the consent box (enforced in DnaResource).
+            'consent_given' => true,
+            'consent_given_at' => now(),
         ];
     }
 }
