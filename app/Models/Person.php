@@ -4,6 +4,7 @@ namespace App\Models;
 
 // use App\Traits\ConnectionTrait;
 
+use App\Enums\PedigreeType;
 use App\Traits\BelongsToTenant;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -42,6 +43,7 @@ class Person extends Model
         'surn',
         'sex',
         'child_in_family_id',
+        'pedigree',
         'description',
         'titl',
         'name',
@@ -183,6 +185,18 @@ class Person extends Model
     public function getSex(): string
     {
         return self::SEX_OPTIONS[$this->sex] ?? 'Unknown';
+    }
+
+    /** GEDCOM FAMC.PEDI ADOPTED. Null pedigree = biological, so not adopted. */
+    public function isAdopted(): bool
+    {
+        return $this->pedigree === PedigreeType::ADOPTED;
+    }
+
+    /** Human label for the child-family link type; null pedigree reads as biological. */
+    public function pedigreeLabel(): string
+    {
+        return ($this->pedigree ?? PedigreeType::BIRTH)->label();
     }
 
     public static function getList(): \Illuminate\Support\Collection
@@ -485,6 +499,7 @@ class Person extends Model
             'deathday' => 'datetime',
             'burial_day' => 'datetime',
             'chan' => 'datetime',
+            'pedigree' => PedigreeType::class,
         ];
     }
 }

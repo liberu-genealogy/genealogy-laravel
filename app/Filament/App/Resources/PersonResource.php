@@ -86,6 +86,11 @@ class PersonResource extends AppResource
                         DateTimePicker::make('deathday')->label('Date of Death'),
                         DateTimePicker::make('burial_day')->label('Burial Date'),
                         TextInput::make('child_in_family_id')->label('Child in Family ID'),
+                        Select::make('pedigree')
+                            ->options(\App\Enums\PedigreeType::options())
+                            ->label('Pedigree')
+                            ->placeholder('Biological')
+                            ->helperText('Link type to the child-in-family. Leave blank for biological.'),
                     ]),
 
                 Section::make('Contact Information')
