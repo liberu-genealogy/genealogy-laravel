@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Traits\BelongsToTenant;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -23,7 +24,41 @@ class Tree extends Model
         'name',
         'description',
         'root_person_id',
+        'is_public',
     ];
+
+    /**
+     * @var array<string, string>
+     */
+    protected $casts = [
+        'is_public' => 'boolean',
+    ];
+
+    /**
+     * Private by default at the model level too, not only via the DB default —
+     * so a freshly-instantiated Tree reads as private before it round-trips.
+     *
+     * @var array<string, mixed>
+     */
+    protected $attributes = [
+        'is_public' => false,
+    ];
+
+    /**
+     * Only trees the owner has opted to share publicly.
+     */
+    public function scopePublic(Builder $query): Builder
+    {
+        return $query->where('is_public', true);
+    }
+
+    /**
+     * Trees kept private (the default).
+     */
+    public function scopePrivate(Builder $query): Builder
+    {
+        return $query->where('is_public', false);
+    }
 
     /**
      * Get the user that owns the tree.

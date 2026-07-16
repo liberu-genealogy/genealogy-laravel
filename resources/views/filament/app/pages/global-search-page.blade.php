@@ -2,8 +2,8 @@
     <div class="space-y-6">
         {{-- Search Controls --}}
         <x-filament::section>
-            <x-slot name="heading">Search People</x-slot>
-            <x-slot name="description">Search across genealogy records. Living individuals (born less than 100 years ago with no death record) from other teams are excluded for privacy.</x-slot>
+            <x-slot name="heading">Global Search</x-slot>
+            <x-slot name="description">Search people, places, sources and events. Living individuals (born less than 100 years ago with no death record) from other teams are excluded for privacy.</x-slot>
 
             <div class="space-y-4">
                 <div class="flex gap-4 items-end">
@@ -13,8 +13,28 @@
                             type="text"
                             id="search-query"
                             wire:model.live.debounce.300ms="query"
-                            placeholder="Enter name, place, or description..."
+                            placeholder="Enter name, place, source or event..."
                             class="w-full rounded-lg border-gray-300 dark:border-gray-600 dark:bg-gray-800 shadow-sm focus:border-primary-500 focus:ring-primary-500"
+                        >
+                    </div>
+                    <div>
+                        <label for="from-year" class="block text-sm font-medium mb-1">From year</label>
+                        <input
+                            type="number"
+                            id="from-year"
+                            wire:model.blur="fromYear"
+                            placeholder="e.g. 1800"
+                            class="w-28 rounded-lg border-gray-300 dark:border-gray-600 dark:bg-gray-800 shadow-sm focus:border-primary-500 focus:ring-primary-500"
+                        >
+                    </div>
+                    <div>
+                        <label for="to-year" class="block text-sm font-medium mb-1">To year</label>
+                        <input
+                            type="number"
+                            id="to-year"
+                            wire:model.blur="toYear"
+                            placeholder="e.g. 1900"
+                            class="w-28 rounded-lg border-gray-300 dark:border-gray-600 dark:bg-gray-800 shadow-sm focus:border-primary-500 focus:ring-primary-500"
                         >
                     </div>
                     <button
@@ -42,93 +62,126 @@
 
         {{-- Results --}}
         @if($totalResults > 0)
-            <x-filament::section>
-                <x-slot name="heading">Results ({{ number_format($totalResults) }} found)</x-slot>
+            {{-- People --}}
+            @if(!empty($groups['people']))
+                <x-filament::section>
+                    <x-slot name="heading">People ({{ count($groups['people']) }})</x-slot>
 
-                <div class="divide-y divide-gray-200 dark:divide-gray-700">
-                    @foreach($results as $person)
-                        <div class="py-4 first:pt-0 last:pb-0">
-                            <div class="flex items-start gap-4">
-                                {{-- Avatar --}}
-                                <div class="flex-shrink-0">
-                                    <div class="w-12 h-12 rounded-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center text-lg font-bold text-gray-500">
-                                        {{ strtoupper(substr($person->givn ?? '?', 0, 1)) }}{{ strtoupper(substr($person->surn ?? '?', 0, 1)) }}
-                                    </div>
-                                </div>
-
-                                {{-- Info --}}
-                                <div class="flex-1 min-w-0">
-                                    <div class="flex items-center gap-2">
-                                        <h3 class="text-base font-semibold text-gray-900 dark:text-white truncate">
-                                            {{ $person->givn }} {{ $person->surn }}
-                                        </h3>
-                                        @if($person->sex === 'M')
-                                            <span class="text-blue-500 text-sm">♂</span>
-                                        @elseif($person->sex === 'F')
-                                            <span class="text-pink-500 text-sm">♀</span>
-                                        @endif
-
-                                        @if($person->team_id !== auth()->user()?->currentTeam?->id)
-                                            <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200">
-                                                Shared
-                                            </span>
-                                        @endif
+                    <div class="divide-y divide-gray-200 dark:divide-gray-700">
+                        @foreach($groups['people'] as $person)
+                            <div class="py-4 first:pt-0 last:pb-0">
+                                <div class="flex items-start gap-4">
+                                    {{-- Avatar --}}
+                                    <div class="flex-shrink-0">
+                                        <div class="w-12 h-12 rounded-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center text-lg font-bold text-gray-500">
+                                            {{ strtoupper(substr($person->givn ?? '?', 0, 1)) }}{{ strtoupper(substr($person->surn ?? '?', 0, 1)) }}
+                                        </div>
                                     </div>
 
-                                    <div class="mt-1 text-sm text-gray-600 dark:text-gray-400 space-x-4">
-                                        @if($person->birthday)
-                                            <span>b. {{ $person->birthday->format('Y') }}</span>
-                                        @elseif($person->birth_year)
-                                            <span>b. {{ $person->birth_year }}</span>
-                                        @endif
+                                    {{-- Info --}}
+                                    <div class="flex-1 min-w-0">
+                                        <div class="flex items-center gap-2">
+                                            <h3 class="text-base font-semibold text-gray-900 dark:text-white truncate">
+                                                {{ $person->givn }} {{ $person->surn }}
+                                            </h3>
+                                            @if($person->sex === 'M')
+                                                <span class="text-blue-500 text-sm">♂</span>
+                                            @elseif($person->sex === 'F')
+                                                <span class="text-pink-500 text-sm">♀</span>
+                                            @endif
 
-                                        @if($person->birthday_plac)
-                                            <span>📍 {{ $person->birthday_plac }}</span>
-                                        @endif
+                                            @if($person->team_id !== auth()->user()?->currentTeam?->id)
+                                                <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200">
+                                                    Shared
+                                                </span>
+                                            @endif
+                                        </div>
 
-                                        @if($person->deathday)
-                                            <span>d. {{ $person->deathday->format('Y') }}</span>
-                                        @elseif($person->death_year)
-                                            <span>d. {{ $person->death_year }}</span>
-                                        @endif
+                                        <div class="mt-1 text-sm text-gray-600 dark:text-gray-400 space-x-4">
+                                            @if($person->birthday)
+                                                <span>b. {{ $person->birthday->format('Y') }}</span>
+                                            @elseif($person->birth_year)
+                                                <span>b. {{ $person->birth_year }}</span>
+                                            @endif
 
-                                        @if($person->deathday_plac)
-                                            <span>📍 {{ $person->deathday_plac }}</span>
+                                            @if($person->birthday_plac)
+                                                <span>📍 {{ $person->birthday_plac }}</span>
+                                            @endif
+
+                                            @if($person->deathday)
+                                                <span>d. {{ $person->deathday->format('Y') }}</span>
+                                            @elseif($person->death_year)
+                                                <span>d. {{ $person->death_year }}</span>
+                                            @endif
+
+                                            @if($person->deathday_plac)
+                                                <span>📍 {{ $person->deathday_plac }}</span>
+                                            @endif
+                                        </div>
+
+                                        @if($person->description)
+                                            <p class="mt-1 text-sm text-gray-500 dark:text-gray-500 truncate">{{ \Illuminate\Support\Str::limit($person->description, 120) }}</p>
                                         @endif
                                     </div>
-
-                                    @if($person->description)
-                                        <p class="mt-1 text-sm text-gray-500 dark:text-gray-500 truncate">{{ \Illuminate\Support\Str::limit($person->description, 120) }}</p>
-                                    @endif
                                 </div>
                             </div>
-                        </div>
-                    @endforeach
-                </div>
-
-                {{-- Pagination --}}
-                @if($lastPage > 1)
-                    <div class="flex items-center justify-between pt-4 border-t dark:border-gray-700">
-                        <button
-                            wire:click="previousPage"
-                            @if($currentPage <= 1) disabled @endif
-                            class="px-4 py-2 text-sm rounded-lg border border-gray-300 dark:border-gray-600 disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50 dark:hover:bg-gray-800"
-                        >
-                            Previous
-                        </button>
-                        <span class="text-sm text-gray-600 dark:text-gray-400">
-                            Page {{ $currentPage }} of {{ $lastPage }}
-                        </span>
-                        <button
-                            wire:click="nextPage"
-                            @if($currentPage >= $lastPage) disabled @endif
-                            class="px-4 py-2 text-sm rounded-lg border border-gray-300 dark:border-gray-600 disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50 dark:hover:bg-gray-800"
-                        >
-                            Next
-                        </button>
+                        @endforeach
                     </div>
-                @endif
-            </x-filament::section>
+                </x-filament::section>
+            @endif
+
+            {{-- Places --}}
+            @if(!empty($groups['places']))
+                <x-filament::section>
+                    <x-slot name="heading">Places ({{ count($groups['places']) }})</x-slot>
+                    <div class="divide-y divide-gray-200 dark:divide-gray-700">
+                        @foreach($groups['places'] as $place)
+                            <div class="py-3 first:pt-0 last:pb-0">
+                                <h3 class="text-base font-semibold text-gray-900 dark:text-white">📍 {{ $place->title }}</h3>
+                                @if($place->description)
+                                    <p class="text-sm text-gray-500 dark:text-gray-400 truncate">{{ \Illuminate\Support\Str::limit($place->description, 120) }}</p>
+                                @endif
+                            </div>
+                        @endforeach
+                    </div>
+                </x-filament::section>
+            @endif
+
+            {{-- Sources --}}
+            @if(!empty($groups['sources']))
+                <x-filament::section>
+                    <x-slot name="heading">Sources ({{ count($groups['sources']) }})</x-slot>
+                    <div class="divide-y divide-gray-200 dark:divide-gray-700">
+                        @foreach($groups['sources'] as $source)
+                            <div class="py-3 first:pt-0 last:pb-0">
+                                <h3 class="text-base font-semibold text-gray-900 dark:text-white">📄 {{ $source->name ?? $source->titl }}</h3>
+                                @if($source->titl && $source->name)
+                                    <p class="text-sm text-gray-500 dark:text-gray-400 truncate">{{ $source->titl }}</p>
+                                @endif
+                            </div>
+                        @endforeach
+                    </div>
+                </x-filament::section>
+            @endif
+
+            {{-- Events --}}
+            @if(!empty($groups['events']))
+                <x-filament::section>
+                    <x-slot name="heading">Events ({{ count($groups['events']) }})</x-slot>
+                    <div class="divide-y divide-gray-200 dark:divide-gray-700">
+                        @foreach($groups['events'] as $event)
+                            <div class="py-3 first:pt-0 last:pb-0">
+                                <h3 class="text-base font-semibold text-gray-900 dark:text-white">📅 {{ $event->title ?: $event->type }}</h3>
+                                <div class="text-sm text-gray-500 dark:text-gray-400 space-x-4">
+                                    @if($event->type)<span>{{ $event->type }}</span>@endif
+                                    @if($event->year)<span>{{ $event->year }}</span>@endif
+                                    @if($event->plac)<span>📍 {{ $event->plac }}</span>@endif
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
+                </x-filament::section>
+            @endif
         @elseif(!empty(trim($query)) && strlen(trim($query)) >= 2)
             <x-filament::section>
                 <div class="text-center py-8">
@@ -141,7 +194,7 @@
             <x-filament::section>
                 <div class="text-center py-8">
                     <div class="text-4xl mb-2">🌳</div>
-                    <p class="text-gray-500 dark:text-gray-400">Enter a name, place, or description to search genealogy records.</p>
+                    <p class="text-gray-500 dark:text-gray-400">Enter a name, place, source or event to search genealogy records.</p>
                     <p class="text-sm text-gray-400 dark:text-gray-500 mt-1">Results from other public teams will exclude living individuals for privacy.</p>
                 </div>
             </x-filament::section>

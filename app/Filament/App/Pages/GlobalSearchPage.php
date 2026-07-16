@@ -26,66 +26,59 @@ class GlobalSearchPage extends Page
 
     public bool $searchGlobal = true;
 
-    public $results = [];
+    // Optional year-range filter (kept as strings so an empty input stays null).
+    public ?string $fromYear = null;
 
-    public int $currentPage = 1;
+    public ?string $toYear = null;
 
-    public int $lastPage = 1;
+    /** @var array{people: array, places: array, sources: array, events: array}|array */
+    public array $groups = [];
 
     public int $totalResults = 0;
 
     public function search(): void
     {
         if (in_array(trim($this->query), ['', '0'], true)) {
-            $this->results = [];
+            $this->groups = [];
             $this->totalResults = 0;
 
             return;
         }
 
-        $service = app(PersonSearchService::class);
+        $groups = app(PersonSearchService::class)->searchAll(
+            $this->query,
+            $this->yearOrNull($this->fromYear),
+            $this->yearOrNull($this->toYear),
+            $this->searchGlobal,
+        );
 
-        $paginator = $this->searchGlobal
-            ? $service->searchGlobal($this->query, 20, true, $this->currentPage)
-            : $service->searchOwnTeam($this->query, 20, $this->currentPage);
+        $this->groups = [
+            'people' => $groups['people']->all(),
+            'places' => $groups['places']->all(),
+            'sources' => $groups['sources']->all(),
+            'events' => $groups['events']->all(),
+        ];
+        $this->totalResults = collect($this->groups)->sum(fn (array $g): int => count($g));
+    }
 
-        $this->results = $paginator->items();
-        $this->currentPage = $paginator->currentPage();
-        $this->lastPage = $paginator->lastPage();
-        $this->totalResults = $paginator->total();
+    private function yearOrNull(?string $value): ?int
+    {
+        return $value === null || trim($value) === '' ? null : (int) $value;
     }
 
     public function updatedQuery(): void
     {
-        $this->currentPage = 1;
         if (strlen(trim($this->query)) >= 2) {
             $this->search();
         } else {
-            $this->results = [];
+            $this->groups = [];
             $this->totalResults = 0;
         }
     }
 
     public function updatedSearchGlobal(): void
     {
-        $this->currentPage = 1;
-        if (!in_array(trim($this->query), ['', '0'], true)) {
-            $this->search();
-        }
-    }
-
-    public function previousPage(): void
-    {
-        if ($this->currentPage > 1) {
-            $this->currentPage--;
-            $this->search();
-        }
-    }
-
-    public function nextPage(): void
-    {
-        if ($this->currentPage < $this->lastPage) {
-            $this->currentPage++;
+        if (! in_array(trim($this->query), ['', '0'], true)) {
             $this->search();
         }
     }
