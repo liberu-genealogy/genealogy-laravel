@@ -9,6 +9,7 @@ use App\Models\ImportJob;
 use FamilyTree365\LaravelGedcom\Utils\GedcomGenerator;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class GedcomService
@@ -108,7 +109,13 @@ class GedcomService
             'slug' => Str::uuid()->toString(),
         ]);
 
-        ImportGedcom::dispatch($path, $job->slug);
+        // ImportGedcom::__construct is (User $user, string $filePath, ?string $slug).
+        // The old dispatch passed ($path, $slug) — the relative path landed in the
+        // User slot (TypeError, every queued import died) and nothing was a User.
+        // Pass the authenticated user, the ABSOLUTE file path (handle() reads it
+        // with File::isFile/File::get, which need a real path, not the relative
+        // one $file->store() returns), and the slug.
+        ImportGedcom::dispatch(Auth::user(), Storage::disk('private')->path($path), $job->slug);
 
         return $job;
     }
