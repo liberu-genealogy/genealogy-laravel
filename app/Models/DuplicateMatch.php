@@ -2,13 +2,17 @@
 
 namespace App\Models;
 
+use App\Traits\BelongsToTenant;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class DuplicateMatch extends Model
 {
+    use BelongsToTenant;
+
     #[\Override]
     protected $fillable = [
+        'team_id',
         'primary_person_id',
         'duplicate_person_id',
         'confidence_score',

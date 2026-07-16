@@ -4,11 +4,13 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use App\Traits\BelongsToTenant;
 use Illuminate\Database\Eloquent\Model;
-use App\Models\Team;
 
 class AISuggestedMatch extends Model
 {
+    use BelongsToTenant;
+
     #[\Override]
     protected $table = 'ai_suggested_matches';
 
@@ -28,11 +30,6 @@ class AISuggestedMatch extends Model
         'candidate_data' => 'array',
         'confidence' => 'float',
     ];
-
-    public function team()
-    {
-        return $this->belongsTo(Team::class);
-    }
 
     public function feedbacks()
     {

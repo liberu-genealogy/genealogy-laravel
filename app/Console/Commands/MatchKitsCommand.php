@@ -36,6 +36,11 @@ class MatchKitsCommand extends Command
             return;
         }
 
+        // Command runs unauthenticated, so BelongsToTenant can't auto-assign team_id.
+        // dna1 is the base kit (its user is the match owner), so key the row to that
+        // user's current team. Null if the owner has no current team (fail-closed).
+        $teamId = $dna1->user?->current_team_id;
+
         try {
             // Use advanced DNA matching service
             $matchResult = $this->advancedDnaMatchingService->performAdvancedMatching(
@@ -47,6 +52,7 @@ class MatchKitsCommand extends Command
 
             // Store the match result in database
             DnaMatching::create([
+                'team_id'            => $teamId,
                 'file1'              => $fileName1,
                 'file2'              => $fileName2,
                 'image'              => 'path/to/match/image.png', // Will be updated with actual visualization
@@ -66,6 +72,7 @@ class MatchKitsCommand extends Command
             $largestCmSegment = random_int(1, $totalSharedCm);
 
             DnaMatching::create([
+                'team_id'            => $teamId,
                 'file1'              => $fileName1,
                 'file2'              => $fileName2,
                 'image'              => 'path/to/match/image.png',

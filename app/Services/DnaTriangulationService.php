@@ -294,8 +294,11 @@ class DnaTriangulationService
                         'analysis_date' => now(),
                     ]);
                 } else {
-                    // Create new record
+                    // Create new record. Triangulation runs unauthenticated (queue/
+                    // console), so BelongsToTenant can't auto-assign team_id; key the
+                    // row to the base kit owner's current team (null = fail-closed).
                     DnaMatching::create([
+                        'team_id' => $baseKit->user?->current_team_id,
                         'user_id' => $baseKit->user_id,
                         'match_id' => $match['user_id'],
                         'match_name' => $match['kit_name'],
