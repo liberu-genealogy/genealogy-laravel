@@ -1,0 +1,16 @@
+includes:
+    - phpstan-baseline.neon
+
+parameters:
+    level: 4
+    paths:
+        - app
+    excludePaths:
+        analyse:
+            - app/Modules/*/vendor/*
+    # No larastan: it isn't a committed dependency, so the gate runs plain
+    # PHPStan (already available transitively). The codebase carries pre-existing
+    # drift + Laravel magic PHPStan can't see without larastan; the baseline
+    # captures all of it so the gate is green today and fails only on NEW issues
+    # (undefined symbols, obvious type errors). Ratchet: add larastan + shrink
+    # the baseline / raise the level over time.
