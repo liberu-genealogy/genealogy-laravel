@@ -2,484 +2,183 @@
 
 namespace App\Services;
 
-use Exception;
-use App\Models\Dna;
-use App\Models\DnaMatching;
-use App\Models\User;
+use App\Services\Dna\RawDnaParser;
+use App\Services\Dna\RelationshipEstimator;
+use App\Services\Dna\SegmentMatcher;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
-//use LiberuGenealogy\LaravelDna\Services\DnaAnalysisService;
-// TODO(C7): real php-dna integration. The installed php-dna package uses
-// namespace Dna\ and has no DnaKit/Snps/Individual, so the classes this service
-// was written against do not exist. Until they are wired up, loadDnaKit() raises
-// a class-not-found Error and matching degrades to performBasicMatching().
 
+/**
+ * Autosomal DNA matching between two kits.
+ *
+ * Rebuilt (C7) to run a real pipeline — RawDnaParser reads the uploaded raw
+ * file, SegmentMatcher finds half-identical (IBD) segments, RelationshipEstimator
+ * maps total shared cM to a relationship — rather than the previous placeholder
+ * that referenced non-existent php-dna classes (the vendor php-dna package is a
+ * non-functional half-port and is deliberately not used). If a kit file can't be
+ * read/parsed the run degrades to performBasicMatching() (no fabricated result).
+ */
 class AdvancedDnaMatchingService
 {
-  //  protected DnaAnalysisService $dnaAnalysisService;
-
-    /** Autosomal chromosomes 1-22 (matches DnaTriangulationService's scan range). */
-    private const MAX_CHROMOSOME_NUMBER = 22;
-
-    //public function __construct(DnaAnalysisService $dnaAnalysisService)
-    //{
-    //    $this->dnaAnalysisService = $dnaAnalysisService;
-    //}
+    public function __construct(
+        private RawDnaParser $parser = new RawDnaParser(),
+        private SegmentMatcher $matcher = new SegmentMatcher(),
+        private RelationshipEstimator $estimator = new RelationshipEstimator(),
+    ) {}
 
     /**
-     * Perform advanced DNA matching between two DNA kits
+     * Match two kits identified by their stored file names (on the private disk).
+     *
+     * @return array<string, mixed>
      */
     public function performAdvancedMatching(string $varName1, string $fileName1, string $varName2, string $fileName2): array
     {
         try {
-            // Load DNA data from files
-            $dnaKit1 = $this->loadDnaKit($fileName1);
-            $dnaKit2 = $this->loadDnaKit($fileName2);
+            $kit1 = $this->loadKit($fileName1);
+            $kit2 = $this->loadKit($fileName2);
 
-            if (!$dnaKit1 || !$dnaKit2) {
-                throw new Exception('Failed to load DNA kits');
+            if ($kit1 === [] || $kit2 === []) {
+                throw new \RuntimeException('DNA kit data unavailable for matching');
             }
 
-            // Perform comprehensive DNA analysis
-            $matchResults = $this->analyzeGenomicSimilarity($dnaKit1, $dnaKit2);
-
-            // Calculate relationship confidence
-            $relationshipPrediction = $this->predictRelationship($matchResults);
-
-            // Generate detailed match report
-            $detailedReport = $this->generateDetailedReport($dnaKit1, $dnaKit2, $matchResults, $relationshipPrediction);
+            $match        = $this->matcher->match($kit1, $kit2);
+            $relationship = $this->estimator->estimate($match['total_shared_cm']);
 
             return [
-                'total_cms' => $matchResults['total_shared_cm'],
-                'largest_cm' => $matchResults['largest_cm_segment'],
-                'confidence_level' => $relationshipPrediction['confidence'],
-                'predicted_relationship' => $relationshipPrediction['relationship'],
-                'shared_segments_count' => $matchResults['shared_segments_count'],
-                'match_quality_score' => $matchResults['quality_score'],
-                'detailed_report' => $detailedReport,
-                'chromosome_breakdown' => $matchResults['chromosome_breakdown'],
-                'ibd_segments' => $matchResults['ibd_segments']
+                'total_cms'              => $match['total_shared_cm'],
+                'largest_cm'             => $match['largest_cm_segment'],
+                // The dna_matchings.confidence_level column is a double, so map the
+                // estimator's categorical confidence to a numeric score here; the
+                // categorical label is preserved in detailed_report.
+                'confidence_level'       => $this->confidenceScore($relationship['confidence_level']),
+                'predicted_relationship' => $relationship['predicted_relationship'],
+                'shared_segments_count'  => $match['shared_segments_count'],
+                'match_quality_score'    => $relationship['match_quality_score'],
+                'detailed_report'        => $this->detailedReport($match, $relationship),
+                'chromosome_breakdown'   => $this->chromosomeBreakdown($match['shared_segments']),
+                'ibd_segments'           => $match['shared_segments'],
             ];
-
         } catch (\Throwable $e) {
-            // Catch Throwable, not Exception: a missing php-dna class or the
-            // undefined-const bug raises Error, which Exception would miss and
-            // let the fallback never run.
+            // Throwable, not Exception: keep any lower-level parse/IO error from
+            // aborting the job — degrade to the basic (no-match) fallback.
             Log::error('Advanced DNA matching failed: ' . $e->getMessage());
 
-            // Fallback to basic matching if advanced fails
             return $this->performBasicMatching();
         }
     }
 
     /**
-     * Load DNA kit from file using php-dna package
+     * Read + parse a kit file into the normalized chrom => (pos => genotype) map.
+     *
+     * @return array<string, array<int, string>>
      */
-    protected function loadDnaKit(string $fileName): ?DnaKit
+    protected function loadKit(string $fileName): array
     {
-        try {
-            $filePath = Storage::disk('private')->path($fileName);
+        $path = Storage::disk('private')->path($fileName);
 
-            if (!file_exists($filePath)) {
-                Log::error("DNA file not found: {$filePath}");
-                return null;
-            }
+        if (! is_file($path)) {
+            Log::warning("DNA file not found: {$path}");
 
-            // Create Individual and load SNPs
-            $individual = new Individual();
-            $snps = new Snps($filePath);
-
-            // Create DnaKit with loaded data
-            $dnaKit = new DnaKit();
-            $dnaKit->loadFromSnps($snps);
-
-            return $dnaKit;
-
-        } catch (\Throwable $e) {
-            // Throwable, not Exception: the php-dna classes do not exist yet, so
-            // instantiating them raises Error. Swallow it and report "no kit".
-            Log::error("Failed to load DNA kit from {$fileName}: " . $e->getMessage());
-            return null;
-        }
-    }
-
-    /**
-     * Analyze genomic similarity using advanced algorithms
-     */
-    protected function analyzeGenomicSimilarity(DnaKit $kit1, DnaKit $kit2): array
-    {
-        // Get SNPs from both kits
-        $snps1 = $kit1->getSnps();
-        $snps2 = $kit2->getSnps();
-
-        // Find shared SNPs
-        $sharedSnps = $this->findSharedSnps($snps1, $snps2);
-
-        // Calculate IBD (Identical By Descent) segments
-        $ibdSegments = $this->calculateIbdSegments($sharedSnps);
-
-        // Calculate total shared centiMorgans
-        $totalSharedCm = $this->calculateTotalSharedCm($ibdSegments);
-
-        // Find largest segment
-        $largestSegment = $this->findLargestSegment($ibdSegments);
-
-        // Calculate match quality score
-        $qualityScore = $this->calculateMatchQuality($sharedSnps, $ibdSegments);
-
-        // Generate chromosome breakdown
-        $chromosomeBreakdown = $this->generateChromosomeBreakdown($ibdSegments);
-
-        return [
-            'total_shared_cm' => round($totalSharedCm, 2),
-            'largest_cm_segment' => round($largestSegment, 2),
-            'shared_segments_count' => count($ibdSegments),
-            'quality_score' => round($qualityScore, 2),
-            'chromosome_breakdown' => $chromosomeBreakdown,
-            'ibd_segments' => $ibdSegments,
-            'shared_snps_count' => count($sharedSnps)
-        ];
-    }
-
-    /**
-     * Find shared SNPs between two DNA kits
-     */
-    protected function findSharedSnps(array $snps1, array $snps2): array
-    {
-        $shared = [];
-
-        foreach ($snps1 as $rsid => $snp1) {
-            if (isset($snps2[$rsid])) {
-                $snp2 = $snps2[$rsid];
-
-                // Check if SNPs match (considering both alleles)
-                if ($this->snpsMatch($snp1, $snp2)) {
-                    $shared[$rsid] = [
-                        'chromosome' => $snp1['chromosome'],
-                        'position' => $snp1['position'],
-                        'genotype1' => $snp1['genotype'],
-                        'genotype2' => $snp2['genotype']
-                    ];
-                }
-            }
+            return [];
         }
 
-        return $shared;
+        return $this->parser->parse($path);
     }
 
     /**
-     * Check if two SNPs match
+     * Group the reported segments into a per-chromosome summary.
+     *
+     * @param  list<array{chromosome:string,start:int,end:int,cm:float,snps:int}>  $segments
+     * @return array<string, array{segment_count:int,total_cm:float,largest_segment:float}>
      */
-    protected function snpsMatch(array $snp1, array $snp2): bool
-    {
-        $genotype1 = str_split((string) $snp1['genotype']);
-        $genotype2 = str_split((string) $snp2['genotype']);
-
-        // Check for exact match or reverse match
-        return ($genotype1[0] === $genotype2[0] && $genotype1[1] === $genotype2[1]) ||
-               ($genotype1[0] === $genotype2[1] && $genotype1[1] === $genotype2[0]);
-    }
-
-    /**
-     * Calculate IBD segments from shared SNPs
-     */
-    protected function calculateIbdSegments(array $sharedSnps): array
-    {
-        $segments = [];
-        $currentSegment = null;
-        $minSegmentLength = 1.0; // Minimum 1 cM
-        $maxGap = 0.5; // Maximum 0.5 cM gap
-
-        // Group SNPs by chromosome
-        $chromosomes = [];
-        foreach ($sharedSnps as $rsid => $snp) {
-            $chromosomes[$snp['chromosome']][] = $snp + ['rsid' => $rsid];
-        }
-
-        foreach ($chromosomes as $chr => $snps) {
-            // Sort by position
-            usort($snps, fn(array $a, array $b): int => $a['position'] <=> $b['position']);
-
-            $currentSegment = null;
-
-            foreach ($snps as $snp) {
-                $position = $snp['position'];
-                $cm = $this->basePairToCentimorgan($position, $chr);
-
-                if ($currentSegment === null) {
-                    $currentSegment = [
-                        'chromosome' => $chr,
-                        'start_position' => $position,
-                        'end_position' => $position,
-                        'start_cm' => $cm,
-                        'end_cm' => $cm,
-                        'snp_count' => 1
-                    ];
-                } else {
-                    $gap = $cm - $currentSegment['end_cm'];
-
-                    if ($gap <= $maxGap) {
-                        // Extend current segment
-                        $currentSegment['end_position'] = $position;
-                        $currentSegment['end_cm'] = $cm;
-                        $currentSegment['snp_count']++;
-                    } else {
-                        // Close current segment if it meets minimum length
-                        $segmentLength = $currentSegment['end_cm'] - $currentSegment['start_cm'];
-                        if ($segmentLength >= $minSegmentLength) {
-                            $currentSegment['length_cm'] = $segmentLength;
-                            $segments[] = $currentSegment;
-                        }
-
-                        // Start new segment
-                        $currentSegment = [
-                            'chromosome' => $chr,
-                            'start_position' => $position,
-                            'end_position' => $position,
-                            'start_cm' => $cm,
-                            'end_cm' => $cm,
-                            'snp_count' => 1
-                        ];
-                    }
-                }
-            }
-
-            // Close final segment
-            if ($currentSegment !== null) {
-                $segmentLength = $currentSegment['end_cm'] - $currentSegment['start_cm'];
-                if ($segmentLength >= $minSegmentLength) {
-                    $currentSegment['length_cm'] = $segmentLength;
-                    $segments[] = $currentSegment;
-                }
-            }
-        }
-
-        return $segments;
-    }
-
-    /**
-     * Convert base pair position to centimorgan (approximate)
-     */
-    protected function basePairToCentimorgan(int $position, string $chromosome): float
-    {
-        // Simplified conversion - in reality this would use genetic maps
-        // Average: 1 cM ≈ 1,000,000 bp
-        return $position / 1000000;
-    }
-
-    /**
-     * Calculate total shared centiMorgans
-     */
-    protected function calculateTotalSharedCm(array $ibdSegments): float
-    {
-        return array_sum(array_column($ibdSegments, 'length_cm'));
-    }
-
-    /**
-     * Find largest segment
-     */
-    protected function findLargestSegment(array $ibdSegments): float
-    {
-        if ($ibdSegments === []) {
-            return 0.0;
-        }
-
-        return max(array_column($ibdSegments, 'length_cm'));
-    }
-
-    /**
-     * Calculate match quality score
-     */
-    protected function calculateMatchQuality(array $sharedSnps, array $ibdSegments): float
-    {
-        $snpCount = count($sharedSnps);
-        $segmentCount = count($ibdSegments);
-        $totalCm = $this->calculateTotalSharedCm($ibdSegments);
-
-        // Quality score based on multiple factors
-        $snpScore = min($snpCount / 10000, 1.0) * 30; // Max 30 points for SNP count
-        $segmentScore = min($segmentCount / 50, 1.0) * 30; // Max 30 points for segment count
-        $cmScore = min($totalCm / 100, 1.0) * 40; // Max 40 points for total cM
-
-        return $snpScore + $segmentScore + $cmScore;
-    }
-
-    /**
-     * Generate chromosome breakdown
-     */
-    protected function generateChromosomeBreakdown(array $ibdSegments): array
+    protected function chromosomeBreakdown(array $segments): array
     {
         $breakdown = [];
 
-        for ($chr = 1; $chr <= self::MAX_CHROMOSOME_NUMBER; $chr++) {
-            $chrSegments = array_filter($ibdSegments, fn(array $seg): bool => $seg['chromosome'] == $chr);
-            $breakdown[$chr] = [
-                'segment_count' => count($chrSegments),
-                'total_cm' => array_sum(array_column($chrSegments, 'length_cm')),
-                'largest_segment' => $chrSegments === [] ? 0 : max(array_column($chrSegments, 'length_cm'))
-            ];
+        foreach ($segments as $seg) {
+            $chr = $seg['chromosome'];
+            $breakdown[$chr] ??= ['segment_count' => 0, 'total_cm' => 0.0, 'largest_segment' => 0.0];
+            $breakdown[$chr]['segment_count']++;
+            $breakdown[$chr]['total_cm']        = round($breakdown[$chr]['total_cm'] + $seg['cm'], 2);
+            $breakdown[$chr]['largest_segment'] = max($breakdown[$chr]['largest_segment'], $seg['cm']);
         }
 
         return $breakdown;
     }
 
     /**
-     * Predict relationship based on DNA match results
+     * @param  array<string, mixed>  $match
+     * @param  array<string, mixed>  $relationship
+     * @return array<string, mixed>
      */
-    protected function predictRelationship(array $matchResults): array
-    {
-        $totalCm = $matchResults['total_shared_cm'];
-        $largestSegment = $matchResults['largest_cm_segment'];
-        $segmentCount = $matchResults['shared_segments_count'];
-
-        // Relationship prediction based on shared cM ranges
-        $relationships = [
-            ['min' => 3400, 'max' => 3700, 'relationship' => 'Identical Twin', 'confidence' => 99],
-            ['min' => 2300, 'max' => 2900, 'relationship' => 'Parent/Child', 'confidence' => 95],
-            ['min' => 1300, 'max' => 2300, 'relationship' => 'Full Sibling', 'confidence' => 90],
-            ['min' => 850, 'max' => 1300, 'relationship' => 'Grandparent/Grandchild', 'confidence' => 85],
-            ['min' => 680, 'max' => 1150, 'relationship' => 'Aunt/Uncle or Half Sibling', 'confidence' => 80],
-            ['min' => 425, 'max' => 850, 'relationship' => 'First Cousin', 'confidence' => 75],
-            ['min' => 200, 'max' => 425, 'relationship' => 'First Cousin Once Removed', 'confidence' => 70],
-            ['min' => 90, 'max' => 200, 'relationship' => 'Second Cousin', 'confidence' => 65],
-            ['min' => 45, 'max' => 90, 'relationship' => 'Second Cousin Once Removed', 'confidence' => 60],
-            ['min' => 20, 'max' => 45, 'relationship' => 'Third Cousin', 'confidence' => 55],
-            ['min' => 6, 'max' => 20, 'relationship' => 'Distant Cousin', 'confidence' => 40],
-        ];
-
-        foreach ($relationships as $rel) {
-            if ($totalCm >= $rel['min'] && $totalCm <= $rel['max']) {
-                // Adjust confidence based on segment characteristics
-                $confidence = $rel['confidence'];
-
-                // Boost confidence for larger segments (indicates closer relationship)
-                if ($largestSegment > 50) {
-                    $confidence += 5;
-                }
-
-                // Boost confidence for appropriate segment count
-                if ($segmentCount > 10 && $segmentCount < 100) {
-                    $confidence += 3;
-                }
-
-                return [
-                    'relationship' => $rel['relationship'],
-                    'confidence' => min($confidence, 99),
-                    'shared_cm_range' => "{$rel['min']}-{$rel['max']} cM"
-                ];
-            }
-        }
-
-        return [
-            'relationship' => 'No significant relationship detected',
-            'confidence' => 10,
-            'shared_cm_range' => '< 6 cM'
-        ];
-    }
-
-    /**
-     * Generate detailed match report
-     */
-    protected function generateDetailedReport(DnaKit $kit1, DnaKit $kit2, array $matchResults, array $relationshipPrediction): array
+    protected function detailedReport(array $match, array $relationship): array
     {
         return [
-            'analysis_date' => now()->toISOString(),
-            'total_shared_cm' => $matchResults['total_shared_cm'],
-            'largest_segment_cm' => $matchResults['largest_cm_segment'],
-            'shared_segments' => $matchResults['shared_segments_count'],
-            'predicted_relationship' => $relationshipPrediction['relationship'],
-            'confidence_level' => $relationshipPrediction['confidence'],
-            'match_quality_score' => $matchResults['quality_score'],
-            'shared_snps_count' => $matchResults['shared_snps_count'],
-            'chromosome_summary' => $this->generateChromosomeSummary($matchResults['chromosome_breakdown']),
-            'analysis_notes' => $this->generateAnalysisNotes($matchResults, $relationshipPrediction)
+            'analysis_date'          => now()->toISOString(),
+            'total_shared_cm'        => $match['total_shared_cm'],
+            'largest_segment_cm'     => $match['largest_cm_segment'],
+            'shared_segments'        => $match['shared_segments_count'],
+            'total_matching_snps'    => $match['total_matching_snps'],
+            'predicted_relationship' => $relationship['predicted_relationship'],
+            'confidence_level'       => $relationship['confidence_level'],
+            'match_quality_score'    => $relationship['match_quality_score'],
+            'analysis_notes'         => [
+                'cM is estimated from physical distance (~1 cM/Mb); a real genetic '
+                . 'recombination map is the upgrade path (see SegmentMatcher).',
+            ],
         ];
     }
 
     /**
-     * Generate chromosome summary
+     * Map the estimator's categorical confidence to a 0-100 numeric score
+     * (the confidence_level DB column is numeric).
      */
-    protected function generateChromosomeSummary(array $chromosomeBreakdown): array
+    protected function confidenceScore(string $confidence): float
     {
-        $summary = [];
-
-        foreach ($chromosomeBreakdown as $chr => $data) {
-            if ($data['total_cm'] > 0) {
-                $summary[] = [
-                    'chromosome' => $chr,
-                    'shared_cm' => round($data['total_cm'], 2),
-                    'segments' => $data['segment_count'],
-                    'largest_segment' => round($data['largest_segment'], 2)
-                ];
-            }
-        }
-
-        return $summary;
+        return match ($confidence) {
+            'very_high' => 95.0,
+            'high'      => 80.0,
+            'medium'    => 60.0,
+            default     => 30.0,
+        };
     }
 
     /**
-     * Generate analysis notes
-     */
-    protected function generateAnalysisNotes(array $matchResults, array $relationshipPrediction): array
-    {
-        $notes = [];
-
-        if ($matchResults['quality_score'] > 80) {
-            $notes[] = 'High-quality match with excellent SNP coverage';
-        } elseif ($matchResults['quality_score'] > 60) {
-            $notes[] = 'Good quality match with adequate SNP coverage';
-        } else {
-            $notes[] = 'Lower quality match - results should be interpreted with caution';
-        }
-
-        if ($matchResults['largest_cm_segment'] > 100) {
-            $notes[] = 'Large shared segments indicate recent common ancestry';
-        }
-
-        if ($relationshipPrediction['confidence'] < 50) {
-            $notes[] = 'Low confidence prediction - additional analysis recommended';
-        }
-
-        return $notes;
-    }
-
-    /**
-     * Fallback to basic matching if advanced algorithms fail
+     * Fail-safe result when a kit file can't be read/parsed. Reports no match
+     * rather than fabricating one; the UI shows a "basic analysis" note.
+     *
+     * @return array<string, mixed>
      */
     protected function performBasicMatching(): array
     {
-        $totalSharedCm = random_int(10, 150);
-        $largestCmSegment = random_int(5, min($totalSharedCm, 50));
-
         return [
-            'total_cms' => $totalSharedCm,
-            'largest_cm' => $largestCmSegment,
-            'confidence_level' => 30,
+            'total_cms'              => 0.0,
+            'largest_cm'             => 0.0,
+            'confidence_level'       => 0.0,
             'predicted_relationship' => 'Unknown (Basic Analysis)',
-            'shared_segments_count' => random_int(5, 25),
-            'match_quality_score' => 40,
-            'detailed_report' => [
-                'analysis_date' => now()->toISOString(),
-                'analysis_notes' => ['Basic analysis used due to advanced algorithm failure']
-            ]
+            'shared_segments_count'  => 0,
+            'match_quality_score'    => 0.0,
+            'detailed_report'        => [
+                'analysis_date'  => now()->toISOString(),
+                'analysis_notes' => ['Basic analysis: DNA kit data could not be read for segment matching.'],
+            ],
+            'chromosome_breakdown'   => [],
+            'ibd_segments'           => [],
         ];
     }
 
     /**
-     * Process large-scale DNA data efficiently
+     * Process large-scale DNA data in batches (all-pairs within each batch).
+     *
+     * @param  list<array{id:int,variable_name:string,file_name:string}>  $dnaKits
+     * @return list<array<string, mixed>>
      */
     public function processLargeScaleMatching(array $dnaKits): array
     {
         $results = [];
-        $batchSize = 10; // Process in batches to manage memory
 
-        $batches = array_chunk($dnaKits, $batchSize);
-
-        foreach ($batches as $batch) {
-            $batchResults = $this->processBatch($batch);
-            $results = array_merge($results, $batchResults);
-
-            // Clear memory between batches
+        foreach (array_chunk($dnaKits, 10) as $batch) {
+            $results = array_merge($results, $this->processBatch($batch));
             gc_collect_cycles();
         }
 
@@ -487,29 +186,25 @@ class AdvancedDnaMatchingService
     }
 
     /**
-     * Process a batch of DNA kits
+     * @param  list<array{id:int,variable_name:string,file_name:string}>  $batch
+     * @return list<array<string, mixed>>
      */
     protected function processBatch(array $batch): array
     {
         $results = [];
-        $counter = count($batch);
+        $count   = count($batch);
 
-        for ($i = 0; $i < $counter; $i++) {
-            for ($j = $i + 1; $j < count($batch); $j++) {
-                $kit1 = $batch[$i];
-                $kit2 = $batch[$j];
-
-                $matchResult = $this->performAdvancedMatching(
-                    $kit1['variable_name'],
-                    $kit1['file_name'],
-                    $kit2['variable_name'],
-                    $kit2['file_name']
-                );
-
+        for ($i = 0; $i < $count; $i++) {
+            for ($j = $i + 1; $j < $count; $j++) {
                 $results[] = [
-                    'kit1_id' => $kit1['id'],
-                    'kit2_id' => $kit2['id'],
-                    'match_result' => $matchResult
+                    'kit1_id'       => $batch[$i]['id'],
+                    'kit2_id'       => $batch[$j]['id'],
+                    'match_result'  => $this->performAdvancedMatching(
+                        $batch[$i]['variable_name'],
+                        $batch[$i]['file_name'],
+                        $batch[$j]['variable_name'],
+                        $batch[$j]['file_name'],
+                    ),
                 ];
             }
         }
