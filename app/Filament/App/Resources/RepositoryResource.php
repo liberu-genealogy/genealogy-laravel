@@ -6,6 +6,7 @@ namespace App\Filament\App\Resources;
 
 use Override;
 use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Tables\Columns\TextColumn;
@@ -58,8 +59,10 @@ final class RepositoryResource extends AppResource
                 DateTimePicker::make('date'),
                 TextInput::make('is_active')
                     ->numeric(),
-                TextInput::make('type_id')
-                    ->numeric(),
+                Select::make('type_id')
+                    ->relationship('type', 'name')
+                    ->searchable()
+                    ->preload(),
                 TextInput::make('repo')
                     ->maxLength(255),
                 TextInput::make('addr_id')
