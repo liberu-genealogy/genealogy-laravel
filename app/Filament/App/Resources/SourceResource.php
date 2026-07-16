@@ -11,6 +11,7 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Actions\EditAction;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
+use App\Filament\App\Resources\SourceResource\RelationManagers\CitationsRelationManager;
 use App\Filament\App\Resources\SourceResource\Pages\ListSources;
 use App\Filament\App\Resources\SourceResource\Pages\CreateSource;
 use App\Filament\App\Resources\SourceResource\Pages\EditSource;
@@ -167,7 +168,7 @@ class SourceResource extends AppResource
     public static function getRelations(): array
     {
         return [
-            //
+            CitationsRelationManager::class,
         ];
     }
 

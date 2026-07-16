@@ -5,6 +5,7 @@ namespace App\Jobs;
 use App\Models\Dna;
 use App\Models\DnaMatching as DM;
 use App\Models\User;
+use App\Notifications\DnaMatchFoundNotification;
 use App\Services\AdvancedDnaMatchingService;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -42,6 +43,7 @@ class DnaMatching implements ShouldQueue
     {
         $user = $this->current_user;
         $dnas = Dna::where('variable_name', '!=', $this->var_name)->get();
+        $newMatches = 0;
 
         foreach ($dnas as $dna) {
             try {
@@ -55,9 +57,11 @@ class DnaMatching implements ShouldQueue
                     $dna->file_name
                 );
 
-                // Get match name
-                $match_name_user = User::with('person')->find($dna->user_id);
-                $match_name = $match_name_user?->person?->name ?? 'Unknown';
+                // Get match name. User has no `person` relation (no user_id on
+                // people) — eager-loading it threw "undefined relationship" and
+                // the catch below silently killed every pairing, so DNA matching
+                // produced nothing. Use the user's own name.
+                $match_name = User::find($dna->user_id)?->name ?? 'Unknown';
 
                 // Create DNA matching record for current user
                 $dm = new DM();
@@ -82,11 +86,11 @@ class DnaMatching implements ShouldQueue
                 $dm->analysis_date = now();
 
                 $dm->save();
+                $newMatches++;
 
                 // Create reciprocal record for the matched user (if different)
                 if ($dna->user_id !== $user->id) {
-                    $current_user_name = User::with('person')->find($user->id);
-                    $current_name = $current_user_name?->person?->name ?? 'Unknown';
+                    $current_name = User::find($user->id)?->name ?? 'Unknown';
 
                     $dm2 = new DM();
                     $dm2->user_id = $dna->user_id;
@@ -148,6 +152,15 @@ class DnaMatching implements ShouldQueue
                 // from aborting the whole job; log and move to the next record.
                 Log::error('Error in DNA matching job: ' . $e->getMessage());
                 continue; // Skip to next DNA record on error
+            }
+        }
+
+        // Notify the kit owner once, summarising the run (never one email per pair).
+        if ($newMatches > 0) {
+            if ($user) {
+                $user->notify(new DnaMatchFoundNotification($newMatches));
+            } else {
+                Log::info('DNA matching: found matches but no owning user to notify', ['new_matches' => $newMatches]);
             }
         }
     }
