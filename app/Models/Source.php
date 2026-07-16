@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Traits\BelongsToTenant;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Source extends \FamilyTree365\LaravelGedcom\Models\Source
 {
@@ -25,6 +26,21 @@ class Source extends \FamilyTree365\LaravelGedcom\Models\Source
     public function recordType(): BelongsTo
     {
         return $this->belongsTo(RecordType::class);
+    }
+
+    /**
+     * Citations that cite this source — the evidence records carrying
+     * confidence/page/volume.
+     *
+     * Overrides the base package relation, which resolves Citation to the
+     * untenanted FamilyTree365\LaravelGedcom\Models\Citation. We need
+     * App\Models\Citation so BelongsToTenant scopes reads and stamps team_id
+     * on the evidence link.
+     */
+    #[\Override]
+    public function citations(): HasMany
+    {
+        return $this->hasMany(Citation::class);
     }
 
     /**
