@@ -2,10 +2,12 @@
 
 namespace App\Services;
 
-use DateTimeInterface;
 use App\Models\HistoricalEvent;
 use App\Models\Person;
 use Carbon\Carbon;
+use Carbon\Month;
+use Carbon\WeekDay;
+use DateTimeInterface;
 use Illuminate\Support\Collection;
 
 class HistoricalEventService
@@ -13,12 +15,10 @@ class HistoricalEventService
     /**
      * Fetch historical events within a date range and optionally by country.
      *
-     * @param string|DateTimeInterface $start
-     * @param string|DateTimeInterface $end
-     * @param  string|null  $country
-     * @return Collection
+     * @param  string|DateTimeInterface  $start
+     * @param  string|DateTimeInterface  $end
      */
-    public function fetchForPeriod(\DateTimeInterface|\Carbon\WeekDay|\Carbon\Month|string|int|float|null $start, \DateTimeInterface|\Carbon\WeekDay|\Carbon\Month|string|int|float|null $end, ?string $country = null): Collection
+    public function fetchForPeriod(DateTimeInterface|WeekDay|Month|string|int|float|null $start, DateTimeInterface|WeekDay|Month|string|int|float|null $end, ?string $country = null): Collection
     {
         $query = HistoricalEvent::query()
             ->betweenDates(Carbon::parse($start)->toDateString(), Carbon::parse($end)->toDateString());
@@ -33,10 +33,6 @@ class HistoricalEventService
     /**
      * Fetch historical events relevant to a person.
      * By default this returns events within the person's life +/- $bufferYears.
-     *
-     * @param  Person  $person
-     * @param  int  $bufferYears
-     * @return Collection
      */
     public function fetchForPerson(Person $person, int $bufferYears = 5): Collection
     {
@@ -53,15 +49,15 @@ class HistoricalEventService
         }
 
         // If only one bound is present, expand by buffer
-        if ($start && !$end) {
+        if ($start && ! $end) {
             $end = Carbon::parse($start)->copy()->addYears(100); // arbitrary far future
         }
 
-        if ($end && !$start) {
+        if ($end && ! $start) {
             $start = Carbon::parse($end)->copy()->subYears(120); // arbitrary far past
         }
 
-        if (!$start || !$end) {
+        if (! $start || ! $end) {
             // fallback: use birth-year +/- buffer if year available
             $year = $person->birthday ? Carbon::parse($person->birthday)->year : null;
             if ($year) {
@@ -70,7 +66,7 @@ class HistoricalEventService
             }
         }
 
-        if (!$start || !$end) {
+        if (! $start || ! $end) {
             // final fallback: last 100 years
             $start = Carbon::now()->subYears(100)->startOfYear();
             $end = Carbon::now()->endOfYear();

@@ -2,13 +2,11 @@
 
 namespace App\Modules\Sources\Services;
 
-use App\Models\Source;
-use App\Models\Repository;
 use App\Models\Author;
-use App\Models\Publication;
-use App\Models\SourceData;
-use Illuminate\Support\Collection;
+use App\Models\Repository;
+use App\Models\Source;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Collection;
 
 class SourcesService
 {
@@ -35,6 +33,7 @@ class SourcesService
     public function updateSource(Source $source, array $data): Source
     {
         $source->update($data);
+
         return $source->fresh();
     }
 
@@ -118,10 +117,10 @@ class SourcesService
         }
 
         if ($source->url) {
-            $parts[] = "accessed " . now()->format('F j, Y') . ", {$source->url}";
+            $parts[] = 'accessed '.now()->format('F j, Y').", {$source->url}";
         }
 
-        return implode(', ', $parts) . '.';
+        return implode(', ', $parts).'.';
     }
 
     /**
@@ -148,10 +147,10 @@ class SourcesService
         }
 
         if ($source->url) {
-            $parts[] = "Web. " . now()->format('j M Y');
+            $parts[] = 'Web. '.now()->format('j M Y');
         }
 
-        return implode(', ', $parts) . '.';
+        return implode(', ', $parts).'.';
     }
 
     /**
@@ -181,7 +180,7 @@ class SourcesService
             $parts[] = "Retrieved from {$source->url}";
         }
 
-        return implode('. ', $parts) . '.';
+        return implode('. ', $parts).'.';
     }
 
     /**
@@ -238,11 +237,11 @@ class SourcesService
             $errors[] = 'Title is required';
         }
 
-        if (!empty($data['url']) && !filter_var($data['url'], FILTER_VALIDATE_URL)) {
+        if (! empty($data['url']) && ! filter_var($data['url'], FILTER_VALIDATE_URL)) {
             $errors[] = 'Invalid URL format';
         }
 
-        if (!empty($data['publication_date']) && !strtotime((string) $data['publication_date'])) {
+        if (! empty($data['publication_date']) && ! strtotime((string) $data['publication_date'])) {
             $errors[] = 'Invalid publication date format';
         }
 
@@ -258,15 +257,15 @@ class SourcesService
         // This would need to be implemented based on actual citation relationships
 
         // Merge source data
-        if (empty($primarySource->author) && !empty($duplicateSource->author)) {
+        if (empty($primarySource->author) && ! empty($duplicateSource->author)) {
             $primarySource->author = $duplicateSource->author;
         }
 
-        if (empty($primarySource->publisher) && !empty($duplicateSource->publisher)) {
+        if (empty($primarySource->publisher) && ! empty($duplicateSource->publisher)) {
             $primarySource->publisher = $duplicateSource->publisher;
         }
 
-        if (empty($primarySource->publication_date) && !empty($duplicateSource->publication_date)) {
+        if (empty($primarySource->publication_date) && ! empty($duplicateSource->publication_date)) {
             $primarySource->publication_date = $duplicateSource->publication_date;
         }
 

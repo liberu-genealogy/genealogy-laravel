@@ -2,10 +2,10 @@
 
 namespace App\Services;
 
-use App\Models\Person;
 use App\Models\DuplicateMatch;
-use Illuminate\Support\Str;
+use App\Models\Person;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Str;
 
 class DuplicateDetectionService
 {
@@ -13,8 +13,8 @@ class DuplicateDetectionService
      * Scan persons and return collection of suggested duplicate pairs with score.
      * This will persist DuplicateMatch records.
      *
-     * @param float $threshold minimal confidence to persist (0.0 - 1.0)
-     * @param int $limitPerPerson maximum candidates per person
+     * @param  float  $threshold  minimal confidence to persist (0.0 - 1.0)
+     * @param  int  $limitPerPerson  maximum candidates per person
      * @return Collection DuplicateMatch[]
      */
     public function scan(float $threshold = 0.7, int $limitPerPerson = 10): Collection
@@ -24,8 +24,8 @@ class DuplicateDetectionService
         $persons = Person::select(['id', 'givn', 'surn', 'name', 'email', 'phone', 'birthday'])->get();
 
         // Index persons by email and phone for cheap exact matches
-        $emailIndex = $persons->filter(fn($p) => $p->email)->groupBy(fn($p) => Str::lower($p->email));
-        $phoneIndex = $persons->filter(fn($p) => $p->phone)->groupBy(fn($p): string|array|null => preg_replace('/\D+/', '', (string) $p->phone));
+        $emailIndex = $persons->filter(fn ($p) => $p->email)->groupBy(fn ($p) => Str::lower($p->email));
+        $phoneIndex = $persons->filter(fn ($p) => $p->phone)->groupBy(fn ($p): string|array|null => preg_replace('/\D+/', '', (string) $p->phone));
 
         foreach ($persons as $primary) {
             $candidates = collect();
@@ -61,7 +61,7 @@ class DuplicateDetectionService
                 }
 
                 // skip if already added by exact match
-                if ($candidates->first(fn($t): bool => $t[0]->id === $other->id)) {
+                if ($candidates->first(fn ($t): bool => $t[0]->id === $other->id)) {
                     continue;
                 }
 
@@ -72,7 +72,7 @@ class DuplicateDetectionService
             }
 
             // keep top N per person
-            $top = $candidates->sortByDesc(fn($t) => $t[1])->take($limitPerPerson);
+            $top = $candidates->sortByDesc(fn ($t) => $t[1])->take($limitPerPerson);
             foreach ($top as [$other, $score, $meta]) {
                 // ensure unique ordered pair (smaller id as primary to avoid duplicates)
                 $primaryId = $primary->id;
@@ -100,21 +100,21 @@ class DuplicateDetectionService
 
                 // If new or confidence improved, store
                 $existing = $record->exists ? (float) $record->confidence_score : 0.0;
-                if (!$record->exists || $score > $existing) {
+                if (! $record->exists || $score > $existing) {
                     $record->confidence_score = $score;
                     $record->match_data = array_merge($record->match_data ?? [], [
                         'last_scanned_at' => now()->toDateTimeString(),
                         'reasons' => $meta,
                         'primary' => [
                             'id' => $primary->id,
-                            'name' => $primary->name ?? ($primary->givn . ' ' . $primary->surn),
+                            'name' => $primary->name ?? ($primary->givn.' '.$primary->surn),
                             'email' => $primary->email,
                             'phone' => $primary->phone,
                             'birthday' => $primary->birthday,
                         ],
                         'candidate' => [
                             'id' => $other->id,
-                            'name' => $other->name ?? ($other->givn . ' ' . $other->surn),
+                            'name' => $other->name ?? ($other->givn.' '.$other->surn),
                             'email' => $other->email,
                             'phone' => $other->phone,
                             'birthday' => $other->birthday,
@@ -156,8 +156,8 @@ class DuplicateDetectionService
         }
 
         // name similarity using normalized levenshtein and soundex
-        $nameA = $this->normalizeName($a->name ?? ($a->givn . ' ' . $a->surn));
-        $nameB = $this->normalizeName($b->name ?? ($b->givn . ' ' . $b->surn));
+        $nameA = $this->normalizeName($a->name ?? ($a->givn.' '.$a->surn));
+        $nameB = $this->normalizeName($b->name ?? ($b->givn.' '.$b->surn));
 
         if ($nameA && $nameB) {
             $lev = levenshtein($nameA, $nameB);
@@ -176,12 +176,13 @@ class DuplicateDetectionService
 
     protected function normalizeName(?string $s): string
     {
-        if (!$s) {
+        if (! $s) {
             return '';
         }
         $s = Str::lower($s);
         $s = preg_replace('/[^a-z0-9 ]+/', '', $s);
         $s = preg_replace('/\s+/', ' ', trim((string) $s));
+
         return $s;
     }
 }

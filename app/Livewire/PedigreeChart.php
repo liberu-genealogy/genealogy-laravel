@@ -2,11 +2,11 @@
 
 namespace App\Livewire;
 
-use Throwable;
+use App\Filament\App\Resources\PersonResource;
 use App\Models\Person;
 use Illuminate\Contracts\View\View;
 use Livewire\Component;
-use App\Filament\App\Resources\PersonResource;
+use Throwable;
 
 class PedigreeChart extends Component
 {
@@ -18,12 +18,14 @@ class PedigreeChart extends Component
 
     /**
      * The tree data used to render the chart.
+     *
      * @var array<mixed>
      */
     public array $tree = [];
 
     /**
      * In-request cache of people with loaded parents to reduce queries
+     *
      * @var array<int, Person>
      */
     protected array $personCache = [];
@@ -64,13 +66,15 @@ class PedigreeChart extends Component
     {
         if (! $this->rootPersonId) {
             $this->tree = [];
+
             return;
         }
 
         $root = $this->fetchPersonWithParents($this->rootPersonId);
 
-        if (!$root instanceof \App\Models\Person) {
+        if (! $root instanceof Person) {
             $this->tree = [];
+
             return;
         }
 
@@ -119,7 +123,7 @@ class PedigreeChart extends Component
         if ($this->showDates) {
             $birth = $node['birth'] ? htmlspecialchars((string) $node['birth'], ENT_QUOTES, 'UTF-8') : '';
             $death = $node['death'] ? htmlspecialchars((string) $node['death'], ENT_QUOTES, 'UTF-8') : '';
-            $datesHtml = "<div class=\"person-dates\">{$birth}" . ($birth && $death ? ' – ' : ($death !== '' && $death !== '0' ? ' – ' : '')) . "{$death}</div>";
+            $datesHtml = "<div class=\"person-dates\">{$birth}".($birth && $death ? ' – ' : ($death !== '' && $death !== '0' ? ' – ' : ''))."{$death}</div>";
         }
 
         $name = htmlspecialchars($node['name'] ?? 'Unknown', ENT_QUOTES, 'UTF-8');
@@ -132,10 +136,10 @@ class PedigreeChart extends Component
             "<div class=\"person-name\"><a href=\"{$editUrl}\" class=\"hover:underline\" target=\"_blank\" rel=\"noopener\">{$name}</a></div>".
             $datesHtml.
             "<button class=\"expand-btn\" title=\"Set as root\" onclick=\"event.stopPropagation(); expandPerson({$node['id']});\">+</button>".
-            "</div>";
+            '</div>';
 
         $parentsHtml = '';
-        if (!empty($node['father']) || !empty($node['mother'])) {
+        if (! empty($node['father']) || ! empty($node['mother'])) {
             $fatherHtml = empty($node['father'])
                 ? '<div class="empty-person-box">Father unknown</div>'
                 : $this->renderPedigreeTree($node['father'], $generation + 1);
@@ -143,10 +147,10 @@ class PedigreeChart extends Component
                 ? '<div class="empty-person-box">Mother unknown</div>'
                 : $this->renderPedigreeTree($node['mother'], $generation + 1);
 
-            $parentsHtml = "<div class=\"parents-container\">".
+            $parentsHtml = '<div class="parents-container">'.
                 "<div class=\"parent-branch father-branch\">{$fatherHtml}</div>".
                 "<div class=\"parent-branch mother-branch\">{$motherHtml}</div>".
-                "</div>";
+                '</div>';
         }
 
         return "<div class=\"generation-level\">{$personHtml}{$parentsHtml}</div>";
@@ -166,6 +170,7 @@ class PedigreeChart extends Component
         if ($person) {
             $this->personCache[$id] = $person;
         }
+
         return $person;
     }
 

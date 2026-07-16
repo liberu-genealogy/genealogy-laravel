@@ -20,7 +20,7 @@ class GamificationDashboardTest extends TestCase
         $this->actingAs($user);
 
         Livewire::test(GamificationDashboard::class)
-                ->assertOk();
+            ->assertOk();
     }
 
     public function test_can_switch_active_tab(): void
@@ -29,8 +29,8 @@ class GamificationDashboardTest extends TestCase
         $this->actingAs($user);
 
         Livewire::test(GamificationDashboard::class)
-                ->set('activeTab', 'achievements')
-                ->assertSet('activeTab', 'achievements');
+            ->set('activeTab', 'achievements')
+            ->assertSet('activeTab', 'achievements');
     }
 
     public function test_can_switch_leaderboard_period(): void
@@ -39,8 +39,8 @@ class GamificationDashboardTest extends TestCase
         $this->actingAs($user);
 
         Livewire::test(GamificationDashboard::class)
-                ->set('leaderboardPeriod', 'monthly')
-                ->assertSet('leaderboardPeriod', 'monthly');
+            ->set('leaderboardPeriod', 'monthly')
+            ->assertSet('leaderboardPeriod', 'monthly');
     }
 
     public function test_can_filter_by_achievement_category(): void
@@ -49,8 +49,8 @@ class GamificationDashboardTest extends TestCase
         $this->actingAs($user);
 
         Livewire::test(GamificationDashboard::class)
-                ->set('achievementCategory', 'genealogy')
-                ->assertSet('achievementCategory', 'genealogy');
+            ->set('achievementCategory', 'genealogy')
+            ->assertSet('achievementCategory', 'genealogy');
     }
 
     public function test_can_toggle_show_only_unlocked(): void
@@ -59,7 +59,7 @@ class GamificationDashboardTest extends TestCase
         $this->actingAs($user);
 
         Livewire::test(GamificationDashboard::class)
-                ->set('showOnlyUnlocked', true)
-                ->assertSet('showOnlyUnlocked', true);
+            ->set('showOnlyUnlocked', true)
+            ->assertSet('showOnlyUnlocked', true);
     }
 }

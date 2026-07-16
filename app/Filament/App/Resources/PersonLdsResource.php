@@ -4,37 +4,32 @@ declare(strict_types=1);
 
 namespace App\Filament\App\Resources;
 
-use Override;
-use Filament\Forms\Components\TextInput;
-use Filament\Tables\Columns\TextColumn;
-use Filament\Actions\EditAction;
-use Filament\Actions\BulkActionGroup;
-use Filament\Actions\DeleteBulkAction;
-use App\Filament\App\Resources\PersonLdsResource\Pages\ListPersonLds;
 use App\Filament\App\Resources\PersonLdsResource\Pages\CreatePersonLds;
 use App\Filament\App\Resources\PersonLdsResource\Pages\EditPersonLds;
-use BackedEnum;
-use App\Filament\App\Resources\PersonLdsResource\Pages;
+use App\Filament\App\Resources\PersonLdsResource\Pages\ListPersonLds;
 use App\Models\PersonLds;
-use Filament\Forms;
-use Filament\Forms\Form;
-use App\Filament\App\Resources\AppResource;
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteBulkAction;
+use Filament\Actions\EditAction;
+use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Schema;
-use Filament\Tables;
-use Filament\Actions;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use Override;
 
 class PersonLdsResource extends AppResource
 {
-    #[\Override]
+    #[Override]
     protected static ?string $model = PersonLds::class;
 
-    #[\Override]
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-sparkles';
-    #[\Override]
+    #[Override]
+    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-sparkles';
+
+    #[Override]
     protected static ?string $navigationLabel = 'LDS Ordinances';
-    #[\Override]
-    protected static string | \UnitEnum | null $navigationGroup = '👥 Family Tree';
+
+    #[Override]
+    protected static string|\UnitEnum|null $navigationGroup = '👥 Family Tree';
 
     #[Override]
     public static function form(Schema $schema): Schema
@@ -112,13 +107,13 @@ class PersonLdsResource extends AppResource
         ];
     }
 
-    #[\Override]
+    #[Override]
     public static function getPages(): array
     {
         return [
-            'index'  => ListPersonLds::route('/'),
+            'index' => ListPersonLds::route('/'),
             'create' => CreatePersonLds::route('/create'),
-            'edit'   => EditPersonLds::route('/{record}/edit'),
+            'edit' => EditPersonLds::route('/{record}/edit'),
         ];
     }
 }

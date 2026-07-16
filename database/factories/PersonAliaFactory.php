@@ -8,7 +8,7 @@ use App\Models\PersonAlia;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\PersonAlia>
+ * @extends Factory<PersonAlia>
  */
 class PersonAliaFactory extends Factory
 {
@@ -28,9 +28,9 @@ class PersonAliaFactory extends Factory
     public function definition()
     {
         return [
-            'group'          => fake()->word(),
-            'gid'            => fake()->randomDigit(),
-            'alia'           => fake()->word(),
+            'group' => fake()->word(),
+            'gid' => fake()->randomDigit(),
+            'alia' => fake()->word(),
             'import_confirm' => fake()->randomDigit(),
         ];
     }

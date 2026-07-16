@@ -16,7 +16,7 @@ class ImportController extends Controller
     public function gedcom(Request $request, GedcomService $service): JsonResponse
     {
         $request->validate([
-            'file'    => ['required', 'file', 'mimes:ged,gedcom,txt', 'max:51200'],
+            'file' => ['required', 'file', 'mimes:ged,gedcom,txt', 'max:51200'],
             'tree_id' => ['nullable', 'exists:trees,id'],
         ]);
 
@@ -31,7 +31,7 @@ class ImportController extends Controller
     public function dna(Request $request, DnaImportService $service): JsonResponse
     {
         $request->validate([
-            'file'   => ['required', 'file', 'mimes:csv,txt', 'max:102400'],
+            'file' => ['required', 'file', 'mimes:csv,txt', 'max:102400'],
             'format' => ['nullable', 'in:23andme,ancestry,ftdna'],
         ]);
 
@@ -46,10 +46,10 @@ class ImportController extends Controller
     public function status(ImportJob $job): JsonResponse
     {
         return response()->json([
-            'id'         => $job->id,
-            'status'     => $job->status,
-            'progress'   => $job->progress,
-            'error'      => $job->error_message,
+            'id' => $job->id,
+            'status' => $job->status,
+            'progress' => $job->progress,
+            'error' => $job->error_message,
             'created_at' => $job->created_at,
             'updated_at' => $job->updated_at,
         ]);

@@ -3,13 +3,15 @@
 namespace App\Livewire;
 
 use App\Models\Person;
-use App\Models\Family;
-use Livewire\Component;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Livewire\Attributes\On;
+use Livewire\Component;
 
 final class FamilyTreeBuilder extends Component
 {
     public array $treeData = [];
+
     public ?Person $selectedPerson = null;
 
     public function mount(): void
@@ -32,9 +34,9 @@ final class FamilyTreeBuilder extends Component
                     'parent_family' => $person->child_in_family_id,
                     'spouse_families' => [
                         ...$person->familiesAsHusband->pluck('id'),
-                        ...$person->familiesAsWife->pluck('id')
-                    ]
-                ]
+                        ...$person->familiesAsWife->pluck('id'),
+                    ],
+                ],
             ])
             ->toArray();
     }
@@ -43,15 +45,16 @@ final class FamilyTreeBuilder extends Component
     public function updatePersonPosition(int $personId, float $x, float $y): void
     {
         $person = Person::find($personId);
-        
-        if (!$person) {
+
+        if (! $person) {
             $this->dispatch('error', message: 'Person not found');
+
             return;
         }
-        
+
         $person->update([
             'tree_position_x' => $x,
-            'tree_position_y' => $y
+            'tree_position_y' => $y,
         ]);
 
         $this->dispatch('positionUpdated', personId: $personId);
@@ -63,9 +66,10 @@ final class FamilyTreeBuilder extends Component
         // Validate required fields
         if (empty($data['givn']) && empty($data['surn'])) {
             $this->dispatch('error', message: 'Either given name or surname is required');
+
             return;
         }
-        
+
         $personData = [
             'givn' => $data['givn'] ?? '',
             'surn' => $data['surn'] ?? '',
@@ -73,7 +77,7 @@ final class FamilyTreeBuilder extends Component
             'tree_position_x' => $data['position']['x'] ?? 0,
             'tree_position_y' => $data['position']['y'] ?? 0,
         ];
-        
+
         // Add optional fields if provided
         if (isset($data['birthday'])) {
             $personData['birthday'] = $data['birthday'];
@@ -92,12 +96,13 @@ final class FamilyTreeBuilder extends Component
     public function removePerson(int $personId): void
     {
         $person = Person::find($personId);
-        
-        if (!$person) {
+
+        if (! $person) {
             $this->dispatch('error', message: 'Person not found');
+
             return;
         }
-        
+
         $person->delete();
         $this->loadTreeData();
         $this->dispatch('personDeleted', personId: $personId);
@@ -106,16 +111,17 @@ final class FamilyTreeBuilder extends Component
     public function selectPerson(int $personId): void
     {
         $this->selectedPerson = Person::find($personId);
-        
-        if (!$this->selectedPerson instanceof \App\Models\Person) {
+
+        if (! $this->selectedPerson instanceof Person) {
             $this->dispatch('error', message: 'Person not found');
+
             return;
         }
-        
+
         $this->dispatch('personSelected', personId: $personId);
     }
 
-    public function render(): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+    public function render(): Factory|View
     {
         return view('livewire.family-tree-builder');
     }

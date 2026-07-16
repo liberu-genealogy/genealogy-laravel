@@ -8,7 +8,7 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\SourceRepo>
+ * @extends Factory<SourceRepo>
  */
 class SourceRepoFactory extends Factory
 {
@@ -28,10 +28,10 @@ class SourceRepoFactory extends Factory
     public function definition()
     {
         return [
-            'group'      => fake()->word(),
-            'gid'        => fake()->randomElement(['1', '2']),
-            'repo_id'    => Repository::factory()->create()->id,
-            'caln'       => fake()->word(),
+            'group' => fake()->word(),
+            'gid' => fake()->randomElement(['1', '2']),
+            'repo_id' => Repository::factory()->create()->id,
+            'caln' => fake()->word(),
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ];

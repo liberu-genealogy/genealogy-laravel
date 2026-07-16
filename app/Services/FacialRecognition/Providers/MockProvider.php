@@ -30,7 +30,7 @@ class MockProvider implements FacialRecognitionProviderInterface
                     'height' => random_int(20, 35) / 100,
                 ],
                 'confidence' => random_int(85, 99) + (random_int(0, 99) / 100),
-                'face_id' => 'mock_face_' . uniqid(),
+                'face_id' => 'mock_face_'.uniqid(),
             ];
         }
 

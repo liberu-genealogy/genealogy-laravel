@@ -18,9 +18,7 @@ class ScanForDuplicatePersons implements ShouldQueue
 {
     use InteractsWithQueue, Queueable, SerializesModels;
 
-    public function __construct(public float $threshold = 0.7, public int $limitPerPerson = 10)
-    {
-    }
+    public function __construct(public float $threshold = 0.7, public int $limitPerPerson = 10) {}
 
     public function handle(DuplicateDetectionService $detector): void
     {
@@ -46,6 +44,7 @@ class ScanForDuplicatePersons implements ShouldQueue
             $teamId = $teamByPerson->get($m->primary_person_id);
             if ($teamId === null) {
                 $unowned++;
+
                 continue;
             }
             $countByTeam[$teamId] = ($countByTeam[$teamId] ?? 0) + 1;

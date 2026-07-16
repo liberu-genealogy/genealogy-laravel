@@ -7,9 +7,7 @@ use App\Services\GamificationService;
 
 class PersonObserver
 {
-    public function __construct(protected \App\Services\GamificationService $gamificationService)
-    {
-    }
+    public function __construct(protected GamificationService $gamificationService) {}
 
     /**
      * Handle the Person "created" event.
@@ -37,7 +35,7 @@ class PersonObserver
     {
         // Award points for updating person information
         $user = auth()->user();
-        if ($user && $person->wasChanged() && !$person->wasRecentlyCreated) {
+        if ($user && $person->wasChanged() && ! $person->wasRecentlyCreated) {
             $this->gamificationService->awardPoints(
                 $user,
                 'person_updated',

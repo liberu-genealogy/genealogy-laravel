@@ -2,8 +2,8 @@
 
 namespace App\Filament\App\Widgets;
 
-use App\Models\Person;
 use App\Models\Family;
+use App\Models\Person;
 use Filament\Widgets\StatsOverviewWidget as BaseWidget;
 use Filament\Widgets\StatsOverviewWidget\Stat;
 

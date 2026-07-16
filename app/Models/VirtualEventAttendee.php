@@ -58,7 +58,7 @@ class VirtualEventAttendee extends Model
         parent::boot();
 
         static::creating(function ($attendee): void {
-            if (!$attendee->invitation_token) {
+            if (! $attendee->invitation_token) {
                 $attendee->invitation_token = Str::random(32);
             }
         });
@@ -118,7 +118,7 @@ class VirtualEventAttendee extends Model
         }
 
         if ($this->person) {
-            return $this->person->name ?? ($this->person->givn . ' ' . $this->person->surn);
+            return $this->person->name ?? ($this->person->givn.' '.$this->person->surn);
         }
 
         return $this->guest_name ?? 'Unknown';
@@ -139,7 +139,7 @@ class VirtualEventAttendee extends Model
 
     public function getAttendanceDurationAttribute(): ?string
     {
-        if (!$this->attended || !$this->joined_at) {
+        if (! $this->attended || ! $this->joined_at) {
             return null;
         }
 
@@ -230,13 +230,13 @@ class VirtualEventAttendee extends Model
 
     public function canRsvp(): bool
     {
-        return $this->virtualEvent->status === 'published' && 
+        return $this->virtualEvent->status === 'published' &&
                $this->virtualEvent->start_time > now();
     }
 
     public function canJoin(): bool
     {
-        return $this->rsvp_status === 'accepted' && 
+        return $this->rsvp_status === 'accepted' &&
                $this->virtualEvent->canJoin();
     }
 }

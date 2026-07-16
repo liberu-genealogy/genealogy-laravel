@@ -9,8 +9,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class SmartMatch extends Model
 {
-    use HasFactory;
     use BelongsToTenant;
+    use HasFactory;
 
     #[\Override]
     protected $fillable = [
@@ -74,13 +74,13 @@ class SmartMatch extends Model
 
     public function getConfidencePercentageAttribute(): string
     {
-        return number_format($this->confidence_score * 100, 1) . '%';
+        return number_format($this->confidence_score * 100, 1).'%';
     }
 
     public function getConfidenceLevelAttribute(): string
     {
         $score = $this->confidence_score;
-        
+
         if ($score >= 0.9) {
             return 'Very High';
         }
@@ -93,7 +93,7 @@ class SmartMatch extends Model
         if ($score >= 0.6) {
             return 'Low';
         }
-        
+
         return 'Very Low';
     }
 }

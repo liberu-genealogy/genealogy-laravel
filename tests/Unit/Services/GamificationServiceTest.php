@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Unit\Services;
 
+use App\Models\Person;
 use App\Models\User;
 use App\Models\UserPoint;
 use App\Services\GamificationService;
@@ -15,13 +16,14 @@ class GamificationServiceTest extends TestCase
     use RefreshDatabase;
 
     private GamificationService $service;
+
     private User $user;
 
     protected function setUp(): void
     {
         parent::setUp();
         $this->service = new GamificationService;
-        $this->user    = User::factory()->withPersonalTeam()->create();
+        $this->user = User::factory()->withPersonalTeam()->create();
     }
 
     public function test_service_can_be_instantiated(): void
@@ -37,8 +39,8 @@ class GamificationServiceTest extends TestCase
         $this->assertSame(50, $point->points);
         $this->assertSame('test_activity', $point->activity_type);
         $this->assertDatabaseHas('user_points', [
-            'user_id'       => $this->user->id,
-            'points'        => 50,
+            'user_id' => $this->user->id,
+            'points' => 50,
             'activity_type' => 'test_activity',
         ]);
     }
@@ -95,11 +97,11 @@ class GamificationServiceTest extends TestCase
 
     public function test_award_points_with_related_model(): void
     {
-        $person = \App\Models\Person::factory()->create();
+        $person = Person::factory()->create();
 
         $point = $this->service->awardPoints($this->user, 'person_added', 10, 'Added person', [], $person);
 
         $this->assertSame($person->id, $point->related_model_id);
-        $this->assertSame(\App\Models\Person::class, $point->related_model_type);
+        $this->assertSame(Person::class, $point->related_model_type);
     }
 }

@@ -2,18 +2,20 @@
 
 namespace App\Livewire;
 
-use App\Models\UserChecklist;
-use App\Models\Person;
 use App\Models\Family;
+use App\Models\Person;
+use App\Models\UserChecklist;
 use Illuminate\Contracts\View\View;
-use Livewire\Component;
-use Illuminate\Support\Collection;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Collection;
+use Livewire\Component;
 
 class ResearchProgressWidget extends Component
 {
     public int $selectedPeriod = 30; // days
+
     public string $selectedSubjectType = 'all';
+
     public bool $showDetails = false;
 
     /** @var array<string, mixed> */
@@ -124,11 +126,11 @@ class ResearchProgressWidget extends Component
             ->where('completed_at', '>=', $periodStart)
             ->orderByDesc('completed_at')
             ->limit(20)
-            ->get(['id','name','completed_at','subject_type','subject_id']);
+            ->get(['id', 'name', 'completed_at', 'subject_type', 'subject_id']);
 
         // Map to objects with userChecklist relation-like structure expected by the Blade
         $this->recentActivity = [
-            'items' => $recentCompleted->map(fn(UserChecklist $c) => (object) [
+            'items' => $recentCompleted->map(fn (UserChecklist $c) => (object) [
                 'userChecklist' => $c,
                 'completed_at' => $c->completed_at,
             ]),
@@ -175,6 +177,7 @@ class ResearchProgressWidget extends Component
                 if ($person) {
                     $person->progress_percentage = $row->total_count > 0 ? round(($row->completed_count / $row->total_count) * 100, 0) : 0;
                 }
+
                 return $person;
             })
             ->filter();
@@ -192,6 +195,7 @@ class ResearchProgressWidget extends Component
                 if ($family) {
                     $family->progress_percentage = $row->total_count > 0 ? round(($row->completed_count / $row->total_count) * 100, 0) : 0;
                 }
+
                 return $family;
             })
             ->filter();

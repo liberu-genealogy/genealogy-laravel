@@ -29,7 +29,7 @@ return new class extends Migration
                 'trial_ends_at',
                 'is_premium',
                 'dna_uploads_count',
-                'premium_started_at'
+                'premium_started_at',
             ]);
         });
     }

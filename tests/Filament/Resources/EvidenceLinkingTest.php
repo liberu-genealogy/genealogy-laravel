@@ -40,7 +40,7 @@ class EvidenceLinkingTest extends TestCase
 
         Livewire::test(CitationsRelationManager::class, [
             'ownerRecord' => $source,
-            'pageClass'   => EditSource::class,
+            'pageClass' => EditSource::class,
         ])->assertOk();
     }
 
@@ -50,10 +50,10 @@ class EvidenceLinkingTest extends TestCase
         $source = Source::factory()->create();
 
         $citation = $source->citations()->create([
-            'name'       => 'Birth certificate',
+            'name' => 'Birth certificate',
             'confidence' => 3,
-            'page'       => 12,
-            'volume'     => 1,
+            'page' => 12,
+            'volume' => 1,
         ]);
 
         // Relation resolves App\Models\Citation (not the untenanted vendor model)...

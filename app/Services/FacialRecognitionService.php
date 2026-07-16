@@ -7,6 +7,7 @@ use App\Models\PersonPhoto;
 use App\Models\PhotoTag;
 use App\Services\FacialRecognition\FacialRecognitionProviderInterface;
 use App\Services\FacialRecognition\Providers\MockProvider;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 
@@ -29,17 +30,16 @@ class FacialRecognitionService
         $provider = config('services.facial_recognition.provider', 'mock');
 
         return match ($provider) {
-            'mock' => new MockProvider(),
+            'mock' => new MockProvider,
             // 'aws' => new AwsRekognitionProvider(),
             // 'azure' => new AzureFaceApiProvider(),
-            default => new MockProvider(),
+            default => new MockProvider,
         };
     }
 
     /**
      * Analyze a photo and create tags for detected faces
      *
-     * @param PersonPhoto $photo
      * @return array Results of the analysis
      */
     public function analyzePhoto(PersonPhoto $photo): array
@@ -47,8 +47,9 @@ class FacialRecognitionService
         try {
             $imagePath = Storage::disk('public')->path($photo->file_path);
 
-            if (!file_exists($imagePath)) {
+            if (! file_exists($imagePath)) {
                 Log::error('Photo file not found', ['path' => $imagePath]);
+
                 return [
                     'success' => false,
                     'error' => 'Photo file not found',
@@ -124,7 +125,7 @@ class FacialRecognitionService
             $query->where('team_id', $teamId);
         }
 
-        return $query->get()->map(fn($encoding) => [
+        return $query->get()->map(fn ($encoding) => [
             'person_id' => $encoding->person_id,
             'person_name' => $encoding->person->fullname(),
             'encoding' => $encoding->encoding,
@@ -169,13 +170,10 @@ class FacialRecognitionService
 
     /**
      * Create a face encoding for a person from a confirmed tag
-     *
-     * @param PhotoTag $tag
-     * @return FaceEncoding|null
      */
     public function createFaceEncoding(PhotoTag $tag): ?FaceEncoding
     {
-        if (!$tag->person_id || $tag->status !== 'confirmed') {
+        if (! $tag->person_id || $tag->status !== 'confirmed') {
             return null;
         }
 
@@ -183,8 +181,9 @@ class FacialRecognitionService
             $photo = $tag->photo;
             $imagePath = Storage::disk('public')->path($photo->file_path);
 
-            if (!file_exists($imagePath)) {
+            if (! file_exists($imagePath)) {
                 Log::error('Photo file not found for encoding', ['path' => $imagePath]);
+
                 return null;
             }
 
@@ -209,11 +208,6 @@ class FacialRecognitionService
 
     /**
      * Confirm a photo tag and optionally create a face encoding
-     *
-     * @param PhotoTag $tag
-     * @param int $userId
-     * @param bool $createEncoding
-     * @return bool
      */
     public function confirmTag(PhotoTag $tag, int $userId, bool $createEncoding = true): bool
     {
@@ -228,11 +222,6 @@ class FacialRecognitionService
 
     /**
      * Update a tag with a different person
-     *
-     * @param PhotoTag $tag
-     * @param int $personId
-     * @param int $userId
-     * @return bool
      */
     public function updateTagPerson(PhotoTag $tag, int $personId, int $userId): bool
     {
@@ -250,22 +239,18 @@ class FacialRecognitionService
 
     /**
      * Reject a photo tag
-     *
-     * @param PhotoTag $tag
-     * @return bool
      */
     public function rejectTag(PhotoTag $tag): bool
     {
         $tag->reject();
+
         return true;
     }
 
     /**
      * Get pending tags for review
      *
-     * @param int|null $teamId
-     * @param int $limit
-     * @return \Illuminate\Database\Eloquent\Collection
+     * @return Collection
      */
     public function getPendingTags(?int $teamId = null, int $limit = 50)
     {

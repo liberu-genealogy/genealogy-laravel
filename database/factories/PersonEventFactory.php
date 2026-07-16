@@ -9,7 +9,7 @@ use App\Models\Place;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\PersonEvent>
+ * @extends Factory<PersonEvent>
  */
 class PersonEventFactory extends Factory
 {
@@ -19,22 +19,22 @@ class PersonEventFactory extends Factory
     public function definition()
     {
         return [
-            'person_id'   => Person::factory()->create()->id,
-            'addr_id'     => Addr::factory()->create()->id,
-            'places_id'   => Place::factory()->create()->id,
-            'title'       => fake()->title(),
-            'type'        => fake()->word(),
-            'attr'        => fake()->text(),
-            'date'        => fake()->date(),
-            'plac'        => fake()->address(),
-            'phon'        => fake()->phoneNumber(),
-            'caus'        => fake()->text(),
-            'age'         => fake()->randomDigit(),
-            'agnc'        => fake()->word(),
+            'person_id' => Person::factory()->create()->id,
+            'addr_id' => Addr::factory()->create()->id,
+            'places_id' => Place::factory()->create()->id,
+            'title' => fake()->title(),
+            'type' => fake()->word(),
+            'attr' => fake()->text(),
+            'date' => fake()->date(),
+            'plac' => fake()->address(),
+            'phon' => fake()->phoneNumber(),
+            'caus' => fake()->text(),
+            'age' => fake()->randomDigit(),
+            'agnc' => fake()->word(),
             'description' => fake()->text(50),
-            'year'        => fake()->year(),
-            'month'       => fake()->month(),
-            'day'         => fake()->dayOfMonth(),
+            'year' => fake()->year(),
+            'month' => fake()->month(),
+            'day' => fake()->dayOfMonth(),
         ];
     }
 }

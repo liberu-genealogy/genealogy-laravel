@@ -9,8 +9,8 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Source extends \FamilyTree365\LaravelGedcom\Models\Source
 {
-    use HasFactory;
     use BelongsToTenant;
+    use HasFactory;
 
     /**
      * The attributes that should be cast.

@@ -4,37 +4,32 @@ declare(strict_types=1);
 
 namespace App\Filament\App\Resources;
 
-use Override;
-use Filament\Forms\Components\TextInput;
-use Filament\Tables\Columns\TextColumn;
-use Filament\Actions\EditAction;
-use Filament\Actions\BulkActionGroup;
-use Filament\Actions\DeleteBulkAction;
-use App\Filament\App\Resources\SubnResource\Pages\ListSubns;
 use App\Filament\App\Resources\SubnResource\Pages\CreateSubn;
 use App\Filament\App\Resources\SubnResource\Pages\EditSubn;
-use BackedEnum;
-use App\Filament\App\Resources\SubnResource\Pages;
+use App\Filament\App\Resources\SubnResource\Pages\ListSubns;
 use App\Models\Subn;
-use Filament\Forms;
-use Filament\Forms\Form;
-use App\Filament\App\Resources\AppResource;
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteBulkAction;
+use Filament\Actions\EditAction;
+use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Schema;
-use Filament\Tables;
-use Filament\Actions;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use Override;
 
 class SubnResource extends AppResource
 {
-    #[\Override]
+    #[Override]
     protected static ?string $model = Subn::class;
 
-    #[\Override]
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-inbox-arrow-down';
-    #[\Override]
+    #[Override]
+    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-inbox-arrow-down';
+
+    #[Override]
     protected static ?string $navigationLabel = 'Submissions';
-    #[\Override]
-    protected static string | \UnitEnum | null $navigationGroup = '🛠️ Data Management';
+
+    #[Override]
+    protected static string|\UnitEnum|null $navigationGroup = '🛠️ Data Management';
 
     #[Override]
     public static function form(Schema $schema): Schema
@@ -107,13 +102,13 @@ class SubnResource extends AppResource
         ];
     }
 
-    #[\Override]
+    #[Override]
     public static function getPages(): array
     {
         return [
-            'index'  => ListSubns::route('/'),
+            'index' => ListSubns::route('/'),
             'create' => CreateSubn::route('/create'),
-            'edit'   => EditSubn::route('/{record}/edit'),
+            'edit' => EditSubn::route('/{record}/edit'),
         ];
     }
 }

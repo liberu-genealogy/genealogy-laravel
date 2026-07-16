@@ -25,7 +25,7 @@ final class PedigreeChartController extends Controller
     {
         return response()->json([
             'message' => 'Pedigree Chart functionality is under development.',
-            'status' => 'pending'
+            'status' => 'pending',
         ]);
     }
 }

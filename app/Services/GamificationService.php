@@ -2,16 +2,15 @@
 
 namespace App\Services;
 
-use App\Models\Person;
-use App\Models\Family;
-use App\Models\PersonEvent;
+use App\Events\AchievementUnlocked;
 use App\Models\Achievement;
+use App\Models\Family;
+use App\Models\Person;
+use App\Models\PersonEvent;
 use App\Models\User;
 use App\Models\UserAchievement;
 use App\Models\UserPoint;
 use App\Models\UserProgress;
-use App\Events\AchievementUnlocked;
-use App\Events\UserLeveledUp;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
@@ -152,7 +151,7 @@ class GamificationService
             // Dispatch achievement unlocked event
             event(new AchievementUnlocked($user, $achievement));
 
-            Log::info("Achievement unlocked", [
+            Log::info('Achievement unlocked', [
                 'user_id' => $user->id,
                 'achievement_key' => $achievement->key,
                 'achievement_name' => $achievement->name,
@@ -319,22 +318,22 @@ class GamificationService
             'today' => $query->withSum(['points as daily_points' => function ($q): void {
                 $q->whereDate('created_at', today());
             }], 'points')
-            ->orderBy('daily_points', 'desc'),
+                ->orderBy('daily_points', 'desc'),
             'week' => $query->withSum(['points as weekly_points' => function ($q): void {
                 $q->where('created_at', '>=', now()->startOfWeek());
             }], 'points')
-            ->orderBy('weekly_points', 'desc'),
+                ->orderBy('weekly_points', 'desc'),
             'month' => $query->withSum(['points as monthly_points' => function ($q): void {
                 $q->where('created_at', '>=', now()->startOfMonth());
             }], 'points')
-            ->orderBy('monthly_points', 'desc'),
+                ->orderBy('monthly_points', 'desc'),
             // all_time
             default => $query->orderBy('total_points', 'desc'),
         };
 
         return $query->limit($limit)
             ->get()
-            ->map(fn($user, $index) => [
+            ->map(fn ($user, $index) => [
                 'rank' => $index + 1,
                 'user' => $user,
                 'points' => $this->getPointsForPeriod($user, $period),

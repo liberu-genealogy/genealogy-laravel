@@ -3,8 +3,8 @@
 namespace App\Modules\Notes\Services;
 
 use App\Models\Note;
-use Illuminate\Support\Collection;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Collection;
 
 class NotesService
 {
@@ -28,6 +28,7 @@ class NotesService
     public function updateNote(Note $note, array $data): Note
     {
         $note->update($data);
+
         return $note->fresh();
     }
 

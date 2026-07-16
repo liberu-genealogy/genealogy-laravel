@@ -13,14 +13,13 @@ class ExampleProvider implements ExternalRecordProviderInterface
     /**
      * Search for matching records in the example data source.
      *
-     * @param Person|int $localPerson
-     * @return array
+     * @param  Person|int  $localPerson
      */
     public function search($localPerson): array
     {
         $person = is_int($localPerson) ? Person::find($localPerson) : $localPerson;
-        
-        if (!$person) {
+
+        if (! $person) {
             return [];
         }
 

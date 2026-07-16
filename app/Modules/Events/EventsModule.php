@@ -2,10 +2,10 @@
 
 namespace App\Modules\Events;
 
+use App\Modules\BaseModule;
 use App\Modules\Events\Services\EventsService;
 use App\Modules\Events\Services\TimelineService;
 use Artisan;
-use App\Modules\BaseModule;
 
 class EventsModule extends BaseModule
 {
@@ -43,9 +43,9 @@ class EventsModule extends BaseModule
      */
     protected function registerEventsServices(): void
     {
-        app()->singleton('genealogy.events', fn($app) => new EventsService());
+        app()->singleton('genealogy.events', fn ($app) => new EventsService);
 
-        app()->singleton('genealogy.events.timeline', fn($app) => new TimelineService());
+        app()->singleton('genealogy.events.timeline', fn ($app) => new TimelineService);
     }
 
     /**

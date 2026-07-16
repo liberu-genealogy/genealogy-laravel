@@ -2,11 +2,11 @@
 
 namespace App\Modules\Import;
 
-use App\Modules\Import\Services\ImportService;
-use App\Modules\Import\Services\GedcomImportService;
-use App\Modules\Import\Services\ExportService;
-use Artisan;
 use App\Modules\BaseModule;
+use App\Modules\Import\Services\ExportService;
+use App\Modules\Import\Services\GedcomImportService;
+use App\Modules\Import\Services\ImportService;
+use Artisan;
 
 class ImportModule extends BaseModule
 {
@@ -43,11 +43,11 @@ class ImportModule extends BaseModule
      */
     protected function registerImportServices(): void
     {
-        app()->singleton('genealogy.import', fn($app) => new ImportService());
+        app()->singleton('genealogy.import', fn ($app) => new ImportService);
 
-        app()->singleton('genealogy.import.gedcom', fn($app) => new GedcomImportService());
+        app()->singleton('genealogy.import.gedcom', fn ($app) => new GedcomImportService);
 
-        app()->singleton('genealogy.export', fn($app) => new ExportService());
+        app()->singleton('genealogy.export', fn ($app) => new ExportService);
     }
 
     /**

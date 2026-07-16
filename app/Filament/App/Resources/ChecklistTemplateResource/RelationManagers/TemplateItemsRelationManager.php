@@ -2,27 +2,24 @@
 
 namespace App\Filament\App\Resources\ChecklistTemplateResource\RelationManagers;
 
-use Filament\Schemas\Components\Grid;
-use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\Textarea;
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\CreateAction;
+use Filament\Actions\DeleteAction;
+use Filament\Actions\DeleteBulkAction;
+use Filament\Actions\EditAction;
 use Filament\Forms\Components\Select;
-use Filament\Forms\Components\Toggle;
 use Filament\Forms\Components\TagsInput;
-use Filament\Tables\Columns\TextColumn;
+use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Toggle;
+use Filament\Resources\RelationManagers\RelationManager;
+use Filament\Schemas\Components\Grid;
+use Filament\Schemas\Schema;
 use Filament\Tables\Columns\IconColumn;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Filters\TernaryFilter;
-use Filament\Actions\CreateAction;
-use Filament\Actions\EditAction;
-use Filament\Actions\DeleteAction;
-use Filament\Actions\BulkActionGroup;
-use Filament\Actions\DeleteBulkAction;
-use Filament\Forms;
-use Filament\Forms\Form;
-use Filament\Resources\RelationManagers\RelationManager;
-use Filament\Tables;
 use Filament\Tables\Table;
-use Filament\Schemas\Schema;
 
 class TemplateItemsRelationManager extends RelationManager
 {
@@ -32,9 +29,9 @@ class TemplateItemsRelationManager extends RelationManager
     #[\Override]
     protected static ?string $title = 'Checklist Items';
 
-   #[\Override]
-   public function form(Schema $schema): Schema
-       {
+    #[\Override]
+    public function form(Schema $schema): Schema
+    {
         return $schema
             ->components([
                 Grid::make(3)

@@ -2,10 +2,10 @@
 
 namespace App\Modules\Core\Providers;
 
-use App\Modules\Core\Services\TreeService;
 use App\Modules\Core\Services\GedcomService;
-use Illuminate\Support\ServiceProvider;
+use App\Modules\Core\Services\TreeService;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\ServiceProvider;
 
 class CoreServiceProvider extends ServiceProvider
 {
@@ -35,9 +35,9 @@ class CoreServiceProvider extends ServiceProvider
     protected function registerCoreServices(): void
     {
         // Register shared genealogy services
-        $this->app->singleton('genealogy.tree', fn($app) => new TreeService());
+        $this->app->singleton('genealogy.tree', fn ($app) => new TreeService);
 
-        $this->app->singleton('genealogy.gedcom', fn($app) => new GedcomService());
+        $this->app->singleton('genealogy.gedcom', fn ($app) => new GedcomService);
     }
 
     /**
@@ -45,7 +45,7 @@ class CoreServiceProvider extends ServiceProvider
      */
     protected function registerCoreConfig(): void
     {
-        $configPath = __DIR__ . '/../config/genealogy.php';
+        $configPath = __DIR__.'/../config/genealogy.php';
         if (File::exists($configPath)) {
             $this->mergeConfigFrom($configPath, 'genealogy');
         }
@@ -57,14 +57,14 @@ class CoreServiceProvider extends ServiceProvider
     protected function bootCoreServices(): void
     {
         // Load core views
-        $this->loadViewsFrom(__DIR__ . '/../resources/views', 'core');
-        
+        $this->loadViewsFrom(__DIR__.'/../resources/views', 'core');
+
         // Load core translations
-        $this->loadTranslationsFrom(__DIR__ . '/../resources/lang', 'core');
-        
+        $this->loadTranslationsFrom(__DIR__.'/../resources/lang', 'core');
+
         // Load core routes
-        $this->loadRoutesFrom(__DIR__ . '/../routes/web.php');
-        $this->loadRoutesFrom(__DIR__ . '/../routes/api.php');
+        $this->loadRoutesFrom(__DIR__.'/../routes/web.php');
+        $this->loadRoutesFrom(__DIR__.'/../routes/api.php');
     }
 
     /**
@@ -74,12 +74,12 @@ class CoreServiceProvider extends ServiceProvider
     {
         // Publish core configuration
         $this->publishes([
-            __DIR__ . '/../config/genealogy.php' => config_path('genealogy.php'),
+            __DIR__.'/../config/genealogy.php' => config_path('genealogy.php'),
         ], 'core-config');
 
         // Publish core assets
         $this->publishes([
-            __DIR__ . '/../resources/assets' => public_path('modules/core'),
+            __DIR__.'/../resources/assets' => public_path('modules/core'),
         ], 'core-assets');
     }
 }

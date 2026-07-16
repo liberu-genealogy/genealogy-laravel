@@ -2,11 +2,11 @@
 
 namespace App\Console\Commands;
 
-use Exception;
 use App\Jobs\DnaMatching;
-use App\Models\User;
 use App\Models\Dna;
+use App\Models\User;
 use App\Services\AdvancedDnaMatchingService;
+use Exception;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Log;
 
@@ -46,6 +46,7 @@ class ProcessLargeScaleDnaCommand extends Command
 
             if ($totalKits === 0) {
                 $this->warn('No DNA kits found to process.');
+
                 return Command::SUCCESS;
             }
 
@@ -54,30 +55,30 @@ class ProcessLargeScaleDnaCommand extends Command
             $errorCount = 0;
             $startTime = microtime(true);
 
-            Dna::chunk($batchSize, function ($dnaKits) use (&$processedCount, &$errorCount, $batchSize): void {
+            Dna::chunk($batchSize, function ($dnaKits) use (&$processedCount, &$errorCount): void {
                 $this->info("Processing batch of {$dnaKits->count()} DNA kits...");
 
                 try {
                     // Convert to array format expected by the service
-                    $kitsArray = $dnaKits->map(fn($kit) => [
+                    $kitsArray = $dnaKits->map(fn ($kit) => [
                         'id' => $kit->id,
                         'variable_name' => $kit->variable_name,
                         'file_name' => $kit->file_name,
-                        'user_id' => $kit->user_id
+                        'user_id' => $kit->user_id,
                     ])->toArray();
 
                     // Process the batch
                     $results = $this->advancedDnaMatchingService->processLargeScaleMatching($kitsArray);
 
-                    $this->info("Successfully processed batch. Generated " . count($results) . " match results.");
+                    $this->info('Successfully processed batch. Generated '.count($results).' match results.');
                     $processedCount += $dnaKits->count();
 
                     // Store results in database
                     $this->storeMatchResults($results);
 
                 } catch (Exception $e) {
-                    $this->error("Error processing batch: " . $e->getMessage());
-                    Log::error('Large-scale DNA processing batch error: ' . $e->getMessage());
+                    $this->error('Error processing batch: '.$e->getMessage());
+                    Log::error('Large-scale DNA processing batch error: '.$e->getMessage());
                     $errorCount++;
                 }
 
@@ -92,7 +93,7 @@ class ProcessLargeScaleDnaCommand extends Command
             $endTime = microtime(true);
             $duration = round($endTime - $startTime, 2);
 
-            $this->info("Large-scale DNA processing completed!");
+            $this->info('Large-scale DNA processing completed!');
             $this->info("Total kits processed: {$processedCount}");
             $this->info("Errors encountered: {$errorCount}");
             $this->info("Total duration: {$duration} seconds");
@@ -100,8 +101,9 @@ class ProcessLargeScaleDnaCommand extends Command
             return Command::SUCCESS;
 
         } catch (Exception $e) {
-            $this->error('Large-scale DNA processing failed: ' . $e->getMessage());
-            Log::error('Large-scale DNA processing failed: ' . $e->getMessage());
+            $this->error('Large-scale DNA processing failed: '.$e->getMessage());
+            Log::error('Large-scale DNA processing failed: '.$e->getMessage());
+
             return Command::FAILURE;
         }
     }
@@ -122,7 +124,7 @@ class ProcessLargeScaleDnaCommand extends Command
                 );
 
             } catch (Exception $e) {
-                Log::error("Failed to queue DNA matching job: " . $e->getMessage());
+                Log::error('Failed to queue DNA matching job: '.$e->getMessage());
             }
         }
     }
@@ -135,8 +137,8 @@ class ProcessLargeScaleDnaCommand extends Command
         $memoryUsage = memory_get_usage(true);
         $memoryPeak = memory_get_peak_usage(true);
 
-        $this->info("Memory usage: " . $this->formatBytes($memoryUsage) .
-                   " (Peak: " . $this->formatBytes($memoryPeak) . ")");
+        $this->info('Memory usage: '.$this->formatBytes($memoryUsage).
+                   ' (Peak: '.$this->formatBytes($memoryPeak).')');
     }
 
     /**
@@ -151,6 +153,6 @@ class ProcessLargeScaleDnaCommand extends Command
 
         $bytes /= 1024 ** $pow;
 
-        return round($bytes, 2) . ' ' . $units[$pow];
+        return round($bytes, 2).' '.$units[$pow];
     }
 }

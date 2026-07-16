@@ -2,9 +2,9 @@
 
 namespace App\Services\RecordMatcher;
 
-use App\Models\Person;
 use App\Models\AIMatchModel;
 use App\Models\AISuggestedMatch;
+use App\Models\Person;
 use Illuminate\Support\Str;
 
 class RecordMatcherService
@@ -31,8 +31,7 @@ class RecordMatcherService
     /**
      * Predict matches for a local person given a set of external candidates.
      *
-     * @param Person|int $localPerson
-     * @param array $candidates
+     * @param  Person|int  $localPerson
      * @return array array of ['candidate' => array, 'score' => float]
      */
     public function scoreCandidates($localPerson, array $candidates): array
@@ -49,7 +48,7 @@ class RecordMatcherService
             $results[] = ['candidate' => $cand, 'score' => $score];
         }
 
-        usort($results, fn(array $a, array $b): int => $b['score'] <=> $a['score']);
+        usort($results, fn (array $a, array $b): int => $b['score'] <=> $a['score']);
 
         return $results;
     }
@@ -60,7 +59,7 @@ class RecordMatcherService
         $score = 0.0;
 
         // first name similarity
-        if (!empty($this->weights['first_name'])) {
+        if (! empty($this->weights['first_name'])) {
             $firstPerson = Str::lower($person->first_name ?? '');
             $firstCand = Str::lower($cand['first_name'] ?? '');
             $sim = $this->stringSimilarity($firstPerson, $firstCand);
@@ -68,7 +67,7 @@ class RecordMatcherService
         }
 
         // last name
-        if (!empty($this->weights['last_name'])) {
+        if (! empty($this->weights['last_name'])) {
             $lastPerson = Str::lower($person->last_name ?? '');
             $lastCand = Str::lower($cand['last_name'] ?? '');
             $sim = $this->stringSimilarity($lastPerson, $lastCand);
@@ -76,9 +75,9 @@ class RecordMatcherService
         }
 
         // birth year exact/near
-        if (!empty($this->weights['birth_year'])) {
-            $py = $person->birth_year ? (int)$person->birth_year : null;
-            $cy = isset($cand['birth_year']) ? (int)$cand['birth_year'] : null;
+        if (! empty($this->weights['birth_year'])) {
+            $py = $person->birth_year ? (int) $person->birth_year : null;
+            $cy = isset($cand['birth_year']) ? (int) $cand['birth_year'] : null;
             $sim = 0.0;
             if ($py && $cy) {
                 $diff = abs($py - $cy);
@@ -94,7 +93,7 @@ class RecordMatcherService
         }
 
         // birth place fuzzy match
-        if (!empty($this->weights['birth_place'])) {
+        if (! empty($this->weights['birth_place'])) {
             $pp = Str::lower($person->birth_place ?? '');
             $cp = Str::lower($cand['birth_place'] ?? '');
             $sim = $this->stringSimilarity($pp, $cp);
@@ -102,10 +101,10 @@ class RecordMatcherService
         }
 
         // parents - simplistic check if last names or parent names match
-        if (!empty($this->weights['parents'])) {
+        if (! empty($this->weights['parents'])) {
             $sim = 0.0;
             // example: check if candidate last name equals person last_name or matches parent last_name fields
-            if (!empty($cand['last_name']) && !empty($person->last_name)) {
+            if (! empty($cand['last_name']) && ! empty($person->last_name)) {
                 $sim = $this->stringSimilarity(Str::lower($person->last_name), Str::lower($cand['last_name']));
             }
             $score += $this->weights['parents'] * $sim;
@@ -126,17 +125,12 @@ class RecordMatcherService
         }
         // use PHP similar_text for a simple score, normalize by max length
         similar_text($a, $b, $perc);
+
         return $perc / 100.0;
     }
 
     /**
      * Persist suggestions into DB (upsert).
-     *
-     * @param int $localPersonId
-     * @param string $provider
-     * @param array $candidate
-     * @param float $confidence
-     * @return AISuggestedMatch
      */
     public function persistSuggestion(int $localPersonId, string $provider, array $candidate, float $confidence): AISuggestedMatch
     {
@@ -157,9 +151,8 @@ class RecordMatcherService
     /**
      * Update model weights based on feedback (simple incremental algorithm).
      *
-     * @param AISuggestedMatch $suggestedMatch
-     * @param string $action 'confirm'|'reject'
-     * @return void
+     * @param  AISuggestedMatch  $suggestedMatch
+     * @param  string  $action  'confirm'|'reject'
      */
     public function learnFromFeedback($suggestedMatch, string $action): void
     {
@@ -170,7 +163,7 @@ class RecordMatcherService
 
         $candidate = $suggestedMatch->candidate_data;
         $local = Person::find($suggestedMatch->local_person_id);
-        if (!$local || !$candidate) {
+        if (! $local || ! $candidate) {
             return;
         }
 
@@ -179,12 +172,12 @@ class RecordMatcherService
         foreach ($fields as $field) {
             $sim = 0.0;
             if (in_array($field, ['first_name', 'last_name', 'birth_place', 'parents'])) {
-                $lv = strtolower((string)($local->{$field} ?? ''));
-                $cv = strtolower((string)($candidate[$field] ?? ''));
+                $lv = strtolower((string) ($local->{$field} ?? ''));
+                $cv = strtolower((string) ($candidate[$field] ?? ''));
                 $sim = $this->stringSimilarity($lv, $cv);
             } elseif ($field === 'birth_year') {
-                $py = $local->birth_year ? (int)$local->birth_year : null;
-                $cy = isset($candidate['birth_year']) ? (int)$candidate['birth_year'] : null;
+                $py = $local->birth_year ? (int) $local->birth_year : null;
+                $cy = isset($candidate['birth_year']) ? (int) $candidate['birth_year'] : null;
                 if ($py && $cy) {
                     $diff = abs($py - $cy);
                     $sim = $diff === 0 ? 1.0 : ($diff <= 2 ? 0.7 : ($diff <= 5 ? 0.4 : 0.0));
@@ -196,7 +189,7 @@ class RecordMatcherService
 
         // Persist updated weights as a new model snapshot
         AIMatchModel::create([
-            'name' => 'snapshot_' . now()->format('YmdHis'),
+            'name' => 'snapshot_'.now()->format('YmdHis'),
             'weights' => $this->weights,
         ]);
     }

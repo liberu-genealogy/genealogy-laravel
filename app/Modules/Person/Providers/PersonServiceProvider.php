@@ -2,10 +2,10 @@
 
 namespace App\Modules\Person\Providers;
 
-use Illuminate\Support\ServiceProvider;
 use App\Modules\Person\Services\PersonService;
 use App\Services\DuplicateDetectionService;
 use App\Services\PersonMergeService;
+use Illuminate\Support\ServiceProvider;
 
 class PersonServiceProvider extends ServiceProvider
 {
@@ -16,15 +16,15 @@ class PersonServiceProvider extends ServiceProvider
     public function register(): void
     {
         // Register person service
-        $this->app->singleton(PersonService::class, fn($app) => new PersonService());
+        $this->app->singleton(PersonService::class, fn ($app) => new PersonService);
 
         // Duplicate detection + merge services
-        $this->app->singleton(DuplicateDetectionService::class, fn($app) => new DuplicateDetectionService());
+        $this->app->singleton(DuplicateDetectionService::class, fn ($app) => new DuplicateDetectionService);
 
-        $this->app->singleton(PersonMergeService::class, fn($app) => new PersonMergeService());
+        $this->app->singleton(PersonMergeService::class, fn ($app) => new PersonMergeService);
 
         // Register person configuration
-        $this->mergeConfigFrom(__DIR__ . '/../config/person.php', 'person');
+        $this->mergeConfigFrom(__DIR__.'/../config/person.php', 'person');
     }
 
     /**
@@ -33,23 +33,23 @@ class PersonServiceProvider extends ServiceProvider
     public function boot(): void
     {
         // Load person routes
-        $this->loadRoutesFrom(__DIR__ . '/../routes/web.php');
-        $this->loadRoutesFrom(__DIR__ . '/../routes/api.php');
+        $this->loadRoutesFrom(__DIR__.'/../routes/web.php');
+        $this->loadRoutesFrom(__DIR__.'/../routes/api.php');
 
         // Load person views
-        $this->loadViewsFrom(__DIR__ . '/../resources/views', 'person');
+        $this->loadViewsFrom(__DIR__.'/../resources/views', 'person');
 
         // Load person translations
-        $this->loadTranslationsFrom(__DIR__ . '/../resources/lang', 'person');
+        $this->loadTranslationsFrom(__DIR__.'/../resources/lang', 'person');
 
         // Publish person assets
         $this->publishes([
-            __DIR__ . '/../resources/assets' => public_path('modules/person'),
+            __DIR__.'/../resources/assets' => public_path('modules/person'),
         ], 'person-assets');
 
         // Publish person configuration
         $this->publishes([
-            __DIR__ . '/../config/person.php' => config_path('person.php'),
+            __DIR__.'/../config/person.php' => config_path('person.php'),
         ], 'person-config');
     }
 }

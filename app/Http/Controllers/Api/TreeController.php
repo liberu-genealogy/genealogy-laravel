@@ -26,7 +26,7 @@ class TreeController extends Controller
     public function store(Request $request): JsonResponse
     {
         $data = $request->validate([
-            'name'        => ['required', 'string', 'max:255'],
+            'name' => ['required', 'string', 'max:255'],
             'description' => ['nullable', 'string'],
         ]);
 
@@ -41,9 +41,9 @@ class TreeController extends Controller
     public function update(Request $request, Tree $tree): JsonResponse
     {
         $data = $request->validate([
-            'name'        => ['sometimes', 'string', 'max:255'],
+            'name' => ['sometimes', 'string', 'max:255'],
             'description' => ['nullable', 'string'],
-            'is_public'   => ['boolean'],
+            'is_public' => ['boolean'],
         ]);
 
         $tree->update($data);
@@ -71,7 +71,7 @@ class TreeController extends Controller
     public function statistics(Tree $tree): JsonResponse
     {
         return response()->json([
-            'people_count'   => 0,
+            'people_count' => 0,
             'families_count' => 0,
         ]);
     }

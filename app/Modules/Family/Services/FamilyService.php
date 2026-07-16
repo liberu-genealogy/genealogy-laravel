@@ -22,7 +22,7 @@ class FamilyService
         ]);
 
         // Add marriage event if date provided
-        if (!empty($data['marriage_date'])) {
+        if (! empty($data['marriage_date'])) {
             $this->addFamilyEvent($family, 'MARR', $data['marriage_date'], $data['marriage_place'] ?? '');
         }
 
@@ -62,8 +62,8 @@ class FamilyService
     {
         $totalFamilies = Family::count();
         $familiesWithChildren = Family::whereHas('children')->count();
-        $averageChildren = $totalFamilies > 0 
-            ? Person::whereNotNull('child_in_family_id')->count() / $totalFamilies 
+        $averageChildren = $totalFamilies > 0
+            ? Person::whereNotNull('child_in_family_id')->count() / $totalFamilies
             : 0;
 
         return [
@@ -124,7 +124,7 @@ class FamilyService
                 'birth_date' => $family->wife->birthday?->format('Y-m-d'),
                 'death_date' => $family->wife->deathday?->format('Y-m-d'),
             ] : null,
-            'children' => $this->getFamilyChildren($family)->map(fn($child) => [
+            'children' => $this->getFamilyChildren($family)->map(fn ($child) => [
                 'id' => $child->id,
                 'name' => $child->fullname(),
                 'sex' => $child->sex,
@@ -143,12 +143,12 @@ class FamilyService
     public function searchFamilies(string $query): Collection
     {
         return Family::whereHas('husband', function ($q) use ($query): void {
-                $q->where('givn', 'LIKE', "%{$query}%")
-                  ->orWhere('surn', 'LIKE', "%{$query}%");
-            })
+            $q->where('givn', 'LIKE', "%{$query}%")
+                ->orWhere('surn', 'LIKE', "%{$query}%");
+        })
             ->orWhereHas('wife', function ($q) use ($query): void {
                 $q->where('givn', 'LIKE', "%{$query}%")
-                  ->orWhere('surn', 'LIKE', "%{$query}%");
+                    ->orWhere('surn', 'LIKE', "%{$query}%");
             })
             ->with(['husband', 'wife'])
             ->get();
@@ -160,8 +160,8 @@ class FamilyService
     public function getFamiliesBySurname(string $surname): Collection
     {
         return Family::whereHas('husband', function ($q) use ($surname): void {
-                $q->where('surn', $surname);
-            })
+            $q->where('surn', $surname);
+        })
             ->orWhereHas('wife', function ($q) use ($surname): void {
                 $q->where('surn', $surname);
             })
@@ -179,15 +179,15 @@ class FamilyService
             ->update(['child_in_family_id' => $primaryFamily->id]);
 
         // Merge family data
-        if (empty($primaryFamily->marriage_date) && !empty($duplicateFamily->marriage_date)) {
+        if (empty($primaryFamily->marriage_date) && ! empty($duplicateFamily->marriage_date)) {
             $primaryFamily->marriage_date = $duplicateFamily->marriage_date;
         }
 
-        if (empty($primaryFamily->marriage_place) && !empty($duplicateFamily->marriage_place)) {
+        if (empty($primaryFamily->marriage_place) && ! empty($duplicateFamily->marriage_place)) {
             $primaryFamily->marriage_place = $duplicateFamily->marriage_place;
         }
 
-        if (empty($primaryFamily->divorce_date) && !empty($duplicateFamily->divorce_date)) {
+        if (empty($primaryFamily->divorce_date) && ! empty($duplicateFamily->divorce_date)) {
             $primaryFamily->divorce_date = $duplicateFamily->divorce_date;
         }
 
@@ -225,7 +225,7 @@ class FamilyService
                     'death_date' => $family->wife->deathday?->format('Y-m-d'),
                 ] : null,
             ],
-            'children' => $this->getFamilyChildren($family)->map(fn($child) => [
+            'children' => $this->getFamilyChildren($family)->map(fn ($child) => [
                 'id' => $child->id,
                 'name' => $child->fullname(),
                 'sex' => $child->getSex(),

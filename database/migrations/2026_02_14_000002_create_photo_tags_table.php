@@ -22,7 +22,7 @@ return new class extends Migration
             $table->foreignId('confirmed_by')->nullable()->constrained('users')->onDelete('set null');
             $table->timestamp('confirmed_at')->nullable();
             $table->timestamps();
-            
+
             $table->index(['photo_id', 'status']);
             $table->index(['person_id', 'status']);
             $table->index('team_id');

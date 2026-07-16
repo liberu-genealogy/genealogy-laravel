@@ -4,9 +4,8 @@ declare(strict_types=1);
 
 namespace App\Filament\App\Resources\ChecklistTemplateResource\Pages;
 
-use Filament\Actions\CreateAction;
 use App\Filament\App\Resources\ChecklistTemplateResource;
-use Filament\Actions;
+use Filament\Actions\CreateAction;
 use Filament\Resources\Pages\ListRecords;
 
 class ListChecklistTemplates extends ListRecords

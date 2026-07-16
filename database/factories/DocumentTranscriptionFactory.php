@@ -17,8 +17,8 @@ class DocumentTranscriptionFactory extends Factory
         return [
             'team_id' => Team::factory(),
             'user_id' => User::factory(),
-            'original_filename' => fake()->word() . '.jpg',
-            'document_path' => 'transcriptions/' . fake()->uuid() . '.jpg',
+            'original_filename' => fake()->word().'.jpg',
+            'document_path' => 'transcriptions/'.fake()->uuid().'.jpg',
             'raw_transcription' => fake()->paragraphs(3, true),
             'corrected_transcription' => null,
             'metadata' => [

@@ -24,13 +24,13 @@ class TypeResourceTest extends TestCase
     public function test_type_can_be_created_in_database(): void
     {
         $type = Type::create([
-            'name'        => 'Test Type',
+            'name' => 'Test Type',
             'description' => 'This is a test type description.',
-            'is_active'   => 1,
+            'is_active' => 1,
         ]);
 
         $this->assertDatabaseHas('types', [
-            'name'        => 'Test Type',
+            'name' => 'Test Type',
             'description' => 'This is a test type description.',
         ]);
         $this->assertTrue($type->is_active);

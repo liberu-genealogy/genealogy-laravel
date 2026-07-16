@@ -10,7 +10,7 @@ use Illuminate\Support\Str;
 use JoelButcher\Socialstream\Providers;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\User>
+ * @extends Factory<User>
  */
 class UserFactory extends Factory
 {
@@ -22,14 +22,14 @@ class UserFactory extends Factory
     public function definition(): array
     {
         return [
-            'name'                      => fake()->name(),
-            'email'                     => fake()->unique()->safeEmail(),
-            'email_verified_at'         => now(),
-            'password'                  => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
-            'two_factor_secret'         => null,
+            'name' => fake()->name(),
+            'email' => fake()->unique()->safeEmail(),
+            'email_verified_at' => now(),
+            'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
+            'two_factor_secret' => null,
             'two_factor_recovery_codes' => null,
-            'remember_token'            => Str::random(10),
-            'profile_photo_path'        => null,
+            'remember_token' => Str::random(10),
+            'profile_photo_path' => null,
         ];
     }
 
@@ -51,8 +51,8 @@ class UserFactory extends Factory
         return $this->has(
             Team::factory()
                 ->state(fn (array $attributes, User $user): array => [
-                    'name'          => $user->name . '\'s Team',
-                    'user_id'       => $user->id,
+                    'name' => $user->name.'\'s Team',
+                    'user_id' => $user->id,
                     'personal_team' => true,
                 ])
                 ->when(is_callable($callback), $callback),
@@ -71,7 +71,7 @@ class UserFactory extends Factory
      */
     public function withConnectedAccount(string $provider, ?callable $callback = null): static
     {
-        if (!Providers::enabled($provider)) {
+        if (! Providers::enabled($provider)) {
             return $this->state([]);
         }
 
@@ -79,7 +79,7 @@ class UserFactory extends Factory
             ConnectedAccount::factory()
                 ->state(fn (array $attributes, User $user): array => [
                     'provider' => $provider,
-                    'user_id'  => $user->id,
+                    'user_id' => $user->id,
                 ])
                 ->when(is_callable($callback), $callback),
             'ownedTeams'

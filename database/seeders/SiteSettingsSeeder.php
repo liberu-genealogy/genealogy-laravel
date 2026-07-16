@@ -2,8 +2,8 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Seeder;
 use App\Settings\GeneralSettings;
+use Illuminate\Database\Seeder;
 
 class SiteSettingsSeeder extends Seeder
 {
@@ -22,7 +22,7 @@ class SiteSettingsSeeder extends Seeder
         $settings->twitter_url = null;
         $settings->github_url = 'https://www.github.com/liberu-genealogy';
         $settings->youtube_url = null;
-        $settings->footer_copyright = '© ' . date('Y') . ' ' . config('app.name', 'Liberu Genealogy') . '. All rights reserved.';
+        $settings->footer_copyright = '© '.date('Y').' '.config('app.name', 'Liberu Genealogy').'. All rights reserved.';
 
         $settings->save();
     }

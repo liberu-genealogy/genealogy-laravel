@@ -2,6 +2,7 @@
 
 namespace App\Http\Responses\Auth;
 
+use App\Models\User;
 use Filament\Facades\Filament;
 use Laravel\Fortify\Contracts\LoginResponse as LoginResponseContract;
 
@@ -13,7 +14,7 @@ class LoginResponse implements LoginResponseContract
             return response()->json(['two_factor' => false]);
         }
 
-        /** @var \App\Models\User|null $user */
+        /** @var User|null $user */
         $user = auth()->user();
         $panel = Filament::getPanel('app');
 

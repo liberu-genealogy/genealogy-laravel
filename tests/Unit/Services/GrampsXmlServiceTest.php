@@ -2,11 +2,10 @@
 
 namespace Tests\Unit\Services;
 
-use App\Models\Person;
 use App\Models\Family;
+use App\Models\Person;
 use App\Services\GrampsXmlService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Support\Facades\Storage;
 use Tests\TestCase;
 
 class GrampsXmlServiceTest extends TestCase
@@ -19,10 +18,10 @@ class GrampsXmlServiceTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
-        $this->service = new GrampsXmlService();
+        $this->service = new GrampsXmlService;
     }
 
-    public function testGenerateGrampsXmlContentReturnsXmlString(): void
+    public function test_generate_gramps_xml_content_returns_xml_string(): void
     {
         $people = collect([]);
         $families = collect([]);
@@ -35,7 +34,7 @@ class GrampsXmlServiceTest extends TestCase
         $this->assertStringContainsString('xmlns="http://gramps-project.org/xml/1.7.2/"', $result);
     }
 
-    public function testGenerateGrampsXmlContentWithPeople(): void
+    public function test_generate_gramps_xml_content_with_people(): void
     {
         // Create a mock person without saving to database
         $person = new Person([
@@ -58,7 +57,7 @@ class GrampsXmlServiceTest extends TestCase
         $this->assertStringContainsString('<gender>M</gender>', $result);
     }
 
-    public function testGenerateGrampsXmlContentWithFamilies(): void
+    public function test_generate_gramps_xml_content_with_families(): void
     {
         $person1 = new Person([
             'id' => 1,
@@ -94,7 +93,7 @@ class GrampsXmlServiceTest extends TestCase
         $this->assertStringContainsString('person_2', $result);
     }
 
-    public function testGenderMapping(): void
+    public function test_gender_mapping(): void
     {
         $malePerson = new Person(['id' => 1, 'sex' => 'M']);
         $malePerson->updated_at = now();

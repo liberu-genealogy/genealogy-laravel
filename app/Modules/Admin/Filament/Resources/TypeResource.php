@@ -2,19 +2,18 @@
 
 namespace App\Modules\Admin\Filament\Resources;
 
-use Filament\Schemas\Schema;
-use Filament\Actions\EditAction;
-use Filament\Actions\DeleteAction;
-use Filament\Actions\BulkActionGroup;
-use Filament\Actions\DeleteBulkAction;
-use Filament\Forms\Components\TextInput;
-use Filament\Resources\Resource;
-use Filament\Tables;
-use Filament\Tables\Table;
-use App\Modules\Admin\Filament\Resources\TypeResource\Pages\ListTypes;
+use App\Models\Type;
 use App\Modules\Admin\Filament\Resources\TypeResource\Pages\CreateType;
 use App\Modules\Admin\Filament\Resources\TypeResource\Pages\EditType;
-use App\Models\Type;
+use App\Modules\Admin\Filament\Resources\TypeResource\Pages\ListTypes;
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteAction;
+use Filament\Actions\DeleteBulkAction;
+use Filament\Actions\EditAction;
+use Filament\Forms\Components\TextInput;
+use Filament\Resources\Resource;
+use Filament\Schemas\Schema;
+use Filament\Tables\Table;
 
 class TypeResource extends Resource
 {
@@ -22,10 +21,10 @@ class TypeResource extends Resource
     protected static ?string $model = Type::class;
 
     #[\Override]
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-tag';
+    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-tag';
 
     #[\Override]
-    protected static string | \UnitEnum | null $navigationGroup = 'Administration';
+    protected static string|\UnitEnum|null $navigationGroup = 'Administration';
 
     #[\Override]
     protected static ?string $navigationLabel = 'Types';
@@ -57,7 +56,7 @@ class TypeResource extends Resource
                     ->sortable(),
                 TextColumn::make('description')
                     ->limit(50)
-                    ->tooltip(fn($record) => $record->description),
+                    ->tooltip(fn ($record) => $record->description),
                 IconColumn::make('is_active')
                     ->boolean()
                     ->sortable(),

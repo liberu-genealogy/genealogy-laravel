@@ -8,11 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Carbon\Carbon;
 
 class VirtualEvent extends Model
 {
-    use HasFactory, BelongsToTenant, SoftDeletes;
+    use BelongsToTenant, HasFactory, SoftDeletes;
 
     #[\Override]
     protected $fillable = [
@@ -98,7 +97,7 @@ class VirtualEvent extends Model
     public function scopeActive($query)
     {
         return $query->where('start_time', '<=', now())
-                    ->where('end_time', '>=', now());
+            ->where('end_time', '>=', now());
     }
 
     public function scopePast($query)
@@ -160,7 +159,7 @@ class VirtualEvent extends Model
     // Helper methods
     public function canJoin(): bool
     {
-        return $this->status === 'published' && 
+        return $this->status === 'published' &&
                $this->start_time <= now()->addMinutes(15) && // Allow joining 15 minutes early
                $this->end_time >= now();
     }

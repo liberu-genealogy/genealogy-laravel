@@ -19,7 +19,7 @@ return new class extends Migration
             $table->text('encoding'); // Store face encoding/features for matching
             $table->string('provider')->default('mock'); // Provider used for encoding
             $table->timestamps();
-            
+
             $table->index(['person_id', 'team_id']);
             $table->index('provider');
         });

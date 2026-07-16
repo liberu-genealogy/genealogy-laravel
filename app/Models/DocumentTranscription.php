@@ -4,9 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class DocumentTranscription extends Model
 {
@@ -60,7 +60,7 @@ class DocumentTranscription extends Model
      */
     public function hasCorrections(): bool
     {
-        return !empty($this->corrected_transcription) || $this->corrections()->exists();
+        return ! empty($this->corrected_transcription) || $this->corrections()->exists();
     }
 
     /**

@@ -2,12 +2,11 @@
 
 namespace App\Filament\App\Resources\VirtualEventResource\Pages;
 
-use Exception;
 use App\Filament\App\Resources\VirtualEventResource;
 use App\Services\VideoConferencingService;
-use Filament\Actions;
-use Filament\Resources\Pages\CreateRecord;
+use Exception;
 use Filament\Notifications\Notification;
+use Filament\Resources\Pages\CreateRecord;
 
 class CreateVirtualEvent extends CreateRecord
 {
@@ -47,7 +46,7 @@ class CreateVirtualEvent extends CreateRecord
             } catch (Exception $e) {
                 Notification::make()
                     ->title('Event Created')
-                    ->body('Virtual event created, but failed to create video conference meeting: ' . $e->getMessage())
+                    ->body('Virtual event created, but failed to create video conference meeting: '.$e->getMessage())
                     ->warning()
                     ->send();
             }

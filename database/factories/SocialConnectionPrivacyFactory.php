@@ -7,7 +7,7 @@ use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\SocialConnectionPrivacy>
+ * @extends Factory<SocialConnectionPrivacy>
  */
 class SocialConnectionPrivacyFactory extends Factory
 {

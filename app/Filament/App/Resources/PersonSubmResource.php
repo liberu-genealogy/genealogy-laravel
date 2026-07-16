@@ -4,37 +4,32 @@ declare(strict_types=1);
 
 namespace App\Filament\App\Resources;
 
-use Override;
-use Filament\Forms\Components\TextInput;
-use Filament\Tables\Columns\TextColumn;
-use Filament\Actions\EditAction;
-use Filament\Actions\BulkActionGroup;
-use Filament\Actions\DeleteBulkAction;
-use App\Filament\App\Resources\PersonSubmResource\Pages\ListPersonSubms;
 use App\Filament\App\Resources\PersonSubmResource\Pages\CreatePersonSubm;
 use App\Filament\App\Resources\PersonSubmResource\Pages\EditPersonSubm;
-use BackedEnum;
-use App\Filament\App\Resources\PersonSubmResource\Pages;
+use App\Filament\App\Resources\PersonSubmResource\Pages\ListPersonSubms;
 use App\Models\PersonSubm;
-use Filament\Forms;
-use Filament\Forms\Form;
-use App\Filament\App\Resources\AppResource;
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteBulkAction;
+use Filament\Actions\EditAction;
+use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Schema;
-use Filament\Tables;
-use Filament\Actions;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use Override;
 
 class PersonSubmResource extends AppResource
 {
-    #[\Override]
+    #[Override]
     protected static ?string $model = PersonSubm::class;
 
-    #[\Override]
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-paper-airplane';
-    #[\Override]
+    #[Override]
+    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-paper-airplane';
+
+    #[Override]
     protected static ?string $navigationLabel = 'Person Submissions';
-    #[\Override]
-    protected static string | \UnitEnum | null $navigationGroup = '👥 Family Tree';
+
+    #[Override]
+    protected static string|\UnitEnum|null $navigationGroup = '👥 Family Tree';
 
     #[Override]
     public static function form(Schema $schema): Schema
@@ -92,13 +87,13 @@ class PersonSubmResource extends AppResource
         ];
     }
 
-    #[\Override]
+    #[Override]
     public static function getPages(): array
     {
         return [
-            'index'  => ListPersonSubms::route('/'),
+            'index' => ListPersonSubms::route('/'),
             'create' => CreatePersonSubm::route('/create'),
-            'edit'   => EditPersonSubm::route('/{record}/edit'),
+            'edit' => EditPersonSubm::route('/{record}/edit'),
         ];
     }
 }

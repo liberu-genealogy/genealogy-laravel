@@ -2,9 +2,9 @@
 
 namespace App\Filament\App\Widgets;
 
-use Filament\Tables\Columns\TextColumn;
 use App\Models\Person;
 use Filament\Tables;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Widgets\TableWidget as BaseWidget;
 use Illuminate\Database\Eloquent\Builder;
 

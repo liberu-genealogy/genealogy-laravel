@@ -8,7 +8,7 @@ use App\Models\SourceRefEven;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\SourceRefEven>
+ * @extends Factory<SourceRefEven>
  */
 class SourceRefEvenFactory extends Factory
 {
@@ -29,9 +29,9 @@ class SourceRefEvenFactory extends Factory
     {
         return [
             'group' => fake()->word(),
-            'gid'   => fake()->randomDigit(),
-            'even'  => fake()->word(),
-            'role'  => fake()->word(),
+            'gid' => fake()->randomDigit(),
+            'even' => fake()->word(),
+            'role' => fake()->word(),
         ];
     }
 }

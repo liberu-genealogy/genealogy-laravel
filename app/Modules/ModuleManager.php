@@ -130,12 +130,12 @@ class ModuleManager
         }
 
         return [
-            'name'         => $module->getName(),
-            'version'      => $module->getVersion(),
-            'description'  => $module->getDescription(),
+            'name' => $module->getName(),
+            'version' => $module->getVersion(),
+            'description' => $module->getDescription(),
             'dependencies' => $module->getDependencies(),
-            'enabled'      => $module->isEnabled(),
-            'config'       => $module->getConfig(),
+            'enabled' => $module->isEnabled(),
+            'config' => $module->getConfig(),
         ];
     }
 
@@ -150,10 +150,10 @@ class ModuleManager
 
         foreach ($this->modules as $name => $module) {
             $report[$name] = [
-                'enabled'      => $module->isEnabled(),
-                'version'      => $module->getVersion(),
+                'enabled' => $module->isEnabled(),
+                'version' => $module->getVersion(),
                 'dependencies' => $module->getDependencies(),
-                'deps_met'     => $this->checkDependencies($module),
+                'deps_met' => $this->checkDependencies($module),
             ];
         }
 
@@ -182,7 +182,7 @@ class ModuleManager
 
     protected function loadComposerModules(): void
     {
-        $loader  = new ExternalModuleLoader();
+        $loader = new ExternalModuleLoader;
         $modules = $loader->discoverFromVendor(base_path('vendor'));
 
         foreach ($modules as $module) {
@@ -217,7 +217,7 @@ class ModuleManager
         $moduleClass = "{$baseNamespace}\\{$moduleName}\\{$moduleName}Module";
 
         if (class_exists($moduleClass)) {
-            $module = new $moduleClass();
+            $module = new $moduleClass;
             if ($module instanceof ModuleInterface) {
                 $this->register($module);
             }

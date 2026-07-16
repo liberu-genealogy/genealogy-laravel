@@ -30,7 +30,7 @@ class CreateGedcom extends CreateRecord
         // FileUpload may store as array even when multiple(false) is set
         if (is_array($path)) {
             $filtered = array_values(array_filter($path));
-            $path     = $filtered !== [] ? $filtered[0] : null;
+            $path = $filtered !== [] ? $filtered[0] : null;
         }
 
         $data['filename'] = (string) ($path ?? '');
@@ -45,7 +45,7 @@ class CreateGedcom extends CreateRecord
         // FileUpload may store as array even when multiple(false) is set
         if (is_array($path)) {
             $filtered = array_values(array_filter($path));
-            $path     = $filtered !== [] ? $filtered[0] : null;
+            $path = $filtered !== [] ? $filtered[0] : null;
         }
 
         $path = (string) ($path ?? '');
@@ -60,7 +60,7 @@ class CreateGedcom extends CreateRecord
         // move it to the permanent gedcom-form-imports directory so storage is organised
         // correctly and the file survives queue processing.
         if (str_starts_with($path, 'livewire-tmp/') && $disk->exists($path)) {
-            $newPath = 'gedcom-form-imports/' . basename($path);
+            $newPath = 'gedcom-form-imports/'.basename($path);
             $disk->move($path, $newPath);
             $path = $newPath;
             $this->record->update(['filename' => $newPath]);
@@ -74,20 +74,20 @@ class CreateGedcom extends CreateRecord
         if (! $disk->exists($path)) {
             Log::error('CreateGedcom: file does not exist on private disk, aborting dispatch', [
                 'gedcom_id' => $this->record->getKey(),
-                'path'      => $path,
+                'path' => $path,
             ]);
 
             return;
         }
 
-        $fullPath  = $disk->path($path);
+        $fullPath = $disk->path($path);
         $extension = strtolower(pathinfo($fullPath, PATHINFO_EXTENSION));
 
         $slug = (string) Str::uuid();
         ImportJob::create([
-            'user_id'  => Auth::id(),
-            'status'   => 'queue',
-            'slug'     => $slug,
+            'user_id' => Auth::id(),
+            'status' => 'queue',
+            'slug' => $slug,
             'progress' => 0,
         ]);
 
@@ -109,10 +109,10 @@ class CreateGedcom extends CreateRecord
         } catch (Throwable $e) {
             Log::error('Failed to dispatch GEDCOM import job', [
                 'gedcom_id' => $this->record->getKey(),
-                'path'      => $path,
+                'path' => $path,
                 'full_path' => $fullPath,
-                'error'     => $e->getMessage(),
-                'trace'     => $e->getTraceAsString(),
+                'error' => $e->getMessage(),
+                'trace' => $e->getTraceAsString(),
             ]);
 
             Notification::make()

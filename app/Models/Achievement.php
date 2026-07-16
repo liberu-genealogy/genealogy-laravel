@@ -128,7 +128,7 @@ class Achievement extends Model
      */
     private function getBadgeColorClass(): string
     {
-        return match($this->badge_color) {
+        return match ($this->badge_color) {
             'gold' => 'bg-gradient-to-br from-yellow-400 to-yellow-600',
             'silver' => 'bg-gradient-to-br from-gray-300 to-gray-500',
             'bronze' => 'bg-gradient-to-br from-orange-400 to-orange-600',

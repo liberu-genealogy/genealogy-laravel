@@ -4,9 +4,8 @@ declare(strict_types=1);
 
 namespace App\Modules\Places\Filament\Resources\PlaceResource\Pages;
 
-use Filament\Actions\DeleteAction;
 use App\Modules\Places\Filament\Resources\PlaceResource;
-use Filament\Actions;
+use Filament\Actions\DeleteAction;
 use Filament\Resources\Pages\EditRecord;
 
 class EditPlace extends EditRecord

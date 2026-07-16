@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Models\User;
 use App\Services\DnaImportService;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Storage;
@@ -26,17 +27,18 @@ class BulkImportDnaCommand extends Command
     public function handle(): int
     {
         $userId = (int) $this->argument('user_id');
-        
+
         // Validate user exists
-        $user = \App\Models\User::find($userId);
-        if (!$user) {
+        $user = User::find($userId);
+        if (! $user) {
             $this->error("User with ID {$userId} not found.");
+
             return Command::FAILURE;
         }
-        
+
         $directory = $this->option('directory');
         $files = $this->option('files');
-        $autoMatch = !$this->option('no-match');
+        $autoMatch = ! $this->option('no-match');
 
         // Collect files to import
         $filesToImport = [];
@@ -48,18 +50,19 @@ class BulkImportDnaCommand extends Command
             $filesToImport = array_merge($filesToImport, $diskFiles);
         }
 
-        if (!empty($files)) {
+        if (! empty($files)) {
             // Import specific files
             $filesToImport = array_merge($filesToImport, $files);
         }
 
         if ($filesToImport === []) {
             $this->error('No files to import. Use --directory or --files option.');
+
             return Command::FAILURE;
         }
 
         $this->info('Starting bulk DNA import...');
-        $this->info('Files to import: ' . count($filesToImport));
+        $this->info('Files to import: '.count($filesToImport));
         $this->newLine();
 
         $progressBar = $this->output->createProgressBar(count($filesToImport));
@@ -98,16 +101,16 @@ class BulkImportDnaCommand extends Command
         $failCount = count($results['failed']);
         $total = $successCount + $failCount;
 
-        $this->info("Import complete!");
+        $this->info('Import complete!');
         $this->newLine();
-        
+
         $this->table(
             ['Metric', 'Value'],
             [
                 ['Total Files', $total],
                 ['Successful', $successCount],
                 ['Failed', $failCount],
-                ['Success Rate', $total > 0 ? round(($successCount / $total) * 100, 2) . '%' : 'N/A'],
+                ['Success Rate', $total > 0 ? round(($successCount / $total) * 100, 2).'%' : 'N/A'],
             ]
         );
 
@@ -116,7 +119,7 @@ class BulkImportDnaCommand extends Command
             $this->info('Successfully imported kits:');
             $this->table(
                 ['DNA ID', 'Variable Name', 'SNP Count', 'Format'],
-                array_map(fn(array $r): array => [
+                array_map(fn (array $r): array => [
                     $r['dna_id'],
                     $r['variable_name'],
                     $r['snp_count'] ?? 'N/A',
@@ -130,7 +133,7 @@ class BulkImportDnaCommand extends Command
             $this->error('Failed imports:');
             $this->table(
                 ['File', 'Error'],
-                array_map(fn(array $r): array => [$r['file'], $r['error']], $results['failed'])
+                array_map(fn (array $r): array => [$r['file'], $r['error']], $results['failed'])
             );
         }
     }

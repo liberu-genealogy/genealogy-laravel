@@ -2,33 +2,33 @@
 
 namespace App\Filament\App\Pages;
 
-use Override;
-use UnitEnum;
-use BackedEnum;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Concerns\InteractsWithForms;
-use Filament\Schemas\Schema;
 use Filament\Pages\Page;
+use Filament\Schemas\Schema;
 use Illuminate\Support\Facades\Auth;
+use Override;
 
 class UpdateProfileInformationPage extends Page
 {
     use InteractsWithForms;
 
-    #[\Override]
+    #[Override]
     protected string $view = 'filament.pages.profile.update-profile-information';
 
-    #[\Override]
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-user';
-    #[\Override]
-    protected static ?string $navigationLabel = 'Update Profile';
-    #[\Override]
-    protected static string | \UnitEnum | null $navigationGroup = '👤 Account & Settings';
+    #[Override]
+    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-user';
 
-    #[\Override]
+    #[Override]
+    protected static ?string $navigationLabel = 'Update Profile';
+
+    #[Override]
+    protected static string|\UnitEnum|null $navigationGroup = '👤 Account & Settings';
+
+    #[Override]
     protected static ?int $navigationSort = 0;
 
-    #[\Override]
+    #[Override]
     protected static ?string $title = 'Profile';
 
     public ?array $data = [];
@@ -36,7 +36,7 @@ class UpdateProfileInformationPage extends Page
     public function mount(): void
     {
         $this->form->fill([
-            'name'  => Auth::user()->name,
+            'name' => Auth::user()->name,
             'email' => Auth::user()->email,
         ]);
     }
@@ -75,6 +75,6 @@ class UpdateProfileInformationPage extends Page
     #[Override]
     public static function shouldRegisterNavigation(): bool
     {
-        return true; //config('filament-jetstream.show_update_profile_information_page');
+        return true; // config('filament-jetstream.show_update_profile_information_page');
     }
 }

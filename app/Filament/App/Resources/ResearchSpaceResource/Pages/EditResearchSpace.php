@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Filament\App\Resources\ResearchSpaceResource\Pages;
 
-use Filament\Resources\Pages\EditRecord;
 use App\Filament\App\Resources\ResearchSpaceResource;
+use Filament\Resources\Pages\EditRecord;
 
 class EditResearchSpace extends EditRecord
 {

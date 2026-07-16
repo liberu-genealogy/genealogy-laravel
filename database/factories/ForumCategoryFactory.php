@@ -8,7 +8,7 @@ use App\Models\ForumCategory;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\ForumCategory>
+ * @extends Factory<ForumCategory>
  */
 class ForumCategoryFactory extends Factory
 {
@@ -28,7 +28,7 @@ class ForumCategoryFactory extends Factory
     public function definition()
     {
         return [
-            'name'=> fake()->word(), 'slug' => fake()->word(),
+            'name' => fake()->word(), 'slug' => fake()->word(),
         ];
     }
 }

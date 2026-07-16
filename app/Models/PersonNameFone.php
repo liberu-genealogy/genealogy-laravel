@@ -9,6 +9,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class PersonNameFone extends \FamilyTree365\LaravelGedcom\Models\PersonNameFone
 {
-    use HasFactory;
     use BelongsToTenant;
+    use HasFactory;
 }

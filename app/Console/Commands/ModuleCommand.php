@@ -2,8 +2,8 @@
 
 namespace App\Console\Commands;
 
-use Exception;
 use App\Modules\ModuleManager;
+use Exception;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\File;
 
@@ -55,12 +55,13 @@ class ModuleCommand extends Command
 
         if ($modules->isEmpty()) {
             $this->info('No modules found.');
+
             return 0;
         }
 
         $this->table(
             ['Name', 'Version', 'Status', 'Description'],
-            $modules->map(fn($module) => [
+            $modules->map(fn ($module) => [
                 $module->getName(),
                 $module->getVersion(),
                 $module->isEnabled() ? '<fg=green>Enabled</>' : '<fg=red>Disabled</>',
@@ -76,21 +77,25 @@ class ModuleCommand extends Command
      */
     protected function enableModule(?string $name): int
     {
-        if (!$name) {
+        if (! $name) {
             $this->error('Module name is required.');
+
             return 1;
         }
 
         try {
             if ($this->moduleManager->enable($name)) {
                 $this->info("Module '{$name}' has been enabled.");
+
                 return 0;
             }
 
             $this->error("Module '{$name}' not found.");
+
             return 1;
         } catch (Exception $e) {
-            $this->error("Failed to enable module '{$name}': " . $e->getMessage());
+            $this->error("Failed to enable module '{$name}': ".$e->getMessage());
+
             return 1;
         }
     }
@@ -100,21 +105,25 @@ class ModuleCommand extends Command
      */
     protected function disableModule(?string $name): int
     {
-        if (!$name) {
+        if (! $name) {
             $this->error('Module name is required.');
+
             return 1;
         }
 
         try {
             if ($this->moduleManager->disable($name)) {
                 $this->info("Module '{$name}' has been disabled.");
+
                 return 0;
             }
 
             $this->error("Module '{$name}' not found.");
+
             return 1;
         } catch (Exception $e) {
-            $this->error("Failed to disable module '{$name}': " . $e->getMessage());
+            $this->error("Failed to disable module '{$name}': ".$e->getMessage());
+
             return 1;
         }
     }
@@ -124,21 +133,25 @@ class ModuleCommand extends Command
      */
     protected function installModule(?string $name): int
     {
-        if (!$name) {
+        if (! $name) {
             $this->error('Module name is required.');
+
             return 1;
         }
 
         try {
             if ($this->moduleManager->install($name)) {
                 $this->info("Module '{$name}' has been installed and enabled.");
+
                 return 0;
             }
 
             $this->error("Module '{$name}' not found.");
+
             return 1;
         } catch (Exception $e) {
-            $this->error("Failed to install module '{$name}': " . $e->getMessage());
+            $this->error("Failed to install module '{$name}': ".$e->getMessage());
+
             return 1;
         }
     }
@@ -148,26 +161,31 @@ class ModuleCommand extends Command
      */
     protected function uninstallModule(?string $name): int
     {
-        if (!$name) {
+        if (! $name) {
             $this->error('Module name is required.');
+
             return 1;
         }
 
-        if (!$this->option('force') && !$this->confirm("Are you sure you want to uninstall module '{$name}'? This action cannot be undone.")) {
+        if (! $this->option('force') && ! $this->confirm("Are you sure you want to uninstall module '{$name}'? This action cannot be undone.")) {
             $this->info('Operation cancelled.');
+
             return 0;
         }
 
         try {
             if ($this->moduleManager->uninstall($name)) {
                 $this->info("Module '{$name}' has been uninstalled.");
+
                 return 0;
             }
 
             $this->error("Module '{$name}' not found.");
+
             return 1;
         } catch (Exception $e) {
-            $this->error("Failed to uninstall module '{$name}': " . $e->getMessage());
+            $this->error("Failed to uninstall module '{$name}': ".$e->getMessage());
+
             return 1;
         }
     }
@@ -177,8 +195,9 @@ class ModuleCommand extends Command
      */
     protected function createModule(?string $name): int
     {
-        if (!$name) {
+        if (! $name) {
             $this->error('Module name is required.');
+
             return 1;
         }
 
@@ -186,6 +205,7 @@ class ModuleCommand extends Command
 
         if (File::exists($modulePath)) {
             $this->error("Module '{$name}' already exists.");
+
             return 1;
         }
 
@@ -200,8 +220,9 @@ class ModuleCommand extends Command
      */
     protected function showModuleInfo(?string $name): int
     {
-        if (!$name) {
+        if (! $name) {
             $this->error('Module name is required.');
+
             return 1;
         }
 
@@ -209,17 +230,18 @@ class ModuleCommand extends Command
 
         if ($info === []) {
             $this->error("Module '{$name}' not found.");
+
             return 1;
         }
 
-        $this->info("Module Information:");
+        $this->info('Module Information:');
         $this->line("Name: {$info['name']}");
         $this->line("Version: {$info['version']}");
         $this->line("Description: {$info['description']}");
-        $this->line("Status: " . ($info['enabled'] ? 'Enabled' : 'Disabled'));
-        
-        if (!empty($info['dependencies'])) {
-            $this->line("Dependencies: " . implode(', ', $info['dependencies']));
+        $this->line('Status: '.($info['enabled'] ? 'Enabled' : 'Disabled'));
+
+        if (! empty($info['dependencies'])) {
+            $this->line('Dependencies: '.implode(', ', $info['dependencies']));
         }
 
         return 0;

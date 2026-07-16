@@ -36,8 +36,6 @@ class ConnectedAccount extends Model
 
     /**
      * The attributes that should be cast.
-     *
-     * @return array
      */
     #[\Override]
     protected function casts(): array
@@ -64,6 +62,6 @@ class ConnectedAccount extends Model
      */
     public function socialFamilyConnections(): HasMany
     {
-        return $this->hasMany(\App\Models\SocialFamilyConnection::class);
+        return $this->hasMany(SocialFamilyConnection::class);
     }
 }

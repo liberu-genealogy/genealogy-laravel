@@ -2,9 +2,9 @@
 
 namespace App\Policies;
 
-use App\Models\User;
 use App\Models\ResearchSpace;
 use App\Models\ResearchSpaceCollaborator;
+use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class ResearchSpacePolicy

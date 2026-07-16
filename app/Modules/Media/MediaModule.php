@@ -2,10 +2,10 @@
 
 namespace App\Modules\Media;
 
-use App\Modules\Media\Services\MediaService;
-use App\Modules\Media\Services\MediaProcessorService;
-use Artisan;
 use App\Modules\BaseModule;
+use App\Modules\Media\Services\MediaProcessorService;
+use App\Modules\Media\Services\MediaService;
+use Artisan;
 
 class MediaModule extends BaseModule
 {
@@ -43,9 +43,9 @@ class MediaModule extends BaseModule
      */
     protected function registerMediaServices(): void
     {
-        app()->singleton('genealogy.media', fn($app) => new MediaService());
+        app()->singleton('genealogy.media', fn ($app) => new MediaService);
 
-        app()->singleton('genealogy.media.processor', fn($app) => new MediaProcessorService());
+        app()->singleton('genealogy.media.processor', fn ($app) => new MediaProcessorService);
     }
 
     /**

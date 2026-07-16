@@ -10,8 +10,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class PersonEvent extends \FamilyTree365\LaravelGedcom\Models\PersonEvent
 {
-    use HasFactory;
     use BelongsToTenant;
+    use HasFactory;
 
     public static function boot(): void
     {
@@ -23,6 +23,6 @@ class PersonEvent extends \FamilyTree365\LaravelGedcom\Models\PersonEvent
 
     protected static function booted(): void
     {
-        static::observe(new EventActionsObserver());
+        static::observe(new EventActionsObserver);
     }
 }

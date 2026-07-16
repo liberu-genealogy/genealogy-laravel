@@ -2,72 +2,62 @@
 
 namespace App\Filament\App\Resources;
 
-use App\Filament\App\Resources\GedcomResource\Pages\ListGedcoms;
 use App\Filament\App\Resources\GedcomResource\Pages\CreateGedcom;
-use App\Filament\App\Resources\GedcomResource\Pages\ViewGedcom;
 use App\Filament\App\Resources\GedcomResource\Pages\EditGedcom;
-use Override;
-use Filament\Tables\Columns\TextColumn;
-use Filament\Actions\ViewAction;
-use Filament\Actions\EditAction;
+use App\Filament\App\Resources\GedcomResource\Pages\ListGedcoms;
+use App\Filament\App\Resources\GedcomResource\Pages\ViewGedcom;
+use App\Jobs\ExportGedCom;
+use App\Jobs\ExportGrampsXml;
+use App\Models\Gedcom;
 use Filament\Actions\Action;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
-use BackedEnum;
-use App\Filament\App\Resources\GedcomResource\Pages;
-use App\Jobs\ExportGedCom;
-use App\Jobs\ExportGrampsXml;
-use App\Jobs\ImportGedcom;
-use App\Jobs\ImportGrampsXml;
-use App\Models\Gedcom;
+use Filament\Actions\EditAction;
+use Filament\Actions\ViewAction;
 use Filament\Forms\Components\FileUpload;
 use Filament\Schemas\Components\Section;
-use App\Filament\App\Resources\AppResource;
 use Filament\Schemas\Schema;
-use Filament\Actions;
-use Filament\Tables;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Storage;
+use Override;
 
 class GedcomResource extends AppResource
 {
-    #[\Override]
+    #[Override]
     protected static bool $isScopedToTenant = false;
 
-    #[\Override]
+    #[Override]
     protected static ?string $model = Gedcom::class;
 
-    #[\Override]
+    #[Override]
     protected static ?string $navigationLabel = 'Gedcom';
 
-    #[\Override]
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-document';
+    #[Override]
+    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-document';
 
-    #[\Override]
+    #[Override]
     protected static ?int $navigationSort = 10;
 
-    #[\Override]
+    #[Override]
     protected static bool $shouldRegisterNavigation = true;
 
-    #[\Override]
-    protected static string | \UnitEnum | null $navigationGroup = "🛠️ Data Management";
+    #[Override]
+    protected static string|\UnitEnum|null $navigationGroup = '🛠️ Data Management';
 
-    #[\Override]
+    #[Override]
     public static function canCreate(): bool
     {
         return auth()->check();
     }
 
-    #[\Override]
+    #[Override]
     public static function getPages(): array
     {
         return [
-            'index'  => ListGedcoms::route('/'),
+            'index' => ListGedcoms::route('/'),
             'create' => CreateGedcom::route('/create'),
-            'view'   => ViewGedcom::route('/{record}'),
-            'edit'   => EditGedcom::route('/{record}/edit'),
+            'view' => ViewGedcom::route('/{record}'),
+            'edit' => EditGedcom::route('/{record}/edit'),
         ];
     }
 
@@ -79,7 +69,7 @@ class GedcomResource extends AppResource
                 Section::make('Import Family Tree')
                     ->description(
                         'Import your family tree data by uploading a GEDCOM (.ged) or GrampsXML (.gramps, .xml) file. '
-                        . 'The file will be processed in the background and you will be redirected to the Import Logs page to monitor progress.'
+                        .'The file will be processed in the background and you will be redirected to the Import Logs page to monitor progress.'
                     )
                     ->schema([
                         FileUpload::make('filename')
@@ -99,8 +89,8 @@ class GedcomResource extends AppResource
                 Section::make('Processing note')
                     ->description(
                         'After submitting, your file will be queued for processing and you will be redirected to the '
-                        . 'Import Logs page where you can monitor the import progress in real time. '
-                        . 'Large files may take several minutes to process.'
+                        .'Import Logs page where you can monitor the import progress in real time. '
+                        .'Large files may take several minutes to process.'
                     )
                     ->columnSpanFull(),
             ]);

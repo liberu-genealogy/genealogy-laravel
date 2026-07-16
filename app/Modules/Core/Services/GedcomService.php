@@ -2,11 +2,10 @@
 
 namespace App\Modules\Core\Services;
 
-use Exception;
-use App\Models\Person;
 use App\Models\Family;
+use App\Models\Person;
+use Exception;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Storage;
 
 class GedcomService
 {
@@ -33,7 +32,7 @@ class GedcomService
     {
         $lines = explode("\n", $gedcomContent);
         $records = $this->parseGedcomLines($lines);
-        
+
         $imported = [
             'persons' => 0,
             'families' => 0,
@@ -50,7 +49,7 @@ class GedcomService
                     $imported['families']++;
                 }
             } catch (Exception $e) {
-                $imported['errors'][] = "Error importing {$record['type']} {$record['id']}: " . $e->getMessage();
+                $imported['errors'][] = "Error importing {$record['type']} {$record['id']}: ".$e->getMessage();
             }
         }
 
@@ -62,15 +61,15 @@ class GedcomService
      */
     protected function generateGedcomHeader(): string
     {
-        return "0 HEAD\n" .
-               "1 SOUR " . config('app.name', 'Genealogy') . "\n" .
-               "2 VERS 1.0\n" .
-               "1 GEDC\n" .
-               "2 VERS 5.5.1\n" .
-               "2 FORM LINEAGE-LINKED\n" .
-               "1 CHAR UTF-8\n" .
-               "1 DATE " . now()->format('d M Y') . "\n" .
-               "2 TIME " . now()->format('H:i:s') . "\n";
+        return "0 HEAD\n".
+               '1 SOUR '.config('app.name', 'Genealogy')."\n".
+               "2 VERS 1.0\n".
+               "1 GEDC\n".
+               "2 VERS 5.5.1\n".
+               "2 FORM LINEAGE-LINKED\n".
+               "1 CHAR UTF-8\n".
+               '1 DATE '.now()->format('d M Y')."\n".
+               '2 TIME '.now()->format('H:i:s')."\n";
     }
 
     /**
@@ -79,35 +78,35 @@ class GedcomService
     protected function generatePersonRecords(Collection $persons): string
     {
         $gedcom = '';
-        
+
         foreach ($persons as $person) {
             $gedcom .= "0 @I{$person->id}@ INDI\n";
             $gedcom .= "1 NAME {$person->givn} /{$person->surn}/\n";
             $gedcom .= "2 GIVN {$person->givn}\n";
             $gedcom .= "2 SURN {$person->surn}\n";
             $gedcom .= "1 SEX {$person->sex}\n";
-            
+
             if ($person->birthday) {
                 $gedcom .= "1 BIRT\n";
-                $gedcom .= "2 DATE " . $person->birthday->format('d M Y') . "\n";
+                $gedcom .= '2 DATE '.$person->birthday->format('d M Y')."\n";
             }
-            
+
             if ($person->deathday) {
                 $gedcom .= "1 DEAT\n";
-                $gedcom .= "2 DATE " . $person->deathday->format('d M Y') . "\n";
+                $gedcom .= '2 DATE '.$person->deathday->format('d M Y')."\n";
             }
-            
+
             if ($person->child_in_family_id) {
                 $gedcom .= "1 FAMC @F{$person->child_in_family_id}@\n";
             }
-            
+
             // Add family spouse relationships
             $spouseFamilies = $person->familiesAsHusband->merge($person->familiesAsWife);
             foreach ($spouseFamilies as $family) {
                 $gedcom .= "1 FAMS @F{$family->id}@\n";
             }
         }
-        
+
         return $gedcom;
     }
 
@@ -117,25 +116,25 @@ class GedcomService
     protected function generateFamilyRecords(Collection $families): string
     {
         $gedcom = '';
-        
+
         foreach ($families as $family) {
             $gedcom .= "0 @F{$family->id}@ FAM\n";
-            
+
             if ($family->husband_id) {
                 $gedcom .= "1 HUSB @I{$family->husband_id}@\n";
             }
-            
+
             if ($family->wife_id) {
                 $gedcom .= "1 WIFE @I{$family->wife_id}@\n";
             }
-            
+
             // Add children
             $children = Person::where('child_in_family_id', $family->id)->get();
             foreach ($children as $child) {
                 $gedcom .= "1 CHIL @I{$child->id}@\n";
             }
         }
-        
+
         return $gedcom;
     }
 
@@ -154,7 +153,7 @@ class GedcomService
     {
         $records = [];
         $currentRecord = null;
-        
+
         foreach ($lines as $line) {
             $line = trim((string) $line);
             if ($line === '') {
@@ -163,16 +162,16 @@ class GedcomService
             if ($line === '0') {
                 continue;
             }
-            
+
             $parts = explode(' ', $line, 3);
             $level = (int) $parts[0];
-            
+
             if ($level === 0 && isset($parts[2])) {
                 // Start of new record
                 if ($currentRecord) {
                     $records[] = $currentRecord;
                 }
-                
+
                 $currentRecord = [
                     'level' => $level,
                     'id' => trim($parts[1], '@'),
@@ -188,11 +187,11 @@ class GedcomService
                 ];
             }
         }
-        
+
         if ($currentRecord) {
             $records[] = $currentRecord;
         }
-        
+
         return $records;
     }
 
@@ -204,7 +203,7 @@ class GedcomService
         $personData = [
             'gid' => $record['id'],
         ];
-        
+
         foreach ($record['data'] as $data) {
             switch ($data['tag']) {
                 case 'NAME':
@@ -221,7 +220,7 @@ class GedcomService
                     break;
             }
         }
-        
+
         return Person::updateOrCreate(['gid' => $record['id']], $personData);
     }
 
@@ -233,7 +232,7 @@ class GedcomService
         $familyData = [
             'gid' => $record['id'],
         ];
-        
+
         foreach ($record['data'] as $data) {
             switch ($data['tag']) {
                 case 'HUSB':
@@ -252,7 +251,7 @@ class GedcomService
                     break;
             }
         }
-        
+
         return Family::updateOrCreate(['gid' => $record['id']], $familyData);
     }
 
@@ -264,7 +263,7 @@ class GedcomService
         if (preg_match('/^(.+?)\s*\/(.+?)\//', $name, $matches)) {
             $personData['givn'] = trim($matches[1]);
             $personData['surn'] = trim($matches[2]);
-            $personData['name'] = $personData['givn'] . ' ' . $personData['surn'];
+            $personData['name'] = $personData['givn'].' '.$personData['surn'];
         } else {
             $personData['name'] = $name;
             $personData['givn'] = $name;

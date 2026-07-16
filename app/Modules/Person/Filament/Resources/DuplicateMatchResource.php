@@ -2,18 +2,15 @@
 
 namespace App\Modules\Person\Filament\Resources;
 
+use App\Models\DuplicateMatch;
+use App\Modules\Person\Filament\Resources\DuplicateMatchResource\Pages\ListDuplicateMatches;
+use App\Services\PersonMergeService;
 use Filament\Actions\Action;
 use Filament\Actions\BulkAction;
-use App\Modules\Person\Filament\Resources\DuplicateMatchResource\Pages\ListDuplicateMatches;
-use App\Models\DuplicateMatch;
-use App\Services\PersonMergeService;
-use App\Models\Person;
 use Filament\Resources\Resource;
-use Filament\Tables;
-use Filament\Tables\Table;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
-use Illuminate\Database\Eloquent\Builder;
+use Filament\Tables\Table;
 use Illuminate\Support\Collection;
 use Illuminate\Support\HtmlString;
 
@@ -24,10 +21,12 @@ class DuplicateMatchResource extends Resource
 
     #[\Override]
     protected static ?string $navigationLabel = 'Duplicate Suggestions';
+
     #[\Override]
-    protected static string | \UnitEnum | null $navigationGroup = 'Genealogy';
+    protected static string|\UnitEnum|null $navigationGroup = 'Genealogy';
+
     #[\Override]
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-identification';
+    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-identification';
 
     #[\Override]
     public static function table(Table $table): Table
@@ -44,7 +43,7 @@ class DuplicateMatchResource extends Resource
                     ->wrap(),
                 TextColumn::make('confidence_score')
                     ->label('Confidence')
-                    ->formatStateUsing(fn($state): string => sprintf('%.1f%%', $state * 100))
+                    ->formatStateUsing(fn ($state): string => sprintf('%.1f%%', $state * 100))
                     ->sortable(),
                 TextColumn::make('status')
                     ->label('Status')
@@ -53,7 +52,7 @@ class DuplicateMatchResource extends Resource
                     ->label('Match data')
                     ->toggleable()
                     ->wrap()
-                    ->formatStateUsing(fn($state) => json_encode($state)),
+                    ->formatStateUsing(fn ($state) => json_encode($state)),
                 TextColumn::make('created_at')
                     ->dateTime()
                     ->label('Detected'),
@@ -72,7 +71,7 @@ class DuplicateMatchResource extends Resource
                     ->label('Review')
                     ->icon('heroicon-o-eye')
                     ->modalHeading('Review duplicate suggestion')
-                    ->modalSubheading(fn (DuplicateMatch $record): string => 'Confidence: ' . sprintf('%.1f%%', $record->confidence_score * 100))
+                    ->modalSubheading(fn (DuplicateMatch $record): string => 'Confidence: '.sprintf('%.1f%%', $record->confidence_score * 100))
                     ->modalContent(function (DuplicateMatch $record): HtmlString {
                         $p = $record->primaryPerson;
                         $d = $record->duplicatePerson;
@@ -80,6 +79,7 @@ class DuplicateMatchResource extends Resource
                         $md = htmlspecialchars(json_encode($data, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
                         $pName = e($p?->name);
                         $dName = e($d?->name);
+
                         // v5 getModalContent() must return View|Htmlable, not a raw string.
                         return new HtmlString("<div>
                             <p><strong>Primary</strong>: {$pName} (ID: {$p?->id})</p>
@@ -96,14 +96,16 @@ class DuplicateMatchResource extends Resource
                                 $mergeService = app(PersonMergeService::class);
                                 $primary = $record->primaryPerson;
                                 $candidate = $record->duplicatePerson;
-                                if (!$primary || !$candidate) {
+                                if (! $primary || ! $candidate) {
                                     $record->status = 'rejected';
                                     $record->save();
+
                                     return $record->fresh();
                                 }
                                 $mergeService->merge($primary, $candidate);
                                 $record->status = 'merged';
                                 $record->save();
+
                                 return $record->fresh();
                             }),
                         Action::make('reject')

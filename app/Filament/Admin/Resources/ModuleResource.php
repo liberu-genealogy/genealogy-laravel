@@ -2,28 +2,24 @@
 
 namespace App\Filament\Admin\Resources;
 
-use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\Textarea;
-use Filament\Forms\Components\TagsInput;
-use Filament\Forms\Components\Toggle;
-use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Columns\TagsColumn;
-use Filament\Tables\Columns\IconColumn;
-use Filament\Tables\Filters\TernaryFilter;
-use Filament\Actions\Action;
-use Filament\Notifications\Notification;
-use Exception;
 use App\Filament\Admin\Resources\ModuleResource\Pages\ListModules;
-use Illuminate\Pagination\LengthAwarePaginator;
-use App\Filament\Admin\Resources\ModuleResource\Pages;
 use App\Modules\ModuleManager;
-use Filament\Forms;
-use Filament\Schemas\Schema;
+use Exception;
+use Filament\Actions\Action;
+use Filament\Forms\Components\TagsInput;
+use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Toggle;
+use Filament\Notifications\Notification;
 use Filament\Resources\Resource;
-use Filament\Tables;
+use Filament\Schemas\Schema;
+use Filament\Tables\Columns\IconColumn;
+use Filament\Tables\Columns\TagsColumn;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\TernaryFilter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class ModuleResource extends Resource
 {
@@ -31,10 +27,10 @@ class ModuleResource extends Resource
     protected static ?string $model = null; // We don't use a traditional model
 
     #[\Override]
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-puzzle-piece';
+    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-puzzle-piece';
 
     #[\Override]
-    protected static string | \UnitEnum | null $navigationGroup = '🛠️ System';
+    protected static string|\UnitEnum|null $navigationGroup = '🛠️ System';
 
     #[\Override]
     protected static ?string $navigationLabel = 'Modules';
@@ -77,7 +73,7 @@ class ModuleResource extends Resource
                 TextColumn::make('description')
                     ->label('Description')
                     ->limit(50)
-                    ->tooltip(fn($record) => $record['description']),
+                    ->tooltip(fn ($record) => $record['description']),
                 TagsColumn::make('dependencies')
                     ->label('Dependencies'),
                 IconColumn::make('enabled')
@@ -101,9 +97,9 @@ class ModuleResource extends Resource
                     ->icon(fn ($record): string => $record['enabled'] ? 'heroicon-o-pause' : 'heroicon-o-play')
                     ->color(fn ($record): string => $record['enabled'] ? 'warning' : 'success')
                     ->requiresConfirmation()
-                    ->modalHeading(fn ($record): string => ($record['enabled'] ? 'Disable' : 'Enable') . ' Module')
-                    ->modalDescription(fn ($record): string => 'Are you sure you want to ' .
-                        ($record['enabled'] ? 'disable' : 'enable') . ' the ' . $record['name'] . ' module?')
+                    ->modalHeading(fn ($record): string => ($record['enabled'] ? 'Disable' : 'Enable').' Module')
+                    ->modalDescription(fn ($record): string => 'Are you sure you want to '.
+                        ($record['enabled'] ? 'disable' : 'enable').' the '.$record['name'].' module?')
                     ->action(function (array $record): void {
                         $moduleManager = app(ModuleManager::class);
 
@@ -126,7 +122,7 @@ class ModuleResource extends Resource
                         } catch (Exception $e) {
                             Notification::make()
                                 ->title('Error')
-                                ->body('Failed to toggle module: ' . $e->getMessage())
+                                ->body('Failed to toggle module: '.$e->getMessage())
                                 ->danger()
                                 ->send();
                         }
@@ -135,9 +131,9 @@ class ModuleResource extends Resource
                     ->label('Info')
                     ->icon('heroicon-o-information-circle')
                     ->color('info')
-                    ->modalHeading(fn ($record): string => $record['name'] . ' Module Information')
-                    ->modalContent(fn($record) => view('filament.admin.resources.module-resource.info-modal', [
-                        'module' => $record
+                    ->modalHeading(fn ($record): string => $record['name'].' Module Information')
+                    ->modalContent(fn ($record) => view('filament.admin.resources.module-resource.info-modal', [
+                        'module' => $record,
                     ])),
             ])
             ->toolbarActions([
@@ -172,13 +168,12 @@ class ModuleResource extends Resource
         $modules = $moduleManager->getAllModulesInfo();
 
         // Convert to a collection and create a fake query
-        $collection = collect($modules)->map(fn($module) => (object) $module);
+        $collection = collect($modules)->map(fn ($module) => (object) $module);
 
         // Return a custom query builder
-        return new class($collection) extends Builder {
-            public function __construct(protected $modules)
-            {
-            }
+        return new class($collection) extends Builder
+        {
+            public function __construct(protected $modules) {}
 
             public function get($columns = ['*'])
             {
@@ -202,14 +197,16 @@ class ModuleResource extends Resource
             public function where($column, $operator = null, $value = null, $boolean = 'and')
             {
                 if ($column === 'enabled' && $value !== null) {
-                    $this->modules = $this->modules->filter(fn($module) => $module->enabled === (bool) $value);
+                    $this->modules = $this->modules->filter(fn ($module) => $module->enabled === (bool) $value);
                 }
+
                 return $this;
             }
 
             public function orderBy($column, $direction = 'asc'): self
             {
                 $this->modules = $this->modules->sortBy($column, SORT_REGULAR, $direction === 'desc');
+
                 return $this;
             }
 

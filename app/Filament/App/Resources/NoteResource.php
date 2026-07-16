@@ -4,42 +4,34 @@ declare(strict_types=1);
 
 namespace App\Filament\App\Resources;
 
-use Override;
-use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\Textarea;
-use Filament\Forms\Components\DateTimePicker;
-use Filament\Tables\Columns\TextColumn;
-use Filament\Actions\EditAction;
-use Filament\Actions\BulkActionGroup;
-use Filament\Actions\DeleteBulkAction;
-use App\Filament\App\Resources\NoteResource\Pages\ListNotes;
 use App\Filament\App\Resources\NoteResource\Pages\CreateNote;
 use App\Filament\App\Resources\NoteResource\Pages\EditNote;
-use UnitEnum;
-use BackedEnum;
-use App\Filament\App\Resources\NoteResource\Pages;
+use App\Filament\App\Resources\NoteResource\Pages\ListNotes;
 use App\Models\Note;
-use Filament\Forms;
-use Filament\Forms\Form;
-use App\Filament\App\Resources\AppResource;
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteBulkAction;
+use Filament\Actions\EditAction;
+use Filament\Forms\Components\DateTimePicker;
+use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Schema;
-use Filament\Tables;
-use Filament\Actions;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use Override;
 
 class NoteResource extends AppResource
 {
-    #[\Override]
+    #[Override]
     protected static ?string $model = Note::class;
 
-    #[\Override]
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-pencil-square';
+    #[Override]
+    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-pencil-square';
 
-    #[\Override]
+    #[Override]
     protected static ?string $navigationLabel = 'Add Notes';
 
-    #[\Override]
-    protected static string | \UnitEnum | null $navigationGroup = '👥 Family Tree';
+    #[Override]
+    protected static string|\UnitEnum|null $navigationGroup = '👥 Family Tree';
 
     #[Override]
     public static function form(Schema $schema): Schema
@@ -73,7 +65,7 @@ class NoteResource extends AppResource
         return $table
             ->columns([
                 TextColumn::make('name')
-                ->searchable(),
+                    ->searchable(),
                 TextColumn::make('date')
                     ->dateTime()
                     ->sortable(),
@@ -119,13 +111,13 @@ class NoteResource extends AppResource
         ];
     }
 
-    #[\Override]
+    #[Override]
     public static function getPages(): array
     {
         return [
-            'index'  => ListNotes::route('/'),
+            'index' => ListNotes::route('/'),
             'create' => CreateNote::route('/create'),
-            'edit'   => EditNote::route('/{record}/edit'),
+            'edit' => EditNote::route('/{record}/edit'),
         ];
     }
 }

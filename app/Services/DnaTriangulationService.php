@@ -2,32 +2,30 @@
 
 namespace App\Services;
 
-use Exception;
 use App\Models\Dna;
 use App\Models\DnaMatching;
-use Illuminate\Support\Facades\Log;
+use Exception;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Log;
 
 class DnaTriangulationService
 {
     const MAX_CHROMOSOME_NUMBER = 23;
 
-    public function __construct(protected AdvancedDnaMatchingService $matchingService)
-    {
-    }
+    public function __construct(protected AdvancedDnaMatchingService $matchingService) {}
 
     /**
      * Perform triangulation: match one kit against multiple kits
      *
-     * @param int $baseKitId The primary DNA kit to match against
-     * @param array|null $compareKitIds Optional array of kit IDs to compare. If null, matches against all kits
-     * @param float $minSharedCm Minimum shared cM threshold to consider a match
+     * @param  int  $baseKitId  The primary DNA kit to match against
+     * @param  array|null  $compareKitIds  Optional array of kit IDs to compare. If null, matches against all kits
+     * @param  float  $minSharedCm  Minimum shared cM threshold to consider a match
      * @return array Triangulation results
      */
     public function triangulateOneAgainstMany(int $baseKitId, ?array $compareKitIds = null, float $minSharedCm = 20.0): array
     {
         $baseKit = Dna::findOrFail($baseKitId);
-        
+
         // Get kits to compare against
         $compareKits = $this->getCompareKits($baseKitId, $compareKitIds);
 
@@ -70,12 +68,12 @@ class DnaTriangulationService
                 }
 
             } catch (Exception $e) {
-                Log::error("Triangulation match failed between kit {$baseKitId} and {$compareKit->id}: " . $e->getMessage());
+                Log::error("Triangulation match failed between kit {$baseKitId} and {$compareKit->id}: ".$e->getMessage());
             }
         }
 
         // Sort matches by shared cM
-        usort($results['matches'], fn(array $a, array $b): int => $b['total_cms'] <=> $a['total_cms']);
+        usort($results['matches'], fn (array $a, array $b): int => $b['total_cms'] <=> $a['total_cms']);
 
         return $results;
     }
@@ -83,9 +81,9 @@ class DnaTriangulationService
     /**
      * Perform three-way triangulation: find shared segments among three kits
      *
-     * @param int $kit1Id First DNA kit ID
-     * @param int $kit2Id Second DNA kit ID
-     * @param int $kit3Id Third DNA kit ID
+     * @param  int  $kit1Id  First DNA kit ID
+     * @param  int  $kit2Id  Second DNA kit ID
+     * @param  int  $kit3Id  Third DNA kit ID
      * @return array Three-way triangulation results
      */
     public function triangulateThreeWay(int $kit1Id, int $kit2Id, int $kit3Id): array
@@ -152,8 +150,8 @@ class DnaTriangulationService
      * Find all triangulated groups for a set of kits
      * This identifies clusters where multiple kits share DNA segments
      *
-     * @param array $kitIds Array of DNA kit IDs
-     * @param float $minSharedCm Minimum shared cM threshold
+     * @param  array  $kitIds  Array of DNA kit IDs
+     * @param  float  $minSharedCm  Minimum shared cM threshold
      * @return array Triangulated groups
      */
     public function findTriangulatedGroups(array $kitIds, float $minSharedCm = 20.0): array
@@ -180,14 +178,14 @@ class DnaTriangulationService
                             ];
                         }
                     } catch (Exception $e) {
-                        Log::error("Failed to triangulate group [{$kitIds[$i]}, {$kitIds[$j]}, {$kitIds[$k]}]: " . $e->getMessage());
+                        Log::error("Failed to triangulate group [{$kitIds[$i]}, {$kitIds[$j]}, {$kitIds[$k]}]: ".$e->getMessage());
                     }
                 }
             }
         }
 
         // Sort by triangulation score
-        usort($groups, fn(array $a, array $b): int => $b['triangulation_score'] <=> $a['triangulation_score']);
+        usort($groups, fn (array $a, array $b): int => $b['triangulation_score'] <=> $a['triangulation_score']);
 
         return $groups;
     }
@@ -195,9 +193,8 @@ class DnaTriangulationService
     /**
      * Get kits to compare against
      *
-     * @param int $baseKitId Base kit ID to exclude
-     * @param array|null $compareKitIds Optional specific kit IDs
-     * @return Collection
+     * @param  int  $baseKitId  Base kit ID to exclude
+     * @param  array|null  $compareKitIds  Optional specific kit IDs
      */
     protected function getCompareKits(int $baseKitId, ?array $compareKitIds = null): Collection
     {
@@ -213,9 +210,9 @@ class DnaTriangulationService
     /**
      * Find chromosomes where all three pairs share DNA
      *
-     * @param array $breakdown12 Chromosome breakdown for kit 1-2
-     * @param array $breakdown13 Chromosome breakdown for kit 1-3
-     * @param array $breakdown23 Chromosome breakdown for kit 2-3
+     * @param  array  $breakdown12  Chromosome breakdown for kit 1-2
+     * @param  array  $breakdown13  Chromosome breakdown for kit 1-3
+     * @param  array  $breakdown23  Chromosome breakdown for kit 2-3
      * @return array Triangulated chromosomes
      */
     protected function findTriangulatedChromosomes(array $breakdown12, array $breakdown13, array $breakdown23): array
@@ -246,7 +243,7 @@ class DnaTriangulationService
     /**
      * Calculate overall triangulation score
      *
-     * @param array $triangulatedChromosomes Triangulated chromosomes
+     * @param  array  $triangulatedChromosomes  Triangulated chromosomes
      * @return float Triangulation score
      */
     protected function calculateTriangulationScore(array $triangulatedChromosomes): float
@@ -264,9 +261,8 @@ class DnaTriangulationService
     /**
      * Store triangulation results in database
      *
-     * @param array $results Triangulation results
-     * @param string $type Type of triangulation (one_to_many, three_way, groups)
-     * @return void
+     * @param  array  $results  Triangulation results
+     * @param  string  $type  Type of triangulation (one_to_many, three_way, groups)
      */
     public function storeTriangulationResults(array $results, string $type = 'one_to_many'): void
     {

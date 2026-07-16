@@ -4,7 +4,8 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration {
+return new class extends Migration
+{
     public function up(): void
     {
         Schema::create('transcription_corrections', function (Blueprint $table): void {
@@ -17,7 +18,7 @@ return new class extends Migration {
             $table->integer('position_end')->nullable(); // Position in document
             $table->json('correction_metadata')->nullable(); // Additional context for learning
             $table->timestamps();
-            
+
             $table->index('document_transcription_id');
             $table->index(['user_id', 'created_at']);
         });

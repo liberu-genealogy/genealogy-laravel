@@ -4,10 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Unit\Models;
 
-use App\Models\Family;
 use App\Models\Person;
-use App\Models\Team;
-use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -43,7 +40,7 @@ class PersonModelTest extends TestCase
         $person = Person::factory()->create([
             'givn' => 'John',
             'surn' => 'Doe',
-            'sex'  => 'M',
+            'sex' => 'M',
             'name' => 'John Doe',
         ]);
 

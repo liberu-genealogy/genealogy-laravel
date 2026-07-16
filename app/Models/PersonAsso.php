@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class PersonAsso extends \FamilyTree365\LaravelGedcom\Models\PersonAsso
 {
-    use HasFactory;
     use BelongsToTenant;
+    use HasFactory;
     use SoftDeletes;
 }

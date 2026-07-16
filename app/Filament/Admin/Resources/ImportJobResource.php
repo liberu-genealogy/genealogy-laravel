@@ -75,19 +75,19 @@ class ImportJobResource extends Resource
                 TextColumn::make('status')
                     ->badge()
                     ->color(fn (?string $state): string => match ($state) {
-                        'complete'   => 'success',
-                        'failed'     => 'danger',
+                        'complete' => 'success',
+                        'failed' => 'danger',
                         'processing' => 'info',
-                        'queue'      => 'warning',
-                        default      => 'gray',
+                        'queue' => 'warning',
+                        default => 'gray',
                     }),
                 TextColumn::make('progress')
-                    ->formatStateUsing(fn (int $state): string => $state . '%')
+                    ->formatStateUsing(fn (int $state): string => $state.'%')
                     ->color(fn (int $state): string => match (true) {
                         $state === 100 => 'success',
-                        $state >= 50   => 'info',
-                        $state > 0     => 'warning',
-                        default        => 'gray',
+                        $state >= 50 => 'info',
+                        $state > 0 => 'warning',
+                        default => 'gray',
                     }),
                 TextColumn::make('people_imported')
                     ->label('People')
@@ -115,10 +115,10 @@ class ImportJobResource extends Resource
             ->filters([
                 SelectFilter::make('status')
                     ->options([
-                        'queue'      => 'Queued',
+                        'queue' => 'Queued',
                         'processing' => 'Processing',
-                        'complete'   => 'Complete',
-                        'failed'     => 'Failed',
+                        'complete' => 'Complete',
+                        'failed' => 'Failed',
                     ]),
             ])
             ->recordActions([
@@ -133,7 +133,7 @@ class ImportJobResource extends Resource
     {
         return [
             'index' => ListImportJobs::route('/'),
-            'view'  => ViewImportJob::route('/{record}'),
+            'view' => ViewImportJob::route('/{record}'),
         ];
     }
 }

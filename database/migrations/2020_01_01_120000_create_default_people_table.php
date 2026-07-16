@@ -8,7 +8,7 @@ class CreateDefaultPeopleTable extends Migration
 {
     public function up(): void
     {
-        if (!Schema::hasTable('people')) {
+        if (! Schema::hasTable('people')) {
             Schema::create('people', function (Blueprint $table): void {
                 $table->bigIncrements('id');
                 $table->tinyInteger('title')->nullable();

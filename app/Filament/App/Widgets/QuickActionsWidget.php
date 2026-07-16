@@ -14,7 +14,7 @@ class QuickActionsWidget extends Widget
     protected string $view = 'filament.app.widgets.quick-actions';
 
     #[\Override]
-    protected int | string | array $columnSpan = 'full';
+    protected int|string|array $columnSpan = 'full';
 
     #[\Override]
     protected static ?int $sort = 2;
@@ -27,46 +27,46 @@ class QuickActionsWidget extends Widget
                 [
                     'label' => 'Add Person',
                     'icon' => 'heroicon-o-user-plus',
-                    'url' => Filament::getUrl() . '/people/create',
+                    'url' => Filament::getUrl().'/people/create',
                     'color' => 'success',
-                    'description' => 'Add a new family member'
+                    'description' => 'Add a new family member',
                 ],
                 [
                     'label' => 'Add Family',
                     'icon' => 'heroicon-o-home',
-                    'url' => Filament::getUrl() . '/families/create',
+                    'url' => Filament::getUrl().'/families/create',
                     'color' => 'info',
-                    'description' => 'Create a new family unit'
+                    'description' => 'Create a new family unit',
                 ],
                 [
                     'label' => 'View Pedigree',
                     'icon' => 'heroicon-o-chart-bar',
-                    'url' => Filament::getUrl() . '/pedigree-chart',
+                    'url' => Filament::getUrl().'/pedigree-chart',
                     'color' => 'warning',
-                    'description' => 'Explore your family tree'
+                    'description' => 'Explore your family tree',
                 ],
                 [
                     'label' => 'Import GEDCOM',
                     'icon' => 'heroicon-o-arrow-up-tray',
                     'url' => GedcomResource::getUrl('create'),
                     'color' => 'primary',
-                    'description' => 'Import genealogy data'
+                    'description' => 'Import genealogy data',
                 ],
                 [
                     'label' => 'DNA Analysis',
                     'icon' => 'heroicon-o-beaker',
-                    'url' => Filament::getUrl() . '/dnas',
+                    'url' => Filament::getUrl().'/dnas',
                     'color' => 'purple',
-                    'description' => 'Analyze DNA matches'
+                    'description' => 'Analyze DNA matches',
                 ],
                 [
                     'label' => 'Add Media',
                     'icon' => 'heroicon-o-photo',
-                    'url' => Filament::getUrl() . '/media-objects/create',
+                    'url' => Filament::getUrl().'/media-objects/create',
                     'color' => 'pink',
-                    'description' => 'Upload photos & documents'
+                    'description' => 'Upload photos & documents',
                 ],
-            ]
+            ],
         ];
     }
 }

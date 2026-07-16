@@ -21,12 +21,12 @@ class FamilyTreeBuilderTest extends TestCase
         $this->actingAs($user);
 
         Livewire::test(FamilyTreeBuilder::class)
-                ->assertOk();
+            ->assertOk();
     }
 
     public function test_tree_data_is_loaded_on_mount(): void
     {
-        $user   = User::factory()->withPersonalTeam()->create();
+        $user = User::factory()->withPersonalTeam()->create();
         $person = Person::factory()->create();
         $this->actingAs($user);
 
@@ -48,7 +48,7 @@ class FamilyTreeBuilderTest extends TestCase
         $person = Person::factory()->create();
 
         $component = Livewire::test(FamilyTreeBuilder::class)
-                             ->call('selectPerson', $person->id);
+            ->call('selectPerson', $person->id);
 
         $selected = $component->get('selectedPerson');
         $this->assertNotNull($selected);

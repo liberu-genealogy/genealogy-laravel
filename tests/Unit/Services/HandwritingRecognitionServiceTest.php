@@ -3,9 +3,9 @@
 namespace Tests\Unit\Services;
 
 use App\Models\DocumentTranscription;
+use App\Models\Team;
 use App\Models\TranscriptionCorrection;
 use App\Models\User;
-use App\Models\Team;
 use App\Services\HandwritingRecognitionService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
@@ -17,15 +17,17 @@ class HandwritingRecognitionServiceTest extends TestCase
     use RefreshDatabase;
 
     protected HandwritingRecognitionService $service;
+
     protected User $user;
+
     protected Team $team;
 
     #[\Override]
     protected function setUp(): void
     {
         parent::setUp();
-        $this->service = new HandwritingRecognitionService();
-        
+        $this->service = new HandwritingRecognitionService;
+
         // Create test user and team
         $this->user = User::factory()->create();
         $this->team = Team::factory()->create(['user_id' => $this->user->id]);
@@ -36,7 +38,7 @@ class HandwritingRecognitionServiceTest extends TestCase
         Storage::fake('public');
     }
 
-    public function testProcessDocumentCreatesTranscription(): void
+    public function test_process_document_creates_transcription(): void
     {
         $file = UploadedFile::fake()->image('document.jpg');
 
@@ -47,12 +49,12 @@ class HandwritingRecognitionServiceTest extends TestCase
         $this->assertEquals($this->user->id, $transcription->user_id);
         $this->assertEquals('document.jpg', $transcription->original_filename);
         $this->assertNotNull($transcription->document_path);
-        
+
         // Verify file was stored
         Storage::disk('public')->assertExists($transcription->document_path);
     }
 
-    public function testProcessDocumentWithFallbackOCR(): void
+    public function test_process_document_with_fallback_ocr(): void
     {
         $file = UploadedFile::fake()->image('document.jpg');
 
@@ -64,7 +66,7 @@ class HandwritingRecognitionServiceTest extends TestCase
         $this->assertIsArray($transcription->metadata);
     }
 
-    public function testApplyCorrectionCreatesRecord(): void
+    public function test_apply_correction_creates_record(): void
     {
         $transcription = DocumentTranscription::factory()->create([
             'team_id' => $this->team->id,
@@ -91,7 +93,7 @@ class HandwritingRecognitionServiceTest extends TestCase
         $this->assertEquals($correctedText, $transcription->corrected_transcription);
     }
 
-    public function testGetTeamStatsReturnsCorrectData(): void
+    public function test_get_team_stats_returns_correct_data(): void
     {
         // Create various transcriptions
         DocumentTranscription::factory()->count(5)->create([
@@ -117,7 +119,7 @@ class HandwritingRecognitionServiceTest extends TestCase
         $this->assertEquals(1, $stats['failed_transcriptions']);
     }
 
-    public function testGetCurrentTranscriptionReturnsCorrectValue(): void
+    public function test_get_current_transcription_returns_correct_value(): void
     {
         $transcription = DocumentTranscription::factory()->create([
             'raw_transcription' => 'Raw text',
@@ -132,7 +134,7 @@ class HandwritingRecognitionServiceTest extends TestCase
         $this->assertEquals('Corrected text', $transcription->getCurrentTranscription());
     }
 
-    public function testHasCorrectionsReturnsTrueWhenCorrected(): void
+    public function test_has_corrections_returns_true_when_corrected(): void
     {
         $transcription = DocumentTranscription::factory()->create([
             'raw_transcription' => 'Raw text',
@@ -142,7 +144,7 @@ class HandwritingRecognitionServiceTest extends TestCase
         $this->assertTrue($transcription->hasCorrections());
     }
 
-    public function testGetConfidenceScoreReturnsCorrectValue(): void
+    public function test_get_confidence_score_returns_correct_value(): void
     {
         $transcription = DocumentTranscription::factory()->create([
             'metadata' => ['confidence' => 0.85],

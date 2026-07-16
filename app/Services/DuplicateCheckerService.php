@@ -2,11 +2,11 @@
 
 namespace App\Services;
 
-use Exception;
-use DateTime;
+use App\Models\DuplicateCheck;
 use App\Models\Person;
 use App\Models\User;
-use App\Models\DuplicateCheck;
+use DateTime;
+use Exception;
 use Illuminate\Support\Collection;
 
 class DuplicateCheckerService
@@ -64,7 +64,7 @@ class DuplicateCheckerService
             }
 
             $potentialDuplicates = $this->findPotentialDuplicates($person, $people);
-            
+
             if ($potentialDuplicates !== []) {
                 $duplicates[] = [
                     'primary_person' => [
@@ -101,7 +101,7 @@ class DuplicateCheckerService
             }
 
             $similarity = $this->calculateSimilarity($person, $otherPerson);
-            
+
             if ($similarity >= 0.7) { // 70% similarity threshold
                 $potentialDuplicates[] = [
                     'id' => $otherPerson->id,
@@ -164,6 +164,7 @@ class DuplicateCheckerService
         }
 
         $distance = levenshtein($name1, $name2);
+
         return 1 - ($distance / $maxLength);
     }
 

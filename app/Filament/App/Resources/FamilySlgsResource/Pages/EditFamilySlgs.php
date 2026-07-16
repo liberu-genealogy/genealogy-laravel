@@ -4,9 +4,8 @@ declare(strict_types=1);
 
 namespace App\Filament\App\Resources\FamilySlgsResource\Pages;
 
-use Filament\Actions\DeleteAction;
 use App\Filament\App\Resources\FamilySlgsResource;
-use Filament\Actions;
+use Filament\Actions\DeleteAction;
 use Filament\Resources\Pages\EditRecord;
 
 class EditFamilySlgs extends EditRecord

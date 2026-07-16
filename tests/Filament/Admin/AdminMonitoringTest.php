@@ -10,7 +10,10 @@ use App\Filament\Admin\Resources\TreeResource\Pages\ListTrees;
 use App\Models\User;
 use Filament\Facades\Filament;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Gate;
 use Livewire\Livewire;
+use Spatie\Permission\Models\Role;
+use Spatie\Permission\PermissionRegistrar;
 use Tests\TestCase;
 
 /**
@@ -38,19 +41,19 @@ class AdminMonitoringTest extends TestCase
         // resource policy (Gate::before short-circuit) allow the mount. Roles are
         // global here (config/permission.php teams => false). Clear the permission
         // cache after creating the role in-test so hasRole() sees it.
-        $role = \Spatie\Permission\Models\Role::firstOrCreate([
-            'name'       => 'super_admin',
+        $role = Role::firstOrCreate([
+            'name' => 'super_admin',
             'guard_name' => 'web',
         ]);
         $user->assignRole($role);
-        app(\Spatie\Permission\PermissionRegistrar::class)->forgetCachedPermissions();
+        app(PermissionRegistrar::class)->forgetCachedPermissions();
 
         // canAccessPanel('admin') passes on the role above, but the admin panel
         // also runs FilamentShield resource policies (the app panel doesn't).
         // In production super_admin bypasses them via Shield's Gate::before; that
         // hook isn't active in the test harness, so replicate it here. This test
         // verifies the resource SCHEMA builds on mount, not Shield authz.
-        \Illuminate\Support\Facades\Gate::before(fn () => true);
+        Gate::before(fn () => true);
 
         Filament::setCurrentPanel('admin');
 

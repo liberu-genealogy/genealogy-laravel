@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Tests\Filament\Resources;
 
-use App\Modules\Person\Filament\Resources\DuplicateMatchResource\Pages\ListDuplicateMatches;
 use App\Models\User;
+use App\Modules\Person\Filament\Resources\DuplicateMatchResource\Pages\ListDuplicateMatches;
 use Filament\Facades\Filament;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Livewire\Livewire;

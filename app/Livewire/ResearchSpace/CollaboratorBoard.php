@@ -4,6 +4,8 @@ namespace App\Livewire\ResearchSpace;
 
 use App\Events\ResearchSpaceUpdated;
 use App\Models\ResearchSpace;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Livewire\Attributes\On;
 use Livewire\Component;
@@ -53,7 +55,7 @@ class CollaboratorBoard extends Component
         $this->dispatch('contentUpdated');
     }
 
-    public function render(): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+    public function render(): Factory|View
     {
         return view('livewire.research-space.collaborator-board', [
             'space' => $this->space,

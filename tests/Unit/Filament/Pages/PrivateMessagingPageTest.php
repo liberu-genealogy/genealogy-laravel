@@ -3,16 +3,17 @@
 namespace Tests\Unit\Filament\Pages;
 
 use App\Filament\Pages\PrivateMessagingPage;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 class PrivateMessagingPageTest extends TestCase
 {
     // database interactions may be necessary for this page
-    use \Illuminate\Foundation\Testing\RefreshDatabase;
+    use RefreshDatabase;
 
     public function test_mount(): void
     {
-        $page = new PrivateMessagingPage();
+        $page = new PrivateMessagingPage;
 
         $this->assertInstanceOf(PrivateMessagingPage::class, $page);
 
@@ -21,9 +22,9 @@ class PrivateMessagingPageTest extends TestCase
         $this->assertNull($result);
     }
 
-    public function test_sendMessage(): void
+    public function test_send_message(): void
     {
-        $page = new PrivateMessagingPage();
+        $page = new PrivateMessagingPage;
 
         $this->assertInstanceOf(PrivateMessagingPage::class, $page);
 

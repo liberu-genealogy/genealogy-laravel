@@ -10,7 +10,7 @@ use App\Models\Source;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Source>
+ * @extends Factory<Source>
  */
 class SourceFactory extends Factory
 {
@@ -30,26 +30,26 @@ class SourceFactory extends Factory
     public function definition()
     {
         return [
-            'sour'          => fake()->word(),
-            'titl'          => fake()->word(),
-            'auth'          => fake()->name(),
-            'data'          => fake()->word(),
-            'date'          => fake()->date(),
-            'text'          => fake()->word(),
-            'publ'          => fake()->text(),
-            'abbr'          => fake()->word(),
-            'name'          => fake()->word(),
-            'description'   => fake()->word(),
+            'sour' => fake()->word(),
+            'titl' => fake()->word(),
+            'auth' => fake()->name(),
+            'data' => fake()->word(),
+            'date' => fake()->date(),
+            'text' => fake()->word(),
+            'publ' => fake()->text(),
+            'abbr' => fake()->word(),
+            'name' => fake()->word(),
+            'description' => fake()->word(),
             'repository_id' => Repository::create()->id,
-            'author_id'     => Author::create([
+            'author_id' => Author::create([
                 'description' => fake()->text(50),
-                'is_active'   => fake()->randomDigit(),
-                'name'        => fake()->word(),
+                'is_active' => fake()->randomDigit(),
+                'name' => fake()->word(),
             ])->id,
             'publication_id' => Publication::create([
                 'description' => fake()->text(50),
-                'is_active'   => fake()->randomDigit(),
-                'name'        => fake()->word(),
+                'is_active' => fake()->randomDigit(),
+                'name' => fake()->word(),
             ])->id,
             //              'type_id' => Type::create([
             //                  'name' => $this->faker->name(),
@@ -57,10 +57,10 @@ class SourceFactory extends Factory
             //                 'is_active' => 1,
             //              ])->id,
             'is_active' => fake()->randomDigit(),
-            'group'     => fake()->word(),
-            'gid'       => fake()->randomDigit(),
-            'quay'      => fake()->word(),
-            'page'      => fake()->word(),
+            'group' => fake()->word(),
+            'gid' => fake()->randomDigit(),
+            'quay' => fake()->word(),
+            'page' => fake()->word(),
         ];
     }
 }

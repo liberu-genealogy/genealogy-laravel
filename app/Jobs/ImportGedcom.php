@@ -60,7 +60,7 @@ class ImportGedcom implements ShouldQueue
             // Invalid input fails the job cleanly instead of letting the parser throw raw.
             $validationErrors = (new GedcomService)->validateGedcom(File::get($this->filePath));
             if ($validationErrors !== []) {
-                $message = 'Invalid GEDCOM file: ' . implode(' ', $validationErrors);
+                $message = 'Invalid GEDCOM file: '.implode(' ', $validationErrors);
                 $importJob->update(['status' => 'failed', 'error_message' => $message]);
                 Log::error('ImportGedcom validation failed', [
                     'file_path' => $this->filePath,

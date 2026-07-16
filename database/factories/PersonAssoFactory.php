@@ -8,7 +8,7 @@ use App\Models\PersonAsso;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\PersonAsso>
+ * @extends Factory<PersonAsso>
  */
 class PersonAssoFactory extends Factory
 {
@@ -28,10 +28,10 @@ class PersonAssoFactory extends Factory
     public function definition()
     {
         return [
-            'group'          => fake()->word(),
-            'gid'            => fake()->randomDigit(),
-            'indi'           => fake()->word(),
-            'rela'           => fake()->word(),
+            'group' => fake()->word(),
+            'gid' => fake()->randomDigit(),
+            'indi' => fake()->word(),
+            'rela' => fake()->word(),
             'import_confirm' => fake()->randomDigit(),
         ];
     }

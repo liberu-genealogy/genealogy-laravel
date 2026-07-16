@@ -48,7 +48,7 @@ class DuplicateMatch extends Model
     {
         $this->status = $status;
         $this->reviewed_at = now();
-        $this->reviewed_by = $user instanceof \App\Models\User ? $user->id : null;
+        $this->reviewed_by = $user instanceof User ? $user->id : null;
         $this->save();
     }
 }

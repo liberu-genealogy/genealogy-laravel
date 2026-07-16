@@ -2,62 +2,57 @@
 
 namespace App\Filament\App\Resources;
 
-use Override;
-use Filament\Tables\Columns\TextColumn;
-use Filament\Actions\EditAction;
-use Filament\Actions\BulkActionGroup;
-use Filament\Actions\DeleteBulkAction;
-use App\Filament\App\Resources\DnaResource\Pages\ListDnas;
 use App\Filament\App\Resources\DnaResource\Pages\CreateDna;
 use App\Filament\App\Resources\DnaResource\Pages\EditDna;
-use UnitEnum;
-use BackedEnum;
-use App\Filament\App\Resources\DnaResource\Pages;
+use App\Filament\App\Resources\DnaResource\Pages\ListDnas;
 use App\Models\Dna;
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteBulkAction;
+use Filament\Actions\EditAction;
 use Filament\Forms\Components\Checkbox;
 use Filament\Forms\Components\FileUpload;
-use Filament\Tables\Columns\IconColumn;
-use App\Filament\App\Resources\AppResource;
 use Filament\Schemas\Schema;
-use Filament\Tables;
-use Filament\Actions;
+use Filament\Tables\Columns\IconColumn;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use Override;
 
 class DnaResource extends AppResource
 {
-    #[\Override]
+    #[Override]
     protected static bool $isScopedToTenant = false;
 
-    #[\Override]
+    #[Override]
     protected static ?string $model = Dna::class;
 
-    #[\Override]
+    #[Override]
     protected static ?string $navigationLabel = 'DNA Records';
 
-    #[\Override]
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-beaker';
+    #[Override]
+    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-beaker';
 
-    #[\Override]
-    protected static string | \UnitEnum | null $navigationGroup = '🧬 DNA & Genetics';
+    #[Override]
+    protected static string|\UnitEnum|null $navigationGroup = '🧬 DNA & Genetics';
 
-    #[\Override]
+    #[Override]
     protected static ?int $navigationSort = 1;
 
-    #[\Override]
+    #[Override]
     public static function shouldRegisterNavigation(): bool
     {
         // When premium is enabled globally, always show DNA navigation for all users
         if (config('premium.enabled')) {
             return true;
         }
+
         return auth()->user()?->isPremium() ?? false;
     }
 
-    #[\Override]
+    #[Override]
     public static function canCreate(): bool
     {
         $user = auth()->user();
-        if (!$user) {
+        if (! $user) {
             return false;
         }
 
@@ -135,13 +130,13 @@ class DnaResource extends AppResource
         ];
     }
 
-    #[\Override]
+    #[Override]
     public static function getPages(): array
     {
         return [
-            'index'  => ListDnas::route('/'),
+            'index' => ListDnas::route('/'),
             'create' => CreateDna::route('/create'),
-            'edit'   => EditDna::route('/{record}/edit'),
+            'edit' => EditDna::route('/{record}/edit'),
         ];
     }
 
@@ -151,6 +146,7 @@ class DnaResource extends AppResource
         if (config('premium.enabled')) {
             return true;
         }
+
         return auth()->user()?->isPremium() ?? false;
     }
 }

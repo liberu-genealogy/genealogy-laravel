@@ -6,10 +6,10 @@ use JoelButcher\Socialstream\Features;
 use JoelButcher\Socialstream\Providers;
 
 return [
-    'guard'      => 'web',
+    'guard' => 'web',
     'middleware' => ['web'],
-    'prompt'     => 'Or continue with',
-    'providers'  => [
+    'prompt' => 'Or continue with',
+    'providers' => [
         Providers::bitbucket(),
         Providers::facebook(),
         Providers::github(),
@@ -33,13 +33,13 @@ return [
         Features::refreshOAuthTokens(),
     ],
     'component' => 'socialstream::components.socialstream',
-    'home'       => '/dashboard',
-    'redirects'  => [
-        'login'                => '/dashboard',
-        'register'             => '/dashboard',
-        'login-failed'         => '/login',
-        'registration-failed'  => '/register',
-        'provider-linked'      => '/user/profile',
+    'home' => '/dashboard',
+    'redirects' => [
+        'login' => '/dashboard',
+        'register' => '/dashboard',
+        'login-failed' => '/login',
+        'registration-failed' => '/register',
+        'provider-linked' => '/user/profile',
         'provider-link-failed' => '/user/profile',
     ],
 ];

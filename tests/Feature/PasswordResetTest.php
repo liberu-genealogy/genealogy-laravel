@@ -7,7 +7,6 @@ use Illuminate\Auth\Notifications\ResetPassword;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Password;
-use Illuminate\Support\Facades\Route;
 use Laravel\Fortify\Features;
 use Laravel\Fortify\Fortify;
 use Tests\TestCase;
@@ -18,11 +17,11 @@ class PasswordResetTest extends TestCase
 
     public function test_reset_password_link_screen_can_be_rendered(): void
     {
-        if (!Features::enabled(Features::resetPasswords())) {
+        if (! Features::enabled(Features::resetPasswords())) {
             $this->markTestSkipped('Password updates are not enabled.');
         }
 
-        if (!Fortify::$registersRoutes) {
+        if (! Fortify::$registersRoutes) {
             $this->markTestSkipped('Fortify routes are not registered (using Filament for authentication).');
         }
 
@@ -33,7 +32,7 @@ class PasswordResetTest extends TestCase
 
     public function test_reset_password_link_can_be_requested(): void
     {
-        if (!Features::enabled(Features::resetPasswords())) {
+        if (! Features::enabled(Features::resetPasswords())) {
             $this->markTestSkipped('Password updates are not enabled.');
         }
 
@@ -49,11 +48,11 @@ class PasswordResetTest extends TestCase
 
     public function test_reset_password_screen_can_be_rendered(): void
     {
-        if (!Features::enabled(Features::resetPasswords())) {
+        if (! Features::enabled(Features::resetPasswords())) {
             $this->markTestSkipped('Password updates are not enabled.');
         }
 
-        if (!Fortify::$registersRoutes) {
+        if (! Fortify::$registersRoutes) {
             $this->markTestSkipped('Fortify routes are not registered (using Filament for authentication).');
         }
 
@@ -74,7 +73,7 @@ class PasswordResetTest extends TestCase
 
     public function test_password_can_be_reset_with_valid_token(): void
     {
-        if (!Features::enabled(Features::resetPasswords())) {
+        if (! Features::enabled(Features::resetPasswords())) {
             $this->markTestSkipped('Password updates are not enabled.');
         }
 
@@ -86,9 +85,9 @@ class PasswordResetTest extends TestCase
 
         Notification::assertSentTo($user, ResetPassword::class, function (object $notification) use ($user): true {
             $status = Password::reset([
-                'token'                 => $notification->token,
-                'email'                 => $user->email,
-                'password'              => 'newpassword123',
+                'token' => $notification->token,
+                'email' => $user->email,
+                'password' => 'newpassword123',
                 'password_confirmation' => 'newpassword123',
             ], function ($user, $password): void {
                 $user->forceFill(['password' => bcrypt($password)])->save();

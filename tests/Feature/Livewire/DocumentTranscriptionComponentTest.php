@@ -4,8 +4,8 @@ namespace Tests\Feature\Livewire;
 
 use App\Livewire\DocumentTranscriptionComponent;
 use App\Models\DocumentTranscription;
-use App\Models\User;
 use App\Models\Team;
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
@@ -17,6 +17,7 @@ class DocumentTranscriptionComponentTest extends TestCase
     use RefreshDatabase;
 
     protected User $user;
+
     protected Team $team;
 
     #[\Override]
@@ -32,7 +33,7 @@ class DocumentTranscriptionComponentTest extends TestCase
         $this->user->save();
     }
 
-    public function testComponentCanMount(): void
+    public function test_component_can_mount(): void
     {
         $this->actingAs($this->user);
 
@@ -40,7 +41,7 @@ class DocumentTranscriptionComponentTest extends TestCase
             ->assertStatus(200);
     }
 
-    public function testComponentLoadsTranscriptions(): void
+    public function test_component_loads_transcriptions(): void
     {
         $this->actingAs($this->user);
 
@@ -52,10 +53,10 @@ class DocumentTranscriptionComponentTest extends TestCase
         Livewire::test(DocumentTranscriptionComponent::class)
             ->assertStatus(200)
             ->call('loadTranscriptions')
-            ->assertSet('transcriptions', fn($value) => count($value) === 3);
+            ->assertSet('transcriptions', fn ($value) => count($value) === 3);
     }
 
-    public function testCanUploadDocument(): void
+    public function test_can_upload_document(): void
     {
         $this->actingAs($this->user);
 
@@ -64,7 +65,7 @@ class DocumentTranscriptionComponentTest extends TestCase
         Livewire::test(DocumentTranscriptionComponent::class)
             ->set('document', $file)
             ->call('uploadDocument')
-            ->assertSet('successMessage', fn($value) => str_contains((string) $value, 'uploaded'));
+            ->assertSet('successMessage', fn ($value) => str_contains((string) $value, 'uploaded'));
 
         // Verify transcription was created
         $this->assertDatabaseHas('document_transcriptions', [
@@ -74,7 +75,7 @@ class DocumentTranscriptionComponentTest extends TestCase
         ]);
     }
 
-    public function testCanSelectTranscription(): void
+    public function test_can_select_transcription(): void
     {
         $this->actingAs($this->user);
 
@@ -90,7 +91,7 @@ class DocumentTranscriptionComponentTest extends TestCase
             ->assertSet('transcriptionText', 'Test transcription text');
     }
 
-    public function testCanStartEditing(): void
+    public function test_can_start_editing(): void
     {
         $this->actingAs($this->user);
 
@@ -105,7 +106,7 @@ class DocumentTranscriptionComponentTest extends TestCase
             ->assertSet('isEditing', true);
     }
 
-    public function testCanCancelEditing(): void
+    public function test_can_cancel_editing(): void
     {
         $this->actingAs($this->user);
 
@@ -124,7 +125,7 @@ class DocumentTranscriptionComponentTest extends TestCase
             ->assertSet('transcriptionText', 'Original text');
     }
 
-    public function testCanSaveCorrection(): void
+    public function test_can_save_correction(): void
     {
         $this->actingAs($this->user);
 
@@ -142,7 +143,7 @@ class DocumentTranscriptionComponentTest extends TestCase
             ->set('transcriptionText', $correctedText)
             ->call('saveCorrection')
             ->assertSet('isEditing', false)
-            ->assertSet('successMessage', fn($value) => str_contains((string) $value, 'saved'));
+            ->assertSet('successMessage', fn ($value) => str_contains((string) $value, 'saved'));
 
         // Verify correction was saved
         $this->assertDatabaseHas('transcription_corrections', [
@@ -158,7 +159,7 @@ class DocumentTranscriptionComponentTest extends TestCase
         ]);
     }
 
-    public function testCanDeleteTranscription(): void
+    public function test_can_delete_transcription(): void
     {
         $this->actingAs($this->user);
 
@@ -169,7 +170,7 @@ class DocumentTranscriptionComponentTest extends TestCase
 
         Livewire::test(DocumentTranscriptionComponent::class)
             ->call('deleteTranscription', $transcription->id)
-            ->assertSet('successMessage', fn($value) => str_contains((string) $value, 'deleted'));
+            ->assertSet('successMessage', fn ($value) => str_contains((string) $value, 'deleted'));
 
         // Verify transcription was soft deleted
         $this->assertSoftDeleted('document_transcriptions', [
@@ -177,7 +178,7 @@ class DocumentTranscriptionComponentTest extends TestCase
         ]);
     }
 
-    public function testOnlyShowsTranscriptionsForCurrentTeam(): void
+    public function test_only_shows_transcriptions_for_current_team(): void
     {
         $this->actingAs($this->user);
 
@@ -193,10 +194,10 @@ class DocumentTranscriptionComponentTest extends TestCase
             ->create(['team_id' => $otherTeam->id]);
 
         Livewire::test(DocumentTranscriptionComponent::class)
-            ->assertSet('transcriptions', fn($value) => count($value) === 2);
+            ->assertSet('transcriptions', fn ($value) => count($value) === 2);
     }
 
-    public function testStatsAreCalculatedCorrectly(): void
+    public function test_stats_are_calculated_correctly(): void
     {
         $this->actingAs($this->user);
 
@@ -218,7 +219,7 @@ class DocumentTranscriptionComponentTest extends TestCase
         $this->assertEquals(2, $stats['pending_transcriptions']);
     }
 
-    public function testValidatesFileUpload(): void
+    public function test_validates_file_upload(): void
     {
         $this->actingAs($this->user);
 

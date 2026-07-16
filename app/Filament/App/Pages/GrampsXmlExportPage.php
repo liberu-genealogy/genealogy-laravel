@@ -4,22 +4,22 @@ declare(strict_types=1);
 
 namespace App\Filament\App\Pages;
 
+use App\Jobs\ExportGrampsXml;
 use Filament\Actions\Action;
 use Filament\Notifications\Notification;
 use Filament\Pages\Page;
-use App\Jobs\ExportGrampsXml;
 use Illuminate\Support\Facades\Auth;
 
 class GrampsXmlExportPage extends Page
 {
     #[\Override]
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-arrow-down-tray';
+    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-arrow-down-tray';
 
     #[\Override]
     protected static ?string $navigationLabel = 'GrampsXML Export';
 
     #[\Override]
-    protected static string | \UnitEnum | null $navigationGroup = "🛠️ Data Management";
+    protected static string|\UnitEnum|null $navigationGroup = '🛠️ Data Management';
 
     #[\Override]
     protected static ?int $navigationSort = 3;

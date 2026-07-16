@@ -9,6 +9,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Subm extends \FamilyTree365\LaravelGedcom\Models\Subm
 {
-    use HasFactory;
     use BelongsToTenant;
+    use HasFactory;
 }

@@ -2,9 +2,9 @@
 
 namespace App\Modules\Person;
 
+use App\Modules\BaseModule;
 use App\Modules\Person\Services\PersonService;
 use Artisan;
-use App\Modules\BaseModule;
 
 class PersonModule extends BaseModule
 {
@@ -42,7 +42,7 @@ class PersonModule extends BaseModule
      */
     protected function registerPersonServices(): void
     {
-        app()->singleton('genealogy.person', fn($app) => new PersonService());
+        app()->singleton('genealogy.person', fn ($app) => new PersonService);
     }
 
     /**

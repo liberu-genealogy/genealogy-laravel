@@ -3,7 +3,6 @@
 namespace App\Filament\App\Resources\ChecklistTemplateResource\Pages;
 
 use App\Filament\App\Resources\ChecklistTemplateResource;
-use Filament\Actions;
 use Filament\Resources\Pages\CreateRecord;
 
 class CreateChecklistTemplate extends CreateRecord

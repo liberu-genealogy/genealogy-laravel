@@ -7,6 +7,8 @@ use App\Models\FamilyEvent;
 use App\Models\Person;
 use App\Models\PersonEvent;
 use App\Services\HistoricalEventService;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Livewire\Attributes\On;
 use Livewire\Component;
 
@@ -137,7 +139,7 @@ class TimelineComponent extends Component
         $items = array_values($items);
 
         // Sort items by start date
-        usort($items, fn(array $a, array $b) => strcmp($a['start'] ?? '', $b['start'] ?? ''));
+        usort($items, fn (array $a, array $b) => strcmp($a['start'] ?? '', $b['start'] ?? ''));
 
         $this->events = $items;
     }
@@ -176,7 +178,7 @@ class TimelineComponent extends Component
         $this->selectedEvent = null;
     }
 
-    public function render(): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+    public function render(): Factory|View
     {
         return view('livewire.timeline-component', [
             'events' => $this->events,

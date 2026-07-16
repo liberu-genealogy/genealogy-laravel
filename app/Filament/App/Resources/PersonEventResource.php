@@ -4,40 +4,35 @@ declare(strict_types=1);
 
 namespace App\Filament\App\Resources;
 
-use Override;
 use App\Enums\EventType;
-use Filament\Forms\Components\Select;
-use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\Textarea;
-use Filament\Tables\Columns\TextColumn;
-use Filament\Actions\EditAction;
-use Filament\Actions\BulkActionGroup;
-use Filament\Actions\DeleteBulkAction;
-use App\Filament\App\Resources\PersonEventResource\Pages\ListPersonEvents;
 use App\Filament\App\Resources\PersonEventResource\Pages\CreatePersonEvent;
 use App\Filament\App\Resources\PersonEventResource\Pages\EditPersonEvent;
-use BackedEnum;
-use App\Filament\App\Resources\PersonEventResource\Pages;
+use App\Filament\App\Resources\PersonEventResource\Pages\ListPersonEvents;
 use App\Models\PersonEvent;
-use Filament\Forms;
-use Filament\Forms\Form;
-use App\Filament\App\Resources\AppResource;
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteBulkAction;
+use Filament\Actions\EditAction;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Schema;
-use Filament\Tables;
-use Filament\Actions;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use Override;
 
 class PersonEventResource extends AppResource
 {
-    #[\Override]
+    #[Override]
     protected static ?string $model = PersonEvent::class;
 
-    #[\Override]
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-calendar';
-    #[\Override]
+    #[Override]
+    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-calendar';
+
+    #[Override]
     protected static ?string $navigationLabel = 'Person Events';
-    #[\Override]
-    protected static string | \UnitEnum | null $navigationGroup = '👥 Family Tree';
+
+    #[Override]
+    protected static string|\UnitEnum|null $navigationGroup = '👥 Family Tree';
 
     #[Override]
     public static function form(Schema $schema): Schema
@@ -91,6 +86,7 @@ class PersonEventResource extends AppResource
                         if ($record && $record->title && ! array_key_exists($record->title, $options)) {
                             $options[$record->title] = $record->title;
                         }
+
                         return $options;
                     })
                     ->searchable(),
@@ -184,13 +180,13 @@ class PersonEventResource extends AppResource
         ];
     }
 
-    #[\Override]
+    #[Override]
     public static function getPages(): array
     {
         return [
-            'index'  => ListPersonEvents::route('/'),
+            'index' => ListPersonEvents::route('/'),
             'create' => CreatePersonEvent::route('/create'),
-            'edit'   => EditPersonEvent::route('/{record}/edit'),
+            'edit' => EditPersonEvent::route('/{record}/edit'),
         ];
     }
 }

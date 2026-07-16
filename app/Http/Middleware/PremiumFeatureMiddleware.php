@@ -2,12 +2,12 @@
 
 namespace App\Http\Middleware;
 
+use Closure;
 use Filament\Actions\Action;
 use Filament\Facades\Filament;
-use Closure;
+use Filament\Notifications\Notification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Filament\Notifications\Notification;
 
 class PremiumFeatureMiddleware
 {
@@ -23,12 +23,12 @@ class PremiumFeatureMiddleware
 
         $user = Auth::user();
 
-        if (!$user) {
+        if (! $user) {
             return redirect()->route('login');
         }
 
         // Check if user has premium access
-        if (!$user->isPremium()) {
+        if (! $user->isPremium()) {
             Notification::make()
                 ->title('Premium Feature Required')
                 ->body('This feature is only available to Premium subscribers. Upgrade now to unlock all features!')
@@ -37,27 +37,27 @@ class PremiumFeatureMiddleware
                 ->actions([
                     Action::make('upgrade')
                         ->label('Upgrade to Premium')
-                        ->url(Filament::getUrl() . '/subscription')
+                        ->url(Filament::getUrl().'/subscription')
                         ->button()
                         ->color('primary'),
                 ])
                 ->send();
 
-            return redirect(Filament::getUrl() . '/subscription');
+            return redirect(Filament::getUrl().'/subscription');
         }
 
         // Feature-specific checks
         if ($feature) {
             switch ($feature) {
                 case 'dna_upload':
-                    if (!$user->canUploadDna()) {
+                    if (! $user->canUploadDna()) {
                         Notification::make()
                             ->title('DNA Upload Limit Reached')
                             ->body('Standard users can upload 1 DNA kit. Upgrade to Premium for unlimited uploads!')
                             ->warning()
                             ->send();
 
-                        return redirect(Filament::getUrl() . '/subscription');
+                        return redirect(Filament::getUrl().'/subscription');
                     }
                     break;
 

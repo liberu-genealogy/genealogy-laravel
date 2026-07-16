@@ -18,8 +18,8 @@ class FamilyMatchingService
     public function findPotentialConnections(User $user): Collection
     {
         $privacy = SocialConnectionPrivacy::where('user_id', $user->id)->first();
-        
-        if (!$privacy || !$privacy->allow_family_discovery) {
+
+        if (! $privacy || ! $privacy->allow_family_discovery) {
             return collect();
         }
 
@@ -50,13 +50,13 @@ class FamilyMatchingService
         $matches = collect();
         $profileData = $account->cached_profile_data;
 
-        if (!$profileData) {
+        if (! $profileData) {
             return $matches;
         }
 
         // Get user's family tree data
         $familySurnames = $this->getUserFamilySurnames($user);
-        
+
         // Find other users with matching criteria
         $potentialMatches = $this->findUsersWithMatchingData($familySurnames, $account->provider);
 
@@ -67,7 +67,7 @@ class FamilyMatchingService
                 ->where('matched_social_id', $match['social_id'])
                 ->first();
 
-            if (!$existing) {
+            if (! $existing) {
                 $matches->push($match);
             }
         }
@@ -84,10 +84,10 @@ class FamilyMatchingService
         $surnames = Person::whereHas('gedcom', function ($query) use ($user): void {
             $query->whereIn('team_id', $user->allTeams()->pluck('id'));
         })
-        ->whereNotNull('surname')
-        ->distinct()
-        ->pluck('surname')
-        ->toArray();
+            ->whereNotNull('surname')
+            ->distinct()
+            ->pluck('surname')
+            ->toArray();
 
         return array_filter($surnames);
     }
@@ -107,14 +107,14 @@ class FamilyMatchingService
 
         foreach ($otherAccounts as $otherAccount) {
             $otherUserSurnames = $this->getUserFamilySurnames($otherAccount->user);
-            
+
             // Find common surnames
             $commonSurnames = array_intersect($surnames, $otherUserSurnames);
-            
+
             if ($commonSurnames !== []) {
                 // Check privacy settings of the other user
                 $otherPrivacy = SocialConnectionPrivacy::where('user_id', $otherAccount->user_id)->first();
-                
+
                 if ($otherPrivacy && $otherPrivacy->allow_family_discovery) {
                     $matches->push([
                         'user_id' => $otherAccount->user_id,
@@ -177,7 +177,7 @@ class FamilyMatchingService
                 // The account_id was added in findPotentialConnections
                 if (isset($match['account_id'])) {
                     $account = ConnectedAccount::find($match['account_id']);
-                    
+
                     if ($account) {
                         $this->createConnection($user, $account, $match);
                         $count++;

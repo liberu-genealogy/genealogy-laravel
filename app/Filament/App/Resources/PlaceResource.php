@@ -4,40 +4,35 @@ declare(strict_types=1);
 
 namespace App\Filament\App\Resources;
 
-use Override;
-use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\Textarea;
-use Filament\Tables\Columns\TextColumn;
-use Filament\Actions\EditAction;
-use Filament\Actions\BulkActionGroup;
-use Filament\Actions\DeleteBulkAction;
-use App\Filament\App\Resources\PlaceResource\Pages\ListPlaces;
 use App\Filament\App\Resources\PlaceResource\Pages\CreatePlace;
 use App\Filament\App\Resources\PlaceResource\Pages\EditPlace;
-use BackedEnum;
-use App\Filament\App\Resources\PlaceResource\Pages;
+use App\Filament\App\Resources\PlaceResource\Pages\ListPlaces;
 use App\Models\Place;
-use Filament\Forms;
-use Filament\Forms\Form;
-use App\Filament\App\Resources\AppResource;
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteBulkAction;
+use Filament\Actions\EditAction;
+use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Schema;
-use Filament\Tables;
-use Filament\Actions;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use Override;
 
 class PlaceResource extends AppResource
 {
-    #[\Override]
+    #[Override]
     protected static ?string $model = Place::class;
 
-    #[\Override]
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-map-pin';
-    #[\Override]
-    protected static ?string $navigationLabel = 'Places';
-    #[\Override]
-    protected static string | \UnitEnum | null $navigationGroup = '👥 Family Tree';
+    #[Override]
+    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-map-pin';
 
-    #[\Override]
+    #[Override]
+    protected static ?string $navigationLabel = 'Places';
+
+    #[Override]
+    protected static string|\UnitEnum|null $navigationGroup = '👥 Family Tree';
+
+    #[Override]
     protected static ?int $navigationSort = 3;
 
     #[Override]
@@ -95,13 +90,13 @@ class PlaceResource extends AppResource
         ];
     }
 
-    #[\Override]
+    #[Override]
     public static function getPages(): array
     {
         return [
-            'index'  => ListPlaces::route('/'),
+            'index' => ListPlaces::route('/'),
             'create' => CreatePlace::route('/create'),
-            'edit'   => EditPlace::route('/{record}/edit'),
+            'edit' => EditPlace::route('/{record}/edit'),
         ];
     }
 }

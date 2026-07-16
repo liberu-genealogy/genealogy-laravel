@@ -2,10 +2,10 @@
 
 namespace Tests\Unit\Services;
 
-use App\Services\FindMyPastMatchingProvider;
 use App\Models\Person;
-use Tests\TestCase;
+use App\Services\FindMyPastMatchingProvider;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\TestCase;
 
 class FindMyPastMatchingProviderTest extends TestCase
 {
@@ -16,7 +16,7 @@ class FindMyPastMatchingProviderTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
-        $this->provider = new FindMyPastMatchingProvider();
+        $this->provider = new FindMyPastMatchingProvider;
     }
 
     public function test_search_records_returns_array(): void
@@ -45,7 +45,7 @@ class FindMyPastMatchingProviderTest extends TestCase
         $results = $this->provider->searchRecords($person, 'newspaper');
 
         $this->assertNotEmpty($results);
-        $newspaperMatches = array_filter($results, fn(array $match): bool => $match['record_type'] === 'newspaper');
+        $newspaperMatches = array_filter($results, fn (array $match): bool => $match['record_type'] === 'newspaper');
         $this->assertNotEmpty($newspaperMatches);
     }
 
@@ -63,7 +63,7 @@ class FindMyPastMatchingProviderTest extends TestCase
         $results = $this->provider->searchRecords($person, 'census');
 
         $this->assertNotEmpty($results);
-        $censusMatches = array_filter($results, fn(array $match): bool => $match['record_type'] === 'census');
+        $censusMatches = array_filter($results, fn (array $match): bool => $match['record_type'] === 'census');
         $this->assertNotEmpty($censusMatches);
     }
 
@@ -80,7 +80,7 @@ class FindMyPastMatchingProviderTest extends TestCase
         $results = $this->provider->searchRecords($person, 'parish');
 
         $this->assertNotEmpty($results);
-        $parishMatches = array_filter($results, fn(array $match): bool => $match['record_type'] === 'parish');
+        $parishMatches = array_filter($results, fn (array $match): bool => $match['record_type'] === 'parish');
         $this->assertNotEmpty($parishMatches);
     }
 
@@ -118,14 +118,14 @@ class FindMyPastMatchingProviderTest extends TestCase
 
         if ($results !== []) {
             $match = $results[0];
-            
+
             $this->assertArrayHasKey('record_type', $match);
             $this->assertArrayHasKey('source', $match);
             $this->assertArrayHasKey('tree_id', $match);
             $this->assertArrayHasKey('person_id', $match);
             $this->assertArrayHasKey('confidence_score', $match);
             $this->assertArrayHasKey('data', $match);
-            
+
             $this->assertEquals('findmypast', $match['source']);
         }
     }

@@ -8,7 +8,7 @@ use App\Models\PersonAnci;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\PersonAnci>
+ * @extends Factory<PersonAnci>
  */
 class PersonAnciFactory extends Factory
 {
@@ -29,8 +29,8 @@ class PersonAnciFactory extends Factory
     {
         return [
             'group' => fake()->word(),
-            'gid'   => fake()->randomDigit(),
-            'anci'  => fake()->word(),
+            'gid' => fake()->randomDigit(),
+            'anci' => fake()->word(),
         ];
     }
 }

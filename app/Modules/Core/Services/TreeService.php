@@ -2,8 +2,8 @@
 
 namespace App\Modules\Core\Services;
 
-use App\Models\Person;
 use App\Models\Family;
+use App\Models\Person;
 use Illuminate\Support\Collection;
 
 class TreeService
@@ -65,7 +65,7 @@ class TreeService
 
         foreach ($families as $family) {
             $children = Person::where('child_in_family_id', $family->id)->get();
-            
+
             foreach ($children as $child) {
                 $descendants[] = [
                     'person' => $this->formatPersonData($child),
@@ -90,7 +90,7 @@ class TreeService
             'sex' => $person->sex,
             'birth_date' => $person->birthday?->format('Y-m-d'),
             'death_date' => $person->deathday?->format('Y-m-d'),
-            'is_living' => !$person->deathday,
+            'is_living' => ! $person->deathday,
         ];
     }
 
@@ -247,7 +247,7 @@ class TreeService
     public function getLivingDescendants(Person $person): Collection
     {
         return $this->getAllDescendants($person)
-            ->filter(fn($descendant): bool => !$descendant->deathday);
+            ->filter(fn ($descendant): bool => ! $descendant->deathday);
     }
 
     /**
@@ -260,7 +260,7 @@ class TreeService
 
         foreach ($families as $family) {
             $children = Person::where('child_in_family_id', $family->id)->get();
-            
+
             foreach ($children as $child) {
                 $descendants->push($child);
                 $descendants = $descendants->merge($this->getAllDescendants($child));

@@ -9,7 +9,7 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\PersonNameFone>
+ * @extends Factory<PersonNameFone>
  */
 class PersonNameFoneFactory extends Factory
 {
@@ -29,16 +29,16 @@ class PersonNameFoneFactory extends Factory
     public function definition()
     {
         return [
-            'group'      => fake()->word(),
-            'gid'        => fake()->randomElement(['1', '2']),
-            'type'       => fake()->word(),
-            'name'       => fake()->name(),
-            'npfx'       => fake()->word(),
-            'givn'       => fake()->firstName(),
-            'nick'       => fake()->userName(),
-            'spfx'       => '',
-            'surn'       => fake()->lastName(),
-            'nsfx'       => '',
+            'group' => fake()->word(),
+            'gid' => fake()->randomElement(['1', '2']),
+            'type' => fake()->word(),
+            'name' => fake()->name(),
+            'npfx' => fake()->word(),
+            'givn' => fake()->firstName(),
+            'nick' => fake()->userName(),
+            'spfx' => '',
+            'surn' => fake()->lastName(),
+            'nsfx' => '',
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ];

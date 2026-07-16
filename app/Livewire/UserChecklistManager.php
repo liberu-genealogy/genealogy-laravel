@@ -7,6 +7,8 @@ use App\Models\Family;
 use App\Models\Person;
 use App\Models\UserChecklist;
 use App\Models\UserChecklistItem;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\Rule;
 use Livewire\Component;
@@ -83,7 +85,7 @@ class UserChecklistManager extends Component
         $this->resetFilters();
     }
 
-    public function render(): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+    public function render(): Factory|View
     {
         $checklists = $this->getFilteredChecklists();
         $templates = ChecklistTemplate::where('is_public', true)

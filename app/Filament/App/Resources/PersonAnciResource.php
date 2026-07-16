@@ -4,40 +4,32 @@ declare(strict_types=1);
 
 namespace App\Filament\App\Resources;
 
-use Override;
-use Filament\Forms\Components\TextInput;
-use Filament\Tables\Columns\TextColumn;
-use Filament\Actions\EditAction;
-use Filament\Actions\BulkActionGroup;
-use Filament\Actions\DeleteBulkAction;
-use App\Filament\App\Resources\PersonAnciResource\Pages\ListPersonAncis;
 use App\Filament\App\Resources\PersonAnciResource\Pages\CreatePersonAnci;
 use App\Filament\App\Resources\PersonAnciResource\Pages\EditPersonAnci;
-use UnitEnum;
-use BackedEnum;
-use App\Filament\App\Resources\PersonAnciResource\Pages;
+use App\Filament\App\Resources\PersonAnciResource\Pages\ListPersonAncis;
 use App\Models\PersonAnci;
-use Filament\Forms;
-use Filament\Forms\Form;
-use App\Filament\App\Resources\AppResource;
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteBulkAction;
+use Filament\Actions\EditAction;
+use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Schema;
-use Filament\Tables;
-use Filament\Actions;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use Override;
 
 class PersonAnciResource extends AppResource
 {
-    #[\Override]
+    #[Override]
     protected static ?string $model = PersonAnci::class;
 
-    #[\Override]
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-users';
+    #[Override]
+    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-users';
 
-    #[\Override]
+    #[Override]
     protected static ?string $navigationLabel = 'Person Anci';
 
-    #[\Override]
-    protected static string | \UnitEnum | null $navigationGroup = '👥 Family Tree';
+    #[Override]
+    protected static string|\UnitEnum|null $navigationGroup = '👥 Family Tree';
 
     #[Override]
     public static function form(Schema $schema): Schema
@@ -45,7 +37,7 @@ class PersonAnciResource extends AppResource
         return $schema
             ->components([
                 TextInput::make('group')
-                ->maxLength(255),
+                    ->maxLength(255),
                 TextInput::make('gid')
                     ->numeric(),
                 TextInput::make('anci')
@@ -87,13 +79,13 @@ class PersonAnciResource extends AppResource
             ]);
     }
 
-    #[\Override]
+    #[Override]
     public static function getPages(): array
     {
         return [
-            'index'  => ListPersonAncis::route('/'),
+            'index' => ListPersonAncis::route('/'),
             'create' => CreatePersonAnci::route('/create'),
-            'edit'   => EditPersonAnci::route('/{record}/edit'),
+            'edit' => EditPersonAnci::route('/{record}/edit'),
         ];
     }
 }

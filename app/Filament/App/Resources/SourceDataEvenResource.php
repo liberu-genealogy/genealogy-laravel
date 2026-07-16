@@ -4,37 +4,32 @@ declare(strict_types=1);
 
 namespace App\Filament\App\Resources;
 
-use Override;
-use Filament\Forms\Components\TextInput;
-use Filament\Tables\Columns\TextColumn;
-use Filament\Actions\EditAction;
-use Filament\Actions\BulkActionGroup;
-use Filament\Actions\DeleteBulkAction;
-use App\Filament\App\Resources\SourceDataEvenResource\Pages\ListSourceDataEvens;
 use App\Filament\App\Resources\SourceDataEvenResource\Pages\CreateSourceDataEven;
 use App\Filament\App\Resources\SourceDataEvenResource\Pages\EditSourceDataEven;
-use BackedEnum;
-use App\Filament\App\Resources\SourceDataEvenResource\Pages;
+use App\Filament\App\Resources\SourceDataEvenResource\Pages\ListSourceDataEvens;
 use App\Models\SourceDataEven;
-use Filament\Forms;
-use Filament\Forms\Form;
-use App\Filament\App\Resources\AppResource;
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteBulkAction;
+use Filament\Actions\EditAction;
+use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Schema;
-use Filament\Tables;
-use Filament\Actions;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use Override;
 
 class SourceDataEvenResource extends AppResource
 {
-    #[\Override]
+    #[Override]
     protected static ?string $model = SourceDataEven::class;
 
-    #[\Override]
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-calendar-days';
-    #[\Override]
+    #[Override]
+    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-calendar-days';
+
+    #[Override]
     protected static ?string $navigationLabel = 'Source Data Events';
-    #[\Override]
-    protected static string | \UnitEnum | null $navigationGroup = '🔍 Research & Analysis';
+
+    #[Override]
+    protected static string|\UnitEnum|null $navigationGroup = '🔍 Research & Analysis';
 
     #[Override]
     public static function form(Schema $schema): Schema
@@ -95,13 +90,13 @@ class SourceDataEvenResource extends AppResource
         ];
     }
 
-    #[\Override]
+    #[Override]
     public static function getPages(): array
     {
         return [
-            'index'  => ListSourceDataEvens::route('/'),
+            'index' => ListSourceDataEvens::route('/'),
             'create' => CreateSourceDataEven::route('/create'),
-            'edit'   => EditSourceDataEven::route('/{record}/edit'),
+            'edit' => EditSourceDataEven::route('/{record}/edit'),
         ];
     }
 }

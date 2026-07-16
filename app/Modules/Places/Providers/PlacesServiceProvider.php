@@ -2,9 +2,9 @@
 
 namespace App\Modules\Places\Providers;
 
-use Illuminate\Support\ServiceProvider;
-use App\Modules\Places\Services\PlacesService;
 use App\Modules\Places\Services\GeocodingService;
+use App\Modules\Places\Services\PlacesService;
+use Illuminate\Support\ServiceProvider;
 
 class PlacesServiceProvider extends ServiceProvider
 {
@@ -15,9 +15,9 @@ class PlacesServiceProvider extends ServiceProvider
     public function register(): void
     {
         // Register places services
-        $this->app->singleton(PlacesService::class, fn($app) => new PlacesService());
+        $this->app->singleton(PlacesService::class, fn ($app) => new PlacesService);
 
-        $this->app->singleton(GeocodingService::class, fn($app) => new GeocodingService());
+        $this->app->singleton(GeocodingService::class, fn ($app) => new GeocodingService);
 
         // Register places configuration
         // $this->mergeConfigFrom(__DIR__ . '/../config/places.php', 'places');
@@ -29,23 +29,23 @@ class PlacesServiceProvider extends ServiceProvider
     public function boot(): void
     {
         // Load places routes
-        $this->loadRoutesFrom(__DIR__ . '/../routes/web.php');
+        $this->loadRoutesFrom(__DIR__.'/../routes/web.php');
         // $this->loadRoutesFrom(__DIR__ . '/../routes/api.php');
 
         // Load places views
-        $this->loadViewsFrom(__DIR__ . '/../resources/views', 'places');
+        $this->loadViewsFrom(__DIR__.'/../resources/views', 'places');
 
         // Load places translations
-        $this->loadTranslationsFrom(__DIR__ . '/../resources/lang', 'places');
+        $this->loadTranslationsFrom(__DIR__.'/../resources/lang', 'places');
 
         // Publish places assets
         $this->publishes([
-            __DIR__ . '/../resources/assets' => public_path('modules/places'),
+            __DIR__.'/../resources/assets' => public_path('modules/places'),
         ], 'places-assets');
 
         // Publish places configuration
         $this->publishes([
-            __DIR__ . '/../config/places.php' => config_path('places.php'),
+            __DIR__.'/../config/places.php' => config_path('places.php'),
         ], 'places-config');
     }
 }

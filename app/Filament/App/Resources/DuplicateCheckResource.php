@@ -2,40 +2,31 @@
 
 namespace App\Filament\App\Resources;
 
-use Filament\Schemas\Schema;
-use Filament\Actions\ViewAction;
-use Filament\Actions\Action;
 use App\Filament\App\Resources\DuplicateCheckResource\Pages\ListDuplicateChecks;
 use App\Filament\App\Resources\DuplicateCheckResource\Pages\ViewDuplicateCheck;
-use UnitEnum;
-use BackedEnum;
-use App\Filament\App\Resources\DuplicateCheckResource\Pages;
 use App\Models\DuplicateCheck;
 use App\Services\DuplicateCheckerService;
-use Filament\Forms;
-use App\Filament\App\Resources\AppResource;
-use Filament\Schemas\Components\Section;
-use Filament\Tables;
-use Filament\Actions;
-use Filament\Tables\Table;
+use Filament\Actions\Action;
+use Filament\Actions\ViewAction;
+use Filament\Schemas\Schema;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Auth;
 
 class DuplicateCheckResource extends AppResource
 {
-
     #[\Override]
     protected static ?string $model = DuplicateCheck::class;
 
     #[\Override]
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-document-duplicate';
+    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-document-duplicate';
 
     #[\Override]
     protected static ?string $navigationLabel = 'Duplicate Checker';
 
     #[\Override]
-    protected static string | \UnitEnum | null $navigationGroup =  '🔍 Research & Analysis';
+    protected static string|\UnitEnum|null $navigationGroup = '🔍 Research & Analysis';
 
     #[\Override]
     protected static ?int $navigationSort = 3;
@@ -46,6 +37,7 @@ class DuplicateCheckResource extends AppResource
         if (config('premium.enabled')) {
             return true;
         }
+
         return auth()->user()?->isPremium() ?? false;
     }
 
@@ -55,6 +47,7 @@ class DuplicateCheckResource extends AppResource
         if (config('premium.enabled')) {
             return true;
         }
+
         return Auth::user()?->isPremium() ?? false;
     }
 

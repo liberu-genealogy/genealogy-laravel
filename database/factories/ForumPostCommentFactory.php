@@ -8,7 +8,7 @@ use App\Models\ForumPostComment;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\ForumPostComment>
+ * @extends Factory<ForumPostComment>
  */
 class ForumPostCommentFactory extends Factory
 {

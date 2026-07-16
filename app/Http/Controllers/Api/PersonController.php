@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\PersonResource;
 use App\Models\Person;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -28,7 +29,7 @@ class PersonController extends Controller
             $query->where('sex', $sex->upper());
         }
 
-        return \App\Http\Resources\PersonResource::collection(
+        return PersonResource::collection(
             $query->latest()->paginate($request->integer('per_page', 25))
         );
     }
@@ -36,7 +37,7 @@ class PersonController extends Controller
     public function show(Person $person): JsonResponse
     {
         return response()->json([
-            'data'     => $person,
+            'data' => $person,
             'families' => $person->families(),
         ]);
     }
@@ -44,12 +45,12 @@ class PersonController extends Controller
     public function store(Request $request): JsonResponse
     {
         $data = $request->validate([
-            'givn'     => ['nullable', 'string', 'max:255'],
-            'surn'     => ['nullable', 'string', 'max:255'],
-            'sex'      => ['required', 'in:M,F,U'],
-            'name'     => ['nullable', 'string', 'max:255'],
+            'givn' => ['nullable', 'string', 'max:255'],
+            'surn' => ['nullable', 'string', 'max:255'],
+            'sex' => ['required', 'in:M,F,U'],
+            'name' => ['nullable', 'string', 'max:255'],
             'birthday' => ['nullable', 'date'],
-            'email'    => ['nullable', 'email', 'max:255'],
+            'email' => ['nullable', 'email', 'max:255'],
         ]);
 
         $person = Person::create($data);
@@ -60,12 +61,12 @@ class PersonController extends Controller
     public function update(Request $request, Person $person): JsonResponse
     {
         $data = $request->validate([
-            'givn'     => ['nullable', 'string', 'max:255'],
-            'surn'     => ['nullable', 'string', 'max:255'],
-            'sex'      => ['nullable', 'in:M,F,U'],
-            'name'     => ['nullable', 'string', 'max:255'],
+            'givn' => ['nullable', 'string', 'max:255'],
+            'surn' => ['nullable', 'string', 'max:255'],
+            'sex' => ['nullable', 'in:M,F,U'],
+            'name' => ['nullable', 'string', 'max:255'],
             'birthday' => ['nullable', 'date'],
-            'email'    => ['nullable', 'email', 'max:255'],
+            'email' => ['nullable', 'email', 'max:255'],
         ]);
 
         $person->update($data);

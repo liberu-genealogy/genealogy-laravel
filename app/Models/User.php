@@ -17,31 +17,33 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Storage;
 use JoelButcher\Socialstream\HasConnectedAccounts;
 use JoelButcher\Socialstream\SetsProfilePhotoFromUrl;
 use Laravel\Cashier\Billable;
+// use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Fortify\TwoFactorAuthenticatable;
-//use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Jetstream\HasTeams;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
 
-class User extends Authenticatable implements HasDefaultTenant, HasTenants, FilamentUser
+class User extends Authenticatable implements FilamentUser, HasDefaultTenant, HasTenants
 {
+    use Billable;
     use HasApiTokens;
     use HasConnectedAccounts;
+    use HasFactory;
+
     use HasRoles, HasTeams {
         HasTeams::teams insteadof HasRoles;
         HasRoles::teams as roleTeams;
     }
-    use HasFactory;
-  //  use HasProfilePhoto {
+    //  use HasProfilePhoto {
     //    HasProfilePhoto::profilePhotoUrl as getPhotoUrl;
-//    }
+    //    }
     use Notifiable;
     use SetsProfilePhotoFromUrl;
     use TwoFactorAuthenticatable;
-    use Billable;
     // use HasPanelShield;
 
     /**
@@ -113,8 +115,8 @@ class User extends Authenticatable implements HasDefaultTenant, HasTenants, Fila
      */
     public function deleteProfilePhoto(): void
     {
-        if (!is_null($this->profile_photo_path)) {
-            \Illuminate\Support\Facades\Storage::disk($this->profilePhotoDisk())->delete($this->profile_photo_path);
+        if (! is_null($this->profile_photo_path)) {
+            Storage::disk($this->profilePhotoDisk())->delete($this->profile_photo_path);
             $this->forceFill(['profile_photo_path' => null])->save();
         }
     }
@@ -155,7 +157,7 @@ class User extends Authenticatable implements HasDefaultTenant, HasTenants, Fila
 
     public function canAccessTenant(Model $tenant): bool
     {
-        return true; //$this->ownedTeams->contains($tenant);
+        return true; // $this->ownedTeams->contains($tenant);
     }
 
     public function canAccessFilament(): bool
@@ -207,6 +209,7 @@ class User extends Authenticatable implements HasDefaultTenant, HasTenants, Fila
         if ($this->subscribed('premium')) {
             return true;
         }
+
         // Local trial still running
         return $this->is_premium && $this->onTrial();
     }
@@ -242,7 +245,7 @@ class User extends Authenticatable implements HasDefaultTenant, HasTenants, Fila
      */
     public function trialDaysRemaining(): int
     {
-        if (!$this->onTrial()) {
+        if (! $this->onTrial()) {
             return 0;
         }
 
@@ -279,7 +282,7 @@ class User extends Authenticatable implements HasDefaultTenant, HasTenants, Fila
      */
     public function getPremiumBadgeAttribute(): string
     {
-        if (!$this->isPremium()) {
+        if (! $this->isPremium()) {
             return '';
         }
 
@@ -364,22 +367,22 @@ class User extends Authenticatable implements HasDefaultTenant, HasTenants, Fila
      */
     public function getLevelInfo(): array
     {
-        $level       = (int) ($this->level ?? 1);
+        $level = (int) ($this->level ?? 1);
         $totalPoints = (int) ($this->total_points ?? 0);
 
-        $pointsForNextLevel    = $this->getPointsRequiredForLevel($level + 1);
+        $pointsForNextLevel = $this->getPointsRequiredForLevel($level + 1);
         $pointsForCurrentLevel = $this->getPointsRequiredForLevel($level);
-        $progressToNextLevel   = $totalPoints - $pointsForCurrentLevel;
+        $progressToNextLevel = $totalPoints - $pointsForCurrentLevel;
         $pointsNeededForNextLevel = $pointsForNextLevel - $pointsForCurrentLevel;
 
         return [
-            'current_level'               => $level,
-            'total_points'                => $totalPoints,
-            'points_for_current_level'    => $pointsForCurrentLevel,
-            'points_for_next_level'       => $pointsForNextLevel,
-            'progress_to_next_level'      => $progressToNextLevel,
+            'current_level' => $level,
+            'total_points' => $totalPoints,
+            'points_for_current_level' => $pointsForCurrentLevel,
+            'points_for_next_level' => $pointsForNextLevel,
+            'progress_to_next_level' => $progressToNextLevel,
             'points_needed_for_next_level' => max(0, $pointsNeededForNextLevel - $progressToNextLevel),
-            'progress_percentage'         => $pointsNeededForNextLevel > 0 ? min(100, ($progressToNextLevel / $pointsNeededForNextLevel) * 100) : 100,
+            'progress_percentage' => $pointsNeededForNextLevel > 0 ? min(100, ($progressToNextLevel / $pointsNeededForNextLevel) * 100) : 100,
         ];
     }
 
@@ -419,10 +422,11 @@ class User extends Authenticatable implements HasDefaultTenant, HasTenants, Fila
     private function calculateLevelFromPoints(?int $points): int
     {
         $points = $points ?? 0;
-        $level  = 1;
+        $level = 1;
         while ($this->getPointsRequiredForLevel($level + 1) <= $points) {
             $level++;
         }
+
         return $level;
     }
 

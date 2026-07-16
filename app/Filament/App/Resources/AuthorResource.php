@@ -2,20 +2,17 @@
 
 namespace App\Filament\App\Resources;
 
-use Filament\Schemas\Schema;
-use Filament\Forms\Components\TextInput;
-use App\Filament\App\Resources\AppResource;
-use Filament\Tables\Table;
-use Filament\Tables;
-use Filament\Tables\Columns\TextColumn;
-use App\Filament\App\Resources\AuthorResource\Pages\ListAuthors;
 use App\Filament\App\Resources\AuthorResource\Pages\CreateAuthor;
 use App\Filament\App\Resources\AuthorResource\Pages\EditAuthor;
+use App\Filament\App\Resources\AuthorResource\Pages\ListAuthors;
 use App\Models\Author;
-use Filament\Forms;
-use Filament\Actions\EditAction;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
+use Filament\Actions\EditAction;
+use Filament\Forms\Components\TextInput;
+use Filament\Schemas\Schema;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Table;
 
 class AuthorResource extends AppResource
 {
@@ -23,13 +20,13 @@ class AuthorResource extends AppResource
     protected static ?string $model = Author::class;
 
     #[\Override]
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-pencil';
+    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-pencil';
 
     #[\Override]
     protected static ?string $navigationLabel = 'Author';
 
     #[\Override]
-    protected static string | \UnitEnum | null $navigationGroup = '🔍 Research & Analysis';
+    protected static string|\UnitEnum|null $navigationGroup = '🔍 Research & Analysis';
 
     #[\Override]
     public static function form(Schema $schema): Schema
@@ -37,8 +34,8 @@ class AuthorResource extends AppResource
         return $schema
             ->components([
                 TextInput::make('name')
-                ->required()
-                ->maxLength(255),
+                    ->required()
+                    ->maxLength(255),
                 TextInput::make('description')
                     ->required()
                     ->maxLength(255),
@@ -53,23 +50,23 @@ class AuthorResource extends AppResource
     public static function table(Table $table): Table
     {
         return $table
-        ->columns([
-            TextColumn::make('name')
-                ->searchable(),
-            TextColumn::make('description')
-                ->searchable(),
-            TextColumn::make('is_active')
-                ->numeric()
-                ->sortable(),
-            TextColumn::make('created_at')
-                ->dateTime()
-                ->sortable()
-                ->toggleable(isToggledHiddenByDefault: true),
-            TextColumn::make('updated_at')
-                ->dateTime()
-                ->sortable()
-                ->toggleable(isToggledHiddenByDefault: true),
-        ])
+            ->columns([
+                TextColumn::make('name')
+                    ->searchable(),
+                TextColumn::make('description')
+                    ->searchable(),
+                TextColumn::make('is_active')
+                    ->numeric()
+                    ->sortable(),
+                TextColumn::make('created_at')
+                    ->dateTime()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+                TextColumn::make('updated_at')
+                    ->dateTime()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+            ])
             ->filters([
                 //
             ])
@@ -96,9 +93,9 @@ class AuthorResource extends AppResource
     public static function getPages(): array
     {
         return [
-            'index'  => ListAuthors::route('/'),
+            'index' => ListAuthors::route('/'),
             'create' => CreateAuthor::route('/create'),
-            'edit'   => EditAuthor::route('/{record}/edit'),
+            'edit' => EditAuthor::route('/{record}/edit'),
         ];
     }
 }

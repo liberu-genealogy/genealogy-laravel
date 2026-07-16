@@ -2,16 +2,18 @@
 
 namespace App\Services\VideoConferencing;
 
+use Carbon\Carbon;
 use Exception;
 use Illuminate\Support\Facades\Http;
-use Illuminate\Support\Facades\Log;
-use Carbon\Carbon;
 
 class TeamsService implements VideoConferencingInterface
 {
     protected string $baseUrl = 'https://graph.microsoft.com/v1.0';
+
     protected string $clientId;
+
     protected string $clientSecret;
+
     protected string $tenantId;
 
     public function __construct()
@@ -44,18 +46,18 @@ class TeamsService implements VideoConferencingInterface
         ];
 
         $response = Http::withHeaders([
-            'Authorization' => 'Bearer ' . $this->getAccessToken(),
+            'Authorization' => 'Bearer '.$this->getAccessToken(),
             'Content-Type' => 'application/json',
-        ])->post($this->baseUrl . '/me/events', $meeting);
+        ])->post($this->baseUrl.'/me/events', $meeting);
 
-        if (!$response->successful()) {
-            throw new Exception('Failed to create Teams meeting: ' . $response->body());
+        if (! $response->successful()) {
+            throw new Exception('Failed to create Teams meeting: '.$response->body());
         }
 
         $createdEvent = $response->json();
         $onlineMeeting = $createdEvent['onlineMeeting'] ?? null;
 
-        if (!$onlineMeeting) {
+        if (! $onlineMeeting) {
             throw new Exception('Failed to create Teams online meeting data');
         }
 
@@ -96,12 +98,12 @@ class TeamsService implements VideoConferencingInterface
         ];
 
         $response = Http::withHeaders([
-            'Authorization' => 'Bearer ' . $this->getAccessToken(),
+            'Authorization' => 'Bearer '.$this->getAccessToken(),
             'Content-Type' => 'application/json',
-        ])->patch($this->baseUrl . '/me/events/' . $meetingData['meeting_id'], $meeting);
+        ])->patch($this->baseUrl.'/me/events/'.$meetingData['meeting_id'], $meeting);
 
-        if (!$response->successful()) {
-            throw new Exception('Failed to update Teams meeting: ' . $response->body());
+        if (! $response->successful()) {
+            throw new Exception('Failed to update Teams meeting: '.$response->body());
         }
 
         return $this->getMeetingDetails($meetingData['meeting_id']) ?? [];
@@ -112,8 +114,8 @@ class TeamsService implements VideoConferencingInterface
         $this->validateConfiguration();
 
         $response = Http::withHeaders([
-            'Authorization' => 'Bearer ' . $this->getAccessToken(),
-        ])->delete($this->baseUrl . '/me/events/' . $meetingId);
+            'Authorization' => 'Bearer '.$this->getAccessToken(),
+        ])->delete($this->baseUrl.'/me/events/'.$meetingId);
 
         return $response->successful();
     }
@@ -123,17 +125,17 @@ class TeamsService implements VideoConferencingInterface
         $this->validateConfiguration();
 
         $response = Http::withHeaders([
-            'Authorization' => 'Bearer ' . $this->getAccessToken(),
-        ])->get($this->baseUrl . '/me/events/' . $meetingId);
+            'Authorization' => 'Bearer '.$this->getAccessToken(),
+        ])->get($this->baseUrl.'/me/events/'.$meetingId);
 
-        if (!$response->successful()) {
+        if (! $response->successful()) {
             return null;
         }
 
         $event = $response->json();
         $onlineMeeting = $event['onlineMeeting'] ?? null;
 
-        if (!$onlineMeeting) {
+        if (! $onlineMeeting) {
             return null;
         }
 
@@ -159,17 +161,17 @@ class TeamsService implements VideoConferencingInterface
         $this->validateConfiguration();
 
         $response = Http::withHeaders([
-            'Authorization' => 'Bearer ' . $this->getAccessToken(),
-        ])->get($this->baseUrl . '/me/events/' . $meetingId);
+            'Authorization' => 'Bearer '.$this->getAccessToken(),
+        ])->get($this->baseUrl.'/me/events/'.$meetingId);
 
-        if (!$response->successful()) {
+        if (! $response->successful()) {
             return [];
         }
 
         $event = $response->json();
         $attendees = $event['attendees'] ?? [];
 
-        return array_map(fn(array $attendee) => [
+        return array_map(fn (array $attendee) => [
             'name' => $attendee['emailAddress']['name'] ?? $attendee['emailAddress']['address'],
             'email' => $attendee['emailAddress']['address'],
             'response_status' => $attendee['status']['response'] ?? 'none',
@@ -181,7 +183,7 @@ class TeamsService implements VideoConferencingInterface
     {
         $this->validateConfiguration();
 
-        $attendees = array_map(fn($email) => [
+        $attendees = array_map(fn ($email) => [
             'emailAddress' => [
                 'address' => $email,
                 'name' => $email,
@@ -190,10 +192,10 @@ class TeamsService implements VideoConferencingInterface
         ], $attendeeEmails);
 
         $response = Http::withHeaders([
-            'Authorization' => 'Bearer ' . $this->getAccessToken(),
-        ])->get($this->baseUrl . '/me/events/' . $meetingId);
+            'Authorization' => 'Bearer '.$this->getAccessToken(),
+        ])->get($this->baseUrl.'/me/events/'.$meetingId);
 
-        if (!$response->successful()) {
+        if (! $response->successful()) {
             return false;
         }
 
@@ -201,9 +203,9 @@ class TeamsService implements VideoConferencingInterface
         $event['attendees'] = array_merge($event['attendees'] ?? [], $attendees);
 
         $updateResponse = Http::withHeaders([
-            'Authorization' => 'Bearer ' . $this->getAccessToken(),
+            'Authorization' => 'Bearer '.$this->getAccessToken(),
             'Content-Type' => 'application/json',
-        ])->patch($this->baseUrl . '/me/events/' . $meetingId, [
+        ])->patch($this->baseUrl.'/me/events/'.$meetingId, [
             'attendees' => $event['attendees'],
         ]);
 
@@ -212,14 +214,14 @@ class TeamsService implements VideoConferencingInterface
 
     public function isConfigured(): bool
     {
-        return $this->clientId !== '' && $this->clientId !== '0' && 
-               ($this->clientSecret !== '' && $this->clientSecret !== '0') && 
+        return $this->clientId !== '' && $this->clientId !== '0' &&
+               ($this->clientSecret !== '' && $this->clientSecret !== '0') &&
                ($this->tenantId !== '' && $this->tenantId !== '0');
     }
 
     protected function validateConfiguration(): void
     {
-        if (!$this->isConfigured()) {
+        if (! $this->isConfigured()) {
             throw new Exception('Teams service is not properly configured. Please check your API credentials.');
         }
     }
@@ -233,11 +235,12 @@ class TeamsService implements VideoConferencingInterface
             'grant_type' => 'client_credentials',
         ]);
 
-        if (!$response->successful()) {
-            throw new Exception('Failed to get Teams access token: ' . $response->body());
+        if (! $response->successful()) {
+            throw new Exception('Failed to get Teams access token: '.$response->body());
         }
 
         $data = $response->json();
+
         return $data['access_token'];
     }
 }

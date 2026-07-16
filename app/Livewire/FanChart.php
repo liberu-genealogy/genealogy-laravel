@@ -2,8 +2,8 @@
 
 namespace App\Livewire;
 
-use Illuminate\Contracts\View\View;
 use App\Models\Person;
+use Illuminate\Contracts\View\View;
 use Livewire\Component;
 
 class FanChart extends Component
@@ -11,9 +11,13 @@ class FanChart extends Component
     protected string $view = 'livewire.fan-chart';
 
     public ?int $rootPersonId = null;
+
     public int $generations = 5;
+
     public bool $showNames = true;
+
     public bool $showDates = false;
+
     public string $colorScheme = 'generation';
 
     public function mount($rootPersonId = null, int $generations = 5): void
@@ -24,7 +28,7 @@ class FanChart extends Component
 
     public function getData(): array
     {
-        if (!$this->rootPersonId) {
+        if (! $this->rootPersonId) {
             return ['fanData' => [], 'rootPerson' => null];
         }
 
@@ -43,7 +47,7 @@ class FanChart extends Component
 
     private function buildFanData($person, $maxGenerations, int|float $generation = 0): array
     {
-        if (!$person || $generation >= $maxGenerations) {
+        if (! $person || $generation >= $maxGenerations) {
             return [];
         }
 
@@ -58,7 +62,7 @@ class FanChart extends Component
             'birth_year' => $person->birthday?->format('Y'),
             'death_year' => $person->deathday?->format('Y'),
             'generation' => $generation,
-            'children' => []
+            'children' => [],
         ];
         // include image URL when available
         $personData['image'] = method_exists($person, 'profileImageUrl') ? $person->profileImageUrl() : asset('images/default-avatar.svg');
@@ -93,13 +97,13 @@ class FanChart extends Component
 
     public function toggleNames(): void
     {
-        $this->showNames = !$this->showNames;
+        $this->showNames = ! $this->showNames;
         $this->dispatch('refreshFanChart');
     }
 
     public function toggleDates(): void
     {
-        $this->showDates = !$this->showDates;
+        $this->showDates = ! $this->showDates;
         $this->dispatch('refreshFanChart');
     }
 

@@ -2,10 +2,10 @@
 
 namespace App\Modules\DNA;
 
-use App\Modules\DNA\Services\DNAService;
-use App\Modules\DNA\Services\DNAMatchService;
-use Artisan;
 use App\Modules\BaseModule;
+use App\Modules\DNA\Services\DNAMatchService;
+use App\Modules\DNA\Services\DNAService;
+use Artisan;
 
 class DNAModule extends BaseModule
 {
@@ -42,9 +42,9 @@ class DNAModule extends BaseModule
      */
     protected function registerDNAServices(): void
     {
-        app()->singleton('genealogy.dna', fn($app) => new DNAService());
+        app()->singleton('genealogy.dna', fn ($app) => new DNAService);
 
-        app()->singleton('genealogy.dna.matcher', fn($app) => new DNAMatchService());
+        app()->singleton('genealogy.dna.matcher', fn ($app) => new DNAMatchService);
     }
 
     /**

@@ -40,12 +40,12 @@ class CompletenessService
         }
 
         return [
-            'generations'     => $generations,
-            'total_slots'     => $totalSlots,
-            'filled_slots'    => $stats['filled'],
+            'generations' => $generations,
+            'total_slots' => $totalSlots,
+            'filled_slots' => $stats['filled'],
             'missing_parents' => $stats['missing'],
-            'completeness'    => $totalSlots > 0 ? round($stats['filled'] / $totalSlots * 100, 1) : 0.0,
-            'root_person_id'  => $root?->id,
+            'completeness' => $totalSlots > 0 ? round($stats['filled'] / $totalSlots * 100, 1) : 0.0,
+            'root_person_id' => $root?->id,
         ];
     }
 
@@ -113,14 +113,14 @@ class CompletenessService
         return [
             'overall' => $this->percentage($withSource, $total),
             'persons' => [
-                'total'       => $personsTotal,
+                'total' => $personsTotal,
                 'with_source' => $personsWithSource,
-                'percentage'  => $this->percentage($personsWithSource, $personsTotal),
+                'percentage' => $this->percentage($personsWithSource, $personsTotal),
             ],
             'events' => [
-                'total'       => $eventsTotal,
+                'total' => $eventsTotal,
                 'with_source' => $eventsWithSource,
-                'percentage'  => $this->percentage($eventsWithSource, $eventsTotal),
+                'percentage' => $this->percentage($eventsWithSource, $eventsTotal),
             ],
         ];
     }

@@ -2,30 +2,28 @@
 
 namespace App\Modules\Person\Filament\Resources;
 
-use Filament\Schemas\Schema;
-use Filament\Schemas\Components\Section;
-use Filament\Schemas\Components\Grid;
-use Filament\Actions\EditAction;
-use Filament\Actions\DeleteAction;
-use Filament\Actions\BulkActionGroup;
-use Filament\Actions\DeleteBulkAction;
-use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\Select;
-use Filament\Forms\Components\Textarea;
-use Filament\Forms\Components\DatePicker;
-use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Columns\IconColumn;
-use Filament\Tables\Filters\SelectFilter;
-use Filament\Tables\Filters\TernaryFilter;
-use Filament\Tables\Filters\Filter;
-use App\Modules\Person\Filament\Resources\PersonResource\Pages\ListPersons;
+use App\Models\Family;
+use App\Models\Person;
 use App\Modules\Person\Filament\Resources\PersonResource\Pages\CreatePerson;
 use App\Modules\Person\Filament\Resources\PersonResource\Pages\EditPerson;
-use App\Models\Person;
-use App\Models\Family;
-use Filament\Forms;
+use App\Modules\Person\Filament\Resources\PersonResource\Pages\ListPersons;
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteAction;
+use Filament\Actions\DeleteBulkAction;
+use Filament\Actions\EditAction;
+use Filament\Forms\Components\DatePicker;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\TextInput;
 use Filament\Resources\Resource;
-use Filament\Tables;
+use Filament\Schemas\Components\Grid;
+use Filament\Schemas\Components\Section;
+use Filament\Schemas\Schema;
+use Filament\Tables\Columns\IconColumn;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\Filter;
+use Filament\Tables\Filters\SelectFilter;
+use Filament\Tables\Filters\TernaryFilter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 
@@ -35,10 +33,10 @@ class PersonResource extends Resource
     protected static ?string $model = Person::class;
 
     #[\Override]
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-user';
+    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-user';
 
     #[\Override]
-    protected static string | \UnitEnum | null $navigationGroup = 'Genealogy';
+    protected static string|\UnitEnum|null $navigationGroup = 'Genealogy';
 
     #[\Override]
     protected static ?string $navigationLabel = 'Persons';
@@ -90,6 +88,7 @@ class PersonResource extends Resource
                             ->options(Family::with(['husband', 'wife'])->get()->mapWithKeys(function ($family): array {
                                 $husbandName = $family->husband ? $family->husband->fullname() : 'Unknown';
                                 $wifeName = $family->wife ? $family->wife->fullname() : 'Unknown';
+
                                 return [$family->id => "{$husbandName} & {$wifeName}"];
                             }))
                             ->searchable(),
@@ -143,7 +142,7 @@ class PersonResource extends Resource
                 IconColumn::make('is_living')
                     ->label('Living')
                     ->boolean()
-                    ->getStateUsing(fn ($record): bool => !$record->deathday),
+                    ->getStateUsing(fn ($record): bool => ! $record->deathday),
                 TextColumn::make('childInFamily.husband.fullname')
                     ->label('Father')
                     ->limit(20),

@@ -51,7 +51,7 @@ class CreateDna extends CreateRecord
 
         if ($successCount === 0 || $firstDna === null) {
             Notification::make()
-                ->title('DNA import failed: ' . implode('; ', $errors))
+                ->title('DNA import failed: '.implode('; ', $errors))
                 ->danger()
                 ->send();
 
@@ -60,7 +60,7 @@ class CreateDna extends CreateRecord
 
         if ($errors !== []) {
             Notification::make()
-                ->title("Imported {$successCount} kit(s) with " . count($errors) . ' error(s)')
+                ->title("Imported {$successCount} kit(s) with ".count($errors).' error(s)')
                 ->warning()
                 ->send();
         } else {

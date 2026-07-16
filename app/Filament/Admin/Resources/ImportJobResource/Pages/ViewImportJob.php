@@ -48,14 +48,14 @@ class ViewImportJob extends ViewRecord
                                 TextEntry::make('status')
                                     ->badge()
                                     ->color(fn (?string $state): string => match ($state) {
-                                        'complete'   => 'success',
-                                        'failed'     => 'danger',
+                                        'complete' => 'success',
+                                        'failed' => 'danger',
                                         'processing' => 'info',
-                                        'queue'      => 'warning',
-                                        default      => 'gray',
+                                        'queue' => 'warning',
+                                        default => 'gray',
                                     }),
                                 TextEntry::make('progress')
-                                    ->formatStateUsing(fn (int $state): string => $state . '%'),
+                                    ->formatStateUsing(fn (int $state): string => $state.'%'),
                                 TextEntry::make('created_at')
                                     ->label('Queued At')
                                     ->dateTime(),

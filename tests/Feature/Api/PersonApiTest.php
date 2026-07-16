@@ -36,7 +36,7 @@ class PersonApiTest extends TestCase
         $response = $this->getJson('/api/people');
 
         $response->assertOk()
-                 ->assertJsonStructure(['data', 'meta', 'links']);
+            ->assertJsonStructure(['data', 'meta', 'links']);
     }
 
     public function test_index_search_parameter_is_accepted(): void
@@ -52,14 +52,14 @@ class PersonApiTest extends TestCase
         $payload = [
             'givn' => 'Jane',
             'surn' => 'Doe',
-            'sex'  => 'F',
+            'sex' => 'F',
             'name' => 'Jane Doe',
         ];
 
         $response = $this->postJson('/api/people', $payload);
 
         $response->assertCreated()
-                 ->assertJsonFragment(['givn' => 'Jane']);
+            ->assertJsonFragment(['givn' => 'Jane']);
 
         $this->assertDatabaseHas('people', ['givn' => 'Jane', 'surn' => 'Doe']);
     }
@@ -69,7 +69,7 @@ class PersonApiTest extends TestCase
         $response = $this->postJson('/api/people', ['givn' => 'Jane']);
 
         $response->assertUnprocessable()
-                 ->assertJsonValidationErrors(['sex']);
+            ->assertJsonValidationErrors(['sex']);
     }
 
     public function test_show_returns_person(): void
@@ -79,7 +79,7 @@ class PersonApiTest extends TestCase
         $response = $this->getJson("/api/people/{$person->id}");
 
         $response->assertOk()
-                 ->assertJsonFragment(['id' => $person->id]);
+            ->assertJsonFragment(['id' => $person->id]);
     }
 
     public function test_show_returns_404_for_unknown_person(): void
@@ -92,12 +92,12 @@ class PersonApiTest extends TestCase
         $person = Person::factory()->create(['givn' => 'Old']);
 
         $response = $this->putJson("/api/people/{$person->id}", [
-            'sex'  => $person->sex,
+            'sex' => $person->sex,
             'givn' => 'New',
         ]);
 
         $response->assertOk()
-                 ->assertJsonFragment(['givn' => 'New']);
+            ->assertJsonFragment(['givn' => 'New']);
 
         $this->assertDatabaseHas('people', ['id' => $person->id, 'givn' => 'New']);
     }

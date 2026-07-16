@@ -2,13 +2,13 @@
 
 namespace App\Filament\App\Resources\PersonResource\Pages;
 
-use Filament\Actions\DeleteAction;
 use App\Filament\App\Resources\PersonResource;
-use Filament\Actions;
-use Filament\Resources\Pages\EditRecord;
-use Filament\Actions\Action;
-use Filament\Forms\Components\Select;
 use App\Models\MediaObject;
+use Filament\Actions\Action;
+use Filament\Actions\DeleteAction;
+use Filament\Forms\Components\Select;
+use Filament\Resources\Pages\EditRecord;
+use Illuminate\Support\Facades\Storage;
 
 class EditPerson extends EditRecord
 {
@@ -36,12 +36,14 @@ class EditPerson extends EditRecord
                     $mediaId = $data['media_id'] ?? null;
                     if (! $mediaId) {
                         $this->notify('danger', 'No media selected.');
+
                         return;
                     }
 
                     $media = MediaObject::with('files')->find($mediaId);
                     if (! $media) {
                         $this->notify('danger', 'Selected media not found.');
+
                         return;
                     }
 
@@ -51,6 +53,7 @@ class EditPerson extends EditRecord
 
                     if (! $filePath) {
                         $this->notify('danger', 'Selected media has no associated file path.');
+
                         return;
                     }
 
@@ -68,7 +71,7 @@ class EditPerson extends EditRecord
                     } else {
                         // If it exists on the public disk, build a public URL
                         try {
-                            $disk = \Illuminate\Support\Facades\Storage::disk('public');
+                            $disk = Storage::disk('public');
                             if ($disk->exists($filePath)) {
                                 $url = $disk->url($filePath);
                             }

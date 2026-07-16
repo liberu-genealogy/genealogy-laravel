@@ -11,7 +11,7 @@ class FamilyTreeOverviewWidget extends Widget
     protected string $view = 'filament.app.widgets.family-tree-overview';
 
     #[\Override]
-    protected int | string | array $columnSpan = 'full';
+    protected int|string|array $columnSpan = 'full';
 
     #[\Override]
     protected static ?int $sort = 4;
@@ -40,14 +40,14 @@ class FamilyTreeOverviewWidget extends Widget
 
     private function buildMiniTree($person, $maxGenerations, int|float $currentGen = 1): array
     {
-        if (!$person || $currentGen > $maxGenerations) {
+        if (! $person || $currentGen > $maxGenerations) {
             return [];
         }
 
         $tree = [
             'person' => $person,
             'generation' => $currentGen,
-            'parents' => []
+            'parents' => [],
         ];
 
         if ($person->childInFamily) {
@@ -68,40 +68,40 @@ class FamilyTreeOverviewWidget extends Widget
         // Calculate actual depth by finding the deepest ancestor chain
         $maxDepth = 0;
         $people = Person::whereNotNull('child_in_family_id')->with('childInFamily')->get();
-        
+
         foreach ($people as $person) {
             $depth = $this->calculatePersonDepth($person);
             $maxDepth = max($maxDepth, $depth);
         }
-        
+
         return max($maxDepth, 1);
     }
-    
+
     private function calculatePersonDepth(Person $person, int $currentDepth = 1, array &$visited = []): int
     {
         // Prevent infinite loops in case of data issues
         if (in_array($person->id, $visited)) {
             return $currentDepth;
         }
-        
+
         $visited[] = $person->id;
-        
-        if (!$person->childInFamily) {
+
+        if (! $person->childInFamily) {
             return $currentDepth;
         }
-        
+
         $maxParentDepth = $currentDepth;
-        
+
         if ($person->childInFamily->husband) {
             $fatherDepth = $this->calculatePersonDepth($person->childInFamily->husband, $currentDepth + 1, $visited);
             $maxParentDepth = max($maxParentDepth, $fatherDepth);
         }
-        
+
         if ($person->childInFamily->wife) {
             $motherDepth = $this->calculatePersonDepth($person->childInFamily->wife, $currentDepth + 1, $visited);
             $maxParentDepth = max($maxParentDepth, $motherDepth);
         }
-        
+
         return $maxParentDepth;
     }
 }

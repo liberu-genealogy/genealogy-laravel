@@ -27,15 +27,15 @@ class DnaResourceTest extends TestCase
         $dna = Dna::factory()->create();
 
         $this->assertDatabaseHas('dnas', [
-            'id'            => $dna->id,
-            'name'          => $dna->name,
+            'id' => $dna->id,
+            'name' => $dna->name,
             'variable_name' => $dna->variable_name,
         ]);
     }
 
     public function test_model_class_is_dna(): void
     {
-        $this->assertEquals(\App\Models\Dna::class, DnaResource::getModel());
+        $this->assertEquals(Dna::class, DnaResource::getModel());
     }
 
     public function test_can_create_returns_true_for_authenticated_user_within_upload_limit(): void

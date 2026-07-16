@@ -13,7 +13,7 @@ class TreeTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function testTreeHasRootPersonRelationship(): void
+    public function test_tree_has_root_person_relationship(): void
     {
         $person = Person::factory()->create();
         $user = User::factory()->create();
@@ -26,7 +26,7 @@ class TreeTest extends TestCase
         $this->assertEquals($person->id, $tree->rootPerson->id);
     }
 
-    public function testTreeHasUserRelationship(): void
+    public function test_tree_has_user_relationship(): void
     {
         $user = User::factory()->create();
         $tree = Tree::factory()->create(['user_id' => $user->id]);
@@ -35,7 +35,7 @@ class TreeTest extends TestCase
         $this->assertEquals($user->id, $tree->user->id);
     }
 
-    public function testGetStatsReturnsEmptyStatsWhenNoRootPerson(): void
+    public function test_get_stats_returns_empty_stats_when_no_root_person(): void
     {
         $user = User::factory()->create();
         $tree = Tree::factory()->create([
@@ -51,15 +51,15 @@ class TreeTest extends TestCase
         $this->assertEquals(0, $stats['total_generations']);
     }
 
-    public function testGetStatsReturnsCorrectStatsWithRootPerson(): void
+    public function test_get_stats_returns_correct_stats_with_root_person(): void
     {
         $user = User::factory()->create();
-        
+
         // Create a simple family tree
         $family = Family::factory()->create();
         $father = Person::factory()->create(['sex' => 'M']);
         $mother = Person::factory()->create(['sex' => 'F']);
-        
+
         $family->update([
             'husband_id' => $father->id,
             'wife_id' => $mother->id,
@@ -83,7 +83,7 @@ class TreeTest extends TestCase
         $this->assertGreaterThanOrEqual(2, $stats['total_ancestors']);
     }
 
-    public function testTreeCanBeCreatedWithRootPersonId(): void
+    public function test_tree_can_be_created_with_root_person_id(): void
     {
         $user = User::factory()->create();
         $person = Person::factory()->create();
@@ -101,7 +101,7 @@ class TreeTest extends TestCase
         ]);
     }
 
-    public function testTreeRootPersonCanBeNull(): void
+    public function test_tree_root_person_can_be_null(): void
     {
         $user = User::factory()->create();
 

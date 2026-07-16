@@ -11,9 +11,7 @@ class DnaMatchFoundNotification extends Notification implements ShouldQueue
 {
     use Queueable;
 
-    public function __construct(protected int $matchCount)
-    {
-    }
+    public function __construct(protected int $matchCount) {}
 
     /**
      * @return array<int, string>

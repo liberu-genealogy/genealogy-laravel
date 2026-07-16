@@ -3,6 +3,8 @@
 namespace App\Livewire;
 
 use App\Models\Person;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Livewire\Component;
 
 class DeVilliersReport extends Component
@@ -11,7 +13,7 @@ class DeVilliersReport extends Component
 
     public $reportData = [];
 
-    public function render(): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+    public function render(): Factory|View
     {
         return view('livewire.devilliers-report');
     }

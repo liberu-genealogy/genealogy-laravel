@@ -8,7 +8,7 @@ use App\Models\Subn;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Subn>
+ * @extends Factory<Subn>
  */
 class SubnFactory extends Factory
 {
@@ -35,7 +35,7 @@ class SubnFactory extends Factory
             'ance' => fake()->word(),
             'desc' => fake()->randomDigit(),
             'ordi' => fake()->word(),
-            'rin'  => fake()->word(),
+            'rin' => fake()->word(),
         ];
     }
 }

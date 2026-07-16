@@ -7,7 +7,7 @@ use App\Models\Subm;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Subm>
+ * @extends Factory<Subm>
  */
 class SubmFactory extends Factory
 {
@@ -27,17 +27,17 @@ class SubmFactory extends Factory
     public function definition()
     {
         return [
-            'group'      => fake()->word(),
-            'gid'        => fake()->randomDigit(),
-            'name'       => fake()->word(),
-            'addr_id'    => Addr::create()->id,
-            'rin'        => fake()->word(),
-            'rfn'        => fake()->word(),
-            'lang'       => fake()->languageCode(),
-            'phon'       => fake()->phoneNumber(),
-            'email'      => fake()->email(),
-            'fax'        => fake()->word(),
-            'www'        => fake()->url(),
+            'group' => fake()->word(),
+            'gid' => fake()->randomDigit(),
+            'name' => fake()->word(),
+            'addr_id' => Addr::create()->id,
+            'rin' => fake()->word(),
+            'rfn' => fake()->word(),
+            'lang' => fake()->languageCode(),
+            'phon' => fake()->phoneNumber(),
+            'email' => fake()->email(),
+            'fax' => fake()->word(),
+            'www' => fake()->url(),
             'created_at' => fake()->date(),
         ];
     }

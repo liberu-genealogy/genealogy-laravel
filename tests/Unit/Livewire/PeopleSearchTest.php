@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\Unit\Livewire;
 
 use App\Livewire\PeopleSearch;
+use Illuminate\Support\Collection;
 use Livewire\Livewire;
 use Tests\TestCase;
 
@@ -22,6 +23,6 @@ class PeopleSearchTest extends TestCase
         Livewire::test(PeopleSearch::class)
             ->assertViewHas('results', fn ($results): bool =>
                 // Assuming the database or mocked data setup, we expect results to be an instance of a collection or an array.
-                is_array($results) || $results instanceof \Illuminate\Support\Collection);
+                is_array($results) || $results instanceof Collection);
     }
 }

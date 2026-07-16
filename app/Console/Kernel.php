@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Console;
 
+use App\Jobs\ScanForDuplicatePersons;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
-use App\Jobs\ScanForDuplicatePersons;
 
 class Kernel extends ConsoleKernel
 {

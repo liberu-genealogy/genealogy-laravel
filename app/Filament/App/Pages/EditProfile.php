@@ -4,23 +4,18 @@ declare(strict_types=1);
 
 namespace App\Filament\App\Pages;
 
-use Override;
-use BackedEnum;
-use App\Models\User;
-use Filament\Facades\Filament;
-use Filament\Forms\Components\TextInput;
 use Filament\Pages\Page;
-use Illuminate\Support\Facades\Auth;
+use Override;
 
 class EditProfile extends Page
 {
-    #[\Override]
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-user-circle';
+    #[Override]
+    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-user-circle';
 
-    #[\Override]
+    #[Override]
     protected string $view = 'filament.pages.edit-profile';
 
-    #[\Override]
+    #[Override]
     protected static ?string $navigationLabel = 'Profile';
 
     #[Override]

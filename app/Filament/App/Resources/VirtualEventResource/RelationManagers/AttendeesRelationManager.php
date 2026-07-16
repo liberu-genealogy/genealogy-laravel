@@ -2,37 +2,32 @@
 
 namespace App\Filament\App\Resources\VirtualEventResource\RelationManagers;
 
-use Filament\Schemas\Components\Section;
-use Filament\Forms\Components\Select;
-use Filament\Schemas\Components\Grid;
-use Filament\Forms\Components\TextInput;
+use App\Models\Person;
+use App\Models\User;
+use App\Models\VirtualEventAttendee;
+use Filament\Actions\Action;
+use Filament\Actions\BulkAction;
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\CreateAction;
+use Filament\Actions\DeleteAction;
+use Filament\Actions\DeleteBulkAction;
+use Filament\Actions\EditAction;
 use Filament\Forms\Components\DateTimePicker;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\TagsInput;
 use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
-use Filament\Tables\Columns\TextColumn;
-
+use Filament\Notifications\Notification;
+use Filament\Resources\RelationManagers\RelationManager;
+use Filament\Schemas\Components\Grid;
+use Filament\Schemas\Components\Section;
+use Filament\Schemas\Schema;
 use Filament\Tables\Columns\IconColumn;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Filters\TernaryFilter;
-use Filament\Actions\CreateAction;
-use Filament\Actions\Action;
-use Filament\Forms\Components\TagsInput;
-use Filament\Actions\EditAction;
-use Filament\Actions\DeleteAction;
-use Filament\Actions\BulkActionGroup;
-use Filament\Actions\BulkAction;
-use Filament\Actions\DeleteBulkAction;
-use App\Models\VirtualEventAttendee;
-use App\Models\User;
-use App\Models\Person;
-use Filament\Forms;
-use Filament\Schemas\Schema;
-use Filament\Resources\RelationManagers\RelationManager;
-use Filament\Tables;
 use Filament\Tables\Table;
-use Filament\Notifications\Notification;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class AttendeesRelationManager extends RelationManager
 {
@@ -73,18 +68,18 @@ class AttendeesRelationManager extends RelationManager
                                     $set('guest_email', null);
                                 }
                             })
-                            ->visible(fn (callable $get): bool => !$get('user_id')),
+                            ->visible(fn (callable $get): bool => ! $get('user_id')),
                         Grid::make(2)
                             ->schema([
                                 TextInput::make('guest_name')
                                     ->label('Guest Name')
                                     ->maxLength(255)
-                                    ->visible(fn (callable $get): bool => !$get('user_id') && !$get('person_id')),
+                                    ->visible(fn (callable $get): bool => ! $get('user_id') && ! $get('person_id')),
                                 TextInput::make('guest_email')
                                     ->label('Guest Email')
                                     ->email()
                                     ->maxLength(255)
-                                    ->visible(fn (callable $get): bool => !$get('user_id') && !$get('person_id')),
+                                    ->visible(fn (callable $get): bool => ! $get('user_id') && ! $get('person_id')),
                             ]),
                     ]),
 
@@ -249,9 +244,9 @@ class AttendeesRelationManager extends RelationManager
                         $added = 0;
 
                         // Add selected users
-                        if (!empty($data['users'])) {
+                        if (! empty($data['users'])) {
                             foreach ($data['users'] as $userId) {
-                                if (!$event->hasUser(User::find($userId))) {
+                                if (! $event->hasUser(User::find($userId))) {
                                     VirtualEventAttendee::create([
                                         'virtual_event_id' => $event->id,
                                         'user_id' => $userId,
@@ -263,9 +258,9 @@ class AttendeesRelationManager extends RelationManager
                         }
 
                         // Add selected people
-                        if (!empty($data['people'])) {
+                        if (! empty($data['people'])) {
                             foreach ($data['people'] as $personId) {
-                                if (!$event->hasPerson(Person::find($personId))) {
+                                if (! $event->hasPerson(Person::find($personId))) {
                                     VirtualEventAttendee::create([
                                         'virtual_event_id' => $event->id,
                                         'person_id' => $personId,
@@ -277,7 +272,7 @@ class AttendeesRelationManager extends RelationManager
                         }
 
                         // Add guest emails
-                        if (!empty($data['guest_emails'])) {
+                        if (! empty($data['guest_emails'])) {
                             foreach ($data['guest_emails'] as $email) {
                                 VirtualEventAttendee::create([
                                     'virtual_event_id' => $event->id,
@@ -311,7 +306,7 @@ class AttendeesRelationManager extends RelationManager
                     ->icon('heroicon-o-user-check')
                     ->color('primary')
                     ->action(fn (VirtualEventAttendee $record) => $record->markAsAttended())
-                    ->visible(fn (VirtualEventAttendee $record): bool => !$record->attended && ($this->getOwnerRecord()->is_past || $this->getOwnerRecord()->is_active)),
+                    ->visible(fn (VirtualEventAttendee $record): bool => ! $record->attended && ($this->getOwnerRecord()->is_past || $this->getOwnerRecord()->is_active)),
                 EditAction::make(),
                 DeleteAction::make(),
             ])

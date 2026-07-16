@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 
 // use Laravel\Scout\Searchable;
 
-//TODO: investigate why migration doesn't exist
+// TODO: investigate why migration doesn't exist
 class Geneanum extends Model
 {
     use HasFactory;

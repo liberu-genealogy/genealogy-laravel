@@ -85,7 +85,7 @@ class UserPoint extends Model
             return $this->description;
         }
 
-        return match($this->activity_type) {
+        return match ($this->activity_type) {
             'person_added' => 'Added a new person to the family tree',
             'family_created' => 'Created a new family relationship',
             'event_added' => 'Added an event to a person\'s timeline',
@@ -103,7 +103,7 @@ class UserPoint extends Model
      */
     public function getActivityIcon(): string
     {
-        return match($this->activity_type) {
+        return match ($this->activity_type) {
             'person_added' => '👤',
             'family_created' => '👨‍👩‍👧‍👦',
             'event_added' => '📅',

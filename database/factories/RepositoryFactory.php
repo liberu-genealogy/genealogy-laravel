@@ -8,7 +8,7 @@ use App\Models\Repository;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Repository>
+ * @extends Factory<Repository>
  */
 class RepositoryFactory extends Factory
 {
@@ -28,8 +28,8 @@ class RepositoryFactory extends Factory
     public function definition()
     {
         return [
-            'repo'    => fake()->word(),
-            'name'    => fake()->word(),
+            'repo' => fake()->word(),
+            'name' => fake()->word(),
             'addr_id' => Addr::create([
                 'adr1' => fake()->address(),
                 'adr2' => fake()->address(),
@@ -38,13 +38,13 @@ class RepositoryFactory extends Factory
                 'post' => fake()->postcode(),
                 'ctry' => fake()->countryCode(),
             ])->id,
-            'date'        => fake()->date(),
-            'rin'         => fake()->word(),
-            'phon'        => fake()->phoneNumber(),
-            'email'       => fake()->email(),
-            'fax'         => fake()->phoneNumber(),
-            'www'         => fake()->url(),
-            'name'        => fake()->name(),
+            'date' => fake()->date(),
+            'rin' => fake()->word(),
+            'phon' => fake()->phoneNumber(),
+            'email' => fake()->email(),
+            'fax' => fake()->phoneNumber(),
+            'www' => fake()->url(),
+            'name' => fake()->name(),
             'description' => fake()->text(50),
             //  'type_id' => Type::create([
             //     'name' => $this->faker->word(),

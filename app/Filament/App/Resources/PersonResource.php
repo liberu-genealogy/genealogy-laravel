@@ -4,48 +4,41 @@ declare(strict_types=1);
 
 namespace App\Filament\App\Resources;
 
-use Override;
-use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\Select;
-use Filament\Forms\Components\DateTimePicker;
-use Filament\Schemas\Components\Section;
-use Filament\Schemas\Components\Grid;
-use Filament\Tables\Columns\TextColumn;
-use Filament\Actions\EditAction;
-use Filament\Actions\BulkActionGroup;
-use Filament\Actions\DeleteBulkAction;
-use App\Filament\App\Resources\PersonResource\Pages\ListPeople;
+use App\Enums\PedigreeType;
 use App\Filament\App\Resources\PersonResource\Pages\CreatePerson;
 use App\Filament\App\Resources\PersonResource\Pages\EditPerson;
-use UnitEnum;
-use BackedEnum;
-use App\Filament\App\Resources\PersonResource\Pages;
+use App\Filament\App\Resources\PersonResource\Pages\ListPeople;
 use App\Models\Person;
-use Filament\Forms;
-use Filament\Forms\Form;
-use App\Filament\App\Resources\AppResource;
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteBulkAction;
+use Filament\Actions\EditAction;
+use Filament\Forms\Components\DateTimePicker;
+use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\TextInput;
+use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
 use Filament\Tables;
-use Filament\Actions;
-use Filament\Tables\Table;
-use Filament\Forms\Components\FileUpload;
 use Filament\Tables\Columns\ImageColumn;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Table;
+use Override;
 
 class PersonResource extends AppResource
 {
-    #[\Override]
+    #[Override]
     protected static ?string $model = Person::class;
 
-    #[\Override]
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-user-plus';
+    #[Override]
+    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-user-plus';
 
-    #[\Override]
+    #[Override]
     protected static ?string $navigationLabel = 'People';
 
-    #[\Override]
-    protected static string | \UnitEnum | null $navigationGroup = '👥 Family Tree';
+    #[Override]
+    protected static string|\UnitEnum|null $navigationGroup = '👥 Family Tree';
 
-    #[\Override]
+    #[Override]
     protected static ?int $navigationSort = 1;
 
     // protected static ?string $tenantRelationshipName = 'People';
@@ -87,7 +80,7 @@ class PersonResource extends AppResource
                         DateTimePicker::make('burial_day')->label('Burial Date'),
                         TextInput::make('child_in_family_id')->label('Child in Family ID'),
                         Select::make('pedigree')
-                            ->options(\App\Enums\PedigreeType::options())
+                            ->options(PedigreeType::options())
                             ->label('Pedigree')
                             ->placeholder('Biological')
                             ->helperText('Link type to the child-in-family. Leave blank for biological.'),
@@ -161,13 +154,13 @@ class PersonResource extends AppResource
         ];
     }
 
-    #[\Override]
+    #[Override]
     public static function getPages(): array
     {
         return [
-            'index'  => ListPeople::route('/'),
+            'index' => ListPeople::route('/'),
             'create' => CreatePerson::route('/create'),
-            'edit'   => EditPerson::route('/{record}/edit'),
+            'edit' => EditPerson::route('/{record}/edit'),
         ];
     }
 }

@@ -4,43 +4,35 @@ declare(strict_types=1);
 
 namespace App\Filament\App\Resources;
 
-use Override;
-use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\Select;
-use Filament\Forms\Components\Textarea;
-use Filament\Forms\Components\DateTimePicker;
-use Filament\Tables\Columns\TextColumn;
-use Filament\Actions\EditAction;
-use Filament\Actions\BulkActionGroup;
-use Filament\Actions\DeleteBulkAction;
-use App\Filament\App\Resources\RepositoryResource\Pages\ListRepositories;
 use App\Filament\App\Resources\RepositoryResource\Pages\CreateRepository;
 use App\Filament\App\Resources\RepositoryResource\Pages\EditRepository;
-use UnitEnum;
-use BackedEnum;
-use App\Filament\App\Resources\RepositoryResource\Pages;
+use App\Filament\App\Resources\RepositoryResource\Pages\ListRepositories;
 use App\Models\Repository;
-use Filament\Forms;
-use Filament\Forms\Form;
-use App\Filament\App\Resources\AppResource;
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteBulkAction;
+use Filament\Actions\EditAction;
+use Filament\Forms\Components\DateTimePicker;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Schema;
-use Filament\Tables;
-use Filament\Actions;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use Override;
 
 final class RepositoryResource extends AppResource
 {
-    #[\Override]
+    #[Override]
     protected static ?string $model = Repository::class;
 
-    #[\Override]
+    #[Override]
     protected static ?string $navigationLabel = 'Repository';
 
-    #[\Override]
-    protected static string | \UnitEnum | null $navigationGroup = '🔍 Research & Analysis';
+    #[Override]
+    protected static string|\UnitEnum|null $navigationGroup = '🔍 Research & Analysis';
 
-    #[\Override]
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-building-library';
+    #[Override]
+    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-building-library';
 
     #[Override]
     public static function form(Schema $schema): Schema
@@ -144,7 +136,7 @@ final class RepositoryResource extends AppResource
         return [];
     }
 
-    #[\Override]
+    #[Override]
     public static function getPages(): array
     {
         return [

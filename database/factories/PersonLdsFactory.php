@@ -8,7 +8,7 @@ use App\Models\PersonLds;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\PersonLds>
+ * @extends Factory<PersonLds>
  */
 class PersonLdsFactory extends Factory
 {
@@ -28,13 +28,13 @@ class PersonLdsFactory extends Factory
     public function definition()
     {
         return [
-            'group'     => fake()->word(),
-            'gid'       => fake()->randomDigit(),
-            'type'      => fake()->word(),
-            'stat'      => fake()->word(),
-            'date'      => fake()->date(),
-            'plac'      => fake()->word(),
-            'temp'      => fake()->text(50),
+            'group' => fake()->word(),
+            'gid' => fake()->randomDigit(),
+            'type' => fake()->word(),
+            'stat' => fake()->word(),
+            'date' => fake()->date(),
+            'plac' => fake()->word(),
+            'temp' => fake()->text(50),
             'slac_famc' => fake()->word(),
         ];
     }

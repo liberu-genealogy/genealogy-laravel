@@ -8,12 +8,10 @@ class CreateSubmsTable extends Migration
 {
     /**
      * Run the migrations.
-     *
-     * @return void
      */
     public function up(): void
     {
-        if (!Schema::hasTable('subms')) {
+        if (! Schema::hasTable('subms')) {
             Schema::create('subms', function (Blueprint $table): void {
                 $table->bigIncrements('id');
                 $table->string('group')->nullable();
@@ -35,8 +33,6 @@ class CreateSubmsTable extends Migration
 
     /**
      * Reverse the migrations.
-     *
-     * @return void
      */
     public function down(): void
     {

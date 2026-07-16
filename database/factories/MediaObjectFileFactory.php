@@ -9,7 +9,7 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\MediaObjectFile>
+ * @extends Factory<MediaObjectFile>
  */
 class MediaObjectFileFactory extends Factory
 {
@@ -29,11 +29,11 @@ class MediaObjectFileFactory extends Factory
     public function definition()
     {
         return [
-            'group'      => fake()->word(),
-            'gid'        => fake()->randomElement(['1', '2']),
-            'form'       => fake()->word(),
-            'medi'       => fake()->word(),
-            'type'       => fake()->word(),
+            'group' => fake()->word(),
+            'gid' => fake()->randomElement(['1', '2']),
+            'form' => fake()->word(),
+            'medi' => fake()->word(),
+            'type' => fake()->word(),
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ];

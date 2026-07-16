@@ -4,39 +4,34 @@ declare(strict_types=1);
 
 namespace App\Filament\App\Resources;
 
-use Override;
-use Filament\Forms\Components\TextInput;
-use Filament\Tables\Columns\TextColumn;
-use Filament\Actions\EditAction;
-use Filament\Actions\BulkActionGroup;
-use Filament\Actions\DeleteBulkAction;
-use App\Filament\App\Resources\RefnResource\Pages\ListRefns;
 use App\Filament\App\Resources\RefnResource\Pages\CreateRefn;
 use App\Filament\App\Resources\RefnResource\Pages\EditRefn;
-use BackedEnum;
-use App\Filament\App\Resources\RefnResource\Pages;
+use App\Filament\App\Resources\RefnResource\Pages\ListRefns;
 use App\Models\Refn;
-use Filament\Forms;
-use Filament\Forms\Form;
-use App\Filament\App\Resources\AppResource;
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteBulkAction;
+use Filament\Actions\EditAction;
+use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Schema;
-use Filament\Tables;
-use Filament\Actions;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use Override;
 
 class RefnResource extends AppResource
 {
-    #[\Override]
+    #[Override]
     protected static ?string $model = Refn::class;
 
-    #[\Override]
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-hashtag';
-    #[\Override]
-    protected static ?string $navigationLabel = 'Reference Numbers';
-    #[\Override]
-    protected static string | \UnitEnum | null $navigationGroup = "🛠️ Data Management";
+    #[Override]
+    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-hashtag';
 
-    #[\Override]
+    #[Override]
+    protected static ?string $navigationLabel = 'Reference Numbers';
+
+    #[Override]
+    protected static string|\UnitEnum|null $navigationGroup = '🛠️ Data Management';
+
+    #[Override]
     protected static ?int $navigationSort = 3;
 
     #[Override]
@@ -99,13 +94,13 @@ class RefnResource extends AppResource
         ];
     }
 
-    #[\Override]
+    #[Override]
     public static function getPages(): array
     {
         return [
-            'index'  => ListRefns::route('/'),
+            'index' => ListRefns::route('/'),
             'create' => CreateRefn::route('/create'),
-            'edit'   => EditRefn::route('/{record}/edit'),
+            'edit' => EditRefn::route('/{record}/edit'),
         ];
     }
 }

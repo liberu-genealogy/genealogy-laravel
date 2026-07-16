@@ -2,8 +2,8 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Seeder;
 use App\Models\Menu;
+use Illuminate\Database\Seeder;
 
 class MenuSeeder extends Seeder
 {
@@ -13,7 +13,7 @@ class MenuSeeder extends Seeder
             [
                 'name' => 'Home',
                 'url' => '/',
-                'order' => 1
+                'order' => 1,
             ],
             [
                 'name' => 'Properties',
@@ -22,7 +22,7 @@ class MenuSeeder extends Seeder
                 'children' => [
                     ['name' => 'For Sale', 'url' => '/properties/for-sale', 'order' => 1],
                     ['name' => 'For Rent', 'url' => '/properties/for-rent', 'order' => 2],
-                ]
+                ],
             ],
             [
                 'name' => 'Services',
@@ -32,22 +32,22 @@ class MenuSeeder extends Seeder
                     ['name' => 'Buying', 'url' => '/services/buying', 'order' => 1],
                     ['name' => 'Selling', 'url' => '/services/selling', 'order' => 2],
                     ['name' => 'Renting', 'url' => '/services/renting', 'order' => 3],
-                ]
+                ],
             ],
             [
                 'name' => 'About',
                 'url' => '/about',
-                'order' => 4
+                'order' => 4,
             ],
             [
                 'name' => 'Contact',
                 'url' => '/contact',
-                'order' => 5
+                'order' => 5,
             ],
             [
                 'name' => 'Calculators',
                 'url' => '/calculators',
-                'order' => 6
+                'order' => 6,
             ],
         ];
 

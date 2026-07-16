@@ -40,6 +40,7 @@ class TrialExpiredPage extends Page
         // If premium is globally enabled or user is actively premium, go to dashboard
         if (config('premium.enabled') || $user->isPremium()) {
             $this->redirect(route('filament.app.pages.premium-dashboard', ['tenant' => auth()->user()->currentTeam]));
+
             return;
         }
 

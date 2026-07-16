@@ -4,20 +4,17 @@ declare(strict_types=1);
 
 namespace App\Filament\App\Resources;
 
-use Filament\Schemas\Schema;
-use Filament\Tables\Table;
-use App\Filament\App\Resources\ResearchSpaceResource\Pages\ListResearchSpaces;
 use App\Filament\App\Resources\ResearchSpaceResource\Pages\CreateResearchSpace;
 use App\Filament\App\Resources\ResearchSpaceResource\Pages\EditResearchSpace;
-use App\Filament\App\Resources\ResearchSpaceResource\Pages;
+use App\Filament\App\Resources\ResearchSpaceResource\Pages\ListResearchSpaces;
 use App\Models\ResearchSpace;
-use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
-use App\Filament\App\Resources\AppResource;
-use Filament\Tables;
-use Filament\Tables\Columns\TextColumn;
+use Filament\Schemas\Schema;
 use Filament\Tables\Columns\IconColumn;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Table;
 
 class ResearchSpaceResource extends AppResource
 {
@@ -25,10 +22,10 @@ class ResearchSpaceResource extends AppResource
     protected static ?string $model = ResearchSpace::class;
 
     #[\Override]
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-users';
+    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-users';
 
     #[\Override]
-    protected static string | \UnitEnum | null $navigationGroup = '📋 Research Management';
+    protected static string|\UnitEnum|null $navigationGroup = '📋 Research Management';
 
     #[\Override]
     protected static ?string $navigationLabel = 'Research Spaces';

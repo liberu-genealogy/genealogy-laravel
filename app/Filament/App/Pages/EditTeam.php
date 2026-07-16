@@ -4,21 +4,17 @@ declare(strict_types=1);
 
 namespace App\Filament\App\Pages;
 
-use Filament\Infolists\Components\TextEntry;
-use Override;
-use App\Models\Team;
-use App\Models\User;
-use Filament\Facades\Filament;
-use Filament\Forms\Components\TextInput;
-use Filament\Pages\Tenancy\EditTenantProfile;
-use Filament\Forms\Components\Placeholder;
 use App\Services\SubscriptionService;
-use Filament\Schemas\Schema;
+use Filament\Facades\Filament;
+use Filament\Infolists\Components\TextEntry;
+use Filament\Pages\Tenancy\EditTenantProfile;
 use Filament\Schemas\Components\Section;
+use Filament\Schemas\Schema;
+use Override;
 
 class EditTeam extends EditTenantProfile
 {
-    #[\Override]
+    #[Override]
     protected string $view = 'filament.pages.edit-team';
 
     public static function getLabel(): string
@@ -31,6 +27,7 @@ class EditTeam extends EditTenantProfile
     {
         $team = Filament::getTenant();
         $subscriptionService = app(SubscriptionService::class);
+
         return $schema
             ->components([
                 // Section::make('Subscription')

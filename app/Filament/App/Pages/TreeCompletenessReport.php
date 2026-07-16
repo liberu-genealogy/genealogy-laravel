@@ -17,13 +17,13 @@ class TreeCompletenessReport extends Page
     protected static ?string $title = 'Tree Completeness';
 
     #[\Override]
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-chart-pie';
+    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-chart-pie';
 
     #[\Override]
     protected static ?string $navigationLabel = 'Tree Completeness';
 
     #[\Override]
-    protected static string | \UnitEnum | null $navigationGroup = '📄 Reports';
+    protected static string|\UnitEnum|null $navigationGroup = '📄 Reports';
 
     /**
      * Completeness stats for every tree in the current tenant.
@@ -36,7 +36,7 @@ class TreeCompletenessReport extends Page
 
         return Tree::all()
             ->map(fn (Tree $tree): array => [
-                'tree'  => $tree,
+                'tree' => $tree,
                 'stats' => $service->treeCompleteness($tree),
             ])
             ->all();

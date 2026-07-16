@@ -2,10 +2,9 @@
 
 namespace App\Filament\App\Widgets;
 
-use App\Models\Person;
 use App\Models\Family;
+use App\Models\Person;
 use Filament\Widgets\Widget;
-use Illuminate\Support\Collection;
 
 class RecentActivityWidget extends Widget
 {
@@ -13,7 +12,7 @@ class RecentActivityWidget extends Widget
     protected string $view = 'filament.app.widgets.recent-activity';
 
     #[\Override]
-    protected int | string | array $columnSpan = [
+    protected int|string|array $columnSpan = [
         'md' => 2,
         'xl' => 1,
     ];
@@ -27,7 +26,7 @@ class RecentActivityWidget extends Widget
         $recentPeople = Person::latest()
             ->limit(5)
             ->get()
-            ->map(fn($person) => [
+            ->map(fn ($person) => [
                 'type' => 'person',
                 'title' => $person->fullname(),
                 'subtitle' => 'Person added',
@@ -39,9 +38,9 @@ class RecentActivityWidget extends Widget
         $recentFamilies = Family::latest()
             ->limit(3)
             ->get()
-            ->map(fn($family) => [
+            ->map(fn ($family) => [
                 'type' => 'family',
-                'title' => 'Family #' . $family->id,
+                'title' => 'Family #'.$family->id,
                 'subtitle' => 'Family created',
                 'date' => $family->created_at,
                 'icon' => 'heroicon-o-home',
@@ -53,7 +52,7 @@ class RecentActivityWidget extends Widget
             ->take(8);
 
         return [
-            'activities' => $activities
+            'activities' => $activities,
         ];
     }
 }

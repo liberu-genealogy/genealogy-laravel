@@ -19,29 +19,29 @@ class AncestryProviderTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
-        
+
         Config::set('services.ancestry.api_key', 'test-api-key');
         Config::set('services.ancestry.base_url', 'https://api.ancestry.test/v1');
         Config::set('services.ancestry.timeout', 30);
-        
-        $this->provider = new AncestryProvider();
+
+        $this->provider = new AncestryProvider;
     }
 
-    public function testIsConfiguredReturnsTrueWhenApiKeySet(): void
+    public function test_is_configured_returns_true_when_api_key_set(): void
     {
         $this->assertTrue($this->provider->isConfigured());
     }
 
-    public function testGetNameReturnsAncestry(): void
+    public function test_get_name_returns_ancestry(): void
     {
         $this->assertEquals('Ancestry', $this->provider->getName());
     }
 
-    public function testSearchReturnsEmptyArrayWhenNotConfigured(): void
+    public function test_search_returns_empty_array_when_not_configured(): void
     {
         Config::set('services.ancestry.api_key', '');
-        $provider = new AncestryProvider();
-        
+        $provider = new AncestryProvider;
+
         $person = Person::factory()->create();
         $results = $provider->search($person);
 
@@ -49,7 +49,7 @@ class AncestryProviderTest extends TestCase
         $this->assertEmpty($results);
     }
 
-    public function testSearchParsesResponseWithRecordsKey(): void
+    public function test_search_parses_response_with_records_key(): void
     {
         Http::fake([
             'api.ancestry.test/*' => Http::response([

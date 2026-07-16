@@ -6,4013 +6,3509 @@ use Illuminate\Database\Seeder;
 
 class PermissionsTableSeeder extends Seeder
 {
-
     /**
      * Auto generated seed file
-     *
-     * @return void
      */
     public function run(): void
     {
-        
 
         \DB::table('permissions')->delete();
-        
-        \DB::table('permissions')->insert( [
-            0 => 
-             [
+
+        \DB::table('permissions')->insert([
+            0 => [
                 'id' => 1,
                 'name' => 'view-any Activation',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:25:55',
                 'updated_at' => '2024-08-20 07:25:55',
             ],
-            1 => 
-             [
+            1 => [
                 'id' => 2,
                 'name' => 'view-any Activation',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:25:55',
                 'updated_at' => '2024-08-20 07:25:55',
             ],
-            2 => 
-             [
+            2 => [
                 'id' => 3,
                 'name' => 'view Activation',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:25:55',
                 'updated_at' => '2024-08-20 07:25:55',
             ],
-            3 => 
-             [
+            3 => [
                 'id' => 4,
                 'name' => 'view Activation',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:25:55',
                 'updated_at' => '2024-08-20 07:25:55',
             ],
-            4 => 
-             [
+            4 => [
                 'id' => 5,
                 'name' => 'create Activation',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:25:56',
                 'updated_at' => '2024-08-20 07:25:56',
             ],
-            5 => 
-             [
+            5 => [
                 'id' => 6,
                 'name' => 'create Activation',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:25:56',
                 'updated_at' => '2024-08-20 07:25:56',
             ],
-            6 => 
-             [
+            6 => [
                 'id' => 7,
                 'name' => 'update Activation',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:25:56',
                 'updated_at' => '2024-08-20 07:25:56',
             ],
-            7 => 
-             [
+            7 => [
                 'id' => 8,
                 'name' => 'update Activation',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:25:56',
                 'updated_at' => '2024-08-20 07:25:56',
             ],
-            8 => 
-             [
+            8 => [
                 'id' => 9,
                 'name' => 'delete Activation',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:25:56',
                 'updated_at' => '2024-08-20 07:25:56',
             ],
-            9 => 
-             [
+            9 => [
                 'id' => 10,
                 'name' => 'delete Activation',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:25:57',
                 'updated_at' => '2024-08-20 07:25:57',
             ],
-            10 => 
-             [
+            10 => [
                 'id' => 11,
                 'name' => 'restore Activation',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:25:57',
                 'updated_at' => '2024-08-20 07:25:57',
             ],
-            11 => 
-             [
+            11 => [
                 'id' => 12,
                 'name' => 'restore Activation',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:25:57',
                 'updated_at' => '2024-08-20 07:25:57',
             ],
-            12 => 
-             [
+            12 => [
                 'id' => 13,
                 'name' => 'force-delete Activation',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:25:57',
                 'updated_at' => '2024-08-20 07:25:57',
             ],
-            13 => 
-             [
+            13 => [
                 'id' => 14,
                 'name' => 'force-delete Activation',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:25:58',
                 'updated_at' => '2024-08-20 07:25:58',
             ],
-            14 => 
-             [
+            14 => [
                 'id' => 15,
                 'name' => 'replicate Activation',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:25:58',
                 'updated_at' => '2024-08-20 07:25:58',
             ],
-            15 => 
-             [
+            15 => [
                 'id' => 16,
                 'name' => 'replicate Activation',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:25:58',
                 'updated_at' => '2024-08-20 07:25:58',
             ],
-            16 => 
-             [
+            16 => [
                 'id' => 17,
                 'name' => 'reorder Activation',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:25:58',
                 'updated_at' => '2024-08-20 07:25:58',
             ],
-            17 => 
-             [
+            17 => [
                 'id' => 18,
                 'name' => 'reorder Activation',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:25:58',
                 'updated_at' => '2024-08-20 07:25:58',
             ],
-            18 => 
-             [
+            18 => [
                 'id' => 19,
                 'name' => 'view-any Addr',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:25:59',
                 'updated_at' => '2024-08-20 07:25:59',
             ],
-            19 => 
-             [
+            19 => [
                 'id' => 20,
                 'name' => 'view-any Addr',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:25:59',
                 'updated_at' => '2024-08-20 07:25:59',
             ],
-            20 => 
-             [
+            20 => [
                 'id' => 21,
                 'name' => 'view Addr',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:25:59',
                 'updated_at' => '2024-08-20 07:25:59',
             ],
-            21 => 
-             [
+            21 => [
                 'id' => 22,
                 'name' => 'view Addr',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:25:59',
                 'updated_at' => '2024-08-20 07:25:59',
             ],
-            22 => 
-             [
+            22 => [
                 'id' => 23,
                 'name' => 'create Addr',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:25:59',
                 'updated_at' => '2024-08-20 07:25:59',
             ],
-            23 => 
-             [
+            23 => [
                 'id' => 24,
                 'name' => 'create Addr',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:25:59',
                 'updated_at' => '2024-08-20 07:25:59',
             ],
-            24 => 
-             [
+            24 => [
                 'id' => 25,
                 'name' => 'update Addr',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:26:00',
                 'updated_at' => '2024-08-20 07:26:00',
             ],
-            25 => 
-             [
+            25 => [
                 'id' => 26,
                 'name' => 'update Addr',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:26:00',
                 'updated_at' => '2024-08-20 07:26:00',
             ],
-            26 => 
-             [
+            26 => [
                 'id' => 27,
                 'name' => 'delete Addr',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:26:00',
                 'updated_at' => '2024-08-20 07:26:00',
             ],
-            27 => 
-             [
+            27 => [
                 'id' => 28,
                 'name' => 'delete Addr',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:26:00',
                 'updated_at' => '2024-08-20 07:26:00',
             ],
-            28 => 
-             [
+            28 => [
                 'id' => 29,
                 'name' => 'restore Addr',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:26:00',
                 'updated_at' => '2024-08-20 07:26:00',
             ],
-            29 => 
-             [
+            29 => [
                 'id' => 30,
                 'name' => 'restore Addr',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:26:00',
                 'updated_at' => '2024-08-20 07:26:00',
             ],
-            30 => 
-             [
+            30 => [
                 'id' => 31,
                 'name' => 'force-delete Addr',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:26:01',
                 'updated_at' => '2024-08-20 07:26:01',
             ],
-            31 => 
-             [
+            31 => [
                 'id' => 32,
                 'name' => 'force-delete Addr',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:26:01',
                 'updated_at' => '2024-08-20 07:26:01',
             ],
-            32 => 
-             [
+            32 => [
                 'id' => 33,
                 'name' => 'replicate Addr',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:26:01',
                 'updated_at' => '2024-08-20 07:26:01',
             ],
-            33 => 
-             [
+            33 => [
                 'id' => 34,
                 'name' => 'replicate Addr',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:26:01',
                 'updated_at' => '2024-08-20 07:26:01',
             ],
-            34 => 
-             [
+            34 => [
                 'id' => 35,
                 'name' => 'reorder Addr',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:26:01',
                 'updated_at' => '2024-08-20 07:26:01',
             ],
-            35 => 
-             [
+            35 => [
                 'id' => 36,
                 'name' => 'reorder Addr',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:26:01',
                 'updated_at' => '2024-08-20 07:26:01',
             ],
-            36 => 
-             [
+            36 => [
                 'id' => 37,
                 'name' => 'view-any Author',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:26:01',
                 'updated_at' => '2024-08-20 07:26:01',
             ],
-            37 => 
-             [
+            37 => [
                 'id' => 38,
                 'name' => 'view-any Author',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:26:02',
                 'updated_at' => '2024-08-20 07:26:02',
             ],
-            38 => 
-             [
+            38 => [
                 'id' => 39,
                 'name' => 'view Author',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:26:02',
                 'updated_at' => '2024-08-20 07:26:02',
             ],
-            39 => 
-             [
+            39 => [
                 'id' => 40,
                 'name' => 'view Author',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:26:02',
                 'updated_at' => '2024-08-20 07:26:02',
             ],
-            40 => 
-             [
+            40 => [
                 'id' => 41,
                 'name' => 'create Author',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:26:02',
                 'updated_at' => '2024-08-20 07:26:02',
             ],
-            41 => 
-             [
+            41 => [
                 'id' => 42,
                 'name' => 'create Author',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:26:02',
                 'updated_at' => '2024-08-20 07:26:02',
             ],
-            42 => 
-             [
+            42 => [
                 'id' => 43,
                 'name' => 'update Author',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:26:02',
                 'updated_at' => '2024-08-20 07:26:02',
             ],
-            43 => 
-             [
+            43 => [
                 'id' => 44,
                 'name' => 'update Author',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:26:02',
                 'updated_at' => '2024-08-20 07:26:02',
             ],
-            44 => 
-             [
+            44 => [
                 'id' => 45,
                 'name' => 'delete Author',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:26:03',
                 'updated_at' => '2024-08-20 07:26:03',
             ],
-            45 => 
-             [
+            45 => [
                 'id' => 46,
                 'name' => 'delete Author',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:26:03',
                 'updated_at' => '2024-08-20 07:26:03',
             ],
-            46 => 
-             [
+            46 => [
                 'id' => 47,
                 'name' => 'restore Author',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:26:03',
                 'updated_at' => '2024-08-20 07:26:03',
             ],
-            47 => 
-             [
+            47 => [
                 'id' => 48,
                 'name' => 'restore Author',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:26:03',
                 'updated_at' => '2024-08-20 07:26:03',
             ],
-            48 => 
-             [
+            48 => [
                 'id' => 49,
                 'name' => 'force-delete Author',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:26:03',
                 'updated_at' => '2024-08-20 07:26:03',
             ],
-            49 => 
-             [
+            49 => [
                 'id' => 50,
                 'name' => 'force-delete Author',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:26:03',
                 'updated_at' => '2024-08-20 07:26:03',
             ],
-            50 => 
-             [
+            50 => [
                 'id' => 51,
                 'name' => 'replicate Author',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:26:03',
                 'updated_at' => '2024-08-20 07:26:03',
             ],
-            51 => 
-             [
+            51 => [
                 'id' => 52,
                 'name' => 'replicate Author',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:26:04',
                 'updated_at' => '2024-08-20 07:26:04',
             ],
-            52 => 
-             [
+            52 => [
                 'id' => 53,
                 'name' => 'reorder Author',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:26:04',
                 'updated_at' => '2024-08-20 07:26:04',
             ],
-            53 => 
-             [
+            53 => [
                 'id' => 54,
                 'name' => 'reorder Author',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:26:04',
                 'updated_at' => '2024-08-20 07:26:04',
             ],
-            54 => 
-             [
+            54 => [
                 'id' => 55,
                 'name' => 'view-any BatchData',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:26:04',
                 'updated_at' => '2024-08-20 07:26:04',
             ],
-            55 => 
-             [
+            55 => [
                 'id' => 56,
                 'name' => 'view-any BatchData',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:26:04',
                 'updated_at' => '2024-08-20 07:26:04',
             ],
-            56 => 
-             [
+            56 => [
                 'id' => 57,
                 'name' => 'view BatchData',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:26:04',
                 'updated_at' => '2024-08-20 07:26:04',
             ],
-            57 => 
-             [
+            57 => [
                 'id' => 58,
                 'name' => 'view BatchData',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:26:05',
                 'updated_at' => '2024-08-20 07:26:05',
             ],
-            58 => 
-             [
+            58 => [
                 'id' => 59,
                 'name' => 'create BatchData',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:26:05',
                 'updated_at' => '2024-08-20 07:26:05',
             ],
-            59 => 
-             [
+            59 => [
                 'id' => 60,
                 'name' => 'create BatchData',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:26:05',
                 'updated_at' => '2024-08-20 07:26:05',
             ],
-            60 => 
-             [
+            60 => [
                 'id' => 61,
                 'name' => 'update BatchData',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:26:05',
                 'updated_at' => '2024-08-20 07:26:05',
             ],
-            61 => 
-             [
+            61 => [
                 'id' => 62,
                 'name' => 'update BatchData',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:26:05',
                 'updated_at' => '2024-08-20 07:26:05',
             ],
-            62 => 
-             [
+            62 => [
                 'id' => 63,
                 'name' => 'delete BatchData',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:26:05',
                 'updated_at' => '2024-08-20 07:26:05',
             ],
-            63 => 
-             [
+            63 => [
                 'id' => 64,
                 'name' => 'delete BatchData',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:26:06',
                 'updated_at' => '2024-08-20 07:26:06',
             ],
-            64 => 
-             [
+            64 => [
                 'id' => 65,
                 'name' => 'restore BatchData',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:26:06',
                 'updated_at' => '2024-08-20 07:26:06',
             ],
-            65 => 
-             [
+            65 => [
                 'id' => 66,
                 'name' => 'restore BatchData',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:26:06',
                 'updated_at' => '2024-08-20 07:26:06',
             ],
-            66 => 
-             [
+            66 => [
                 'id' => 67,
                 'name' => 'force-delete BatchData',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:26:06',
                 'updated_at' => '2024-08-20 07:26:06',
             ],
-            67 => 
-             [
+            67 => [
                 'id' => 68,
                 'name' => 'force-delete BatchData',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:26:07',
                 'updated_at' => '2024-08-20 07:26:07',
             ],
-            68 => 
-             [
+            68 => [
                 'id' => 69,
                 'name' => 'replicate BatchData',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:26:07',
                 'updated_at' => '2024-08-20 07:26:07',
             ],
-            69 => 
-             [
+            69 => [
                 'id' => 70,
                 'name' => 'replicate BatchData',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:26:07',
                 'updated_at' => '2024-08-20 07:26:07',
             ],
-            70 => 
-             [
+            70 => [
                 'id' => 71,
                 'name' => 'reorder BatchData',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:26:07',
                 'updated_at' => '2024-08-20 07:26:07',
             ],
-            71 => 
-             [
+            71 => [
                 'id' => 72,
                 'name' => 'reorder BatchData',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:26:07',
                 'updated_at' => '2024-08-20 07:26:07',
             ],
-            72 => 
-             [
+            72 => [
                 'id' => 73,
                 'name' => 'view-any Category',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:26:07',
                 'updated_at' => '2024-08-20 07:26:07',
             ],
-            73 => 
-             [
+            73 => [
                 'id' => 74,
                 'name' => 'view-any Category',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:26:08',
                 'updated_at' => '2024-08-20 07:26:08',
             ],
-            74 => 
-             [
+            74 => [
                 'id' => 75,
                 'name' => 'view Category',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:26:08',
                 'updated_at' => '2024-08-20 07:26:08',
             ],
-            75 => 
-             [
+            75 => [
                 'id' => 76,
                 'name' => 'view Category',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:26:08',
                 'updated_at' => '2024-08-20 07:26:08',
             ],
-            76 => 
-             [
+            76 => [
                 'id' => 77,
                 'name' => 'create Category',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:26:08',
                 'updated_at' => '2024-08-20 07:26:08',
             ],
-            77 => 
-             [
+            77 => [
                 'id' => 78,
                 'name' => 'create Category',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:26:08',
                 'updated_at' => '2024-08-20 07:26:08',
             ],
-            78 => 
-             [
+            78 => [
                 'id' => 79,
                 'name' => 'update Category',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:26:08',
                 'updated_at' => '2024-08-20 07:26:08',
             ],
-            79 => 
-             [
+            79 => [
                 'id' => 80,
                 'name' => 'update Category',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:26:09',
                 'updated_at' => '2024-08-20 07:26:09',
             ],
-            80 => 
-             [
+            80 => [
                 'id' => 81,
                 'name' => 'delete Category',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:26:09',
                 'updated_at' => '2024-08-20 07:26:09',
             ],
-            81 => 
-             [
+            81 => [
                 'id' => 82,
                 'name' => 'delete Category',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:26:10',
                 'updated_at' => '2024-08-20 07:26:10',
             ],
-            82 => 
-             [
+            82 => [
                 'id' => 83,
                 'name' => 'restore Category',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:26:10',
                 'updated_at' => '2024-08-20 07:26:10',
             ],
-            83 => 
-             [
+            83 => [
                 'id' => 84,
                 'name' => 'restore Category',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:26:10',
                 'updated_at' => '2024-08-20 07:26:10',
             ],
-            84 => 
-             [
+            84 => [
                 'id' => 85,
                 'name' => 'force-delete Category',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:26:10',
                 'updated_at' => '2024-08-20 07:26:10',
             ],
-            85 => 
-             [
+            85 => [
                 'id' => 86,
                 'name' => 'force-delete Category',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:26:11',
                 'updated_at' => '2024-08-20 07:26:11',
             ],
-            86 => 
-             [
+            86 => [
                 'id' => 87,
                 'name' => 'replicate Category',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:26:11',
                 'updated_at' => '2024-08-20 07:26:11',
             ],
-            87 => 
-             [
+            87 => [
                 'id' => 88,
                 'name' => 'replicate Category',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:26:11',
                 'updated_at' => '2024-08-20 07:26:11',
             ],
-            88 => 
-             [
+            88 => [
                 'id' => 89,
                 'name' => 'reorder Category',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:26:11',
                 'updated_at' => '2024-08-20 07:26:11',
             ],
-            89 => 
-             [
+            89 => [
                 'id' => 90,
                 'name' => 'reorder Category',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:26:11',
                 'updated_at' => '2024-08-20 07:26:11',
             ],
-            90 => 
-             [
+            90 => [
                 'id' => 91,
                 'name' => 'view-any Chan',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:26:11',
                 'updated_at' => '2024-08-20 07:26:11',
             ],
-            91 => 
-             [
+            91 => [
                 'id' => 92,
                 'name' => 'view-any Chan',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:26:12',
                 'updated_at' => '2024-08-20 07:26:12',
             ],
-            92 => 
-             [
+            92 => [
                 'id' => 93,
                 'name' => 'view Chan',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:26:12',
                 'updated_at' => '2024-08-20 07:26:12',
             ],
-            93 => 
-             [
+            93 => [
                 'id' => 94,
                 'name' => 'view Chan',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:26:12',
                 'updated_at' => '2024-08-20 07:26:12',
             ],
-            94 => 
-             [
+            94 => [
                 'id' => 95,
                 'name' => 'create Chan',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:26:12',
                 'updated_at' => '2024-08-20 07:26:12',
             ],
-            95 => 
-             [
+            95 => [
                 'id' => 96,
                 'name' => 'create Chan',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:26:12',
                 'updated_at' => '2024-08-20 07:26:12',
             ],
-            96 => 
-             [
+            96 => [
                 'id' => 97,
                 'name' => 'update Chan',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:26:13',
                 'updated_at' => '2024-08-20 07:26:13',
             ],
-            97 => 
-             [
+            97 => [
                 'id' => 98,
                 'name' => 'update Chan',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:26:13',
                 'updated_at' => '2024-08-20 07:26:13',
             ],
-            98 => 
-             [
+            98 => [
                 'id' => 99,
                 'name' => 'delete Chan',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:26:13',
                 'updated_at' => '2024-08-20 07:26:13',
             ],
-            99 => 
-             [
+            99 => [
                 'id' => 100,
                 'name' => 'delete Chan',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:26:13',
                 'updated_at' => '2024-08-20 07:26:13',
             ],
-            100 => 
-             [
+            100 => [
                 'id' => 101,
                 'name' => 'restore Chan',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:26:13',
                 'updated_at' => '2024-08-20 07:26:13',
             ],
-            101 => 
-             [
+            101 => [
                 'id' => 102,
                 'name' => 'restore Chan',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:26:14',
                 'updated_at' => '2024-08-20 07:26:14',
             ],
-            102 => 
-             [
+            102 => [
                 'id' => 103,
                 'name' => 'force-delete Chan',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:26:14',
                 'updated_at' => '2024-08-20 07:26:14',
             ],
-            103 => 
-             [
+            103 => [
                 'id' => 104,
                 'name' => 'force-delete Chan',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:26:14',
                 'updated_at' => '2024-08-20 07:26:14',
             ],
-            104 => 
-             [
+            104 => [
                 'id' => 105,
                 'name' => 'replicate Chan',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:26:14',
                 'updated_at' => '2024-08-20 07:26:14',
             ],
-            105 => 
-             [
+            105 => [
                 'id' => 106,
                 'name' => 'replicate Chan',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:26:14',
                 'updated_at' => '2024-08-20 07:26:14',
             ],
-            106 => 
-             [
+            106 => [
                 'id' => 107,
                 'name' => 'reorder Chan',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:26:14',
                 'updated_at' => '2024-08-20 07:26:14',
             ],
-            107 => 
-             [
+            107 => [
                 'id' => 108,
                 'name' => 'reorder Chan',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:26:15',
                 'updated_at' => '2024-08-20 07:26:15',
             ],
-            108 => 
-             [
+            108 => [
                 'id' => 109,
                 'name' => 'view-any Citation',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:26:15',
                 'updated_at' => '2024-08-20 07:26:15',
             ],
-            109 => 
-             [
+            109 => [
                 'id' => 110,
                 'name' => 'view-any Citation',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:26:15',
                 'updated_at' => '2024-08-20 07:26:15',
             ],
-            110 => 
-             [
+            110 => [
                 'id' => 111,
                 'name' => 'view Citation',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:26:15',
                 'updated_at' => '2024-08-20 07:26:15',
             ],
-            111 => 
-             [
+            111 => [
                 'id' => 112,
                 'name' => 'view Citation',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:26:15',
                 'updated_at' => '2024-08-20 07:26:15',
             ],
-            112 => 
-             [
+            112 => [
                 'id' => 113,
                 'name' => 'create Citation',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:26:16',
                 'updated_at' => '2024-08-20 07:26:16',
             ],
-            113 => 
-             [
+            113 => [
                 'id' => 114,
                 'name' => 'create Citation',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:26:16',
                 'updated_at' => '2024-08-20 07:26:16',
             ],
-            114 => 
-             [
+            114 => [
                 'id' => 115,
                 'name' => 'update Citation',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:26:16',
                 'updated_at' => '2024-08-20 07:26:16',
             ],
-            115 => 
-             [
+            115 => [
                 'id' => 116,
                 'name' => 'update Citation',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:26:16',
                 'updated_at' => '2024-08-20 07:26:16',
             ],
-            116 => 
-             [
+            116 => [
                 'id' => 117,
                 'name' => 'delete Citation',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:26:16',
                 'updated_at' => '2024-08-20 07:26:16',
             ],
-            117 => 
-             [
+            117 => [
                 'id' => 118,
                 'name' => 'delete Citation',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:26:17',
                 'updated_at' => '2024-08-20 07:26:17',
             ],
-            118 => 
-             [
+            118 => [
                 'id' => 119,
                 'name' => 'restore Citation',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:26:17',
                 'updated_at' => '2024-08-20 07:26:17',
             ],
-            119 => 
-             [
+            119 => [
                 'id' => 120,
                 'name' => 'restore Citation',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:26:17',
                 'updated_at' => '2024-08-20 07:26:17',
             ],
-            120 => 
-             [
+            120 => [
                 'id' => 121,
                 'name' => 'force-delete Citation',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:26:17',
                 'updated_at' => '2024-08-20 07:26:17',
             ],
-            121 => 
-             [
+            121 => [
                 'id' => 122,
                 'name' => 'force-delete Citation',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:26:17',
                 'updated_at' => '2024-08-20 07:26:17',
             ],
-            122 => 
-             [
+            122 => [
                 'id' => 123,
                 'name' => 'replicate Citation',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:26:18',
                 'updated_at' => '2024-08-20 07:26:18',
             ],
-            123 => 
-             [
+            123 => [
                 'id' => 124,
                 'name' => 'replicate Citation',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:26:18',
                 'updated_at' => '2024-08-20 07:26:18',
             ],
-            124 => 
-             [
+            124 => [
                 'id' => 125,
                 'name' => 'reorder Citation',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:26:18',
                 'updated_at' => '2024-08-20 07:26:18',
             ],
-            125 => 
-             [
+            125 => [
                 'id' => 126,
                 'name' => 'reorder Citation',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:26:18',
                 'updated_at' => '2024-08-20 07:26:18',
             ],
-            126 => 
-             [
+            126 => [
                 'id' => 127,
                 'name' => 'view-any Company',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:26:18',
                 'updated_at' => '2024-08-20 07:26:18',
             ],
-            127 => 
-             [
+            127 => [
                 'id' => 128,
                 'name' => 'view-any Company',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:26:18',
                 'updated_at' => '2024-08-20 07:26:18',
             ],
-            128 => 
-             [
+            128 => [
                 'id' => 129,
                 'name' => 'view Company',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:26:18',
                 'updated_at' => '2024-08-20 07:26:18',
             ],
-            129 => 
-             [
+            129 => [
                 'id' => 130,
                 'name' => 'view Company',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:26:19',
                 'updated_at' => '2024-08-20 07:26:19',
             ],
-            130 => 
-             [
+            130 => [
                 'id' => 131,
                 'name' => 'create Company',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:26:19',
                 'updated_at' => '2024-08-20 07:26:19',
             ],
-            131 => 
-             [
+            131 => [
                 'id' => 132,
                 'name' => 'create Company',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:26:19',
                 'updated_at' => '2024-08-20 07:26:19',
             ],
-            132 => 
-             [
+            132 => [
                 'id' => 133,
                 'name' => 'update Company',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:26:19',
                 'updated_at' => '2024-08-20 07:26:19',
             ],
-            133 => 
-             [
+            133 => [
                 'id' => 134,
                 'name' => 'update Company',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:26:19',
                 'updated_at' => '2024-08-20 07:26:19',
             ],
-            134 => 
-             [
+            134 => [
                 'id' => 135,
                 'name' => 'delete Company',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:26:20',
                 'updated_at' => '2024-08-20 07:26:20',
             ],
-            135 => 
-             [
+            135 => [
                 'id' => 136,
                 'name' => 'delete Company',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:26:20',
                 'updated_at' => '2024-08-20 07:26:20',
             ],
-            136 => 
-             [
+            136 => [
                 'id' => 137,
                 'name' => 'restore Company',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:26:20',
                 'updated_at' => '2024-08-20 07:26:20',
             ],
-            137 => 
-             [
+            137 => [
                 'id' => 138,
                 'name' => 'restore Company',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:26:20',
                 'updated_at' => '2024-08-20 07:26:20',
             ],
-            138 => 
-             [
+            138 => [
                 'id' => 139,
                 'name' => 'force-delete Company',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:26:20',
                 'updated_at' => '2024-08-20 07:26:20',
             ],
-            139 => 
-             [
+            139 => [
                 'id' => 140,
                 'name' => 'force-delete Company',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:26:20',
                 'updated_at' => '2024-08-20 07:26:20',
             ],
-            140 => 
-             [
+            140 => [
                 'id' => 141,
                 'name' => 'replicate Company',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:26:20',
                 'updated_at' => '2024-08-20 07:26:20',
             ],
-            141 => 
-             [
+            141 => [
                 'id' => 142,
                 'name' => 'replicate Company',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:26:21',
                 'updated_at' => '2024-08-20 07:26:21',
             ],
-            142 => 
-             [
+            142 => [
                 'id' => 143,
                 'name' => 'reorder Company',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:26:21',
                 'updated_at' => '2024-08-20 07:26:21',
             ],
-            143 => 
-             [
+            143 => [
                 'id' => 144,
                 'name' => 'reorder Company',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:26:21',
                 'updated_at' => '2024-08-20 07:26:21',
             ],
-            144 => 
-             [
+            144 => [
                 'id' => 145,
                 'name' => 'view-any ConnectedAccount',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:26:21',
                 'updated_at' => '2024-08-20 07:26:21',
             ],
-            145 => 
-             [
+            145 => [
                 'id' => 146,
                 'name' => 'view-any ConnectedAccount',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:26:21',
                 'updated_at' => '2024-08-20 07:26:21',
             ],
-            146 => 
-             [
+            146 => [
                 'id' => 147,
                 'name' => 'view ConnectedAccount',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:26:22',
                 'updated_at' => '2024-08-20 07:26:22',
             ],
-            147 => 
-             [
+            147 => [
                 'id' => 148,
                 'name' => 'view ConnectedAccount',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:26:22',
                 'updated_at' => '2024-08-20 07:26:22',
             ],
-            148 => 
-             [
+            148 => [
                 'id' => 149,
                 'name' => 'create ConnectedAccount',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:26:22',
                 'updated_at' => '2024-08-20 07:26:22',
             ],
-            149 => 
-             [
+            149 => [
                 'id' => 150,
                 'name' => 'create ConnectedAccount',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:26:22',
                 'updated_at' => '2024-08-20 07:26:22',
             ],
-            150 => 
-             [
+            150 => [
                 'id' => 151,
                 'name' => 'update ConnectedAccount',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:26:22',
                 'updated_at' => '2024-08-20 07:26:22',
             ],
-            151 => 
-             [
+            151 => [
                 'id' => 152,
                 'name' => 'update ConnectedAccount',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:26:23',
                 'updated_at' => '2024-08-20 07:26:23',
             ],
-            152 => 
-             [
+            152 => [
                 'id' => 153,
                 'name' => 'delete ConnectedAccount',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:26:23',
                 'updated_at' => '2024-08-20 07:26:23',
             ],
-            153 => 
-             [
+            153 => [
                 'id' => 154,
                 'name' => 'delete ConnectedAccount',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:26:23',
                 'updated_at' => '2024-08-20 07:26:23',
             ],
-            154 => 
-             [
+            154 => [
                 'id' => 155,
                 'name' => 'restore ConnectedAccount',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:26:23',
                 'updated_at' => '2024-08-20 07:26:23',
             ],
-            155 => 
-             [
+            155 => [
                 'id' => 156,
                 'name' => 'restore ConnectedAccount',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:26:23',
                 'updated_at' => '2024-08-20 07:26:23',
             ],
-            156 => 
-             [
+            156 => [
                 'id' => 157,
                 'name' => 'force-delete ConnectedAccount',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:26:23',
                 'updated_at' => '2024-08-20 07:26:23',
             ],
-            157 => 
-             [
+            157 => [
                 'id' => 158,
                 'name' => 'force-delete ConnectedAccount',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:26:24',
                 'updated_at' => '2024-08-20 07:26:24',
             ],
-            158 => 
-             [
+            158 => [
                 'id' => 159,
                 'name' => 'replicate ConnectedAccount',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:26:24',
                 'updated_at' => '2024-08-20 07:26:24',
             ],
-            159 => 
-             [
+            159 => [
                 'id' => 160,
                 'name' => 'replicate ConnectedAccount',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:26:24',
                 'updated_at' => '2024-08-20 07:26:24',
             ],
-            160 => 
-             [
+            160 => [
                 'id' => 161,
                 'name' => 'reorder ConnectedAccount',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:26:24',
                 'updated_at' => '2024-08-20 07:26:24',
             ],
-            161 => 
-             [
+            161 => [
                 'id' => 162,
                 'name' => 'reorder ConnectedAccount',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:26:24',
                 'updated_at' => '2024-08-20 07:26:24',
             ],
-            162 => 
-             [
+            162 => [
                 'id' => 163,
                 'name' => 'view-any Conversation',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:26:24',
                 'updated_at' => '2024-08-20 07:26:24',
             ],
-            163 => 
-             [
+            163 => [
                 'id' => 164,
                 'name' => 'view-any Conversation',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:26:25',
                 'updated_at' => '2024-08-20 07:26:25',
             ],
-            164 => 
-             [
+            164 => [
                 'id' => 165,
                 'name' => 'view Conversation',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:26:25',
                 'updated_at' => '2024-08-20 07:26:25',
             ],
-            165 => 
-             [
+            165 => [
                 'id' => 166,
                 'name' => 'view Conversation',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:26:25',
                 'updated_at' => '2024-08-20 07:26:25',
             ],
-            166 => 
-             [
+            166 => [
                 'id' => 167,
                 'name' => 'create Conversation',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:26:25',
                 'updated_at' => '2024-08-20 07:26:25',
             ],
-            167 => 
-             [
+            167 => [
                 'id' => 168,
                 'name' => 'create Conversation',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:26:25',
                 'updated_at' => '2024-08-20 07:26:25',
             ],
-            168 => 
-             [
+            168 => [
                 'id' => 169,
                 'name' => 'update Conversation',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:26:26',
                 'updated_at' => '2024-08-20 07:26:26',
             ],
-            169 => 
-             [
+            169 => [
                 'id' => 170,
                 'name' => 'update Conversation',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:26:26',
                 'updated_at' => '2024-08-20 07:26:26',
             ],
-            170 => 
-             [
+            170 => [
                 'id' => 171,
                 'name' => 'delete Conversation',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:26:26',
                 'updated_at' => '2024-08-20 07:26:26',
             ],
-            171 => 
-             [
+            171 => [
                 'id' => 172,
                 'name' => 'delete Conversation',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:26:26',
                 'updated_at' => '2024-08-20 07:26:26',
             ],
-            172 => 
-             [
+            172 => [
                 'id' => 173,
                 'name' => 'restore Conversation',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:26:26',
                 'updated_at' => '2024-08-20 07:26:26',
             ],
-            173 => 
-             [
+            173 => [
                 'id' => 174,
                 'name' => 'restore Conversation',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:26:26',
                 'updated_at' => '2024-08-20 07:26:26',
             ],
-            174 => 
-             [
+            174 => [
                 'id' => 175,
                 'name' => 'force-delete Conversation',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:26:27',
                 'updated_at' => '2024-08-20 07:26:27',
             ],
-            175 => 
-             [
+            175 => [
                 'id' => 176,
                 'name' => 'force-delete Conversation',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:26:27',
                 'updated_at' => '2024-08-20 07:26:27',
             ],
-            176 => 
-             [
+            176 => [
                 'id' => 177,
                 'name' => 'replicate Conversation',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:26:27',
                 'updated_at' => '2024-08-20 07:26:27',
             ],
-            177 => 
-             [
+            177 => [
                 'id' => 178,
                 'name' => 'replicate Conversation',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:26:27',
                 'updated_at' => '2024-08-20 07:26:27',
             ],
-            178 => 
-             [
+            178 => [
                 'id' => 179,
                 'name' => 'reorder Conversation',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:26:27',
                 'updated_at' => '2024-08-20 07:26:27',
             ],
-            179 => 
-             [
+            179 => [
                 'id' => 180,
                 'name' => 'reorder Conversation',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:26:27',
                 'updated_at' => '2024-08-20 07:26:27',
             ],
-            180 => 
-             [
+            180 => [
                 'id' => 181,
                 'name' => 'view-any Dna',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:26:28',
                 'updated_at' => '2024-08-20 07:26:28',
             ],
-            181 => 
-             [
+            181 => [
                 'id' => 182,
                 'name' => 'view-any Dna',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:26:28',
                 'updated_at' => '2024-08-20 07:26:28',
             ],
-            182 => 
-             [
+            182 => [
                 'id' => 183,
                 'name' => 'view Dna',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:26:28',
                 'updated_at' => '2024-08-20 07:26:28',
             ],
-            183 => 
-             [
+            183 => [
                 'id' => 184,
                 'name' => 'view Dna',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:26:28',
                 'updated_at' => '2024-08-20 07:26:28',
             ],
-            184 => 
-             [
+            184 => [
                 'id' => 185,
                 'name' => 'create Dna',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:26:28',
                 'updated_at' => '2024-08-20 07:26:28',
             ],
-            185 => 
-             [
+            185 => [
                 'id' => 186,
                 'name' => 'create Dna',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:26:29',
                 'updated_at' => '2024-08-20 07:26:29',
             ],
-            186 => 
-             [
+            186 => [
                 'id' => 187,
                 'name' => 'update Dna',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:26:29',
                 'updated_at' => '2024-08-20 07:26:29',
             ],
-            187 => 
-             [
+            187 => [
                 'id' => 188,
                 'name' => 'update Dna',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:26:29',
                 'updated_at' => '2024-08-20 07:26:29',
             ],
-            188 => 
-             [
+            188 => [
                 'id' => 189,
                 'name' => 'delete Dna',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:26:29',
                 'updated_at' => '2024-08-20 07:26:29',
             ],
-            189 => 
-             [
+            189 => [
                 'id' => 190,
                 'name' => 'delete Dna',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:26:29',
                 'updated_at' => '2024-08-20 07:26:29',
             ],
-            190 => 
-             [
+            190 => [
                 'id' => 191,
                 'name' => 'restore Dna',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:26:29',
                 'updated_at' => '2024-08-20 07:26:29',
             ],
-            191 => 
-             [
+            191 => [
                 'id' => 192,
                 'name' => 'restore Dna',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:26:29',
                 'updated_at' => '2024-08-20 07:26:29',
             ],
-            192 => 
-             [
+            192 => [
                 'id' => 193,
                 'name' => 'force-delete Dna',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:26:30',
                 'updated_at' => '2024-08-20 07:26:30',
             ],
-            193 => 
-             [
+            193 => [
                 'id' => 194,
                 'name' => 'force-delete Dna',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:26:30',
                 'updated_at' => '2024-08-20 07:26:30',
             ],
-            194 => 
-             [
+            194 => [
                 'id' => 195,
                 'name' => 'replicate Dna',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:26:30',
                 'updated_at' => '2024-08-20 07:26:30',
             ],
-            195 => 
-             [
+            195 => [
                 'id' => 196,
                 'name' => 'replicate Dna',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:26:30',
                 'updated_at' => '2024-08-20 07:26:30',
             ],
-            196 => 
-             [
+            196 => [
                 'id' => 197,
                 'name' => 'reorder Dna',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:26:30',
                 'updated_at' => '2024-08-20 07:26:30',
             ],
-            197 => 
-             [
+            197 => [
                 'id' => 198,
                 'name' => 'reorder Dna',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:26:31',
                 'updated_at' => '2024-08-20 07:26:31',
             ],
-            198 => 
-             [
+            198 => [
                 'id' => 199,
                 'name' => 'view-any DnaMatching',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:26:31',
                 'updated_at' => '2024-08-20 07:26:31',
             ],
-            199 => 
-             [
+            199 => [
                 'id' => 200,
                 'name' => 'view-any DnaMatching',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:26:31',
                 'updated_at' => '2024-08-20 07:26:31',
             ],
-            200 => 
-             [
+            200 => [
                 'id' => 201,
                 'name' => 'view DnaMatching',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:26:31',
                 'updated_at' => '2024-08-20 07:26:31',
             ],
-            201 => 
-             [
+            201 => [
                 'id' => 202,
                 'name' => 'view DnaMatching',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:26:31',
                 'updated_at' => '2024-08-20 07:26:31',
             ],
-            202 => 
-             [
+            202 => [
                 'id' => 203,
                 'name' => 'create DnaMatching',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:26:31',
                 'updated_at' => '2024-08-20 07:26:31',
             ],
-            203 => 
-             [
+            203 => [
                 'id' => 204,
                 'name' => 'create DnaMatching',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:26:32',
                 'updated_at' => '2024-08-20 07:26:32',
             ],
-            204 => 
-             [
+            204 => [
                 'id' => 205,
                 'name' => 'update DnaMatching',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:26:32',
                 'updated_at' => '2024-08-20 07:26:32',
             ],
-            205 => 
-             [
+            205 => [
                 'id' => 206,
                 'name' => 'update DnaMatching',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:26:32',
                 'updated_at' => '2024-08-20 07:26:32',
             ],
-            206 => 
-             [
+            206 => [
                 'id' => 207,
                 'name' => 'delete DnaMatching',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:26:32',
                 'updated_at' => '2024-08-20 07:26:32',
             ],
-            207 => 
-             [
+            207 => [
                 'id' => 208,
                 'name' => 'delete DnaMatching',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:26:32',
                 'updated_at' => '2024-08-20 07:26:32',
             ],
-            208 => 
-             [
+            208 => [
                 'id' => 209,
                 'name' => 'restore DnaMatching',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:26:32',
                 'updated_at' => '2024-08-20 07:26:32',
             ],
-            209 => 
-             [
+            209 => [
                 'id' => 210,
                 'name' => 'restore DnaMatching',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:26:33',
                 'updated_at' => '2024-08-20 07:26:33',
             ],
-            210 => 
-             [
+            210 => [
                 'id' => 211,
                 'name' => 'force-delete DnaMatching',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:26:33',
                 'updated_at' => '2024-08-20 07:26:33',
             ],
-            211 => 
-             [
+            211 => [
                 'id' => 212,
                 'name' => 'force-delete DnaMatching',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:26:33',
                 'updated_at' => '2024-08-20 07:26:33',
             ],
-            212 => 
-             [
+            212 => [
                 'id' => 213,
                 'name' => 'replicate DnaMatching',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:26:33',
                 'updated_at' => '2024-08-20 07:26:33',
             ],
-            213 => 
-             [
+            213 => [
                 'id' => 214,
                 'name' => 'replicate DnaMatching',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:26:33',
                 'updated_at' => '2024-08-20 07:26:33',
             ],
-            214 => 
-             [
+            214 => [
                 'id' => 215,
                 'name' => 'reorder DnaMatching',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:26:33',
                 'updated_at' => '2024-08-20 07:26:33',
             ],
-            215 => 
-             [
+            215 => [
                 'id' => 216,
                 'name' => 'reorder DnaMatching',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:26:33',
                 'updated_at' => '2024-08-20 07:26:33',
             ],
-            216 => 
-             [
+            216 => [
                 'id' => 217,
                 'name' => 'view-any Family',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:26:34',
                 'updated_at' => '2024-08-20 07:26:34',
             ],
-            217 => 
-             [
+            217 => [
                 'id' => 218,
                 'name' => 'view-any Family',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:26:34',
                 'updated_at' => '2024-08-20 07:26:34',
             ],
-            218 => 
-             [
+            218 => [
                 'id' => 219,
                 'name' => 'view Family',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:26:34',
                 'updated_at' => '2024-08-20 07:26:34',
             ],
-            219 => 
-             [
+            219 => [
                 'id' => 220,
                 'name' => 'view Family',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:26:35',
                 'updated_at' => '2024-08-20 07:26:35',
             ],
-            220 => 
-             [
+            220 => [
                 'id' => 221,
                 'name' => 'create Family',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:26:35',
                 'updated_at' => '2024-08-20 07:26:35',
             ],
-            221 => 
-             [
+            221 => [
                 'id' => 222,
                 'name' => 'create Family',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:26:35',
                 'updated_at' => '2024-08-20 07:26:35',
             ],
-            222 => 
-             [
+            222 => [
                 'id' => 223,
                 'name' => 'update Family',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:26:35',
                 'updated_at' => '2024-08-20 07:26:35',
             ],
-            223 => 
-             [
+            223 => [
                 'id' => 224,
                 'name' => 'update Family',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:26:35',
                 'updated_at' => '2024-08-20 07:26:35',
             ],
-            224 => 
-             [
+            224 => [
                 'id' => 225,
                 'name' => 'delete Family',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:26:35',
                 'updated_at' => '2024-08-20 07:26:35',
             ],
-            225 => 
-             [
+            225 => [
                 'id' => 226,
                 'name' => 'delete Family',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:26:35',
                 'updated_at' => '2024-08-20 07:26:35',
             ],
-            226 => 
-             [
+            226 => [
                 'id' => 227,
                 'name' => 'restore Family',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:26:36',
                 'updated_at' => '2024-08-20 07:26:36',
             ],
-            227 => 
-             [
+            227 => [
                 'id' => 228,
                 'name' => 'restore Family',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:26:36',
                 'updated_at' => '2024-08-20 07:26:36',
             ],
-            228 => 
-             [
+            228 => [
                 'id' => 229,
                 'name' => 'force-delete Family',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:26:36',
                 'updated_at' => '2024-08-20 07:26:36',
             ],
-            229 => 
-             [
+            229 => [
                 'id' => 230,
                 'name' => 'force-delete Family',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:26:36',
                 'updated_at' => '2024-08-20 07:26:36',
             ],
-            230 => 
-             [
+            230 => [
                 'id' => 231,
                 'name' => 'replicate Family',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:26:36',
                 'updated_at' => '2024-08-20 07:26:36',
             ],
-            231 => 
-             [
+            231 => [
                 'id' => 232,
                 'name' => 'replicate Family',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:26:36',
                 'updated_at' => '2024-08-20 07:26:36',
             ],
-            232 => 
-             [
+            232 => [
                 'id' => 233,
                 'name' => 'reorder Family',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:26:37',
                 'updated_at' => '2024-08-20 07:26:37',
             ],
-            233 => 
-             [
+            233 => [
                 'id' => 234,
                 'name' => 'reorder Family',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:26:37',
                 'updated_at' => '2024-08-20 07:26:37',
             ],
-            234 => 
-             [
+            234 => [
                 'id' => 235,
                 'name' => 'view-any FamilyEvent',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:26:37',
                 'updated_at' => '2024-08-20 07:26:37',
             ],
-            235 => 
-             [
+            235 => [
                 'id' => 236,
                 'name' => 'view-any FamilyEvent',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:26:37',
                 'updated_at' => '2024-08-20 07:26:37',
             ],
-            236 => 
-             [
+            236 => [
                 'id' => 237,
                 'name' => 'view FamilyEvent',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:26:37',
                 'updated_at' => '2024-08-20 07:26:37',
             ],
-            237 => 
-             [
+            237 => [
                 'id' => 238,
                 'name' => 'view FamilyEvent',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:26:37',
                 'updated_at' => '2024-08-20 07:26:37',
             ],
-            238 => 
-             [
+            238 => [
                 'id' => 239,
                 'name' => 'create FamilyEvent',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:26:38',
                 'updated_at' => '2024-08-20 07:26:38',
             ],
-            239 => 
-             [
+            239 => [
                 'id' => 240,
                 'name' => 'create FamilyEvent',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:26:38',
                 'updated_at' => '2024-08-20 07:26:38',
             ],
-            240 => 
-             [
+            240 => [
                 'id' => 241,
                 'name' => 'update FamilyEvent',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:26:38',
                 'updated_at' => '2024-08-20 07:26:38',
             ],
-            241 => 
-             [
+            241 => [
                 'id' => 242,
                 'name' => 'update FamilyEvent',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:26:38',
                 'updated_at' => '2024-08-20 07:26:38',
             ],
-            242 => 
-             [
+            242 => [
                 'id' => 243,
                 'name' => 'delete FamilyEvent',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:26:38',
                 'updated_at' => '2024-08-20 07:26:38',
             ],
-            243 => 
-             [
+            243 => [
                 'id' => 244,
                 'name' => 'delete FamilyEvent',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:26:38',
                 'updated_at' => '2024-08-20 07:26:38',
             ],
-            244 => 
-             [
+            244 => [
                 'id' => 245,
                 'name' => 'restore FamilyEvent',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:26:39',
                 'updated_at' => '2024-08-20 07:26:39',
             ],
-            245 => 
-             [
+            245 => [
                 'id' => 246,
                 'name' => 'restore FamilyEvent',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:26:39',
                 'updated_at' => '2024-08-20 07:26:39',
             ],
-            246 => 
-             [
+            246 => [
                 'id' => 247,
                 'name' => 'force-delete FamilyEvent',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:26:39',
                 'updated_at' => '2024-08-20 07:26:39',
             ],
-            247 => 
-             [
+            247 => [
                 'id' => 248,
                 'name' => 'force-delete FamilyEvent',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:26:39',
                 'updated_at' => '2024-08-20 07:26:39',
             ],
-            248 => 
-             [
+            248 => [
                 'id' => 249,
                 'name' => 'replicate FamilyEvent',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:26:39',
                 'updated_at' => '2024-08-20 07:26:39',
             ],
-            249 => 
-             [
+            249 => [
                 'id' => 250,
                 'name' => 'replicate FamilyEvent',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:26:40',
                 'updated_at' => '2024-08-20 07:26:40',
             ],
-            250 => 
-             [
+            250 => [
                 'id' => 251,
                 'name' => 'reorder FamilyEvent',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:26:40',
                 'updated_at' => '2024-08-20 07:26:40',
             ],
-            251 => 
-             [
+            251 => [
                 'id' => 252,
                 'name' => 'reorder FamilyEvent',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:26:40',
                 'updated_at' => '2024-08-20 07:26:40',
             ],
-            252 => 
-             [
+            252 => [
                 'id' => 253,
                 'name' => 'view-any FamilySlgs',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:26:40',
                 'updated_at' => '2024-08-20 07:26:40',
             ],
-            253 => 
-             [
+            253 => [
                 'id' => 254,
                 'name' => 'view-any FamilySlgs',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:26:40',
                 'updated_at' => '2024-08-20 07:26:40',
             ],
-            254 => 
-             [
+            254 => [
                 'id' => 255,
                 'name' => 'view FamilySlgs',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:26:41',
                 'updated_at' => '2024-08-20 07:26:41',
             ],
-            255 => 
-             [
+            255 => [
                 'id' => 256,
                 'name' => 'view FamilySlgs',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:26:41',
                 'updated_at' => '2024-08-20 07:26:41',
             ],
-            256 => 
-             [
+            256 => [
                 'id' => 257,
                 'name' => 'create FamilySlgs',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:26:41',
                 'updated_at' => '2024-08-20 07:26:41',
             ],
-            257 => 
-             [
+            257 => [
                 'id' => 258,
                 'name' => 'create FamilySlgs',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:26:41',
                 'updated_at' => '2024-08-20 07:26:41',
             ],
-            258 => 
-             [
+            258 => [
                 'id' => 259,
                 'name' => 'update FamilySlgs',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:26:41',
                 'updated_at' => '2024-08-20 07:26:41',
             ],
-            259 => 
-             [
+            259 => [
                 'id' => 260,
                 'name' => 'update FamilySlgs',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:26:41',
                 'updated_at' => '2024-08-20 07:26:41',
             ],
-            260 => 
-             [
+            260 => [
                 'id' => 261,
                 'name' => 'delete FamilySlgs',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:26:41',
                 'updated_at' => '2024-08-20 07:26:41',
             ],
-            261 => 
-             [
+            261 => [
                 'id' => 262,
                 'name' => 'delete FamilySlgs',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:26:41',
                 'updated_at' => '2024-08-20 07:26:41',
             ],
-            262 => 
-             [
+            262 => [
                 'id' => 263,
                 'name' => 'restore FamilySlgs',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:26:42',
                 'updated_at' => '2024-08-20 07:26:42',
             ],
-            263 => 
-             [
+            263 => [
                 'id' => 264,
                 'name' => 'restore FamilySlgs',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:26:42',
                 'updated_at' => '2024-08-20 07:26:42',
             ],
-            264 => 
-             [
+            264 => [
                 'id' => 265,
                 'name' => 'force-delete FamilySlgs',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:26:42',
                 'updated_at' => '2024-08-20 07:26:42',
             ],
-            265 => 
-             [
+            265 => [
                 'id' => 266,
                 'name' => 'force-delete FamilySlgs',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:26:42',
                 'updated_at' => '2024-08-20 07:26:42',
             ],
-            266 => 
-             [
+            266 => [
                 'id' => 267,
                 'name' => 'replicate FamilySlgs',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:26:42',
                 'updated_at' => '2024-08-20 07:26:42',
             ],
-            267 => 
-             [
+            267 => [
                 'id' => 268,
                 'name' => 'replicate FamilySlgs',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:26:42',
                 'updated_at' => '2024-08-20 07:26:42',
             ],
-            268 => 
-             [
+            268 => [
                 'id' => 269,
                 'name' => 'reorder FamilySlgs',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:26:42',
                 'updated_at' => '2024-08-20 07:26:42',
             ],
-            269 => 
-             [
+            269 => [
                 'id' => 270,
                 'name' => 'reorder FamilySlgs',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:26:43',
                 'updated_at' => '2024-08-20 07:26:43',
             ],
-            270 => 
-             [
+            270 => [
                 'id' => 271,
                 'name' => 'view-any Gedcom',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:26:43',
                 'updated_at' => '2024-08-20 07:26:43',
             ],
-            271 => 
-             [
+            271 => [
                 'id' => 272,
                 'name' => 'view-any Gedcom',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:26:43',
                 'updated_at' => '2024-08-20 07:26:43',
             ],
-            272 => 
-             [
+            272 => [
                 'id' => 273,
                 'name' => 'view Gedcom',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:26:43',
                 'updated_at' => '2024-08-20 07:26:43',
             ],
-            273 => 
-             [
+            273 => [
                 'id' => 274,
                 'name' => 'view Gedcom',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:26:43',
                 'updated_at' => '2024-08-20 07:26:43',
             ],
-            274 => 
-             [
+            274 => [
                 'id' => 275,
                 'name' => 'create Gedcom',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:26:43',
                 'updated_at' => '2024-08-20 07:26:43',
             ],
-            275 => 
-             [
+            275 => [
                 'id' => 276,
                 'name' => 'create Gedcom',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:26:44',
                 'updated_at' => '2024-08-20 07:26:44',
             ],
-            276 => 
-             [
+            276 => [
                 'id' => 277,
                 'name' => 'update Gedcom',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:26:44',
                 'updated_at' => '2024-08-20 07:26:44',
             ],
-            277 => 
-             [
+            277 => [
                 'id' => 278,
                 'name' => 'update Gedcom',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:26:44',
                 'updated_at' => '2024-08-20 07:26:44',
             ],
-            278 => 
-             [
+            278 => [
                 'id' => 279,
                 'name' => 'delete Gedcom',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:26:44',
                 'updated_at' => '2024-08-20 07:26:44',
             ],
-            279 => 
-             [
+            279 => [
                 'id' => 280,
                 'name' => 'delete Gedcom',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:26:44',
                 'updated_at' => '2024-08-20 07:26:44',
             ],
-            280 => 
-             [
+            280 => [
                 'id' => 281,
                 'name' => 'restore Gedcom',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:26:44',
                 'updated_at' => '2024-08-20 07:26:44',
             ],
-            281 => 
-             [
+            281 => [
                 'id' => 282,
                 'name' => 'restore Gedcom',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:26:45',
                 'updated_at' => '2024-08-20 07:26:45',
             ],
-            282 => 
-             [
+            282 => [
                 'id' => 283,
                 'name' => 'force-delete Gedcom',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:26:45',
                 'updated_at' => '2024-08-20 07:26:45',
             ],
-            283 => 
-             [
+            283 => [
                 'id' => 284,
                 'name' => 'force-delete Gedcom',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:26:45',
                 'updated_at' => '2024-08-20 07:26:45',
             ],
-            284 => 
-             [
+            284 => [
                 'id' => 285,
                 'name' => 'replicate Gedcom',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:26:45',
                 'updated_at' => '2024-08-20 07:26:45',
             ],
-            285 => 
-             [
+            285 => [
                 'id' => 286,
                 'name' => 'replicate Gedcom',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:26:45',
                 'updated_at' => '2024-08-20 07:26:45',
             ],
-            286 => 
-             [
+            286 => [
                 'id' => 287,
                 'name' => 'reorder Gedcom',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:26:45',
                 'updated_at' => '2024-08-20 07:26:45',
             ],
-            287 => 
-             [
+            287 => [
                 'id' => 288,
                 'name' => 'reorder Gedcom',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:26:45',
                 'updated_at' => '2024-08-20 07:26:45',
             ],
-            288 => 
-             [
+            288 => [
                 'id' => 289,
                 'name' => 'view-any Geneanum',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:26:46',
                 'updated_at' => '2024-08-20 07:26:46',
             ],
-            289 => 
-             [
+            289 => [
                 'id' => 290,
                 'name' => 'view-any Geneanum',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:26:46',
                 'updated_at' => '2024-08-20 07:26:46',
             ],
-            290 => 
-             [
+            290 => [
                 'id' => 291,
                 'name' => 'view Geneanum',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:26:46',
                 'updated_at' => '2024-08-20 07:26:46',
             ],
-            291 => 
-             [
+            291 => [
                 'id' => 292,
                 'name' => 'view Geneanum',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:26:46',
                 'updated_at' => '2024-08-20 07:26:46',
             ],
-            292 => 
-             [
+            292 => [
                 'id' => 293,
                 'name' => 'create Geneanum',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:26:46',
                 'updated_at' => '2024-08-20 07:26:46',
             ],
-            293 => 
-             [
+            293 => [
                 'id' => 294,
                 'name' => 'create Geneanum',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:26:46',
                 'updated_at' => '2024-08-20 07:26:46',
             ],
-            294 => 
-             [
+            294 => [
                 'id' => 295,
                 'name' => 'update Geneanum',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:26:46',
                 'updated_at' => '2024-08-20 07:26:46',
             ],
-            295 => 
-             [
+            295 => [
                 'id' => 296,
                 'name' => 'update Geneanum',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:26:47',
                 'updated_at' => '2024-08-20 07:26:47',
             ],
-            296 => 
-             [
+            296 => [
                 'id' => 297,
                 'name' => 'delete Geneanum',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:26:47',
                 'updated_at' => '2024-08-20 07:26:47',
             ],
-            297 => 
-             [
+            297 => [
                 'id' => 298,
                 'name' => 'delete Geneanum',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:26:47',
                 'updated_at' => '2024-08-20 07:26:47',
             ],
-            298 => 
-             [
+            298 => [
                 'id' => 299,
                 'name' => 'restore Geneanum',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:26:47',
                 'updated_at' => '2024-08-20 07:26:47',
             ],
-            299 => 
-             [
+            299 => [
                 'id' => 300,
                 'name' => 'restore Geneanum',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:26:47',
                 'updated_at' => '2024-08-20 07:26:47',
             ],
-            300 => 
-             [
+            300 => [
                 'id' => 301,
                 'name' => 'force-delete Geneanum',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:26:47',
                 'updated_at' => '2024-08-20 07:26:47',
             ],
-            301 => 
-             [
+            301 => [
                 'id' => 302,
                 'name' => 'force-delete Geneanum',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:26:47',
                 'updated_at' => '2024-08-20 07:26:47',
             ],
-            302 => 
-             [
+            302 => [
                 'id' => 303,
                 'name' => 'replicate Geneanum',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:26:48',
                 'updated_at' => '2024-08-20 07:26:48',
             ],
-            303 => 
-             [
+            303 => [
                 'id' => 304,
                 'name' => 'replicate Geneanum',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:26:48',
                 'updated_at' => '2024-08-20 07:26:48',
             ],
-            304 => 
-             [
+            304 => [
                 'id' => 305,
                 'name' => 'reorder Geneanum',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:26:48',
                 'updated_at' => '2024-08-20 07:26:48',
             ],
-            305 => 
-             [
+            305 => [
                 'id' => 306,
                 'name' => 'reorder Geneanum',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:26:48',
                 'updated_at' => '2024-08-20 07:26:48',
             ],
-            306 => 
-             [
+            306 => [
                 'id' => 307,
                 'name' => 'view-any ImportJob',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:26:48',
                 'updated_at' => '2024-08-20 07:26:48',
             ],
-            307 => 
-             [
+            307 => [
                 'id' => 308,
                 'name' => 'view-any ImportJob',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:26:48',
                 'updated_at' => '2024-08-20 07:26:48',
             ],
-            308 => 
-             [
+            308 => [
                 'id' => 309,
                 'name' => 'view ImportJob',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:26:48',
                 'updated_at' => '2024-08-20 07:26:48',
             ],
-            309 => 
-             [
+            309 => [
                 'id' => 310,
                 'name' => 'view ImportJob',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:26:49',
                 'updated_at' => '2024-08-20 07:26:49',
             ],
-            310 => 
-             [
+            310 => [
                 'id' => 311,
                 'name' => 'create ImportJob',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:26:49',
                 'updated_at' => '2024-08-20 07:26:49',
             ],
-            311 => 
-             [
+            311 => [
                 'id' => 312,
                 'name' => 'create ImportJob',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:26:49',
                 'updated_at' => '2024-08-20 07:26:49',
             ],
-            312 => 
-             [
+            312 => [
                 'id' => 313,
                 'name' => 'update ImportJob',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:26:49',
                 'updated_at' => '2024-08-20 07:26:49',
             ],
-            313 => 
-             [
+            313 => [
                 'id' => 314,
                 'name' => 'update ImportJob',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:26:49',
                 'updated_at' => '2024-08-20 07:26:49',
             ],
-            314 => 
-             [
+            314 => [
                 'id' => 315,
                 'name' => 'delete ImportJob',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:26:49',
                 'updated_at' => '2024-08-20 07:26:49',
             ],
-            315 => 
-             [
+            315 => [
                 'id' => 316,
                 'name' => 'delete ImportJob',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:26:49',
                 'updated_at' => '2024-08-20 07:26:49',
             ],
-            316 => 
-             [
+            316 => [
                 'id' => 317,
                 'name' => 'restore ImportJob',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:26:50',
                 'updated_at' => '2024-08-20 07:26:50',
             ],
-            317 => 
-             [
+            317 => [
                 'id' => 318,
                 'name' => 'restore ImportJob',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:26:50',
                 'updated_at' => '2024-08-20 07:26:50',
             ],
-            318 => 
-             [
+            318 => [
                 'id' => 319,
                 'name' => 'force-delete ImportJob',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:26:50',
                 'updated_at' => '2024-08-20 07:26:50',
             ],
-            319 => 
-             [
+            319 => [
                 'id' => 320,
                 'name' => 'force-delete ImportJob',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:26:50',
                 'updated_at' => '2024-08-20 07:26:50',
             ],
-            320 => 
-             [
+            320 => [
                 'id' => 321,
                 'name' => 'replicate ImportJob',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:26:50',
                 'updated_at' => '2024-08-20 07:26:50',
             ],
-            321 => 
-             [
+            321 => [
                 'id' => 322,
                 'name' => 'replicate ImportJob',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:26:50',
                 'updated_at' => '2024-08-20 07:26:50',
             ],
-            322 => 
-             [
+            322 => [
                 'id' => 323,
                 'name' => 'reorder ImportJob',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:26:50',
                 'updated_at' => '2024-08-20 07:26:50',
             ],
-            323 => 
-             [
+            323 => [
                 'id' => 324,
                 'name' => 'reorder ImportJob',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:26:51',
                 'updated_at' => '2024-08-20 07:26:51',
             ],
-            324 => 
-             [
+            324 => [
                 'id' => 325,
                 'name' => 'view-any MediaObject',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:26:51',
                 'updated_at' => '2024-08-20 07:26:51',
             ],
-            325 => 
-             [
+            325 => [
                 'id' => 326,
                 'name' => 'view-any MediaObject',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:26:51',
                 'updated_at' => '2024-08-20 07:26:51',
             ],
-            326 => 
-             [
+            326 => [
                 'id' => 327,
                 'name' => 'view MediaObject',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:26:51',
                 'updated_at' => '2024-08-20 07:26:51',
             ],
-            327 => 
-             [
+            327 => [
                 'id' => 328,
                 'name' => 'view MediaObject',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:26:51',
                 'updated_at' => '2024-08-20 07:26:51',
             ],
-            328 => 
-             [
+            328 => [
                 'id' => 329,
                 'name' => 'create MediaObject',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:26:51',
                 'updated_at' => '2024-08-20 07:26:51',
             ],
-            329 => 
-             [
+            329 => [
                 'id' => 330,
                 'name' => 'create MediaObject',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:26:51',
                 'updated_at' => '2024-08-20 07:26:51',
             ],
-            330 => 
-             [
+            330 => [
                 'id' => 331,
                 'name' => 'update MediaObject',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:26:52',
                 'updated_at' => '2024-08-20 07:26:52',
             ],
-            331 => 
-             [
+            331 => [
                 'id' => 332,
                 'name' => 'update MediaObject',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:26:52',
                 'updated_at' => '2024-08-20 07:26:52',
             ],
-            332 => 
-             [
+            332 => [
                 'id' => 333,
                 'name' => 'delete MediaObject',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:26:52',
                 'updated_at' => '2024-08-20 07:26:52',
             ],
-            333 => 
-             [
+            333 => [
                 'id' => 334,
                 'name' => 'delete MediaObject',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:26:52',
                 'updated_at' => '2024-08-20 07:26:52',
             ],
-            334 => 
-             [
+            334 => [
                 'id' => 335,
                 'name' => 'restore MediaObject',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:26:52',
                 'updated_at' => '2024-08-20 07:26:52',
             ],
-            335 => 
-             [
+            335 => [
                 'id' => 336,
                 'name' => 'restore MediaObject',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:26:52',
                 'updated_at' => '2024-08-20 07:26:52',
             ],
-            336 => 
-             [
+            336 => [
                 'id' => 337,
                 'name' => 'force-delete MediaObject',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:26:52',
                 'updated_at' => '2024-08-20 07:26:52',
             ],
-            337 => 
-             [
+            337 => [
                 'id' => 338,
                 'name' => 'force-delete MediaObject',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:26:53',
                 'updated_at' => '2024-08-20 07:26:53',
             ],
-            338 => 
-             [
+            338 => [
                 'id' => 339,
                 'name' => 'replicate MediaObject',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:26:53',
                 'updated_at' => '2024-08-20 07:26:53',
             ],
-            339 => 
-             [
+            339 => [
                 'id' => 340,
                 'name' => 'replicate MediaObject',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:26:53',
                 'updated_at' => '2024-08-20 07:26:53',
             ],
-            340 => 
-             [
+            340 => [
                 'id' => 341,
                 'name' => 'reorder MediaObject',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:26:53',
                 'updated_at' => '2024-08-20 07:26:53',
             ],
-            341 => 
-             [
+            341 => [
                 'id' => 342,
                 'name' => 'reorder MediaObject',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:26:53',
                 'updated_at' => '2024-08-20 07:26:53',
             ],
-            342 => 
-             [
+            342 => [
                 'id' => 343,
                 'name' => 'view-any MediaObjeectFile',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:26:53',
                 'updated_at' => '2024-08-20 07:26:53',
             ],
-            343 => 
-             [
+            343 => [
                 'id' => 344,
                 'name' => 'view-any MediaObjeectFile',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:26:53',
                 'updated_at' => '2024-08-20 07:26:53',
             ],
-            344 => 
-             [
+            344 => [
                 'id' => 345,
                 'name' => 'view MediaObjeectFile',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:26:54',
                 'updated_at' => '2024-08-20 07:26:54',
             ],
-            345 => 
-             [
+            345 => [
                 'id' => 346,
                 'name' => 'view MediaObjeectFile',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:26:54',
                 'updated_at' => '2024-08-20 07:26:54',
             ],
-            346 => 
-             [
+            346 => [
                 'id' => 347,
                 'name' => 'create MediaObjeectFile',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:26:54',
                 'updated_at' => '2024-08-20 07:26:54',
             ],
-            347 => 
-             [
+            347 => [
                 'id' => 348,
                 'name' => 'create MediaObjeectFile',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:26:54',
                 'updated_at' => '2024-08-20 07:26:54',
             ],
-            348 => 
-             [
+            348 => [
                 'id' => 349,
                 'name' => 'update MediaObjeectFile',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:26:54',
                 'updated_at' => '2024-08-20 07:26:54',
             ],
-            349 => 
-             [
+            349 => [
                 'id' => 350,
                 'name' => 'update MediaObjeectFile',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:26:54',
                 'updated_at' => '2024-08-20 07:26:54',
             ],
-            350 => 
-             [
+            350 => [
                 'id' => 351,
                 'name' => 'delete MediaObjeectFile',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:26:55',
                 'updated_at' => '2024-08-20 07:26:55',
             ],
-            351 => 
-             [
+            351 => [
                 'id' => 352,
                 'name' => 'delete MediaObjeectFile',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:26:55',
                 'updated_at' => '2024-08-20 07:26:55',
             ],
-            352 => 
-             [
+            352 => [
                 'id' => 353,
                 'name' => 'restore MediaObjeectFile',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:26:55',
                 'updated_at' => '2024-08-20 07:26:55',
             ],
-            353 => 
-             [
+            353 => [
                 'id' => 354,
                 'name' => 'restore MediaObjeectFile',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:26:55',
                 'updated_at' => '2024-08-20 07:26:55',
             ],
-            354 => 
-             [
+            354 => [
                 'id' => 355,
                 'name' => 'force-delete MediaObjeectFile',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:26:55',
                 'updated_at' => '2024-08-20 07:26:55',
             ],
-            355 => 
-             [
+            355 => [
                 'id' => 356,
                 'name' => 'force-delete MediaObjeectFile',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:26:55',
                 'updated_at' => '2024-08-20 07:26:55',
             ],
-            356 => 
-             [
+            356 => [
                 'id' => 357,
                 'name' => 'replicate MediaObjeectFile',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:26:55',
                 'updated_at' => '2024-08-20 07:26:55',
             ],
-            357 => 
-             [
+            357 => [
                 'id' => 358,
                 'name' => 'replicate MediaObjeectFile',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:26:55',
                 'updated_at' => '2024-08-20 07:26:55',
             ],
-            358 => 
-             [
+            358 => [
                 'id' => 359,
                 'name' => 'reorder MediaObjeectFile',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:26:56',
                 'updated_at' => '2024-08-20 07:26:56',
             ],
-            359 => 
-             [
+            359 => [
                 'id' => 360,
                 'name' => 'reorder MediaObjeectFile',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:26:56',
                 'updated_at' => '2024-08-20 07:26:56',
             ],
-            360 => 
-             [
+            360 => [
                 'id' => 361,
                 'name' => 'view-any Membership',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:26:56',
                 'updated_at' => '2024-08-20 07:26:56',
             ],
-            361 => 
-             [
+            361 => [
                 'id' => 362,
                 'name' => 'view-any Membership',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:26:56',
                 'updated_at' => '2024-08-20 07:26:56',
             ],
-            362 => 
-             [
+            362 => [
                 'id' => 363,
                 'name' => 'view Membership',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:26:57',
                 'updated_at' => '2024-08-20 07:26:57',
             ],
-            363 => 
-             [
+            363 => [
                 'id' => 364,
                 'name' => 'view Membership',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:26:57',
                 'updated_at' => '2024-08-20 07:26:57',
             ],
-            364 => 
-             [
+            364 => [
                 'id' => 365,
                 'name' => 'create Membership',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:26:57',
                 'updated_at' => '2024-08-20 07:26:57',
             ],
-            365 => 
-             [
+            365 => [
                 'id' => 366,
                 'name' => 'create Membership',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:26:57',
                 'updated_at' => '2024-08-20 07:26:57',
             ],
-            366 => 
-             [
+            366 => [
                 'id' => 367,
                 'name' => 'update Membership',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:26:57',
                 'updated_at' => '2024-08-20 07:26:57',
             ],
-            367 => 
-             [
+            367 => [
                 'id' => 368,
                 'name' => 'update Membership',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:26:57',
                 'updated_at' => '2024-08-20 07:26:57',
             ],
-            368 => 
-             [
+            368 => [
                 'id' => 369,
                 'name' => 'delete Membership',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:26:57',
                 'updated_at' => '2024-08-20 07:26:57',
             ],
-            369 => 
-             [
+            369 => [
                 'id' => 370,
                 'name' => 'delete Membership',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:26:57',
                 'updated_at' => '2024-08-20 07:26:57',
             ],
-            370 => 
-             [
+            370 => [
                 'id' => 371,
                 'name' => 'restore Membership',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:26:58',
                 'updated_at' => '2024-08-20 07:26:58',
             ],
-            371 => 
-             [
+            371 => [
                 'id' => 372,
                 'name' => 'restore Membership',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:26:58',
                 'updated_at' => '2024-08-20 07:26:58',
             ],
-            372 => 
-             [
+            372 => [
                 'id' => 373,
                 'name' => 'force-delete Membership',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:26:58',
                 'updated_at' => '2024-08-20 07:26:58',
             ],
-            373 => 
-             [
+            373 => [
                 'id' => 374,
                 'name' => 'force-delete Membership',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:26:58',
                 'updated_at' => '2024-08-20 07:26:58',
             ],
-            374 => 
-             [
+            374 => [
                 'id' => 375,
                 'name' => 'replicate Membership',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:26:58',
                 'updated_at' => '2024-08-20 07:26:58',
             ],
-            375 => 
-             [
+            375 => [
                 'id' => 376,
                 'name' => 'replicate Membership',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:26:59',
                 'updated_at' => '2024-08-20 07:26:59',
             ],
-            376 => 
-             [
+            376 => [
                 'id' => 377,
                 'name' => 'reorder Membership',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:26:59',
                 'updated_at' => '2024-08-20 07:26:59',
             ],
-            377 => 
-             [
+            377 => [
                 'id' => 378,
                 'name' => 'reorder Membership',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:26:59',
                 'updated_at' => '2024-08-20 07:26:59',
             ],
-            378 => 
-             [
+            378 => [
                 'id' => 379,
                 'name' => 'view-any Menu',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:26:59',
                 'updated_at' => '2024-08-20 07:26:59',
             ],
-            379 => 
-             [
+            379 => [
                 'id' => 380,
                 'name' => 'view-any Menu',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:26:59',
                 'updated_at' => '2024-08-20 07:26:59',
             ],
-            380 => 
-             [
+            380 => [
                 'id' => 381,
                 'name' => 'view Menu',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:26:59',
                 'updated_at' => '2024-08-20 07:26:59',
             ],
-            381 => 
-             [
+            381 => [
                 'id' => 382,
                 'name' => 'view Menu',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:27:00',
                 'updated_at' => '2024-08-20 07:27:00',
             ],
-            382 => 
-             [
+            382 => [
                 'id' => 383,
                 'name' => 'create Menu',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:27:00',
                 'updated_at' => '2024-08-20 07:27:00',
             ],
-            383 => 
-             [
+            383 => [
                 'id' => 384,
                 'name' => 'create Menu',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:27:00',
                 'updated_at' => '2024-08-20 07:27:00',
             ],
-            384 => 
-             [
+            384 => [
                 'id' => 385,
                 'name' => 'update Menu',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:27:00',
                 'updated_at' => '2024-08-20 07:27:00',
             ],
-            385 => 
-             [
+            385 => [
                 'id' => 386,
                 'name' => 'update Menu',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:27:00',
                 'updated_at' => '2024-08-20 07:27:00',
             ],
-            386 => 
-             [
+            386 => [
                 'id' => 387,
                 'name' => 'delete Menu',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:27:00',
                 'updated_at' => '2024-08-20 07:27:00',
             ],
-            387 => 
-             [
+            387 => [
                 'id' => 388,
                 'name' => 'delete Menu',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:27:00',
                 'updated_at' => '2024-08-20 07:27:00',
             ],
-            388 => 
-             [
+            388 => [
                 'id' => 389,
                 'name' => 'restore Menu',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:27:00',
                 'updated_at' => '2024-08-20 07:27:00',
             ],
-            389 => 
-             [
+            389 => [
                 'id' => 390,
                 'name' => 'restore Menu',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:27:01',
                 'updated_at' => '2024-08-20 07:27:01',
             ],
-            390 => 
-             [
+            390 => [
                 'id' => 391,
                 'name' => 'force-delete Menu',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:27:01',
                 'updated_at' => '2024-08-20 07:27:01',
             ],
-            391 => 
-             [
+            391 => [
                 'id' => 392,
                 'name' => 'force-delete Menu',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:27:01',
                 'updated_at' => '2024-08-20 07:27:01',
             ],
-            392 => 
-             [
+            392 => [
                 'id' => 393,
                 'name' => 'replicate Menu',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:27:01',
                 'updated_at' => '2024-08-20 07:27:01',
             ],
-            393 => 
-             [
+            393 => [
                 'id' => 394,
                 'name' => 'replicate Menu',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:27:01',
                 'updated_at' => '2024-08-20 07:27:01',
             ],
-            394 => 
-             [
+            394 => [
                 'id' => 395,
                 'name' => 'reorder Menu',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:27:01',
                 'updated_at' => '2024-08-20 07:27:01',
             ],
-            395 => 
-             [
+            395 => [
                 'id' => 396,
                 'name' => 'reorder Menu',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:27:02',
                 'updated_at' => '2024-08-20 07:27:02',
             ],
-            396 => 
-             [
+            396 => [
                 'id' => 397,
                 'name' => 'view-any Message',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:27:02',
                 'updated_at' => '2024-08-20 07:27:02',
             ],
-            397 => 
-             [
+            397 => [
                 'id' => 398,
                 'name' => 'view-any Message',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:27:02',
                 'updated_at' => '2024-08-20 07:27:02',
             ],
-            398 => 
-             [
+            398 => [
                 'id' => 399,
                 'name' => 'view Message',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:27:02',
                 'updated_at' => '2024-08-20 07:27:02',
             ],
-            399 => 
-             [
+            399 => [
                 'id' => 400,
                 'name' => 'view Message',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:27:02',
                 'updated_at' => '2024-08-20 07:27:02',
             ],
-            400 => 
-             [
+            400 => [
                 'id' => 401,
                 'name' => 'create Message',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:27:02',
                 'updated_at' => '2024-08-20 07:27:02',
             ],
-            401 => 
-             [
+            401 => [
                 'id' => 402,
                 'name' => 'create Message',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:27:02',
                 'updated_at' => '2024-08-20 07:27:02',
             ],
-            402 => 
-             [
+            402 => [
                 'id' => 403,
                 'name' => 'update Message',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:27:02',
                 'updated_at' => '2024-08-20 07:27:02',
             ],
-            403 => 
-             [
+            403 => [
                 'id' => 404,
                 'name' => 'update Message',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:27:03',
                 'updated_at' => '2024-08-20 07:27:03',
             ],
-            404 => 
-             [
+            404 => [
                 'id' => 405,
                 'name' => 'delete Message',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:27:03',
                 'updated_at' => '2024-08-20 07:27:03',
             ],
-            405 => 
-             [
+            405 => [
                 'id' => 406,
                 'name' => 'delete Message',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:27:03',
                 'updated_at' => '2024-08-20 07:27:03',
             ],
-            406 => 
-             [
+            406 => [
                 'id' => 407,
                 'name' => 'restore Message',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:27:03',
                 'updated_at' => '2024-08-20 07:27:03',
             ],
-            407 => 
-             [
+            407 => [
                 'id' => 408,
                 'name' => 'restore Message',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:27:03',
                 'updated_at' => '2024-08-20 07:27:03',
             ],
-            408 => 
-             [
+            408 => [
                 'id' => 409,
                 'name' => 'force-delete Message',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:27:04',
                 'updated_at' => '2024-08-20 07:27:04',
             ],
-            409 => 
-             [
+            409 => [
                 'id' => 410,
                 'name' => 'force-delete Message',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:27:04',
                 'updated_at' => '2024-08-20 07:27:04',
             ],
-            410 => 
-             [
+            410 => [
                 'id' => 411,
                 'name' => 'replicate Message',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:27:04',
                 'updated_at' => '2024-08-20 07:27:04',
             ],
-            411 => 
-             [
+            411 => [
                 'id' => 412,
                 'name' => 'replicate Message',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:27:04',
                 'updated_at' => '2024-08-20 07:27:04',
             ],
-            412 => 
-             [
+            412 => [
                 'id' => 413,
                 'name' => 'reorder Message',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:27:04',
                 'updated_at' => '2024-08-20 07:27:04',
             ],
-            413 => 
-             [
+            413 => [
                 'id' => 414,
                 'name' => 'reorder Message',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:27:04',
                 'updated_at' => '2024-08-20 07:27:04',
             ],
-            414 => 
-             [
+            414 => [
                 'id' => 415,
                 'name' => 'view-any Note',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:27:04',
                 'updated_at' => '2024-08-20 07:27:04',
             ],
-            415 => 
-             [
+            415 => [
                 'id' => 416,
                 'name' => 'view-any Note',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:27:05',
                 'updated_at' => '2024-08-20 07:27:05',
             ],
-            416 => 
-             [
+            416 => [
                 'id' => 417,
                 'name' => 'view Note',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:27:05',
                 'updated_at' => '2024-08-20 07:27:05',
             ],
-            417 => 
-             [
+            417 => [
                 'id' => 418,
                 'name' => 'view Note',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:27:05',
                 'updated_at' => '2024-08-20 07:27:05',
             ],
-            418 => 
-             [
+            418 => [
                 'id' => 419,
                 'name' => 'create Note',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:27:05',
                 'updated_at' => '2024-08-20 07:27:05',
             ],
-            419 => 
-             [
+            419 => [
                 'id' => 420,
                 'name' => 'create Note',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:27:06',
                 'updated_at' => '2024-08-20 07:27:06',
             ],
-            420 => 
-             [
+            420 => [
                 'id' => 421,
                 'name' => 'update Note',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:27:06',
                 'updated_at' => '2024-08-20 07:27:06',
             ],
-            421 => 
-             [
+            421 => [
                 'id' => 422,
                 'name' => 'update Note',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:27:06',
                 'updated_at' => '2024-08-20 07:27:06',
             ],
-            422 => 
-             [
+            422 => [
                 'id' => 423,
                 'name' => 'delete Note',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:27:06',
                 'updated_at' => '2024-08-20 07:27:06',
             ],
-            423 => 
-             [
+            423 => [
                 'id' => 424,
                 'name' => 'delete Note',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:27:06',
                 'updated_at' => '2024-08-20 07:27:06',
             ],
-            424 => 
-             [
+            424 => [
                 'id' => 425,
                 'name' => 'restore Note',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:27:06',
                 'updated_at' => '2024-08-20 07:27:06',
             ],
-            425 => 
-             [
+            425 => [
                 'id' => 426,
                 'name' => 'restore Note',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:27:06',
                 'updated_at' => '2024-08-20 07:27:06',
             ],
-            426 => 
-             [
+            426 => [
                 'id' => 427,
                 'name' => 'force-delete Note',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:27:07',
                 'updated_at' => '2024-08-20 07:27:07',
             ],
-            427 => 
-             [
+            427 => [
                 'id' => 428,
                 'name' => 'force-delete Note',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:27:07',
                 'updated_at' => '2024-08-20 07:27:07',
             ],
-            428 => 
-             [
+            428 => [
                 'id' => 429,
                 'name' => 'replicate Note',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:27:07',
                 'updated_at' => '2024-08-20 07:27:07',
             ],
-            429 => 
-             [
+            429 => [
                 'id' => 430,
                 'name' => 'replicate Note',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:27:07',
                 'updated_at' => '2024-08-20 07:27:07',
             ],
-            430 => 
-             [
+            430 => [
                 'id' => 431,
                 'name' => 'reorder Note',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:27:07',
                 'updated_at' => '2024-08-20 07:27:07',
             ],
-            431 => 
-             [
+            431 => [
                 'id' => 432,
                 'name' => 'reorder Note',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:27:07',
                 'updated_at' => '2024-08-20 07:27:07',
             ],
-            432 => 
-             [
+            432 => [
                 'id' => 433,
                 'name' => 'view-any PaypalPlan',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:27:07',
                 'updated_at' => '2024-08-20 07:27:07',
             ],
-            433 => 
-             [
+            433 => [
                 'id' => 434,
                 'name' => 'view-any PaypalPlan',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:27:08',
                 'updated_at' => '2024-08-20 07:27:08',
             ],
-            434 => 
-             [
+            434 => [
                 'id' => 435,
                 'name' => 'view PaypalPlan',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:27:08',
                 'updated_at' => '2024-08-20 07:27:08',
             ],
-            435 => 
-             [
+            435 => [
                 'id' => 436,
                 'name' => 'view PaypalPlan',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:27:08',
                 'updated_at' => '2024-08-20 07:27:08',
             ],
-            436 => 
-             [
+            436 => [
                 'id' => 437,
                 'name' => 'create PaypalPlan',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:27:08',
                 'updated_at' => '2024-08-20 07:27:08',
             ],
-            437 => 
-             [
+            437 => [
                 'id' => 438,
                 'name' => 'create PaypalPlan',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:27:08',
                 'updated_at' => '2024-08-20 07:27:08',
             ],
-            438 => 
-             [
+            438 => [
                 'id' => 439,
                 'name' => 'update PaypalPlan',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:27:08',
                 'updated_at' => '2024-08-20 07:27:08',
             ],
-            439 => 
-             [
+            439 => [
                 'id' => 440,
                 'name' => 'update PaypalPlan',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:27:08',
                 'updated_at' => '2024-08-20 07:27:08',
             ],
-            440 => 
-             [
+            440 => [
                 'id' => 441,
                 'name' => 'delete PaypalPlan',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:27:08',
                 'updated_at' => '2024-08-20 07:27:08',
             ],
-            441 => 
-             [
+            441 => [
                 'id' => 442,
                 'name' => 'delete PaypalPlan',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:27:09',
                 'updated_at' => '2024-08-20 07:27:09',
             ],
-            442 => 
-             [
+            442 => [
                 'id' => 443,
                 'name' => 'restore PaypalPlan',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:27:09',
                 'updated_at' => '2024-08-20 07:27:09',
             ],
-            443 => 
-             [
+            443 => [
                 'id' => 444,
                 'name' => 'restore PaypalPlan',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:27:09',
                 'updated_at' => '2024-08-20 07:27:09',
             ],
-            444 => 
-             [
+            444 => [
                 'id' => 445,
                 'name' => 'force-delete PaypalPlan',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:27:09',
                 'updated_at' => '2024-08-20 07:27:09',
             ],
-            445 => 
-             [
+            445 => [
                 'id' => 446,
                 'name' => 'force-delete PaypalPlan',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:27:09',
                 'updated_at' => '2024-08-20 07:27:09',
             ],
-            446 => 
-             [
+            446 => [
                 'id' => 447,
                 'name' => 'replicate PaypalPlan',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:27:09',
                 'updated_at' => '2024-08-20 07:27:09',
             ],
-            447 => 
-             [
+            447 => [
                 'id' => 448,
                 'name' => 'replicate PaypalPlan',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:27:10',
                 'updated_at' => '2024-08-20 07:27:10',
             ],
-            448 => 
-             [
+            448 => [
                 'id' => 449,
                 'name' => 'reorder PaypalPlan',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:27:10',
                 'updated_at' => '2024-08-20 07:27:10',
             ],
-            449 => 
-             [
+            449 => [
                 'id' => 450,
                 'name' => 'reorder PaypalPlan',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:27:10',
                 'updated_at' => '2024-08-20 07:27:10',
             ],
-            450 => 
-             [
+            450 => [
                 'id' => 451,
                 'name' => 'view-any PaypalProduct',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:27:10',
                 'updated_at' => '2024-08-20 07:27:10',
             ],
-            451 => 
-             [
+            451 => [
                 'id' => 452,
                 'name' => 'view-any PaypalProduct',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:27:10',
                 'updated_at' => '2024-08-20 07:27:10',
             ],
-            452 => 
-             [
+            452 => [
                 'id' => 453,
                 'name' => 'view PaypalProduct',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:27:10',
                 'updated_at' => '2024-08-20 07:27:10',
             ],
-            453 => 
-             [
+            453 => [
                 'id' => 454,
                 'name' => 'view PaypalProduct',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:27:11',
                 'updated_at' => '2024-08-20 07:27:11',
             ],
-            454 => 
-             [
+            454 => [
                 'id' => 455,
                 'name' => 'create PaypalProduct',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:27:11',
                 'updated_at' => '2024-08-20 07:27:11',
             ],
-            455 => 
-             [
+            455 => [
                 'id' => 456,
                 'name' => 'create PaypalProduct',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:27:11',
                 'updated_at' => '2024-08-20 07:27:11',
             ],
-            456 => 
-             [
+            456 => [
                 'id' => 457,
                 'name' => 'update PaypalProduct',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:27:11',
                 'updated_at' => '2024-08-20 07:27:11',
             ],
-            457 => 
-             [
+            457 => [
                 'id' => 458,
                 'name' => 'update PaypalProduct',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:27:12',
                 'updated_at' => '2024-08-20 07:27:12',
             ],
-            458 => 
-             [
+            458 => [
                 'id' => 459,
                 'name' => 'delete PaypalProduct',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:27:12',
                 'updated_at' => '2024-08-20 07:27:12',
             ],
-            459 => 
-             [
+            459 => [
                 'id' => 460,
                 'name' => 'delete PaypalProduct',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:27:12',
                 'updated_at' => '2024-08-20 07:27:12',
             ],
-            460 => 
-             [
+            460 => [
                 'id' => 461,
                 'name' => 'restore PaypalProduct',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:27:12',
                 'updated_at' => '2024-08-20 07:27:12',
             ],
-            461 => 
-             [
+            461 => [
                 'id' => 462,
                 'name' => 'restore PaypalProduct',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:27:12',
                 'updated_at' => '2024-08-20 07:27:12',
             ],
-            462 => 
-             [
+            462 => [
                 'id' => 463,
                 'name' => 'force-delete PaypalProduct',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:27:12',
                 'updated_at' => '2024-08-20 07:27:12',
             ],
-            463 => 
-             [
+            463 => [
                 'id' => 464,
                 'name' => 'force-delete PaypalProduct',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:27:13',
                 'updated_at' => '2024-08-20 07:27:13',
             ],
-            464 => 
-             [
+            464 => [
                 'id' => 465,
                 'name' => 'replicate PaypalProduct',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:27:13',
                 'updated_at' => '2024-08-20 07:27:13',
             ],
-            465 => 
-             [
+            465 => [
                 'id' => 466,
                 'name' => 'replicate PaypalProduct',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:27:13',
                 'updated_at' => '2024-08-20 07:27:13',
             ],
-            466 => 
-             [
+            466 => [
                 'id' => 467,
                 'name' => 'reorder PaypalProduct',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:27:13',
                 'updated_at' => '2024-08-20 07:27:13',
             ],
-            467 => 
-             [
+            467 => [
                 'id' => 468,
                 'name' => 'reorder PaypalProduct',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:27:13',
                 'updated_at' => '2024-08-20 07:27:13',
             ],
-            468 => 
-             [
+            468 => [
                 'id' => 469,
                 'name' => 'view-any PaypalSubscription',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:27:13',
                 'updated_at' => '2024-08-20 07:27:13',
             ],
-            469 => 
-             [
+            469 => [
                 'id' => 470,
                 'name' => 'view-any PaypalSubscription',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:27:14',
                 'updated_at' => '2024-08-20 07:27:14',
             ],
-            470 => 
-             [
+            470 => [
                 'id' => 471,
                 'name' => 'view PaypalSubscription',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:27:14',
                 'updated_at' => '2024-08-20 07:27:14',
             ],
-            471 => 
-             [
+            471 => [
                 'id' => 472,
                 'name' => 'view PaypalSubscription',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:27:14',
                 'updated_at' => '2024-08-20 07:27:14',
             ],
-            472 => 
-             [
+            472 => [
                 'id' => 473,
                 'name' => 'create PaypalSubscription',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:27:14',
                 'updated_at' => '2024-08-20 07:27:14',
             ],
-            473 => 
-             [
+            473 => [
                 'id' => 474,
                 'name' => 'create PaypalSubscription',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:27:14',
                 'updated_at' => '2024-08-20 07:27:14',
             ],
-            474 => 
-             [
+            474 => [
                 'id' => 475,
                 'name' => 'update PaypalSubscription',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:27:14',
                 'updated_at' => '2024-08-20 07:27:14',
             ],
-            475 => 
-             [
+            475 => [
                 'id' => 476,
                 'name' => 'update PaypalSubscription',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:27:14',
                 'updated_at' => '2024-08-20 07:27:14',
             ],
-            476 => 
-             [
+            476 => [
                 'id' => 477,
                 'name' => 'delete PaypalSubscription',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:27:15',
                 'updated_at' => '2024-08-20 07:27:15',
             ],
-            477 => 
-             [
+            477 => [
                 'id' => 478,
                 'name' => 'delete PaypalSubscription',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:27:15',
                 'updated_at' => '2024-08-20 07:27:15',
             ],
-            478 => 
-             [
+            478 => [
                 'id' => 479,
                 'name' => 'restore PaypalSubscription',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:27:15',
                 'updated_at' => '2024-08-20 07:27:15',
             ],
-            479 => 
-             [
+            479 => [
                 'id' => 480,
                 'name' => 'restore PaypalSubscription',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:27:15',
                 'updated_at' => '2024-08-20 07:27:15',
             ],
-            480 => 
-             [
+            480 => [
                 'id' => 481,
                 'name' => 'force-delete PaypalSubscription',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:27:15',
                 'updated_at' => '2024-08-20 07:27:15',
             ],
-            481 => 
-             [
+            481 => [
                 'id' => 482,
                 'name' => 'force-delete PaypalSubscription',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:27:15',
                 'updated_at' => '2024-08-20 07:27:15',
             ],
-            482 => 
-             [
+            482 => [
                 'id' => 483,
                 'name' => 'replicate PaypalSubscription',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:27:15',
                 'updated_at' => '2024-08-20 07:27:15',
             ],
-            483 => 
-             [
+            483 => [
                 'id' => 484,
                 'name' => 'replicate PaypalSubscription',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:27:16',
                 'updated_at' => '2024-08-20 07:27:16',
             ],
-            484 => 
-             [
+            484 => [
                 'id' => 485,
                 'name' => 'reorder PaypalSubscription',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:27:16',
                 'updated_at' => '2024-08-20 07:27:16',
             ],
-            485 => 
-             [
+            485 => [
                 'id' => 486,
                 'name' => 'reorder PaypalSubscription',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:27:16',
                 'updated_at' => '2024-08-20 07:27:16',
             ],
-            486 => 
-             [
+            486 => [
                 'id' => 487,
                 'name' => 'view-any Person',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:27:16',
                 'updated_at' => '2024-08-20 07:27:16',
             ],
-            487 => 
-             [
+            487 => [
                 'id' => 488,
                 'name' => 'view-any Person',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:27:16',
                 'updated_at' => '2024-08-20 07:27:16',
             ],
-            488 => 
-             [
+            488 => [
                 'id' => 489,
                 'name' => 'view Person',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:27:16',
                 'updated_at' => '2024-08-20 07:27:16',
             ],
-            489 => 
-             [
+            489 => [
                 'id' => 490,
                 'name' => 'view Person',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:27:17',
                 'updated_at' => '2024-08-20 07:27:17',
             ],
-            490 => 
-             [
+            490 => [
                 'id' => 491,
                 'name' => 'create Person',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:27:17',
                 'updated_at' => '2024-08-20 07:27:17',
             ],
-            491 => 
-             [
+            491 => [
                 'id' => 492,
                 'name' => 'create Person',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:27:17',
                 'updated_at' => '2024-08-20 07:27:17',
             ],
-            492 => 
-             [
+            492 => [
                 'id' => 493,
                 'name' => 'update Person',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:27:17',
                 'updated_at' => '2024-08-20 07:27:17',
             ],
-            493 => 
-             [
+            493 => [
                 'id' => 494,
                 'name' => 'update Person',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:27:17',
                 'updated_at' => '2024-08-20 07:27:17',
             ],
-            494 => 
-             [
+            494 => [
                 'id' => 495,
                 'name' => 'delete Person',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:27:17',
                 'updated_at' => '2024-08-20 07:27:17',
             ],
-            495 => 
-             [
+            495 => [
                 'id' => 496,
                 'name' => 'delete Person',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:27:17',
                 'updated_at' => '2024-08-20 07:27:17',
             ],
-            496 => 
-             [
+            496 => [
                 'id' => 497,
                 'name' => 'restore Person',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:27:18',
                 'updated_at' => '2024-08-20 07:27:18',
             ],
-            497 => 
-             [
+            497 => [
                 'id' => 498,
                 'name' => 'restore Person',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:27:18',
                 'updated_at' => '2024-08-20 07:27:18',
             ],
-            498 => 
-             [
+            498 => [
                 'id' => 499,
                 'name' => 'force-delete Person',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:27:18',
                 'updated_at' => '2024-08-20 07:27:18',
             ],
-            499 => 
-             [
+            499 => [
                 'id' => 500,
                 'name' => 'force-delete Person',
                 'guard_name' => 'api',
@@ -4020,4001 +3516,3501 @@ class PermissionsTableSeeder extends Seeder
                 'updated_at' => '2024-08-20 07:27:18',
             ],
         ]);
-        \DB::table('permissions')->insert( [
-            0 => 
-             [
+        \DB::table('permissions')->insert([
+            0 => [
                 'id' => 501,
                 'name' => 'replicate Person',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:27:18',
                 'updated_at' => '2024-08-20 07:27:18',
             ],
-            1 => 
-             [
+            1 => [
                 'id' => 502,
                 'name' => 'replicate Person',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:27:18',
                 'updated_at' => '2024-08-20 07:27:18',
             ],
-            2 => 
-             [
+            2 => [
                 'id' => 503,
                 'name' => 'reorder Person',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:27:18',
                 'updated_at' => '2024-08-20 07:27:18',
             ],
-            3 => 
-             [
+            3 => [
                 'id' => 504,
                 'name' => 'reorder Person',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:27:18',
                 'updated_at' => '2024-08-20 07:27:18',
             ],
-            4 => 
-             [
+            4 => [
                 'id' => 505,
                 'name' => 'view-any PersonAlia',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:27:19',
                 'updated_at' => '2024-08-20 07:27:19',
             ],
-            5 => 
-             [
+            5 => [
                 'id' => 506,
                 'name' => 'view-any PersonAlia',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:27:19',
                 'updated_at' => '2024-08-20 07:27:19',
             ],
-            6 => 
-             [
+            6 => [
                 'id' => 507,
                 'name' => 'view PersonAlia',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:27:19',
                 'updated_at' => '2024-08-20 07:27:19',
             ],
-            7 => 
-             [
+            7 => [
                 'id' => 508,
                 'name' => 'view PersonAlia',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:27:19',
                 'updated_at' => '2024-08-20 07:27:19',
             ],
-            8 => 
-             [
+            8 => [
                 'id' => 509,
                 'name' => 'create PersonAlia',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:27:19',
                 'updated_at' => '2024-08-20 07:27:19',
             ],
-            9 => 
-             [
+            9 => [
                 'id' => 510,
                 'name' => 'create PersonAlia',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:27:19',
                 'updated_at' => '2024-08-20 07:27:19',
             ],
-            10 => 
-             [
+            10 => [
                 'id' => 511,
                 'name' => 'update PersonAlia',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:27:19',
                 'updated_at' => '2024-08-20 07:27:19',
             ],
-            11 => 
-             [
+            11 => [
                 'id' => 512,
                 'name' => 'update PersonAlia',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:27:20',
                 'updated_at' => '2024-08-20 07:27:20',
             ],
-            12 => 
-             [
+            12 => [
                 'id' => 513,
                 'name' => 'delete PersonAlia',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:27:20',
                 'updated_at' => '2024-08-20 07:27:20',
             ],
-            13 => 
-             [
+            13 => [
                 'id' => 514,
                 'name' => 'delete PersonAlia',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:27:20',
                 'updated_at' => '2024-08-20 07:27:20',
             ],
-            14 => 
-             [
+            14 => [
                 'id' => 515,
                 'name' => 'restore PersonAlia',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:27:20',
                 'updated_at' => '2024-08-20 07:27:20',
             ],
-            15 => 
-             [
+            15 => [
                 'id' => 516,
                 'name' => 'restore PersonAlia',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:27:20',
                 'updated_at' => '2024-08-20 07:27:20',
             ],
-            16 => 
-             [
+            16 => [
                 'id' => 517,
                 'name' => 'force-delete PersonAlia',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:27:20',
                 'updated_at' => '2024-08-20 07:27:20',
             ],
-            17 => 
-             [
+            17 => [
                 'id' => 518,
                 'name' => 'force-delete PersonAlia',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:27:20',
                 'updated_at' => '2024-08-20 07:27:20',
             ],
-            18 => 
-             [
+            18 => [
                 'id' => 519,
                 'name' => 'replicate PersonAlia',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:27:20',
                 'updated_at' => '2024-08-20 07:27:20',
             ],
-            19 => 
-             [
+            19 => [
                 'id' => 520,
                 'name' => 'replicate PersonAlia',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:27:20',
                 'updated_at' => '2024-08-20 07:27:20',
             ],
-            20 => 
-             [
+            20 => [
                 'id' => 521,
                 'name' => 'reorder PersonAlia',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:27:21',
                 'updated_at' => '2024-08-20 07:27:21',
             ],
-            21 => 
-             [
+            21 => [
                 'id' => 522,
                 'name' => 'reorder PersonAlia',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:27:21',
                 'updated_at' => '2024-08-20 07:27:21',
             ],
-            22 => 
-             [
+            22 => [
                 'id' => 523,
                 'name' => 'view-any PersonAnci',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:27:21',
                 'updated_at' => '2024-08-20 07:27:21',
             ],
-            23 => 
-             [
+            23 => [
                 'id' => 524,
                 'name' => 'view-any PersonAnci',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:27:21',
                 'updated_at' => '2024-08-20 07:27:21',
             ],
-            24 => 
-             [
+            24 => [
                 'id' => 525,
                 'name' => 'view PersonAnci',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:27:21',
                 'updated_at' => '2024-08-20 07:27:21',
             ],
-            25 => 
-             [
+            25 => [
                 'id' => 526,
                 'name' => 'view PersonAnci',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:27:21',
                 'updated_at' => '2024-08-20 07:27:21',
             ],
-            26 => 
-             [
+            26 => [
                 'id' => 527,
                 'name' => 'create PersonAnci',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:27:22',
                 'updated_at' => '2024-08-20 07:27:22',
             ],
-            27 => 
-             [
+            27 => [
                 'id' => 528,
                 'name' => 'create PersonAnci',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:27:22',
                 'updated_at' => '2024-08-20 07:27:22',
             ],
-            28 => 
-             [
+            28 => [
                 'id' => 529,
                 'name' => 'update PersonAnci',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:27:22',
                 'updated_at' => '2024-08-20 07:27:22',
             ],
-            29 => 
-             [
+            29 => [
                 'id' => 530,
                 'name' => 'update PersonAnci',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:27:22',
                 'updated_at' => '2024-08-20 07:27:22',
             ],
-            30 => 
-             [
+            30 => [
                 'id' => 531,
                 'name' => 'delete PersonAnci',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:27:22',
                 'updated_at' => '2024-08-20 07:27:22',
             ],
-            31 => 
-             [
+            31 => [
                 'id' => 532,
                 'name' => 'delete PersonAnci',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:27:22',
                 'updated_at' => '2024-08-20 07:27:22',
             ],
-            32 => 
-             [
+            32 => [
                 'id' => 533,
                 'name' => 'restore PersonAnci',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:27:22',
                 'updated_at' => '2024-08-20 07:27:22',
             ],
-            33 => 
-             [
+            33 => [
                 'id' => 534,
                 'name' => 'restore PersonAnci',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:27:23',
                 'updated_at' => '2024-08-20 07:27:23',
             ],
-            34 => 
-             [
+            34 => [
                 'id' => 535,
                 'name' => 'force-delete PersonAnci',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:27:23',
                 'updated_at' => '2024-08-20 07:27:23',
             ],
-            35 => 
-             [
+            35 => [
                 'id' => 536,
                 'name' => 'force-delete PersonAnci',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:27:23',
                 'updated_at' => '2024-08-20 07:27:23',
             ],
-            36 => 
-             [
+            36 => [
                 'id' => 537,
                 'name' => 'replicate PersonAnci',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:27:23',
                 'updated_at' => '2024-08-20 07:27:23',
             ],
-            37 => 
-             [
+            37 => [
                 'id' => 538,
                 'name' => 'replicate PersonAnci',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:27:23',
                 'updated_at' => '2024-08-20 07:27:23',
             ],
-            38 => 
-             [
+            38 => [
                 'id' => 539,
                 'name' => 'reorder PersonAnci',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:27:23',
                 'updated_at' => '2024-08-20 07:27:23',
             ],
-            39 => 
-             [
+            39 => [
                 'id' => 540,
                 'name' => 'reorder PersonAnci',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:27:23',
                 'updated_at' => '2024-08-20 07:27:23',
             ],
-            40 => 
-             [
+            40 => [
                 'id' => 541,
                 'name' => 'view-any PersonAsso',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:27:23',
                 'updated_at' => '2024-08-20 07:27:23',
             ],
-            41 => 
-             [
+            41 => [
                 'id' => 542,
                 'name' => 'view-any PersonAsso',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:27:24',
                 'updated_at' => '2024-08-20 07:27:24',
             ],
-            42 => 
-             [
+            42 => [
                 'id' => 543,
                 'name' => 'view PersonAsso',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:27:24',
                 'updated_at' => '2024-08-20 07:27:24',
             ],
-            43 => 
-             [
+            43 => [
                 'id' => 544,
                 'name' => 'view PersonAsso',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:27:24',
                 'updated_at' => '2024-08-20 07:27:24',
             ],
-            44 => 
-             [
+            44 => [
                 'id' => 545,
                 'name' => 'create PersonAsso',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:27:24',
                 'updated_at' => '2024-08-20 07:27:24',
             ],
-            45 => 
-             [
+            45 => [
                 'id' => 546,
                 'name' => 'create PersonAsso',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:27:24',
                 'updated_at' => '2024-08-20 07:27:24',
             ],
-            46 => 
-             [
+            46 => [
                 'id' => 547,
                 'name' => 'update PersonAsso',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:27:24',
                 'updated_at' => '2024-08-20 07:27:24',
             ],
-            47 => 
-             [
+            47 => [
                 'id' => 548,
                 'name' => 'update PersonAsso',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:27:24',
                 'updated_at' => '2024-08-20 07:27:24',
             ],
-            48 => 
-             [
+            48 => [
                 'id' => 549,
                 'name' => 'delete PersonAsso',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:27:24',
                 'updated_at' => '2024-08-20 07:27:24',
             ],
-            49 => 
-             [
+            49 => [
                 'id' => 550,
                 'name' => 'delete PersonAsso',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:27:24',
                 'updated_at' => '2024-08-20 07:27:24',
             ],
-            50 => 
-             [
+            50 => [
                 'id' => 551,
                 'name' => 'restore PersonAsso',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:27:25',
                 'updated_at' => '2024-08-20 07:27:25',
             ],
-            51 => 
-             [
+            51 => [
                 'id' => 552,
                 'name' => 'restore PersonAsso',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:27:25',
                 'updated_at' => '2024-08-20 07:27:25',
             ],
-            52 => 
-             [
+            52 => [
                 'id' => 553,
                 'name' => 'force-delete PersonAsso',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:27:25',
                 'updated_at' => '2024-08-20 07:27:25',
             ],
-            53 => 
-             [
+            53 => [
                 'id' => 554,
                 'name' => 'force-delete PersonAsso',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:27:25',
                 'updated_at' => '2024-08-20 07:27:25',
             ],
-            54 => 
-             [
+            54 => [
                 'id' => 555,
                 'name' => 'replicate PersonAsso',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:27:25',
                 'updated_at' => '2024-08-20 07:27:25',
             ],
-            55 => 
-             [
+            55 => [
                 'id' => 556,
                 'name' => 'replicate PersonAsso',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:27:25',
                 'updated_at' => '2024-08-20 07:27:25',
             ],
-            56 => 
-             [
+            56 => [
                 'id' => 557,
                 'name' => 'reorder PersonAsso',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:27:25',
                 'updated_at' => '2024-08-20 07:27:25',
             ],
-            57 => 
-             [
+            57 => [
                 'id' => 558,
                 'name' => 'reorder PersonAsso',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:27:26',
                 'updated_at' => '2024-08-20 07:27:26',
             ],
-            58 => 
-             [
+            58 => [
                 'id' => 559,
                 'name' => 'view-any PersonEvent',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:27:26',
                 'updated_at' => '2024-08-20 07:27:26',
             ],
-            59 => 
-             [
+            59 => [
                 'id' => 560,
                 'name' => 'view-any PersonEvent',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:27:26',
                 'updated_at' => '2024-08-20 07:27:26',
             ],
-            60 => 
-             [
+            60 => [
                 'id' => 561,
                 'name' => 'view PersonEvent',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:27:26',
                 'updated_at' => '2024-08-20 07:27:26',
             ],
-            61 => 
-             [
+            61 => [
                 'id' => 562,
                 'name' => 'view PersonEvent',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:27:26',
                 'updated_at' => '2024-08-20 07:27:26',
             ],
-            62 => 
-             [
+            62 => [
                 'id' => 563,
                 'name' => 'create PersonEvent',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:27:26',
                 'updated_at' => '2024-08-20 07:27:26',
             ],
-            63 => 
-             [
+            63 => [
                 'id' => 564,
                 'name' => 'create PersonEvent',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:27:26',
                 'updated_at' => '2024-08-20 07:27:26',
             ],
-            64 => 
-             [
+            64 => [
                 'id' => 565,
                 'name' => 'update PersonEvent',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:27:26',
                 'updated_at' => '2024-08-20 07:27:26',
             ],
-            65 => 
-             [
+            65 => [
                 'id' => 566,
                 'name' => 'update PersonEvent',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:27:27',
                 'updated_at' => '2024-08-20 07:27:27',
             ],
-            66 => 
-             [
+            66 => [
                 'id' => 567,
                 'name' => 'delete PersonEvent',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:27:27',
                 'updated_at' => '2024-08-20 07:27:27',
             ],
-            67 => 
-             [
+            67 => [
                 'id' => 568,
                 'name' => 'delete PersonEvent',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:27:27',
                 'updated_at' => '2024-08-20 07:27:27',
             ],
-            68 => 
-             [
+            68 => [
                 'id' => 569,
                 'name' => 'restore PersonEvent',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:27:27',
                 'updated_at' => '2024-08-20 07:27:27',
             ],
-            69 => 
-             [
+            69 => [
                 'id' => 570,
                 'name' => 'restore PersonEvent',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:27:27',
                 'updated_at' => '2024-08-20 07:27:27',
             ],
-            70 => 
-             [
+            70 => [
                 'id' => 571,
                 'name' => 'force-delete PersonEvent',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:27:27',
                 'updated_at' => '2024-08-20 07:27:27',
             ],
-            71 => 
-             [
+            71 => [
                 'id' => 572,
                 'name' => 'force-delete PersonEvent',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:27:28',
                 'updated_at' => '2024-08-20 07:27:28',
             ],
-            72 => 
-             [
+            72 => [
                 'id' => 573,
                 'name' => 'replicate PersonEvent',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:27:28',
                 'updated_at' => '2024-08-20 07:27:28',
             ],
-            73 => 
-             [
+            73 => [
                 'id' => 574,
                 'name' => 'replicate PersonEvent',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:27:28',
                 'updated_at' => '2024-08-20 07:27:28',
             ],
-            74 => 
-             [
+            74 => [
                 'id' => 575,
                 'name' => 'reorder PersonEvent',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:27:28',
                 'updated_at' => '2024-08-20 07:27:28',
             ],
-            75 => 
-             [
+            75 => [
                 'id' => 576,
                 'name' => 'reorder PersonEvent',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:27:28',
                 'updated_at' => '2024-08-20 07:27:28',
             ],
-            76 => 
-             [
+            76 => [
                 'id' => 577,
                 'name' => 'view-any PersonLds',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:27:29',
                 'updated_at' => '2024-08-20 07:27:29',
             ],
-            77 => 
-             [
+            77 => [
                 'id' => 578,
                 'name' => 'view-any PersonLds',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:27:29',
                 'updated_at' => '2024-08-20 07:27:29',
             ],
-            78 => 
-             [
+            78 => [
                 'id' => 579,
                 'name' => 'view PersonLds',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:27:29',
                 'updated_at' => '2024-08-20 07:27:29',
             ],
-            79 => 
-             [
+            79 => [
                 'id' => 580,
                 'name' => 'view PersonLds',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:27:29',
                 'updated_at' => '2024-08-20 07:27:29',
             ],
-            80 => 
-             [
+            80 => [
                 'id' => 581,
                 'name' => 'create PersonLds',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:27:29',
                 'updated_at' => '2024-08-20 07:27:29',
             ],
-            81 => 
-             [
+            81 => [
                 'id' => 582,
                 'name' => 'create PersonLds',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:27:29',
                 'updated_at' => '2024-08-20 07:27:29',
             ],
-            82 => 
-             [
+            82 => [
                 'id' => 583,
                 'name' => 'update PersonLds',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:27:30',
                 'updated_at' => '2024-08-20 07:27:30',
             ],
-            83 => 
-             [
+            83 => [
                 'id' => 584,
                 'name' => 'update PersonLds',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:27:30',
                 'updated_at' => '2024-08-20 07:27:30',
             ],
-            84 => 
-             [
+            84 => [
                 'id' => 585,
                 'name' => 'delete PersonLds',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:27:30',
                 'updated_at' => '2024-08-20 07:27:30',
             ],
-            85 => 
-             [
+            85 => [
                 'id' => 586,
                 'name' => 'delete PersonLds',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:27:30',
                 'updated_at' => '2024-08-20 07:27:30',
             ],
-            86 => 
-             [
+            86 => [
                 'id' => 587,
                 'name' => 'restore PersonLds',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:27:30',
                 'updated_at' => '2024-08-20 07:27:30',
             ],
-            87 => 
-             [
+            87 => [
                 'id' => 588,
                 'name' => 'restore PersonLds',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:27:30',
                 'updated_at' => '2024-08-20 07:27:30',
             ],
-            88 => 
-             [
+            88 => [
                 'id' => 589,
                 'name' => 'force-delete PersonLds',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:27:30',
                 'updated_at' => '2024-08-20 07:27:30',
             ],
-            89 => 
-             [
+            89 => [
                 'id' => 590,
                 'name' => 'force-delete PersonLds',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:27:30',
                 'updated_at' => '2024-08-20 07:27:30',
             ],
-            90 => 
-             [
+            90 => [
                 'id' => 591,
                 'name' => 'replicate PersonLds',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:27:31',
                 'updated_at' => '2024-08-20 07:27:31',
             ],
-            91 => 
-             [
+            91 => [
                 'id' => 592,
                 'name' => 'replicate PersonLds',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:27:31',
                 'updated_at' => '2024-08-20 07:27:31',
             ],
-            92 => 
-             [
+            92 => [
                 'id' => 593,
                 'name' => 'reorder PersonLds',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:27:31',
                 'updated_at' => '2024-08-20 07:27:31',
             ],
-            93 => 
-             [
+            93 => [
                 'id' => 594,
                 'name' => 'reorder PersonLds',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:27:31',
                 'updated_at' => '2024-08-20 07:27:31',
             ],
-            94 => 
-             [
+            94 => [
                 'id' => 595,
                 'name' => 'view-any PersonName',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:27:31',
                 'updated_at' => '2024-08-20 07:27:31',
             ],
-            95 => 
-             [
+            95 => [
                 'id' => 596,
                 'name' => 'view-any PersonName',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:27:31',
                 'updated_at' => '2024-08-20 07:27:31',
             ],
-            96 => 
-             [
+            96 => [
                 'id' => 597,
                 'name' => 'view PersonName',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:27:32',
                 'updated_at' => '2024-08-20 07:27:32',
             ],
-            97 => 
-             [
+            97 => [
                 'id' => 598,
                 'name' => 'view PersonName',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:27:32',
                 'updated_at' => '2024-08-20 07:27:32',
             ],
-            98 => 
-             [
+            98 => [
                 'id' => 599,
                 'name' => 'create PersonName',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:27:32',
                 'updated_at' => '2024-08-20 07:27:32',
             ],
-            99 => 
-             [
+            99 => [
                 'id' => 600,
                 'name' => 'create PersonName',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:27:32',
                 'updated_at' => '2024-08-20 07:27:32',
             ],
-            100 => 
-             [
+            100 => [
                 'id' => 601,
                 'name' => 'update PersonName',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:27:32',
                 'updated_at' => '2024-08-20 07:27:32',
             ],
-            101 => 
-             [
+            101 => [
                 'id' => 602,
                 'name' => 'update PersonName',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:27:32',
                 'updated_at' => '2024-08-20 07:27:32',
             ],
-            102 => 
-             [
+            102 => [
                 'id' => 603,
                 'name' => 'delete PersonName',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:27:33',
                 'updated_at' => '2024-08-20 07:27:33',
             ],
-            103 => 
-             [
+            103 => [
                 'id' => 604,
                 'name' => 'delete PersonName',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:27:33',
                 'updated_at' => '2024-08-20 07:27:33',
             ],
-            104 => 
-             [
+            104 => [
                 'id' => 605,
                 'name' => 'restore PersonName',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:27:33',
                 'updated_at' => '2024-08-20 07:27:33',
             ],
-            105 => 
-             [
+            105 => [
                 'id' => 606,
                 'name' => 'restore PersonName',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:27:33',
                 'updated_at' => '2024-08-20 07:27:33',
             ],
-            106 => 
-             [
+            106 => [
                 'id' => 607,
                 'name' => 'force-delete PersonName',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:27:33',
                 'updated_at' => '2024-08-20 07:27:33',
             ],
-            107 => 
-             [
+            107 => [
                 'id' => 608,
                 'name' => 'force-delete PersonName',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:27:33',
                 'updated_at' => '2024-08-20 07:27:33',
             ],
-            108 => 
-             [
+            108 => [
                 'id' => 609,
                 'name' => 'replicate PersonName',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:27:33',
                 'updated_at' => '2024-08-20 07:27:33',
             ],
-            109 => 
-             [
+            109 => [
                 'id' => 610,
                 'name' => 'replicate PersonName',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:27:34',
                 'updated_at' => '2024-08-20 07:27:34',
             ],
-            110 => 
-             [
+            110 => [
                 'id' => 611,
                 'name' => 'reorder PersonName',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:27:34',
                 'updated_at' => '2024-08-20 07:27:34',
             ],
-            111 => 
-             [
+            111 => [
                 'id' => 612,
                 'name' => 'reorder PersonName',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:27:34',
                 'updated_at' => '2024-08-20 07:27:34',
             ],
-            112 => 
-             [
+            112 => [
                 'id' => 613,
                 'name' => 'view-any PersonNameFone',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:27:34',
                 'updated_at' => '2024-08-20 07:27:34',
             ],
-            113 => 
-             [
+            113 => [
                 'id' => 614,
                 'name' => 'view-any PersonNameFone',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:27:34',
                 'updated_at' => '2024-08-20 07:27:34',
             ],
-            114 => 
-             [
+            114 => [
                 'id' => 615,
                 'name' => 'view PersonNameFone',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:27:34',
                 'updated_at' => '2024-08-20 07:27:34',
             ],
-            115 => 
-             [
+            115 => [
                 'id' => 616,
                 'name' => 'view PersonNameFone',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:27:34',
                 'updated_at' => '2024-08-20 07:27:34',
             ],
-            116 => 
-             [
+            116 => [
                 'id' => 617,
                 'name' => 'create PersonNameFone',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:27:35',
                 'updated_at' => '2024-08-20 07:27:35',
             ],
-            117 => 
-             [
+            117 => [
                 'id' => 618,
                 'name' => 'create PersonNameFone',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:27:35',
                 'updated_at' => '2024-08-20 07:27:35',
             ],
-            118 => 
-             [
+            118 => [
                 'id' => 619,
                 'name' => 'update PersonNameFone',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:27:35',
                 'updated_at' => '2024-08-20 07:27:35',
             ],
-            119 => 
-             [
+            119 => [
                 'id' => 620,
                 'name' => 'update PersonNameFone',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:27:35',
                 'updated_at' => '2024-08-20 07:27:35',
             ],
-            120 => 
-             [
+            120 => [
                 'id' => 621,
                 'name' => 'delete PersonNameFone',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:27:35',
                 'updated_at' => '2024-08-20 07:27:35',
             ],
-            121 => 
-             [
+            121 => [
                 'id' => 622,
                 'name' => 'delete PersonNameFone',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:27:35',
                 'updated_at' => '2024-08-20 07:27:35',
             ],
-            122 => 
-             [
+            122 => [
                 'id' => 623,
                 'name' => 'restore PersonNameFone',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:27:35',
                 'updated_at' => '2024-08-20 07:27:35',
             ],
-            123 => 
-             [
+            123 => [
                 'id' => 624,
                 'name' => 'restore PersonNameFone',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:27:36',
                 'updated_at' => '2024-08-20 07:27:36',
             ],
-            124 => 
-             [
+            124 => [
                 'id' => 625,
                 'name' => 'force-delete PersonNameFone',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:27:36',
                 'updated_at' => '2024-08-20 07:27:36',
             ],
-            125 => 
-             [
+            125 => [
                 'id' => 626,
                 'name' => 'force-delete PersonNameFone',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:27:36',
                 'updated_at' => '2024-08-20 07:27:36',
             ],
-            126 => 
-             [
+            126 => [
                 'id' => 627,
                 'name' => 'replicate PersonNameFone',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:27:36',
                 'updated_at' => '2024-08-20 07:27:36',
             ],
-            127 => 
-             [
+            127 => [
                 'id' => 628,
                 'name' => 'replicate PersonNameFone',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:27:36',
                 'updated_at' => '2024-08-20 07:27:36',
             ],
-            128 => 
-             [
+            128 => [
                 'id' => 629,
                 'name' => 'reorder PersonNameFone',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:27:37',
                 'updated_at' => '2024-08-20 07:27:37',
             ],
-            129 => 
-             [
+            129 => [
                 'id' => 630,
                 'name' => 'reorder PersonNameFone',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:27:37',
                 'updated_at' => '2024-08-20 07:27:37',
             ],
-            130 => 
-             [
+            130 => [
                 'id' => 631,
                 'name' => 'view-any PersonNameRomn',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:27:37',
                 'updated_at' => '2024-08-20 07:27:37',
             ],
-            131 => 
-             [
+            131 => [
                 'id' => 632,
                 'name' => 'view-any PersonNameRomn',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:27:37',
                 'updated_at' => '2024-08-20 07:27:37',
             ],
-            132 => 
-             [
+            132 => [
                 'id' => 633,
                 'name' => 'view PersonNameRomn',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:27:37',
                 'updated_at' => '2024-08-20 07:27:37',
             ],
-            133 => 
-             [
+            133 => [
                 'id' => 634,
                 'name' => 'view PersonNameRomn',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:27:37',
                 'updated_at' => '2024-08-20 07:27:37',
             ],
-            134 => 
-             [
+            134 => [
                 'id' => 635,
                 'name' => 'create PersonNameRomn',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:27:37',
                 'updated_at' => '2024-08-20 07:27:37',
             ],
-            135 => 
-             [
+            135 => [
                 'id' => 636,
                 'name' => 'create PersonNameRomn',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:27:38',
                 'updated_at' => '2024-08-20 07:27:38',
             ],
-            136 => 
-             [
+            136 => [
                 'id' => 637,
                 'name' => 'update PersonNameRomn',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:27:38',
                 'updated_at' => '2024-08-20 07:27:38',
             ],
-            137 => 
-             [
+            137 => [
                 'id' => 638,
                 'name' => 'update PersonNameRomn',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:27:38',
                 'updated_at' => '2024-08-20 07:27:38',
             ],
-            138 => 
-             [
+            138 => [
                 'id' => 639,
                 'name' => 'delete PersonNameRomn',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:27:38',
                 'updated_at' => '2024-08-20 07:27:38',
             ],
-            139 => 
-             [
+            139 => [
                 'id' => 640,
                 'name' => 'delete PersonNameRomn',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:27:38',
                 'updated_at' => '2024-08-20 07:27:38',
             ],
-            140 => 
-             [
+            140 => [
                 'id' => 641,
                 'name' => 'restore PersonNameRomn',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:27:38',
                 'updated_at' => '2024-08-20 07:27:38',
             ],
-            141 => 
-             [
+            141 => [
                 'id' => 642,
                 'name' => 'restore PersonNameRomn',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:27:39',
                 'updated_at' => '2024-08-20 07:27:39',
             ],
-            142 => 
-             [
+            142 => [
                 'id' => 643,
                 'name' => 'force-delete PersonNameRomn',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:27:39',
                 'updated_at' => '2024-08-20 07:27:39',
             ],
-            143 => 
-             [
+            143 => [
                 'id' => 644,
                 'name' => 'force-delete PersonNameRomn',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:27:39',
                 'updated_at' => '2024-08-20 07:27:39',
             ],
-            144 => 
-             [
+            144 => [
                 'id' => 645,
                 'name' => 'replicate PersonNameRomn',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:27:39',
                 'updated_at' => '2024-08-20 07:27:39',
             ],
-            145 => 
-             [
+            145 => [
                 'id' => 646,
                 'name' => 'replicate PersonNameRomn',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:27:39',
                 'updated_at' => '2024-08-20 07:27:39',
             ],
-            146 => 
-             [
+            146 => [
                 'id' => 647,
                 'name' => 'reorder PersonNameRomn',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:27:39',
                 'updated_at' => '2024-08-20 07:27:39',
             ],
-            147 => 
-             [
+            147 => [
                 'id' => 648,
                 'name' => 'reorder PersonNameRomn',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:27:39',
                 'updated_at' => '2024-08-20 07:27:39',
             ],
-            148 => 
-             [
+            148 => [
                 'id' => 649,
                 'name' => 'view-any PersonSubm',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:27:40',
                 'updated_at' => '2024-08-20 07:27:40',
             ],
-            149 => 
-             [
+            149 => [
                 'id' => 650,
                 'name' => 'view-any PersonSubm',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:27:40',
                 'updated_at' => '2024-08-20 07:27:40',
             ],
-            150 => 
-             [
+            150 => [
                 'id' => 651,
                 'name' => 'view PersonSubm',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:27:40',
                 'updated_at' => '2024-08-20 07:27:40',
             ],
-            151 => 
-             [
+            151 => [
                 'id' => 652,
                 'name' => 'view PersonSubm',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:27:40',
                 'updated_at' => '2024-08-20 07:27:40',
             ],
-            152 => 
-             [
+            152 => [
                 'id' => 653,
                 'name' => 'create PersonSubm',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:27:40',
                 'updated_at' => '2024-08-20 07:27:40',
             ],
-            153 => 
-             [
+            153 => [
                 'id' => 654,
                 'name' => 'create PersonSubm',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:27:40',
                 'updated_at' => '2024-08-20 07:27:40',
             ],
-            154 => 
-             [
+            154 => [
                 'id' => 655,
                 'name' => 'update PersonSubm',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:27:41',
                 'updated_at' => '2024-08-20 07:27:41',
             ],
-            155 => 
-             [
+            155 => [
                 'id' => 656,
                 'name' => 'update PersonSubm',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:27:41',
                 'updated_at' => '2024-08-20 07:27:41',
             ],
-            156 => 
-             [
+            156 => [
                 'id' => 657,
                 'name' => 'delete PersonSubm',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:27:41',
                 'updated_at' => '2024-08-20 07:27:41',
             ],
-            157 => 
-             [
+            157 => [
                 'id' => 658,
                 'name' => 'delete PersonSubm',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:27:41',
                 'updated_at' => '2024-08-20 07:27:41',
             ],
-            158 => 
-             [
+            158 => [
                 'id' => 659,
                 'name' => 'restore PersonSubm',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:27:42',
                 'updated_at' => '2024-08-20 07:27:42',
             ],
-            159 => 
-             [
+            159 => [
                 'id' => 660,
                 'name' => 'restore PersonSubm',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:27:42',
                 'updated_at' => '2024-08-20 07:27:42',
             ],
-            160 => 
-             [
+            160 => [
                 'id' => 661,
                 'name' => 'force-delete PersonSubm',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:27:42',
                 'updated_at' => '2024-08-20 07:27:42',
             ],
-            161 => 
-             [
+            161 => [
                 'id' => 662,
                 'name' => 'force-delete PersonSubm',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:27:42',
                 'updated_at' => '2024-08-20 07:27:42',
             ],
-            162 => 
-             [
+            162 => [
                 'id' => 663,
                 'name' => 'replicate PersonSubm',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:27:42',
                 'updated_at' => '2024-08-20 07:27:42',
             ],
-            163 => 
-             [
+            163 => [
                 'id' => 664,
                 'name' => 'replicate PersonSubm',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:27:43',
                 'updated_at' => '2024-08-20 07:27:43',
             ],
-            164 => 
-             [
+            164 => [
                 'id' => 665,
                 'name' => 'reorder PersonSubm',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:27:43',
                 'updated_at' => '2024-08-20 07:27:43',
             ],
-            165 => 
-             [
+            165 => [
                 'id' => 666,
                 'name' => 'reorder PersonSubm',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:27:43',
                 'updated_at' => '2024-08-20 07:27:43',
             ],
-            166 => 
-             [
+            166 => [
                 'id' => 667,
                 'name' => 'view-any Place',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:27:43',
                 'updated_at' => '2024-08-20 07:27:43',
             ],
-            167 => 
-             [
+            167 => [
                 'id' => 668,
                 'name' => 'view-any Place',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:27:43',
                 'updated_at' => '2024-08-20 07:27:43',
             ],
-            168 => 
-             [
+            168 => [
                 'id' => 669,
                 'name' => 'view Place',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:27:43',
                 'updated_at' => '2024-08-20 07:27:43',
             ],
-            169 => 
-             [
+            169 => [
                 'id' => 670,
                 'name' => 'view Place',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:27:43',
                 'updated_at' => '2024-08-20 07:27:43',
             ],
-            170 => 
-             [
+            170 => [
                 'id' => 671,
                 'name' => 'create Place',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:27:44',
                 'updated_at' => '2024-08-20 07:27:44',
             ],
-            171 => 
-             [
+            171 => [
                 'id' => 672,
                 'name' => 'create Place',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:27:44',
                 'updated_at' => '2024-08-20 07:27:44',
             ],
-            172 => 
-             [
+            172 => [
                 'id' => 673,
                 'name' => 'update Place',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:27:44',
                 'updated_at' => '2024-08-20 07:27:44',
             ],
-            173 => 
-             [
+            173 => [
                 'id' => 674,
                 'name' => 'update Place',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:27:44',
                 'updated_at' => '2024-08-20 07:27:44',
             ],
-            174 => 
-             [
+            174 => [
                 'id' => 675,
                 'name' => 'delete Place',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:27:44',
                 'updated_at' => '2024-08-20 07:27:44',
             ],
-            175 => 
-             [
+            175 => [
                 'id' => 676,
                 'name' => 'delete Place',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:27:44',
                 'updated_at' => '2024-08-20 07:27:44',
             ],
-            176 => 
-             [
+            176 => [
                 'id' => 677,
                 'name' => 'restore Place',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:27:45',
                 'updated_at' => '2024-08-20 07:27:45',
             ],
-            177 => 
-             [
+            177 => [
                 'id' => 678,
                 'name' => 'restore Place',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:27:45',
                 'updated_at' => '2024-08-20 07:27:45',
             ],
-            178 => 
-             [
+            178 => [
                 'id' => 679,
                 'name' => 'force-delete Place',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:27:45',
                 'updated_at' => '2024-08-20 07:27:45',
             ],
-            179 => 
-             [
+            179 => [
                 'id' => 680,
                 'name' => 'force-delete Place',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:27:45',
                 'updated_at' => '2024-08-20 07:27:45',
             ],
-            180 => 
-             [
+            180 => [
                 'id' => 681,
                 'name' => 'replicate Place',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:27:45',
                 'updated_at' => '2024-08-20 07:27:45',
             ],
-            181 => 
-             [
+            181 => [
                 'id' => 682,
                 'name' => 'replicate Place',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:27:45',
                 'updated_at' => '2024-08-20 07:27:45',
             ],
-            182 => 
-             [
+            182 => [
                 'id' => 683,
                 'name' => 'reorder Place',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:27:45',
                 'updated_at' => '2024-08-20 07:27:45',
             ],
-            183 => 
-             [
+            183 => [
                 'id' => 684,
                 'name' => 'reorder Place',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:27:46',
                 'updated_at' => '2024-08-20 07:27:46',
             ],
-            184 => 
-             [
+            184 => [
                 'id' => 685,
                 'name' => 'view-any Publication',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:27:46',
                 'updated_at' => '2024-08-20 07:27:46',
             ],
-            185 => 
-             [
+            185 => [
                 'id' => 686,
                 'name' => 'view-any Publication',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:27:46',
                 'updated_at' => '2024-08-20 07:27:46',
             ],
-            186 => 
-             [
+            186 => [
                 'id' => 687,
                 'name' => 'view Publication',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:27:46',
                 'updated_at' => '2024-08-20 07:27:46',
             ],
-            187 => 
-             [
+            187 => [
                 'id' => 688,
                 'name' => 'view Publication',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:27:46',
                 'updated_at' => '2024-08-20 07:27:46',
             ],
-            188 => 
-             [
+            188 => [
                 'id' => 689,
                 'name' => 'create Publication',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:27:46',
                 'updated_at' => '2024-08-20 07:27:46',
             ],
-            189 => 
-             [
+            189 => [
                 'id' => 690,
                 'name' => 'create Publication',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:27:46',
                 'updated_at' => '2024-08-20 07:27:46',
             ],
-            190 => 
-             [
+            190 => [
                 'id' => 691,
                 'name' => 'update Publication',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:27:47',
                 'updated_at' => '2024-08-20 07:27:47',
             ],
-            191 => 
-             [
+            191 => [
                 'id' => 692,
                 'name' => 'update Publication',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:27:47',
                 'updated_at' => '2024-08-20 07:27:47',
             ],
-            192 => 
-             [
+            192 => [
                 'id' => 693,
                 'name' => 'delete Publication',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:27:47',
                 'updated_at' => '2024-08-20 07:27:47',
             ],
-            193 => 
-             [
+            193 => [
                 'id' => 694,
                 'name' => 'delete Publication',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:27:47',
                 'updated_at' => '2024-08-20 07:27:47',
             ],
-            194 => 
-             [
+            194 => [
                 'id' => 695,
                 'name' => 'restore Publication',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:27:47',
                 'updated_at' => '2024-08-20 07:27:47',
             ],
-            195 => 
-             [
+            195 => [
                 'id' => 696,
                 'name' => 'restore Publication',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:27:47',
                 'updated_at' => '2024-08-20 07:27:47',
             ],
-            196 => 
-             [
+            196 => [
                 'id' => 697,
                 'name' => 'force-delete Publication',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:27:48',
                 'updated_at' => '2024-08-20 07:27:48',
             ],
-            197 => 
-             [
+            197 => [
                 'id' => 698,
                 'name' => 'force-delete Publication',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:27:48',
                 'updated_at' => '2024-08-20 07:27:48',
             ],
-            198 => 
-             [
+            198 => [
                 'id' => 699,
                 'name' => 'replicate Publication',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:27:48',
                 'updated_at' => '2024-08-20 07:27:48',
             ],
-            199 => 
-             [
+            199 => [
                 'id' => 700,
                 'name' => 'replicate Publication',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:27:48',
                 'updated_at' => '2024-08-20 07:27:48',
             ],
-            200 => 
-             [
+            200 => [
                 'id' => 701,
                 'name' => 'reorder Publication',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:27:48',
                 'updated_at' => '2024-08-20 07:27:48',
             ],
-            201 => 
-             [
+            201 => [
                 'id' => 702,
                 'name' => 'reorder Publication',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:27:48',
                 'updated_at' => '2024-08-20 07:27:48',
             ],
-            202 => 
-             [
+            202 => [
                 'id' => 703,
                 'name' => 'view-any Refn',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:27:48',
                 'updated_at' => '2024-08-20 07:27:48',
             ],
-            203 => 
-             [
+            203 => [
                 'id' => 704,
                 'name' => 'view-any Refn',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:27:49',
                 'updated_at' => '2024-08-20 07:27:49',
             ],
-            204 => 
-             [
+            204 => [
                 'id' => 705,
                 'name' => 'view Refn',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:27:49',
                 'updated_at' => '2024-08-20 07:27:49',
             ],
-            205 => 
-             [
+            205 => [
                 'id' => 706,
                 'name' => 'view Refn',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:27:49',
                 'updated_at' => '2024-08-20 07:27:49',
             ],
-            206 => 
-             [
+            206 => [
                 'id' => 707,
                 'name' => 'create Refn',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:27:49',
                 'updated_at' => '2024-08-20 07:27:49',
             ],
-            207 => 
-             [
+            207 => [
                 'id' => 708,
                 'name' => 'create Refn',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:27:49',
                 'updated_at' => '2024-08-20 07:27:49',
             ],
-            208 => 
-             [
+            208 => [
                 'id' => 709,
                 'name' => 'update Refn',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:27:49',
                 'updated_at' => '2024-08-20 07:27:49',
             ],
-            209 => 
-             [
+            209 => [
                 'id' => 710,
                 'name' => 'update Refn',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:27:49',
                 'updated_at' => '2024-08-20 07:27:49',
             ],
-            210 => 
-             [
+            210 => [
                 'id' => 711,
                 'name' => 'delete Refn',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:27:50',
                 'updated_at' => '2024-08-20 07:27:50',
             ],
-            211 => 
-             [
+            211 => [
                 'id' => 712,
                 'name' => 'delete Refn',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:27:50',
                 'updated_at' => '2024-08-20 07:27:50',
             ],
-            212 => 
-             [
+            212 => [
                 'id' => 713,
                 'name' => 'restore Refn',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:27:50',
                 'updated_at' => '2024-08-20 07:27:50',
             ],
-            213 => 
-             [
+            213 => [
                 'id' => 714,
                 'name' => 'restore Refn',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:27:50',
                 'updated_at' => '2024-08-20 07:27:50',
             ],
-            214 => 
-             [
+            214 => [
                 'id' => 715,
                 'name' => 'force-delete Refn',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:27:50',
                 'updated_at' => '2024-08-20 07:27:50',
             ],
-            215 => 
-             [
+            215 => [
                 'id' => 716,
                 'name' => 'force-delete Refn',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:27:50',
                 'updated_at' => '2024-08-20 07:27:50',
             ],
-            216 => 
-             [
+            216 => [
                 'id' => 717,
                 'name' => 'replicate Refn',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:27:51',
                 'updated_at' => '2024-08-20 07:27:51',
             ],
-            217 => 
-             [
+            217 => [
                 'id' => 718,
                 'name' => 'replicate Refn',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:27:51',
                 'updated_at' => '2024-08-20 07:27:51',
             ],
-            218 => 
-             [
+            218 => [
                 'id' => 719,
                 'name' => 'reorder Refn',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:27:51',
                 'updated_at' => '2024-08-20 07:27:51',
             ],
-            219 => 
-             [
+            219 => [
                 'id' => 720,
                 'name' => 'reorder Refn',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:27:51',
                 'updated_at' => '2024-08-20 07:27:51',
             ],
-            220 => 
-             [
+            220 => [
                 'id' => 721,
                 'name' => 'view-any Repository',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:27:51',
                 'updated_at' => '2024-08-20 07:27:51',
             ],
-            221 => 
-             [
+            221 => [
                 'id' => 722,
                 'name' => 'view-any Repository',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:27:51',
                 'updated_at' => '2024-08-20 07:27:51',
             ],
-            222 => 
-             [
+            222 => [
                 'id' => 723,
                 'name' => 'view Repository',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:27:51',
                 'updated_at' => '2024-08-20 07:27:51',
             ],
-            223 => 
-             [
+            223 => [
                 'id' => 724,
                 'name' => 'view Repository',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:27:52',
                 'updated_at' => '2024-08-20 07:27:52',
             ],
-            224 => 
-             [
+            224 => [
                 'id' => 725,
                 'name' => 'create Repository',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:27:52',
                 'updated_at' => '2024-08-20 07:27:52',
             ],
-            225 => 
-             [
+            225 => [
                 'id' => 726,
                 'name' => 'create Repository',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:27:52',
                 'updated_at' => '2024-08-20 07:27:52',
             ],
-            226 => 
-             [
+            226 => [
                 'id' => 727,
                 'name' => 'update Repository',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:27:52',
                 'updated_at' => '2024-08-20 07:27:52',
             ],
-            227 => 
-             [
+            227 => [
                 'id' => 728,
                 'name' => 'update Repository',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:27:52',
                 'updated_at' => '2024-08-20 07:27:52',
             ],
-            228 => 
-             [
+            228 => [
                 'id' => 729,
                 'name' => 'delete Repository',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:27:52',
                 'updated_at' => '2024-08-20 07:27:52',
             ],
-            229 => 
-             [
+            229 => [
                 'id' => 730,
                 'name' => 'delete Repository',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:27:52',
                 'updated_at' => '2024-08-20 07:27:52',
             ],
-            230 => 
-             [
+            230 => [
                 'id' => 731,
                 'name' => 'restore Repository',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:27:53',
                 'updated_at' => '2024-08-20 07:27:53',
             ],
-            231 => 
-             [
+            231 => [
                 'id' => 732,
                 'name' => 'restore Repository',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:27:53',
                 'updated_at' => '2024-08-20 07:27:53',
             ],
-            232 => 
-             [
+            232 => [
                 'id' => 733,
                 'name' => 'force-delete Repository',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:27:53',
                 'updated_at' => '2024-08-20 07:27:53',
             ],
-            233 => 
-             [
+            233 => [
                 'id' => 734,
                 'name' => 'force-delete Repository',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:27:53',
                 'updated_at' => '2024-08-20 07:27:53',
             ],
-            234 => 
-             [
+            234 => [
                 'id' => 735,
                 'name' => 'replicate Repository',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:27:53',
                 'updated_at' => '2024-08-20 07:27:53',
             ],
-            235 => 
-             [
+            235 => [
                 'id' => 736,
                 'name' => 'replicate Repository',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:27:53',
                 'updated_at' => '2024-08-20 07:27:53',
             ],
-            236 => 
-             [
+            236 => [
                 'id' => 737,
                 'name' => 'reorder Repository',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:27:53',
                 'updated_at' => '2024-08-20 07:27:53',
             ],
-            237 => 
-             [
+            237 => [
                 'id' => 738,
                 'name' => 'reorder Repository',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:27:54',
                 'updated_at' => '2024-08-20 07:27:54',
             ],
-            238 => 
-             [
+            238 => [
                 'id' => 739,
                 'name' => 'view-any Role',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:27:54',
                 'updated_at' => '2024-08-20 07:27:54',
             ],
-            239 => 
-             [
+            239 => [
                 'id' => 740,
                 'name' => 'view-any Role',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:27:54',
                 'updated_at' => '2024-08-20 07:27:54',
             ],
-            240 => 
-             [
+            240 => [
                 'id' => 741,
                 'name' => 'view Role',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:27:54',
                 'updated_at' => '2024-08-20 07:27:54',
             ],
-            241 => 
-             [
+            241 => [
                 'id' => 742,
                 'name' => 'view Role',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:27:54',
                 'updated_at' => '2024-08-20 07:27:54',
             ],
-            242 => 
-             [
+            242 => [
                 'id' => 743,
                 'name' => 'create Role',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:27:54',
                 'updated_at' => '2024-08-20 07:27:54',
             ],
-            243 => 
-             [
+            243 => [
                 'id' => 744,
                 'name' => 'create Role',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:27:54',
                 'updated_at' => '2024-08-20 07:27:54',
             ],
-            244 => 
-             [
+            244 => [
                 'id' => 745,
                 'name' => 'update Role',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:27:54',
                 'updated_at' => '2024-08-20 07:27:54',
             ],
-            245 => 
-             [
+            245 => [
                 'id' => 746,
                 'name' => 'update Role',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:27:54',
                 'updated_at' => '2024-08-20 07:27:54',
             ],
-            246 => 
-             [
+            246 => [
                 'id' => 747,
                 'name' => 'delete Role',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:27:55',
                 'updated_at' => '2024-08-20 07:27:55',
             ],
-            247 => 
-             [
+            247 => [
                 'id' => 748,
                 'name' => 'delete Role',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:27:55',
                 'updated_at' => '2024-08-20 07:27:55',
             ],
-            248 => 
-             [
+            248 => [
                 'id' => 749,
                 'name' => 'restore Role',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:27:55',
                 'updated_at' => '2024-08-20 07:27:55',
             ],
-            249 => 
-             [
+            249 => [
                 'id' => 750,
                 'name' => 'restore Role',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:27:55',
                 'updated_at' => '2024-08-20 07:27:55',
             ],
-            250 => 
-             [
+            250 => [
                 'id' => 751,
                 'name' => 'force-delete Role',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:27:55',
                 'updated_at' => '2024-08-20 07:27:55',
             ],
-            251 => 
-             [
+            251 => [
                 'id' => 752,
                 'name' => 'force-delete Role',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:27:56',
                 'updated_at' => '2024-08-20 07:27:56',
             ],
-            252 => 
-             [
+            252 => [
                 'id' => 753,
                 'name' => 'replicate Role',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:27:56',
                 'updated_at' => '2024-08-20 07:27:56',
             ],
-            253 => 
-             [
+            253 => [
                 'id' => 754,
                 'name' => 'replicate Role',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:27:56',
                 'updated_at' => '2024-08-20 07:27:56',
             ],
-            254 => 
-             [
+            254 => [
                 'id' => 755,
                 'name' => 'reorder Role',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:27:56',
                 'updated_at' => '2024-08-20 07:27:56',
             ],
-            255 => 
-             [
+            255 => [
                 'id' => 756,
                 'name' => 'reorder Role',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:27:56',
                 'updated_at' => '2024-08-20 07:27:56',
             ],
-            256 => 
-             [
+            256 => [
                 'id' => 757,
                 'name' => 'view-any Source',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:27:56',
                 'updated_at' => '2024-08-20 07:27:56',
             ],
-            257 => 
-             [
+            257 => [
                 'id' => 758,
                 'name' => 'view-any Source',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:27:56',
                 'updated_at' => '2024-08-20 07:27:56',
             ],
-            258 => 
-             [
+            258 => [
                 'id' => 759,
                 'name' => 'view Source',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:27:56',
                 'updated_at' => '2024-08-20 07:27:56',
             ],
-            259 => 
-             [
+            259 => [
                 'id' => 760,
                 'name' => 'view Source',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:27:57',
                 'updated_at' => '2024-08-20 07:27:57',
             ],
-            260 => 
-             [
+            260 => [
                 'id' => 761,
                 'name' => 'create Source',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:27:57',
                 'updated_at' => '2024-08-20 07:27:57',
             ],
-            261 => 
-             [
+            261 => [
                 'id' => 762,
                 'name' => 'create Source',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:27:57',
                 'updated_at' => '2024-08-20 07:27:57',
             ],
-            262 => 
-             [
+            262 => [
                 'id' => 763,
                 'name' => 'update Source',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:27:57',
                 'updated_at' => '2024-08-20 07:27:57',
             ],
-            263 => 
-             [
+            263 => [
                 'id' => 764,
                 'name' => 'update Source',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:27:57',
                 'updated_at' => '2024-08-20 07:27:57',
             ],
-            264 => 
-             [
+            264 => [
                 'id' => 765,
                 'name' => 'delete Source',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:27:57',
                 'updated_at' => '2024-08-20 07:27:57',
             ],
-            265 => 
-             [
+            265 => [
                 'id' => 766,
                 'name' => 'delete Source',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:27:58',
                 'updated_at' => '2024-08-20 07:27:58',
             ],
-            266 => 
-             [
+            266 => [
                 'id' => 767,
                 'name' => 'restore Source',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:27:58',
                 'updated_at' => '2024-08-20 07:27:58',
             ],
-            267 => 
-             [
+            267 => [
                 'id' => 768,
                 'name' => 'restore Source',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:27:58',
                 'updated_at' => '2024-08-20 07:27:58',
             ],
-            268 => 
-             [
+            268 => [
                 'id' => 769,
                 'name' => 'force-delete Source',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:27:58',
                 'updated_at' => '2024-08-20 07:27:58',
             ],
-            269 => 
-             [
+            269 => [
                 'id' => 770,
                 'name' => 'force-delete Source',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:27:58',
                 'updated_at' => '2024-08-20 07:27:58',
             ],
-            270 => 
-             [
+            270 => [
                 'id' => 771,
                 'name' => 'replicate Source',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:27:58',
                 'updated_at' => '2024-08-20 07:27:58',
             ],
-            271 => 
-             [
+            271 => [
                 'id' => 772,
                 'name' => 'replicate Source',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:27:59',
                 'updated_at' => '2024-08-20 07:27:59',
             ],
-            272 => 
-             [
+            272 => [
                 'id' => 773,
                 'name' => 'reorder Source',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:27:59',
                 'updated_at' => '2024-08-20 07:27:59',
             ],
-            273 => 
-             [
+            273 => [
                 'id' => 774,
                 'name' => 'reorder Source',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:27:59',
                 'updated_at' => '2024-08-20 07:27:59',
             ],
-            274 => 
-             [
+            274 => [
                 'id' => 775,
                 'name' => 'view-any SourceData',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:27:59',
                 'updated_at' => '2024-08-20 07:27:59',
             ],
-            275 => 
-             [
+            275 => [
                 'id' => 776,
                 'name' => 'view-any SourceData',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:27:59',
                 'updated_at' => '2024-08-20 07:27:59',
             ],
-            276 => 
-             [
+            276 => [
                 'id' => 777,
                 'name' => 'view SourceData',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:27:59',
                 'updated_at' => '2024-08-20 07:27:59',
             ],
-            277 => 
-             [
+            277 => [
                 'id' => 778,
                 'name' => 'view SourceData',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:27:59',
                 'updated_at' => '2024-08-20 07:27:59',
             ],
-            278 => 
-             [
+            278 => [
                 'id' => 779,
                 'name' => 'create SourceData',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:28:00',
                 'updated_at' => '2024-08-20 07:28:00',
             ],
-            279 => 
-             [
+            279 => [
                 'id' => 780,
                 'name' => 'create SourceData',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:28:00',
                 'updated_at' => '2024-08-20 07:28:00',
             ],
-            280 => 
-             [
+            280 => [
                 'id' => 781,
                 'name' => 'update SourceData',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:28:00',
                 'updated_at' => '2024-08-20 07:28:00',
             ],
-            281 => 
-             [
+            281 => [
                 'id' => 782,
                 'name' => 'update SourceData',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:28:00',
                 'updated_at' => '2024-08-20 07:28:00',
             ],
-            282 => 
-             [
+            282 => [
                 'id' => 783,
                 'name' => 'delete SourceData',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:28:00',
                 'updated_at' => '2024-08-20 07:28:00',
             ],
-            283 => 
-             [
+            283 => [
                 'id' => 784,
                 'name' => 'delete SourceData',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:28:00',
                 'updated_at' => '2024-08-20 07:28:00',
             ],
-            284 => 
-             [
+            284 => [
                 'id' => 785,
                 'name' => 'restore SourceData',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:28:01',
                 'updated_at' => '2024-08-20 07:28:01',
             ],
-            285 => 
-             [
+            285 => [
                 'id' => 786,
                 'name' => 'restore SourceData',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:28:01',
                 'updated_at' => '2024-08-20 07:28:01',
             ],
-            286 => 
-             [
+            286 => [
                 'id' => 787,
                 'name' => 'force-delete SourceData',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:28:01',
                 'updated_at' => '2024-08-20 07:28:01',
             ],
-            287 => 
-             [
+            287 => [
                 'id' => 788,
                 'name' => 'force-delete SourceData',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:28:01',
                 'updated_at' => '2024-08-20 07:28:01',
             ],
-            288 => 
-             [
+            288 => [
                 'id' => 789,
                 'name' => 'replicate SourceData',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:28:01',
                 'updated_at' => '2024-08-20 07:28:01',
             ],
-            289 => 
-             [
+            289 => [
                 'id' => 790,
                 'name' => 'replicate SourceData',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:28:01',
                 'updated_at' => '2024-08-20 07:28:01',
             ],
-            290 => 
-             [
+            290 => [
                 'id' => 791,
                 'name' => 'reorder SourceData',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:28:01',
                 'updated_at' => '2024-08-20 07:28:01',
             ],
-            291 => 
-             [
+            291 => [
                 'id' => 792,
                 'name' => 'reorder SourceData',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:28:02',
                 'updated_at' => '2024-08-20 07:28:02',
             ],
-            292 => 
-             [
+            292 => [
                 'id' => 793,
                 'name' => 'view-any SourceDataEven',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:28:02',
                 'updated_at' => '2024-08-20 07:28:02',
             ],
-            293 => 
-             [
+            293 => [
                 'id' => 794,
                 'name' => 'view-any SourceDataEven',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:28:02',
                 'updated_at' => '2024-08-20 07:28:02',
             ],
-            294 => 
-             [
+            294 => [
                 'id' => 795,
                 'name' => 'view SourceDataEven',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:28:02',
                 'updated_at' => '2024-08-20 07:28:02',
             ],
-            295 => 
-             [
+            295 => [
                 'id' => 796,
                 'name' => 'view SourceDataEven',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:28:02',
                 'updated_at' => '2024-08-20 07:28:02',
             ],
-            296 => 
-             [
+            296 => [
                 'id' => 797,
                 'name' => 'create SourceDataEven',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:28:02',
                 'updated_at' => '2024-08-20 07:28:02',
             ],
-            297 => 
-             [
+            297 => [
                 'id' => 798,
                 'name' => 'create SourceDataEven',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:28:02',
                 'updated_at' => '2024-08-20 07:28:02',
             ],
-            298 => 
-             [
+            298 => [
                 'id' => 799,
                 'name' => 'update SourceDataEven',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:28:02',
                 'updated_at' => '2024-08-20 07:28:02',
             ],
-            299 => 
-             [
+            299 => [
                 'id' => 800,
                 'name' => 'update SourceDataEven',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:28:03',
                 'updated_at' => '2024-08-20 07:28:03',
             ],
-            300 => 
-             [
+            300 => [
                 'id' => 801,
                 'name' => 'delete SourceDataEven',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:28:03',
                 'updated_at' => '2024-08-20 07:28:03',
             ],
-            301 => 
-             [
+            301 => [
                 'id' => 802,
                 'name' => 'delete SourceDataEven',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:28:03',
                 'updated_at' => '2024-08-20 07:28:03',
             ],
-            302 => 
-             [
+            302 => [
                 'id' => 803,
                 'name' => 'restore SourceDataEven',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:28:03',
                 'updated_at' => '2024-08-20 07:28:03',
             ],
-            303 => 
-             [
+            303 => [
                 'id' => 804,
                 'name' => 'restore SourceDataEven',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:28:03',
                 'updated_at' => '2024-08-20 07:28:03',
             ],
-            304 => 
-             [
+            304 => [
                 'id' => 805,
                 'name' => 'force-delete SourceDataEven',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:28:03',
                 'updated_at' => '2024-08-20 07:28:03',
             ],
-            305 => 
-             [
+            305 => [
                 'id' => 806,
                 'name' => 'force-delete SourceDataEven',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:28:03',
                 'updated_at' => '2024-08-20 07:28:03',
             ],
-            306 => 
-             [
+            306 => [
                 'id' => 807,
                 'name' => 'replicate SourceDataEven',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:28:04',
                 'updated_at' => '2024-08-20 07:28:04',
             ],
-            307 => 
-             [
+            307 => [
                 'id' => 808,
                 'name' => 'replicate SourceDataEven',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:28:04',
                 'updated_at' => '2024-08-20 07:28:04',
             ],
-            308 => 
-             [
+            308 => [
                 'id' => 809,
                 'name' => 'reorder SourceDataEven',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:28:04',
                 'updated_at' => '2024-08-20 07:28:04',
             ],
-            309 => 
-             [
+            309 => [
                 'id' => 810,
                 'name' => 'reorder SourceDataEven',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:28:04',
                 'updated_at' => '2024-08-20 07:28:04',
             ],
-            310 => 
-             [
+            310 => [
                 'id' => 811,
                 'name' => 'view-any SourceRef',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:28:04',
                 'updated_at' => '2024-08-20 07:28:04',
             ],
-            311 => 
-             [
+            311 => [
                 'id' => 812,
                 'name' => 'view-any SourceRef',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:28:04',
                 'updated_at' => '2024-08-20 07:28:04',
             ],
-            312 => 
-             [
+            312 => [
                 'id' => 813,
                 'name' => 'view SourceRef',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:28:04',
                 'updated_at' => '2024-08-20 07:28:04',
             ],
-            313 => 
-             [
+            313 => [
                 'id' => 814,
                 'name' => 'view SourceRef',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:28:05',
                 'updated_at' => '2024-08-20 07:28:05',
             ],
-            314 => 
-             [
+            314 => [
                 'id' => 815,
                 'name' => 'create SourceRef',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:28:05',
                 'updated_at' => '2024-08-20 07:28:05',
             ],
-            315 => 
-             [
+            315 => [
                 'id' => 816,
                 'name' => 'create SourceRef',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:28:05',
                 'updated_at' => '2024-08-20 07:28:05',
             ],
-            316 => 
-             [
+            316 => [
                 'id' => 817,
                 'name' => 'update SourceRef',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:28:05',
                 'updated_at' => '2024-08-20 07:28:05',
             ],
-            317 => 
-             [
+            317 => [
                 'id' => 818,
                 'name' => 'update SourceRef',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:28:05',
                 'updated_at' => '2024-08-20 07:28:05',
             ],
-            318 => 
-             [
+            318 => [
                 'id' => 819,
                 'name' => 'delete SourceRef',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:28:05',
                 'updated_at' => '2024-08-20 07:28:05',
             ],
-            319 => 
-             [
+            319 => [
                 'id' => 820,
                 'name' => 'delete SourceRef',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:28:05',
                 'updated_at' => '2024-08-20 07:28:05',
             ],
-            320 => 
-             [
+            320 => [
                 'id' => 821,
                 'name' => 'restore SourceRef',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:28:06',
                 'updated_at' => '2024-08-20 07:28:06',
             ],
-            321 => 
-             [
+            321 => [
                 'id' => 822,
                 'name' => 'restore SourceRef',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:28:06',
                 'updated_at' => '2024-08-20 07:28:06',
             ],
-            322 => 
-             [
+            322 => [
                 'id' => 823,
                 'name' => 'force-delete SourceRef',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:28:06',
                 'updated_at' => '2024-08-20 07:28:06',
             ],
-            323 => 
-             [
+            323 => [
                 'id' => 824,
                 'name' => 'force-delete SourceRef',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:28:06',
                 'updated_at' => '2024-08-20 07:28:06',
             ],
-            324 => 
-             [
+            324 => [
                 'id' => 825,
                 'name' => 'replicate SourceRef',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:28:06',
                 'updated_at' => '2024-08-20 07:28:06',
             ],
-            325 => 
-             [
+            325 => [
                 'id' => 826,
                 'name' => 'replicate SourceRef',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:28:06',
                 'updated_at' => '2024-08-20 07:28:06',
             ],
-            326 => 
-             [
+            326 => [
                 'id' => 827,
                 'name' => 'reorder SourceRef',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:28:06',
                 'updated_at' => '2024-08-20 07:28:06',
             ],
-            327 => 
-             [
+            327 => [
                 'id' => 828,
                 'name' => 'reorder SourceRef',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:28:06',
                 'updated_at' => '2024-08-20 07:28:06',
             ],
-            328 => 
-             [
+            328 => [
                 'id' => 829,
                 'name' => 'view-any SourceRefEven',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:28:07',
                 'updated_at' => '2024-08-20 07:28:07',
             ],
-            329 => 
-             [
+            329 => [
                 'id' => 830,
                 'name' => 'view-any SourceRefEven',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:28:07',
                 'updated_at' => '2024-08-20 07:28:07',
             ],
-            330 => 
-             [
+            330 => [
                 'id' => 831,
                 'name' => 'view SourceRefEven',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:28:07',
                 'updated_at' => '2024-08-20 07:28:07',
             ],
-            331 => 
-             [
+            331 => [
                 'id' => 832,
                 'name' => 'view SourceRefEven',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:28:07',
                 'updated_at' => '2024-08-20 07:28:07',
             ],
-            332 => 
-             [
+            332 => [
                 'id' => 833,
                 'name' => 'create SourceRefEven',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:28:07',
                 'updated_at' => '2024-08-20 07:28:07',
             ],
-            333 => 
-             [
+            333 => [
                 'id' => 834,
                 'name' => 'create SourceRefEven',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:28:07',
                 'updated_at' => '2024-08-20 07:28:07',
             ],
-            334 => 
-             [
+            334 => [
                 'id' => 835,
                 'name' => 'update SourceRefEven',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:28:07',
                 'updated_at' => '2024-08-20 07:28:07',
             ],
-            335 => 
-             [
+            335 => [
                 'id' => 836,
                 'name' => 'update SourceRefEven',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:28:08',
                 'updated_at' => '2024-08-20 07:28:08',
             ],
-            336 => 
-             [
+            336 => [
                 'id' => 837,
                 'name' => 'delete SourceRefEven',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:28:08',
                 'updated_at' => '2024-08-20 07:28:08',
             ],
-            337 => 
-             [
+            337 => [
                 'id' => 838,
                 'name' => 'delete SourceRefEven',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:28:08',
                 'updated_at' => '2024-08-20 07:28:08',
             ],
-            338 => 
-             [
+            338 => [
                 'id' => 839,
                 'name' => 'restore SourceRefEven',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:28:08',
                 'updated_at' => '2024-08-20 07:28:08',
             ],
-            339 => 
-             [
+            339 => [
                 'id' => 840,
                 'name' => 'restore SourceRefEven',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:28:08',
                 'updated_at' => '2024-08-20 07:28:08',
             ],
-            340 => 
-             [
+            340 => [
                 'id' => 841,
                 'name' => 'force-delete SourceRefEven',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:28:08',
                 'updated_at' => '2024-08-20 07:28:08',
             ],
-            341 => 
-             [
+            341 => [
                 'id' => 842,
                 'name' => 'force-delete SourceRefEven',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:28:08',
                 'updated_at' => '2024-08-20 07:28:08',
             ],
-            342 => 
-             [
+            342 => [
                 'id' => 843,
                 'name' => 'replicate SourceRefEven',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:28:09',
                 'updated_at' => '2024-08-20 07:28:09',
             ],
-            343 => 
-             [
+            343 => [
                 'id' => 844,
                 'name' => 'replicate SourceRefEven',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:28:09',
                 'updated_at' => '2024-08-20 07:28:09',
             ],
-            344 => 
-             [
+            344 => [
                 'id' => 845,
                 'name' => 'reorder SourceRefEven',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:28:09',
                 'updated_at' => '2024-08-20 07:28:09',
             ],
-            345 => 
-             [
+            345 => [
                 'id' => 846,
                 'name' => 'reorder SourceRefEven',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:28:09',
                 'updated_at' => '2024-08-20 07:28:09',
             ],
-            346 => 
-             [
+            346 => [
                 'id' => 847,
                 'name' => 'view-any SourceRepo',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:28:09',
                 'updated_at' => '2024-08-20 07:28:09',
             ],
-            347 => 
-             [
+            347 => [
                 'id' => 848,
                 'name' => 'view-any SourceRepo',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:28:09',
                 'updated_at' => '2024-08-20 07:28:09',
             ],
-            348 => 
-             [
+            348 => [
                 'id' => 849,
                 'name' => 'view SourceRepo',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:28:09',
                 'updated_at' => '2024-08-20 07:28:09',
             ],
-            349 => 
-             [
+            349 => [
                 'id' => 850,
                 'name' => 'view SourceRepo',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:28:09',
                 'updated_at' => '2024-08-20 07:28:09',
             ],
-            350 => 
-             [
+            350 => [
                 'id' => 851,
                 'name' => 'create SourceRepo',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:28:10',
                 'updated_at' => '2024-08-20 07:28:10',
             ],
-            351 => 
-             [
+            351 => [
                 'id' => 852,
                 'name' => 'create SourceRepo',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:28:10',
                 'updated_at' => '2024-08-20 07:28:10',
             ],
-            352 => 
-             [
+            352 => [
                 'id' => 853,
                 'name' => 'update SourceRepo',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:28:10',
                 'updated_at' => '2024-08-20 07:28:10',
             ],
-            353 => 
-             [
+            353 => [
                 'id' => 854,
                 'name' => 'update SourceRepo',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:28:10',
                 'updated_at' => '2024-08-20 07:28:10',
             ],
-            354 => 
-             [
+            354 => [
                 'id' => 855,
                 'name' => 'delete SourceRepo',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:28:10',
                 'updated_at' => '2024-08-20 07:28:10',
             ],
-            355 => 
-             [
+            355 => [
                 'id' => 856,
                 'name' => 'delete SourceRepo',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:28:10',
                 'updated_at' => '2024-08-20 07:28:10',
             ],
-            356 => 
-             [
+            356 => [
                 'id' => 857,
                 'name' => 'restore SourceRepo',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:28:10',
                 'updated_at' => '2024-08-20 07:28:10',
             ],
-            357 => 
-             [
+            357 => [
                 'id' => 858,
                 'name' => 'restore SourceRepo',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:28:11',
                 'updated_at' => '2024-08-20 07:28:11',
             ],
-            358 => 
-             [
+            358 => [
                 'id' => 859,
                 'name' => 'force-delete SourceRepo',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:28:11',
                 'updated_at' => '2024-08-20 07:28:11',
             ],
-            359 => 
-             [
+            359 => [
                 'id' => 860,
                 'name' => 'force-delete SourceRepo',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:28:11',
                 'updated_at' => '2024-08-20 07:28:11',
             ],
-            360 => 
-             [
+            360 => [
                 'id' => 861,
                 'name' => 'replicate SourceRepo',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:28:11',
                 'updated_at' => '2024-08-20 07:28:11',
             ],
-            361 => 
-             [
+            361 => [
                 'id' => 862,
                 'name' => 'replicate SourceRepo',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:28:11',
                 'updated_at' => '2024-08-20 07:28:11',
             ],
-            362 => 
-             [
+            362 => [
                 'id' => 863,
                 'name' => 'reorder SourceRepo',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:28:11',
                 'updated_at' => '2024-08-20 07:28:11',
             ],
-            363 => 
-             [
+            363 => [
                 'id' => 864,
                 'name' => 'reorder SourceRepo',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:28:11',
                 'updated_at' => '2024-08-20 07:28:11',
             ],
-            364 => 
-             [
+            364 => [
                 'id' => 865,
                 'name' => 'view-any Subm',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:28:12',
                 'updated_at' => '2024-08-20 07:28:12',
             ],
-            365 => 
-             [
+            365 => [
                 'id' => 866,
                 'name' => 'view-any Subm',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:28:12',
                 'updated_at' => '2024-08-20 07:28:12',
             ],
-            366 => 
-             [
+            366 => [
                 'id' => 867,
                 'name' => 'view Subm',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:28:12',
                 'updated_at' => '2024-08-20 07:28:12',
             ],
-            367 => 
-             [
+            367 => [
                 'id' => 868,
                 'name' => 'view Subm',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:28:12',
                 'updated_at' => '2024-08-20 07:28:12',
             ],
-            368 => 
-             [
+            368 => [
                 'id' => 869,
                 'name' => 'create Subm',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:28:12',
                 'updated_at' => '2024-08-20 07:28:12',
             ],
-            369 => 
-             [
+            369 => [
                 'id' => 870,
                 'name' => 'create Subm',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:28:12',
                 'updated_at' => '2024-08-20 07:28:12',
             ],
-            370 => 
-             [
+            370 => [
                 'id' => 871,
                 'name' => 'update Subm',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:28:13',
                 'updated_at' => '2024-08-20 07:28:13',
             ],
-            371 => 
-             [
+            371 => [
                 'id' => 872,
                 'name' => 'update Subm',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:28:13',
                 'updated_at' => '2024-08-20 07:28:13',
             ],
-            372 => 
-             [
+            372 => [
                 'id' => 873,
                 'name' => 'delete Subm',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:28:13',
                 'updated_at' => '2024-08-20 07:28:13',
             ],
-            373 => 
-             [
+            373 => [
                 'id' => 874,
                 'name' => 'delete Subm',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:28:13',
                 'updated_at' => '2024-08-20 07:28:13',
             ],
-            374 => 
-             [
+            374 => [
                 'id' => 875,
                 'name' => 'restore Subm',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:28:14',
                 'updated_at' => '2024-08-20 07:28:14',
             ],
-            375 => 
-             [
+            375 => [
                 'id' => 876,
                 'name' => 'restore Subm',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:28:14',
                 'updated_at' => '2024-08-20 07:28:14',
             ],
-            376 => 
-             [
+            376 => [
                 'id' => 877,
                 'name' => 'force-delete Subm',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:28:14',
                 'updated_at' => '2024-08-20 07:28:14',
             ],
-            377 => 
-             [
+            377 => [
                 'id' => 878,
                 'name' => 'force-delete Subm',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:28:14',
                 'updated_at' => '2024-08-20 07:28:14',
             ],
-            378 => 
-             [
+            378 => [
                 'id' => 879,
                 'name' => 'replicate Subm',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:28:14',
                 'updated_at' => '2024-08-20 07:28:14',
             ],
-            379 => 
-             [
+            379 => [
                 'id' => 880,
                 'name' => 'replicate Subm',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:28:14',
                 'updated_at' => '2024-08-20 07:28:14',
             ],
-            380 => 
-             [
+            380 => [
                 'id' => 881,
                 'name' => 'reorder Subm',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:28:14',
                 'updated_at' => '2024-08-20 07:28:14',
             ],
-            381 => 
-             [
+            381 => [
                 'id' => 882,
                 'name' => 'reorder Subm',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:28:15',
                 'updated_at' => '2024-08-20 07:28:15',
             ],
-            382 => 
-             [
+            382 => [
                 'id' => 883,
                 'name' => 'view-any Subn',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:28:15',
                 'updated_at' => '2024-08-20 07:28:15',
             ],
-            383 => 
-             [
+            383 => [
                 'id' => 884,
                 'name' => 'view-any Subn',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:28:15',
                 'updated_at' => '2024-08-20 07:28:15',
             ],
-            384 => 
-             [
+            384 => [
                 'id' => 885,
                 'name' => 'view Subn',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:28:15',
                 'updated_at' => '2024-08-20 07:28:15',
             ],
-            385 => 
-             [
+            385 => [
                 'id' => 886,
                 'name' => 'view Subn',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:28:15',
                 'updated_at' => '2024-08-20 07:28:15',
             ],
-            386 => 
-             [
+            386 => [
                 'id' => 887,
                 'name' => 'create Subn',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:28:15',
                 'updated_at' => '2024-08-20 07:28:15',
             ],
-            387 => 
-             [
+            387 => [
                 'id' => 888,
                 'name' => 'create Subn',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:28:15',
                 'updated_at' => '2024-08-20 07:28:15',
             ],
-            388 => 
-             [
+            388 => [
                 'id' => 889,
                 'name' => 'update Subn',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:28:16',
                 'updated_at' => '2024-08-20 07:28:16',
             ],
-            389 => 
-             [
+            389 => [
                 'id' => 890,
                 'name' => 'update Subn',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:28:16',
                 'updated_at' => '2024-08-20 07:28:16',
             ],
-            390 => 
-             [
+            390 => [
                 'id' => 891,
                 'name' => 'delete Subn',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:28:16',
                 'updated_at' => '2024-08-20 07:28:16',
             ],
-            391 => 
-             [
+            391 => [
                 'id' => 892,
                 'name' => 'delete Subn',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:28:16',
                 'updated_at' => '2024-08-20 07:28:16',
             ],
-            392 => 
-             [
+            392 => [
                 'id' => 893,
                 'name' => 'restore Subn',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:28:16',
                 'updated_at' => '2024-08-20 07:28:16',
             ],
-            393 => 
-             [
+            393 => [
                 'id' => 894,
                 'name' => 'restore Subn',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:28:16',
                 'updated_at' => '2024-08-20 07:28:16',
             ],
-            394 => 
-             [
+            394 => [
                 'id' => 895,
                 'name' => 'force-delete Subn',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:28:16',
                 'updated_at' => '2024-08-20 07:28:16',
             ],
-            395 => 
-             [
+            395 => [
                 'id' => 896,
                 'name' => 'force-delete Subn',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:28:17',
                 'updated_at' => '2024-08-20 07:28:17',
             ],
-            396 => 
-             [
+            396 => [
                 'id' => 897,
                 'name' => 'replicate Subn',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:28:17',
                 'updated_at' => '2024-08-20 07:28:17',
             ],
-            397 => 
-             [
+            397 => [
                 'id' => 898,
                 'name' => 'replicate Subn',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:28:17',
                 'updated_at' => '2024-08-20 07:28:17',
             ],
-            398 => 
-             [
+            398 => [
                 'id' => 899,
                 'name' => 'reorder Subn',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:28:17',
                 'updated_at' => '2024-08-20 07:28:17',
             ],
-            399 => 
-             [
+            399 => [
                 'id' => 900,
                 'name' => 'reorder Subn',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:28:17',
                 'updated_at' => '2024-08-20 07:28:17',
             ],
-            400 => 
-             [
+            400 => [
                 'id' => 901,
                 'name' => 'view-any Team',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:28:17',
                 'updated_at' => '2024-08-20 07:28:17',
             ],
-            401 => 
-             [
+            401 => [
                 'id' => 902,
                 'name' => 'view-any Team',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:28:18',
                 'updated_at' => '2024-08-20 07:28:18',
             ],
-            402 => 
-             [
+            402 => [
                 'id' => 903,
                 'name' => 'view Team',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:28:18',
                 'updated_at' => '2024-08-20 07:28:18',
             ],
-            403 => 
-             [
+            403 => [
                 'id' => 904,
                 'name' => 'view Team',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:28:18',
                 'updated_at' => '2024-08-20 07:28:18',
             ],
-            404 => 
-             [
+            404 => [
                 'id' => 905,
                 'name' => 'create Team',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:28:18',
                 'updated_at' => '2024-08-20 07:28:18',
             ],
-            405 => 
-             [
+            405 => [
                 'id' => 906,
                 'name' => 'create Team',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:28:18',
                 'updated_at' => '2024-08-20 07:28:18',
             ],
-            406 => 
-             [
+            406 => [
                 'id' => 907,
                 'name' => 'update Team',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:28:18',
                 'updated_at' => '2024-08-20 07:28:18',
             ],
-            407 => 
-             [
+            407 => [
                 'id' => 908,
                 'name' => 'update Team',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:28:18',
                 'updated_at' => '2024-08-20 07:28:18',
             ],
-            408 => 
-             [
+            408 => [
                 'id' => 909,
                 'name' => 'delete Team',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:28:19',
                 'updated_at' => '2024-08-20 07:28:19',
             ],
-            409 => 
-             [
+            409 => [
                 'id' => 910,
                 'name' => 'delete Team',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:28:19',
                 'updated_at' => '2024-08-20 07:28:19',
             ],
-            410 => 
-             [
+            410 => [
                 'id' => 911,
                 'name' => 'restore Team',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:28:19',
                 'updated_at' => '2024-08-20 07:28:19',
             ],
-            411 => 
-             [
+            411 => [
                 'id' => 912,
                 'name' => 'restore Team',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:28:19',
                 'updated_at' => '2024-08-20 07:28:19',
             ],
-            412 => 
-             [
+            412 => [
                 'id' => 913,
                 'name' => 'force-delete Team',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:28:19',
                 'updated_at' => '2024-08-20 07:28:19',
             ],
-            413 => 
-             [
+            413 => [
                 'id' => 914,
                 'name' => 'force-delete Team',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:28:19',
                 'updated_at' => '2024-08-20 07:28:19',
             ],
-            414 => 
-             [
+            414 => [
                 'id' => 915,
                 'name' => 'replicate Team',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:28:20',
                 'updated_at' => '2024-08-20 07:28:20',
             ],
-            415 => 
-             [
+            415 => [
                 'id' => 916,
                 'name' => 'replicate Team',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:28:20',
                 'updated_at' => '2024-08-20 07:28:20',
             ],
-            416 => 
-             [
+            416 => [
                 'id' => 917,
                 'name' => 'reorder Team',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:28:20',
                 'updated_at' => '2024-08-20 07:28:20',
             ],
-            417 => 
-             [
+            417 => [
                 'id' => 918,
                 'name' => 'reorder Team',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:28:20',
                 'updated_at' => '2024-08-20 07:28:20',
             ],
-            418 => 
-             [
+            418 => [
                 'id' => 919,
                 'name' => 'view-any TeamInvitation',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:28:20',
                 'updated_at' => '2024-08-20 07:28:20',
             ],
-            419 => 
-             [
+            419 => [
                 'id' => 920,
                 'name' => 'view-any TeamInvitation',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:28:20',
                 'updated_at' => '2024-08-20 07:28:20',
             ],
-            420 => 
-             [
+            420 => [
                 'id' => 921,
                 'name' => 'view TeamInvitation',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:28:21',
                 'updated_at' => '2024-08-20 07:28:21',
             ],
-            421 => 
-             [
+            421 => [
                 'id' => 922,
                 'name' => 'view TeamInvitation',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:28:21',
                 'updated_at' => '2024-08-20 07:28:21',
             ],
-            422 => 
-             [
+            422 => [
                 'id' => 923,
                 'name' => 'create TeamInvitation',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:28:21',
                 'updated_at' => '2024-08-20 07:28:21',
             ],
-            423 => 
-             [
+            423 => [
                 'id' => 924,
                 'name' => 'create TeamInvitation',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:28:21',
                 'updated_at' => '2024-08-20 07:28:21',
             ],
-            424 => 
-             [
+            424 => [
                 'id' => 925,
                 'name' => 'update TeamInvitation',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:28:21',
                 'updated_at' => '2024-08-20 07:28:21',
             ],
-            425 => 
-             [
+            425 => [
                 'id' => 926,
                 'name' => 'update TeamInvitation',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:28:21',
                 'updated_at' => '2024-08-20 07:28:21',
             ],
-            426 => 
-             [
+            426 => [
                 'id' => 927,
                 'name' => 'delete TeamInvitation',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:28:22',
                 'updated_at' => '2024-08-20 07:28:22',
             ],
-            427 => 
-             [
+            427 => [
                 'id' => 928,
                 'name' => 'delete TeamInvitation',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:28:22',
                 'updated_at' => '2024-08-20 07:28:22',
             ],
-            428 => 
-             [
+            428 => [
                 'id' => 929,
                 'name' => 'restore TeamInvitation',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:28:22',
                 'updated_at' => '2024-08-20 07:28:22',
             ],
-            429 => 
-             [
+            429 => [
                 'id' => 930,
                 'name' => 'restore TeamInvitation',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:28:22',
                 'updated_at' => '2024-08-20 07:28:22',
             ],
-            430 => 
-             [
+            430 => [
                 'id' => 931,
                 'name' => 'force-delete TeamInvitation',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:28:22',
                 'updated_at' => '2024-08-20 07:28:22',
             ],
-            431 => 
-             [
+            431 => [
                 'id' => 932,
                 'name' => 'force-delete TeamInvitation',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:28:22',
                 'updated_at' => '2024-08-20 07:28:22',
             ],
-            432 => 
-             [
+            432 => [
                 'id' => 933,
                 'name' => 'replicate TeamInvitation',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:28:23',
                 'updated_at' => '2024-08-20 07:28:23',
             ],
-            433 => 
-             [
+            433 => [
                 'id' => 934,
                 'name' => 'replicate TeamInvitation',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:28:23',
                 'updated_at' => '2024-08-20 07:28:23',
             ],
-            434 => 
-             [
+            434 => [
                 'id' => 935,
                 'name' => 'reorder TeamInvitation',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:28:23',
                 'updated_at' => '2024-08-20 07:28:23',
             ],
-            435 => 
-             [
+            435 => [
                 'id' => 936,
                 'name' => 'reorder TeamInvitation',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:28:23',
                 'updated_at' => '2024-08-20 07:28:23',
             ],
-            436 => 
-             [
+            436 => [
                 'id' => 937,
                 'name' => 'view-any Tree',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:28:23',
                 'updated_at' => '2024-08-20 07:28:23',
             ],
-            437 => 
-             [
+            437 => [
                 'id' => 938,
                 'name' => 'view-any Tree',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:28:23',
                 'updated_at' => '2024-08-20 07:28:23',
             ],
-            438 => 
-             [
+            438 => [
                 'id' => 939,
                 'name' => 'view Tree',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:28:24',
                 'updated_at' => '2024-08-20 07:28:24',
             ],
-            439 => 
-             [
+            439 => [
                 'id' => 940,
                 'name' => 'view Tree',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:28:24',
                 'updated_at' => '2024-08-20 07:28:24',
             ],
-            440 => 
-             [
+            440 => [
                 'id' => 941,
                 'name' => 'create Tree',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:28:24',
                 'updated_at' => '2024-08-20 07:28:24',
             ],
-            441 => 
-             [
+            441 => [
                 'id' => 942,
                 'name' => 'create Tree',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:28:24',
                 'updated_at' => '2024-08-20 07:28:24',
             ],
-            442 => 
-             [
+            442 => [
                 'id' => 943,
                 'name' => 'update Tree',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:28:24',
                 'updated_at' => '2024-08-20 07:28:24',
             ],
-            443 => 
-             [
+            443 => [
                 'id' => 944,
                 'name' => 'update Tree',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:28:24',
                 'updated_at' => '2024-08-20 07:28:24',
             ],
-            444 => 
-             [
+            444 => [
                 'id' => 945,
                 'name' => 'delete Tree',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:28:25',
                 'updated_at' => '2024-08-20 07:28:25',
             ],
-            445 => 
-             [
+            445 => [
                 'id' => 946,
                 'name' => 'delete Tree',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:28:25',
                 'updated_at' => '2024-08-20 07:28:25',
             ],
-            446 => 
-             [
+            446 => [
                 'id' => 947,
                 'name' => 'restore Tree',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:28:25',
                 'updated_at' => '2024-08-20 07:28:25',
             ],
-            447 => 
-             [
+            447 => [
                 'id' => 948,
                 'name' => 'restore Tree',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:28:25',
                 'updated_at' => '2024-08-20 07:28:25',
             ],
-            448 => 
-             [
+            448 => [
                 'id' => 949,
                 'name' => 'force-delete Tree',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:28:25',
                 'updated_at' => '2024-08-20 07:28:25',
             ],
-            449 => 
-             [
+            449 => [
                 'id' => 950,
                 'name' => 'force-delete Tree',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:28:25',
                 'updated_at' => '2024-08-20 07:28:25',
             ],
-            450 => 
-             [
+            450 => [
                 'id' => 951,
                 'name' => 'replicate Tree',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:28:25',
                 'updated_at' => '2024-08-20 07:28:25',
             ],
-            451 => 
-             [
+            451 => [
                 'id' => 952,
                 'name' => 'replicate Tree',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:28:26',
                 'updated_at' => '2024-08-20 07:28:26',
             ],
-            452 => 
-             [
+            452 => [
                 'id' => 953,
                 'name' => 'reorder Tree',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:28:26',
                 'updated_at' => '2024-08-20 07:28:26',
             ],
-            453 => 
-             [
+            453 => [
                 'id' => 954,
                 'name' => 'reorder Tree',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:28:26',
                 'updated_at' => '2024-08-20 07:28:26',
             ],
-            454 => 
-             [
+            454 => [
                 'id' => 955,
                 'name' => 'view-any Type',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:28:26',
                 'updated_at' => '2024-08-20 07:28:26',
             ],
-            455 => 
-             [
+            455 => [
                 'id' => 956,
                 'name' => 'view-any Type',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:28:26',
                 'updated_at' => '2024-08-20 07:28:26',
             ],
-            456 => 
-             [
+            456 => [
                 'id' => 957,
                 'name' => 'view Type',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:28:26',
                 'updated_at' => '2024-08-20 07:28:26',
             ],
-            457 => 
-             [
+            457 => [
                 'id' => 958,
                 'name' => 'view Type',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:28:27',
                 'updated_at' => '2024-08-20 07:28:27',
             ],
-            458 => 
-             [
+            458 => [
                 'id' => 959,
                 'name' => 'create Type',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:28:27',
                 'updated_at' => '2024-08-20 07:28:27',
             ],
-            459 => 
-             [
+            459 => [
                 'id' => 960,
                 'name' => 'create Type',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:28:27',
                 'updated_at' => '2024-08-20 07:28:27',
             ],
-            460 => 
-             [
+            460 => [
                 'id' => 961,
                 'name' => 'update Type',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:28:27',
                 'updated_at' => '2024-08-20 07:28:27',
             ],
-            461 => 
-             [
+            461 => [
                 'id' => 962,
                 'name' => 'update Type',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:28:27',
                 'updated_at' => '2024-08-20 07:28:27',
             ],
-            462 => 
-             [
+            462 => [
                 'id' => 963,
                 'name' => 'delete Type',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:28:27',
                 'updated_at' => '2024-08-20 07:28:27',
             ],
-            463 => 
-             [
+            463 => [
                 'id' => 964,
                 'name' => 'delete Type',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:28:28',
                 'updated_at' => '2024-08-20 07:28:28',
             ],
-            464 => 
-             [
+            464 => [
                 'id' => 965,
                 'name' => 'restore Type',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:28:28',
                 'updated_at' => '2024-08-20 07:28:28',
             ],
-            465 => 
-             [
+            465 => [
                 'id' => 966,
                 'name' => 'restore Type',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:28:28',
                 'updated_at' => '2024-08-20 07:28:28',
             ],
-            466 => 
-             [
+            466 => [
                 'id' => 967,
                 'name' => 'force-delete Type',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:28:28',
                 'updated_at' => '2024-08-20 07:28:28',
             ],
-            467 => 
-             [
+            467 => [
                 'id' => 968,
                 'name' => 'force-delete Type',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:28:28',
                 'updated_at' => '2024-08-20 07:28:28',
             ],
-            468 => 
-             [
+            468 => [
                 'id' => 969,
                 'name' => 'replicate Type',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:28:28',
                 'updated_at' => '2024-08-20 07:28:28',
             ],
-            469 => 
-             [
+            469 => [
                 'id' => 970,
                 'name' => 'replicate Type',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:28:29',
                 'updated_at' => '2024-08-20 07:28:29',
             ],
-            470 => 
-             [
+            470 => [
                 'id' => 971,
                 'name' => 'reorder Type',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:28:29',
                 'updated_at' => '2024-08-20 07:28:29',
             ],
-            471 => 
-             [
+            471 => [
                 'id' => 972,
                 'name' => 'reorder Type',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:28:29',
                 'updated_at' => '2024-08-20 07:28:29',
             ],
-            472 => 
-             [
+            472 => [
                 'id' => 973,
                 'name' => 'view-any User',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:28:29',
                 'updated_at' => '2024-08-20 07:28:29',
             ],
-            473 => 
-             [
+            473 => [
                 'id' => 974,
                 'name' => 'view-any User',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:28:29',
                 'updated_at' => '2024-08-20 07:28:29',
             ],
-            474 => 
-             [
+            474 => [
                 'id' => 975,
                 'name' => 'view User',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:28:29',
                 'updated_at' => '2024-08-20 07:28:29',
             ],
-            475 => 
-             [
+            475 => [
                 'id' => 976,
                 'name' => 'view User',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:28:30',
                 'updated_at' => '2024-08-20 07:28:30',
             ],
-            476 => 
-             [
+            476 => [
                 'id' => 977,
                 'name' => 'create User',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:28:30',
                 'updated_at' => '2024-08-20 07:28:30',
             ],
-            477 => 
-             [
+            477 => [
                 'id' => 978,
                 'name' => 'create User',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:28:30',
                 'updated_at' => '2024-08-20 07:28:30',
             ],
-            478 => 
-             [
+            478 => [
                 'id' => 979,
                 'name' => 'update User',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:28:30',
                 'updated_at' => '2024-08-20 07:28:30',
             ],
-            479 => 
-             [
+            479 => [
                 'id' => 980,
                 'name' => 'update User',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:28:30',
                 'updated_at' => '2024-08-20 07:28:30',
             ],
-            480 => 
-             [
+            480 => [
                 'id' => 981,
                 'name' => 'delete User',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:28:30',
                 'updated_at' => '2024-08-20 07:28:30',
             ],
-            481 => 
-             [
+            481 => [
                 'id' => 982,
                 'name' => 'delete User',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:28:30',
                 'updated_at' => '2024-08-20 07:28:30',
             ],
-            482 => 
-             [
+            482 => [
                 'id' => 983,
                 'name' => 'restore User',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:28:30',
                 'updated_at' => '2024-08-20 07:28:30',
             ],
-            483 => 
-             [
+            483 => [
                 'id' => 984,
                 'name' => 'restore User',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:28:31',
                 'updated_at' => '2024-08-20 07:28:31',
             ],
-            484 => 
-             [
+            484 => [
                 'id' => 985,
                 'name' => 'force-delete User',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:28:31',
                 'updated_at' => '2024-08-20 07:28:31',
             ],
-            485 => 
-             [
+            485 => [
                 'id' => 986,
                 'name' => 'force-delete User',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:28:31',
                 'updated_at' => '2024-08-20 07:28:31',
             ],
-            486 => 
-             [
+            486 => [
                 'id' => 987,
                 'name' => 'replicate User',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:28:31',
                 'updated_at' => '2024-08-20 07:28:31',
             ],
-            487 => 
-             [
+            487 => [
                 'id' => 988,
                 'name' => 'replicate User',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:28:31',
                 'updated_at' => '2024-08-20 07:28:31',
             ],
-            488 => 
-             [
+            488 => [
                 'id' => 989,
                 'name' => 'reorder User',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:28:31',
                 'updated_at' => '2024-08-20 07:28:31',
             ],
-            489 => 
-             [
+            489 => [
                 'id' => 990,
                 'name' => 'reorder User',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:28:32',
                 'updated_at' => '2024-08-20 07:28:32',
             ],
-            490 => 
-             [
+            490 => [
                 'id' => 991,
                 'name' => 'view-any UserSocial',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:28:32',
                 'updated_at' => '2024-08-20 07:28:32',
             ],
-            491 => 
-             [
+            491 => [
                 'id' => 992,
                 'name' => 'view-any UserSocial',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:28:32',
                 'updated_at' => '2024-08-20 07:28:32',
             ],
-            492 => 
-             [
+            492 => [
                 'id' => 993,
                 'name' => 'view UserSocial',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:28:32',
                 'updated_at' => '2024-08-20 07:28:32',
             ],
-            493 => 
-             [
+            493 => [
                 'id' => 994,
                 'name' => 'view UserSocial',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:28:32',
                 'updated_at' => '2024-08-20 07:28:32',
             ],
-            494 => 
-             [
+            494 => [
                 'id' => 995,
                 'name' => 'create UserSocial',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:28:32',
                 'updated_at' => '2024-08-20 07:28:32',
             ],
-            495 => 
-             [
+            495 => [
                 'id' => 996,
                 'name' => 'create UserSocial',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:28:33',
                 'updated_at' => '2024-08-20 07:28:33',
             ],
-            496 => 
-             [
+            496 => [
                 'id' => 997,
                 'name' => 'update UserSocial',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:28:33',
                 'updated_at' => '2024-08-20 07:28:33',
             ],
-            497 => 
-             [
+            497 => [
                 'id' => 998,
                 'name' => 'update UserSocial',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:28:33',
                 'updated_at' => '2024-08-20 07:28:33',
             ],
-            498 => 
-             [
+            498 => [
                 'id' => 999,
                 'name' => 'delete UserSocial',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:28:33',
                 'updated_at' => '2024-08-20 07:28:33',
             ],
-            499 => 
-             [
+            499 => [
                 'id' => 1000,
                 'name' => 'delete UserSocial',
                 'guard_name' => 'api',
@@ -8022,3601 +7018,3151 @@ class PermissionsTableSeeder extends Seeder
                 'updated_at' => '2024-08-20 07:28:33',
             ],
         ]);
-        \DB::table('permissions')->insert( [
-            0 => 
-             [
+        \DB::table('permissions')->insert([
+            0 => [
                 'id' => 1001,
                 'name' => 'restore UserSocial',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:28:33',
                 'updated_at' => '2024-08-20 07:28:33',
             ],
-            1 => 
-             [
+            1 => [
                 'id' => 1002,
                 'name' => 'restore UserSocial',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:28:33',
                 'updated_at' => '2024-08-20 07:28:33',
             ],
-            2 => 
-             [
+            2 => [
                 'id' => 1003,
                 'name' => 'force-delete UserSocial',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:28:33',
                 'updated_at' => '2024-08-20 07:28:33',
             ],
-            3 => 
-             [
+            3 => [
                 'id' => 1004,
                 'name' => 'force-delete UserSocial',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:28:33',
                 'updated_at' => '2024-08-20 07:28:33',
             ],
-            4 => 
-             [
+            4 => [
                 'id' => 1005,
                 'name' => 'replicate UserSocial',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:28:34',
                 'updated_at' => '2024-08-20 07:28:34',
             ],
-            5 => 
-             [
+            5 => [
                 'id' => 1006,
                 'name' => 'replicate UserSocial',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:28:34',
                 'updated_at' => '2024-08-20 07:28:34',
             ],
-            6 => 
-             [
+            6 => [
                 'id' => 1007,
                 'name' => 'reorder UserSocial',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:28:34',
                 'updated_at' => '2024-08-20 07:28:34',
             ],
-            7 => 
-             [
+            7 => [
                 'id' => 1008,
                 'name' => 'reorder UserSocial',
                 'guard_name' => 'api',
                 'created_at' => '2024-08-20 07:28:34',
                 'updated_at' => '2024-08-20 07:28:34',
             ],
-            8 => 
-             [
+            8 => [
                 'id' => 1009,
                 'name' => 'view_addr',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:31:49',
                 'updated_at' => '2024-08-20 07:31:49',
             ],
-            9 => 
-             [
+            9 => [
                 'id' => 1010,
                 'name' => 'view_any_addr',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:31:49',
                 'updated_at' => '2024-08-20 07:31:49',
             ],
-            10 => 
-             [
+            10 => [
                 'id' => 1011,
                 'name' => 'create_addr',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:31:49',
                 'updated_at' => '2024-08-20 07:31:49',
             ],
-            11 => 
-             [
+            11 => [
                 'id' => 1012,
                 'name' => 'update_addr',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:31:49',
                 'updated_at' => '2024-08-20 07:31:49',
             ],
-            12 => 
-             [
+            12 => [
                 'id' => 1013,
                 'name' => 'restore_addr',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:31:50',
                 'updated_at' => '2024-08-20 07:31:50',
             ],
-            13 => 
-             [
+            13 => [
                 'id' => 1014,
                 'name' => 'restore_any_addr',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:31:50',
                 'updated_at' => '2024-08-20 07:31:50',
             ],
-            14 => 
-             [
+            14 => [
                 'id' => 1015,
                 'name' => 'replicate_addr',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:31:50',
                 'updated_at' => '2024-08-20 07:31:50',
             ],
-            15 => 
-             [
+            15 => [
                 'id' => 1016,
                 'name' => 'reorder_addr',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:31:50',
                 'updated_at' => '2024-08-20 07:31:50',
             ],
-            16 => 
-             [
+            16 => [
                 'id' => 1017,
                 'name' => 'delete_addr',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:31:50',
                 'updated_at' => '2024-08-20 07:31:50',
             ],
-            17 => 
-             [
+            17 => [
                 'id' => 1018,
                 'name' => 'delete_any_addr',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:31:50',
                 'updated_at' => '2024-08-20 07:31:50',
             ],
-            18 => 
-             [
+            18 => [
                 'id' => 1019,
                 'name' => 'force_delete_addr',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:31:50',
                 'updated_at' => '2024-08-20 07:31:50',
             ],
-            19 => 
-             [
+            19 => [
                 'id' => 1020,
                 'name' => 'force_delete_any_addr',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:31:51',
                 'updated_at' => '2024-08-20 07:31:51',
             ],
-            20 => 
-             [
+            20 => [
                 'id' => 1021,
                 'name' => 'view_author',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:31:51',
                 'updated_at' => '2024-08-20 07:31:51',
             ],
-            21 => 
-             [
+            21 => [
                 'id' => 1022,
                 'name' => 'view_any_author',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:31:51',
                 'updated_at' => '2024-08-20 07:31:51',
             ],
-            22 => 
-             [
+            22 => [
                 'id' => 1023,
                 'name' => 'create_author',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:31:51',
                 'updated_at' => '2024-08-20 07:31:51',
             ],
-            23 => 
-             [
+            23 => [
                 'id' => 1024,
                 'name' => 'update_author',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:31:52',
                 'updated_at' => '2024-08-20 07:31:52',
             ],
-            24 => 
-             [
+            24 => [
                 'id' => 1025,
                 'name' => 'restore_author',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:31:52',
                 'updated_at' => '2024-08-20 07:31:52',
             ],
-            25 => 
-             [
+            25 => [
                 'id' => 1026,
                 'name' => 'restore_any_author',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:31:52',
                 'updated_at' => '2024-08-20 07:31:52',
             ],
-            26 => 
-             [
+            26 => [
                 'id' => 1027,
                 'name' => 'replicate_author',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:31:52',
                 'updated_at' => '2024-08-20 07:31:52',
             ],
-            27 => 
-             [
+            27 => [
                 'id' => 1028,
                 'name' => 'reorder_author',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:31:52',
                 'updated_at' => '2024-08-20 07:31:52',
             ],
-            28 => 
-             [
+            28 => [
                 'id' => 1029,
                 'name' => 'delete_author',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:31:52',
                 'updated_at' => '2024-08-20 07:31:52',
             ],
-            29 => 
-             [
+            29 => [
                 'id' => 1030,
                 'name' => 'delete_any_author',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:31:53',
                 'updated_at' => '2024-08-20 07:31:53',
             ],
-            30 => 
-             [
+            30 => [
                 'id' => 1031,
                 'name' => 'force_delete_author',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:31:53',
                 'updated_at' => '2024-08-20 07:31:53',
             ],
-            31 => 
-             [
+            31 => [
                 'id' => 1032,
                 'name' => 'force_delete_any_author',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:31:53',
                 'updated_at' => '2024-08-20 07:31:53',
             ],
-            32 => 
-             [
+            32 => [
                 'id' => 1033,
                 'name' => 'view_chan',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:31:53',
                 'updated_at' => '2024-08-20 07:31:53',
             ],
-            33 => 
-             [
+            33 => [
                 'id' => 1034,
                 'name' => 'view_any_chan',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:31:53',
                 'updated_at' => '2024-08-20 07:31:53',
             ],
-            34 => 
-             [
+            34 => [
                 'id' => 1035,
                 'name' => 'create_chan',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:31:53',
                 'updated_at' => '2024-08-20 07:31:53',
             ],
-            35 => 
-             [
+            35 => [
                 'id' => 1036,
                 'name' => 'update_chan',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:31:54',
                 'updated_at' => '2024-08-20 07:31:54',
             ],
-            36 => 
-             [
+            36 => [
                 'id' => 1037,
                 'name' => 'restore_chan',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:31:54',
                 'updated_at' => '2024-08-20 07:31:54',
             ],
-            37 => 
-             [
+            37 => [
                 'id' => 1038,
                 'name' => 'restore_any_chan',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:31:54',
                 'updated_at' => '2024-08-20 07:31:54',
             ],
-            38 => 
-             [
+            38 => [
                 'id' => 1039,
                 'name' => 'replicate_chan',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:31:54',
                 'updated_at' => '2024-08-20 07:31:54',
             ],
-            39 => 
-             [
+            39 => [
                 'id' => 1040,
                 'name' => 'reorder_chan',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:31:54',
                 'updated_at' => '2024-08-20 07:31:54',
             ],
-            40 => 
-             [
+            40 => [
                 'id' => 1041,
                 'name' => 'delete_chan',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:31:54',
                 'updated_at' => '2024-08-20 07:31:54',
             ],
-            41 => 
-             [
+            41 => [
                 'id' => 1042,
                 'name' => 'delete_any_chan',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:31:55',
                 'updated_at' => '2024-08-20 07:31:55',
             ],
-            42 => 
-             [
+            42 => [
                 'id' => 1043,
                 'name' => 'force_delete_chan',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:31:55',
                 'updated_at' => '2024-08-20 07:31:55',
             ],
-            43 => 
-             [
+            43 => [
                 'id' => 1044,
                 'name' => 'force_delete_any_chan',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:31:55',
                 'updated_at' => '2024-08-20 07:31:55',
             ],
-            44 => 
-             [
+            44 => [
                 'id' => 1045,
                 'name' => 'view_citation',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:31:55',
                 'updated_at' => '2024-08-20 07:31:55',
             ],
-            45 => 
-             [
+            45 => [
                 'id' => 1046,
                 'name' => 'view_any_citation',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:31:55',
                 'updated_at' => '2024-08-20 07:31:55',
             ],
-            46 => 
-             [
+            46 => [
                 'id' => 1047,
                 'name' => 'create_citation',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:31:56',
                 'updated_at' => '2024-08-20 07:31:56',
             ],
-            47 => 
-             [
+            47 => [
                 'id' => 1048,
                 'name' => 'update_citation',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:31:56',
                 'updated_at' => '2024-08-20 07:31:56',
             ],
-            48 => 
-             [
+            48 => [
                 'id' => 1049,
                 'name' => 'restore_citation',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:31:56',
                 'updated_at' => '2024-08-20 07:31:56',
             ],
-            49 => 
-             [
+            49 => [
                 'id' => 1050,
                 'name' => 'restore_any_citation',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:31:56',
                 'updated_at' => '2024-08-20 07:31:56',
             ],
-            50 => 
-             [
+            50 => [
                 'id' => 1051,
                 'name' => 'replicate_citation',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:31:56',
                 'updated_at' => '2024-08-20 07:31:56',
             ],
-            51 => 
-             [
+            51 => [
                 'id' => 1052,
                 'name' => 'reorder_citation',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:31:56',
                 'updated_at' => '2024-08-20 07:31:56',
             ],
-            52 => 
-             [
+            52 => [
                 'id' => 1053,
                 'name' => 'delete_citation',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:31:56',
                 'updated_at' => '2024-08-20 07:31:56',
             ],
-            53 => 
-             [
+            53 => [
                 'id' => 1054,
                 'name' => 'delete_any_citation',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:31:57',
                 'updated_at' => '2024-08-20 07:31:57',
             ],
-            54 => 
-             [
+            54 => [
                 'id' => 1055,
                 'name' => 'force_delete_citation',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:31:57',
                 'updated_at' => '2024-08-20 07:31:57',
             ],
-            55 => 
-             [
+            55 => [
                 'id' => 1056,
                 'name' => 'force_delete_any_citation',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:31:57',
                 'updated_at' => '2024-08-20 07:31:57',
             ],
-            56 => 
-             [
+            56 => [
                 'id' => 1057,
                 'name' => 'view_dna',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:31:57',
                 'updated_at' => '2024-08-20 07:31:57',
             ],
-            57 => 
-             [
+            57 => [
                 'id' => 1058,
                 'name' => 'view_any_dna',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:31:58',
                 'updated_at' => '2024-08-20 07:31:58',
             ],
-            58 => 
-             [
+            58 => [
                 'id' => 1059,
                 'name' => 'create_dna',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:31:58',
                 'updated_at' => '2024-08-20 07:31:58',
             ],
-            59 => 
-             [
+            59 => [
                 'id' => 1060,
                 'name' => 'update_dna',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:31:58',
                 'updated_at' => '2024-08-20 07:31:58',
             ],
-            60 => 
-             [
+            60 => [
                 'id' => 1061,
                 'name' => 'restore_dna',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:31:58',
                 'updated_at' => '2024-08-20 07:31:58',
             ],
-            61 => 
-             [
+            61 => [
                 'id' => 1062,
                 'name' => 'restore_any_dna',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:31:58',
                 'updated_at' => '2024-08-20 07:31:58',
             ],
-            62 => 
-             [
+            62 => [
                 'id' => 1063,
                 'name' => 'replicate_dna',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:31:58',
                 'updated_at' => '2024-08-20 07:31:58',
             ],
-            63 => 
-             [
+            63 => [
                 'id' => 1064,
                 'name' => 'reorder_dna',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:31:59',
                 'updated_at' => '2024-08-20 07:31:59',
             ],
-            64 => 
-             [
+            64 => [
                 'id' => 1065,
                 'name' => 'delete_dna',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:31:59',
                 'updated_at' => '2024-08-20 07:31:59',
             ],
-            65 => 
-             [
+            65 => [
                 'id' => 1066,
                 'name' => 'delete_any_dna',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:31:59',
                 'updated_at' => '2024-08-20 07:31:59',
             ],
-            66 => 
-             [
+            66 => [
                 'id' => 1067,
                 'name' => 'force_delete_dna',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:31:59',
                 'updated_at' => '2024-08-20 07:31:59',
             ],
-            67 => 
-             [
+            67 => [
                 'id' => 1068,
                 'name' => 'force_delete_any_dna',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:31:59',
                 'updated_at' => '2024-08-20 07:31:59',
             ],
-            68 => 
-             [
+            68 => [
                 'id' => 1069,
                 'name' => 'view_dna::matching',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:31:59',
                 'updated_at' => '2024-08-20 07:31:59',
             ],
-            69 => 
-             [
+            69 => [
                 'id' => 1070,
                 'name' => 'view_any_dna::matching',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:31:59',
                 'updated_at' => '2024-08-20 07:31:59',
             ],
-            70 => 
-             [
+            70 => [
                 'id' => 1071,
                 'name' => 'create_dna::matching',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:00',
                 'updated_at' => '2024-08-20 07:32:00',
             ],
-            71 => 
-             [
+            71 => [
                 'id' => 1072,
                 'name' => 'update_dna::matching',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:00',
                 'updated_at' => '2024-08-20 07:32:00',
             ],
-            72 => 
-             [
+            72 => [
                 'id' => 1073,
                 'name' => 'restore_dna::matching',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:00',
                 'updated_at' => '2024-08-20 07:32:00',
             ],
-            73 => 
-             [
+            73 => [
                 'id' => 1074,
                 'name' => 'restore_any_dna::matching',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:00',
                 'updated_at' => '2024-08-20 07:32:00',
             ],
-            74 => 
-             [
+            74 => [
                 'id' => 1075,
                 'name' => 'replicate_dna::matching',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:00',
                 'updated_at' => '2024-08-20 07:32:00',
             ],
-            75 => 
-             [
+            75 => [
                 'id' => 1076,
                 'name' => 'reorder_dna::matching',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:00',
                 'updated_at' => '2024-08-20 07:32:00',
             ],
-            76 => 
-             [
+            76 => [
                 'id' => 1077,
                 'name' => 'delete_dna::matching',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:00',
                 'updated_at' => '2024-08-20 07:32:00',
             ],
-            77 => 
-             [
+            77 => [
                 'id' => 1078,
                 'name' => 'delete_any_dna::matching',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:01',
                 'updated_at' => '2024-08-20 07:32:01',
             ],
-            78 => 
-             [
+            78 => [
                 'id' => 1079,
                 'name' => 'force_delete_dna::matching',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:01',
                 'updated_at' => '2024-08-20 07:32:01',
             ],
-            79 => 
-             [
+            79 => [
                 'id' => 1080,
                 'name' => 'force_delete_any_dna::matching',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:01',
                 'updated_at' => '2024-08-20 07:32:01',
             ],
-            80 => 
-             [
+            80 => [
                 'id' => 1081,
                 'name' => 'view_family',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:01',
                 'updated_at' => '2024-08-20 07:32:01',
             ],
-            81 => 
-             [
+            81 => [
                 'id' => 1082,
                 'name' => 'view_any_family',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:01',
                 'updated_at' => '2024-08-20 07:32:01',
             ],
-            82 => 
-             [
+            82 => [
                 'id' => 1083,
                 'name' => 'create_family',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:02',
                 'updated_at' => '2024-08-20 07:32:02',
             ],
-            83 => 
-             [
+            83 => [
                 'id' => 1084,
                 'name' => 'update_family',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:02',
                 'updated_at' => '2024-08-20 07:32:02',
             ],
-            84 => 
-             [
+            84 => [
                 'id' => 1085,
                 'name' => 'restore_family',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:02',
                 'updated_at' => '2024-08-20 07:32:02',
             ],
-            85 => 
-             [
+            85 => [
                 'id' => 1086,
                 'name' => 'restore_any_family',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:03',
                 'updated_at' => '2024-08-20 07:32:03',
             ],
-            86 => 
-             [
+            86 => [
                 'id' => 1087,
                 'name' => 'replicate_family',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:03',
                 'updated_at' => '2024-08-20 07:32:03',
             ],
-            87 => 
-             [
+            87 => [
                 'id' => 1088,
                 'name' => 'reorder_family',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:03',
                 'updated_at' => '2024-08-20 07:32:03',
             ],
-            88 => 
-             [
+            88 => [
                 'id' => 1089,
                 'name' => 'delete_family',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:03',
                 'updated_at' => '2024-08-20 07:32:03',
             ],
-            89 => 
-             [
+            89 => [
                 'id' => 1090,
                 'name' => 'delete_any_family',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:03',
                 'updated_at' => '2024-08-20 07:32:03',
             ],
-            90 => 
-             [
+            90 => [
                 'id' => 1091,
                 'name' => 'force_delete_family',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:03',
                 'updated_at' => '2024-08-20 07:32:03',
             ],
-            91 => 
-             [
+            91 => [
                 'id' => 1092,
                 'name' => 'force_delete_any_family',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:04',
                 'updated_at' => '2024-08-20 07:32:04',
             ],
-            92 => 
-             [
+            92 => [
                 'id' => 1093,
                 'name' => 'view_family::event',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:04',
                 'updated_at' => '2024-08-20 07:32:04',
             ],
-            93 => 
-             [
+            93 => [
                 'id' => 1094,
                 'name' => 'view_any_family::event',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:04',
                 'updated_at' => '2024-08-20 07:32:04',
             ],
-            94 => 
-             [
+            94 => [
                 'id' => 1095,
                 'name' => 'create_family::event',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:04',
                 'updated_at' => '2024-08-20 07:32:04',
             ],
-            95 => 
-             [
+            95 => [
                 'id' => 1096,
                 'name' => 'update_family::event',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:05',
                 'updated_at' => '2024-08-20 07:32:05',
             ],
-            96 => 
-             [
+            96 => [
                 'id' => 1097,
                 'name' => 'restore_family::event',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:05',
                 'updated_at' => '2024-08-20 07:32:05',
             ],
-            97 => 
-             [
+            97 => [
                 'id' => 1098,
                 'name' => 'restore_any_family::event',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:05',
                 'updated_at' => '2024-08-20 07:32:05',
             ],
-            98 => 
-             [
+            98 => [
                 'id' => 1099,
                 'name' => 'replicate_family::event',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:05',
                 'updated_at' => '2024-08-20 07:32:05',
             ],
-            99 => 
-             [
+            99 => [
                 'id' => 1100,
                 'name' => 'reorder_family::event',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:05',
                 'updated_at' => '2024-08-20 07:32:05',
             ],
-            100 => 
-             [
+            100 => [
                 'id' => 1101,
                 'name' => 'delete_family::event',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:05',
                 'updated_at' => '2024-08-20 07:32:05',
             ],
-            101 => 
-             [
+            101 => [
                 'id' => 1102,
                 'name' => 'delete_any_family::event',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:05',
                 'updated_at' => '2024-08-20 07:32:05',
             ],
-            102 => 
-             [
+            102 => [
                 'id' => 1103,
                 'name' => 'force_delete_family::event',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:05',
                 'updated_at' => '2024-08-20 07:32:05',
             ],
-            103 => 
-             [
+            103 => [
                 'id' => 1104,
                 'name' => 'force_delete_any_family::event',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:06',
                 'updated_at' => '2024-08-20 07:32:06',
             ],
-            104 => 
-             [
+            104 => [
                 'id' => 1105,
                 'name' => 'view_family::slgs',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:06',
                 'updated_at' => '2024-08-20 07:32:06',
             ],
-            105 => 
-             [
+            105 => [
                 'id' => 1106,
                 'name' => 'view_any_family::slgs',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:06',
                 'updated_at' => '2024-08-20 07:32:06',
             ],
-            106 => 
-             [
+            106 => [
                 'id' => 1107,
                 'name' => 'create_family::slgs',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:06',
                 'updated_at' => '2024-08-20 07:32:06',
             ],
-            107 => 
-             [
+            107 => [
                 'id' => 1108,
                 'name' => 'update_family::slgs',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:06',
                 'updated_at' => '2024-08-20 07:32:06',
             ],
-            108 => 
-             [
+            108 => [
                 'id' => 1109,
                 'name' => 'restore_family::slgs',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:07',
                 'updated_at' => '2024-08-20 07:32:07',
             ],
-            109 => 
-             [
+            109 => [
                 'id' => 1110,
                 'name' => 'restore_any_family::slgs',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:07',
                 'updated_at' => '2024-08-20 07:32:07',
             ],
-            110 => 
-             [
+            110 => [
                 'id' => 1111,
                 'name' => 'replicate_family::slgs',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:07',
                 'updated_at' => '2024-08-20 07:32:07',
             ],
-            111 => 
-             [
+            111 => [
                 'id' => 1112,
                 'name' => 'reorder_family::slgs',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:07',
                 'updated_at' => '2024-08-20 07:32:07',
             ],
-            112 => 
-             [
+            112 => [
                 'id' => 1113,
                 'name' => 'delete_family::slgs',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:07',
                 'updated_at' => '2024-08-20 07:32:07',
             ],
-            113 => 
-             [
+            113 => [
                 'id' => 1114,
                 'name' => 'delete_any_family::slgs',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:07',
                 'updated_at' => '2024-08-20 07:32:07',
             ],
-            114 => 
-             [
+            114 => [
                 'id' => 1115,
                 'name' => 'force_delete_family::slgs',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:07',
                 'updated_at' => '2024-08-20 07:32:07',
             ],
-            115 => 
-             [
+            115 => [
                 'id' => 1116,
                 'name' => 'force_delete_any_family::slgs',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:07',
                 'updated_at' => '2024-08-20 07:32:07',
             ],
-            116 => 
-             [
+            116 => [
                 'id' => 1117,
                 'name' => 'view_gedcom',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:08',
                 'updated_at' => '2024-08-20 07:32:08',
             ],
-            117 => 
-             [
+            117 => [
                 'id' => 1118,
                 'name' => 'view_any_gedcom',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:08',
                 'updated_at' => '2024-08-20 07:32:08',
             ],
-            118 => 
-             [
+            118 => [
                 'id' => 1119,
                 'name' => 'create_gedcom',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:08',
                 'updated_at' => '2024-08-20 07:32:08',
             ],
-            119 => 
-             [
+            119 => [
                 'id' => 1120,
                 'name' => 'update_gedcom',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:08',
                 'updated_at' => '2024-08-20 07:32:08',
             ],
-            120 => 
-             [
+            120 => [
                 'id' => 1121,
                 'name' => 'restore_gedcom',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:08',
                 'updated_at' => '2024-08-20 07:32:08',
             ],
-            121 => 
-             [
+            121 => [
                 'id' => 1122,
                 'name' => 'restore_any_gedcom',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:09',
                 'updated_at' => '2024-08-20 07:32:09',
             ],
-            122 => 
-             [
+            122 => [
                 'id' => 1123,
                 'name' => 'replicate_gedcom',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:09',
                 'updated_at' => '2024-08-20 07:32:09',
             ],
-            123 => 
-             [
+            123 => [
                 'id' => 1124,
                 'name' => 'reorder_gedcom',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:09',
                 'updated_at' => '2024-08-20 07:32:09',
             ],
-            124 => 
-             [
+            124 => [
                 'id' => 1125,
                 'name' => 'delete_gedcom',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:09',
                 'updated_at' => '2024-08-20 07:32:09',
             ],
-            125 => 
-             [
+            125 => [
                 'id' => 1126,
                 'name' => 'delete_any_gedcom',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:09',
                 'updated_at' => '2024-08-20 07:32:09',
             ],
-            126 => 
-             [
+            126 => [
                 'id' => 1127,
                 'name' => 'force_delete_gedcom',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:09',
                 'updated_at' => '2024-08-20 07:32:09',
             ],
-            127 => 
-             [
+            127 => [
                 'id' => 1128,
                 'name' => 'force_delete_any_gedcom',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:09',
                 'updated_at' => '2024-08-20 07:32:09',
             ],
-            128 => 
-             [
+            128 => [
                 'id' => 1129,
                 'name' => 'view_media::object',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:10',
                 'updated_at' => '2024-08-20 07:32:10',
             ],
-            129 => 
-             [
+            129 => [
                 'id' => 1130,
                 'name' => 'view_any_media::object',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:10',
                 'updated_at' => '2024-08-20 07:32:10',
             ],
-            130 => 
-             [
+            130 => [
                 'id' => 1131,
                 'name' => 'create_media::object',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:10',
                 'updated_at' => '2024-08-20 07:32:10',
             ],
-            131 => 
-             [
+            131 => [
                 'id' => 1132,
                 'name' => 'update_media::object',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:10',
                 'updated_at' => '2024-08-20 07:32:10',
             ],
-            132 => 
-             [
+            132 => [
                 'id' => 1133,
                 'name' => 'restore_media::object',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:10',
                 'updated_at' => '2024-08-20 07:32:10',
             ],
-            133 => 
-             [
+            133 => [
                 'id' => 1134,
                 'name' => 'restore_any_media::object',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:10',
                 'updated_at' => '2024-08-20 07:32:10',
             ],
-            134 => 
-             [
+            134 => [
                 'id' => 1135,
                 'name' => 'replicate_media::object',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:10',
                 'updated_at' => '2024-08-20 07:32:10',
             ],
-            135 => 
-             [
+            135 => [
                 'id' => 1136,
                 'name' => 'reorder_media::object',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:11',
                 'updated_at' => '2024-08-20 07:32:11',
             ],
-            136 => 
-             [
+            136 => [
                 'id' => 1137,
                 'name' => 'delete_media::object',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:11',
                 'updated_at' => '2024-08-20 07:32:11',
             ],
-            137 => 
-             [
+            137 => [
                 'id' => 1138,
                 'name' => 'delete_any_media::object',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:11',
                 'updated_at' => '2024-08-20 07:32:11',
             ],
-            138 => 
-             [
+            138 => [
                 'id' => 1139,
                 'name' => 'force_delete_media::object',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:11',
                 'updated_at' => '2024-08-20 07:32:11',
             ],
-            139 => 
-             [
+            139 => [
                 'id' => 1140,
                 'name' => 'force_delete_any_media::object',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:11',
                 'updated_at' => '2024-08-20 07:32:11',
             ],
-            140 => 
-             [
+            140 => [
                 'id' => 1141,
                 'name' => 'view_note',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:11',
                 'updated_at' => '2024-08-20 07:32:11',
             ],
-            141 => 
-             [
+            141 => [
                 'id' => 1142,
                 'name' => 'view_any_note',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:11',
                 'updated_at' => '2024-08-20 07:32:11',
             ],
-            142 => 
-             [
+            142 => [
                 'id' => 1143,
                 'name' => 'create_note',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:12',
                 'updated_at' => '2024-08-20 07:32:12',
             ],
-            143 => 
-             [
+            143 => [
                 'id' => 1144,
                 'name' => 'update_note',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:12',
                 'updated_at' => '2024-08-20 07:32:12',
             ],
-            144 => 
-             [
+            144 => [
                 'id' => 1145,
                 'name' => 'restore_note',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:12',
                 'updated_at' => '2024-08-20 07:32:12',
             ],
-            145 => 
-             [
+            145 => [
                 'id' => 1146,
                 'name' => 'restore_any_note',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:12',
                 'updated_at' => '2024-08-20 07:32:12',
             ],
-            146 => 
-             [
+            146 => [
                 'id' => 1147,
                 'name' => 'replicate_note',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:12',
                 'updated_at' => '2024-08-20 07:32:12',
             ],
-            147 => 
-             [
+            147 => [
                 'id' => 1148,
                 'name' => 'reorder_note',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:12',
                 'updated_at' => '2024-08-20 07:32:12',
             ],
-            148 => 
-             [
+            148 => [
                 'id' => 1149,
                 'name' => 'delete_note',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:12',
                 'updated_at' => '2024-08-20 07:32:12',
             ],
-            149 => 
-             [
+            149 => [
                 'id' => 1150,
                 'name' => 'delete_any_note',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:13',
                 'updated_at' => '2024-08-20 07:32:13',
             ],
-            150 => 
-             [
+            150 => [
                 'id' => 1151,
                 'name' => 'force_delete_note',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:13',
                 'updated_at' => '2024-08-20 07:32:13',
             ],
-            151 => 
-             [
+            151 => [
                 'id' => 1152,
                 'name' => 'force_delete_any_note',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:13',
                 'updated_at' => '2024-08-20 07:32:13',
             ],
-            152 => 
-             [
+            152 => [
                 'id' => 1153,
                 'name' => 'view_person',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:13',
                 'updated_at' => '2024-08-20 07:32:13',
             ],
-            153 => 
-             [
+            153 => [
                 'id' => 1154,
                 'name' => 'view_any_person',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:13',
                 'updated_at' => '2024-08-20 07:32:13',
             ],
-            154 => 
-             [
+            154 => [
                 'id' => 1155,
                 'name' => 'create_person',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:13',
                 'updated_at' => '2024-08-20 07:32:13',
             ],
-            155 => 
-             [
+            155 => [
                 'id' => 1156,
                 'name' => 'update_person',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:13',
                 'updated_at' => '2024-08-20 07:32:13',
             ],
-            156 => 
-             [
+            156 => [
                 'id' => 1157,
                 'name' => 'restore_person',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:14',
                 'updated_at' => '2024-08-20 07:32:14',
             ],
-            157 => 
-             [
+            157 => [
                 'id' => 1158,
                 'name' => 'restore_any_person',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:14',
                 'updated_at' => '2024-08-20 07:32:14',
             ],
-            158 => 
-             [
+            158 => [
                 'id' => 1159,
                 'name' => 'replicate_person',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:14',
                 'updated_at' => '2024-08-20 07:32:14',
             ],
-            159 => 
-             [
+            159 => [
                 'id' => 1160,
                 'name' => 'reorder_person',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:14',
                 'updated_at' => '2024-08-20 07:32:14',
             ],
-            160 => 
-             [
+            160 => [
                 'id' => 1161,
                 'name' => 'delete_person',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:14',
                 'updated_at' => '2024-08-20 07:32:14',
             ],
-            161 => 
-             [
+            161 => [
                 'id' => 1162,
                 'name' => 'delete_any_person',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:14',
                 'updated_at' => '2024-08-20 07:32:14',
             ],
-            162 => 
-             [
+            162 => [
                 'id' => 1163,
                 'name' => 'force_delete_person',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:15',
                 'updated_at' => '2024-08-20 07:32:15',
             ],
-            163 => 
-             [
+            163 => [
                 'id' => 1164,
                 'name' => 'force_delete_any_person',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:15',
                 'updated_at' => '2024-08-20 07:32:15',
             ],
-            164 => 
-             [
+            164 => [
                 'id' => 1165,
                 'name' => 'view_person::alia',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:15',
                 'updated_at' => '2024-08-20 07:32:15',
             ],
-            165 => 
-             [
+            165 => [
                 'id' => 1166,
                 'name' => 'view_any_person::alia',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:15',
                 'updated_at' => '2024-08-20 07:32:15',
             ],
-            166 => 
-             [
+            166 => [
                 'id' => 1167,
                 'name' => 'create_person::alia',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:15',
                 'updated_at' => '2024-08-20 07:32:15',
             ],
-            167 => 
-             [
+            167 => [
                 'id' => 1168,
                 'name' => 'update_person::alia',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:15',
                 'updated_at' => '2024-08-20 07:32:15',
             ],
-            168 => 
-             [
+            168 => [
                 'id' => 1169,
                 'name' => 'restore_person::alia',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:16',
                 'updated_at' => '2024-08-20 07:32:16',
             ],
-            169 => 
-             [
+            169 => [
                 'id' => 1170,
                 'name' => 'restore_any_person::alia',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:16',
                 'updated_at' => '2024-08-20 07:32:16',
             ],
-            170 => 
-             [
+            170 => [
                 'id' => 1171,
                 'name' => 'replicate_person::alia',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:16',
                 'updated_at' => '2024-08-20 07:32:16',
             ],
-            171 => 
-             [
+            171 => [
                 'id' => 1172,
                 'name' => 'reorder_person::alia',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:16',
                 'updated_at' => '2024-08-20 07:32:16',
             ],
-            172 => 
-             [
+            172 => [
                 'id' => 1173,
                 'name' => 'delete_person::alia',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:16',
                 'updated_at' => '2024-08-20 07:32:16',
             ],
-            173 => 
-             [
+            173 => [
                 'id' => 1174,
                 'name' => 'delete_any_person::alia',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:16',
                 'updated_at' => '2024-08-20 07:32:16',
             ],
-            174 => 
-             [
+            174 => [
                 'id' => 1175,
                 'name' => 'force_delete_person::alia',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:16',
                 'updated_at' => '2024-08-20 07:32:16',
             ],
-            175 => 
-             [
+            175 => [
                 'id' => 1176,
                 'name' => 'force_delete_any_person::alia',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:16',
                 'updated_at' => '2024-08-20 07:32:16',
             ],
-            176 => 
-             [
+            176 => [
                 'id' => 1177,
                 'name' => 'view_person::anci',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:17',
                 'updated_at' => '2024-08-20 07:32:17',
             ],
-            177 => 
-             [
+            177 => [
                 'id' => 1178,
                 'name' => 'view_any_person::anci',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:17',
                 'updated_at' => '2024-08-20 07:32:17',
             ],
-            178 => 
-             [
+            178 => [
                 'id' => 1179,
                 'name' => 'create_person::anci',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:17',
                 'updated_at' => '2024-08-20 07:32:17',
             ],
-            179 => 
-             [
+            179 => [
                 'id' => 1180,
                 'name' => 'update_person::anci',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:17',
                 'updated_at' => '2024-08-20 07:32:17',
             ],
-            180 => 
-             [
+            180 => [
                 'id' => 1181,
                 'name' => 'restore_person::anci',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:17',
                 'updated_at' => '2024-08-20 07:32:17',
             ],
-            181 => 
-             [
+            181 => [
                 'id' => 1182,
                 'name' => 'restore_any_person::anci',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:17',
                 'updated_at' => '2024-08-20 07:32:17',
             ],
-            182 => 
-             [
+            182 => [
                 'id' => 1183,
                 'name' => 'replicate_person::anci',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:17',
                 'updated_at' => '2024-08-20 07:32:17',
             ],
-            183 => 
-             [
+            183 => [
                 'id' => 1184,
                 'name' => 'reorder_person::anci',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:18',
                 'updated_at' => '2024-08-20 07:32:18',
             ],
-            184 => 
-             [
+            184 => [
                 'id' => 1185,
                 'name' => 'delete_person::anci',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:18',
                 'updated_at' => '2024-08-20 07:32:18',
             ],
-            185 => 
-             [
+            185 => [
                 'id' => 1186,
                 'name' => 'delete_any_person::anci',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:18',
                 'updated_at' => '2024-08-20 07:32:18',
             ],
-            186 => 
-             [
+            186 => [
                 'id' => 1187,
                 'name' => 'force_delete_person::anci',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:18',
                 'updated_at' => '2024-08-20 07:32:18',
             ],
-            187 => 
-             [
+            187 => [
                 'id' => 1188,
                 'name' => 'force_delete_any_person::anci',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:18',
                 'updated_at' => '2024-08-20 07:32:18',
             ],
-            188 => 
-             [
+            188 => [
                 'id' => 1189,
                 'name' => 'view_person::asso',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:19',
                 'updated_at' => '2024-08-20 07:32:19',
             ],
-            189 => 
-             [
+            189 => [
                 'id' => 1190,
                 'name' => 'view_any_person::asso',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:19',
                 'updated_at' => '2024-08-20 07:32:19',
             ],
-            190 => 
-             [
+            190 => [
                 'id' => 1191,
                 'name' => 'create_person::asso',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:19',
                 'updated_at' => '2024-08-20 07:32:19',
             ],
-            191 => 
-             [
+            191 => [
                 'id' => 1192,
                 'name' => 'update_person::asso',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:19',
                 'updated_at' => '2024-08-20 07:32:19',
             ],
-            192 => 
-             [
+            192 => [
                 'id' => 1193,
                 'name' => 'restore_person::asso',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:19',
                 'updated_at' => '2024-08-20 07:32:19',
             ],
-            193 => 
-             [
+            193 => [
                 'id' => 1194,
                 'name' => 'restore_any_person::asso',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:19',
                 'updated_at' => '2024-08-20 07:32:19',
             ],
-            194 => 
-             [
+            194 => [
                 'id' => 1195,
                 'name' => 'replicate_person::asso',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:19',
                 'updated_at' => '2024-08-20 07:32:19',
             ],
-            195 => 
-             [
+            195 => [
                 'id' => 1196,
                 'name' => 'reorder_person::asso',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:20',
                 'updated_at' => '2024-08-20 07:32:20',
             ],
-            196 => 
-             [
+            196 => [
                 'id' => 1197,
                 'name' => 'delete_person::asso',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:20',
                 'updated_at' => '2024-08-20 07:32:20',
             ],
-            197 => 
-             [
+            197 => [
                 'id' => 1198,
                 'name' => 'delete_any_person::asso',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:20',
                 'updated_at' => '2024-08-20 07:32:20',
             ],
-            198 => 
-             [
+            198 => [
                 'id' => 1199,
                 'name' => 'force_delete_person::asso',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:20',
                 'updated_at' => '2024-08-20 07:32:20',
             ],
-            199 => 
-             [
+            199 => [
                 'id' => 1200,
                 'name' => 'force_delete_any_person::asso',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:20',
                 'updated_at' => '2024-08-20 07:32:20',
             ],
-            200 => 
-             [
+            200 => [
                 'id' => 1201,
                 'name' => 'view_person::event',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:20',
                 'updated_at' => '2024-08-20 07:32:20',
             ],
-            201 => 
-             [
+            201 => [
                 'id' => 1202,
                 'name' => 'view_any_person::event',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:20',
                 'updated_at' => '2024-08-20 07:32:20',
             ],
-            202 => 
-             [
+            202 => [
                 'id' => 1203,
                 'name' => 'create_person::event',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:21',
                 'updated_at' => '2024-08-20 07:32:21',
             ],
-            203 => 
-             [
+            203 => [
                 'id' => 1204,
                 'name' => 'update_person::event',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:21',
                 'updated_at' => '2024-08-20 07:32:21',
             ],
-            204 => 
-             [
+            204 => [
                 'id' => 1205,
                 'name' => 'restore_person::event',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:21',
                 'updated_at' => '2024-08-20 07:32:21',
             ],
-            205 => 
-             [
+            205 => [
                 'id' => 1206,
                 'name' => 'restore_any_person::event',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:21',
                 'updated_at' => '2024-08-20 07:32:21',
             ],
-            206 => 
-             [
+            206 => [
                 'id' => 1207,
                 'name' => 'replicate_person::event',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:21',
                 'updated_at' => '2024-08-20 07:32:21',
             ],
-            207 => 
-             [
+            207 => [
                 'id' => 1208,
                 'name' => 'reorder_person::event',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:21',
                 'updated_at' => '2024-08-20 07:32:21',
             ],
-            208 => 
-             [
+            208 => [
                 'id' => 1209,
                 'name' => 'delete_person::event',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:21',
                 'updated_at' => '2024-08-20 07:32:21',
             ],
-            209 => 
-             [
+            209 => [
                 'id' => 1210,
                 'name' => 'delete_any_person::event',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:22',
                 'updated_at' => '2024-08-20 07:32:22',
             ],
-            210 => 
-             [
+            210 => [
                 'id' => 1211,
                 'name' => 'force_delete_person::event',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:22',
                 'updated_at' => '2024-08-20 07:32:22',
             ],
-            211 => 
-             [
+            211 => [
                 'id' => 1212,
                 'name' => 'force_delete_any_person::event',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:22',
                 'updated_at' => '2024-08-20 07:32:22',
             ],
-            212 => 
-             [
+            212 => [
                 'id' => 1213,
                 'name' => 'view_person::lds',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:22',
                 'updated_at' => '2024-08-20 07:32:22',
             ],
-            213 => 
-             [
+            213 => [
                 'id' => 1214,
                 'name' => 'view_any_person::lds',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:22',
                 'updated_at' => '2024-08-20 07:32:22',
             ],
-            214 => 
-             [
+            214 => [
                 'id' => 1215,
                 'name' => 'create_person::lds',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:23',
                 'updated_at' => '2024-08-20 07:32:23',
             ],
-            215 => 
-             [
+            215 => [
                 'id' => 1216,
                 'name' => 'update_person::lds',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:23',
                 'updated_at' => '2024-08-20 07:32:23',
             ],
-            216 => 
-             [
+            216 => [
                 'id' => 1217,
                 'name' => 'restore_person::lds',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:23',
                 'updated_at' => '2024-08-20 07:32:23',
             ],
-            217 => 
-             [
+            217 => [
                 'id' => 1218,
                 'name' => 'restore_any_person::lds',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:23',
                 'updated_at' => '2024-08-20 07:32:23',
             ],
-            218 => 
-             [
+            218 => [
                 'id' => 1219,
                 'name' => 'replicate_person::lds',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:23',
                 'updated_at' => '2024-08-20 07:32:23',
             ],
-            219 => 
-             [
+            219 => [
                 'id' => 1220,
                 'name' => 'reorder_person::lds',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:23',
                 'updated_at' => '2024-08-20 07:32:23',
             ],
-            220 => 
-             [
+            220 => [
                 'id' => 1221,
                 'name' => 'delete_person::lds',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:23',
                 'updated_at' => '2024-08-20 07:32:23',
             ],
-            221 => 
-             [
+            221 => [
                 'id' => 1222,
                 'name' => 'delete_any_person::lds',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:24',
                 'updated_at' => '2024-08-20 07:32:24',
             ],
-            222 => 
-             [
+            222 => [
                 'id' => 1223,
                 'name' => 'force_delete_person::lds',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:24',
                 'updated_at' => '2024-08-20 07:32:24',
             ],
-            223 => 
-             [
+            223 => [
                 'id' => 1224,
                 'name' => 'force_delete_any_person::lds',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:24',
                 'updated_at' => '2024-08-20 07:32:24',
             ],
-            224 => 
-             [
+            224 => [
                 'id' => 1225,
                 'name' => 'view_person::name',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:24',
                 'updated_at' => '2024-08-20 07:32:24',
             ],
-            225 => 
-             [
+            225 => [
                 'id' => 1226,
                 'name' => 'view_any_person::name',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:24',
                 'updated_at' => '2024-08-20 07:32:24',
             ],
-            226 => 
-             [
+            226 => [
                 'id' => 1227,
                 'name' => 'create_person::name',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:25',
                 'updated_at' => '2024-08-20 07:32:25',
             ],
-            227 => 
-             [
+            227 => [
                 'id' => 1228,
                 'name' => 'update_person::name',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:25',
                 'updated_at' => '2024-08-20 07:32:25',
             ],
-            228 => 
-             [
+            228 => [
                 'id' => 1229,
                 'name' => 'restore_person::name',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:25',
                 'updated_at' => '2024-08-20 07:32:25',
             ],
-            229 => 
-             [
+            229 => [
                 'id' => 1230,
                 'name' => 'restore_any_person::name',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:25',
                 'updated_at' => '2024-08-20 07:32:25',
             ],
-            230 => 
-             [
+            230 => [
                 'id' => 1231,
                 'name' => 'replicate_person::name',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:25',
                 'updated_at' => '2024-08-20 07:32:25',
             ],
-            231 => 
-             [
+            231 => [
                 'id' => 1232,
                 'name' => 'reorder_person::name',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:26',
                 'updated_at' => '2024-08-20 07:32:26',
             ],
-            232 => 
-             [
+            232 => [
                 'id' => 1233,
                 'name' => 'delete_person::name',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:26',
                 'updated_at' => '2024-08-20 07:32:26',
             ],
-            233 => 
-             [
+            233 => [
                 'id' => 1234,
                 'name' => 'delete_any_person::name',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:26',
                 'updated_at' => '2024-08-20 07:32:26',
             ],
-            234 => 
-             [
+            234 => [
                 'id' => 1235,
                 'name' => 'force_delete_person::name',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:26',
                 'updated_at' => '2024-08-20 07:32:26',
             ],
-            235 => 
-             [
+            235 => [
                 'id' => 1236,
                 'name' => 'force_delete_any_person::name',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:26',
                 'updated_at' => '2024-08-20 07:32:26',
             ],
-            236 => 
-             [
+            236 => [
                 'id' => 1237,
                 'name' => 'view_person::name::fone',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:26',
                 'updated_at' => '2024-08-20 07:32:26',
             ],
-            237 => 
-             [
+            237 => [
                 'id' => 1238,
                 'name' => 'view_any_person::name::fone',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:26',
                 'updated_at' => '2024-08-20 07:32:26',
             ],
-            238 => 
-             [
+            238 => [
                 'id' => 1239,
                 'name' => 'create_person::name::fone',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:27',
                 'updated_at' => '2024-08-20 07:32:27',
             ],
-            239 => 
-             [
+            239 => [
                 'id' => 1240,
                 'name' => 'update_person::name::fone',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:27',
                 'updated_at' => '2024-08-20 07:32:27',
             ],
-            240 => 
-             [
+            240 => [
                 'id' => 1241,
                 'name' => 'restore_person::name::fone',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:27',
                 'updated_at' => '2024-08-20 07:32:27',
             ],
-            241 => 
-             [
+            241 => [
                 'id' => 1242,
                 'name' => 'restore_any_person::name::fone',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:27',
                 'updated_at' => '2024-08-20 07:32:27',
             ],
-            242 => 
-             [
+            242 => [
                 'id' => 1243,
                 'name' => 'replicate_person::name::fone',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:27',
                 'updated_at' => '2024-08-20 07:32:27',
             ],
-            243 => 
-             [
+            243 => [
                 'id' => 1244,
                 'name' => 'reorder_person::name::fone',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:27',
                 'updated_at' => '2024-08-20 07:32:27',
             ],
-            244 => 
-             [
+            244 => [
                 'id' => 1245,
                 'name' => 'delete_person::name::fone',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:27',
                 'updated_at' => '2024-08-20 07:32:27',
             ],
-            245 => 
-             [
+            245 => [
                 'id' => 1246,
                 'name' => 'delete_any_person::name::fone',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:28',
                 'updated_at' => '2024-08-20 07:32:28',
             ],
-            246 => 
-             [
+            246 => [
                 'id' => 1247,
                 'name' => 'force_delete_person::name::fone',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:28',
                 'updated_at' => '2024-08-20 07:32:28',
             ],
-            247 => 
-             [
+            247 => [
                 'id' => 1248,
                 'name' => 'force_delete_any_person::name::fone',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:28',
                 'updated_at' => '2024-08-20 07:32:28',
             ],
-            248 => 
-             [
+            248 => [
                 'id' => 1249,
                 'name' => 'view_person::name::romn',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:28',
                 'updated_at' => '2024-08-20 07:32:28',
             ],
-            249 => 
-             [
+            249 => [
                 'id' => 1250,
                 'name' => 'view_any_person::name::romn',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:28',
                 'updated_at' => '2024-08-20 07:32:28',
             ],
-            250 => 
-             [
+            250 => [
                 'id' => 1251,
                 'name' => 'create_person::name::romn',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:28',
                 'updated_at' => '2024-08-20 07:32:28',
             ],
-            251 => 
-             [
+            251 => [
                 'id' => 1252,
                 'name' => 'update_person::name::romn',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:29',
                 'updated_at' => '2024-08-20 07:32:29',
             ],
-            252 => 
-             [
+            252 => [
                 'id' => 1253,
                 'name' => 'restore_person::name::romn',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:29',
                 'updated_at' => '2024-08-20 07:32:29',
             ],
-            253 => 
-             [
+            253 => [
                 'id' => 1254,
                 'name' => 'restore_any_person::name::romn',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:29',
                 'updated_at' => '2024-08-20 07:32:29',
             ],
-            254 => 
-             [
+            254 => [
                 'id' => 1255,
                 'name' => 'replicate_person::name::romn',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:29',
                 'updated_at' => '2024-08-20 07:32:29',
             ],
-            255 => 
-             [
+            255 => [
                 'id' => 1256,
                 'name' => 'reorder_person::name::romn',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:29',
                 'updated_at' => '2024-08-20 07:32:29',
             ],
-            256 => 
-             [
+            256 => [
                 'id' => 1257,
                 'name' => 'delete_person::name::romn',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:29',
                 'updated_at' => '2024-08-20 07:32:29',
             ],
-            257 => 
-             [
+            257 => [
                 'id' => 1258,
                 'name' => 'delete_any_person::name::romn',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:29',
                 'updated_at' => '2024-08-20 07:32:29',
             ],
-            258 => 
-             [
+            258 => [
                 'id' => 1259,
                 'name' => 'force_delete_person::name::romn',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:29',
                 'updated_at' => '2024-08-20 07:32:29',
             ],
-            259 => 
-             [
+            259 => [
                 'id' => 1260,
                 'name' => 'force_delete_any_person::name::romn',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:30',
                 'updated_at' => '2024-08-20 07:32:30',
             ],
-            260 => 
-             [
+            260 => [
                 'id' => 1261,
                 'name' => 'view_person::subm',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:30',
                 'updated_at' => '2024-08-20 07:32:30',
             ],
-            261 => 
-             [
+            261 => [
                 'id' => 1262,
                 'name' => 'view_any_person::subm',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:30',
                 'updated_at' => '2024-08-20 07:32:30',
             ],
-            262 => 
-             [
+            262 => [
                 'id' => 1263,
                 'name' => 'create_person::subm',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:30',
                 'updated_at' => '2024-08-20 07:32:30',
             ],
-            263 => 
-             [
+            263 => [
                 'id' => 1264,
                 'name' => 'update_person::subm',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:30',
                 'updated_at' => '2024-08-20 07:32:30',
             ],
-            264 => 
-             [
+            264 => [
                 'id' => 1265,
                 'name' => 'restore_person::subm',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:31',
                 'updated_at' => '2024-08-20 07:32:31',
             ],
-            265 => 
-             [
+            265 => [
                 'id' => 1266,
                 'name' => 'restore_any_person::subm',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:31',
                 'updated_at' => '2024-08-20 07:32:31',
             ],
-            266 => 
-             [
+            266 => [
                 'id' => 1267,
                 'name' => 'replicate_person::subm',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:31',
                 'updated_at' => '2024-08-20 07:32:31',
             ],
-            267 => 
-             [
+            267 => [
                 'id' => 1268,
                 'name' => 'reorder_person::subm',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:31',
                 'updated_at' => '2024-08-20 07:32:31',
             ],
-            268 => 
-             [
+            268 => [
                 'id' => 1269,
                 'name' => 'delete_person::subm',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:31',
                 'updated_at' => '2024-08-20 07:32:31',
             ],
-            269 => 
-             [
+            269 => [
                 'id' => 1270,
                 'name' => 'delete_any_person::subm',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:31',
                 'updated_at' => '2024-08-20 07:32:31',
             ],
-            270 => 
-             [
+            270 => [
                 'id' => 1271,
                 'name' => 'force_delete_person::subm',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:31',
                 'updated_at' => '2024-08-20 07:32:31',
             ],
-            271 => 
-             [
+            271 => [
                 'id' => 1272,
                 'name' => 'force_delete_any_person::subm',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:32',
                 'updated_at' => '2024-08-20 07:32:32',
             ],
-            272 => 
-             [
+            272 => [
                 'id' => 1273,
                 'name' => 'view_place',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:32',
                 'updated_at' => '2024-08-20 07:32:32',
             ],
-            273 => 
-             [
+            273 => [
                 'id' => 1274,
                 'name' => 'view_any_place',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:32',
                 'updated_at' => '2024-08-20 07:32:32',
             ],
-            274 => 
-             [
+            274 => [
                 'id' => 1275,
                 'name' => 'create_place',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:32',
                 'updated_at' => '2024-08-20 07:32:32',
             ],
-            275 => 
-             [
+            275 => [
                 'id' => 1276,
                 'name' => 'update_place',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:33',
                 'updated_at' => '2024-08-20 07:32:33',
             ],
-            276 => 
-             [
+            276 => [
                 'id' => 1277,
                 'name' => 'restore_place',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:33',
                 'updated_at' => '2024-08-20 07:32:33',
             ],
-            277 => 
-             [
+            277 => [
                 'id' => 1278,
                 'name' => 'restore_any_place',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:33',
                 'updated_at' => '2024-08-20 07:32:33',
             ],
-            278 => 
-             [
+            278 => [
                 'id' => 1279,
                 'name' => 'replicate_place',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:33',
                 'updated_at' => '2024-08-20 07:32:33',
             ],
-            279 => 
-             [
+            279 => [
                 'id' => 1280,
                 'name' => 'reorder_place',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:33',
                 'updated_at' => '2024-08-20 07:32:33',
             ],
-            280 => 
-             [
+            280 => [
                 'id' => 1281,
                 'name' => 'delete_place',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:33',
                 'updated_at' => '2024-08-20 07:32:33',
             ],
-            281 => 
-             [
+            281 => [
                 'id' => 1282,
                 'name' => 'delete_any_place',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:34',
                 'updated_at' => '2024-08-20 07:32:34',
             ],
-            282 => 
-             [
+            282 => [
                 'id' => 1283,
                 'name' => 'force_delete_place',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:34',
                 'updated_at' => '2024-08-20 07:32:34',
             ],
-            283 => 
-             [
+            283 => [
                 'id' => 1284,
                 'name' => 'force_delete_any_place',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:34',
                 'updated_at' => '2024-08-20 07:32:34',
             ],
-            284 => 
-             [
+            284 => [
                 'id' => 1285,
                 'name' => 'view_publication',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:34',
                 'updated_at' => '2024-08-20 07:32:34',
             ],
-            285 => 
-             [
+            285 => [
                 'id' => 1286,
                 'name' => 'view_any_publication',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:35',
                 'updated_at' => '2024-08-20 07:32:35',
             ],
-            286 => 
-             [
+            286 => [
                 'id' => 1287,
                 'name' => 'create_publication',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:35',
                 'updated_at' => '2024-08-20 07:32:35',
             ],
-            287 => 
-             [
+            287 => [
                 'id' => 1288,
                 'name' => 'update_publication',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:35',
                 'updated_at' => '2024-08-20 07:32:35',
             ],
-            288 => 
-             [
+            288 => [
                 'id' => 1289,
                 'name' => 'restore_publication',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:35',
                 'updated_at' => '2024-08-20 07:32:35',
             ],
-            289 => 
-             [
+            289 => [
                 'id' => 1290,
                 'name' => 'restore_any_publication',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:35',
                 'updated_at' => '2024-08-20 07:32:35',
             ],
-            290 => 
-             [
+            290 => [
                 'id' => 1291,
                 'name' => 'replicate_publication',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:35',
                 'updated_at' => '2024-08-20 07:32:35',
             ],
-            291 => 
-             [
+            291 => [
                 'id' => 1292,
                 'name' => 'reorder_publication',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:35',
                 'updated_at' => '2024-08-20 07:32:35',
             ],
-            292 => 
-             [
+            292 => [
                 'id' => 1293,
                 'name' => 'delete_publication',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:36',
                 'updated_at' => '2024-08-20 07:32:36',
             ],
-            293 => 
-             [
+            293 => [
                 'id' => 1294,
                 'name' => 'delete_any_publication',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:36',
                 'updated_at' => '2024-08-20 07:32:36',
             ],
-            294 => 
-             [
+            294 => [
                 'id' => 1295,
                 'name' => 'force_delete_publication',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:36',
                 'updated_at' => '2024-08-20 07:32:36',
             ],
-            295 => 
-             [
+            295 => [
                 'id' => 1296,
                 'name' => 'force_delete_any_publication',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:36',
                 'updated_at' => '2024-08-20 07:32:36',
             ],
-            296 => 
-             [
+            296 => [
                 'id' => 1297,
                 'name' => 'view_refn',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:36',
                 'updated_at' => '2024-08-20 07:32:36',
             ],
-            297 => 
-             [
+            297 => [
                 'id' => 1298,
                 'name' => 'view_any_refn',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:37',
                 'updated_at' => '2024-08-20 07:32:37',
             ],
-            298 => 
-             [
+            298 => [
                 'id' => 1299,
                 'name' => 'create_refn',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:37',
                 'updated_at' => '2024-08-20 07:32:37',
             ],
-            299 => 
-             [
+            299 => [
                 'id' => 1300,
                 'name' => 'update_refn',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:37',
                 'updated_at' => '2024-08-20 07:32:37',
             ],
-            300 => 
-             [
+            300 => [
                 'id' => 1301,
                 'name' => 'restore_refn',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:37',
                 'updated_at' => '2024-08-20 07:32:37',
             ],
-            301 => 
-             [
+            301 => [
                 'id' => 1302,
                 'name' => 'restore_any_refn',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:37',
                 'updated_at' => '2024-08-20 07:32:37',
             ],
-            302 => 
-             [
+            302 => [
                 'id' => 1303,
                 'name' => 'replicate_refn',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:37',
                 'updated_at' => '2024-08-20 07:32:37',
             ],
-            303 => 
-             [
+            303 => [
                 'id' => 1304,
                 'name' => 'reorder_refn',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:37',
                 'updated_at' => '2024-08-20 07:32:37',
             ],
-            304 => 
-             [
+            304 => [
                 'id' => 1305,
                 'name' => 'delete_refn',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:37',
                 'updated_at' => '2024-08-20 07:32:37',
             ],
-            305 => 
-             [
+            305 => [
                 'id' => 1306,
                 'name' => 'delete_any_refn',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:38',
                 'updated_at' => '2024-08-20 07:32:38',
             ],
-            306 => 
-             [
+            306 => [
                 'id' => 1307,
                 'name' => 'force_delete_refn',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:38',
                 'updated_at' => '2024-08-20 07:32:38',
             ],
-            307 => 
-             [
+            307 => [
                 'id' => 1308,
                 'name' => 'force_delete_any_refn',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:38',
                 'updated_at' => '2024-08-20 07:32:38',
             ],
-            308 => 
-             [
+            308 => [
                 'id' => 1309,
                 'name' => 'view_repository',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:38',
                 'updated_at' => '2024-08-20 07:32:38',
             ],
-            309 => 
-             [
+            309 => [
                 'id' => 1310,
                 'name' => 'view_any_repository',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:38',
                 'updated_at' => '2024-08-20 07:32:38',
             ],
-            310 => 
-             [
+            310 => [
                 'id' => 1311,
                 'name' => 'create_repository',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:39',
                 'updated_at' => '2024-08-20 07:32:39',
             ],
-            311 => 
-             [
+            311 => [
                 'id' => 1312,
                 'name' => 'update_repository',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:39',
                 'updated_at' => '2024-08-20 07:32:39',
             ],
-            312 => 
-             [
+            312 => [
                 'id' => 1313,
                 'name' => 'restore_repository',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:39',
                 'updated_at' => '2024-08-20 07:32:39',
             ],
-            313 => 
-             [
+            313 => [
                 'id' => 1314,
                 'name' => 'restore_any_repository',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:39',
                 'updated_at' => '2024-08-20 07:32:39',
             ],
-            314 => 
-             [
+            314 => [
                 'id' => 1315,
                 'name' => 'replicate_repository',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:39',
                 'updated_at' => '2024-08-20 07:32:39',
             ],
-            315 => 
-             [
+            315 => [
                 'id' => 1316,
                 'name' => 'reorder_repository',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:39',
                 'updated_at' => '2024-08-20 07:32:39',
             ],
-            316 => 
-             [
+            316 => [
                 'id' => 1317,
                 'name' => 'delete_repository',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:39',
                 'updated_at' => '2024-08-20 07:32:39',
             ],
-            317 => 
-             [
+            317 => [
                 'id' => 1318,
                 'name' => 'delete_any_repository',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:39',
                 'updated_at' => '2024-08-20 07:32:39',
             ],
-            318 => 
-             [
+            318 => [
                 'id' => 1319,
                 'name' => 'force_delete_repository',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:40',
                 'updated_at' => '2024-08-20 07:32:40',
             ],
-            319 => 
-             [
+            319 => [
                 'id' => 1320,
                 'name' => 'force_delete_any_repository',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:40',
                 'updated_at' => '2024-08-20 07:32:40',
             ],
-            320 => 
-             [
+            320 => [
                 'id' => 1321,
                 'name' => 'view_role',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:40',
                 'updated_at' => '2024-08-20 07:32:40',
             ],
-            321 => 
-             [
+            321 => [
                 'id' => 1322,
                 'name' => 'view_any_role',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:40',
                 'updated_at' => '2024-08-20 07:32:40',
             ],
-            322 => 
-             [
+            322 => [
                 'id' => 1323,
                 'name' => 'create_role',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:40',
                 'updated_at' => '2024-08-20 07:32:40',
             ],
-            323 => 
-             [
+            323 => [
                 'id' => 1324,
                 'name' => 'update_role',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:40',
                 'updated_at' => '2024-08-20 07:32:40',
             ],
-            324 => 
-             [
+            324 => [
                 'id' => 1325,
                 'name' => 'delete_role',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:40',
                 'updated_at' => '2024-08-20 07:32:40',
             ],
-            325 => 
-             [
+            325 => [
                 'id' => 1326,
                 'name' => 'delete_any_role',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:41',
                 'updated_at' => '2024-08-20 07:32:41',
             ],
-            326 => 
-             [
+            326 => [
                 'id' => 1327,
                 'name' => 'view_source',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:41',
                 'updated_at' => '2024-08-20 07:32:41',
             ],
-            327 => 
-             [
+            327 => [
                 'id' => 1328,
                 'name' => 'view_any_source',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:41',
                 'updated_at' => '2024-08-20 07:32:41',
             ],
-            328 => 
-             [
+            328 => [
                 'id' => 1329,
                 'name' => 'create_source',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:41',
                 'updated_at' => '2024-08-20 07:32:41',
             ],
-            329 => 
-             [
+            329 => [
                 'id' => 1330,
                 'name' => 'update_source',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:41',
                 'updated_at' => '2024-08-20 07:32:41',
             ],
-            330 => 
-             [
+            330 => [
                 'id' => 1331,
                 'name' => 'restore_source',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:41',
                 'updated_at' => '2024-08-20 07:32:41',
             ],
-            331 => 
-             [
+            331 => [
                 'id' => 1332,
                 'name' => 'restore_any_source',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:41',
                 'updated_at' => '2024-08-20 07:32:41',
             ],
-            332 => 
-             [
+            332 => [
                 'id' => 1333,
                 'name' => 'replicate_source',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:42',
                 'updated_at' => '2024-08-20 07:32:42',
             ],
-            333 => 
-             [
+            333 => [
                 'id' => 1334,
                 'name' => 'reorder_source',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:42',
                 'updated_at' => '2024-08-20 07:32:42',
             ],
-            334 => 
-             [
+            334 => [
                 'id' => 1335,
                 'name' => 'delete_source',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:42',
                 'updated_at' => '2024-08-20 07:32:42',
             ],
-            335 => 
-             [
+            335 => [
                 'id' => 1336,
                 'name' => 'delete_any_source',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:42',
                 'updated_at' => '2024-08-20 07:32:42',
             ],
-            336 => 
-             [
+            336 => [
                 'id' => 1337,
                 'name' => 'force_delete_source',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:42',
                 'updated_at' => '2024-08-20 07:32:42',
             ],
-            337 => 
-             [
+            337 => [
                 'id' => 1338,
                 'name' => 'force_delete_any_source',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:42',
                 'updated_at' => '2024-08-20 07:32:42',
             ],
-            338 => 
-             [
+            338 => [
                 'id' => 1339,
                 'name' => 'view_source::data',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:43',
                 'updated_at' => '2024-08-20 07:32:43',
             ],
-            339 => 
-             [
+            339 => [
                 'id' => 1340,
                 'name' => 'view_any_source::data',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:43',
                 'updated_at' => '2024-08-20 07:32:43',
             ],
-            340 => 
-             [
+            340 => [
                 'id' => 1341,
                 'name' => 'create_source::data',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:43',
                 'updated_at' => '2024-08-20 07:32:43',
             ],
-            341 => 
-             [
+            341 => [
                 'id' => 1342,
                 'name' => 'update_source::data',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:43',
                 'updated_at' => '2024-08-20 07:32:43',
             ],
-            342 => 
-             [
+            342 => [
                 'id' => 1343,
                 'name' => 'restore_source::data',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:43',
                 'updated_at' => '2024-08-20 07:32:43',
             ],
-            343 => 
-             [
+            343 => [
                 'id' => 1344,
                 'name' => 'restore_any_source::data',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:43',
                 'updated_at' => '2024-08-20 07:32:43',
             ],
-            344 => 
-             [
+            344 => [
                 'id' => 1345,
                 'name' => 'replicate_source::data',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:44',
                 'updated_at' => '2024-08-20 07:32:44',
             ],
-            345 => 
-             [
+            345 => [
                 'id' => 1346,
                 'name' => 'reorder_source::data',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:44',
                 'updated_at' => '2024-08-20 07:32:44',
             ],
-            346 => 
-             [
+            346 => [
                 'id' => 1347,
                 'name' => 'delete_source::data',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:44',
                 'updated_at' => '2024-08-20 07:32:44',
             ],
-            347 => 
-             [
+            347 => [
                 'id' => 1348,
                 'name' => 'delete_any_source::data',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:44',
                 'updated_at' => '2024-08-20 07:32:44',
             ],
-            348 => 
-             [
+            348 => [
                 'id' => 1349,
                 'name' => 'force_delete_source::data',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:44',
                 'updated_at' => '2024-08-20 07:32:44',
             ],
-            349 => 
-             [
+            349 => [
                 'id' => 1350,
                 'name' => 'force_delete_any_source::data',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:44',
                 'updated_at' => '2024-08-20 07:32:44',
             ],
-            350 => 
-             [
+            350 => [
                 'id' => 1351,
                 'name' => 'view_source::data::even',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:44',
                 'updated_at' => '2024-08-20 07:32:44',
             ],
-            351 => 
-             [
+            351 => [
                 'id' => 1352,
                 'name' => 'view_any_source::data::even',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:45',
                 'updated_at' => '2024-08-20 07:32:45',
             ],
-            352 => 
-             [
+            352 => [
                 'id' => 1353,
                 'name' => 'create_source::data::even',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:45',
                 'updated_at' => '2024-08-20 07:32:45',
             ],
-            353 => 
-             [
+            353 => [
                 'id' => 1354,
                 'name' => 'update_source::data::even',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:45',
                 'updated_at' => '2024-08-20 07:32:45',
             ],
-            354 => 
-             [
+            354 => [
                 'id' => 1355,
                 'name' => 'restore_source::data::even',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:45',
                 'updated_at' => '2024-08-20 07:32:45',
             ],
-            355 => 
-             [
+            355 => [
                 'id' => 1356,
                 'name' => 'restore_any_source::data::even',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:45',
                 'updated_at' => '2024-08-20 07:32:45',
             ],
-            356 => 
-             [
+            356 => [
                 'id' => 1357,
                 'name' => 'replicate_source::data::even',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:45',
                 'updated_at' => '2024-08-20 07:32:45',
             ],
-            357 => 
-             [
+            357 => [
                 'id' => 1358,
                 'name' => 'reorder_source::data::even',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:46',
                 'updated_at' => '2024-08-20 07:32:46',
             ],
-            358 => 
-             [
+            358 => [
                 'id' => 1359,
                 'name' => 'delete_source::data::even',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:46',
                 'updated_at' => '2024-08-20 07:32:46',
             ],
-            359 => 
-             [
+            359 => [
                 'id' => 1360,
                 'name' => 'delete_any_source::data::even',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:46',
                 'updated_at' => '2024-08-20 07:32:46',
             ],
-            360 => 
-             [
+            360 => [
                 'id' => 1361,
                 'name' => 'force_delete_source::data::even',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:46',
                 'updated_at' => '2024-08-20 07:32:46',
             ],
-            361 => 
-             [
+            361 => [
                 'id' => 1362,
                 'name' => 'force_delete_any_source::data::even',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:46',
                 'updated_at' => '2024-08-20 07:32:46',
             ],
-            362 => 
-             [
+            362 => [
                 'id' => 1363,
                 'name' => 'view_source::ref',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:46',
                 'updated_at' => '2024-08-20 07:32:46',
             ],
-            363 => 
-             [
+            363 => [
                 'id' => 1364,
                 'name' => 'view_any_source::ref',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:47',
                 'updated_at' => '2024-08-20 07:32:47',
             ],
-            364 => 
-             [
+            364 => [
                 'id' => 1365,
                 'name' => 'create_source::ref',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:47',
                 'updated_at' => '2024-08-20 07:32:47',
             ],
-            365 => 
-             [
+            365 => [
                 'id' => 1366,
                 'name' => 'update_source::ref',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:47',
                 'updated_at' => '2024-08-20 07:32:47',
             ],
-            366 => 
-             [
+            366 => [
                 'id' => 1367,
                 'name' => 'restore_source::ref',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:47',
                 'updated_at' => '2024-08-20 07:32:47',
             ],
-            367 => 
-             [
+            367 => [
                 'id' => 1368,
                 'name' => 'restore_any_source::ref',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:47',
                 'updated_at' => '2024-08-20 07:32:47',
             ],
-            368 => 
-             [
+            368 => [
                 'id' => 1369,
                 'name' => 'replicate_source::ref',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:47',
                 'updated_at' => '2024-08-20 07:32:47',
             ],
-            369 => 
-             [
+            369 => [
                 'id' => 1370,
                 'name' => 'reorder_source::ref',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:47',
                 'updated_at' => '2024-08-20 07:32:47',
             ],
-            370 => 
-             [
+            370 => [
                 'id' => 1371,
                 'name' => 'delete_source::ref',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:48',
                 'updated_at' => '2024-08-20 07:32:48',
             ],
-            371 => 
-             [
+            371 => [
                 'id' => 1372,
                 'name' => 'delete_any_source::ref',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:48',
                 'updated_at' => '2024-08-20 07:32:48',
             ],
-            372 => 
-             [
+            372 => [
                 'id' => 1373,
                 'name' => 'force_delete_source::ref',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:48',
                 'updated_at' => '2024-08-20 07:32:48',
             ],
-            373 => 
-             [
+            373 => [
                 'id' => 1374,
                 'name' => 'force_delete_any_source::ref',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:48',
                 'updated_at' => '2024-08-20 07:32:48',
             ],
-            374 => 
-             [
+            374 => [
                 'id' => 1375,
                 'name' => 'view_source::ref::even',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:49',
                 'updated_at' => '2024-08-20 07:32:49',
             ],
-            375 => 
-             [
+            375 => [
                 'id' => 1376,
                 'name' => 'view_any_source::ref::even',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:49',
                 'updated_at' => '2024-08-20 07:32:49',
             ],
-            376 => 
-             [
+            376 => [
                 'id' => 1377,
                 'name' => 'create_source::ref::even',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:49',
                 'updated_at' => '2024-08-20 07:32:49',
             ],
-            377 => 
-             [
+            377 => [
                 'id' => 1378,
                 'name' => 'update_source::ref::even',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:49',
                 'updated_at' => '2024-08-20 07:32:49',
             ],
-            378 => 
-             [
+            378 => [
                 'id' => 1379,
                 'name' => 'restore_source::ref::even',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:49',
                 'updated_at' => '2024-08-20 07:32:49',
             ],
-            379 => 
-             [
+            379 => [
                 'id' => 1380,
                 'name' => 'restore_any_source::ref::even',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:49',
                 'updated_at' => '2024-08-20 07:32:49',
             ],
-            380 => 
-             [
+            380 => [
                 'id' => 1381,
                 'name' => 'replicate_source::ref::even',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:49',
                 'updated_at' => '2024-08-20 07:32:49',
             ],
-            381 => 
-             [
+            381 => [
                 'id' => 1382,
                 'name' => 'reorder_source::ref::even',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:49',
                 'updated_at' => '2024-08-20 07:32:49',
             ],
-            382 => 
-             [
+            382 => [
                 'id' => 1383,
                 'name' => 'delete_source::ref::even',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:49',
                 'updated_at' => '2024-08-20 07:32:49',
             ],
-            383 => 
-             [
+            383 => [
                 'id' => 1384,
                 'name' => 'delete_any_source::ref::even',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:50',
                 'updated_at' => '2024-08-20 07:32:50',
             ],
-            384 => 
-             [
+            384 => [
                 'id' => 1385,
                 'name' => 'force_delete_source::ref::even',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:50',
                 'updated_at' => '2024-08-20 07:32:50',
             ],
-            385 => 
-             [
+            385 => [
                 'id' => 1386,
                 'name' => 'force_delete_any_source::ref::even',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:50',
                 'updated_at' => '2024-08-20 07:32:50',
             ],
-            386 => 
-             [
+            386 => [
                 'id' => 1387,
                 'name' => 'view_source::repo',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:50',
                 'updated_at' => '2024-08-20 07:32:50',
             ],
-            387 => 
-             [
+            387 => [
                 'id' => 1388,
                 'name' => 'view_any_source::repo',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:50',
                 'updated_at' => '2024-08-20 07:32:50',
             ],
-            388 => 
-             [
+            388 => [
                 'id' => 1389,
                 'name' => 'create_source::repo',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:51',
                 'updated_at' => '2024-08-20 07:32:51',
             ],
-            389 => 
-             [
+            389 => [
                 'id' => 1390,
                 'name' => 'update_source::repo',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:51',
                 'updated_at' => '2024-08-20 07:32:51',
             ],
-            390 => 
-             [
+            390 => [
                 'id' => 1391,
                 'name' => 'restore_source::repo',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:51',
                 'updated_at' => '2024-08-20 07:32:51',
             ],
-            391 => 
-             [
+            391 => [
                 'id' => 1392,
                 'name' => 'restore_any_source::repo',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:51',
                 'updated_at' => '2024-08-20 07:32:51',
             ],
-            392 => 
-             [
+            392 => [
                 'id' => 1393,
                 'name' => 'replicate_source::repo',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:51',
                 'updated_at' => '2024-08-20 07:32:51',
             ],
-            393 => 
-             [
+            393 => [
                 'id' => 1394,
                 'name' => 'reorder_source::repo',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:51',
                 'updated_at' => '2024-08-20 07:32:51',
             ],
-            394 => 
-             [
+            394 => [
                 'id' => 1395,
                 'name' => 'delete_source::repo',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:51',
                 'updated_at' => '2024-08-20 07:32:51',
             ],
-            395 => 
-             [
+            395 => [
                 'id' => 1396,
                 'name' => 'delete_any_source::repo',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:51',
                 'updated_at' => '2024-08-20 07:32:51',
             ],
-            396 => 
-             [
+            396 => [
                 'id' => 1397,
                 'name' => 'force_delete_source::repo',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:52',
                 'updated_at' => '2024-08-20 07:32:52',
             ],
-            397 => 
-             [
+            397 => [
                 'id' => 1398,
                 'name' => 'force_delete_any_source::repo',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:52',
                 'updated_at' => '2024-08-20 07:32:52',
             ],
-            398 => 
-             [
+            398 => [
                 'id' => 1399,
                 'name' => 'view_subm',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:52',
                 'updated_at' => '2024-08-20 07:32:52',
             ],
-            399 => 
-             [
+            399 => [
                 'id' => 1400,
                 'name' => 'view_any_subm',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:52',
                 'updated_at' => '2024-08-20 07:32:52',
             ],
-            400 => 
-             [
+            400 => [
                 'id' => 1401,
                 'name' => 'create_subm',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:52',
                 'updated_at' => '2024-08-20 07:32:52',
             ],
-            401 => 
-             [
+            401 => [
                 'id' => 1402,
                 'name' => 'update_subm',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:52',
                 'updated_at' => '2024-08-20 07:32:52',
             ],
-            402 => 
-             [
+            402 => [
                 'id' => 1403,
                 'name' => 'restore_subm',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:52',
                 'updated_at' => '2024-08-20 07:32:52',
             ],
-            403 => 
-             [
+            403 => [
                 'id' => 1404,
                 'name' => 'restore_any_subm',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:52',
                 'updated_at' => '2024-08-20 07:32:52',
             ],
-            404 => 
-             [
+            404 => [
                 'id' => 1405,
                 'name' => 'replicate_subm',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:53',
                 'updated_at' => '2024-08-20 07:32:53',
             ],
-            405 => 
-             [
+            405 => [
                 'id' => 1406,
                 'name' => 'reorder_subm',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:53',
                 'updated_at' => '2024-08-20 07:32:53',
             ],
-            406 => 
-             [
+            406 => [
                 'id' => 1407,
                 'name' => 'delete_subm',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:53',
                 'updated_at' => '2024-08-20 07:32:53',
             ],
-            407 => 
-             [
+            407 => [
                 'id' => 1408,
                 'name' => 'delete_any_subm',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:53',
                 'updated_at' => '2024-08-20 07:32:53',
             ],
-            408 => 
-             [
+            408 => [
                 'id' => 1409,
                 'name' => 'force_delete_subm',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:53',
                 'updated_at' => '2024-08-20 07:32:53',
             ],
-            409 => 
-             [
+            409 => [
                 'id' => 1410,
                 'name' => 'force_delete_any_subm',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:53',
                 'updated_at' => '2024-08-20 07:32:53',
             ],
-            410 => 
-             [
+            410 => [
                 'id' => 1411,
                 'name' => 'view_subn',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:53',
                 'updated_at' => '2024-08-20 07:32:53',
             ],
-            411 => 
-             [
+            411 => [
                 'id' => 1412,
                 'name' => 'view_any_subn',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:54',
                 'updated_at' => '2024-08-20 07:32:54',
             ],
-            412 => 
-             [
+            412 => [
                 'id' => 1413,
                 'name' => 'create_subn',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:54',
                 'updated_at' => '2024-08-20 07:32:54',
             ],
-            413 => 
-             [
+            413 => [
                 'id' => 1414,
                 'name' => 'update_subn',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:54',
                 'updated_at' => '2024-08-20 07:32:54',
             ],
-            414 => 
-             [
+            414 => [
                 'id' => 1415,
                 'name' => 'restore_subn',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:54',
                 'updated_at' => '2024-08-20 07:32:54',
             ],
-            415 => 
-             [
+            415 => [
                 'id' => 1416,
                 'name' => 'restore_any_subn',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:54',
                 'updated_at' => '2024-08-20 07:32:54',
             ],
-            416 => 
-             [
+            416 => [
                 'id' => 1417,
                 'name' => 'replicate_subn',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:54',
                 'updated_at' => '2024-08-20 07:32:54',
             ],
-            417 => 
-             [
+            417 => [
                 'id' => 1418,
                 'name' => 'reorder_subn',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:54',
                 'updated_at' => '2024-08-20 07:32:54',
             ],
-            418 => 
-             [
+            418 => [
                 'id' => 1419,
                 'name' => 'delete_subn',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:55',
                 'updated_at' => '2024-08-20 07:32:55',
             ],
-            419 => 
-             [
+            419 => [
                 'id' => 1420,
                 'name' => 'delete_any_subn',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:55',
                 'updated_at' => '2024-08-20 07:32:55',
             ],
-            420 => 
-             [
+            420 => [
                 'id' => 1421,
                 'name' => 'force_delete_subn',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:55',
                 'updated_at' => '2024-08-20 07:32:55',
             ],
-            421 => 
-             [
+            421 => [
                 'id' => 1422,
                 'name' => 'force_delete_any_subn',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:55',
                 'updated_at' => '2024-08-20 07:32:55',
             ],
-            422 => 
-             [
+            422 => [
                 'id' => 1423,
                 'name' => 'view_type',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:55',
                 'updated_at' => '2024-08-20 07:32:55',
             ],
-            423 => 
-             [
+            423 => [
                 'id' => 1424,
                 'name' => 'view_any_type',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:55',
                 'updated_at' => '2024-08-20 07:32:55',
             ],
-            424 => 
-             [
+            424 => [
                 'id' => 1425,
                 'name' => 'create_type',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:56',
                 'updated_at' => '2024-08-20 07:32:56',
             ],
-            425 => 
-             [
+            425 => [
                 'id' => 1426,
                 'name' => 'update_type',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:56',
                 'updated_at' => '2024-08-20 07:32:56',
             ],
-            426 => 
-             [
+            426 => [
                 'id' => 1427,
                 'name' => 'restore_type',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:56',
                 'updated_at' => '2024-08-20 07:32:56',
             ],
-            427 => 
-             [
+            427 => [
                 'id' => 1428,
                 'name' => 'restore_any_type',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:56',
                 'updated_at' => '2024-08-20 07:32:56',
             ],
-            428 => 
-             [
+            428 => [
                 'id' => 1429,
                 'name' => 'replicate_type',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:56',
                 'updated_at' => '2024-08-20 07:32:56',
             ],
-            429 => 
-             [
+            429 => [
                 'id' => 1430,
                 'name' => 'reorder_type',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:56',
                 'updated_at' => '2024-08-20 07:32:56',
             ],
-            430 => 
-             [
+            430 => [
                 'id' => 1431,
                 'name' => 'delete_type',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:56',
                 'updated_at' => '2024-08-20 07:32:56',
             ],
-            431 => 
-             [
+            431 => [
                 'id' => 1432,
                 'name' => 'delete_any_type',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:56',
                 'updated_at' => '2024-08-20 07:32:56',
             ],
-            432 => 
-             [
+            432 => [
                 'id' => 1433,
                 'name' => 'force_delete_type',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:57',
                 'updated_at' => '2024-08-20 07:32:57',
             ],
-            433 => 
-             [
+            433 => [
                 'id' => 1434,
                 'name' => 'force_delete_any_type',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:57',
                 'updated_at' => '2024-08-20 07:32:57',
             ],
-            434 => 
-             [
+            434 => [
                 'id' => 1435,
                 'name' => 'page_DabovilleReportPage',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:57',
                 'updated_at' => '2024-08-20 07:32:57',
             ],
-            435 => 
-             [
+            435 => [
                 'id' => 1436,
                 'name' => 'page_DeVilliersReportPage',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:58',
                 'updated_at' => '2024-08-20 07:32:58',
             ],
-            436 => 
-             [
+            436 => [
                 'id' => 1437,
                 'name' => 'page_DescendantChartPage',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:58',
                 'updated_at' => '2024-08-20 07:32:58',
             ],
-            437 => 
-             [
+            437 => [
                 'id' => 1438,
                 'name' => 'page_EditProfile',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:59',
                 'updated_at' => '2024-08-20 07:32:59',
             ],
-            438 => 
-             [
+            438 => [
                 'id' => 1439,
                 'name' => 'page_FanChartPage',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:32:59',
                 'updated_at' => '2024-08-20 07:32:59',
             ],
-            439 => 
-             [
+            439 => [
                 'id' => 1440,
                 'name' => 'page_HenryReportPage',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:33:00',
                 'updated_at' => '2024-08-20 07:33:00',
             ],
-            440 => 
-             [
+            440 => [
                 'id' => 1441,
                 'name' => 'page_PedigreeChartPage',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:33:00',
                 'updated_at' => '2024-08-20 07:33:00',
             ],
-            441 => 
-             [
+            441 => [
                 'id' => 1442,
                 'name' => 'page_PeopleDashboard',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:33:01',
                 'updated_at' => '2024-08-20 07:33:01',
             ],
-            442 => 
-             [
+            442 => [
                 'id' => 1443,
                 'name' => 'page_PersonalAccessTokensPage',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:33:01',
                 'updated_at' => '2024-08-20 07:33:01',
             ],
-            443 => 
-             [
+            443 => [
                 'id' => 1444,
                 'name' => 'page_PrivateMessagingPage',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:33:01',
                 'updated_at' => '2024-08-20 07:33:01',
             ],
-            444 => 
-             [
+            444 => [
                 'id' => 1445,
                 'name' => 'page_TwoFactorAuthenticationPage',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:33:02',
                 'updated_at' => '2024-08-20 07:33:02',
             ],
-            445 => 
-             [
+            445 => [
                 'id' => 1446,
                 'name' => 'page_UpdatePasswordPage',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:33:03',
                 'updated_at' => '2024-08-20 07:33:03',
             ],
-            446 => 
-             [
+            446 => [
                 'id' => 1447,
                 'name' => 'page_UpdateProfileInformationPage',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:33:03',
                 'updated_at' => '2024-08-20 07:33:03',
             ],
-            447 => 
-             [
+            447 => [
                 'id' => 1448,
                 'name' => 'widget_FanChartWidget',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:33:04',
                 'updated_at' => '2024-08-20 07:33:04',
             ],
-            448 => 
-             [
+            448 => [
                 'id' => 1449,
                 'name' => 'widget_PeopleWidget',
                 'guard_name' => 'web',
                 'created_at' => '2024-08-20 07:33:05',
                 'updated_at' => '2024-08-20 07:33:05',
             ],
-            449 => 
-             [
+            449 => [
                 'id' => 1450,
                 'name' => 'widget_SocialLinksWidget',
                 'guard_name' => 'web',
@@ -11624,7 +10170,6 @@ class PermissionsTableSeeder extends Seeder
                 'updated_at' => '2024-08-20 07:33:06',
             ],
         ]);
-        
-        
+
     }
 }

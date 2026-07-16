@@ -10,8 +10,6 @@ class CreatePersonNameFoneTable extends Migration
 {
     /**
      * Run the migrations.
-     *
-     * @return void
      */
     public function up(): void
     {
@@ -34,8 +32,6 @@ class CreatePersonNameFoneTable extends Migration
 
     /**
      * Reverse the migrations.
-     *
-     * @return void
      */
     public function down(): void
     {

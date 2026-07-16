@@ -28,13 +28,13 @@ class TeamController extends Controller
     public function store(Request $request): JsonResponse
     {
         $data = $request->validate([
-            'name'      => ['required', 'string', 'max:255'],
+            'name' => ['required', 'string', 'max:255'],
             'is_public' => ['boolean'],
         ]);
 
         $team = Team::forceCreate([
-            'user_id'       => $request->user()->id,
-            'name'          => $data['name'],
+            'user_id' => $request->user()->id,
+            'name' => $data['name'],
             'personal_team' => false,
         ]);
 

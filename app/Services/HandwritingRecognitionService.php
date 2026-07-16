@@ -7,8 +7,8 @@ use App\Models\TranscriptionCorrection;
 use App\Models\User;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Http;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class HandwritingRecognitionService
@@ -112,7 +112,7 @@ class HandwritingRecognitionService
         ]);
 
         if ($response->failed()) {
-            throw new \Exception('Google Vision API request failed: ' . $response->body());
+            throw new \Exception('Google Vision API request failed: '.$response->body());
         }
 
         $data = $response->json();
@@ -137,7 +137,7 @@ class HandwritingRecognitionService
             }
         }
 
-        $avgConfidence = $confidenceScores === [] 
+        $avgConfidence = $confidenceScores === []
             ? 0.85
             : round(array_sum($confidenceScores) / count($confidenceScores), 2); // Default confidence if not provided
 

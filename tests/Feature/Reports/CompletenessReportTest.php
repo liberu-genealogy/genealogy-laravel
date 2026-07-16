@@ -38,8 +38,8 @@ class CompletenessReportTest extends TestCase
 
         $father = Person::factory()->create();
         $family = Family::factory()->create(['husband_id' => $father->id, 'wife_id' => null]);
-        $root   = Person::factory()->create(['child_in_family_id' => $family->id]);
-        $tree   = Tree::factory()->create(['root_person_id' => $root->id]);
+        $root = Person::factory()->create(['child_in_family_id' => $family->id]);
+        $tree = Tree::factory()->create(['root_person_id' => $root->id]);
 
         $stats = app(CompletenessService::class)->treeCompleteness($tree);
 
