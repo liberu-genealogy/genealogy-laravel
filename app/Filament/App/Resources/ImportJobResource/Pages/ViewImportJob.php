@@ -3,7 +3,7 @@
 namespace App\Filament\App\Resources\ImportJobResource\Pages;
 
 use App\Filament\App\Resources\ImportJobResource;
-use Filament\Forms\Components\Grid;
+use Filament\Schemas\Components\Grid;
 use Filament\Schemas\Components\Section;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Resources\Pages\ViewRecord;

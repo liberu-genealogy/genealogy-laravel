@@ -16,9 +16,13 @@ class GoogleMeetService implements VideoConferencingInterface
 
     public function __construct()
     {
-        $this->clientId = config('services.google.client_id', '');
-        $this->clientSecret = config('services.google.client_secret', '');
-        $this->refreshToken = config('services.google.refresh_token', '');
+        // (string) cast, not a config default: the services.google.* keys exist
+        // but resolve to null when the env vars are unset, so the ,'' default
+        // never fires and null hits these typed string properties (TypeError
+        // that 500'd any form mounting a provider Select).
+        $this->clientId = (string) config('services.google.client_id');
+        $this->clientSecret = (string) config('services.google.client_secret');
+        $this->refreshToken = (string) config('services.google.refresh_token');
     }
 
     public function createMeeting(array $meetingData): array
