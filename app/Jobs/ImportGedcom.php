@@ -4,6 +4,7 @@ namespace App\Jobs;
 
 use App\Models\ImportJob;
 use App\Models\User;
+use App\Services\GedcomService;
 use Artisan;
 use Exception;
 use FamilyTree365\LaravelGedcom\Utils\GedcomParser;
@@ -54,6 +55,21 @@ class ImportGedcom implements ShouldQueue
             throw_unless(File::isFile($this->filePath), Exception::class, "{$this->filePath} does not exist.");
 
             $importJob->update(['progress' => 25]);
+
+            // Structural sanity check before the (heavy) vendor parser runs.
+            // Invalid input fails the job cleanly instead of letting the parser throw raw.
+            $validationErrors = (new GedcomService)->validateGedcom(File::get($this->filePath));
+            if ($validationErrors !== []) {
+                $message = 'Invalid GEDCOM file: ' . implode(' ', $validationErrors);
+                $importJob->update(['status' => 'failed', 'error_message' => $message]);
+                Log::error('ImportGedcom validation failed', [
+                    'file_path' => $this->filePath,
+                    'user_id' => $this->user->getKey(),
+                    'errors' => $validationErrors,
+                ]);
+
+                return 1;
+            }
 
             $parser = new GedcomParser;
             $team_id = $this->user->currentTeam?->id;
