@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace App\Filament\App\Resources;
 
 use Override;
+use App\Enums\EventType;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Textarea;
 use Filament\Tables\Columns\TextColumn;
@@ -53,8 +55,20 @@ class FamilyEventResource extends AppResource
                 Textarea::make('date')
                     ->maxLength(65535)
                     ->columnSpanFull(),
-                TextInput::make('title')
-                    ->maxLength(255),
+                // Event type is stored in `title` (see Event::getTitle / EventsService).
+                // family_events has no `type` column (commented out in its create migration),
+                // so `title` is the only type field. ponytail: constrained input, no enum cast.
+                Select::make('title')
+                    ->label('Event Type')
+                    // Preserve an off-list legacy title on edit (see PersonEventResource).
+                    ->options(function ($record): array {
+                        $options = EventType::options(EventType::familyCases());
+                        if ($record && $record->title && ! array_key_exists($record->title, $options)) {
+                            $options[$record->title] = $record->title;
+                        }
+                        return $options;
+                    })
+                    ->searchable(),
                 Textarea::make('description')
                     ->maxLength(65535)
                     ->columnSpanFull(),

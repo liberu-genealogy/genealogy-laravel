@@ -1,4 +1,3 @@
-```html
 <div>
     <!-- Include vis-timeline CSS + JS from CDN -->
     <link href="https://unpkg.com/vis-timeline@latest/styles/vis-timeline-graph2d.min.css" rel="stylesheet" />
@@ -54,7 +53,7 @@
             const container = document.getElementById('timeline');
 
             const groups = new vis.DataSet([
-                { id: 'family', content: 'Family events' },
+                { id: 'family', content: @json($mode === 'family' ? 'Family events' : 'Personal events') },
                 { id: 'historical', content: 'Historical events' },
             ]);
 

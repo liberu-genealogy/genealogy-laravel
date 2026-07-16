@@ -40,6 +40,62 @@ class GedcomService
         return $head === false ? $gedcom : substr($gedcom, $head);
     }
 
+    /**
+     * Structural sanity check for a GEDCOM document. Returns a list of
+     * human-readable errors; an empty array means the content clears the
+     * boundary checks.
+     *
+     * ponytail: envelope-only, NOT a full GEDCOM 5.5.1 validator. It confirms
+     * the file is non-empty, opens at "0 HEAD", carries a "0 TRLR" terminator,
+     * and that lines carry a numeric level + tag — enough to reject empty
+     * uploads, wrong file types and truncated files before the (heavy) vendor
+     * parser runs. Per-line linting stops at the first offending line (the
+     * boundary), not a full report. Upgrade to a spec validator only if malformed
+     * imports slip past the parser.
+     *
+     * @return list<string>
+     */
+    public function validateGedcom(string $content): array
+    {
+        // Strip a leading UTF-8 BOM and surrounding whitespace before inspecting.
+        $trimmed = ltrim($content, "\xEF\xBB\xBF \t\r\n");
+
+        if ($trimmed === '') {
+            return ['GEDCOM is empty.'];
+        }
+
+        $lines = preg_split('/\r\n|\r|\n/', $trimmed) ?: [];
+        $errors = [];
+
+        if (! str_starts_with($lines[0], '0 HEAD')) {
+            $errors[] = 'GEDCOM must begin with a "0 HEAD" record.';
+        }
+
+        $hasTrailer = false;
+        foreach ($lines as $line) {
+            if (rtrim($line) === '0 TRLR') {
+                $hasTrailer = true;
+                break;
+            }
+        }
+        if (! $hasTrailer) {
+            $errors[] = 'GEDCOM must contain a "0 TRLR" terminator.';
+        }
+
+        // Every non-blank line must be "<level> <tag-or-@xref@> ...".
+        foreach ($lines as $i => $line) {
+            if (trim($line) === '') {
+                continue;
+            }
+            if (! preg_match('/^\d+\s+\S/', $line)) {
+                $errors[] = 'Line ' . ($i + 1) . ' is not a valid GEDCOM line: ' . Str::limit(trim($line), 40);
+                break;
+            }
+        }
+
+        return $errors;
+    }
+
     public function queueImport(UploadedFile $file, ?int $treeId = null): ImportJob
     {
         $path = $file->store('gedcom-form-imports', 'private');

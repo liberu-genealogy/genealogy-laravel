@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace App\Filament\App\Resources;
 
 use Override;
+use App\Enums\EventType;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Textarea;
 use Filament\Tables\Columns\TextColumn;
@@ -76,8 +78,22 @@ class PersonEventResource extends AppResource
                     ->maxLength(255),
                 TextInput::make('person_id')
                     ->numeric(),
-                TextInput::make('title')
-                    ->maxLength(255),
+                // Event type is stored in `title` (see Event::getTitle / EventsService).
+                // ponytail: constrained Select, not a strict cast — legacy imports hold
+                // GEDCOM tags beyond these 10, and a backed-enum cast would ValueError on read.
+                Select::make('title')
+                    ->label('Event Type')
+                    // Merge the record's own value in when it isn't one of the 10 enum
+                    // types (legacy GEDCOM imports), so editing an existing event can't
+                    // silently blank a valid-but-off-list title on save.
+                    ->options(function ($record): array {
+                        $options = EventType::options(EventType::personCases());
+                        if ($record && $record->title && ! array_key_exists($record->title, $options)) {
+                            $options[$record->title] = $record->title;
+                        }
+                        return $options;
+                    })
+                    ->searchable(),
                 TextInput::make('date')
                     ->maxLength(255),
                 TextInput::make('description')

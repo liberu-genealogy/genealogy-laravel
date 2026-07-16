@@ -72,10 +72,7 @@ class PersonResource extends AppResource
                         TextInput::make('appellative')->label('Appellative'),
                         TextInput::make('name')->label('Full Name'),
                         Select::make('sex')
-                            ->options([
-                                'M' => 'Male',
-                                'F' => 'Female',
-                            ])
+                            ->options(Person::SEX_OPTIONS)
                             ->label('Sex'),
                         TextInput::make('description')->label('Description')->columnSpanFull(),
                     ]),
@@ -139,10 +136,7 @@ class PersonResource extends AppResource
             ])
             ->filters([
                 Tables\Filters\SelectFilter::make('sex')
-                    ->options([
-                        'M' => 'Male',
-                        'F' => 'Female',
-                    ]),
+                    ->options(Person::SEX_OPTIONS),
             ])
             ->recordActions([
                 EditAction::make(),
