@@ -48,7 +48,7 @@ class RecordTypeResource extends AppResource
     {
         return $form
             ->schema([
-                Forms\Components\Section::make('Basic Information')
+                Section::make('Basic Information')
                     ->schema([
                         TextInput::make('name')
                             ->required()
@@ -83,7 +83,7 @@ class RecordTypeResource extends AppResource
                     ])
                     ->columns(2),
 
-                Forms\Components\Section::make('Display Settings')
+                Section::make('Display Settings')
                     ->schema([
                         TextInput::make('icon')
                             ->maxLength(255)
@@ -108,7 +108,7 @@ class RecordTypeResource extends AppResource
                     ])
                     ->columns(2),
 
-                Forms\Components\Section::make('Metadata Schema')
+                Section::make('Metadata Schema')
                     ->schema([
                         KeyValue::make('metadata_schema')
                             ->keyLabel('Field Name')
