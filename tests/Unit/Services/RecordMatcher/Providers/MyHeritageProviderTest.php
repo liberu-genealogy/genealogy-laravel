@@ -19,38 +19,38 @@ class MyHeritageProviderTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
-        
+
         // Set up test configuration
         Config::set('services.myheritage.api_key', 'test-api-key');
         Config::set('services.myheritage.base_url', 'https://api.myheritage.test/v1');
         Config::set('services.myheritage.timeout', 30);
-        
-        $this->provider = new MyHeritageProvider();
+
+        $this->provider = new MyHeritageProvider;
     }
 
-    public function testIsConfiguredReturnsTrueWhenApiKeySet(): void
+    public function test_is_configured_returns_true_when_api_key_set(): void
     {
         $this->assertTrue($this->provider->isConfigured());
     }
 
-    public function testIsConfiguredReturnsFalseWhenApiKeyNotSet(): void
+    public function test_is_configured_returns_false_when_api_key_not_set(): void
     {
         Config::set('services.myheritage.api_key', '');
-        $provider = new MyHeritageProvider();
-        
+        $provider = new MyHeritageProvider;
+
         $this->assertFalse($provider->isConfigured());
     }
 
-    public function testGetNameReturnsMyHeritage(): void
+    public function test_get_name_returns_my_heritage(): void
     {
         $this->assertEquals('MyHeritage', $this->provider->getName());
     }
 
-    public function testSearchReturnsEmptyArrayWhenApiKeyNotConfigured(): void
+    public function test_search_returns_empty_array_when_api_key_not_configured(): void
     {
         Config::set('services.myheritage.api_key', '');
-        $provider = new MyHeritageProvider();
-        
+        $provider = new MyHeritageProvider;
+
         $person = Person::factory()->create([
             'first_name' => 'John',
             'last_name' => 'Doe',
@@ -62,7 +62,7 @@ class MyHeritageProviderTest extends TestCase
         $this->assertEmpty($results);
     }
 
-    public function testSearchReturnsEmptyArrayForInvalidPerson(): void
+    public function test_search_returns_empty_array_for_invalid_person(): void
     {
         $results = $this->provider->search(99999);
 
@@ -70,7 +70,7 @@ class MyHeritageProviderTest extends TestCase
         $this->assertEmpty($results);
     }
 
-    public function testSearchCallsApiWithCorrectParameters(): void
+    public function test_search_calls_api_with_correct_parameters(): void
     {
         Http::fake([
             'api.myheritage.test/*' => Http::response([
@@ -94,7 +94,7 @@ class MyHeritageProviderTest extends TestCase
 
         $results = $this->provider->search($person);
 
-        Http::assertSent(fn($request) => $request->hasHeader('Authorization', 'Bearer test-api-key') &&
+        Http::assertSent(fn ($request) => $request->hasHeader('Authorization', 'Bearer test-api-key') &&
                $request->hasHeader('Accept', 'application/json') &&
                str_contains((string) $request->url(), 'api.myheritage.test'));
 
@@ -102,7 +102,7 @@ class MyHeritageProviderTest extends TestCase
         $this->assertNotEmpty($results);
     }
 
-    public function testSearchParsesResponseCorrectly(): void
+    public function test_search_parses_response_correctly(): void
     {
         Http::fake([
             'api.myheritage.test/*' => Http::response([
@@ -142,7 +142,7 @@ class MyHeritageProviderTest extends TestCase
         $this->assertEquals('M', $results[0]['gender']);
     }
 
-    public function testSearchHandlesApiErrors(): void
+    public function test_search_handles_api_errors(): void
     {
         Http::fake([
             'api.myheritage.test/*' => Http::response([], 500),
@@ -159,7 +159,7 @@ class MyHeritageProviderTest extends TestCase
         $this->assertEmpty($results);
     }
 
-    public function testSearchAcceptsPersonModel(): void
+    public function test_search_accepts_person_model(): void
     {
         Http::fake([
             'api.myheritage.test/*' => Http::response([
@@ -177,7 +177,7 @@ class MyHeritageProviderTest extends TestCase
         $this->assertIsArray($results);
     }
 
-    public function testSearchAcceptsPersonId(): void
+    public function test_search_accepts_person_id(): void
     {
         Http::fake([
             'api.myheritage.test/*' => Http::response([

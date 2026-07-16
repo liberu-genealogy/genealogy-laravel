@@ -2,43 +2,37 @@
 
 namespace App\Filament\App\Resources;
 
-use Filament\Schemas\Components\Section;
-use Filament\Schemas\Components\Grid;
-use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\Textarea;
-use Filament\Forms\Components\DateTimePicker;
-use Filament\Forms\Components\Select;
-use Filament\Forms\Components\Toggle;
-use Filament\Forms\Components\Hidden;
-use Filament\Tables\Columns\TextColumn;
-
-use Filament\Tables\Columns\IconColumn;
-use Filament\Tables\Filters\SelectFilter;
-use Filament\Tables\Filters\Filter;
-use Filament\Actions\Action;
-use Exception;
-use Filament\Actions\EditAction;
-use Filament\Actions\DeleteAction;
-use Filament\Actions\BulkActionGroup;
-use Filament\Actions\DeleteBulkAction;
-use App\Filament\App\Resources\VirtualEventResource\RelationManagers\AttendeesRelationManager;
-use App\Filament\App\Resources\VirtualEventResource\Pages\ListVirtualEvents;
 use App\Filament\App\Resources\VirtualEventResource\Pages\CreateVirtualEvent;
 use App\Filament\App\Resources\VirtualEventResource\Pages\EditVirtualEvent;
+use App\Filament\App\Resources\VirtualEventResource\Pages\ListVirtualEvents;
 use App\Filament\App\Resources\VirtualEventResource\Pages\ViewVirtualEvent;
-use App\Filament\App\Resources\VirtualEventResource\Pages;
-use App\Filament\App\Resources\VirtualEventResource\RelationManagers;
+use App\Filament\App\Resources\VirtualEventResource\RelationManagers\AttendeesRelationManager;
 use App\Models\VirtualEvent;
 use App\Services\VideoConferencingService;
-use Filament\Forms;
-use Filament\Schemas\Schema;
-use App\Filament\App\Resources\AppResource;
-use Filament\Tables;
-use Filament\Tables\Table;
+use Carbon\Carbon;
+use Exception;
+use Filament\Actions\Action;
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteAction;
+use Filament\Actions\DeleteBulkAction;
+use Filament\Actions\EditAction;
+use Filament\Forms\Components\DateTimePicker;
+use Filament\Forms\Components\Hidden;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Toggle;
 use Filament\Notifications\Notification;
+use Filament\Schemas\Components\Grid;
+use Filament\Schemas\Components\Section;
+use Filament\Schemas\Schema;
+use Filament\Tables\Columns\IconColumn;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\Filter;
+use Filament\Tables\Filters\SelectFilter;
+use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
-use Carbon\Carbon;
 
 class VirtualEventResource extends AppResource
 {
@@ -46,18 +40,19 @@ class VirtualEventResource extends AppResource
     protected static ?string $model = VirtualEvent::class;
 
     #[\Override]
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-video-camera';
+    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-video-camera';
 
     #[\Override]
     protected static ?string $navigationLabel = 'Virtual Events';
 
     #[\Override]
-    protected static string | \UnitEnum | null $navigationGroup = '👥 Family Reunions';
+    protected static string|\UnitEnum|null $navigationGroup = '👥 Family Reunions';
 
     #[\Override]
     protected static ?int $navigationSort = 1;
- #[\Override]
- public static function form(Schema $schema): Schema
+
+    #[\Override]
+    public static function form(Schema $schema): Schema
     {
         return $schema
             ->components([
@@ -84,7 +79,7 @@ class VirtualEventResource extends AppResource
                                     ->native(false)
                                     ->live()
                                     ->afterStateUpdated(function ($state, callable $set, callable $get): void {
-                                        if ($state && !$get('end_time')) {
+                                        if ($state && ! $get('end_time')) {
                                             $set('end_time', Carbon::parse($state)->addHours(2));
                                         }
                                     }),
@@ -144,8 +139,8 @@ class VirtualEventResource extends AppResource
                                 $platforms = $service->getAvailablePlatforms();
 
                                 return collect($platforms)
-                                    ->filter(fn($platform) => $platform['enabled'])
-                                    ->mapWithKeys(fn($platform, $key): array => [$key => $platform['name']])
+                                    ->filter(fn ($platform) => $platform['enabled'])
+                                    ->mapWithKeys(fn ($platform, $key): array => [$key => $platform['name']])
                                     ->toArray();
                             })
                             ->required()
@@ -163,7 +158,7 @@ class VirtualEventResource extends AppResource
                                     ->email()
                                     ->label('Host Email')
                                     ->helperText('Email of the meeting host (defaults to event creator)')
-                                    ->default(fn() => auth()->user()->email),
+                                    ->default(fn () => auth()->user()->email),
                                 TextInput::make('meeting_password')
                                     ->label('Meeting Password')
                                     ->helperText('Auto-generated when meeting is created')
@@ -177,14 +172,14 @@ class VirtualEventResource extends AppResource
                                     ->url()
                                     ->disabled()
                                     ->dehydrated(false)
-                                    ->visible(fn($get): bool => $get('platform') === 'custom'),
+                                    ->visible(fn ($get): bool => $get('platform') === 'custom'),
                                 TextInput::make('join_url')
                                     ->label('Join URL')
                                     ->url()
                                     ->disabled()
                                     ->dehydrated(false)
                                     ->columnSpanFull()
-                                    ->visible(fn($get): bool => !empty($get('join_url'))),
+                                    ->visible(fn ($get): bool => ! empty($get('join_url'))),
                             ]),
                         Textarea::make('instructions')
                             ->label('Special Instructions')
@@ -286,7 +281,7 @@ class VirtualEventResource extends AppResource
                     ->color('success')
                     ->url(fn (VirtualEvent $record): string => $record->join_url ?? '#')
                     ->openUrlInNewTab()
-                    ->visible(fn (VirtualEvent $record): bool => $record->canJoin() && !empty($record->join_url)),
+                    ->visible(fn (VirtualEvent $record): bool => $record->canJoin() && ! empty($record->join_url)),
                 Action::make('create_meeting')
                     ->icon('heroicon-o-plus-circle')
                     ->color('primary')

@@ -9,8 +9,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Citation extends Model
 {
-    use HasFactory;
     use BelongsToTenant;
+    use HasFactory;
 
     #[\Override]
     protected $fillable = ['name', 'description', 'repository_id', 'volume', 'page', 'is_active', 'confidence', 'source_id'];
@@ -27,6 +27,7 @@ class Citation extends Model
     {
         return $this->belongsTo(User::class, 'user_id', 'id');
     }
+
     #[\Override]
     protected function casts(): array
     {

@@ -10,8 +10,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class MediaObject extends \FamilyTree365\LaravelGedcom\Models\MediaObject
 {
-    use HasFactory;
     use BelongsToTenant;
+    use HasFactory;
 
     /**
      * The vendor base hardcodes $fillable. Append our columns to whatever it

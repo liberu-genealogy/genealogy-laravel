@@ -10,8 +10,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Type extends Model
 {
-    use HasFactory;
     use BelongsToTenant;
+    use HasFactory;
 
     #[\Override]
     protected $fillable = ['name', 'description', 'is_active'];

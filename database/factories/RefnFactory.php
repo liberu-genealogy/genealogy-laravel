@@ -8,7 +8,7 @@ use App\Models\Refn;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Refn>
+ * @extends Factory<Refn>
  */
 class RefnFactory extends Factory
 {
@@ -29,9 +29,9 @@ class RefnFactory extends Factory
     {
         return [
             'group' => fake()->word(),
-            'gid'   => fake()->randomDigit(),
-            'refn'  => fake()->word(),
-            'type'  => fake()->word(),
+            'gid' => fake()->randomDigit(),
+            'refn' => fake()->word(),
+            'type' => fake()->word(),
         ];
     }
 }

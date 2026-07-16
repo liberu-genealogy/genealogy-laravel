@@ -2,12 +2,11 @@
 
 namespace App\Jobs;
 
-use Artisan;
-use Throwable;
-use Exception;
 use App\Models\ImportJob;
 use App\Models\User;
 use App\Services\GrampsXmlService;
+use Artisan;
+use Exception;
 use FamilyTree365\LaravelGedcom\Utils\GedcomParser;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -17,6 +16,7 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
+use Throwable;
 
 class ImportGrampsXml implements ShouldQueue
 {
@@ -26,11 +26,10 @@ class ImportGrampsXml implements ShouldQueue
     use SerializesModels;
 
     public int $timeout = 0;
+
     public int $tries = 1;
 
-    public function __construct(protected User $user, protected string $filePath, public ?string $slug = null)
-    {
-    }
+    public function __construct(protected User $user, protected string $filePath, public ?string $slug = null) {}
 
     public function handle(): int
     {
@@ -39,8 +38,8 @@ class ImportGrampsXml implements ShouldQueue
         $importJob = ImportJob::firstOrCreate(
             ['slug' => $slug],
             [
-                'user_id'  => $this->user->getKey(),
-                'status'   => 'queue',
+                'user_id' => $this->user->getKey(),
+                'status' => 'queue',
                 'progress' => 0,
             ],
         );
@@ -53,11 +52,11 @@ class ImportGrampsXml implements ShouldQueue
             $importJob->update(['progress' => 20]);
 
             // Parse GrampsXML file
-            $grampsXmlService = new GrampsXmlService();
+            $grampsXmlService = new GrampsXmlService;
             $grampsData = $grampsXmlService->parseGrampsXml($this->filePath);
 
             Log::info('GrampsXML parsed successfully', [
-                'people_count'   => $grampsData['stats']['people_count'] ?? 0,
+                'people_count' => $grampsData['stats']['people_count'] ?? 0,
                 'families_count' => $grampsData['stats']['families_count'] ?? 0,
             ]);
 
@@ -66,7 +65,7 @@ class ImportGrampsXml implements ShouldQueue
             // Convert GrampsXML to GEDCOM format and import using existing parser
             // This leverages the existing GEDCOM import infrastructure
             $gedcomContent = $this->convertGrampsToGedcom($grampsData['data']);
-            $tempGedcomPath = storage_path('app/private/temp/' . $slug . '.ged');
+            $tempGedcomPath = storage_path('app/private/temp/'.$slug.'.ged');
 
             // Ensure temp directory exists
             File::ensureDirectoryExists(dirname($tempGedcomPath));
@@ -75,7 +74,7 @@ class ImportGrampsXml implements ShouldQueue
             $importJob->update(['progress' => 50]);
 
             // Use existing GEDCOM parser
-            $parser = new GedcomParser();
+            $parser = new GedcomParser;
             $team_id = $this->user->currentTeam?->id;
             $parser->parse(config('database.default'), $tempGedcomPath, $slug, true, $team_id);
 
@@ -95,10 +94,10 @@ class ImportGrampsXml implements ShouldQueue
         } catch (Throwable $e) {
             Log::error('GrampsXML import failed', [
                 'error' => $e->getMessage(),
-                'file'  => $this->filePath,
+                'file' => $this->filePath,
             ]);
             $importJob->update([
-                'status'        => 'failed',
+                'status' => 'failed',
                 'error_message' => $e->getMessage(),
             ]);
             throw $e;
@@ -118,25 +117,22 @@ class ImportGrampsXml implements ShouldQueue
     {
         if ($this->slug) {
             ImportJob::where('slug', $this->slug)->update([
-                'status'        => 'failed',
+                'status' => 'failed',
                 'error_message' => $exception?->getMessage() ?? 'Job failed unexpectedly.',
             ]);
         }
 
         Log::error('ImportGrampsXml job failed', [
             'file_path' => $this->filePath,
-            'user_id'   => $this->user->getKey(),
-            'slug'      => $this->slug,
-            'error'     => $exception?->getMessage(),
+            'user_id' => $this->user->getKey(),
+            'slug' => $this->slug,
+            'error' => $exception?->getMessage(),
         ]);
     }
 
     /**
      * Convert GrampsXML data to GEDCOM format
      * This is a basic conversion that maps GrampsXML structure to GEDCOM
-     *
-     * @param array $grampsData
-     * @return string
      */
     private function convertGrampsToGedcom(array $grampsData): string
     {
@@ -150,9 +146,9 @@ class ImportGrampsXml implements ShouldQueue
         // Convert people
         foreach ($grampsData['people'] ?? [] as $person) {
             $gedcom .= "0 @{$person['id']}@ INDI\n";
-            
+
             // Add names
-            if (!empty($person['names'])) {
+            if (! empty($person['names'])) {
                 foreach ($person['names'] as $name) {
                     $first = $name['first'] ?? '';
                     $surname = $name['surname'] ?? '';
@@ -165,7 +161,7 @@ class ImportGrampsXml implements ShouldQueue
                     }
                 }
             }
-            
+
             // Add gender
             if (isset($person['gender'])) {
                 $gedcom .= "1 SEX {$person['gender']}\n";
@@ -175,7 +171,7 @@ class ImportGrampsXml implements ShouldQueue
         // Convert families
         foreach ($grampsData['families'] ?? [] as $family) {
             $gedcom .= "0 @{$family['id']}@ FAM\n";
-            
+
             if (isset($family['father'])) {
                 // Convert handle to ID format
                 $fatherId = $this->handleToId($family['father'], $grampsData['people'] ?? []);
@@ -183,7 +179,7 @@ class ImportGrampsXml implements ShouldQueue
                     $gedcom .= "1 HUSB @{$fatherId}@\n";
                 }
             }
-            
+
             if (isset($family['mother'])) {
                 $motherId = $this->handleToId($family['mother'], $grampsData['people'] ?? []);
                 if ($motherId) {
@@ -192,7 +188,7 @@ class ImportGrampsXml implements ShouldQueue
             }
 
             // Add children
-            if (!empty($family['children'])) {
+            if (! empty($family['children'])) {
                 foreach ($family['children'] as $child) {
                     $childId = $this->handleToId($child['hlink'], $grampsData['people'] ?? []);
                     if ($childId) {
@@ -209,10 +205,6 @@ class ImportGrampsXml implements ShouldQueue
 
     /**
      * Convert GrampsXML handle to GEDCOM ID
-     *
-     * @param string $handle
-     * @param array $people
-     * @return string|null
      */
     private function handleToId(string $handle, array $people): ?string
     {
@@ -221,6 +213,7 @@ class ImportGrampsXml implements ShouldQueue
                 return $person['id'] ?? null;
             }
         }
+
         return null;
     }
 }

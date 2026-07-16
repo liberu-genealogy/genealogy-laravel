@@ -2,9 +2,9 @@
 
 namespace App\Modules\Core;
 
-use Exception;
-use Artisan;
 use App\Modules\BaseModule;
+use Artisan;
+use Exception;
 
 class CoreModule extends BaseModule
 {

@@ -9,8 +9,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Author extends Model
 {
-    use HasFactory;
     use BelongsToTenant;
+    use HasFactory;
 
     #[\Override]
     protected $fillable = ['description', 'is_active', 'name'];
@@ -22,6 +22,7 @@ class Author extends Model
     {
         return $this->belongsTo(User::class, 'user_id', 'id');
     }
+
     #[\Override]
     protected function casts(): array
     {

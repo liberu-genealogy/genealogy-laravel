@@ -10,6 +10,8 @@ use Filament\Forms\Components\Select;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Schemas\Schema;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Livewire\Component;
 
 class DevillierReport extends Component implements HasActions, HasForms
@@ -54,7 +56,7 @@ class DevillierReport extends Component implements HasActions, HasForms
         // Report generation - state contains selected person and generation
     }
 
-    public function render(): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+    public function render(): Factory|View
     {
         return view('livewire.devilliers-report');
     }

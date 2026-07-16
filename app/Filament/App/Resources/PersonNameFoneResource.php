@@ -4,37 +4,32 @@ declare(strict_types=1);
 
 namespace App\Filament\App\Resources;
 
-use Override;
-use Filament\Forms\Components\TextInput;
-use Filament\Tables\Columns\TextColumn;
-use Filament\Actions\EditAction;
-use Filament\Actions\BulkActionGroup;
-use Filament\Actions\DeleteBulkAction;
-use App\Filament\App\Resources\PersonNameFoneResource\Pages\ListPersonNameFones;
 use App\Filament\App\Resources\PersonNameFoneResource\Pages\CreatePersonNameFone;
 use App\Filament\App\Resources\PersonNameFoneResource\Pages\EditPersonNameFone;
-use BackedEnum;
-use App\Filament\App\Resources\PersonNameFoneResource\Pages;
+use App\Filament\App\Resources\PersonNameFoneResource\Pages\ListPersonNameFones;
 use App\Models\PersonNameFone;
-use Filament\Forms;
-use Filament\Forms\Form;
-use App\Filament\App\Resources\AppResource;
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteBulkAction;
+use Filament\Actions\EditAction;
+use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Schema;
-use Filament\Tables;
-use Filament\Actions;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use Override;
 
 class PersonNameFoneResource extends AppResource
 {
-    #[\Override]
+    #[Override]
     protected static ?string $model = PersonNameFone::class;
 
-    #[\Override]
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-speaker-wave';
-    #[\Override]
+    #[Override]
+    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-speaker-wave';
+
+    #[Override]
     protected static ?string $navigationLabel = 'Phonetic Names';
-    #[\Override]
-    protected static string | \UnitEnum | null $navigationGroup = '👥 Family Tree';
+
+    #[Override]
+    protected static string|\UnitEnum|null $navigationGroup = '👥 Family Tree';
 
     #[Override]
     public static function form(Schema $schema): Schema
@@ -120,13 +115,13 @@ class PersonNameFoneResource extends AppResource
         ];
     }
 
-    #[\Override]
+    #[Override]
     public static function getPages(): array
     {
         return [
-            'index'  => ListPersonNameFones::route('/'),
+            'index' => ListPersonNameFones::route('/'),
             'create' => CreatePersonNameFone::route('/create'),
-            'edit'   => EditPersonNameFone::route('/{record}/edit'),
+            'edit' => EditPersonNameFone::route('/{record}/edit'),
         ];
     }
 }

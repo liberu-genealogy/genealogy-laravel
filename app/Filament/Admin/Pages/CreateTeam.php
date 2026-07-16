@@ -2,11 +2,11 @@
 
 namespace App\Filament\Admin\Pages;
 
-use Override;
 use Filament\Forms\Components\TextInput;
-use Filament\Schemas\Schema;
 use Filament\Pages\Tenancy\RegisterTenant;
+use Filament\Schemas\Schema;
 use Illuminate\Database\Eloquent\Model;
+use Override;
 
 class CreateTeam extends RegisterTenant
 {

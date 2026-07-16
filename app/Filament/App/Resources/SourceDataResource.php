@@ -4,37 +4,32 @@ declare(strict_types=1);
 
 namespace App\Filament\App\Resources;
 
-use Override;
-use Filament\Forms\Components\TextInput;
-use Filament\Tables\Columns\TextColumn;
-use Filament\Actions\EditAction;
-use Filament\Actions\BulkActionGroup;
-use Filament\Actions\DeleteBulkAction;
-use App\Filament\App\Resources\SourceDataResource\Pages\ListSourceData;
 use App\Filament\App\Resources\SourceDataResource\Pages\CreateSourceData;
 use App\Filament\App\Resources\SourceDataResource\Pages\EditSourceData;
-use BackedEnum;
-use App\Filament\App\Resources\SourceDataResource\Pages;
+use App\Filament\App\Resources\SourceDataResource\Pages\ListSourceData;
 use App\Models\SourceData;
-use Filament\Forms;
-use Filament\Forms\Form;
-use App\Filament\App\Resources\AppResource;
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteBulkAction;
+use Filament\Actions\EditAction;
+use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Schema;
-use Filament\Tables;
-use Filament\Actions;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use Override;
 
 class SourceDataResource extends AppResource
 {
-    #[\Override]
+    #[Override]
     protected static ?string $model = SourceData::class;
 
-    #[\Override]
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-circle-stack';
-    #[\Override]
+    #[Override]
+    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-circle-stack';
+
+    #[Override]
     protected static ?string $navigationLabel = 'Source Data';
-    #[\Override]
-    protected static string | \UnitEnum | null $navigationGroup = '🔍 Research & Analysis';
+
+    #[Override]
+    protected static string|\UnitEnum|null $navigationGroup = '🔍 Research & Analysis';
 
     #[Override]
     public static function form(Schema $schema): Schema
@@ -100,13 +95,13 @@ class SourceDataResource extends AppResource
         ];
     }
 
-    #[\Override]
+    #[Override]
     public static function getPages(): array
     {
         return [
-            'index'  => ListSourceData::route('/'),
+            'index' => ListSourceData::route('/'),
             'create' => CreateSourceData::route('/create'),
-            'edit'   => EditSourceData::route('/{record}/edit'),
+            'edit' => EditSourceData::route('/{record}/edit'),
         ];
     }
 }

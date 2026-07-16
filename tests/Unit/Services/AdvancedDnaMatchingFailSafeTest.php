@@ -18,7 +18,7 @@ class AdvancedDnaMatchingFailSafeTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
-        $this->service = new AdvancedDnaMatchingService();
+        $this->service = new AdvancedDnaMatchingService;
         Storage::fake('private');
     }
 

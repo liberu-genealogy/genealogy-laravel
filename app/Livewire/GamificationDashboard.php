@@ -4,6 +4,8 @@ namespace App\Livewire;
 
 use App\Models\Achievement;
 use App\Services\GamificationService;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -61,7 +63,7 @@ class GamificationDashboard extends Component
         $this->dispatch('leaderboard-updated');
     }
 
-    public function render(): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+    public function render(): Factory|View
     {
         $user = auth()->user();
 
@@ -120,7 +122,7 @@ class GamificationDashboard extends Component
                 'progress' => $progress,
                 'progress_percentage' => $progress ? $progress->getProgressPercentage() : 0,
             ];
-        })->when($this->showOnlyUnlocked, fn($collection) => $collection->filter(fn ($item) => $item['unlocked']));
+        })->when($this->showOnlyUnlocked, fn ($collection) => $collection->filter(fn ($item) => $item['unlocked']));
     }
 
     public function getAchievementCategories(): array

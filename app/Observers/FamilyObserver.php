@@ -7,9 +7,7 @@ use App\Services\GamificationService;
 
 class FamilyObserver
 {
-    public function __construct(protected \App\Services\GamificationService $gamificationService)
-    {
-    }
+    public function __construct(protected GamificationService $gamificationService) {}
 
     /**
      * Handle the Family "created" event.
@@ -23,7 +21,7 @@ class FamilyObserver
                 $user,
                 'family_created',
                 50,
-                "Created a new family relationship",
+                'Created a new family relationship',
                 ['family_id' => $family->id],
                 $family
             );
@@ -37,12 +35,12 @@ class FamilyObserver
     {
         // Award points for updating family information
         $user = auth()->user();
-        if ($user && $family->wasChanged() && !$family->wasRecentlyCreated) {
+        if ($user && $family->wasChanged() && ! $family->wasRecentlyCreated) {
             $this->gamificationService->awardPoints(
                 $user,
                 'family_updated',
                 15,
-                "Updated family relationship information",
+                'Updated family relationship information',
                 ['family_id' => $family->id],
                 $family
             );

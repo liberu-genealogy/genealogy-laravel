@@ -4,29 +4,29 @@ namespace Tests\Unit\Services;
 
 use App\Models\Dna;
 use App\Models\User;
-use App\Models\DnaMatching;
-use App\Services\DnaTriangulationService;
 use App\Services\AdvancedDnaMatchingService;
+use App\Services\DnaTriangulationService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Storage;
-use Tests\TestCase;
 use Mockery;
+use Tests\TestCase;
 
 class DnaTriangulationServiceTest extends TestCase
 {
     use RefreshDatabase;
 
     protected DnaTriangulationService $service;
+
     protected AdvancedDnaMatchingService $mockMatchingService;
 
     protected function setUp(): void
     {
         parent::setUp();
-        
+
         // Mock the AdvancedDnaMatchingService
         $this->mockMatchingService = Mockery::mock(AdvancedDnaMatchingService::class);
         $this->service = new DnaTriangulationService($this->mockMatchingService);
-        
+
         Storage::fake('private');
     }
 
@@ -149,7 +149,7 @@ class DnaTriangulationServiceTest extends TestCase
         $this->assertArrayHasKey(1, $result);
         $this->assertArrayHasKey(2, $result);
         $this->assertArrayNotHasKey(3, $result);
-        
+
         $this->assertEquals(10.0, $result[1]['min_shared_cm']);
         $this->assertEquals(5.0, $result[2]['min_shared_cm']);
     }

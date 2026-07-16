@@ -4,43 +4,35 @@ declare(strict_types=1);
 
 namespace App\Filament\App\Resources;
 
-use Override;
 use App\Enums\EventType;
-use Filament\Forms\Components\Select;
-use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\Textarea;
-use Filament\Tables\Columns\TextColumn;
-use Filament\Actions\EditAction;
-use Filament\Actions\BulkActionGroup;
-use Filament\Actions\DeleteBulkAction;
-use App\Filament\App\Resources\FamilyEventResource\Pages\ListFamilyEvents;
 use App\Filament\App\Resources\FamilyEventResource\Pages\CreateFamilyEvent;
 use App\Filament\App\Resources\FamilyEventResource\Pages\EditFamilyEvent;
-use UnitEnum;
-use BackedEnum;
-use App\Filament\App\Resources\FamilyEventResource\Pages;
+use App\Filament\App\Resources\FamilyEventResource\Pages\ListFamilyEvents;
 use App\Models\FamilyEvent;
-use Filament\Forms;
-use Filament\Forms\Form;
-use App\Filament\App\Resources\AppResource;
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteBulkAction;
+use Filament\Actions\EditAction;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Schema;
-use Filament\Tables;
-use Filament\Actions;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use Override;
 
 class FamilyEventResource extends AppResource
 {
-    #[\Override]
+    #[Override]
     protected static ?string $model = FamilyEvent::class;
 
-    #[\Override]
+    #[Override]
     protected static ?string $navigationLabel = 'Family Events';
 
-    #[\Override]
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-calendar';
+    #[Override]
+    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-calendar';
 
-    #[\Override]
-    protected static string | \UnitEnum | null $navigationGroup = '👥 Family Tree';
+    #[Override]
+    protected static string|\UnitEnum|null $navigationGroup = '👥 Family Tree';
 
     #[Override]
     public static function form(Schema $schema): Schema
@@ -48,8 +40,8 @@ class FamilyEventResource extends AppResource
         return $schema
             ->components([
                 TextInput::make('family_id')
-                ->required()
-                ->numeric(),
+                    ->required()
+                    ->numeric(),
                 TextInput::make('places_id')
                     ->numeric(),
                 Textarea::make('date')
@@ -66,6 +58,7 @@ class FamilyEventResource extends AppResource
                         if ($record && $record->title && ! array_key_exists($record->title, $options)) {
                             $options[$record->title] = $record->title;
                         }
+
                         return $options;
                     })
                     ->searchable(),
@@ -179,13 +172,13 @@ class FamilyEventResource extends AppResource
         ];
     }
 
-    #[\Override]
+    #[Override]
     public static function getPages(): array
     {
         return [
-            'index'  => ListFamilyEvents::route('/'),
+            'index' => ListFamilyEvents::route('/'),
             'create' => CreateFamilyEvent::route('/create'),
-            'edit'   => EditFamilyEvent::route('/{record}/edit'),
+            'edit' => EditFamilyEvent::route('/{record}/edit'),
         ];
     }
 }

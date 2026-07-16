@@ -16,13 +16,13 @@ class SourceCompletenessReport extends Page
     protected static ?string $title = 'Source Completeness';
 
     #[\Override]
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-document-check';
+    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-document-check';
 
     #[\Override]
     protected static ?string $navigationLabel = 'Source Completeness';
 
     #[\Override]
-    protected static string | \UnitEnum | null $navigationGroup = '📄 Reports';
+    protected static string|\UnitEnum|null $navigationGroup = '📄 Reports';
 
     /**
      * Source-coverage stats for the current tenant.

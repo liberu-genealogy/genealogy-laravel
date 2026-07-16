@@ -10,8 +10,8 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class PersonPhoto extends Model
 {
-    use HasFactory;
     use BelongsToTenant;
+    use HasFactory;
 
     #[\Override]
     protected $fillable = [
@@ -64,6 +64,6 @@ class PersonPhoto extends Model
 
     public function getUrlAttribute(): string
     {
-        return asset('storage/' . $this->file_path);
+        return asset('storage/'.$this->file_path);
     }
 }

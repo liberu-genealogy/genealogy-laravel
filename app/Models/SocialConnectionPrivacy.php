@@ -57,7 +57,7 @@ class SocialConnectionPrivacy extends Model
     public function blockUser(int $userId): void
     {
         $blockedUsers = $this->blocked_users ?? [];
-        if (!in_array($userId, $blockedUsers)) {
+        if (! in_array($userId, $blockedUsers)) {
             $blockedUsers[] = $userId;
             $this->blocked_users = $blockedUsers;
             $this->save();
@@ -70,7 +70,7 @@ class SocialConnectionPrivacy extends Model
     public function unblockUser(int $userId): void
     {
         $blockedUsers = $this->blocked_users ?? [];
-        $this->blocked_users = array_values(array_filter($blockedUsers, fn($id): bool => $id !== $userId));
+        $this->blocked_users = array_values(array_filter($blockedUsers, fn ($id): bool => $id !== $userId));
         $this->save();
     }
 }

@@ -2,9 +2,15 @@
 
 namespace App\Providers;
 
-use Illuminate\Support\ServiceProvider;
+use App\Models\Family;
+use App\Models\Person;
+use FamilyTree365\LaravelGedcom\Commands\GedcomExporter;
+use FamilyTree365\LaravelGedcom\Commands\GedcomImporter;
+use FamilyTree365\LaravelGedcom\Commands\GedcomXImporter;
+use FamilyTree365\LaravelGedcom\Commands\GedcomXImporterOptimized;
 use FamilyTree365\LaravelGedcom\Utils\GedcomParser;
 use FamilyTree365\LaravelGedcom\Utils\GedcomXParser;
+use Illuminate\Support\ServiceProvider;
 
 /**
  * Replaces the vendor's FamilyTree365\LaravelGedcom\ServiceProvider so that the
@@ -18,10 +24,10 @@ class LaravelGedcomServiceProvider extends ServiceProvider
     {
         if ($this->app->runningInConsole()) {
             $this->commands([
-                \FamilyTree365\LaravelGedcom\Commands\GedcomImporter::class,
-                \FamilyTree365\LaravelGedcom\Commands\GedcomExporter::class,
-                \FamilyTree365\LaravelGedcom\Commands\GedcomXImporter::class,
-                \FamilyTree365\LaravelGedcom\Commands\GedcomXImporterOptimized::class,
+                GedcomImporter::class,
+                GedcomExporter::class,
+                GedcomXImporter::class,
+                GedcomXImporterOptimized::class,
             ]);
         }
 
@@ -33,8 +39,8 @@ class LaravelGedcomServiceProvider extends ServiceProvider
     #[\Override]
     public function register(): void
     {
-        $this->app->singleton('gedcom-parser', fn($app): \FamilyTree365\LaravelGedcom\Utils\GedcomParser => new GedcomParser());
-        $this->app->singleton('gedcomx-parser', fn($app): \FamilyTree365\LaravelGedcom\Utils\GedcomXParser => new GedcomXParser());
+        $this->app->singleton('gedcom-parser', fn ($app): GedcomParser => new GedcomParser);
+        $this->app->singleton('gedcomx-parser', fn ($app): GedcomXParser => new GedcomXParser);
         $this->app->alias('gedcom-parser', 'GedcomParser');
         $this->app->alias('gedcomx-parser', 'GedcomXParser');
 
@@ -43,11 +49,11 @@ class LaravelGedcomServiceProvider extends ServiceProvider
         // type_id handling) when it calls app(Family::class) / app(Person::class).
         $this->app->bind(
             \FamilyTree365\LaravelGedcom\Models\Family::class,
-            \App\Models\Family::class,
+            Family::class,
         );
         $this->app->bind(
             \FamilyTree365\LaravelGedcom\Models\Person::class,
-            \App\Models\Person::class,
+            Person::class,
         );
     }
 }

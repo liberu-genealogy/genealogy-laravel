@@ -2,11 +2,11 @@
 
 namespace App\Modules\Sources;
 
-use App\Modules\Sources\Services\SourcesService;
+use App\Modules\BaseModule;
 use App\Modules\Sources\Services\CitationService;
 use App\Modules\Sources\Services\RepositoryService;
+use App\Modules\Sources\Services\SourcesService;
 use Artisan;
-use App\Modules\BaseModule;
 
 class SourcesModule extends BaseModule
 {
@@ -44,11 +44,11 @@ class SourcesModule extends BaseModule
      */
     protected function registerSourcesServices(): void
     {
-        app()->singleton('genealogy.sources', fn($app) => new SourcesService());
+        app()->singleton('genealogy.sources', fn ($app) => new SourcesService);
 
-        app()->singleton('genealogy.citations', fn($app) => new CitationService());
+        app()->singleton('genealogy.citations', fn ($app) => new CitationService);
 
-        app()->singleton('genealogy.repositories', fn($app) => new RepositoryService());
+        app()->singleton('genealogy.repositories', fn ($app) => new RepositoryService);
     }
 
     /**

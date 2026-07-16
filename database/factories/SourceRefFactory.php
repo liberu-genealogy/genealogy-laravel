@@ -7,7 +7,7 @@ use App\Models\SourceRef;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\SourceRef>
+ * @extends Factory<SourceRef>
  */
 class SourceRefFactory extends Factory
 {
@@ -27,12 +27,12 @@ class SourceRefFactory extends Factory
     public function definition()
     {
         return [
-            'group'   => fake()->word(),
-            'gid'     => fake()->randomDigit(),
+            'group' => fake()->word(),
+            'gid' => fake()->randomDigit(),
             'sour_id' => Source::create()->id,
-            'text'    => fake()->word(),
-            'quay'    => fake()->word(),
-            'page'    => fake()->word(),
+            'text' => fake()->word(),
+            'quay' => fake()->word(),
+            'page' => fake()->word(),
         ];
     }
 }

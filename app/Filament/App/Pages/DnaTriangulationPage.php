@@ -8,9 +8,9 @@ use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
-use Filament\Schemas\Schema;
 use Filament\Notifications\Notification;
 use Filament\Pages\Page;
+use Filament\Schemas\Schema;
 use Illuminate\Support\Facades\Auth;
 
 class DnaTriangulationPage extends Page implements HasForms
@@ -33,6 +33,7 @@ class DnaTriangulationPage extends Page implements HasForms
     protected static ?int $navigationSort = 3;
 
     public ?array $data = [];
+
     public ?array $results = null;
 
     #[\Override]
@@ -41,6 +42,7 @@ class DnaTriangulationPage extends Page implements HasForms
         if (config('premium.enabled')) {
             return true;
         }
+
         return auth()->user()?->isPremium() ?? false;
     }
 

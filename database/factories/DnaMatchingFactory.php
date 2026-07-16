@@ -5,10 +5,11 @@ declare(strict_types=1);
 namespace Database\Factories;
 
 use App\Models\DnaMatching;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\DnaMatching>
+ * @extends Factory<DnaMatching>
  */
 class DnaMatchingFactory extends Factory
 {
@@ -28,8 +29,8 @@ class DnaMatchingFactory extends Factory
     public function definition()
     {
         return [
-            'user_id' => \App\Models\User::factory(),
-            'match_id' => \App\Models\User::factory(),
+            'user_id' => User::factory(),
+            'match_id' => User::factory(),
             'match_name' => $this->faker->name,
             'file1' => 'dna-test-files/file1.txt',
             'file2' => 'dna-test-files/file2.txt',

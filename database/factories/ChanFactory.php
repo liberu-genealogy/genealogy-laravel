@@ -8,7 +8,7 @@ use App\Models\Chan;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Chan>
+ * @extends Factory<Chan>
  */
 class ChanFactory extends Factory
 {
@@ -22,16 +22,14 @@ class ChanFactory extends Factory
 
     /**
      * Define the model's default state.
-     *
-     * @return array
      */
     public function definition(): array
     {
         return [
-            'gid'   => fake()->randomDigit(),
+            'gid' => fake()->randomDigit(),
             'group' => fake()->text(50),
-            'date'  => fake()->date,
-            'time'  => fake()->time,
+            'date' => fake()->date,
+            'time' => fake()->time,
         ];
     }
 }

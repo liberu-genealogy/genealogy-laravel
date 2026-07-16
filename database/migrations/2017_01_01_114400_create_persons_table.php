@@ -22,5 +22,3 @@ class CreatePersonsTable extends Migration
         // No-op.
     }
 }
-
-

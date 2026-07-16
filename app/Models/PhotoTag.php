@@ -9,8 +9,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class PhotoTag extends Model
 {
-    use HasFactory;
     use BelongsToTenant;
+    use HasFactory;
 
     #[\Override]
     protected $fillable = [

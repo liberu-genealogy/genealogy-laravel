@@ -33,19 +33,19 @@ class TreeApiTest extends TestCase
         Tree::factory()->count(2)->create();
 
         $this->getJson('/api/trees')
-             ->assertOk()
-             ->assertJsonStructure(['data']);
+            ->assertOk()
+            ->assertJsonStructure(['data']);
     }
 
     public function test_store_creates_tree(): void
     {
         $response = $this->postJson('/api/trees', [
-            'name'        => 'My Family Tree',
+            'name' => 'My Family Tree',
             'description' => 'A test tree',
         ]);
 
         $response->assertCreated()
-                 ->assertJsonFragment(['name' => 'My Family Tree']);
+            ->assertJsonFragment(['name' => 'My Family Tree']);
 
         $this->assertDatabaseHas('trees', ['name' => 'My Family Tree']);
     }
@@ -53,8 +53,8 @@ class TreeApiTest extends TestCase
     public function test_store_requires_name(): void
     {
         $this->postJson('/api/trees', [])
-             ->assertUnprocessable()
-             ->assertJsonValidationErrors(['name']);
+            ->assertUnprocessable()
+            ->assertJsonValidationErrors(['name']);
     }
 
     public function test_show_returns_tree(): void
@@ -62,8 +62,8 @@ class TreeApiTest extends TestCase
         $tree = Tree::factory()->create();
 
         $this->getJson("/api/trees/{$tree->id}")
-             ->assertOk()
-             ->assertJsonFragment(['id' => $tree->id]);
+            ->assertOk()
+            ->assertJsonFragment(['id' => $tree->id]);
     }
 
     public function test_update_modifies_tree(): void
@@ -71,8 +71,8 @@ class TreeApiTest extends TestCase
         $tree = Tree::factory()->create(['name' => 'Original']);
 
         $this->putJson("/api/trees/{$tree->id}", ['name' => 'Updated'])
-             ->assertOk()
-             ->assertJsonFragment(['name' => 'Updated']);
+            ->assertOk()
+            ->assertJsonFragment(['name' => 'Updated']);
     }
 
     public function test_destroy_deletes_tree(): void
@@ -89,7 +89,7 @@ class TreeApiTest extends TestCase
         $tree = Tree::factory()->create();
 
         $this->getJson("/api/trees/{$tree->id}/statistics")
-             ->assertOk()
-             ->assertJsonStructure(['people_count', 'families_count']);
+            ->assertOk()
+            ->assertJsonStructure(['people_count', 'families_count']);
     }
 }

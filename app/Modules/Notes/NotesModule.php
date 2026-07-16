@@ -2,9 +2,9 @@
 
 namespace App\Modules\Notes;
 
+use App\Modules\BaseModule;
 use App\Modules\Notes\Services\NotesService;
 use Artisan;
-use App\Modules\BaseModule;
 
 class NotesModule extends BaseModule
 {
@@ -41,7 +41,7 @@ class NotesModule extends BaseModule
      */
     protected function registerNotesServices(): void
     {
-        app()->singleton('genealogy.notes', fn($app) => new NotesService());
+        app()->singleton('genealogy.notes', fn ($app) => new NotesService);
     }
 
     /**

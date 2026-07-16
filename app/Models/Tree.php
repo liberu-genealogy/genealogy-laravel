@@ -2,17 +2,17 @@
 
 namespace App\Models;
 
+use App\Modules\Tree\Services\TreeBuilderService;
 use App\Traits\BelongsToTenant;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Tree extends Model
 {
-    use HasFactory;
     use BelongsToTenant;
+    use HasFactory;
 
     /**
      * @var array
@@ -81,7 +81,7 @@ class Tree extends Model
      */
     public function getStats(): array
     {
-        if (!$this->rootPerson) {
+        if (! $this->rootPerson) {
             return [
                 'total_people' => 0,
                 'total_ancestors' => 0,
@@ -90,11 +90,11 @@ class Tree extends Model
             ];
         }
 
-        $treeService = app(\App\Modules\Tree\Services\TreeBuilderService::class);
-        
+        $treeService = app(TreeBuilderService::class);
+
         $ancestors = $treeService->getAllAncestors($this->rootPerson);
         $descendants = $treeService->getAllDescendants($this->rootPerson);
-        
+
         // Calculate total unique people
         $allPeople = collect([$this->rootPerson])
             ->merge($ancestors)
@@ -114,18 +114,18 @@ class Tree extends Model
      */
     private function calculateTreeDepth(): int
     {
-        if (!$this->rootPerson) {
+        if (! $this->rootPerson) {
             return 0;
         }
 
-        $treeService = app(\App\Modules\Tree\Services\TreeBuilderService::class);
-        
+        $treeService = app(TreeBuilderService::class);
+
         // Get max ancestor depth
         $maxAncestorDepth = $this->getAncestorDepth($this->rootPerson);
-        
+
         // Get max descendant depth
         $maxDescendantDepth = $this->getDescendantDepth($this->rootPerson);
-        
+
         return $maxAncestorDepth + $maxDescendantDepth;
     }
 
@@ -134,7 +134,7 @@ class Tree extends Model
      */
     private function getAncestorDepth(Person $person, int $depth = 0): int
     {
-        if (!$person->childInFamily) {
+        if (! $person->childInFamily) {
             return $depth;
         }
 
@@ -157,7 +157,7 @@ class Tree extends Model
     private function getDescendantDepth(Person $person, int $depth = 0): int
     {
         $families = $person->familiesAsHusband->merge($person->familiesAsWife);
-        
+
         if ($families->isEmpty()) {
             return $depth;
         }
@@ -166,7 +166,7 @@ class Tree extends Model
 
         foreach ($families as $family) {
             $children = Person::where('child_in_family_id', $family->id)->get();
-            
+
             foreach ($children as $child) {
                 $maxDepth = max($maxDepth, $this->getDescendantDepth($child, $depth + 1));
             }

@@ -8,7 +8,7 @@ use App\Models\Author;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Author>
+ * @extends Factory<Author>
  */
 class AuthorFactory extends Factory
 {
@@ -28,9 +28,9 @@ class AuthorFactory extends Factory
     public function definition()
     {
         return [
-            'name'        => fake()->name,
+            'name' => fake()->name,
             'description' => fake()->text(50),
-            'is_active'   => 1,
+            'is_active' => 1,
         ];
     }
 }

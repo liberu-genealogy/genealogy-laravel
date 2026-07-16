@@ -22,10 +22,10 @@ use Illuminate\Support\Facades\Storage;
 class AdvancedDnaMatchingService
 {
     public function __construct(
-        private RawDnaParser $parser = new RawDnaParser(),
-        private SegmentMatcher $matcher = new SegmentMatcher(),
-        private RelationshipEstimator $estimator = new RelationshipEstimator(),
-        private DnaFileVault $vault = new DnaFileVault(),
+        private RawDnaParser $parser = new RawDnaParser,
+        private SegmentMatcher $matcher = new SegmentMatcher,
+        private RelationshipEstimator $estimator = new RelationshipEstimator,
+        private DnaFileVault $vault = new DnaFileVault,
     ) {}
 
     /**
@@ -43,27 +43,27 @@ class AdvancedDnaMatchingService
                 throw new \RuntimeException('DNA kit data unavailable for matching');
             }
 
-            $match        = $this->matcher->match($kit1, $kit2);
+            $match = $this->matcher->match($kit1, $kit2);
             $relationship = $this->estimator->estimate($match['total_shared_cm']);
 
             return [
-                'total_cms'              => $match['total_shared_cm'],
-                'largest_cm'             => $match['largest_cm_segment'],
+                'total_cms' => $match['total_shared_cm'],
+                'largest_cm' => $match['largest_cm_segment'],
                 // The dna_matchings.confidence_level column is a double, so map the
                 // estimator's categorical confidence to a numeric score here; the
                 // categorical label is preserved in detailed_report.
-                'confidence_level'       => $this->confidenceScore($relationship['confidence_level']),
+                'confidence_level' => $this->confidenceScore($relationship['confidence_level']),
                 'predicted_relationship' => $relationship['predicted_relationship'],
-                'shared_segments_count'  => $match['shared_segments_count'],
-                'match_quality_score'    => $relationship['match_quality_score'],
-                'detailed_report'        => $this->detailedReport($match, $relationship),
-                'chromosome_breakdown'   => $this->chromosomeBreakdown($match['shared_segments']),
-                'ibd_segments'           => $match['shared_segments'],
+                'shared_segments_count' => $match['shared_segments_count'],
+                'match_quality_score' => $relationship['match_quality_score'],
+                'detailed_report' => $this->detailedReport($match, $relationship),
+                'chromosome_breakdown' => $this->chromosomeBreakdown($match['shared_segments']),
+                'ibd_segments' => $match['shared_segments'],
             ];
         } catch (\Throwable $e) {
             // Throwable, not Exception: keep any lower-level parse/IO error from
             // aborting the job — degrade to the basic (no-match) fallback.
-            Log::error('Advanced DNA matching failed: ' . $e->getMessage());
+            Log::error('Advanced DNA matching failed: '.$e->getMessage());
 
             return $this->performBasicMatching();
         }
@@ -104,7 +104,7 @@ class AdvancedDnaMatchingService
             $chr = $seg['chromosome'];
             $breakdown[$chr] ??= ['segment_count' => 0, 'total_cm' => 0.0, 'largest_segment' => 0.0];
             $breakdown[$chr]['segment_count']++;
-            $breakdown[$chr]['total_cm']        = round($breakdown[$chr]['total_cm'] + $seg['cm'], 2);
+            $breakdown[$chr]['total_cm'] = round($breakdown[$chr]['total_cm'] + $seg['cm'], 2);
             $breakdown[$chr]['largest_segment'] = max($breakdown[$chr]['largest_segment'], $seg['cm']);
         }
 
@@ -119,17 +119,17 @@ class AdvancedDnaMatchingService
     protected function detailedReport(array $match, array $relationship): array
     {
         return [
-            'analysis_date'          => now()->toISOString(),
-            'total_shared_cm'        => $match['total_shared_cm'],
-            'largest_segment_cm'     => $match['largest_cm_segment'],
-            'shared_segments'        => $match['shared_segments_count'],
-            'total_matching_snps'    => $match['total_matching_snps'],
+            'analysis_date' => now()->toISOString(),
+            'total_shared_cm' => $match['total_shared_cm'],
+            'largest_segment_cm' => $match['largest_cm_segment'],
+            'shared_segments' => $match['shared_segments_count'],
+            'total_matching_snps' => $match['total_matching_snps'],
             'predicted_relationship' => $relationship['predicted_relationship'],
-            'confidence_level'       => $relationship['confidence_level'],
-            'match_quality_score'    => $relationship['match_quality_score'],
-            'analysis_notes'         => [
+            'confidence_level' => $relationship['confidence_level'],
+            'match_quality_score' => $relationship['match_quality_score'],
+            'analysis_notes' => [
                 'cM is estimated from physical distance (~1 cM/Mb); a real genetic '
-                . 'recombination map is the upgrade path (see SegmentMatcher).',
+                .'recombination map is the upgrade path (see SegmentMatcher).',
             ],
         ];
     }
@@ -142,9 +142,9 @@ class AdvancedDnaMatchingService
     {
         return match ($confidence) {
             'very_high' => 95.0,
-            'high'      => 80.0,
-            'medium'    => 60.0,
-            default     => 30.0,
+            'high' => 80.0,
+            'medium' => 60.0,
+            default => 30.0,
         };
     }
 
@@ -157,18 +157,18 @@ class AdvancedDnaMatchingService
     protected function performBasicMatching(): array
     {
         return [
-            'total_cms'              => 0.0,
-            'largest_cm'             => 0.0,
-            'confidence_level'       => 0.0,
+            'total_cms' => 0.0,
+            'largest_cm' => 0.0,
+            'confidence_level' => 0.0,
             'predicted_relationship' => 'Unknown (Basic Analysis)',
-            'shared_segments_count'  => 0,
-            'match_quality_score'    => 0.0,
-            'detailed_report'        => [
-                'analysis_date'  => now()->toISOString(),
+            'shared_segments_count' => 0,
+            'match_quality_score' => 0.0,
+            'detailed_report' => [
+                'analysis_date' => now()->toISOString(),
                 'analysis_notes' => ['Basic analysis: DNA kit data could not be read for segment matching.'],
             ],
-            'chromosome_breakdown'   => [],
-            'ibd_segments'           => [],
+            'chromosome_breakdown' => [],
+            'ibd_segments' => [],
         ];
     }
 
@@ -197,14 +197,14 @@ class AdvancedDnaMatchingService
     protected function processBatch(array $batch): array
     {
         $results = [];
-        $count   = count($batch);
+        $count = count($batch);
 
         for ($i = 0; $i < $count; $i++) {
             for ($j = $i + 1; $j < $count; $j++) {
                 $results[] = [
-                    'kit1_id'       => $batch[$i]['id'],
-                    'kit2_id'       => $batch[$j]['id'],
-                    'match_result'  => $this->performAdvancedMatching(
+                    'kit1_id' => $batch[$i]['id'],
+                    'kit2_id' => $batch[$j]['id'],
+                    'match_result' => $this->performAdvancedMatching(
                         $batch[$i]['variable_name'],
                         $batch[$i]['file_name'],
                         $batch[$j]['variable_name'],

@@ -12,11 +12,11 @@ class TeamsPermission
     /**
      * Handle an incoming request.
      *
-     * @param Closure(Request):Response $next
+     * @param  Closure(Request):Response  $next
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (!empty($user = auth()->user()) && !empty($user->current_team_id)) {
+        if (! empty($user = auth()->user()) && ! empty($user->current_team_id)) {
             app(PermissionRegistrar::class)->setPermissionsTeamId($user->current_team_id);
         }
 

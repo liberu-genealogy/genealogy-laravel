@@ -63,28 +63,28 @@ class ModuleServiceProvider extends ServiceProvider
             $this->app->register($providerClass);
         }
 
-        $configPath = $modulePath . '/config';
+        $configPath = $modulePath.'/config';
         if (File::exists($configPath)) {
             foreach (File::files($configPath) as $configFile) {
-                $key = Str::snake($moduleName) . '.' . $configFile->getFilenameWithoutExtension();
+                $key = Str::snake($moduleName).'.'.$configFile->getFilenameWithoutExtension();
                 $this->mergeConfigFrom($configFile->getPathname(), $key);
             }
         }
 
         // Migrations are always registered so `artisan migrate` works unconditionally.
-        $this->loadMigrationsFrom($modulePath . '/database/migrations');
+        $this->loadMigrationsFrom($modulePath.'/database/migrations');
     }
 
     protected function registerModuleRoutes(string $moduleName, string $modulePath): void
     {
-        $routesPath = $modulePath . '/routes';
+        $routesPath = $modulePath.'/routes';
 
         if (! File::exists($routesPath)) {
             return;
         }
 
         foreach (['web.php', 'api.php', 'admin.php'] as $routeFile) {
-            $fullPath = $routesPath . '/' . $routeFile;
+            $fullPath = $routesPath.'/'.$routeFile;
             if (File::exists($fullPath)) {
                 $this->loadRoutesFrom($fullPath);
             }
@@ -105,19 +105,19 @@ class ModuleServiceProvider extends ServiceProvider
 
     protected function bootModule(string $moduleName, string $modulePath): void
     {
-        $assetsPath = $modulePath . '/resources/assets';
+        $assetsPath = $modulePath.'/resources/assets';
         if (File::exists($assetsPath)) {
             $this->publishes([
                 $assetsPath => public_path("modules/{$moduleName}"),
-            ], Str::snake($moduleName) . '-assets');
+            ], Str::snake($moduleName).'-assets');
         }
 
-        $configPath = $modulePath . '/config';
+        $configPath = $modulePath.'/config';
         if (File::exists($configPath)) {
             foreach (File::files($configPath) as $configFile) {
                 $this->publishes([
-                    $configFile->getPathname() => config_path(Str::snake($moduleName) . '.' . $configFile->getFilename()),
-                ], Str::snake($moduleName) . '-config');
+                    $configFile->getPathname() => config_path(Str::snake($moduleName).'.'.$configFile->getFilename()),
+                ], Str::snake($moduleName).'-config');
             }
         }
 
@@ -129,12 +129,12 @@ class ModuleServiceProvider extends ServiceProvider
 
         $this->registerModuleRoutes($moduleName, $modulePath);
 
-        $viewsPath = $modulePath . '/resources/views';
+        $viewsPath = $modulePath.'/resources/views';
         if (File::exists($viewsPath)) {
             $this->loadViewsFrom($viewsPath, Str::snake($moduleName));
         }
 
-        $langPath = $modulePath . '/resources/lang';
+        $langPath = $modulePath.'/resources/lang';
         if (File::exists($langPath)) {
             $this->loadTranslationsFrom($langPath, Str::snake($moduleName));
         }

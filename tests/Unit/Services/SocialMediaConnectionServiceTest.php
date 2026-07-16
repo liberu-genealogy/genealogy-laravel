@@ -19,10 +19,10 @@ class SocialMediaConnectionServiceTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
-        $this->service = new SocialMediaConnectionService();
+        $this->service = new SocialMediaConnectionService;
     }
 
-    public function testEnableFamilyMatching(): void
+    public function test_enable_family_matching(): void
     {
         $user = User::factory()->create();
         $account = ConnectedAccount::factory()->create([
@@ -37,7 +37,7 @@ class SocialMediaConnectionServiceTest extends TestCase
         $this->assertNotNull($account->fresh()->last_synced_at);
     }
 
-    public function testDisableFamilyMatching(): void
+    public function test_disable_family_matching(): void
     {
         $user = User::factory()->create();
         $account = ConnectedAccount::factory()->create([
@@ -54,7 +54,7 @@ class SocialMediaConnectionServiceTest extends TestCase
         $this->assertNull($account->fresh()->last_synced_at);
     }
 
-    public function testGetOrCreatePrivacySettings(): void
+    public function test_get_or_create_privacy_settings(): void
     {
         $user = User::factory()->create();
 
@@ -65,7 +65,7 @@ class SocialMediaConnectionServiceTest extends TestCase
         $this->assertTrue($privacy->allow_family_discovery);
     }
 
-    public function testUpdatePrivacySettings(): void
+    public function test_update_privacy_settings(): void
     {
         $user = User::factory()->create();
 
@@ -78,7 +78,7 @@ class SocialMediaConnectionServiceTest extends TestCase
         $this->assertTrue($privacy->share_tree_with_matches);
     }
 
-    public function testNeedsSyncReturnsTrueWhenNeverSynced(): void
+    public function test_needs_sync_returns_true_when_never_synced(): void
     {
         $user = User::factory()->create();
         $account = ConnectedAccount::factory()->create([
@@ -92,7 +92,7 @@ class SocialMediaConnectionServiceTest extends TestCase
         $this->assertTrue($result);
     }
 
-    public function testNeedsSyncReturnsFalseWhenRecentlySynced(): void
+    public function test_needs_sync_returns_false_when_recently_synced(): void
     {
         $user = User::factory()->create();
         $account = ConnectedAccount::factory()->create([
@@ -106,7 +106,7 @@ class SocialMediaConnectionServiceTest extends TestCase
         $this->assertFalse($result);
     }
 
-    public function testNeedsSyncReturnsTrueWhenOldSync(): void
+    public function test_needs_sync_returns_true_when_old_sync(): void
     {
         $user = User::factory()->create();
         $account = ConnectedAccount::factory()->create([
@@ -120,7 +120,7 @@ class SocialMediaConnectionServiceTest extends TestCase
         $this->assertTrue($result);
     }
 
-    public function testSyncAccountData(): void
+    public function test_sync_account_data(): void
     {
         $user = User::factory()->create();
         $account = ConnectedAccount::factory()->create([
@@ -137,7 +137,7 @@ class SocialMediaConnectionServiceTest extends TestCase
         $this->assertNotNull($account->fresh()->last_synced_at);
     }
 
-    public function testDisconnectAccount(): void
+    public function test_disconnect_account(): void
     {
         $user = User::factory()->create();
         $account = ConnectedAccount::factory()->create([

@@ -3,7 +3,6 @@
 namespace Tests\Feature\Filament\Resources;
 
 use App\Filament\App\Resources\ImportJobResource;
-use App\Filament\App\Resources\ImportJobResource\Pages\ListImportJobs;
 use App\Models\ImportJob;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;

@@ -16,16 +16,17 @@ class SocialMediaConnectionService
     {
         try {
             $account->update(['enable_family_matching' => true]);
-            
+
             // Trigger initial sync
             $this->syncAccountData($account);
-            
+
             return true;
         } catch (\Exception $e) {
             Log::error('Failed to enable family matching', [
                 'account_id' => $account->id,
                 'error' => $e->getMessage(),
             ]);
+
             return false;
         }
     }
@@ -41,13 +42,14 @@ class SocialMediaConnectionService
                 'cached_profile_data' => null,
                 'last_synced_at' => null,
             ]);
-            
+
             return true;
         } catch (\Exception $e) {
             Log::error('Failed to disable family matching', [
                 'account_id' => $account->id,
                 'error' => $e->getMessage(),
             ]);
+
             return false;
         }
     }
@@ -57,19 +59,19 @@ class SocialMediaConnectionService
      */
     public function syncAccountData(ConnectedAccount $account): bool
     {
-        if (!$account->enable_family_matching) {
+        if (! $account->enable_family_matching) {
             return false;
         }
 
         try {
             // Get fresh data from the provider
             $profileData = $this->fetchProfileData($account);
-            
+
             $account->update([
                 'cached_profile_data' => $profileData,
                 'last_synced_at' => now(),
             ]);
-            
+
             return true;
         } catch (\Exception $e) {
             Log::error('Failed to sync account data', [
@@ -77,6 +79,7 @@ class SocialMediaConnectionService
                 'provider' => $account->provider,
                 'error' => $e->getMessage(),
             ]);
+
             return false;
         }
     }
@@ -121,7 +124,7 @@ class SocialMediaConnectionService
     {
         $privacy = $this->getOrCreatePrivacySettings($user);
         $privacy->update($settings);
-        
+
         return $privacy;
     }
 
@@ -130,11 +133,11 @@ class SocialMediaConnectionService
      */
     public function needsSync(ConnectedAccount $account): bool
     {
-        if (!$account->enable_family_matching) {
+        if (! $account->enable_family_matching) {
             return false;
         }
 
-        if (!$account->last_synced_at) {
+        if (! $account->last_synced_at) {
             return true;
         }
 
@@ -150,16 +153,17 @@ class SocialMediaConnectionService
         try {
             // Delete related family connections
             $account->socialFamilyConnections()->delete();
-            
+
             // Delete the account
             $account->delete();
-            
+
             return true;
         } catch (\Exception $e) {
             Log::error('Failed to disconnect account', [
                 'account_id' => $account->id,
                 'error' => $e->getMessage(),
             ]);
+
             return false;
         }
     }

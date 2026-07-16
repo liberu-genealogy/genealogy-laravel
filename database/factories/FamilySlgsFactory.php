@@ -7,7 +7,7 @@ use App\Models\FamilySlgs;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\FamilySlgs>
+ * @extends Factory<FamilySlgs>
  */
 class FamilySlgsFactory extends Factory
 {
@@ -21,17 +21,15 @@ class FamilySlgsFactory extends Factory
 
     /**
      * Define the model's default state.
-     *
-     * @return array
      */
     public function definition(): array
     {
         return [
             'family_id' => Family::create()->id,
-            'stat'      => fake()->word(),
-            'date'      => fake()->date,
-            'plac'      => fake()->word(),
-            'temp'      => fake()->word(),
+            'stat' => fake()->word(),
+            'date' => fake()->date,
+            'plac' => fake()->word(),
+            'temp' => fake()->word(),
         ];
     }
 }

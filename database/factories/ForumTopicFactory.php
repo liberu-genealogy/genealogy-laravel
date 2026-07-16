@@ -7,7 +7,7 @@ use App\Models\ForumTopic;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\ForumTopic>
+ * @extends Factory<ForumTopic>
  */
 class ForumTopicFactory extends Factory
 {

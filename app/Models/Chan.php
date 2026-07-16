@@ -9,8 +9,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Chan extends Model
 {
-    use HasFactory;
     use BelongsToTenant;
+    use HasFactory;
 
     /**
      * The "type" of the auto-incrementing ID.

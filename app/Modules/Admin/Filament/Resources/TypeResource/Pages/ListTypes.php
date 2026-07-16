@@ -4,9 +4,8 @@ declare(strict_types=1);
 
 namespace App\Modules\Admin\Filament\Resources\TypeResource\Pages;
 
-use Filament\Actions\CreateAction;
 use App\Modules\Admin\Filament\Resources\TypeResource;
-use Filament\Actions;
+use Filament\Actions\CreateAction;
 use Filament\Resources\Pages\ListRecords;
 
 class ListTypes extends ListRecords

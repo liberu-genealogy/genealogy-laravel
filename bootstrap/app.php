@@ -1,11 +1,14 @@
 <?php
 
+use App\Http\Middleware\SecurityHeaders;
+use Filament\Forms\Form;
+use Filament\Schemas\Schema;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
 
-if (! class_exists(\Filament\Forms\Form::class) && class_exists(\Filament\Schemas\Schema::class)) {
-    class_alias(\Filament\Schemas\Schema::class, \Filament\Forms\Form::class);
+if (! class_exists(Form::class) && class_exists(Schema::class)) {
+    class_alias(Schema::class, Form::class);
 }
 
 return Application::configure(basePath: dirname(__DIR__))
@@ -16,7 +19,7 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware) {
-        $middleware->append(\App\Http\Middleware\SecurityHeaders::class);
+        $middleware->append(SecurityHeaders::class);
         $middleware->validateCsrfTokens(except: [
             'stripe/*',
         ]);

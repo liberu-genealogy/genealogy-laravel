@@ -1,10 +1,12 @@
 <?php
 
+use App\Models\Team;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class () extends Migration {
+return new class extends Migration
+{
     public function up(): void
     {
         Schema::table('importjobs', function (Blueprint $table): void {
@@ -15,7 +17,7 @@ return new class () extends Migration {
     public function down(): void
     {
         Schema::table('importjobs', function (Blueprint $table): void {
-            $table->dropForeignIdFor(\App\Models\Team::class);
+            $table->dropForeignIdFor(Team::class);
             $table->dropColumn('team_id');
         });
     }

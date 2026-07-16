@@ -2,9 +2,11 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration {
+return new class extends Migration
+{
     public function up(): void
     {
         Schema::create('ai_match_models', function (Blueprint $table): void {
@@ -15,7 +17,7 @@ return new class extends Migration {
         });
 
         // Seed a default model
-        \Illuminate\Support\Facades\DB::table('ai_match_models')->insert([
+        DB::table('ai_match_models')->insert([
             'name' => 'default',
             'weights' => json_encode([
                 'first_name' => 1.0,

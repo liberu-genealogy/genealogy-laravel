@@ -10,7 +10,7 @@ use App\Models\Type;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Family>
+ * @extends Factory<Family>
  */
 class FamilyFactory extends Factory
 {
@@ -31,13 +31,13 @@ class FamilyFactory extends Factory
     {
         return [
             'description' => fake()->text(),
-            'is_active'   => fake()->boolean(),
-            'husband_id'  => Person::factory(),
-            'wife_id'     => Person::factory(),
-            'type_id'     => Type::factory(),
-            'chan'         => fake()->word(),
-            'nchi'        => (string) fake()->randomDigit(),
-            'rin'         => fake()->word(),
+            'is_active' => fake()->boolean(),
+            'husband_id' => Person::factory(),
+            'wife_id' => Person::factory(),
+            'type_id' => Type::factory(),
+            'chan' => fake()->word(),
+            'nchi' => (string) fake()->randomDigit(),
+            'rin' => fake()->word(),
         ];
     }
 }

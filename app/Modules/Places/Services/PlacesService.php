@@ -3,8 +3,8 @@
 namespace App\Modules\Places\Services;
 
 use App\Models\Place;
-use Illuminate\Support\Collection;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Collection;
 
 class PlacesService
 {
@@ -30,6 +30,7 @@ class PlacesService
     public function updatePlace(Place $place, array $data): Place
     {
         $place->update($data);
+
         return $place->fresh();
     }
 
@@ -71,19 +72,19 @@ class PlacesService
     public function getPlaceHierarchy(Place $place): array
     {
         $hierarchy = [];
-        
+
         if ($place->city) {
             $hierarchy[] = $place->city;
         }
-        
+
         if ($place->state) {
             $hierarchy[] = $place->state;
         }
-        
+
         if ($place->country) {
             $hierarchy[] = $place->country;
         }
-        
+
         return $hierarchy;
     }
 
@@ -98,7 +99,7 @@ class PlacesService
             $place->state,
             $place->country,
         ]);
-        
+
         return implode(', ', $parts);
     }
 
@@ -110,7 +111,7 @@ class PlacesService
         // Using Haversine formula for distance calculation
         return Place::whereNotNull('latitude')
             ->whereNotNull('longitude')
-            ->selectRaw('*, (6371 * acos(cos(radians(?)) * cos(radians(latitude)) * cos(radians(longitude) - radians(?)) + sin(radians(?)) * sin(radians(latitude)))) AS distance', 
+            ->selectRaw('*, (6371 * acos(cos(radians(?)) * cos(radians(latitude)) * cos(radians(longitude) - radians(?)) + sin(radians(?)) * sin(radians(latitude)))) AS distance',
                 [$latitude, $longitude, $latitude])
             ->having('distance', '<', $radiusKm)
             ->orderBy('distance')
@@ -126,11 +127,11 @@ class PlacesService
         $withCoordinates = Place::whereNotNull('latitude')
             ->whereNotNull('longitude')
             ->count();
-        
+
         $countries = Place::whereNotNull('country')
             ->distinct('country')
             ->count('country');
-            
+
         return [
             'total_places' => $total,
             'with_coordinates' => $withCoordinates,
@@ -160,7 +161,7 @@ class PlacesService
         // Basic standardization - can be enhanced
         $parts = array_map(trim(...), explode(',', $placeName));
         $parts = array_filter($parts);
-        
+
         return implode(', ', $parts);
     }
 
@@ -171,18 +172,18 @@ class PlacesService
     {
         // Update references to use primary place
         // This would need to be implemented based on actual relationships
-        
+
         // Merge coordinates if primary doesn't have them
-        if (!$primaryPlace->latitude && $duplicatePlace->latitude) {
+        if (! $primaryPlace->latitude && $duplicatePlace->latitude) {
             $primaryPlace->latitude = $duplicatePlace->latitude;
             $primaryPlace->longitude = $duplicatePlace->longitude;
         }
-        
+
         $primaryPlace->save();
-        
+
         // Delete duplicate
         $duplicatePlace->delete();
-        
+
         return $primaryPlace;
     }
 

@@ -25,7 +25,7 @@ class UserResource extends Resource
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedUserGroup;
 
     #[\Override]
-    protected static string | UnitEnum | null $navigationGroup = "Administration";
+    protected static string|UnitEnum|null $navigationGroup = 'Administration';
 
     #[\Override]
     protected static ?string $navigationLabel = 'Users';
@@ -75,4 +75,3 @@ class UserResource extends Resource
         return static::getModel()::count();
     }
 }
-

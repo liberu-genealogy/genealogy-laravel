@@ -9,6 +9,8 @@ use App\Traits\BelongsToTenant;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Storage;
 
 // use Laravel\Scout\Searchable;
 // use LaravelLiberu\People\Models\Person as CorePerson;
@@ -138,7 +140,7 @@ class Person extends Model
         return $this->hasMany(Family::class, 'wife_id');
     }
 
-    public function families(): \Illuminate\Support\Collection
+    public function families(): Collection
     {
         return $this->familiesAsHusband->merge($this->familiesAsWife);
     }
@@ -199,7 +201,7 @@ class Person extends Model
         return ($this->pedigree ?? PedigreeType::BIRTH)->label();
     }
 
-    public static function getList(): \Illuminate\Support\Collection
+    public static function getList(): Collection
     {
         $persons = self::get();
         $result = [];
@@ -361,7 +363,7 @@ class Person extends Model
 
         // 2) Look for files in the public storage under predictable paths
         try {
-            $disk = \Illuminate\Support\Facades\Storage::disk('public');
+            $disk = Storage::disk('public');
             $candidates = [
                 "people/{$this->id}.jpg",
                 "people/{$this->id}.jpeg",

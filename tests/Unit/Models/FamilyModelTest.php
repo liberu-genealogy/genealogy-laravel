@@ -15,7 +15,7 @@ class FamilyModelTest extends TestCase
      */
     public function test_type_id_zero_is_converted_to_null(): void
     {
-        $family = new Family();
+        $family = new Family;
         $family->type_id = 0;
 
         $this->assertNull($family->type_id);
@@ -23,7 +23,7 @@ class FamilyModelTest extends TestCase
 
     public function test_type_id_string_zero_is_converted_to_null(): void
     {
-        $family = new Family();
+        $family = new Family;
         $family->type_id = '0';
 
         $this->assertNull($family->type_id);
@@ -31,7 +31,7 @@ class FamilyModelTest extends TestCase
 
     public function test_type_id_null_stays_null(): void
     {
-        $family = new Family();
+        $family = new Family;
         $family->type_id = null;
 
         $this->assertNull($family->type_id);
@@ -39,7 +39,7 @@ class FamilyModelTest extends TestCase
 
     public function test_type_id_valid_value_is_preserved(): void
     {
-        $family = new Family();
+        $family = new Family;
         $family->type_id = 5;
 
         $this->assertSame(5, $family->type_id);
@@ -47,7 +47,7 @@ class FamilyModelTest extends TestCase
 
     public function test_team_id_is_in_fillable(): void
     {
-        $family = new Family();
+        $family = new Family;
 
         $this->assertContains('team_id', $family->getFillable());
     }

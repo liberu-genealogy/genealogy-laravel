@@ -11,9 +11,7 @@ class RecordSuggestionNotification extends Notification implements ShouldQueue
 {
     use Queueable;
 
-    public function __construct(protected int $count)
-    {
-    }
+    public function __construct(protected int $count) {}
 
     /**
      * @return array<int, string>

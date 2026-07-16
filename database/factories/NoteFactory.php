@@ -8,7 +8,7 @@ use App\Models\Type;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Note>
+ * @extends Factory<Note>
  */
 class NoteFactory extends Factory
 {
@@ -28,15 +28,15 @@ class NoteFactory extends Factory
     public function definition()
     {
         return [
-            'group'       => fake()->word(),
-            'gid'         => fake()->randomDigit(),
-            'note'        => fake()->text(),
-            'rin'         => fake()->word(),
-            'name'        => fake()->word(),
-            'date'        => fake()->date(),
+            'group' => fake()->word(),
+            'gid' => fake()->randomDigit(),
+            'note' => fake()->text(),
+            'rin' => fake()->word(),
+            'name' => fake()->word(),
+            'date' => fake()->date(),
             'description' => fake()->text(50),
-            'is_active'   => fake()->randomDigit(),
-            'type_id'     => Type::inRandomOrder()->first()?->id ?? Type::factory()->create()->id,
+            'is_active' => fake()->randomDigit(),
+            'type_id' => Type::inRandomOrder()->first()?->id ?? Type::factory()->create()->id,
         ];
     }
 }

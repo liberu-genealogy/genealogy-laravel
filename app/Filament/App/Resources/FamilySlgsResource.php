@@ -4,40 +4,32 @@ declare(strict_types=1);
 
 namespace App\Filament\App\Resources;
 
-use Override;
-use Filament\Forms\Components\TextInput;
-use Filament\Tables\Columns\TextColumn;
-use Filament\Actions\EditAction;
-use Filament\Actions\BulkActionGroup;
-use Filament\Actions\DeleteBulkAction;
-use App\Filament\App\Resources\FamilySlgsResource\Pages\ListFamilySlgs;
 use App\Filament\App\Resources\FamilySlgsResource\Pages\CreateFamilySlgs;
 use App\Filament\App\Resources\FamilySlgsResource\Pages\EditFamilySlgs;
-use UnitEnum;
-use BackedEnum;
-use App\Filament\App\Resources\FamilySlgsResource\Pages;
+use App\Filament\App\Resources\FamilySlgsResource\Pages\ListFamilySlgs;
 use App\Models\FamilySlgs;
-use Filament\Forms;
-use Filament\Forms\Form;
-use App\Filament\App\Resources\AppResource;
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteBulkAction;
+use Filament\Actions\EditAction;
+use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Schema;
-use Filament\Tables;
-use Filament\Actions;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use Override;
 
 class FamilySlgsResource extends AppResource
 {
-    #[\Override]
+    #[Override]
     protected static ?string $model = FamilySlgs::class;
 
-    #[\Override]
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-link';
+    #[Override]
+    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-link';
 
-    #[\Override]
+    #[Override]
     protected static ?string $navigationLabel = 'Family Slugs';
 
-    #[\Override]
-    protected static string | \UnitEnum | null $navigationGroup = '👥 Family Tree';
+    #[Override]
+    protected static string|\UnitEnum|null $navigationGroup = '👥 Family Tree';
 
     #[Override]
     public static function form(Schema $schema): Schema
@@ -63,8 +55,8 @@ class FamilySlgsResource extends AppResource
         return $table
             ->columns([
                 TextColumn::make('family_id')
-                ->numeric()
-                ->sortable(),
+                    ->numeric()
+                    ->sortable(),
                 TextColumn::make('stat')
                     ->searchable(),
                 TextColumn::make('date')
@@ -103,13 +95,13 @@ class FamilySlgsResource extends AppResource
         ];
     }
 
-    #[\Override]
+    #[Override]
     public static function getPages(): array
     {
         return [
-            'index'  => ListFamilySlgs::route('/'),
+            'index' => ListFamilySlgs::route('/'),
             'create' => CreateFamilySlgs::route('/create'),
-            'edit'   => EditFamilySlgs::route('/{record}/edit'),
+            'edit' => EditFamilySlgs::route('/{record}/edit'),
         ];
     }
 }

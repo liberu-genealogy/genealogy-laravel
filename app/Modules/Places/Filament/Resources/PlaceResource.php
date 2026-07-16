@@ -2,22 +2,20 @@
 
 namespace App\Modules\Places\Filament\Resources;
 
-use Filament\Schemas\Schema;
-use Filament\Actions\EditAction;
-use Filament\Actions\DeleteAction;
-use Filament\Actions\BulkActionGroup;
-use Filament\Actions\DeleteBulkAction;
-use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\Textarea;
-use Filament\Tables\Columns\TextColumn;
-use Filament\Forms;
-use Filament\Resources\Resource;
-use Filament\Tables;
-use Filament\Tables\Table;
-use App\Modules\Places\Filament\Resources\PlaceResource\Pages\ListPlaces;
+use App\Models\Place;
 use App\Modules\Places\Filament\Resources\PlaceResource\Pages\CreatePlace;
 use App\Modules\Places\Filament\Resources\PlaceResource\Pages\EditPlace;
-use App\Models\Place;
+use App\Modules\Places\Filament\Resources\PlaceResource\Pages\ListPlaces;
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteAction;
+use Filament\Actions\DeleteBulkAction;
+use Filament\Actions\EditAction;
+use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\TextInput;
+use Filament\Resources\Resource;
+use Filament\Schemas\Schema;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 
 class PlaceResource extends Resource
@@ -26,10 +24,10 @@ class PlaceResource extends Resource
     protected static ?string $model = Place::class;
 
     #[\Override]
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-map-pin';
+    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-map-pin';
 
     #[\Override]
-    protected static string | \UnitEnum | null $navigationGroup = 'Geography';
+    protected static string|\UnitEnum|null $navigationGroup = 'Geography';
 
     #[\Override]
     protected static ?string $navigationLabel = 'Places';

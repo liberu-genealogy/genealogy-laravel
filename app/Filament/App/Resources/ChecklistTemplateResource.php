@@ -2,65 +2,55 @@
 
 namespace App\Filament\App\Resources;
 
-use Filament\Schemas\Components\Section;
-use Filament\Schemas\Components\Grid;
-use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\Select;
-use Filament\Forms\Components\Textarea;
+use App\Filament\App\Resources\ChecklistTemplateResource\Pages\CreateChecklistTemplate;
+use App\Filament\App\Resources\ChecklistTemplateResource\Pages\EditChecklistTemplate;
+use App\Filament\App\Resources\ChecklistTemplateResource\Pages\ListChecklistTemplates;
+use App\Filament\App\Resources\ChecklistTemplateResource\Pages\ViewChecklistTemplate;
+use App\Filament\App\Resources\ChecklistTemplateResource\RelationManagers\TemplateItemsRelationManager;
+use App\Models\ChecklistTemplate;
+use Filament\Actions\Action;
+use Filament\Actions\ActionGroup;
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteAction;
+use Filament\Actions\DeleteBulkAction;
+use Filament\Actions\EditAction;
+use Filament\Actions\ForceDeleteAction;
+use Filament\Actions\ForceDeleteBulkAction;
+use Filament\Actions\RestoreAction;
+use Filament\Actions\RestoreBulkAction;
+use Filament\Actions\ViewAction;
 use Filament\Forms\Components\Hidden;
-use Filament\Forms\Components\Toggle;
-use Filament\Forms\Components\TagsInput;
 use Filament\Forms\Components\Repeater;
-use Filament\Tables\Columns\TextColumn;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\TagsInput;
+use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Toggle;
+use Filament\Schemas\Components\Grid;
+use Filament\Schemas\Components\Section;
+use Filament\Schemas\Schema;
 use Filament\Tables\Columns\IconColumn;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Filters\TernaryFilter;
 use Filament\Tables\Filters\TrashedFilter;
-use Filament\Actions\ActionGroup;
-use Filament\Actions\ViewAction;
-use Filament\Actions\EditAction;
-use Filament\Actions\Action;
-use Filament\Actions\DeleteAction;
-use Filament\Actions\RestoreAction;
-use Filament\Actions\ForceDeleteAction;
-use Filament\Actions\BulkActionGroup;
-use Filament\Actions\DeleteBulkAction;
-use Filament\Actions\RestoreBulkAction;
-use Filament\Actions\ForceDeleteBulkAction;
-use App\Filament\App\Resources\ChecklistTemplateResource\RelationManagers\TemplateItemsRelationManager;
-use App\Filament\App\Resources\ChecklistTemplateResource\Pages\ListChecklistTemplates;
-use App\Filament\App\Resources\ChecklistTemplateResource\Pages\CreateChecklistTemplate;
-use App\Filament\App\Resources\ChecklistTemplateResource\Pages\ViewChecklistTemplate;
-use App\Filament\App\Resources\ChecklistTemplateResource\Pages\EditChecklistTemplate;
-use BackedEnum;
-use UnitEnum;
-use App\Filament\App\Resources\ChecklistTemplateResource\Pages;
-use App\Filament\App\Resources\ChecklistTemplateResource\RelationManagers;
-use App\Models\ChecklistTemplate;
-use Filament\Forms;
-use Filament\Forms\Form;
-use App\Filament\App\Resources\AppResource;
-use Filament\Schemas\Schema;
-use Filament\Tables;
 use Filament\Tables\Table;
-use Filament\Actions;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class ChecklistTemplateResource extends AppResource
 {
-
     #[\Override]
     protected static ?string $model = ChecklistTemplate::class;
 
     #[\Override]
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-clipboard-document-list';
+    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-clipboard-document-list';
 
     #[\Override]
     protected static ?string $navigationLabel = 'Checklist Templates';
 
     #[\Override]
-    protected static string | \UnitEnum | null $navigationGroup = '📋 Research Management';
+    protected static string|\UnitEnum|null $navigationGroup = '📋 Research Management';
 
     #[\Override]
     protected static ?int $navigationSort = 1;
@@ -154,6 +144,7 @@ class ChecklistTemplateResource extends AppResource
                                             ->numeric()
                                             ->default(function (callable $get): int {
                                                 $items = $get('../../templateItems') ?? [];
+
                                                 return count($items) + 1;
                                             }),
                                     ]),
@@ -285,7 +276,7 @@ class ChecklistTemplateResource extends AppResource
                         ->icon('heroicon-o-document-duplicate')
                         ->action(function (ChecklistTemplate $record) {
                             $newTemplate = $record->replicate();
-                            $newTemplate->name = $record->name . ' (Copy)';
+                            $newTemplate->name = $record->name.' (Copy)';
                             $newTemplate->is_default = false;
                             $newTemplate->created_by = auth()->id();
                             $newTemplate->save();

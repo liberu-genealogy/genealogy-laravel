@@ -7,7 +7,7 @@ use App\Models\Source;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Citation>
+ * @extends Factory<Citation>
  */
 class CitationFactory extends Factory
 {
@@ -27,15 +27,15 @@ class CitationFactory extends Factory
     public function definition()
     {
         return [
-            'name'        => fake()->word,
-            'date'        => fake()->date,
+            'name' => fake()->word,
+            'date' => fake()->date,
             'description' => fake()->text(50),
             // 'repository_id' => Repository::create()->id,
-            'volume'     => fake()->randomDigit(),
-            'page'       => fake()->randomDigit(),
-            'is_active'  => fake()->randomDigit(),
+            'volume' => fake()->randomDigit(),
+            'page' => fake()->randomDigit(),
+            'is_active' => fake()->randomDigit(),
             'confidence' => fake()->randomDigit(),
-            'source_id'  => Source::create()->id,
+            'source_id' => Source::create()->id,
         ];
     }
 }

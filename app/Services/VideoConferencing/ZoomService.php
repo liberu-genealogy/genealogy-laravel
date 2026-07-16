@@ -2,16 +2,18 @@
 
 namespace App\Services\VideoConferencing;
 
+use Carbon\Carbon;
 use Exception;
 use Illuminate\Support\Facades\Http;
-use Illuminate\Support\Facades\Log;
-use Carbon\Carbon;
 
 class ZoomService implements VideoConferencingInterface
 {
     protected string $baseUrl;
+
     protected string $apiKey;
+
     protected string $apiSecret;
+
     protected string $accountId;
 
     public function __construct()
@@ -56,12 +58,12 @@ class ZoomService implements VideoConferencingInterface
         }
 
         $response = Http::withHeaders([
-            'Authorization' => 'Bearer ' . $this->getAccessToken(),
+            'Authorization' => 'Bearer '.$this->getAccessToken(),
             'Content-Type' => 'application/json',
-        ])->post($this->baseUrl . '/users/me/meetings', $payload);
+        ])->post($this->baseUrl.'/users/me/meetings', $payload);
 
-        if (!$response->successful()) {
-            throw new Exception('Failed to create Zoom meeting: ' . $response->body());
+        if (! $response->successful()) {
+            throw new Exception('Failed to create Zoom meeting: '.$response->body());
         }
 
         $meeting = $response->json();
@@ -98,12 +100,12 @@ class ZoomService implements VideoConferencingInterface
         }
 
         $response = Http::withHeaders([
-            'Authorization' => 'Bearer ' . $this->getAccessToken(),
+            'Authorization' => 'Bearer '.$this->getAccessToken(),
             'Content-Type' => 'application/json',
-        ])->patch($this->baseUrl . '/meetings/' . $meetingData['meeting_id'], $payload);
+        ])->patch($this->baseUrl.'/meetings/'.$meetingData['meeting_id'], $payload);
 
-        if (!$response->successful()) {
-            throw new Exception('Failed to update Zoom meeting: ' . $response->body());
+        if (! $response->successful()) {
+            throw new Exception('Failed to update Zoom meeting: '.$response->body());
         }
 
         // Get updated meeting details
@@ -115,8 +117,8 @@ class ZoomService implements VideoConferencingInterface
         $this->validateConfiguration();
 
         $response = Http::withHeaders([
-            'Authorization' => 'Bearer ' . $this->getAccessToken(),
-        ])->delete($this->baseUrl . '/meetings/' . $meetingId);
+            'Authorization' => 'Bearer '.$this->getAccessToken(),
+        ])->delete($this->baseUrl.'/meetings/'.$meetingId);
 
         return $response->successful();
     }
@@ -126,10 +128,10 @@ class ZoomService implements VideoConferencingInterface
         $this->validateConfiguration();
 
         $response = Http::withHeaders([
-            'Authorization' => 'Bearer ' . $this->getAccessToken(),
-        ])->get($this->baseUrl . '/meetings/' . $meetingId);
+            'Authorization' => 'Bearer '.$this->getAccessToken(),
+        ])->get($this->baseUrl.'/meetings/'.$meetingId);
 
-        if (!$response->successful()) {
+        if (! $response->successful()) {
             return null;
         }
 
@@ -156,17 +158,17 @@ class ZoomService implements VideoConferencingInterface
         $this->validateConfiguration();
 
         $response = Http::withHeaders([
-            'Authorization' => 'Bearer ' . $this->getAccessToken(),
-        ])->get($this->baseUrl . '/meetings/' . $meetingId . '/participants');
+            'Authorization' => 'Bearer '.$this->getAccessToken(),
+        ])->get($this->baseUrl.'/meetings/'.$meetingId.'/participants');
 
-        if (!$response->successful()) {
+        if (! $response->successful()) {
             return [];
         }
 
         $data = $response->json();
         $participants = $data['participants'] ?? [];
 
-        return array_map(fn(array $participant) => [
+        return array_map(fn (array $participant) => [
             'name' => $participant['name'],
             'email' => $participant['user_email'] ?? '',
             'joined_at' => $participant['join_time'] ?? null,
@@ -186,14 +188,14 @@ class ZoomService implements VideoConferencingInterface
 
     public function isConfigured(): bool
     {
-        return $this->apiKey !== '' && $this->apiKey !== '0' && 
-               ($this->apiSecret !== '' && $this->apiSecret !== '0') && 
+        return $this->apiKey !== '' && $this->apiKey !== '0' &&
+               ($this->apiSecret !== '' && $this->apiSecret !== '0') &&
                ($this->accountId !== '' && $this->accountId !== '0');
     }
 
     protected function validateConfiguration(): void
     {
-        if (!$this->isConfigured()) {
+        if (! $this->isConfigured()) {
             throw new Exception('Zoom service is not properly configured. Please check your API credentials.');
         }
     }
@@ -207,11 +209,12 @@ class ZoomService implements VideoConferencingInterface
             'account_id' => $this->accountId,
         ]);
 
-        if (!$response->successful()) {
-            throw new Exception('Failed to get Zoom access token: ' . $response->body());
+        if (! $response->successful()) {
+            throw new Exception('Failed to get Zoom access token: '.$response->body());
         }
 
         $data = $response->json();
+
         return $data['access_token'];
     }
 

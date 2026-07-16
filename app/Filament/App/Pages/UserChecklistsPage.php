@@ -8,7 +8,7 @@ use Filament\Pages\Page;
 class UserChecklistsPage extends Page
 {
     #[\Override]
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-clipboard-document-check';
+    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-clipboard-document-check';
 
     #[\Override]
     protected string $view = 'filament.app.pages.user-checklists-page';
@@ -17,7 +17,7 @@ class UserChecklistsPage extends Page
     protected static ?string $navigationLabel = 'My Checklists';
 
     #[\Override]
-    protected static string | \UnitEnum | null $navigationGroup = '📋 Research Management';
+    protected static string|\UnitEnum|null $navigationGroup = '📋 Research Management';
 
     #[\Override]
     protected static ?int $navigationSort = 2;

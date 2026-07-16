@@ -82,6 +82,6 @@ class DnaPrivacyTest extends TestCase
             $lines[] = "rs{$i}\t1\t{$pos}\tAG";
         }
 
-        return implode("\n", $lines) . "\n";
+        return implode("\n", $lines)."\n";
     }
 }

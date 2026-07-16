@@ -1,16 +1,29 @@
 <?php
 
+use App\Providers\AppServiceProvider;
+use App\Providers\AuthServiceProvider;
+use App\Providers\DnaServiceProvider;
+use App\Providers\EventServiceProvider;
+use App\Providers\Filament\AdminPanelProvider;
+use App\Providers\Filament\AppPanelProvider;
+use App\Providers\FilamentServiceProvider;
+use App\Providers\FortifyServiceProvider;
+use App\Providers\HorizonServiceProvider;
+use App\Providers\JetstreamServiceProvider;
+use App\Providers\LaravelGedcomServiceProvider;
+use App\Providers\SocialstreamServiceProvider;
+
 return [
-    App\Providers\AppServiceProvider::class,
-    App\Providers\AuthServiceProvider::class,
-    App\Providers\DnaServiceProvider::class,
-    App\Providers\EventServiceProvider::class,
-    App\Providers\FilamentServiceProvider::class,
-    App\Providers\Filament\AdminPanelProvider::class,
-    App\Providers\Filament\AppPanelProvider::class,
-    App\Providers\FortifyServiceProvider::class,
-    App\Providers\HorizonServiceProvider::class,
-    App\Providers\JetstreamServiceProvider::class,
-    App\Providers\LaravelGedcomServiceProvider::class,
-    App\Providers\SocialstreamServiceProvider::class,
+    AppServiceProvider::class,
+    AuthServiceProvider::class,
+    DnaServiceProvider::class,
+    EventServiceProvider::class,
+    FilamentServiceProvider::class,
+    AdminPanelProvider::class,
+    AppPanelProvider::class,
+    FortifyServiceProvider::class,
+    HorizonServiceProvider::class,
+    JetstreamServiceProvider::class,
+    LaravelGedcomServiceProvider::class,
+    SocialstreamServiceProvider::class,
 ];

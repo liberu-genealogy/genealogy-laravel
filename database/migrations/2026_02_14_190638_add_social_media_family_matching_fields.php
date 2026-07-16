@@ -13,19 +13,19 @@ return new class extends Migration
     {
         // Add fields to connected_accounts table for family matching
         Schema::table('connected_accounts', function (Blueprint $table): void {
-            if (!Schema::hasColumn('connected_accounts', 'enable_family_matching')) {
+            if (! Schema::hasColumn('connected_accounts', 'enable_family_matching')) {
                 $table->boolean('enable_family_matching')->default(false)->after('expires_at');
             }
-            if (!Schema::hasColumn('connected_accounts', 'cached_profile_data')) {
+            if (! Schema::hasColumn('connected_accounts', 'cached_profile_data')) {
                 $table->json('cached_profile_data')->nullable()->after('enable_family_matching');
             }
-            if (!Schema::hasColumn('connected_accounts', 'last_synced_at')) {
+            if (! Schema::hasColumn('connected_accounts', 'last_synced_at')) {
                 $table->timestamp('last_synced_at')->nullable()->after('cached_profile_data');
             }
         });
 
         // Create social_connection_privacy table for granular privacy controls
-        if (!Schema::hasTable('social_connection_privacy')) {
+        if (! Schema::hasTable('social_connection_privacy')) {
             Schema::create('social_connection_privacy', function (Blueprint $table): void {
                 $table->id();
                 $table->foreignId('user_id')->constrained()->onDelete('cascade');
@@ -41,7 +41,7 @@ return new class extends Migration
         }
 
         // Create social_family_connections table for storing identified connections
-        if (!Schema::hasTable('social_family_connections')) {
+        if (! Schema::hasTable('social_family_connections')) {
             Schema::create('social_family_connections', function (Blueprint $table): void {
                 $table->id();
                 $table->foreignId('user_id')->constrained()->onDelete('cascade');

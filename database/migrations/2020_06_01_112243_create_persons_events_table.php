@@ -8,12 +8,10 @@ class CreatePersonsEventsTable extends Migration
 {
     /**
      * Run the migrations.
-     *
-     * @return void
      */
     public function up(): void
     {
-        if (!Schema::hasTable('person_events')) {
+        if (! Schema::hasTable('person_events')) {
             Schema::create('person_events', function (Blueprint $table): void {
                 $table->bigIncrements('id')->index();
                 $table->integer('year')->nullable();
@@ -45,8 +43,6 @@ class CreatePersonsEventsTable extends Migration
 
     /**
      * Reverse the migrations.
-     *
-     * @return void
      */
     public function down(): void
     {

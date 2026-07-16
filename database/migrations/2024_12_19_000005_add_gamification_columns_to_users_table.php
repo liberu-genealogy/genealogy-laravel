@@ -34,7 +34,7 @@ return new class extends Migration
                 'level',
                 'level_progress',
                 'last_activity_at',
-                'show_on_leaderboard'
+                'show_on_leaderboard',
             ]);
         });
     }

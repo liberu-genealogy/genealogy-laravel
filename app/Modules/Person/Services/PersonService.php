@@ -2,14 +2,11 @@
 
 namespace App\Modules\Person\Services;
 
-use DB;
 use App\Models\Person;
 use App\Models\PersonEvent;
-use App\Models\PersonName;
-use App\Models\PersonAlia;
-use App\Models\Place;
-use Illuminate\Support\Collection;
+use DB;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Collection;
 
 class PersonService
 {
@@ -28,12 +25,12 @@ class PersonService
         ]);
 
         // Add birth event if birth date provided
-        if (!empty($data['birth_date'])) {
+        if (! empty($data['birth_date'])) {
             $this->addPersonEvent($person, 'BIRT', $data['birth_date'], $data['birth_place'] ?? '');
         }
 
         // Add death event if death date provided
-        if (!empty($data['death_date'])) {
+        if (! empty($data['death_date'])) {
             $this->addPersonEvent($person, 'DEAT', $data['death_date'], $data['death_place'] ?? '');
         }
 
@@ -141,7 +138,7 @@ class PersonService
             ->with('place')
             ->orderBy('date')
             ->get()
-            ->map(fn($event) => [
+            ->map(fn ($event) => [
                 'type' => $event->title,
                 'date' => $event->date,
                 'place' => $event->place?->name ?? '',
@@ -172,15 +169,15 @@ class PersonService
             ->update(['child_in_family_id' => $primaryPerson->child_in_family_id]);
 
         // Merge additional data
-        if (empty($primaryPerson->description) && !empty($duplicatePerson->description)) {
+        if (empty($primaryPerson->description) && ! empty($duplicatePerson->description)) {
             $primaryPerson->description = $duplicatePerson->description;
         }
 
-        if (empty($primaryPerson->birthday) && !empty($duplicatePerson->birthday)) {
+        if (empty($primaryPerson->birthday) && ! empty($duplicatePerson->birthday)) {
             $primaryPerson->birthday = $duplicatePerson->birthday;
         }
 
-        if (empty($primaryPerson->deathday) && !empty($duplicatePerson->deathday)) {
+        if (empty($primaryPerson->deathday) && ! empty($duplicatePerson->deathday)) {
             $primaryPerson->deathday = $duplicatePerson->deathday;
         }
 
@@ -210,7 +207,7 @@ class PersonService
             ],
             'events' => $this->getPersonTimeline($person)->toArray(),
             'family_relationships' => [
-                'parents' => $person->parents()?->map(fn($p): array => [
+                'parents' => $person->parents()?->map(fn ($p): array => [
                     'id' => $p->id,
                     'name' => $p->fullname(),
                     'relationship' => $p->sex === 'M' ? 'Father' : 'Mother',
@@ -218,6 +215,7 @@ class PersonService
                 'spouses' => $person->familiesAsHusband->merge($person->familiesAsWife)
                     ->map(function ($family) use ($person): ?array {
                         $spouse = $person->sex === 'M' ? $family->wife : $family->husband;
+
                         return $spouse ? [
                             'id' => $spouse->id,
                             'name' => $spouse->fullname(),
@@ -227,7 +225,7 @@ class PersonService
                     ->filter()
                     ->values()
                     ->toArray(),
-                'children' => $person->children->map(fn($c): array => [
+                'children' => $person->children->map(fn ($c): array => [
                     'id' => $c->id,
                     'name' => $c->fullname(),
                     'relationship' => $c->sex === 'M' ? 'Son' : 'Daughter',

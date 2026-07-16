@@ -7,9 +7,7 @@ use App\Services\GamificationService;
 
 class PersonEventObserver
 {
-    public function __construct(protected \App\Services\GamificationService $gamificationService)
-    {
-    }
+    public function __construct(protected GamificationService $gamificationService) {}
 
     /**
      * Handle the PersonEvent "created" event.
@@ -29,7 +27,7 @@ class PersonEventObserver
                 [
                     'event_id' => $event->id,
                     'event_type' => $event->title,
-                    'person_id' => $event->person_id
+                    'person_id' => $event->person_id,
                 ],
                 $event
             );
@@ -43,7 +41,7 @@ class PersonEventObserver
     {
         // Award points for updating event information
         $user = auth()->user();
-        if ($user && $event->wasChanged() && !$event->wasRecentlyCreated) {
+        if ($user && $event->wasChanged() && ! $event->wasRecentlyCreated) {
             $this->gamificationService->awardPoints(
                 $user,
                 'event_updated',
@@ -52,7 +50,7 @@ class PersonEventObserver
                 [
                     'event_id' => $event->id,
                     'event_type' => $event->title,
-                    'person_id' => $event->person_id
+                    'person_id' => $event->person_id,
                 ],
                 $event
             );
@@ -64,7 +62,7 @@ class PersonEventObserver
      */
     private function getPointsForEventType(string $eventType): int
     {
-        return match(strtoupper($eventType)) {
+        return match (strtoupper($eventType)) {
             'BIRT' => 30, // Birth events are important
             'DEAT' => 30, // Death events are important
             'MARR' => 25, // Marriage events

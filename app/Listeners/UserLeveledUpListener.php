@@ -12,9 +12,7 @@ class UserLeveledUpListener implements ShouldQueue
 {
     use InteractsWithQueue;
 
-    public function __construct(protected \App\Services\GamificationService $gamificationService)
-    {
-    }
+    public function __construct(protected GamificationService $gamificationService) {}
 
     /**
      * Handle the event.

@@ -15,7 +15,7 @@ class DnaFileVaultTest extends TestCase
 {
     public function test_encrypt_then_decrypt_round_trips(): void
     {
-        $vault = new DnaFileVault();
+        $vault = new DnaFileVault;
         $raw = "# 23andMe\nrs1\t1\t82154\tAG\n";
 
         $this->assertSame($raw, $vault->decrypt($vault->encrypt($raw)));
@@ -24,7 +24,7 @@ class DnaFileVaultTest extends TestCase
     public function test_decrypt_returns_legacy_plaintext_unchanged(): void
     {
         // A pre-encryption file is not valid ciphertext → returned as-is.
-        $vault = new DnaFileVault();
+        $vault = new DnaFileVault;
         $legacy = "rsid\tchromosome\tposition\tgenotype\n";
 
         $this->assertSame($legacy, $vault->decrypt($legacy));
@@ -33,7 +33,7 @@ class DnaFileVaultTest extends TestCase
     public function test_store_encrypts_on_disk_and_read_round_trips(): void
     {
         Storage::fake('private');
-        $vault = new DnaFileVault();
+        $vault = new DnaFileVault;
         $raw = "rs1\t1\t82154\tAG\n";
         $path = 'dna/kit.txt';
 
@@ -49,6 +49,6 @@ class DnaFileVaultTest extends TestCase
     {
         Storage::fake('private');
 
-        $this->assertSame('', (new DnaFileVault())->read('dna/nope.txt'));
+        $this->assertSame('', (new DnaFileVault)->read('dna/nope.txt'));
     }
 }

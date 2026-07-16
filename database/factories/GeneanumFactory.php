@@ -8,7 +8,7 @@ use App\Models\Geneanum;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Geneanum>
+ * @extends Factory<Geneanum>
  */
 class GeneanumFactory extends Factory
 {

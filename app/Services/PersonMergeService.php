@@ -2,20 +2,19 @@
 
 namespace App\Services;
 
-use App\Models\PersonEvent;
-use App\Models\PersonName;
+use App\Models\Family;
+use App\Models\Person;
 use App\Models\PersonAlia;
-use App\Models\PersonLds;
-use App\Models\PersonSubm;
-use App\Models\VirtualEventAttendee;
 use App\Models\PersonAnci;
 use App\Models\PersonAsso;
+use App\Models\PersonEvent;
+use App\Models\PersonLds;
+use App\Models\PersonName;
 use App\Models\PersonNameFone;
-use App\Models\Family;
+use App\Models\PersonSubm;
+use App\Models\VirtualEventAttendee;
 use Exception;
-use App\Models\Person;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Arr;
 
 class PersonMergeService
 {
@@ -43,7 +42,7 @@ class PersonMergeService
 
             $updated = [];
             foreach ($fields as $field) {
-                if (empty($primary->{$field}) && !empty($duplicate->{$field})) {
+                if (empty($primary->{$field}) && ! empty($duplicate->{$field})) {
                     $primary->{$field} = $duplicate->{$field};
                     $updated[] = $field;
                 }
@@ -88,7 +87,7 @@ class PersonMergeService
             Person::where('child_in_family_id', $duplicateId)->update(['child_in_family_id' => $primaryId]);
 
             // Move tree positions if missing
-            if (empty($primary->tree_position_x) && !empty($duplicate->tree_position_x)) {
+            if (empty($primary->tree_position_x) && ! empty($duplicate->tree_position_x)) {
                 $primary->tree_position_x = $duplicate->tree_position_x;
                 $primary->tree_position_y = $duplicate->tree_position_y;
                 $primary->save();

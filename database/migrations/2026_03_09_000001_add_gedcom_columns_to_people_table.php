@@ -16,143 +16,143 @@ return new class extends Migration
     {
         Schema::table('people', function (Blueprint $table): void {
             // GEDCOM identifier
-            if (!Schema::hasColumn('people', 'gid')) {
+            if (! Schema::hasColumn('people', 'gid')) {
                 $table->string('gid')->nullable();
             }
 
             // Name components
-            if (!Schema::hasColumn('people', 'givn')) {
+            if (! Schema::hasColumn('people', 'givn')) {
                 $table->string('givn')->nullable()->index();
             }
-            if (!Schema::hasColumn('people', 'surn')) {
+            if (! Schema::hasColumn('people', 'surn')) {
                 $table->string('surn', 191)->nullable()->index();
             }
-            if (!Schema::hasColumn('people', 'npfx')) {
+            if (! Schema::hasColumn('people', 'npfx')) {
                 $table->string('npfx')->nullable();
             }
-            if (!Schema::hasColumn('people', 'nick')) {
+            if (! Schema::hasColumn('people', 'nick')) {
                 $table->string('nick')->nullable();
             }
-            if (!Schema::hasColumn('people', 'spfx')) {
+            if (! Schema::hasColumn('people', 'spfx')) {
                 $table->string('spfx')->nullable();
             }
-            if (!Schema::hasColumn('people', 'nsfx')) {
+            if (! Schema::hasColumn('people', 'nsfx')) {
                 $table->string('nsfx')->nullable();
             }
-            if (!Schema::hasColumn('people', 'type')) {
+            if (! Schema::hasColumn('people', 'type')) {
                 $table->string('type')->nullable();
             }
-            if (!Schema::hasColumn('people', 'titl')) {
+            if (! Schema::hasColumn('people', 'titl')) {
                 $table->string('titl')->nullable();
             }
 
             // Demographics
-            if (!Schema::hasColumn('people', 'sex')) {
+            if (! Schema::hasColumn('people', 'sex')) {
                 $table->char('sex', 1)->nullable();
             }
 
             // Contact & media
-            if (!Schema::hasColumn('people', 'photo_url')) {
+            if (! Schema::hasColumn('people', 'photo_url')) {
                 $table->string('photo_url')->nullable();
             }
 
             // Birth details
-            if (!Schema::hasColumn('people', 'birth_month')) {
+            if (! Schema::hasColumn('people', 'birth_month')) {
                 $table->string('birth_month')->nullable();
             }
-            if (!Schema::hasColumn('people', 'birth_year')) {
+            if (! Schema::hasColumn('people', 'birth_year')) {
                 $table->integer('birth_year')->nullable();
             }
-            if (!Schema::hasColumn('people', 'birthday_dati')) {
+            if (! Schema::hasColumn('people', 'birthday_dati')) {
                 $table->string('birthday_dati')->nullable();
             }
-            if (!Schema::hasColumn('people', 'birthday_plac')) {
+            if (! Schema::hasColumn('people', 'birthday_plac')) {
                 $table->string('birthday_plac')->nullable();
             }
 
             // Death
-            if (!Schema::hasColumn('people', 'deathday')) {
+            if (! Schema::hasColumn('people', 'deathday')) {
                 $table->date('deathday')->nullable();
             }
-            if (!Schema::hasColumn('people', 'death_month')) {
+            if (! Schema::hasColumn('people', 'death_month')) {
                 $table->string('death_month')->nullable();
             }
-            if (!Schema::hasColumn('people', 'death_year')) {
+            if (! Schema::hasColumn('people', 'death_year')) {
                 $table->integer('death_year')->nullable();
             }
-            if (!Schema::hasColumn('people', 'deathday_dati')) {
+            if (! Schema::hasColumn('people', 'deathday_dati')) {
                 $table->string('deathday_dati')->nullable();
             }
-            if (!Schema::hasColumn('people', 'deathday_plac')) {
+            if (! Schema::hasColumn('people', 'deathday_plac')) {
                 $table->string('deathday_plac')->nullable();
             }
-            if (!Schema::hasColumn('people', 'deathday_caus')) {
+            if (! Schema::hasColumn('people', 'deathday_caus')) {
                 $table->string('deathday_caus')->nullable();
             }
 
             // Burial
-            if (!Schema::hasColumn('people', 'burial_day')) {
+            if (! Schema::hasColumn('people', 'burial_day')) {
                 $table->date('burial_day')->nullable();
             }
-            if (!Schema::hasColumn('people', 'burial_month')) {
+            if (! Schema::hasColumn('people', 'burial_month')) {
                 $table->string('burial_month')->nullable();
             }
-            if (!Schema::hasColumn('people', 'burial_year')) {
+            if (! Schema::hasColumn('people', 'burial_year')) {
                 $table->integer('burial_year')->nullable();
             }
-            if (!Schema::hasColumn('people', 'burial_day_dati')) {
+            if (! Schema::hasColumn('people', 'burial_day_dati')) {
                 $table->string('burial_day_dati')->nullable();
             }
-            if (!Schema::hasColumn('people', 'burial_day_plac')) {
+            if (! Schema::hasColumn('people', 'burial_day_plac')) {
                 $table->string('burial_day_plac')->nullable();
             }
 
             // Christening
-            if (!Schema::hasColumn('people', 'chr')) {
+            if (! Schema::hasColumn('people', 'chr')) {
                 $table->string('chr')->nullable();
             }
 
             // Family relationships
-            if (!Schema::hasColumn('people', 'child_in_family_id')) {
+            if (! Schema::hasColumn('people', 'child_in_family_id')) {
                 $table->integer('child_in_family_id')->nullable();
             }
-            if (!Schema::hasColumn('people', 'famc')) {
+            if (! Schema::hasColumn('people', 'famc')) {
                 $table->string('famc')->nullable();
             }
-            if (!Schema::hasColumn('people', 'fams')) {
+            if (! Schema::hasColumn('people', 'fams')) {
                 $table->string('fams')->nullable();
             }
 
             // Miscellaneous
-            if (!Schema::hasColumn('people', 'description')) {
+            if (! Schema::hasColumn('people', 'description')) {
                 $table->text('description')->nullable();
             }
-            if (!Schema::hasColumn('people', 'chan')) {
+            if (! Schema::hasColumn('people', 'chan')) {
                 $table->string('chan')->nullable();
             }
-            if (!Schema::hasColumn('people', 'rin')) {
+            if (! Schema::hasColumn('people', 'rin')) {
                 $table->string('rin')->nullable();
             }
-            if (!Schema::hasColumn('people', 'resn')) {
+            if (! Schema::hasColumn('people', 'resn')) {
                 $table->string('resn')->nullable();
             }
-            if (!Schema::hasColumn('people', 'rfn')) {
+            if (! Schema::hasColumn('people', 'rfn')) {
                 $table->string('rfn')->nullable();
             }
-            if (!Schema::hasColumn('people', 'afn')) {
+            if (! Schema::hasColumn('people', 'afn')) {
                 $table->string('afn')->nullable();
             }
 
             // Application-specific
-            if (!Schema::hasColumn('people', 'first_name')) {
+            if (! Schema::hasColumn('people', 'first_name')) {
                 $table->string('first_name')->nullable();
             }
-            if (!Schema::hasColumn('people', 'last_name')) {
+            if (! Schema::hasColumn('people', 'last_name')) {
                 $table->string('last_name')->nullable();
             }
 
             // Soft deletes
-            if (!Schema::hasColumn('people', 'deleted_at')) {
+            if (! Schema::hasColumn('people', 'deleted_at')) {
                 $table->softDeletes();
             }
         });

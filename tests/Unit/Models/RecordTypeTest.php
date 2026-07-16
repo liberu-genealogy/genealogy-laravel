@@ -3,10 +3,8 @@
 namespace Tests\Unit\Models;
 
 use App\Models\RecordType;
-use App\Models\Source;
-use App\Models\SmartMatch;
-use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\TestCase;
 
 class RecordTypeTest extends TestCase
 {

@@ -3,9 +3,16 @@
 namespace App\Providers\Filament;
 
 use App\Filament\App\Pages;
+use App\Filament\App\Pages\DescendantChartPage;
 use App\Filament\App\Pages\EditProfile;
-use App\Filament\App\Resources\AIRecordMatchResource;
+use App\Filament\App\Pages\FanChartPage;
+use App\Filament\App\Pages\GamificationPage;
+use App\Filament\App\Pages\PedigreeChartPage;
+use App\Filament\App\Pages\PremiumDashboardPage;
+use App\Filament\App\Pages\SubscriptionPage;
+use App\Filament\App\Pages\TrialExpiredPage;
 use App\Filament\App\Resources\AddrResource;
+use App\Filament\App\Resources\AIRecordMatchResource;
 use App\Filament\App\Resources\AuthorResource;
 use App\Filament\App\Resources\ChanResource;
 use App\Filament\App\Resources\ChecklistTemplateResource;
@@ -40,6 +47,10 @@ use App\Filament\App\Resources\SmartMatchResource;
 use App\Filament\App\Resources\SourceDataEvenResource;
 use App\Filament\App\Resources\SourceDataResource;
 use App\Filament\App\Resources\SourceRefEvenResource;
+// Person-merge UI. Lives under app/Modules/* (autoloadable via App\ PSR-4) and is
+// registered explicitly rather than by discovering app/Modules, because a broad
+// discover would also pick up the module PersonResource/PlaceResource/SourceResource/
+// TypeResource that duplicate the App-panel resources above (double nav / conflicts).
 use App\Filament\App\Resources\SourceRefResource;
 use App\Filament\App\Resources\SourceRepoResource;
 use App\Filament\App\Resources\SourceResource;
@@ -47,15 +58,12 @@ use App\Filament\App\Resources\SubmResource;
 use App\Filament\App\Resources\SubnResource;
 use App\Filament\App\Resources\TypeResource;
 use App\Filament\App\Resources\VirtualEventResource;
-// Person-merge UI. Lives under app/Modules/* (autoloadable via App\ PSR-4) and is
-// registered explicitly rather than by discovering app/Modules, because a broad
-// discover would also pick up the module PersonResource/PlaceResource/SourceResource/
-// TypeResource that duplicate the App-panel resources above (double nav / conflicts).
-use App\Modules\Person\Filament\Resources\DuplicateMatchResource;
 use App\Http\Middleware\TeamsPermission;
 use App\Listeners\CreatePersonalTeam;
 use App\Listeners\SwitchTeam;
 use App\Models\Team;
+use App\Modules\Person\Filament\Resources\DuplicateMatchResource;
+use App\Settings\GeneralSettings;
 use Filament\Actions\Action;
 use Filament\Auth\Events\Registered;
 use Filament\Events\TenantSet;
@@ -65,11 +73,11 @@ use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
 use Filament\Navigation\MenuItem;
 use Filament\Navigation\NavigationGroup;
-use Filament\Pages\Dashboard;
 use Filament\Panel;
 use Filament\PanelProvider;
 use Filament\Support\Colors\Color;
 use Filament\Widgets;
+use Illuminate\Contracts\Routing\UrlGenerator;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
 use Illuminate\Cookie\Middleware\EncryptCookies;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
@@ -79,6 +87,8 @@ use Illuminate\Session\Middleware\StartSession;
 use Illuminate\Support\Facades\Event;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 use JoelButcher\Socialstream\Filament\SocialstreamPlugin;
+use Laravel\Fortify\Contracts\LoginResponse;
+use Laravel\Fortify\Contracts\RegisterResponse;
 use Laravel\Fortify\Fortify;
 use Laravel\Fortify\Http\Controllers\AuthenticatedSessionController;
 use Laravel\Fortify\Http\Controllers\RegisteredUserController;
@@ -107,13 +117,13 @@ class AppPanelProvider extends PanelProvider
             // and no contrast verification.
             ->darkMode(false)
             ->emailVerification()
-            ->plugin(new SocialstreamPlugin())
+            ->plugin(new SocialstreamPlugin)
             ->viteTheme('resources/css/filament/app/theme.css')
             ->colors([
                 'primary' => Color::Emerald,
                 'gray' => Color::Slate,
             ])
-            ->brandName(fn () => app(\App\Settings\GeneralSettings::class)->site_name)
+            ->brandName(fn () => app(GeneralSettings::class)->site_name)
             ->brandLogo(asset('build/images/logo.svg')) // vite-plugin-static-copy writes to build/images/; asset('images/..') was 404 on every panel page
             ->favicon(asset('favicon.ico')) // public/favicon.ico is the only .ico that exists; images/favicon.ico was 404
             ->navigationGroups([
@@ -148,7 +158,7 @@ class AppPanelProvider extends PanelProvider
                 Action::make('profile')
                     ->label('Profile')
                     ->icon('heroicon-o-user-circle')
-                    ->url(fn (): \Illuminate\Contracts\Routing\UrlGenerator|string => $this->shouldRegisterMenuItem()
+                    ->url(fn (): UrlGenerator|string => $this->shouldRegisterMenuItem()
                         ? url(EditProfile::getUrl())
                         : url($panel->getPath())),
             ])
@@ -201,14 +211,14 @@ class AppPanelProvider extends PanelProvider
             ])
             ->discoverPages(in: app_path('Filament/App/Pages'), for: 'App\\Filament\\App\\Pages')
             ->pages([
-                \App\Filament\App\Pages\Dashboard::class,
-                \App\Filament\App\Pages\PedigreeChartPage::class,
-                \App\Filament\App\Pages\FanChartPage::class,
-                \App\Filament\App\Pages\DescendantChartPage::class,
-                \App\Filament\App\Pages\GamificationPage::class,
-                \App\Filament\App\Pages\SubscriptionPage::class,
-                \App\Filament\App\Pages\PremiumDashboardPage::class,
-                \App\Filament\App\Pages\TrialExpiredPage::class,
+                Pages\Dashboard::class,
+                PedigreeChartPage::class,
+                FanChartPage::class,
+                DescendantChartPage::class,
+                GamificationPage::class,
+                SubscriptionPage::class,
+                PremiumDashboardPage::class,
+                TrialExpiredPage::class,
                 EditProfile::class,
             ])
             ->discoverWidgets(in: app_path('Filament/App/Widgets'), for: 'App\\Filament\\App\\Widgets')
@@ -251,7 +261,7 @@ class AppPanelProvider extends PanelProvider
                     Action::make('team-settings')
                         ->label('Team Settings')
                         ->icon('heroicon-o-cog-6-tooth')
-                        ->url(fn (): \Illuminate\Contracts\Routing\UrlGenerator|string => $this->shouldRegisterMenuItem()
+                        ->url(fn (): UrlGenerator|string => $this->shouldRegisterMenuItem()
                             ? url(Pages\EditTeam::getUrl())
                             : url($panel->getPath())),
                 ]);
@@ -280,12 +290,12 @@ class AppPanelProvider extends PanelProvider
          * precedence.
          */
         $this->app->singleton(
-            \Laravel\Fortify\Contracts\LoginResponse::class,
+            LoginResponse::class,
             \App\Http\Responses\Auth\LoginResponse::class,
         );
 
         $this->app->singleton(
-            \Laravel\Fortify\Contracts\RegisterResponse::class,
+            RegisterResponse::class,
             \App\Http\Responses\Auth\RegisterResponse::class,
         );
 
@@ -308,10 +318,10 @@ class AppPanelProvider extends PanelProvider
 
     public function shouldRegisterMenuItem(): bool
     {
-        $hasVerifiedEmail = !is_null(auth()->user());//?->hasVerifiedEmail();
+        $hasVerifiedEmail = ! is_null(auth()->user()); // ?->hasVerifiedEmail();
 
         // Check if Filament is properly initialized before using facades
-        if (!app()->bound('filament')) {
+        if (! app()->bound('filament')) {
             return $hasVerifiedEmail;
         }
 

@@ -7,6 +7,7 @@ use Exception;
 use Filament\Actions\Action;
 use Filament\Notifications\Notification;
 use Filament\Pages\Page;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 
 class SubscriptionPage extends Page
@@ -145,7 +146,7 @@ class SubscriptionPage extends Page
 
         if (is_object($checkout) && property_exists($checkout, 'url') && $checkout->url) {
             $this->redirect($checkout->url);
-        } elseif ($checkout instanceof \Illuminate\Http\RedirectResponse) {
+        } elseif ($checkout instanceof RedirectResponse) {
             $this->redirect($checkout->getTargetUrl());
         } else {
             Notification::make()

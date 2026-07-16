@@ -13,9 +13,7 @@ class ResearchSpaceUpdated implements ShouldBroadcastNow
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public function __construct(public int $researchSpaceId, public array $payload = [])
-    {
-    }
+    public function __construct(public int $researchSpaceId, public array $payload = []) {}
 
     public function broadcastAs(): string
     {
@@ -29,6 +27,6 @@ class ResearchSpaceUpdated implements ShouldBroadcastNow
 
     public function broadcastOn()
     {
-        return ['research-space.' . $this->researchSpaceId];
+        return ['research-space.'.$this->researchSpaceId];
     }
 }

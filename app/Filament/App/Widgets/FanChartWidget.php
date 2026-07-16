@@ -2,14 +2,14 @@
 
 namespace App\Filament\App\Widgets;
 
-use Override;
-use Illuminate\Contracts\View\View;
 use App\Models\Person;
 use Filament\Widgets\Widget;
+use Illuminate\Contracts\View\View;
+use Override;
 
 class FanChartWidget extends Widget
 {
-    #[\Override]
+    #[Override]
     protected string $view = 'livewire.fan-chart-component';
 
     public $people;

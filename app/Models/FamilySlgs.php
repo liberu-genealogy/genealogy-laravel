@@ -8,9 +8,9 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class FamilySlgs extends \FamilyTree365\LaravelGedcom\Models\FamilySlgs
 {
-//
-    use HasFactory;
     use BelongsToTenant;
+    //
+    use HasFactory;
 
     public function user(): BelongsTo
     {

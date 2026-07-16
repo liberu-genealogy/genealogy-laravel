@@ -18,16 +18,16 @@ class TreeBuilderServiceTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
-        $this->service = new TreeBuilderService();
+        $this->service = new TreeBuilderService;
     }
 
-    public function testBuildFamilyTreeIncludesSiblings(): void
+    public function test_build_family_tree_includes_siblings(): void
     {
         // Create a family with parents and multiple children
         $family = Family::factory()->create();
         $father = Person::factory()->create(['sex' => 'M']);
         $mother = Person::factory()->create(['sex' => 'F']);
-        
+
         $family->update([
             'husband_id' => $father->id,
             'wife_id' => $mother->id,
@@ -49,7 +49,7 @@ class TreeBuilderServiceTest extends TestCase
         $this->assertContains($child3->id, $siblingIds);
     }
 
-    public function testBuildFamilyTreeWithoutSiblings(): void
+    public function test_build_family_tree_without_siblings(): void
     {
         $person = Person::factory()->create();
 
@@ -61,13 +61,13 @@ class TreeBuilderServiceTest extends TestCase
         $this->assertArrayNotHasKey('siblings', $tree);
     }
 
-    public function testCountTreePersonsReturnsCorrectCount(): void
+    public function test_count_tree_persons_returns_correct_count(): void
     {
         // Create a simple family tree
         $family = Family::factory()->create();
         $father = Person::factory()->create(['sex' => 'M']);
         $mother = Person::factory()->create(['sex' => 'F']);
-        
+
         $family->update([
             'husband_id' => $father->id,
             'wife_id' => $mother->id,
@@ -81,7 +81,7 @@ class TreeBuilderServiceTest extends TestCase
         $this->assertGreaterThanOrEqual(3, $tree['metadata']['total_persons']);
     }
 
-    public function testGetSiblingsReturnsEmptyCollectionWhenNoParentFamily(): void
+    public function test_get_siblings_returns_empty_collection_when_no_parent_family(): void
     {
         $person = Person::factory()->create();
 
@@ -90,7 +90,7 @@ class TreeBuilderServiceTest extends TestCase
         $this->assertTrue($siblings->isEmpty());
     }
 
-    public function testGetSiblingsReturnsCorrectSiblings(): void
+    public function test_get_siblings_returns_correct_siblings(): void
     {
         $family = Family::factory()->create();
         $child1 = Person::factory()->create([
@@ -113,13 +113,13 @@ class TreeBuilderServiceTest extends TestCase
         $this->assertEquals($child3->id, $siblings->last()->id);
     }
 
-    public function testGetAllAncestorsReturnsCorrectAncestors(): void
+    public function test_get_all_ancestors_returns_correct_ancestors(): void
     {
         // Create a 3-generation family
         $grandparentFamily = Family::factory()->create();
         $grandfather = Person::factory()->create(['sex' => 'M']);
         $grandmother = Person::factory()->create(['sex' => 'F']);
-        
+
         $grandparentFamily->update([
             'husband_id' => $grandfather->id,
             'wife_id' => $grandmother->id,
@@ -131,7 +131,7 @@ class TreeBuilderServiceTest extends TestCase
             'child_in_family_id' => $grandparentFamily->id,
         ]);
         $mother = Person::factory()->create(['sex' => 'F']);
-        
+
         $parentFamily->update([
             'husband_id' => $father->id,
             'wife_id' => $mother->id,
@@ -148,11 +148,11 @@ class TreeBuilderServiceTest extends TestCase
         $this->assertTrue($ancestors->contains('id', $grandfather->id));
     }
 
-    public function testGetAllDescendantsReturnsCorrectDescendants(): void
+    public function test_get_all_descendants_returns_correct_descendants(): void
     {
         $parentFamily = Family::factory()->create();
         $parent = Person::factory()->create(['sex' => 'M']);
-        
+
         $parentFamily->update(['husband_id' => $parent->id]);
 
         $child1 = Person::factory()->create(['child_in_family_id' => $parentFamily->id]);
@@ -165,12 +165,12 @@ class TreeBuilderServiceTest extends TestCase
         $this->assertTrue($descendants->contains('id', $child2->id));
     }
 
-    public function testGetTreeStatisticsReturnsCorrectData(): void
+    public function test_get_tree_statistics_returns_correct_data(): void
     {
         $family = Family::factory()->create();
         $father = Person::factory()->create(['sex' => 'M']);
         $mother = Person::factory()->create(['sex' => 'F', 'deathday' => '2020-01-01']);
-        
+
         $family->update([
             'husband_id' => $father->id,
             'wife_id' => $mother->id,
@@ -197,7 +197,7 @@ class TreeBuilderServiceTest extends TestCase
         $this->assertGreaterThanOrEqual(1, $stats['females']);
     }
 
-    public function testBuildPedigreeChartReturnsCorrectStructure(): void
+    public function test_build_pedigree_chart_returns_correct_structure(): void
     {
         $person = Person::factory()->create();
 
@@ -211,7 +211,7 @@ class TreeBuilderServiceTest extends TestCase
         $this->assertEquals(4, $chart['metadata']['generations']);
     }
 
-    public function testBuildDescendantChartReturnsCorrectStructure(): void
+    public function test_build_descendant_chart_returns_correct_structure(): void
     {
         $person = Person::factory()->create();
 
@@ -225,7 +225,7 @@ class TreeBuilderServiceTest extends TestCase
         $this->assertEquals(4, $chart['metadata']['generations']);
     }
 
-    public function testFormatPersonNodeIncludesAllRequiredFields(): void
+    public function test_format_person_node_includes_all_required_fields(): void
     {
         $person = Person::factory()->create([
             'givn' => 'John',

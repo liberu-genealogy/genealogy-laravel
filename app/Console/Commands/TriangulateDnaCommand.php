@@ -37,8 +37,9 @@ class TriangulateDnaCommand extends Command
 
         // Validate base kit exists
         $baseKit = Dna::find($baseKitId);
-        if (!$baseKit) {
+        if (! $baseKit) {
             $this->error("Base kit ID {$baseKitId} not found.");
+
             return Command::FAILURE;
         }
 
@@ -75,8 +76,9 @@ class TriangulateDnaCommand extends Command
             return Command::SUCCESS;
 
         } catch (\Exception $e) {
-            $this->error('Triangulation failed: ' . $e->getMessage());
-            Log::error('DNA triangulation command failed: ' . $e->getMessage());
+            $this->error('Triangulation failed: '.$e->getMessage());
+            Log::error('DNA triangulation command failed: '.$e->getMessage());
+
             return Command::FAILURE;
         }
     }
@@ -85,12 +87,13 @@ class TriangulateDnaCommand extends Command
     {
         if (count($threeWayKits) !== 3) {
             $this->error('Three-way triangulation requires exactly 3 kit IDs. Use --three-way-kits option.');
+
             return Command::FAILURE;
         }
 
         $kitIds = array_map(intval(...), $threeWayKits);
-        
-        $this->info("Starting three-way triangulation for kits: " . implode(', ', $kitIds));
+
+        $this->info('Starting three-way triangulation for kits: '.implode(', ', $kitIds));
         $this->newLine();
 
         try {
@@ -105,34 +108,36 @@ class TriangulateDnaCommand extends Command
             return Command::SUCCESS;
 
         } catch (\Exception $e) {
-            $this->error('Three-way triangulation failed: ' . $e->getMessage());
-            Log::error('DNA three-way triangulation failed: ' . $e->getMessage());
+            $this->error('Three-way triangulation failed: '.$e->getMessage());
+            Log::error('DNA three-way triangulation failed: '.$e->getMessage());
+
             return Command::FAILURE;
         }
     }
 
     protected function displayOneToManyResults(array $results): void
     {
-        $this->info('Base Kit: ' . $results['base_kit']['name']);
-        $this->info('Total Compared: ' . $results['total_compared']);
-        $this->info('Significant Matches: ' . $results['significant_matches']);
+        $this->info('Base Kit: '.$results['base_kit']['name']);
+        $this->info('Total Compared: '.$results['total_compared']);
+        $this->info('Significant Matches: '.$results['significant_matches']);
         $this->newLine();
 
         if (empty($results['matches'])) {
             $this->warn('No significant matches found.');
+
             return;
         }
 
         $this->info('Top Matches:');
         $this->table(
             ['Kit ID', 'Kit Name', 'Shared cM', 'Largest Segment', 'Relationship', 'Confidence', 'Quality Score'],
-            array_map(fn(array $match): array => [
+            array_map(fn (array $match): array => [
                 $match['kit_id'],
                 substr((string) $match['kit_name'], 0, 30),
                 $match['total_cms'],
                 $match['largest_cm'],
                 $match['predicted_relationship'],
-                $match['confidence_level'] . '%',
+                $match['confidence_level'].'%',
                 $match['match_quality_score'],
             ], array_slice($results['matches'], 0, 20)) // Show top 20
         );
@@ -145,7 +150,7 @@ class TriangulateDnaCommand extends Command
 
         $this->info('Kits:');
         foreach ($results['kits'] as $idx => $kit) {
-            $this->info(($idx + 1) . ". Kit ID {$kit['id']}: {$kit['name']}");
+            $this->info(($idx + 1).". Kit ID {$kit['id']}: {$kit['name']}");
         }
         $this->newLine();
 
@@ -160,15 +165,15 @@ class TriangulateDnaCommand extends Command
         );
 
         $this->newLine();
-        $this->info('Triangulation Score: ' . $results['triangulation_score']);
-        $this->info('Triangulated Chromosomes: ' . count($results['triangulated_chromosomes']));
+        $this->info('Triangulation Score: '.$results['triangulation_score']);
+        $this->info('Triangulated Chromosomes: '.count($results['triangulated_chromosomes']));
 
-        if (!empty($results['triangulated_chromosomes'])) {
+        if (! empty($results['triangulated_chromosomes'])) {
             $this->newLine();
             $this->info('Chromosome Breakdown:');
             $this->table(
                 ['Chr', 'Kit1-Kit2 cM', 'Kit1-Kit3 cM', 'Kit2-Kit3 cM', 'Min cM', 'Avg cM'],
-                array_map(fn(array $chr): array => [
+                array_map(fn (array $chr): array => [
                     $chr['chromosome'],
                     $chr['kit1_kit2_cm'],
                     $chr['kit1_kit3_cm'],

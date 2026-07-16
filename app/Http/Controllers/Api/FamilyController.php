@@ -26,8 +26,8 @@ class FamilyController extends Controller
     public function store(Request $request): JsonResponse
     {
         $data = $request->validate([
-            'husb'    => ['nullable', 'exists:people,id'],
-            'wife'    => ['nullable', 'exists:people,id'],
+            'husb' => ['nullable', 'exists:people,id'],
+            'wife' => ['nullable', 'exists:people,id'],
             'tree_id' => ['nullable', 'exists:trees,id'],
         ]);
 
@@ -39,8 +39,8 @@ class FamilyController extends Controller
     public function update(Request $request, Family $family): JsonResponse
     {
         $data = $request->validate([
-            'husb'    => ['nullable', 'exists:people,id'],
-            'wife'    => ['nullable', 'exists:people,id'],
+            'husb' => ['nullable', 'exists:people,id'],
+            'wife' => ['nullable', 'exists:people,id'],
             'tree_id' => ['nullable', 'exists:trees,id'],
         ]);
 

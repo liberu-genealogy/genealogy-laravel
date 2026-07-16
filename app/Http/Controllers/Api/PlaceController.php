@@ -31,8 +31,8 @@ class PlaceController extends Controller
     {
         $data = $request->validate([
             'place' => ['required', 'string', 'max:255'],
-            'lati'  => ['nullable', 'numeric', 'between:-90,90'],
-            'long'  => ['nullable', 'numeric', 'between:-180,180'],
+            'lati' => ['nullable', 'numeric', 'between:-90,90'],
+            'long' => ['nullable', 'numeric', 'between:-180,180'],
         ]);
 
         return response()->json(Place::create($data), 201);
@@ -42,8 +42,8 @@ class PlaceController extends Controller
     {
         $data = $request->validate([
             'place' => ['sometimes', 'string', 'max:255'],
-            'lati'  => ['nullable', 'numeric', 'between:-90,90'],
-            'long'  => ['nullable', 'numeric', 'between:-180,180'],
+            'lati' => ['nullable', 'numeric', 'between:-90,90'],
+            'long' => ['nullable', 'numeric', 'between:-180,180'],
         ]);
 
         $place->update($data);

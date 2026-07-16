@@ -4,18 +4,18 @@ namespace App\Filament\App\Resources\PersonResource\RelationManagers;
 
 use App\Models\PersonPhoto;
 use App\Services\FacialRecognitionService;
+use Filament\Actions\Action;
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\CreateAction;
+use Filament\Actions\DeleteAction;
+use Filament\Actions\DeleteBulkAction;
+use Filament\Actions\EditAction;
+use Filament\Forms\Components;
 use Filament\Notifications\Notification;
 use Filament\Resources\RelationManagers\RelationManager;
-use Filament\Forms\Components;
 use Filament\Schemas\Schema;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Filament\Actions\Action;
-use Filament\Actions\CreateAction;
-use Filament\Actions\EditAction;
-use Filament\Actions\DeleteAction;
-use Filament\Actions\DeleteBulkAction;
-use Filament\Actions\BulkActionGroup;
 use Illuminate\Support\Facades\Storage;
 
 class PhotosRelationManager extends RelationManager
@@ -77,6 +77,7 @@ class PhotosRelationManager extends RelationManager
                     ->mutateFormDataUsing(function (array $data): array {
                         $data['person_id'] = $this->ownerRecord->id;
                         $data['file_name'] = basename((string) $data['file_path']);
+
                         return $data;
                     })
                     ->after(function (PersonPhoto $record): void {
@@ -97,7 +98,7 @@ class PhotosRelationManager extends RelationManager
                     ->label('Analyze')
                     ->icon('heroicon-o-camera')
                     ->color('primary')
-                    ->visible(fn (PersonPhoto $record): bool => !$record->is_analyzed)
+                    ->visible(fn (PersonPhoto $record): bool => ! $record->is_analyzed)
                     ->action(function (PersonPhoto $record): void {
                         $facialRecognitionService = app(FacialRecognitionService::class);
                         $result = $facialRecognitionService->analyzePhoto($record);

@@ -25,7 +25,7 @@ return new class extends Migration
             $table->boolean('is_analyzed')->default(false);
             $table->timestamp('analyzed_at')->nullable();
             $table->timestamps();
-            
+
             $table->index(['person_id', 'team_id']);
             $table->index('is_analyzed');
         });

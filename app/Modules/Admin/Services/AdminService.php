@@ -3,10 +3,9 @@
 namespace App\Modules\Admin\Services;
 
 use App\Models\Chan;
-use App\Models\Type;
 use App\Models\Refn;
+use App\Models\Type;
 use Illuminate\Support\Collection;
-use Illuminate\Pagination\LengthAwarePaginator;
 
 class AdminService
 {
@@ -71,6 +70,7 @@ class AdminService
     public function updateType(Type $type, array $data): Type
     {
         $type->update($data);
+
         return $type->fresh();
     }
 
@@ -113,6 +113,7 @@ class AdminService
     public function cleanOldChanges(int $days = 365): int
     {
         $cutoffDate = now()->subDays($days);
+
         return Chan::where('created_at', '<', $cutoffDate)->delete();
     }
 

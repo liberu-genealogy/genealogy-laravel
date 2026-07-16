@@ -2,8 +2,8 @@
 
 namespace App\Modules\Tree\Services;
 
-use App\Models\Person;
 use App\Models\Family;
+use App\Models\Person;
 use Illuminate\Support\Collection;
 
 class TreeBuilderService
@@ -27,14 +27,14 @@ class TreeBuilderService
                 'build_date' => now()->toISOString(),
             ],
         ];
-        
+
         // Add siblings if requested
         if ($includeSiblings) {
             $tree['siblings'] = $this->getSiblings($rootPerson)
-                ->map(fn(\App\Models\Person $sibling): array => $this->formatPersonNode($sibling))
+                ->map(fn (Person $sibling): array => $this->formatPersonNode($sibling))
                 ->toArray();
         }
-        
+
         return $tree;
     }
 
@@ -152,19 +152,19 @@ class TreeBuilderService
                 $data['parents'] = [];
                 $husband = $family->husband()->first();
                 $wife = $family->wife()->first();
-                
+
                 if ($husband) {
                     $data['parents']['father'] = $this->buildPedigreeData(
-                        $husband, 
-                        $maxGenerations, 
+                        $husband,
+                        $maxGenerations,
                         $currentGeneration + 1
                     );
                 }
-                
+
                 if ($wife) {
                     $data['parents']['mother'] = $this->buildPedigreeData(
-                        $wife, 
-                        $maxGenerations, 
+                        $wife,
+                        $maxGenerations,
                         $currentGeneration + 1
                     );
                 }
@@ -204,7 +204,7 @@ class TreeBuilderService
 
         if ($currentGeneration < $maxGenerations) {
             $families = $person->familiesAsHusband->merge($person->familiesAsWife);
-            
+
             foreach ($families as $family) {
                 $familyData = [
                     'family_id' => $family->id,
@@ -228,8 +228,8 @@ class TreeBuilderService
 
                 foreach ($children as $child) {
                     $familyData['children'][] = $this->buildDescendantData(
-                        $child, 
-                        $maxGenerations, 
+                        $child,
+                        $maxGenerations,
                         $currentGeneration + 1
                     );
                 }
@@ -256,7 +256,7 @@ class TreeBuilderService
             'birth_year' => $person->birthday?->year,
             'death_date' => $person->deathday?->format('Y-m-d'),
             'death_year' => $person->deathday?->year,
-            'is_living' => !$person->deathday,
+            'is_living' => ! $person->deathday,
             'age' => $this->calculateAge($person),
             'lifespan' => $this->formatLifespan($person),
         ];
@@ -267,11 +267,12 @@ class TreeBuilderService
      */
     protected function calculateAge(Person $person): ?int
     {
-        if (!$person->birthday) {
+        if (! $person->birthday) {
             return null;
         }
 
         $endDate = $person->deathday ?? now();
+
         return $person->birthday->diffInYears($endDate);
     }
 
@@ -282,7 +283,7 @@ class TreeBuilderService
     {
         $birth = $person->birthday?->year ?? '?';
         $death = $person->deathday?->year ?? ($person->birthday ? 'living' : '?');
-        
+
         return "({$birth}-{$death})";
     }
 
@@ -292,15 +293,15 @@ class TreeBuilderService
     protected function countTreePersons(Person $rootPerson, int $generations): int
     {
         $persons = collect([$rootPerson]);
-        
+
         // Count ancestors
         $ancestors = $this->getAllAncestors($rootPerson, $generations);
         $persons = $persons->merge($ancestors);
-        
+
         // Count descendants
         $descendants = $this->getAllDescendants($rootPerson, $generations);
         $persons = $persons->merge($descendants);
-        
+
         // Return unique count
         return $persons->unique('id')->count();
     }
@@ -310,7 +311,7 @@ class TreeBuilderService
      */
     public function getSiblings(Person $person): Collection
     {
-        if (!$person->child_in_family_id) {
+        if (! $person->child_in_family_id) {
             return collect();
         }
 
@@ -327,6 +328,7 @@ class TreeBuilderService
     {
         $ancestors = collect();
         $this->collectAncestors($person, $ancestors, $maxGenerations);
+
         return $ancestors;
     }
 
@@ -344,12 +346,12 @@ class TreeBuilderService
             $husband = $family->husband()->first();
             $wife = $family->wife()->first();
 
-            if ($husband && !$ancestors->contains('id', $husband->id)) {
+            if ($husband && ! $ancestors->contains('id', $husband->id)) {
                 $ancestors->push($husband);
                 $this->collectAncestors($husband, $ancestors, $remainingGenerations - 1);
             }
 
-            if ($wife && !$ancestors->contains('id', $wife->id)) {
+            if ($wife && ! $ancestors->contains('id', $wife->id)) {
                 $ancestors->push($wife);
                 $this->collectAncestors($wife, $ancestors, $remainingGenerations - 1);
             }
@@ -363,6 +365,7 @@ class TreeBuilderService
     {
         $descendants = collect();
         $this->collectDescendants($person, $descendants, $maxGenerations);
+
         return $descendants;
     }
 
@@ -376,12 +379,12 @@ class TreeBuilderService
         }
 
         $families = $person->familiesAsHusband->merge($person->familiesAsWife);
-        
+
         foreach ($families as $family) {
             $children = Person::where('child_in_family_id', $family->id)->get();
-            
+
             foreach ($children as $child) {
-                if (!$descendants->contains('id', $child->id)) {
+                if (! $descendants->contains('id', $child->id)) {
                     $descendants->push($child);
                     $this->collectDescendants($child, $descendants, $remainingGenerations - 1);
                 }
@@ -397,22 +400,22 @@ class TreeBuilderService
         $ancestors = $this->getAllAncestors($person, $maxGenerations);
         $descendants = $this->getAllDescendants($person, $maxGenerations);
         $siblings = $this->getSiblings($person);
-        
+
         // Calculate unique people in the tree
         $allPeople = collect([$person])
             ->merge($ancestors)
             ->merge($descendants)
             ->unique('id');
-        
+
         return [
             'total_people' => $allPeople->count(),
             'total_ancestors' => $ancestors->count(),
             'total_descendants' => $descendants->count(),
             'total_siblings' => $siblings->count(),
-            'living_people' => $allPeople->filter(fn($p): bool => !$p->deathday)->count(),
-            'deceased_people' => $allPeople->filter(fn($p) => $p->deathday)->count(),
-            'males' => $allPeople->filter(fn($p): bool => $p->sex === 'M')->count(),
-            'females' => $allPeople->filter(fn($p): bool => $p->sex === 'F')->count(),
+            'living_people' => $allPeople->filter(fn ($p): bool => ! $p->deathday)->count(),
+            'deceased_people' => $allPeople->filter(fn ($p) => $p->deathday)->count(),
+            'males' => $allPeople->filter(fn ($p): bool => $p->sex === 'M')->count(),
+            'females' => $allPeople->filter(fn ($p): bool => $p->sex === 'F')->count(),
             'max_ancestor_depth' => $this->getMaxAncestorDepth($person),
             'max_descendant_depth' => $this->getMaxDescendantDepth($person),
         ];
@@ -426,10 +429,10 @@ class TreeBuilderService
         if (in_array($person->id, $visited)) {
             return $depth;
         }
-        
+
         $visited[] = $person->id;
-        
-        if (!$person->childInFamily) {
+
+        if (! $person->childInFamily) {
             return $depth;
         }
 
@@ -454,11 +457,11 @@ class TreeBuilderService
         if (in_array($person->id, $visited)) {
             return $depth;
         }
-        
+
         $visited[] = $person->id;
-        
+
         $families = $person->familiesAsHusband->merge($person->familiesAsWife);
-        
+
         if ($families->isEmpty()) {
             return $depth;
         }
@@ -467,7 +470,7 @@ class TreeBuilderService
 
         foreach ($families as $family) {
             $children = Person::where('child_in_family_id', $family->id)->get();
-            
+
             foreach ($children as $child) {
                 $maxDepth = max($maxDepth, $this->getMaxDescendantDepth($child, $depth + 1, $visited));
             }

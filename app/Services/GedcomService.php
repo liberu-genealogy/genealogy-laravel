@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Services;
 
+use App\Jobs\ImportGedcom;
 use App\Models\ImportJob;
 use FamilyTree365\LaravelGedcom\Utils\GedcomGenerator;
 use Illuminate\Http\UploadedFile;
@@ -16,7 +17,7 @@ class GedcomService
     {
         $generator = new GedcomGenerator($personId, $familyId, $upNest, $downNest);
 
-        return $generator->getGedcomPerson() . $generator->getGedcomFamily();
+        return $generator->getGedcomPerson().$generator->getGedcomFamily();
     }
 
     /**
@@ -88,7 +89,7 @@ class GedcomService
                 continue;
             }
             if (! preg_match('/^\d+\s+\S/', $line)) {
-                $errors[] = 'Line ' . ($i + 1) . ' is not a valid GEDCOM line: ' . Str::limit(trim($line), 40);
+                $errors[] = 'Line '.($i + 1).' is not a valid GEDCOM line: '.Str::limit(trim($line), 40);
                 break;
             }
         }
@@ -101,13 +102,13 @@ class GedcomService
         $path = $file->store('gedcom-form-imports', 'private');
 
         $job = ImportJob::create([
-            'user_id'  => Auth::id(),
-            'status'   => 'queue',
+            'user_id' => Auth::id(),
+            'status' => 'queue',
             'progress' => 0,
-            'slug'     => Str::uuid()->toString(),
+            'slug' => Str::uuid()->toString(),
         ]);
 
-        \App\Jobs\ImportGedcom::dispatch($path, $job->slug);
+        ImportGedcom::dispatch($path, $job->slug);
 
         return $job;
     }

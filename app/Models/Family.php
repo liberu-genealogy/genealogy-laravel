@@ -9,8 +9,8 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Family extends \FamilyTree365\LaravelGedcom\Models\Family
 {
-    use HasFactory;
     use BelongsToTenant;
+    use HasFactory;
 
     /**
      * Unset the parent's public property declarations that shadow Eloquent's
@@ -90,7 +90,7 @@ class Family extends \FamilyTree365\LaravelGedcom\Models\Family
     {
         return $this->checklists()->whereIn('status', [
             UserChecklist::STATUS_NOT_STARTED,
-            UserChecklist::STATUS_IN_PROGRESS
+            UserChecklist::STATUS_IN_PROGRESS,
         ]);
     }
 
@@ -113,6 +113,7 @@ class Family extends \FamilyTree365\LaravelGedcom\Models\Family
         }
 
         $completedChecklists = $this->completedChecklists()->count();
+
         return round(($completedChecklists / $totalChecklists) * 100, 2);
     }
 
@@ -138,9 +139,9 @@ class Family extends \FamilyTree365\LaravelGedcom\Models\Family
             'total_checklists' => $checklists->count(),
             'completed_checklists' => $checklists->where('status', UserChecklist::STATUS_COMPLETED)->count(),
             'in_progress_checklists' => $checklists->where('status', UserChecklist::STATUS_IN_PROGRESS)->count(),
-            'overdue_checklists' => $checklists->filter(fn($c) => $c->is_overdue)->count(),
-            'total_items' => $checklists->sum(fn($c) => $c->items->count()),
-            'completed_items' => $checklists->sum(fn($c) => $c->items->where('is_completed', true)->count()),
+            'overdue_checklists' => $checklists->filter(fn ($c) => $c->is_overdue)->count(),
+            'total_items' => $checklists->sum(fn ($c) => $c->items->count()),
+            'completed_items' => $checklists->sum(fn ($c) => $c->items->where('is_completed', true)->count()),
             'progress_percentage' => $this->research_progress,
         ];
     }

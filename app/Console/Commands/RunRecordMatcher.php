@@ -9,6 +9,7 @@ class RunRecordMatcher extends Command
 {
     #[\Override]
     protected $signature = 'ai:run-matcher {--queue=default}';
+
     #[\Override]
     protected $description = 'Run the AI record matching job (dispatch to queue).';
 

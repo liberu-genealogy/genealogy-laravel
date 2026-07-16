@@ -25,7 +25,7 @@ class DnaController extends Controller
     {
         $data = $request->validate([
             'variable_name' => ['required', 'string', 'max:20', 'unique:dnas,variable_name'],
-            'gedcom_id'     => ['nullable', 'exists:gedcoms,id'],
+            'gedcom_id' => ['nullable', 'exists:gedcoms,id'],
         ]);
 
         return response()->json(Dna::create($data), 201);

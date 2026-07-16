@@ -11,28 +11,28 @@ use Override;
 
 class ImportJobResource extends AppResource
 {
-    #[\Override]
+    #[Override]
     protected static ?string $model = ImportJob::class;
 
-    #[\Override]
+    #[Override]
     protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-clipboard-document-list';
 
-    #[\Override]
+    #[Override]
     protected static ?string $navigationLabel = 'Import Logs';
 
-    #[\Override]
+    #[Override]
     protected static string|\UnitEnum|null $navigationGroup = '🛠️ Data Management';
 
-    #[\Override]
+    #[Override]
     protected static ?int $navigationSort = 11;
 
-    #[\Override]
+    #[Override]
     public static function canCreate(): bool
     {
         return false;
     }
 
-    #[\Override]
+    #[Override]
     public static function getEloquentQuery(): Builder
     {
         return parent::getEloquentQuery()
@@ -54,20 +54,20 @@ class ImportJobResource extends AppResource
                     ->label('Status')
                     ->badge()
                     ->color(fn (string $state): string => match ($state) {
-                        'complete'   => 'success',
-                        'failed'     => 'danger',
+                        'complete' => 'success',
+                        'failed' => 'danger',
                         'processing' => 'info',
-                        'queue'      => 'warning',
-                        default      => 'gray',
+                        'queue' => 'warning',
+                        default => 'gray',
                     }),
                 TextColumn::make('progress')
                     ->label('Progress')
-                    ->formatStateUsing(fn (int $state): string => $state . '%')
+                    ->formatStateUsing(fn (int $state): string => $state.'%')
                     ->color(fn (int $state): string => match (true) {
                         $state === 100 => 'success',
-                        $state >= 50   => 'info',
-                        $state > 0     => 'warning',
-                        default        => 'gray',
+                        $state >= 50 => 'info',
+                        $state > 0 => 'warning',
+                        default => 'gray',
                     }),
                 TextColumn::make('people_imported')
                     ->label('People')
@@ -101,7 +101,7 @@ class ImportJobResource extends AppResource
             ->toolbarActions([]);
     }
 
-    #[\Override]
+    #[Override]
     public static function getPages(): array
     {
         return [

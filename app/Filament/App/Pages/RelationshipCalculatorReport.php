@@ -24,13 +24,13 @@ class RelationshipCalculatorReport extends Page implements HasForms
     protected static ?string $title = 'Relationship Calculator';
 
     #[\Override]
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-users';
+    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-users';
 
     #[\Override]
     protected static ?string $navigationLabel = 'Relationship Calculator';
 
     #[\Override]
-    protected static string | \UnitEnum | null $navigationGroup = '📄 Reports';
+    protected static string|\UnitEnum|null $navigationGroup = '📄 Reports';
 
     public ?array $data = [];
 

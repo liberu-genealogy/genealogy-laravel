@@ -2,16 +2,16 @@
 
 declare(strict_types=1);
 
-use App\Http\Controllers\Api\FamilyController;
-use App\Http\Controllers\Api\PersonController;
-use App\Http\Controllers\Api\TreeController;
-use App\Http\Controllers\Api\TeamController;
-use App\Http\Controllers\Api\MediaController;
-use App\Http\Controllers\Api\SourceController;
-use App\Http\Controllers\Api\NoteController;
-use App\Http\Controllers\Api\PlaceController;
 use App\Http\Controllers\Api\DnaController;
+use App\Http\Controllers\Api\FamilyController;
 use App\Http\Controllers\Api\ImportController;
+use App\Http\Controllers\Api\MediaController;
+use App\Http\Controllers\Api\NoteController;
+use App\Http\Controllers\Api\PersonController;
+use App\Http\Controllers\Api\PlaceController;
+use App\Http\Controllers\Api\SourceController;
+use App\Http\Controllers\Api\TeamController;
+use App\Http\Controllers\Api\TreeController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 

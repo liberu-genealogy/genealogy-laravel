@@ -10,8 +10,6 @@ class CreateSourceDataEvenTable extends Migration
 {
     /**
      * Run the migrations.
-     *
-     * @return void
      */
     public function up(): void
     {
@@ -28,8 +26,6 @@ class CreateSourceDataEvenTable extends Migration
 
     /**
      * Reverse the migrations.
-     *
-     * @return void
      */
     public function down(): void
     {

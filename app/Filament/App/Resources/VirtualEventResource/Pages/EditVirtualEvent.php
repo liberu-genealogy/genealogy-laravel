@@ -2,15 +2,14 @@
 
 namespace App\Filament\App\Resources\VirtualEventResource\Pages;
 
-use Filament\Actions\Action;
-use Exception;
-use Filament\Actions\ViewAction;
-use Filament\Actions\DeleteAction;
 use App\Filament\App\Resources\VirtualEventResource;
 use App\Services\VideoConferencingService;
-use Filament\Actions;
-use Filament\Resources\Pages\EditRecord;
+use Exception;
+use Filament\Actions\Action;
+use Filament\Actions\DeleteAction;
+use Filament\Actions\ViewAction;
 use Filament\Notifications\Notification;
+use Filament\Resources\Pages\EditRecord;
 
 class EditVirtualEvent extends EditRecord
 {
@@ -68,13 +67,13 @@ class EditVirtualEvent extends EditRecord
                             ->send();
                     }
                 })
-                ->visible(fn (): bool => !empty($this->getRecord()->meeting_id) && $this->getRecord()->platform !== 'custom'),
+                ->visible(fn (): bool => ! empty($this->getRecord()->meeting_id) && $this->getRecord()->platform !== 'custom'),
             Action::make('join_meeting')
                 ->icon('heroicon-o-video-camera')
                 ->color('success')
                 ->url(fn () => $this->getRecord()->join_url ?? '#')
                 ->openUrlInNewTab()
-                ->visible(fn (): bool => $this->getRecord()->canJoin() && !empty($this->getRecord()->join_url)),
+                ->visible(fn (): bool => $this->getRecord()->canJoin() && ! empty($this->getRecord()->join_url)),
             ViewAction::make(),
             DeleteAction::make(),
         ];
@@ -85,14 +84,14 @@ class EditVirtualEvent extends EditRecord
         $record = $this->getRecord();
 
         // Update meeting if it exists and platform supports it
-        if (!empty($record->meeting_id) && $record->platform !== 'custom') {
+        if (! empty($record->meeting_id) && $record->platform !== 'custom') {
             try {
                 $service = app(VideoConferencingService::class);
                 $service->updateMeeting($record);
             } catch (Exception $e) {
                 Notification::make()
                     ->title('Meeting Update Failed')
-                    ->body('Event saved, but failed to update video conference meeting: ' . $e->getMessage())
+                    ->body('Event saved, but failed to update video conference meeting: '.$e->getMessage())
                     ->warning()
                     ->send();
             }

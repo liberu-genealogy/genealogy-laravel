@@ -24,8 +24,7 @@ interface ExternalRecordProviderInterface
      *   ...
      * ]
      *
-     * @param Person|int $localPerson
-     * @return array
+     * @param  Person|int  $localPerson
      */
     public function search($localPerson): array;
 }

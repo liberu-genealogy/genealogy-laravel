@@ -4,37 +4,32 @@ declare(strict_types=1);
 
 namespace App\Filament\App\Resources;
 
-use Override;
-use Filament\Forms\Components\TextInput;
-use Filament\Tables\Columns\TextColumn;
-use Filament\Actions\EditAction;
-use Filament\Actions\BulkActionGroup;
-use Filament\Actions\DeleteBulkAction;
-use App\Filament\App\Resources\SourceRefEvenResource\Pages\ListSourceRefEvens;
 use App\Filament\App\Resources\SourceRefEvenResource\Pages\CreateSourceRefEven;
 use App\Filament\App\Resources\SourceRefEvenResource\Pages\EditSourceRefEven;
-use BackedEnum;
-use App\Filament\App\Resources\SourceRefEvenResource\Pages;
+use App\Filament\App\Resources\SourceRefEvenResource\Pages\ListSourceRefEvens;
 use App\Models\SourceRefEven;
-use Filament\Forms;
-use Filament\Forms\Form;
-use App\Filament\App\Resources\AppResource;
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteBulkAction;
+use Filament\Actions\EditAction;
+use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Schema;
-use Filament\Tables;
-use Filament\Actions;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use Override;
 
 class SourceRefEvenResource extends AppResource
 {
-    #[\Override]
+    #[Override]
     protected static ?string $model = SourceRefEven::class;
 
-    #[\Override]
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-link';
-    #[\Override]
+    #[Override]
+    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-link';
+
+    #[Override]
     protected static ?string $navigationLabel = 'Source Reference Events';
-    #[\Override]
-    protected static string | \UnitEnum | null $navigationGroup = '🔍 Research & Analysis';
+
+    #[Override]
+    protected static string|\UnitEnum|null $navigationGroup = '🔍 Research & Analysis';
 
     #[Override]
     public static function form(Schema $schema): Schema
@@ -96,13 +91,13 @@ class SourceRefEvenResource extends AppResource
         ];
     }
 
-    #[\Override]
+    #[Override]
     public static function getPages(): array
     {
         return [
-            'index'  => ListSourceRefEvens::route('/'),
+            'index' => ListSourceRefEvens::route('/'),
             'create' => CreateSourceRefEven::route('/create'),
-            'edit'   => EditSourceRefEven::route('/{record}/edit'),
+            'edit' => EditSourceRefEven::route('/{record}/edit'),
         ];
     }
 }

@@ -10,7 +10,7 @@ class DatabaseUpdateService
     {
         $subscription = Subscription::where('stripe_id', $subscriptionId)->first();
 
-        if (!$subscription) {
+        if (! $subscription) {
             return ['success' => false, 'message' => 'Subscription not found.'];
         }
 
@@ -23,7 +23,7 @@ class DatabaseUpdateService
     {
         $subscription = Subscription::where('stripe_id', $subscriptionId)->first();
 
-        if (!$subscription) {
+        if (! $subscription) {
             return ['success' => false, 'message' => 'Subscription not found.'];
         }
 

@@ -8,7 +8,7 @@ use App\Models\Provider;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Provider>
+ * @extends Factory<Provider>
  */
 class ProviderFactory extends Factory
 {
@@ -28,10 +28,10 @@ class ProviderFactory extends Factory
     public function definition()
     {
         return [
-            'provider'    => fake()->domainWord,
+            'provider' => fake()->domainWord,
             'provider_id' => fake()->randomAscii(),
-            'user_id'     => 1,
-            'avatar'      => '',
+            'user_id' => 1,
+            'avatar' => '',
         ];
     }
 }

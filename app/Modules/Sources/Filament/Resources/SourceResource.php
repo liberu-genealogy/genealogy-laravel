@@ -2,27 +2,25 @@
 
 namespace App\Modules\Sources\Filament\Resources;
 
-use Filament\Schemas\Schema;
-use Filament\Actions\EditAction;
-use Filament\Actions\DeleteAction;
+use App\Models\Repository;
+use App\Models\Source;
+use App\Modules\Sources\Filament\Resources\SourceResource\Pages\CreateSource;
+use App\Modules\Sources\Filament\Resources\SourceResource\Pages\EditSource;
+use App\Modules\Sources\Filament\Resources\SourceResource\Pages\ListSources;
 use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
-use Filament\Forms\Components\TextInput;
+use Filament\Actions\EditAction;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
-use Filament\Tables\Columns\TextColumn;
+use Filament\Forms\Components\TextInput;
+use Filament\Resources\Resource;
+use Filament\Schemas\Schema;
 use Filament\Tables\Columns\IconColumn;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Filters\TernaryFilter;
-use App\Modules\Sources\Filament\Resources\SourceResource\Pages\ListSources;
-use App\Modules\Sources\Filament\Resources\SourceResource\Pages\CreateSource;
-use App\Modules\Sources\Filament\Resources\SourceResource\Pages\EditSource;
-use App\Models\Source;
-use App\Models\Repository;
-use Filament\Forms;
-use Filament\Resources\Resource;
-use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 
@@ -32,10 +30,10 @@ class SourceResource extends Resource
     protected static ?string $model = Source::class;
 
     #[\Override]
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-document-text';
+    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-document-text';
 
     #[\Override]
-    protected static string | \UnitEnum | null $navigationGroup = 'Research';
+    protected static string|\UnitEnum|null $navigationGroup = 'Research';
 
     #[\Override]
     protected static ?string $navigationLabel = 'Sources';
@@ -90,7 +88,7 @@ class SourceResource extends Resource
                 IconColumn::make('has_url')
                     ->label('Online')
                     ->boolean()
-                    ->getStateUsing(fn ($record): bool => !empty($record->url)),
+                    ->getStateUsing(fn ($record): bool => ! empty($record->url)),
                 TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()

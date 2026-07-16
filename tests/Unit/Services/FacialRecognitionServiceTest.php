@@ -2,7 +2,6 @@
 
 namespace Tests\Unit\Services;
 
-use App\Models\FaceEncoding;
 use App\Models\Person;
 use App\Models\PersonPhoto;
 use App\Models\PhotoTag;
@@ -19,28 +18,31 @@ class FacialRecognitionServiceTest extends TestCase
     use RefreshDatabase;
 
     protected FacialRecognitionService $service;
+
     protected Team $team;
+
     protected Person $person;
+
     protected User $user;
 
     #[\Override]
     protected function setUp(): void
     {
         parent::setUp();
-        
-        $this->service = new FacialRecognitionService();
-        
+
+        $this->service = new FacialRecognitionService;
+
         // Create test data
         $this->user = User::factory()->create();
         $this->team = Team::factory()->create();
         $this->team->users()->attach($this->user);
         $this->person = Person::factory()->create(['team_id' => $this->team->id]);
-        
+
         // Setup storage
         Storage::fake('public');
     }
 
-    public function testAnalyzePhotoDetectsFaces(): void
+    public function test_analyze_photo_detects_faces(): void
     {
         // Create a test photo file
         $file = UploadedFile::fake()->image('test-photo.jpg', 800, 600);
@@ -69,7 +71,7 @@ class FacialRecognitionServiceTest extends TestCase
         $this->assertNotNull($photo->analyzed_at);
     }
 
-    public function testAnalyzePhotoCreatesTags(): void
+    public function test_analyze_photo_creates_tags(): void
     {
         // Create photo
         $file = UploadedFile::fake()->image('test-photo.jpg', 800, 600);
@@ -87,7 +89,7 @@ class FacialRecognitionServiceTest extends TestCase
 
         // Check tags were created
         $this->assertGreaterThanOrEqual(0, $photo->tags()->count());
-        
+
         if ($result['faces_detected'] > 0) {
             // Each tag should have proper structure
             $tag = $photo->tags()->first();
@@ -98,7 +100,7 @@ class FacialRecognitionServiceTest extends TestCase
         }
     }
 
-    public function testConfirmTagUpdatesStatus(): void
+    public function test_confirm_tag_updates_status(): void
     {
         // Create a photo tag
         $photo = PersonPhoto::factory()->create([
@@ -125,7 +127,7 @@ class FacialRecognitionServiceTest extends TestCase
         $this->assertNotNull($tag->confirmed_at);
     }
 
-    public function testRejectTagUpdatesStatus(): void
+    public function test_reject_tag_updates_status(): void
     {
         $photo = PersonPhoto::factory()->create([
             'person_id' => $this->person->id,
@@ -149,10 +151,10 @@ class FacialRecognitionServiceTest extends TestCase
         $this->assertEquals('rejected', $tag->status);
     }
 
-    public function testUpdateTagPersonChangesAssignment(): void
+    public function test_update_tag_person_changes_assignment(): void
     {
         $anotherPerson = Person::factory()->create(['team_id' => $this->team->id]);
-        
+
         $photo = PersonPhoto::factory()->create([
             'person_id' => $this->person->id,
             'team_id' => $this->team->id,
@@ -177,7 +179,7 @@ class FacialRecognitionServiceTest extends TestCase
         $this->assertEquals($this->user->id, $tag->confirmed_by);
     }
 
-    public function testGetPendingTagsReturnsCorrectTags(): void
+    public function test_get_pending_tags_returns_correct_tags(): void
     {
         $photo = PersonPhoto::factory()->create([
             'person_id' => $this->person->id,
@@ -210,7 +212,7 @@ class FacialRecognitionServiceTest extends TestCase
         $this->assertEquals('pending', $pendingTags->first()->status);
     }
 
-    public function testAnalyzePhotoHandlesMissingFile(): void
+    public function test_analyze_photo_handles_missing_file(): void
     {
         // Create photo record without actual file
         $photo = PersonPhoto::create([

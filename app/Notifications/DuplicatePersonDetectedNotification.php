@@ -11,9 +11,7 @@ class DuplicatePersonDetectedNotification extends Notification implements Should
 {
     use Queueable;
 
-    public function __construct(protected int $count)
-    {
-    }
+    public function __construct(protected int $count) {}
 
     /**
      * @return array<int, string>

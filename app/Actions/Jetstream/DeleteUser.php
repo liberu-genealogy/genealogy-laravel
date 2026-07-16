@@ -9,7 +9,7 @@ class DeleteUser implements DeletesUsers
     /**
      * Delete the given user.
      *
-     * @param mixed $user
+     * @param  mixed  $user
      */
     public function delete($user): void
     {

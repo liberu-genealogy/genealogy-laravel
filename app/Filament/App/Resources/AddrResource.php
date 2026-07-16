@@ -2,42 +2,34 @@
 
 namespace App\Filament\App\Resources;
 
-use Override;
-use Filament\Forms\Components\TextInput;
-use Filament\Tables\Columns\TextColumn;
-use Filament\Actions\EditAction;
-use Filament\Actions\BulkActionGroup;
-use Filament\Actions\DeleteBulkAction;
-use App\Filament\App\Resources\AddrResource\Pages\ListAddrs;
 use App\Filament\App\Resources\AddrResource\Pages\CreateAddr;
 use App\Filament\App\Resources\AddrResource\Pages\EditAddr;
-use UnitEnum;
-use BackedEnum;
-use App\Filament\App\Resources\AddrResource\Pages;
+use App\Filament\App\Resources\AddrResource\Pages\ListAddrs;
 use App\Models\Addr;
-use Filament\Forms;
-use Filament\Forms\Form;
-use App\Filament\App\Resources\AppResource;
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteBulkAction;
+use Filament\Actions\EditAction;
+use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Schema;
-use Filament\Tables;
-use Filament\Actions;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use Override;
 
 class AddrResource extends AppResource
 {
-    #[\Override]
+    #[Override]
     protected static ?string $model = Addr::class;
 
-    #[\Override]
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-map-pin';
+    #[Override]
+    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-map-pin';
 
-    #[\Override]
+    #[Override]
     protected static ?string $navigationLabel = 'Address';
 
-    #[\Override]
-    protected static string | \UnitEnum | null $navigationGroup = '👥 Family Tree';
+    #[Override]
+    protected static string|\UnitEnum|null $navigationGroup = '👥 Family Tree';
 
-    #[\Override]
+    #[Override]
     public static function canCreate(): bool
     {
         return auth()->check();
@@ -116,13 +108,13 @@ class AddrResource extends AppResource
         ];
     }
 
-    #[\Override]
+    #[Override]
     public static function getPages(): array
     {
         return [
-            'index'  => ListAddrs::route('/'),
+            'index' => ListAddrs::route('/'),
             'create' => CreateAddr::route('/create'),
-            'edit'   => EditAddr::route('/{record}/edit'),
+            'edit' => EditAddr::route('/{record}/edit'),
         ];
     }
 }

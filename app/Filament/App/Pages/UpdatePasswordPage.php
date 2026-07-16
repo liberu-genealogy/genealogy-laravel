@@ -2,34 +2,35 @@
 
 namespace App\Filament\App\Pages;
 
-use Override;
-use UnitEnum;
-use BackedEnum;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Concerns\InteractsWithForms;
-use Filament\Schemas\Schema;
 use Filament\Pages\Page;
+use Filament\Schemas\Schema;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules\Password;
+use Override;
 
 class UpdatePasswordPage extends Page
 {
     use InteractsWithForms;
-    #[\Override]
+
+    #[Override]
     protected string $view = 'filament.pages.profile.update-password';
 
-    #[\Override]
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-lock-closed';
-    #[\Override]
-    protected static ?string $navigationLabel = 'Update Password';
-    #[\Override]
-    protected static string | \UnitEnum | null $navigationGroup = '👤 Account & Settings';
+    #[Override]
+    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-lock-closed';
 
-    #[\Override]
+    #[Override]
+    protected static ?string $navigationLabel = 'Update Password';
+
+    #[Override]
+    protected static string|\UnitEnum|null $navigationGroup = '👤 Account & Settings';
+
+    #[Override]
     protected static ?int $navigationSort = 1;
 
-    #[\Override]
+    #[Override]
     protected static ?string $title = 'Update Password';
 
     public ?array $data = [];
@@ -84,6 +85,6 @@ class UpdatePasswordPage extends Page
     #[Override]
     public static function shouldRegisterNavigation(): bool
     {
-        return true; //config('filament-jetstream.show_update_password_page');
+        return true; // config('filament-jetstream.show_update_password_page');
     }
 }

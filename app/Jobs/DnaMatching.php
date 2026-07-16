@@ -22,6 +22,7 @@ class DnaMatching implements ShouldQueue
     use SerializesModels;
 
     public int $timeout = 3600; // Changed from 0 to 1 hour
+
     public int $tries = 1;
 
     protected AdvancedDnaMatchingService $advancedDnaMatchingService;
@@ -57,7 +58,7 @@ class DnaMatching implements ShouldQueue
 
         foreach ($dnas as $dna) {
             try {
-                Log::info('Processing DNA match between ' . $this->var_name . ' and ' . $dna->variable_name);
+                Log::info('Processing DNA match between '.$this->var_name.' and '.$dna->variable_name);
 
                 // Use advanced DNA matching service
                 $matchResult = $this->advancedDnaMatchingService->performAdvancedMatching(
@@ -74,7 +75,7 @@ class DnaMatching implements ShouldQueue
                 $match_name = User::find($dna->user_id)?->name ?? 'Unknown';
 
                 // Create DNA matching record for current user
-                $dm = new DM();
+                $dm = new DM;
                 $dm->user_id = $user->id;
                 $dm->match_id = $dna->user_id;
                 $dm->match_name = $match_name;
@@ -102,7 +103,7 @@ class DnaMatching implements ShouldQueue
                 if ($dna->user_id !== $user->id) {
                     $current_name = User::find($user->id)?->name ?? 'Unknown';
 
-                    $dm2 = new DM();
+                    $dm2 = new DM;
                     $dm2->user_id = $dna->user_id;
                     $dm2->match_id = $user->id;
                     $dm2->match_name = $current_name;
@@ -126,11 +127,11 @@ class DnaMatching implements ShouldQueue
                 }
 
                 Log::info('Successfully processed DNA match with advanced algorithms');
-                Log::info('Match result: ' . json_encode([
+                Log::info('Match result: '.json_encode([
                     'total_cms' => $matchResult['total_cms'],
                     'largest_cm' => $matchResult['largest_cm'],
                     'confidence' => $matchResult['confidence_level'] ?? 'N/A',
-                    'relationship' => $matchResult['predicted_relationship'] ?? 'N/A'
+                    'relationship' => $matchResult['predicted_relationship'] ?? 'N/A',
                 ]));
 
                 // $data = readCSV(storage_path('app'.DIRECTORY_SEPARATOR.'dna'.DIRECTORY_SEPARATOR.'output'.DIRECTORY_SEPARATOR.$dm->file1), ',');
@@ -160,7 +161,8 @@ class DnaMatching implements ShouldQueue
             } catch (\Throwable $e) {
                 // Throwable, not Exception: keep one bad pairing (Error included)
                 // from aborting the whole job; log and move to the next record.
-                Log::error('Error in DNA matching job: ' . $e->getMessage());
+                Log::error('Error in DNA matching job: '.$e->getMessage());
+
                 continue; // Skip to next DNA record on error
             }
         }

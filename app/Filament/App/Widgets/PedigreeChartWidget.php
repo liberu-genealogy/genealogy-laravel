@@ -2,14 +2,14 @@
 
 namespace App\Filament\App\Widgets;
 
-use Override;
-use Illuminate\Contracts\View\View;
 use App\Models\Person;
 use Filament\Widgets\Widget;
+use Illuminate\Contracts\View\View;
+use Override;
 
 class PedigreeChartWidget extends Widget
 {
-    #[\Override]
+    #[Override]
     protected string $view = 'filament.widgets.pedigree-chart-widget';
 
     public function getData(): array
@@ -45,13 +45,13 @@ class PedigreeChartWidget extends Widget
         $this->dispatch('pan', direction: $direction);
     }
 
-    #[\Override]
+    #[Override]
     protected function getListeners()
     {
         return [
-            'zoomIn'  => 'zoomIn',
+            'zoomIn' => 'zoomIn',
             'zoomOut' => 'zoomOut',
-            'pan'     => 'pan',
+            'pan' => 'pan',
         ];
     }
 }

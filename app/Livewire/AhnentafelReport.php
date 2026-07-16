@@ -3,14 +3,17 @@
 namespace App\Livewire;
 
 use App\Models\Person;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Livewire\Component;
 
 class AhnentafelReport extends Component
 {
     public ?int $selectedPersonId = null;
+
     public array $reportData = [];
 
-    public function render(): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+    public function render(): Factory|View
     {
         return view('livewire.ahnentafel-report');
     }
@@ -19,7 +22,7 @@ class AhnentafelReport extends Component
     {
         $this->selectedPersonId = $personId;
         $person = Person::with(['childInFamily.husband', 'childInFamily.wife'])->find($personId);
-        
+
         if ($person) {
             $this->reportData = [];
             $this->buildAhnentafelNumbers($person, 1);
@@ -29,7 +32,7 @@ class AhnentafelReport extends Component
 
     private function buildAhnentafelNumbers($person, int $number): void
     {
-        if (!$person) {
+        if (! $person) {
             return;
         }
 
@@ -49,12 +52,12 @@ class AhnentafelReport extends Component
         // Build ancestors using Ahnentafel numbering system
         if ($person->childInFamily) {
             $family = $person->childInFamily;
-            
+
             // Father gets number * 2
             if ($family->husband) {
                 $this->buildAhnentafelNumbers($family->husband, $number * 2);
             }
-            
+
             // Mother gets number * 2 + 1
             if ($family->wife) {
                 $this->buildAhnentafelNumbers($family->wife, $number * 2 + 1);

@@ -38,7 +38,7 @@ class RawDnaParserTest extends TestCase
             '',                       // blank line → ignored
         ]));
 
-        $map = (new RawDnaParser())->parse($path);
+        $map = (new RawDnaParser)->parse($path);
 
         $this->assertSame([
             '1' => [82154 => 'AG', 82170 => 'CC'],
@@ -57,7 +57,7 @@ class RawDnaParserTest extends TestCase
             "rs4\t2\t950\tD\tD",     // indel no-call → dropped
         ]));
 
-        $map = (new RawDnaParser())->parse($path);
+        $map = (new RawDnaParser)->parse($path);
 
         $this->assertSame([
             '1' => [82154 => 'AG'],
@@ -74,7 +74,7 @@ class RawDnaParserTest extends TestCase
             '"rs2","MT","16","TT"',
         ]));
 
-        $map = (new RawDnaParser())->parse($path);
+        $map = (new RawDnaParser)->parse($path);
 
         $this->assertSame([
             '1' => [82154 => 'AG'],
@@ -84,7 +84,7 @@ class RawDnaParserTest extends TestCase
 
     public function test_it_returns_empty_array_for_missing_file(): void
     {
-        $this->assertSame([], (new RawDnaParser())->parse('/no/such/file.txt'));
+        $this->assertSame([], (new RawDnaParser)->parse('/no/such/file.txt'));
     }
 
     public function test_parse_content_parses_an_in_memory_string(): void
@@ -96,7 +96,7 @@ class RawDnaParserTest extends TestCase
             "rs3\t2\t500\t--",  // no-call → dropped
         ]);
 
-        $map = (new RawDnaParser())->parseContent($raw);
+        $map = (new RawDnaParser)->parseContent($raw);
 
         $this->assertSame([
             '1' => [82154 => 'AG'],

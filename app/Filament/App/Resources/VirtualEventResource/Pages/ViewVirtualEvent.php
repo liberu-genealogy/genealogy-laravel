@@ -2,17 +2,14 @@
 
 namespace App\Filament\App\Resources\VirtualEventResource\Pages;
 
+use App\Filament\App\Resources\VirtualEventResource;
 use Filament\Actions\Action;
 use Filament\Actions\EditAction;
-use Filament\Schemas\Components\Section;
-use Filament\Schemas\Components\Grid;
-use Filament\Infolists\Components\TextEntry;
 use Filament\Infolists\Components\IconEntry;
-use App\Filament\App\Resources\VirtualEventResource;
-use Filament\Actions;
+use Filament\Infolists\Components\TextEntry;
 use Filament\Resources\Pages\ViewRecord;
-use Filament\Infolists;
-use Filament\Infolists\Infolist;
+use Filament\Schemas\Components\Grid;
+use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
 
 class ViewVirtualEvent extends ViewRecord
@@ -29,7 +26,7 @@ class ViewVirtualEvent extends ViewRecord
                 ->color('success')
                 ->url(fn () => $this->getRecord()->join_url ?? '#')
                 ->openUrlInNewTab()
-                ->visible(fn (): bool => $this->getRecord()->canJoin() && !empty($this->getRecord()->join_url)),
+                ->visible(fn (): bool => $this->getRecord()->canJoin() && ! empty($this->getRecord()->join_url)),
             EditAction::make(),
         ];
     }
@@ -119,17 +116,17 @@ class ViewVirtualEvent extends ViewRecord
                             ->openUrlInNewTab()
                             ->copyable()
                             ->columnSpanFull()
-                            ->visible(fn ($record): bool => !empty($record->join_url)),
+                            ->visible(fn ($record): bool => ! empty($record->join_url)),
                         TextEntry::make('meeting_password')
                             ->label('Meeting Password')
                             ->copyable()
-                            ->visible(fn ($record): bool => !empty($record->meeting_password)),
+                            ->visible(fn ($record): bool => ! empty($record->meeting_password)),
                         TextEntry::make('instructions')
                             ->label('Special Instructions')
                             ->columnSpanFull()
-                            ->visible(fn ($record): bool => !empty($record->instructions)),
+                            ->visible(fn ($record): bool => ! empty($record->instructions)),
                     ])
-                    ->visible(fn ($record): bool => !empty($record->meeting_id) || !empty($record->join_url)),
+                    ->visible(fn ($record): bool => ! empty($record->meeting_id) || ! empty($record->join_url)),
 
                 Section::make('Attendance Summary')
                     ->schema([

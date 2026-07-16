@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Database\Factories;
 
-use App\Models\TranscriptionCorrection;
 use App\Models\DocumentTranscription;
+use App\Models\TranscriptionCorrection;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 

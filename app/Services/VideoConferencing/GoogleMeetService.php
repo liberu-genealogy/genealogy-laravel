@@ -2,16 +2,18 @@
 
 namespace App\Services\VideoConferencing;
 
+use Carbon\Carbon;
 use Exception;
 use Illuminate\Support\Facades\Http;
-use Illuminate\Support\Facades\Log;
-use Carbon\Carbon;
 
 class GoogleMeetService implements VideoConferencingInterface
 {
     protected string $baseUrl = 'https://www.googleapis.com/calendar/v3';
+
     protected string $clientId;
+
     protected string $clientSecret;
+
     protected string $refreshToken;
 
     public function __construct()
@@ -44,7 +46,7 @@ class GoogleMeetService implements VideoConferencingInterface
                 'createRequest' => [
                     'requestId' => uniqid(),
                     'conferenceSolutionKey' => [
-                        'type' => 'hangoutsMeet'
+                        'type' => 'hangoutsMeet',
                     ],
                 ],
             ],
@@ -59,18 +61,18 @@ class GoogleMeetService implements VideoConferencingInterface
         ];
 
         $response = Http::withHeaders([
-            'Authorization' => 'Bearer ' . $this->getAccessToken(),
+            'Authorization' => 'Bearer '.$this->getAccessToken(),
             'Content-Type' => 'application/json',
-        ])->post($this->baseUrl . '/calendars/primary/events?conferenceDataVersion=1', $event);
+        ])->post($this->baseUrl.'/calendars/primary/events?conferenceDataVersion=1', $event);
 
-        if (!$response->successful()) {
-            throw new Exception('Failed to create Google Meet: ' . $response->body());
+        if (! $response->successful()) {
+            throw new Exception('Failed to create Google Meet: '.$response->body());
         }
 
         $createdEvent = $response->json();
         $meetData = $createdEvent['conferenceData']['entryPoints'][0] ?? null;
 
-        if (!$meetData) {
+        if (! $meetData) {
             throw new Exception('Failed to create Google Meet conference data');
         }
 
@@ -107,12 +109,12 @@ class GoogleMeetService implements VideoConferencingInterface
         ];
 
         $response = Http::withHeaders([
-            'Authorization' => 'Bearer ' . $this->getAccessToken(),
+            'Authorization' => 'Bearer '.$this->getAccessToken(),
             'Content-Type' => 'application/json',
-        ])->put($this->baseUrl . '/calendars/primary/events/' . $meetingData['meeting_id'], $event);
+        ])->put($this->baseUrl.'/calendars/primary/events/'.$meetingData['meeting_id'], $event);
 
-        if (!$response->successful()) {
-            throw new Exception('Failed to update Google Meet: ' . $response->body());
+        if (! $response->successful()) {
+            throw new Exception('Failed to update Google Meet: '.$response->body());
         }
 
         return $this->getMeetingDetails($meetingData['meeting_id']) ?? [];
@@ -123,8 +125,8 @@ class GoogleMeetService implements VideoConferencingInterface
         $this->validateConfiguration();
 
         $response = Http::withHeaders([
-            'Authorization' => 'Bearer ' . $this->getAccessToken(),
-        ])->delete($this->baseUrl . '/calendars/primary/events/' . $meetingId);
+            'Authorization' => 'Bearer '.$this->getAccessToken(),
+        ])->delete($this->baseUrl.'/calendars/primary/events/'.$meetingId);
 
         return $response->successful();
     }
@@ -134,17 +136,17 @@ class GoogleMeetService implements VideoConferencingInterface
         $this->validateConfiguration();
 
         $response = Http::withHeaders([
-            'Authorization' => 'Bearer ' . $this->getAccessToken(),
-        ])->get($this->baseUrl . '/calendars/primary/events/' . $meetingId);
+            'Authorization' => 'Bearer '.$this->getAccessToken(),
+        ])->get($this->baseUrl.'/calendars/primary/events/'.$meetingId);
 
-        if (!$response->successful()) {
+        if (! $response->successful()) {
             return null;
         }
 
         $event = $response->json();
         $meetData = $event['conferenceData']['entryPoints'][0] ?? null;
 
-        if (!$meetData) {
+        if (! $meetData) {
             return null;
         }
 
@@ -169,17 +171,17 @@ class GoogleMeetService implements VideoConferencingInterface
         $this->validateConfiguration();
 
         $response = Http::withHeaders([
-            'Authorization' => 'Bearer ' . $this->getAccessToken(),
-        ])->get($this->baseUrl . '/calendars/primary/events/' . $meetingId);
+            'Authorization' => 'Bearer '.$this->getAccessToken(),
+        ])->get($this->baseUrl.'/calendars/primary/events/'.$meetingId);
 
-        if (!$response->successful()) {
+        if (! $response->successful()) {
             return [];
         }
 
         $event = $response->json();
         $attendees = $event['attendees'] ?? [];
 
-        return array_map(fn(array $attendee) => [
+        return array_map(fn (array $attendee) => [
             'name' => $attendee['displayName'] ?? $attendee['email'],
             'email' => $attendee['email'],
             'response_status' => $attendee['responseStatus'] ?? 'needsAction',
@@ -191,13 +193,13 @@ class GoogleMeetService implements VideoConferencingInterface
     {
         $this->validateConfiguration();
 
-        $attendees = array_map(fn($email) => ['email' => $email], $attendeeEmails);
+        $attendees = array_map(fn ($email) => ['email' => $email], $attendeeEmails);
 
         $response = Http::withHeaders([
-            'Authorization' => 'Bearer ' . $this->getAccessToken(),
-        ])->get($this->baseUrl . '/calendars/primary/events/' . $meetingId);
+            'Authorization' => 'Bearer '.$this->getAccessToken(),
+        ])->get($this->baseUrl.'/calendars/primary/events/'.$meetingId);
 
-        if (!$response->successful()) {
+        if (! $response->successful()) {
             return false;
         }
 
@@ -205,23 +207,23 @@ class GoogleMeetService implements VideoConferencingInterface
         $event['attendees'] = array_merge($event['attendees'] ?? [], $attendees);
 
         $updateResponse = Http::withHeaders([
-            'Authorization' => 'Bearer ' . $this->getAccessToken(),
+            'Authorization' => 'Bearer '.$this->getAccessToken(),
             'Content-Type' => 'application/json',
-        ])->put($this->baseUrl . '/calendars/primary/events/' . $meetingId . '?sendUpdates=all', $event);
+        ])->put($this->baseUrl.'/calendars/primary/events/'.$meetingId.'?sendUpdates=all', $event);
 
         return $updateResponse->successful();
     }
 
     public function isConfigured(): bool
     {
-        return $this->clientId !== '' && $this->clientId !== '0' && 
-               ($this->clientSecret !== '' && $this->clientSecret !== '0') && 
+        return $this->clientId !== '' && $this->clientId !== '0' &&
+               ($this->clientSecret !== '' && $this->clientSecret !== '0') &&
                ($this->refreshToken !== '' && $this->refreshToken !== '0');
     }
 
     protected function validateConfiguration(): void
     {
-        if (!$this->isConfigured()) {
+        if (! $this->isConfigured()) {
             throw new Exception('Google Meet service is not properly configured. Please check your API credentials.');
         }
     }
@@ -235,11 +237,12 @@ class GoogleMeetService implements VideoConferencingInterface
             'grant_type' => 'refresh_token',
         ]);
 
-        if (!$response->successful()) {
-            throw new Exception('Failed to get Google access token: ' . $response->body());
+        if (! $response->successful()) {
+            throw new Exception('Failed to get Google access token: '.$response->body());
         }
 
         $data = $response->json();
+
         return $data['access_token'];
     }
 }

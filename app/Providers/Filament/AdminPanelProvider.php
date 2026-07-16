@@ -7,6 +7,7 @@ use App\Filament\Admin\Pages\EditProfile;
 use App\Filament\Admin\Pages\EditTeam;
 use App\Http\Middleware\TeamsPermission;
 use App\Models\Team;
+use App\Settings\GeneralSettings;
 use BezhanSalleh\FilamentShield\FilamentShieldPlugin;
 use Filament\Actions\Action;
 use Filament\Facades\Filament;
@@ -19,6 +20,7 @@ use Filament\Panel;
 use Filament\PanelProvider;
 use Filament\Support\Colors\Color;
 use Filament\Widgets;
+use Illuminate\Contracts\Routing\UrlGenerator;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
 use Illuminate\Cookie\Middleware\EncryptCookies;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
@@ -45,19 +47,19 @@ class AdminPanelProvider extends PanelProvider
             // the OS, serving a theme with no defined palette or verified contrast.
             ->darkMode(false)
             ->viteTheme('resources/css/filament/admin/theme.css')
-            ->brandName(fn () => app(\App\Settings\GeneralSettings::class)->site_name)
+            ->brandName(fn () => app(GeneralSettings::class)->site_name)
             ->colors([
                 'primary' => Color::Emerald,
                 'gray' => Color::Slate,
             ])
-            ->brandName(fn () => app(\App\Settings\GeneralSettings::class)->site_name)
+            ->brandName(fn () => app(GeneralSettings::class)->site_name)
             ->brandLogo(asset('build/images/logo.svg')) // vite-plugin-static-copy writes to build/images/; asset('images/..') was 404 on every panel page
             ->favicon(asset('favicon.ico')) // public/favicon.ico is the only .ico that exists; images/favicon.ico was 404
             ->userMenuItems([
                 Action::make('profile')
                     ->label('Profile')
                     ->icon('heroicon-o-user-circle')
-                    ->url(fn (): \Illuminate\Contracts\Routing\UrlGenerator|string => $this->shouldRegisterMenuItem()
+                    ->url(fn (): UrlGenerator|string => $this->shouldRegisterMenuItem()
                         ? url(EditProfile::getUrl())
                         : url($panel->getPath())),
             ])
@@ -65,7 +67,7 @@ class AdminPanelProvider extends PanelProvider
             ->discoverPages(in: app_path('Filament/Admin/Pages'), for: 'App\\Filament\\Admin\\Pages')
             ->pages([
                 FilamentPage\Dashboard::class,
-                EditProfile::class
+                EditProfile::class,
                 // Pages\ApiTokenManagerPage::class,
             ])->widgets([
                 Widgets\AccountWidget::class,
@@ -89,7 +91,7 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->plugins([
                 FilamentShieldPlugin::make()
-                    ->navigationGroup('Administration')
+                    ->navigationGroup('Administration'),
             ]);
 
         // if (Features::hasApiFeatures()) {
@@ -136,10 +138,10 @@ class AdminPanelProvider extends PanelProvider
 
     public function shouldRegisterMenuItem(): bool
     {
-        $hasVerifiedEmail = !is_null(auth()->user());//?->hasVerifiedEmail();
+        $hasVerifiedEmail = ! is_null(auth()->user()); // ?->hasVerifiedEmail();
 
         // Check if Filament is properly initialized before using facades
-        if (!app()->bound('filament')) {
+        if (! app()->bound('filament')) {
             return $hasVerifiedEmail;
         }
 

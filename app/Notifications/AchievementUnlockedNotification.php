@@ -15,9 +15,7 @@ class AchievementUnlockedNotification extends Notification implements ShouldQueu
     /**
      * Create a new notification instance.
      */
-    public function __construct(protected Achievement $achievement)
-    {
-    }
+    public function __construct(protected Achievement $achievement) {}
 
     /**
      * Get the notification's delivery channels.
@@ -35,7 +33,7 @@ class AchievementUnlockedNotification extends Notification implements ShouldQueu
     public function toMail(object $notifiable): MailMessage
     {
         return (new MailMessage)
-            ->subject('🎉 Achievement Unlocked: ' . $this->achievement->name)
+            ->subject('🎉 Achievement Unlocked: '.$this->achievement->name)
             ->greeting('Congratulations!')
             ->line("You've unlocked a new achievement: **{$this->achievement->name}**")
             ->line($this->achievement->description)

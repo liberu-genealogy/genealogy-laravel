@@ -22,6 +22,6 @@ class Company extends Model
         'email',
         'is_tenant',
         'status',
-        //TODO: add all the other fields from migration or verify that model exists on LaravelLiberu package
+        // TODO: add all the other fields from migration or verify that model exists on LaravelLiberu package
     ];
 }

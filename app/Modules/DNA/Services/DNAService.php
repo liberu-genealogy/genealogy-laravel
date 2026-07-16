@@ -2,14 +2,16 @@
 
 namespace App\Modules\DNA\Services;
 
+use App\Services\AdvancedDnaMatchingService;
 use App\Services\DnaImportService as BaseDnaImportService;
 use App\Services\DnaTriangulationService as BaseDnaTriangulationService;
-use App\Services\AdvancedDnaMatchingService;
 
 class DNAService
 {
     protected BaseDnaImportService $importService;
+
     protected BaseDnaTriangulationService $triangulationService;
+
     protected AdvancedDnaMatchingService $matchingService;
 
     public function __construct()

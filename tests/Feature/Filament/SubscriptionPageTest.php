@@ -37,11 +37,11 @@ class SubscriptionPageTest extends TestCase
 
         $pricingInfo = [
             'premium' => [
-                'name'           => 'Premium',
-                'price'          => '$2.99',
-                'interval'       => 'month',
-                'trial_days'     => 14,
-                'features'       => [],
+                'name' => 'Premium',
+                'price' => '$2.99',
+                'interval' => 'month',
+                'trial_days' => 14,
+                'features' => [],
                 'stripe_price_id' => 'page_price_456',
             ],
         ];

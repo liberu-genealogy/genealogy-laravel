@@ -4,37 +4,32 @@ declare(strict_types=1);
 
 namespace App\Filament\App\Resources;
 
-use Override;
-use Filament\Forms\Components\TextInput;
-use Filament\Tables\Columns\TextColumn;
-use Filament\Actions\EditAction;
-use Filament\Actions\BulkActionGroup;
-use Filament\Actions\DeleteBulkAction;
-use App\Filament\App\Resources\PersonNameResource\Pages\ListPersonNames;
 use App\Filament\App\Resources\PersonNameResource\Pages\CreatePersonName;
 use App\Filament\App\Resources\PersonNameResource\Pages\EditPersonName;
-use BackedEnum;
-use App\Filament\App\Resources\PersonNameResource\Pages;
+use App\Filament\App\Resources\PersonNameResource\Pages\ListPersonNames;
 use App\Models\PersonName;
-use Filament\Forms;
-use Filament\Forms\Form;
-use App\Filament\App\Resources\AppResource;
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteBulkAction;
+use Filament\Actions\EditAction;
+use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Schema;
-use Filament\Tables;
-use Filament\Actions;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use Override;
 
 class PersonNameResource extends AppResource
 {
-    #[\Override]
+    #[Override]
     protected static ?string $model = PersonName::class;
 
-    #[\Override]
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-identification';
-    #[\Override]
+    #[Override]
+    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-identification';
+
+    #[Override]
     protected static ?string $navigationLabel = 'Person Names';
-    #[\Override]
-    protected static string | \UnitEnum | null $navigationGroup = '👥 Family Tree';
+
+    #[Override]
+    protected static string|\UnitEnum|null $navigationGroup = '👥 Family Tree';
 
     #[Override]
     public static function form(Schema $schema): Schema
@@ -120,13 +115,13 @@ class PersonNameResource extends AppResource
         ];
     }
 
-    #[\Override]
+    #[Override]
     public static function getPages(): array
     {
         return [
-            'index'  => ListPersonNames::route('/'),
+            'index' => ListPersonNames::route('/'),
             'create' => CreatePersonName::route('/create'),
-            'edit'   => EditPersonName::route('/{record}/edit'),
+            'edit' => EditPersonName::route('/{record}/edit'),
         ];
     }
 }

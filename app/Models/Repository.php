@@ -10,8 +10,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Repository extends Model
 {
-    use HasFactory;
     use BelongsToTenant;
+    use HasFactory;
 
     /**
      * The "type" of the auto-incrementing ID.
@@ -36,6 +36,7 @@ class Repository extends Model
     {
         return $this->belongsTo(Type::class);
     }
+
     #[\Override]
     protected function casts(): array
     {

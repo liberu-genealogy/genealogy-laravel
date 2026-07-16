@@ -2,16 +2,19 @@
 
 namespace App\Livewire;
 
-use Throwable;
 use App\Models\Person;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Log;
 use Livewire\Component;
-use Illuminate\Support\Collection;
+use Throwable;
 
 final class DescendantChartComponent extends Component
 {
     public array $descendantsData = [];
+
     public ?int $rootPersonId = null;
+
     public int $generations = 4;
 
     public function mount($rootPersonId = null): void
@@ -28,7 +31,7 @@ final class DescendantChartComponent extends Component
         } catch (Throwable $e) {
             Log::error('Failed to retrieve descendants data', [
                 'error' => $e->getMessage(),
-                'trace' => $e->getTraceAsString()
+                'trace' => $e->getTraceAsString(),
             ]);
             $this->descendantsData = [];
         }
@@ -36,7 +39,7 @@ final class DescendantChartComponent extends Component
 
     private function buildDescendantTree($person, $maxGenerations, int|float $generation = 1): array
     {
-        if (!$person || $generation > $maxGenerations) {
+        if (! $person || $generation > $maxGenerations) {
             return [];
         }
 
@@ -51,7 +54,7 @@ final class DescendantChartComponent extends Component
             // include a safe image URL for use in charts (uses Person::profileImageUrl)
             'image' => method_exists($person, 'profileImageUrl') ? $person->profileImageUrl() : asset('images/default-avatar.svg'),
             'generation' => $generation,
-            'children' => []
+            'children' => [],
         ];
 
         // Get all families where this person is a parent
@@ -103,7 +106,7 @@ final class DescendantChartComponent extends Component
         $this->dispatch('refreshDescendantChart');
     }
 
-    public function render(): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+    public function render(): Factory|View
     {
         return view('livewire.descendant-chart-component');
     }

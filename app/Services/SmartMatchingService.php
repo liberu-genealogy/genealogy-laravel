@@ -2,14 +2,13 @@
 
 namespace App\Services;
 
-use DateTime;
 use App\Models\Person;
-use App\Models\User;
 use App\Models\SmartMatch;
-use App\Services\RecordMatcher\Providers\MyHeritageProvider;
+use App\Models\User;
 use App\Services\RecordMatcher\Providers\AncestryProvider;
 use App\Services\RecordMatcher\Providers\FamilySearchProvider;
-use App\Services\RecordMatcher\Providers\ExternalRecordProviderInterface;
+use App\Services\RecordMatcher\Providers\MyHeritageProvider;
+use DateTime;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Log;
 
@@ -28,19 +27,19 @@ class SmartMatchingService
     protected function initializeProviders(): void
     {
         // Add MyHeritage provider
-        $myHeritage = new MyHeritageProvider();
+        $myHeritage = new MyHeritageProvider;
         if ($myHeritage->isConfigured()) {
             $this->providers['myheritage'] = $myHeritage;
         }
 
         // Add Ancestry provider
-        $ancestry = new AncestryProvider();
+        $ancestry = new AncestryProvider;
         if ($ancestry->isConfigured()) {
             $this->providers['ancestry'] = $ancestry;
         }
 
         // Add FamilySearch provider
-        $familySearch = new FamilySearchProvider();
+        $familySearch = new FamilySearchProvider;
         if ($familySearch->isConfigured()) {
             $this->providers['familysearch'] = $familySearch;
         }
@@ -57,17 +56,17 @@ class SmartMatchingService
     {
         // Get people with missing parent information
         $peopleWithMissingParents = Person::where('team_id', $user->current_team_id)
-        ->whereNull('child_in_family_id')
-        ->orWhereHas('childInFamily', function ($query): void {
-            $query->whereNull('husband_id')->orWhereNull('wife_id');
-        })
-        ->get();
+            ->whereNull('child_in_family_id')
+            ->orWhereHas('childInFamily', function ($query): void {
+                $query->whereNull('husband_id')->orWhereNull('wife_id');
+            })
+            ->get();
 
         $matches = collect();
 
         foreach ($peopleWithMissingParents as $person) {
             $potentialMatches = $this->searchPublicTrees($person);
-            
+
             foreach ($potentialMatches as $match) {
                 $smartMatch = SmartMatch::create([
                     'user_id' => $user->id,
@@ -106,7 +105,7 @@ class SmartMatchingService
         }
 
         // Sort by confidence score
-        usort($matches, fn(array $a, array $b) => $b['confidence_score'] <=> $a['confidence_score']);
+        usort($matches, fn (array $a, array $b) => $b['confidence_score'] <=> $a['confidence_score']);
 
         // Return top 10 matches
         return array_slice($matches, 0, 10);
@@ -122,10 +121,10 @@ class SmartMatchingService
         foreach ($this->providers as $providerName => $provider) {
             try {
                 $candidates = $provider->search($person);
-                
+
                 foreach ($candidates as $candidate) {
                     $confidence = $this->calculateMatchConfidence($person, $candidate);
-                    
+
                     if ($confidence >= 0.6) { // 60% confidence threshold
                         $matches[] = [
                             'tree_id' => $candidate['tree_id'] ?? null,
@@ -153,7 +152,7 @@ class SmartMatchingService
     private function searchUsingSimulation(Person $person): array
     {
         $matches = [];
-        
+
         // Simulate searching different genealogy platforms
         $sources = ['familysearch', 'ancestry', 'myheritage', 'findmypast'];
 
@@ -177,9 +176,9 @@ class SmartMatchingService
 
         // This would integrate with actual genealogy APIs
         // For now, we'll simulate potential matches for other sources
-        
+
         $matches = [];
-        
+
         // Simulate finding matches based on name and dates
         $searchTerms = [
             'name' => $person->fullname(),
@@ -192,7 +191,7 @@ class SmartMatchingService
 
         foreach ($simulatedMatches as $match) {
             $confidence = $this->calculateMatchConfidence($person, $match);
-            
+
             if ($confidence >= 0.6) { // 60% confidence threshold
                 $matches[] = [
                     'tree_id' => $match['tree_id'],
@@ -212,7 +211,7 @@ class SmartMatchingService
      */
     private function searchFindMyPast(Person $person): array
     {
-        $provider = new FindMyPastMatchingProvider();
+        $provider = new FindMyPastMatchingProvider;
         $recordMatches = $provider->searchRecords($person);
 
         $matches = [];
@@ -244,12 +243,12 @@ class SmartMatchingService
     {
         // This simulates what would come from real APIs
         $matches = [];
-        
+
         // Generate some realistic-looking matches
         for ($i = 0; $i < random_int(2, 8); $i++) {
             $matches[] = [
-                'tree_id' => $source . '_tree_' . random_int(1000, 9999),
-                'person_id' => $source . '_person_' . random_int(10000, 99999),
+                'tree_id' => $source.'_tree_'.random_int(1000, 9999),
+                'person_id' => $source.'_person_'.random_int(10000, 99999),
                 'name' => $this->generateSimilarName($person->fullname()),
                 'birth_date' => $this->generateSimilarDate($person->birthday),
                 'death_date' => $this->generateSimilarDate($person->deathday),
@@ -261,7 +260,7 @@ class SmartMatchingService
                 ],
                 'spouse' => $this->generateRandomName($person->sex === 'M' ? 'female' : 'male'),
                 'children' => array_map($this->generateRandomName(...), range(1, random_int(0, 4))),
-                'source_url' => "https://{$source}.com/tree/" . random_int(1000, 9999),
+                'source_url' => "https://{$source}.com/tree/".random_int(1000, 9999),
                 'last_updated' => now()->subDays(random_int(1, 365))->format('Y-m-d'),
             ];
         }
@@ -322,6 +321,7 @@ class SmartMatchingService
         }
 
         $distance = levenshtein($name1, $name2);
+
         return max(0, 1 - ($distance / $maxLength));
     }
 
@@ -342,6 +342,7 @@ class SmartMatchingService
         if ($daysDiff <= 1825) {
             return 0.7;
         }
+
         return 0.3;
     }
 
@@ -386,12 +387,13 @@ class SmartMatchingService
 
     private function generateSimilarDate(?DateTime $originalDate): ?string
     {
-        if (!$originalDate instanceof \DateTime) {
+        if (! $originalDate instanceof DateTime) {
             return null;
         }
 
         // Generate a date within 5 years of the original
         $variation = random_int(-5, 5);
+
         return $originalDate->modify("{$variation} years")->format('Y-m-d');
     }
 
@@ -429,6 +431,7 @@ class SmartMatchingService
         }
 
         $surname = $surnames[array_rand($surnames)];
+
         return "{$firstName} {$surname}";
     }
 }

@@ -31,7 +31,7 @@ class HorizonServiceProvider extends HorizonApplicationServiceProvider
     #[\Override]
     protected function gate(): void
     {
-        Gate::define('viewHorizon', fn($user = null) => in_array(optional($user)->email, [
+        Gate::define('viewHorizon', fn ($user = null) => in_array(optional($user)->email, [
             //
         ]));
     }

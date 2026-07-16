@@ -60,8 +60,8 @@ class SegmentMatcher
     public const MIN_CM = 7.0;
 
     /**
-     * @param array<string, array<int, string>> $kitA
-     * @param array<string, array<int, string>> $kitB
+     * @param  array<string, array<int, string>>  $kitA
+     * @param  array<string, array<int, string>>  $kitB
      * @return array{
      *   total_shared_cm: float,
      *   largest_cm_segment: float,

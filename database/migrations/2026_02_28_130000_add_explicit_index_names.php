@@ -1,9 +1,10 @@
 <?php
 
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\QueryException;
 use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
@@ -63,14 +64,14 @@ return new class extends Migration
         $useInfoSchema = DB::getDriverName() === 'mysql';
 
         foreach ($definitions as $tableName => $indexes) {
-            if (!Schema::hasTable($tableName)) {
+            if (! Schema::hasTable($tableName)) {
                 continue;
             }
 
             $dbName = DB::getDatabaseName();
 
             foreach ($indexes as [$columns, $name]) {
-                $longName = $tableName . '_' . implode('_', $columns) . '_index';
+                $longName = $tableName.'_'.implode('_', $columns).'_index';
 
                 if ($useInfoSchema) {
                     // drop the automatically generated long-form index if it exists
@@ -80,7 +81,7 @@ return new class extends Migration
                                 WHERE TABLE_SCHEMA = ? AND TABLE_NAME = ? AND INDEX_NAME = ?',
                             [$dbName, $tableName, $longName]
                         );
-                    } catch (\Exception) {
+                    } catch (Exception) {
                         $idxExists = false;
                     }
                     if ($idxExists) {
@@ -96,18 +97,18 @@ return new class extends Migration
                                 WHERE TABLE_SCHEMA = ? AND TABLE_NAME = ? AND INDEX_NAME = ?',
                             [$dbName, $tableName, $name]
                         );
-                    } catch (\Exception) {
+                    } catch (Exception) {
                         $nameExists = false;
                     }
                 } else {
                     $nameExists = false;
                 }
-                if (!$nameExists) {
+                if (! $nameExists) {
                     try {
                         Schema::table($tableName, function (Blueprint $table) use ($columns, $name): void {
                             $table->index($columns, $name);
                         });
-                    } catch (\Illuminate\Database\QueryException $e) {
+                    } catch (QueryException $e) {
                         $mysqlCode = $e->errorInfo[1] ?? null;
                         if ($mysqlCode !== 1061) {
                             throw $e;
@@ -157,7 +158,7 @@ return new class extends Migration
                             WHERE TABLE_SCHEMA = ? AND TABLE_NAME = ? AND INDEX_NAME = ?',
                         [$dbName, $tableName, $idx]
                     );
-                } catch (\Exception) {
+                } catch (Exception) {
                     $idxExists = false;
                 }
                 if ($idxExists) {
@@ -167,7 +168,7 @@ return new class extends Migration
                 // fall back to blind drop; errors will be caught by the caller
                 try {
                     DB::statement("ALTER TABLE `$tableName` DROP INDEX `$idx`");
-                } catch (\Exception) {
+                } catch (Exception) {
                     // ignore failures on sqlite
                 }
             }

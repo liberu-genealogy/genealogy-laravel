@@ -2,8 +2,8 @@
 
 namespace App\Modules\Admin\Providers;
 
-use Illuminate\Support\ServiceProvider;
 use App\Modules\Admin\Services\AdminService;
+use Illuminate\Support\ServiceProvider;
 
 class AdminServiceProvider extends ServiceProvider
 {
@@ -14,7 +14,7 @@ class AdminServiceProvider extends ServiceProvider
     public function register(): void
     {
         // Register admin services
-        $this->app->singleton(AdminService::class, fn($app) => new AdminService());
+        $this->app->singleton(AdminService::class, fn ($app) => new AdminService);
 
         // Register admin configuration
         // $this->mergeConfigFrom(__DIR__ . '/../config/admin.php', 'admin');
@@ -30,19 +30,19 @@ class AdminServiceProvider extends ServiceProvider
         // $this->loadRoutesFrom(__DIR__ . '/../routes/api.php');
 
         // Load admin views
-        $this->loadViewsFrom(__DIR__ . '/../resources/views', 'admin');
+        $this->loadViewsFrom(__DIR__.'/../resources/views', 'admin');
 
         // Load admin translations
-        $this->loadTranslationsFrom(__DIR__ . '/../resources/lang', 'admin');
+        $this->loadTranslationsFrom(__DIR__.'/../resources/lang', 'admin');
 
         // Publish admin assets
         $this->publishes([
-            __DIR__ . '/../resources/assets' => public_path('modules/admin'),
+            __DIR__.'/../resources/assets' => public_path('modules/admin'),
         ], 'admin-assets');
 
         // Publish admin configuration
         $this->publishes([
-            __DIR__ . '/../config/admin.php' => config_path('admin.php'),
+            __DIR__.'/../config/admin.php' => config_path('admin.php'),
         ], 'admin-config');
     }
 }

@@ -2,29 +2,29 @@
 
 namespace App\Filament\App\Pages;
 
-use Override;
-use UnitEnum;
-use BackedEnum;
 use App\Models\User;
 use Filament\Pages\Page;
 use Illuminate\Support\Facades\Auth;
+use Override;
 
 class TwoFactorAuthenticationPage extends Page
 {
-    #[\Override]
+    #[Override]
     protected string $view = 'filament.pages.profile.two-factor-authentication';
 
-    #[\Override]
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-shield-check';
-    #[\Override]
-    protected static ?string $navigationLabel = 'Two-Factor Authentication';
-    #[\Override]
-    protected static string | \UnitEnum | null $navigationGroup = '👤 Account & Settings';
+    #[Override]
+    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-shield-check';
 
-    #[\Override]
+    #[Override]
+    protected static ?string $navigationLabel = 'Two-Factor Authentication';
+
+    #[Override]
+    protected static string|\UnitEnum|null $navigationGroup = '👤 Account & Settings';
+
+    #[Override]
     protected static ?int $navigationSort = 4;
 
-    #[\Override]
+    #[Override]
     protected static ?string $title = 'Two Factor Authentication';
 
     public User $user;
@@ -63,6 +63,6 @@ class TwoFactorAuthenticationPage extends Page
     #[Override]
     public static function shouldRegisterNavigation(): bool
     {
-        return true; //config('filament-jetstream.show_two_factor_authentication_page');
+        return true; // config('filament-jetstream.show_two_factor_authentication_page');
     }
 }

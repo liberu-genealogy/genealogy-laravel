@@ -3,10 +3,10 @@
 namespace App\Services;
 
 use App\Models\VirtualEvent;
-use App\Services\VideoConferencing\ZoomService;
 use App\Services\VideoConferencing\GoogleMeetService;
 use App\Services\VideoConferencing\TeamsService;
 use App\Services\VideoConferencing\VideoConferencingInterface;
+use App\Services\VideoConferencing\ZoomService;
 use Exception;
 use Illuminate\Support\Facades\Log;
 
@@ -17,9 +17,9 @@ class VideoConferencingService
     public function __construct()
     {
         $this->services = [
-            'zoom' => new ZoomService(),
-            'google_meet' => new GoogleMeetService(),
-            'teams' => new TeamsService(),
+            'zoom' => new ZoomService,
+            'google_meet' => new GoogleMeetService,
+            'teams' => new TeamsService,
         ];
     }
 
@@ -68,7 +68,7 @@ class VideoConferencingService
                 'error' => $e->getMessage(),
             ]);
 
-            throw new Exception("Failed to create {$event->platform} meeting: " . $e->getMessage(), $e->getCode(), $e);
+            throw new Exception("Failed to create {$event->platform} meeting: ".$e->getMessage(), $e->getCode(), $e);
         }
     }
 
@@ -115,7 +115,7 @@ class VideoConferencingService
                 'error' => $e->getMessage(),
             ]);
 
-            throw new Exception("Failed to update {$event->platform} meeting: " . $e->getMessage(), $e->getCode(), $e);
+            throw new Exception("Failed to update {$event->platform} meeting: ".$e->getMessage(), $e->getCode(), $e);
         }
     }
 
@@ -165,6 +165,7 @@ class VideoConferencingService
     {
         try {
             $service = $this->getService($event->platform);
+
             return $service->getMeetingDetails($event->meeting_id);
 
         } catch (Exception $e) {
@@ -186,6 +187,7 @@ class VideoConferencingService
     {
         try {
             $service = $this->getService($event->platform);
+
             return $service->getMeetingAttendees($event->meeting_id);
 
         } catch (Exception $e) {
@@ -240,7 +242,7 @@ class VideoConferencingService
         if ($event->platform === 'custom') {
             return route('virtual-events.join', [
                 'event' => $event->id,
-                'token' => $event->platform_data['custom_token'] ?? 'default'
+                'token' => $event->platform_data['custom_token'] ?? 'default',
             ]);
         }
 
@@ -252,7 +254,7 @@ class VideoConferencingService
      */
     protected function getService(string $platform): VideoConferencingInterface
     {
-        if (!isset($this->services[$platform])) {
+        if (! isset($this->services[$platform])) {
             throw new Exception("Unsupported video conferencing platform: {$platform}");
         }
 
@@ -295,6 +297,7 @@ class VideoConferencingService
     {
         try {
             $service = $this->getService($platform);
+
             return $service->isConfigured();
         } catch (Exception) {
             return false;

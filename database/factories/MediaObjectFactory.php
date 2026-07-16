@@ -8,7 +8,7 @@ use App\Models\MediaObject;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\MediaObject>
+ * @extends Factory<MediaObject>
  */
 class MediaObjectFactory extends Factory
 {
@@ -28,9 +28,9 @@ class MediaObjectFactory extends Factory
     public function definition()
     {
         return [
-            'group'   => fake()->word(),
-            'gid'     => fake()->randomDigit(),
-            'titl'    => fake()->word(),
+            'group' => fake()->word(),
+            'gid' => fake()->randomDigit(),
+            'titl' => fake()->word(),
             'obje_id' => fake()->randomDigit(),
         ];
     }

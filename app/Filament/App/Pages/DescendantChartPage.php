@@ -9,13 +9,13 @@ use Filament\Pages\Page;
 class DescendantChartPage extends Page
 {
     #[\Override]
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-chart-pie';
+    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-chart-pie';
 
     #[\Override]
     protected static ?string $navigationLabel = 'Descendant Chart';
 
     #[\Override]
-    protected static string | \UnitEnum | null $navigationGroup = '📊 Charts & Visualizations';
+    protected static string|\UnitEnum|null $navigationGroup = '📊 Charts & Visualizations';
 
     #[\Override]
     protected static ?int $navigationSort = 3;

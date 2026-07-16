@@ -18,7 +18,7 @@ class RelationshipEstimatorTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
-        $this->estimator = new RelationshipEstimator();
+        $this->estimator = new RelationshipEstimator;
     }
 
     #[DataProvider('relationshipBands')]
@@ -34,14 +34,14 @@ class RelationshipEstimatorTest extends TestCase
     {
         return [
             'identical/self' => [6800.0, 'Identical Twin / Same Person', 'very_high'],
-            'parent/child'   => [3500.0, 'Parent/Child', 'very_high'],
-            'full sibling'   => [2600.0, 'Full Sibling', 'very_high'],
-            'grandparent grp'=> [1800.0, 'Grandparent/Aunt/Uncle/Half-sibling', 'high'],
-            '1st cousin'     => [850.0, '1st Cousin', 'high'],
+            'parent/child' => [3500.0, 'Parent/Child', 'very_high'],
+            'full sibling' => [2600.0, 'Full Sibling', 'very_high'],
+            'grandparent grp' => [1800.0, 'Grandparent/Aunt/Uncle/Half-sibling', 'high'],
+            '1st cousin' => [850.0, '1st Cousin', 'high'],
             '1cr/2nd cousin' => [350.0, '1st Cousin Once Removed / 2nd Cousin', 'medium'],
             '2nd-3rd cousin' => [100.0, '2nd-3rd Cousin', 'medium'],
             'distant cousin' => [40.0, 'Distant Cousin', 'low'],
-            'unrelated'      => [5.0, 'Unrelated / No significant match', 'low'],
+            'unrelated' => [5.0, 'Unrelated / No significant match', 'low'],
         ];
     }
 

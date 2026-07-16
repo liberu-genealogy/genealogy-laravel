@@ -4,38 +4,33 @@ declare(strict_types=1);
 
 namespace App\Filament\App\Resources;
 
-use Override;
-use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\Textarea;
-use Filament\Tables\Columns\TextColumn;
-use Filament\Actions\EditAction;
-use Filament\Actions\BulkActionGroup;
-use Filament\Actions\DeleteBulkAction;
-use App\Filament\App\Resources\SourceRepoResource\Pages\ListSourceRepos;
 use App\Filament\App\Resources\SourceRepoResource\Pages\CreateSourceRepo;
 use App\Filament\App\Resources\SourceRepoResource\Pages\EditSourceRepo;
-use BackedEnum;
-use App\Filament\App\Resources\SourceRepoResource\Pages;
+use App\Filament\App\Resources\SourceRepoResource\Pages\ListSourceRepos;
 use App\Models\SourceRepo;
-use Filament\Forms;
-use Filament\Forms\Form;
-use App\Filament\App\Resources\AppResource;
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteBulkAction;
+use Filament\Actions\EditAction;
+use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Schema;
-use Filament\Tables;
-use Filament\Actions;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use Override;
 
 final class SourceRepoResource extends AppResource
 {
-    #[\Override]
+    #[Override]
     protected static ?string $model = SourceRepo::class;
 
-    #[\Override]
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-building-library';
-    #[\Override]
+    #[Override]
+    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-building-library';
+
+    #[Override]
     protected static ?string $navigationLabel = 'Source Repositories';
-    #[\Override]
-    protected static string | \UnitEnum | null $navigationGroup = '🔍 Research & Analysis';
+
+    #[Override]
+    protected static string|\UnitEnum|null $navigationGroup = '🔍 Research & Analysis';
 
     #[Override]
     public static function form(Schema $schema): Schema
@@ -96,7 +91,7 @@ final class SourceRepoResource extends AppResource
         return [];
     }
 
-    #[\Override]
+    #[Override]
     public static function getPages(): array
     {
         return [

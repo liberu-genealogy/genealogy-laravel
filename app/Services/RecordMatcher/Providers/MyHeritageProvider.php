@@ -3,9 +3,9 @@
 namespace App\Services\RecordMatcher\Providers;
 
 use App\Models\Person;
+use Exception;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
-use Exception;
 
 /**
  * MyHeritage provider for searching external genealogy records.
@@ -14,7 +14,9 @@ use Exception;
 class MyHeritageProvider implements ExternalRecordProviderInterface
 {
     protected string $apiKey;
+
     protected string $baseUrl;
+
     protected int $timeout;
 
     public function __construct()
@@ -27,42 +29,40 @@ class MyHeritageProvider implements ExternalRecordProviderInterface
     /**
      * Search MyHeritage for matching records.
      *
-     * @param Person|int $localPerson
-     * @return array
+     * @param  Person|int  $localPerson
      */
     public function search($localPerson): array
     {
         $person = is_int($localPerson) ? Person::find($localPerson) : $localPerson;
-        
-        if (!$person) {
+
+        if (! $person) {
             return [];
         }
 
         // If API key is not configured, return empty results
         if ($this->apiKey === '' || $this->apiKey === '0') {
             Log::warning('MyHeritage API key not configured');
+
             return [];
         }
 
         try {
             $searchParams = $this->buildSearchParams($person);
             $response = $this->performSearch($searchParams);
-            
+
             return $this->parseResponse($response);
         } catch (Exception $e) {
             Log::error('MyHeritage search failed', [
                 'person_id' => $person->id,
                 'error' => $e->getMessage(),
             ]);
+
             return [];
         }
     }
 
     /**
      * Build search parameters from person data.
-     *
-     * @param Person $person
-     * @return array
      */
     protected function buildSearchParams(Person $person): array
     {
@@ -106,21 +106,18 @@ class MyHeritageProvider implements ExternalRecordProviderInterface
 
     /**
      * Perform the actual API search.
-     *
-     * @param array $searchParams
-     * @return array
      */
     protected function performSearch(array $searchParams): array
     {
         $response = Http::timeout($this->timeout)
             ->withHeaders([
-                'Authorization' => 'Bearer ' . $this->apiKey,
+                'Authorization' => 'Bearer '.$this->apiKey,
                 'Accept' => 'application/json',
             ])
-            ->get($this->baseUrl . '/search/persons', $searchParams);
+            ->get($this->baseUrl.'/search/persons', $searchParams);
 
-        if (!$response->successful()) {
-            throw new Exception('MyHeritage API request failed: ' . $response->status());
+        if (! $response->successful()) {
+            throw new Exception('MyHeritage API request failed: '.$response->status());
         }
 
         return $response->json() ?? [];
@@ -128,9 +125,6 @@ class MyHeritageProvider implements ExternalRecordProviderInterface
 
     /**
      * Parse API response into standardized format.
-     *
-     * @param array $response
-     * @return array
      */
     protected function parseResponse(array $response): array
     {
@@ -165,8 +159,6 @@ class MyHeritageProvider implements ExternalRecordProviderInterface
 
     /**
      * Get provider name.
-     *
-     * @return string
      */
     public function getName(): string
     {
@@ -175,8 +167,6 @@ class MyHeritageProvider implements ExternalRecordProviderInterface
 
     /**
      * Check if provider is configured.
-     *
-     * @return bool
      */
     public function isConfigured(): bool
     {

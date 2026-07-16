@@ -9,8 +9,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class FamilyEvent extends \FamilyTree365\LaravelGedcom\Models\FamilyEvent
 {
-    use HasFactory;
     use BelongsToTenant;
+    use HasFactory;
 
     public static function boot(): void
     {
@@ -19,7 +19,7 @@ class FamilyEvent extends \FamilyTree365\LaravelGedcom\Models\FamilyEvent
 
     protected static function booted(): void
     {
-        static::observe(new EventActionsObserver());
+        static::observe(new EventActionsObserver);
     }
 
     public function user(): BelongsTo

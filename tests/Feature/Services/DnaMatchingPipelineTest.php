@@ -25,7 +25,7 @@ class DnaMatchingPipelineTest extends TestCase
         Storage::disk('private')->put('kit_a.txt', $kit);
         Storage::disk('private')->put('kit_b.txt', $kit);
 
-        $result = (new AdvancedDnaMatchingService())
+        $result = (new AdvancedDnaMatchingService)
             ->performAdvancedMatching('a', 'kit_a.txt', 'b', 'kit_b.txt');
 
         // The advanced pipeline ran (not the "Unknown (Basic Analysis)" fallback).
@@ -40,7 +40,7 @@ class DnaMatchingPipelineTest extends TestCase
     {
         Storage::fake('private');
 
-        $result = (new AdvancedDnaMatchingService())
+        $result = (new AdvancedDnaMatchingService)
             ->performAdvancedMatching('a', 'nope_a.txt', 'b', 'nope_b.txt');
 
         $this->assertSame('Unknown (Basic Analysis)', $result['predicted_relationship']);
@@ -64,6 +64,6 @@ class DnaMatchingPipelineTest extends TestCase
             $lines[] = "rs{$i}\t1\t{$pos}\tAG";
         }
 
-        return implode("\n", $lines) . "\n";
+        return implode("\n", $lines)."\n";
     }
 }

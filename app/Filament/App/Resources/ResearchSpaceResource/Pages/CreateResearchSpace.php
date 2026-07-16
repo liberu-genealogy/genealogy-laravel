@@ -2,8 +2,8 @@
 
 namespace App\Filament\App\Resources\ResearchSpaceResource\Pages;
 
-use Filament\Resources\Pages\CreateRecord;
 use App\Filament\App\Resources\ResearchSpaceResource;
+use Filament\Resources\Pages\CreateRecord;
 
 class CreateResearchSpace extends CreateRecord
 {

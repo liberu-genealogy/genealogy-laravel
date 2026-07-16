@@ -1,6 +1,8 @@
 <?php
 
 declare(strict_types=1);
+use App\Models\Team;
+use App\Models\User;
 
 return [
 
@@ -10,7 +12,7 @@ return [
 
     'navigation_section_group' => 'filament-spatie-roles-permissions::filament-spatie.section.roles_and_permissions', // Default uses language constant
 
-    'team_model' => \App\Models\Team::class,
+    'team_model' => Team::class,
 
     'scope_to_tenant' => false,
 
@@ -19,7 +21,7 @@ return [
      */
     'should_register_on_navigation' => [
         'permissions' => false,
-        'roles'       => true,
+        'roles' => true,
     ],
 
     'guard_names' => [
@@ -46,7 +48,7 @@ return [
      * Icons to use for navigation
      */
     'icons' => [
-        'role_navigation'       => 'heroicon-o-lock-closed',
+        'role_navigation' => 'heroicon-o-lock-closed',
         'permission_navigation' => 'heroicon-o-lock-closed',
     ],
 
@@ -55,7 +57,7 @@ return [
      */
 
     'sort' => [
-        'role_navigation'       => false,
+        'role_navigation' => false,
         'permission_navigation' => false,
     ],
 
@@ -72,12 +74,12 @@ return [
              * Permissions Aligned with Policies.
              * DO NOT change the keys unless the genericPolicy.stub is published and altered accordingly
              */
-            'viewAnyPermission'     => 'view-any',
-            'viewPermission'        => 'view',
-            'createPermission'      => 'create',
-            'updatePermission'      => 'update',
-            'deletePermission'      => 'delete',
-            'restorePermission'     => 'restore',
+            'viewAnyPermission' => 'view-any',
+            'viewPermission' => 'view',
+            'createPermission' => 'create',
+            'updatePermission' => 'update',
+            'deletePermission' => 'delete',
+            'restorePermission' => 'restore',
             'forceDeletePermission' => 'force-delete',
 
             /*
@@ -109,7 +111,7 @@ return [
          */
         'model_directories' => [
             app_path('Models'),
-            //app_path('Domains/Forum')
+            // app_path('Domains/Forum')
         ],
 
         /*
@@ -127,17 +129,17 @@ return [
         ],
 
         'excluded_policy_models' => [
-            \App\Models\User::class,
+            User::class,
         ],
 
         /*
          * Define any other permission that should be synced with the DB
          */
         'custom_permissions' => [
-            //'view-log'
+            // 'view-log'
         ],
 
-        'user_model' => \App\Models\User::class,
+        'user_model' => User::class,
 
         'policies_namespace' => 'App\Policies',
     ],

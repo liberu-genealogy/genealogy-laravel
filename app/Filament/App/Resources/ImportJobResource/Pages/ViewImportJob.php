@@ -3,10 +3,10 @@
 namespace App\Filament\App\Resources\ImportJobResource\Pages;
 
 use App\Filament\App\Resources\ImportJobResource;
-use Filament\Schemas\Components\Grid;
-use Filament\Schemas\Components\Section;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Resources\Pages\ViewRecord;
+use Filament\Schemas\Components\Grid;
+use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
 
 class ViewImportJob extends ViewRecord
@@ -39,20 +39,20 @@ class ViewImportJob extends ViewRecord
                                     ->label('Status')
                                     ->badge()
                                     ->color(fn (string $state): string => match ($state) {
-                                        'complete'   => 'success',
-                                        'failed'     => 'danger',
+                                        'complete' => 'success',
+                                        'failed' => 'danger',
                                         'processing' => 'info',
-                                        'queue'      => 'warning',
-                                        default      => 'gray',
+                                        'queue' => 'warning',
+                                        default => 'gray',
                                     }),
                                 TextEntry::make('progress')
                                     ->label('Progress')
-                                    ->formatStateUsing(fn (int $state): string => $state . '%')
+                                    ->formatStateUsing(fn (int $state): string => $state.'%')
                                     ->color(fn (int $state): string => match (true) {
                                         $state === 100 => 'success',
-                                        $state >= 50   => 'info',
-                                        $state > 0     => 'warning',
-                                        default        => 'gray',
+                                        $state >= 50 => 'info',
+                                        $state > 0 => 'warning',
+                                        default => 'gray',
                                     }),
                             ]),
                         Grid::make(2)

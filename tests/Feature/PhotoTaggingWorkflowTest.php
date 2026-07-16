@@ -18,7 +18,9 @@ class PhotoTaggingWorkflowTest extends TestCase
     use RefreshDatabase;
 
     protected User $user;
+
     protected Team $team;
+
     protected Person $person;
 
     #[\Override]
@@ -35,7 +37,7 @@ class PhotoTaggingWorkflowTest extends TestCase
         Storage::fake('public');
     }
 
-    public function testCompletePhotoTaggingWorkflow(): void
+    public function test_complete_photo_tagging_workflow(): void
     {
         // Step 1: Create and upload a photo
         $file = UploadedFile::fake()->image('family-photo.jpg', 1200, 800);
@@ -52,7 +54,7 @@ class PhotoTaggingWorkflowTest extends TestCase
         $this->assertFalse($photo->is_analyzed);
 
         // Step 2: Analyze the photo with facial recognition
-        $service = new FacialRecognitionService();
+        $service = new FacialRecognitionService;
         $result = $service->analyzePhoto($photo);
 
         $this->assertTrue($result['success']);
@@ -78,7 +80,7 @@ class PhotoTaggingWorkflowTest extends TestCase
         }
     }
 
-    public function testUserCanReviewAndCorrectTags(): void
+    public function test_user_can_review_and_correct_tags(): void
     {
         $anotherPerson = Person::factory()->create(['team_id' => $this->team->id]);
 
@@ -97,7 +99,7 @@ class PhotoTaggingWorkflowTest extends TestCase
         ]);
 
         // User corrects the tag to point to a different person
-        $service = new FacialRecognitionService();
+        $service = new FacialRecognitionService;
         $service->updateTagPerson($tag, $anotherPerson->id, $this->user->id);
 
         $tag->refresh();
@@ -105,7 +107,7 @@ class PhotoTaggingWorkflowTest extends TestCase
         $this->assertEquals('confirmed', $tag->status);
     }
 
-    public function testUserCanRejectIncorrectTags(): void
+    public function test_user_can_reject_incorrect_tags(): void
     {
         $photo = PersonPhoto::factory()->create([
             'person_id' => $this->person->id,
@@ -121,14 +123,14 @@ class PhotoTaggingWorkflowTest extends TestCase
         ]);
 
         // User rejects the tag
-        $service = new FacialRecognitionService();
+        $service = new FacialRecognitionService;
         $service->rejectTag($tag);
 
         $tag->refresh();
         $this->assertEquals('rejected', $tag->status);
     }
 
-    public function testPersonPhotoRelationshipWorks(): void
+    public function test_person_photo_relationship_works(): void
     {
         $photo = PersonPhoto::factory()->create([
             'person_id' => $this->person->id,
@@ -142,7 +144,7 @@ class PhotoTaggingWorkflowTest extends TestCase
         $this->assertEquals($this->person->id, $photo->person->id);
     }
 
-    public function testPhotoTagsAreLinkedToPerson(): void
+    public function test_photo_tags_are_linked_to_person(): void
     {
         $photo = PersonPhoto::factory()->create([
             'person_id' => $this->person->id,

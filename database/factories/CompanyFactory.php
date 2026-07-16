@@ -8,7 +8,7 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Company>
+ * @extends Factory<Company>
  */
 class CompanyFactory extends Factory
 {
@@ -28,10 +28,10 @@ class CompanyFactory extends Factory
     public function definition()
     {
         return [
-            'privacy'    => fake()->word(),
-            'name'       => fake()->word(),
-            'email'      => fake()->email(),
-            'status'     => fake()->randomElement([1, 2, 3, 4]),
+            'privacy' => fake()->word(),
+            'name' => fake()->word(),
+            'email' => fake()->email(),
+            'status' => fake()->randomElement([1, 2, 3, 4]),
             'created_by' => User::where('id', fake()->randomElement([1, 2, 3, 4]))->first()->id,
             'updated_by' => User::where('id', fake()->randomElement([1, 2, 3, 4]))->first()->id,
             'created_at' => Carbon::now(),

@@ -2,10 +2,12 @@
 
 namespace App\Models;
 
-use Throwable;
+use Carbon\Carbon;
+use Carbon\Month;
+use Carbon\WeekDay;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Carbon\Carbon;
+use Throwable;
 
 class HistoricalEvent extends Model
 {
@@ -44,7 +46,7 @@ class HistoricalEvent extends Model
         return $query->whereBetween('date', [$start, $end]);
     }
 
-    public static function yearFromDate(\DateTimeInterface|\Carbon\WeekDay|\Carbon\Month|string|int|float|null $date)
+    public static function yearFromDate(\DateTimeInterface|WeekDay|Month|string|int|float|null $date)
     {
         try {
             return Carbon::parse($date)->year;

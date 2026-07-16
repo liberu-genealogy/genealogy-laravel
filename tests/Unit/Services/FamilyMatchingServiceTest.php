@@ -3,7 +3,6 @@
 namespace Tests\Unit\Services;
 
 use App\Models\ConnectedAccount;
-use App\Models\Person;
 use App\Models\SocialConnectionPrivacy;
 use App\Models\SocialFamilyConnection;
 use App\Models\User;
@@ -21,10 +20,10 @@ class FamilyMatchingServiceTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
-        $this->service = new FamilyMatchingService();
+        $this->service = new FamilyMatchingService;
     }
 
-    public function testFindPotentialConnectionsReturnsEmptyWhenPrivacyDisabled(): void
+    public function test_find_potential_connections_returns_empty_when_privacy_disabled(): void
     {
         $user = User::factory()->create();
         SocialConnectionPrivacy::factory()->create([
@@ -37,7 +36,7 @@ class FamilyMatchingServiceTest extends TestCase
         $this->assertTrue($connections->isEmpty());
     }
 
-    public function testFindPotentialConnectionsReturnsEmptyWhenNoPrivacySettings(): void
+    public function test_find_potential_connections_returns_empty_when_no_privacy_settings(): void
     {
         $user = User::factory()->create();
 
@@ -46,7 +45,7 @@ class FamilyMatchingServiceTest extends TestCase
         $this->assertTrue($connections->isEmpty());
     }
 
-    public function testCreateConnection(): void
+    public function test_create_connection(): void
     {
         $user = User::factory()->create();
         $account = ConnectedAccount::factory()->create([
@@ -72,7 +71,7 @@ class FamilyMatchingServiceTest extends TestCase
         $this->assertEquals('pending', $connection->status);
     }
 
-    public function testCalculateConfidenceScore(): void
+    public function test_calculate_confidence_score(): void
     {
         // Use reflection to access protected method
         $reflection = new \ReflectionClass($this->service);
@@ -91,7 +90,7 @@ class FamilyMatchingServiceTest extends TestCase
         $this->assertEquals(100, $score);
     }
 
-    public function testProcessMatchesReturnsZeroWhenNoMatches(): void
+    public function test_process_matches_returns_zero_when_no_matches(): void
     {
         $user = User::factory()->create();
         SocialConnectionPrivacy::factory()->create([

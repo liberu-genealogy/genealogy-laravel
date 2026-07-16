@@ -13,7 +13,7 @@ class FanChartController extends Controller
     public function show(Request $request): View
     {
         $personId = $request->integer('person_id');
-        $person   = $personId ? Person::find($personId) : null;
+        $person = $personId ? Person::find($personId) : null;
 
         return view('fan-chart', compact('person'));
     }

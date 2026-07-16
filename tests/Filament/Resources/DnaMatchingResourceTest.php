@@ -32,8 +32,8 @@ class DnaMatchingResourceTest extends TestCase
         $matchUser = User::factory()->create();
 
         $dnaMatching = DnaMatching::factory()->create([
-            'user_id'    => $user->id,
-            'match_id'   => $matchUser->id,
+            'user_id' => $user->id,
+            'match_id' => $matchUser->id,
             'match_name' => 'Test Match',
         ]);
 

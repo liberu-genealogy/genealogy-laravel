@@ -2,14 +2,14 @@
 
 namespace App\Filament\App\Widgets;
 
-use Override;
-use Illuminate\Contracts\View\View;
 use App\Models\Person;
 use Filament\Widgets\Widget;
+use Illuminate\Contracts\View\View;
+use Override;
 
 class FanChart extends Widget
 {
-    #[\Override]
+    #[Override]
     protected string $view = 'filament.widgets.fan-chart-widget';
 
     public function getData(): array

@@ -10,12 +10,10 @@ class CreatePersonNameTable extends Migration
 {
     /**
      * Run the migrations.
-     *
-     * @return void
      */
     public function up(): void
     {
-        if (!Schema::hasTable('person_name')) {
+        if (! Schema::hasTable('person_name')) {
             Schema::create('person_name', function (Blueprint $table): void {
                 $table->bigIncrements('id');
                 $table->string('group')->nullable();
@@ -36,8 +34,6 @@ class CreatePersonNameTable extends Migration
 
     /**
      * Reverse the migrations.
-     *
-     * @return void
      */
     public function down(): void
     {

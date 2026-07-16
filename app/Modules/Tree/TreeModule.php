@@ -2,11 +2,11 @@
 
 namespace App\Modules\Tree;
 
+use App\Modules\BaseModule;
 use App\Modules\Tree\Services\TreeBuilderService;
 use App\Modules\Tree\Services\TreeRenderService;
 use Artisan;
 use File;
-use App\Modules\BaseModule;
 
 class TreeModule extends BaseModule
 {
@@ -43,9 +43,9 @@ class TreeModule extends BaseModule
      */
     protected function registerTreeServices(): void
     {
-        app()->singleton('genealogy.tree.builder', fn($app) => new TreeBuilderService());
+        app()->singleton('genealogy.tree.builder', fn ($app) => new TreeBuilderService);
 
-        app()->singleton('genealogy.tree.renderer', fn($app) => new TreeRenderService());
+        app()->singleton('genealogy.tree.renderer', fn ($app) => new TreeRenderService);
     }
 
     /**

@@ -2,11 +2,9 @@
 
 namespace App\Modules\Events\Services;
 
-use App\Models\PersonEvent;
 use App\Models\Person;
-use App\Models\Place;
+use App\Models\PersonEvent;
 use Illuminate\Support\Collection;
-use Illuminate\Pagination\LengthAwarePaginator;
 
 class EventsService
 {
@@ -30,6 +28,7 @@ class EventsService
     public function updateEvent(PersonEvent $event, array $data): PersonEvent
     {
         $event->update($data);
+
         return $event->fresh();
     }
 
@@ -75,7 +74,7 @@ class EventsService
             ->orWhere('description', 'LIKE', "%{$query}%")
             ->orWhereHas('person', function ($q) use ($query): void {
                 $q->where('givn', 'LIKE', "%{$query}%")
-                  ->orWhere('surn', 'LIKE', "%{$query}%");
+                    ->orWhere('surn', 'LIKE', "%{$query}%");
             })
             ->with(['person', 'place'])
             ->limit($limit)
@@ -126,12 +125,12 @@ class EventsService
      */
     public function formatEventDate(?string $date): string
     {
-        if (!$date) {
+        if (! $date) {
             return 'Unknown';
         }
 
         $timestamp = strtotime($date);
-        if (!$timestamp) {
+        if (! $timestamp) {
             return $date; // Return original if can't parse
         }
 

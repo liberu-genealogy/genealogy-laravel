@@ -2,18 +2,16 @@
 
 namespace App\Filament\Admin\Resources\ModuleResource\Pages;
 
-use Filament\Actions\Action;
-use Cache;
-use Filament\Notifications\Notification;
-use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\Textarea;
-use Artisan;
-use Exception;
-use Illuminate\Database\Eloquent\Builder;
 use App\Filament\Admin\Resources\ModuleResource;
-use App\Modules\ModuleManager;
-use Filament\Actions;
+use Artisan;
+use Cache;
+use Exception;
+use Filament\Actions\Action;
+use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\TextInput;
+use Filament\Notifications\Notification;
 use Filament\Resources\Pages\ListRecords;
+use Illuminate\Database\Eloquent\Builder;
 
 class ListModules extends ListRecords
 {
@@ -30,7 +28,7 @@ class ListModules extends ListRecords
                 ->action(function (): void {
                     // Clear module cache and reload
                     Cache::forget('modules');
-                    
+
                     Notification::make()
                         ->title('Modules Refreshed')
                         ->body('Module information has been refreshed.')
@@ -53,7 +51,7 @@ class ListModules extends ListRecords
                 ->action(function (array $data): void {
                     try {
                         Artisan::call('module create', [
-                            'name' => $data['name']
+                            'name' => $data['name'],
                         ]);
 
                         Notification::make()
@@ -64,7 +62,7 @@ class ListModules extends ListRecords
                     } catch (Exception $e) {
                         Notification::make()
                             ->title('Error')
-                            ->body('Failed to create module: ' . $e->getMessage())
+                            ->body('Failed to create module: '.$e->getMessage())
                             ->danger()
                             ->send();
                     }

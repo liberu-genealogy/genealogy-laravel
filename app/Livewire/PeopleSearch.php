@@ -3,6 +3,8 @@
 namespace App\Livewire;
 
 use App\Services\PersonSearchService;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Livewire\Attributes\On;
 use Livewire\Component;
 
@@ -36,7 +38,7 @@ class PeopleSearch extends Component
         $this->results = array_map(fn ($p) => is_object($p) ? $p->toArray() : $p, $this->results);
     }
 
-    public function render(): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+    public function render(): Factory|View
     {
         return view('livewire.people-search', [
             'results' => $this->results,

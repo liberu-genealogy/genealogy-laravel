@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Modules\Person\Filament\Resources\DuplicateMatchResource\Pages;
 
-use Filament\Resources\Pages\ListRecords;
 use App\Modules\Person\Filament\Resources\DuplicateMatchResource;
+use Filament\Resources\Pages\ListRecords;
 
 class ListDuplicateMatches extends ListRecords
 {

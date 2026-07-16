@@ -2,24 +2,17 @@
 
 namespace App\Filament\App\Resources;
 
-use Filament\Schemas\Schema;
-use Filament\Actions\ViewAction;
-use Filament\Actions\Action;
-use Filament\Tables\Filters\SelectFilter;
-use Filament\Notifications\Notification;
 use App\Filament\App\Resources\SmartMatchResource\Pages\ListSmartMatches;
 use App\Filament\App\Resources\SmartMatchResource\Pages\ViewSmartMatch;
-use UnitEnum;
-use BackedEnum;
-use App\Filament\App\Resources\SmartMatchResource\Pages;
 use App\Models\SmartMatch;
 use App\Services\SmartMatchingService;
-use Filament\Forms;
-use App\Filament\App\Resources\AppResource;
-use Filament\Tables;
-use Filament\Actions;
-use Filament\Tables\Table;
+use Filament\Actions\Action;
+use Filament\Actions\ViewAction;
+use Filament\Notifications\Notification;
+use Filament\Schemas\Schema;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\SelectFilter;
+use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Auth;
 
@@ -29,13 +22,13 @@ class SmartMatchResource extends AppResource
     protected static ?string $model = SmartMatch::class;
 
     #[\Override]
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-magnifying-glass';
+    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-magnifying-glass';
 
     #[\Override]
     protected static ?string $navigationLabel = 'Smart Matches';
 
     #[\Override]
-    protected static string | \UnitEnum | null $navigationGroup =  '🔍 Research & Analysis';
+    protected static string|\UnitEnum|null $navigationGroup = '🔍 Research & Analysis';
 
     #[\Override]
     protected static ?int $navigationSort = 4;
@@ -46,6 +39,7 @@ class SmartMatchResource extends AppResource
         if (config('premium.enabled')) {
             return true;
         }
+
         return auth()->user()?->isPremium() ?? false;
     }
 
@@ -55,6 +49,7 @@ class SmartMatchResource extends AppResource
         if (config('premium.enabled')) {
             return true;
         }
+
         return Auth::user()?->isPremium() ?? false;
     }
 

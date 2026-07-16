@@ -4,6 +4,7 @@ namespace Tests\Feature;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use JoelButcher\Socialstream\Providers;
+use PHPUnit\Framework\Attributes\DataProvider;
 use Tests\TestCase;
 
 class SocialstreamRegistrationTest extends TestCase
@@ -15,7 +16,7 @@ class SocialstreamRegistrationTest extends TestCase
         $this->assertTrue(class_exists(Providers::class));
     }
 
-    #[\PHPUnit\Framework\Attributes\DataProvider('socialMediaProviders')]
+    #[DataProvider('socialMediaProviders')]
     public function test_socialstream_config_has_social_media_providers(string $provider): void
     {
         $this->assertContains($provider, config('socialstream.providers'));
@@ -24,14 +25,14 @@ class SocialstreamRegistrationTest extends TestCase
     public static function socialMediaProviders(): array
     {
         return [
-            'bitbucket'       => [Providers::bitbucket()],
-            'facebook'        => [Providers::facebook()],
-            'github'          => [Providers::github()],
-            'gitlab'          => [Providers::gitlab()],
-            'google'          => [Providers::google()],
-            'linkedin'        => [Providers::linkedin()],
+            'bitbucket' => [Providers::bitbucket()],
+            'facebook' => [Providers::facebook()],
+            'github' => [Providers::github()],
+            'gitlab' => [Providers::gitlab()],
+            'google' => [Providers::google()],
+            'linkedin' => [Providers::linkedin()],
             'linkedin-openid' => [Providers::linkedinOpenId()],
-            'slack'           => [Providers::slack()],
+            'slack' => [Providers::slack()],
             'twitter-oauth-2' => [Providers::twitterOAuth2()],
             // twitterOAuth1 excluded: OAuth 1.0 requires live API keys even for redirect
         ];

@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace App\Listeners;
 
-use Exception;
 use App\Events\AchievementUnlocked;
+use App\Notifications\AchievementUnlockedNotification;
+use Exception;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Notification;
-use App\Notifications\AchievementUnlockedNotification;
 
 class AchievementUnlockedListener implements ShouldQueue
 {

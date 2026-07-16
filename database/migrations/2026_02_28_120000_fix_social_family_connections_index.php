@@ -1,9 +1,10 @@
 <?php
 
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\QueryException;
 use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
@@ -36,7 +37,7 @@ return new class extends Migration
                             WHERE TABLE_SCHEMA = ? AND TABLE_NAME = ? AND INDEX_NAME = ?',
                         [$dbName, 'social_family_connections', 'sfc_account_social_id_idx']
                     );
-                } catch (\Exception) {
+                } catch (Exception) {
                     // safe to ignore if the query fails for any reason
                     $exists = false;
                 }
@@ -44,7 +45,7 @@ return new class extends Migration
                 $exists = false;
             }
 
-            if (!$exists) {
+            if (! $exists) {
                 try {
                     Schema::table('social_family_connections', function (Blueprint $table): void {
                         // the previously-added index already has the correct short name.
@@ -55,7 +56,7 @@ return new class extends Migration
                             'sfc_account_social_id_idx'
                         );
                     });
-                } catch (\Illuminate\Database\QueryException $e) {
+                } catch (QueryException $e) {
                     // ignore duplicate-key errors (1061) which can happen if the
                     // index already exists but we couldn't detect it earlier.
                     $mysqlCode = $e->errorInfo[1] ?? null;

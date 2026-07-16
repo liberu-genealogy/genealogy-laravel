@@ -6,10 +6,10 @@ namespace App\Filament\Admin\Resources;
 
 use App\Filament\Admin\Resources\DnaMatchingResource\Pages\ListDnaMatchings;
 use App\Models\DnaMatching;
+use Filament\Resources\Resource;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\Filter;
 use Filament\Tables\Filters\SelectFilter;
-use Filament\Resources\Resource;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 
@@ -76,9 +76,9 @@ class DnaMatchingResource extends Resource
                     ->sortable()
                     ->color(fn (?string $state): string => match ($state) {
                         'Parent/Child', 'Full Sibling' => 'success',
-                        'Grandparent/Grandchild'       => 'warning',
-                        'First Cousin'                 => 'info',
-                        default                        => 'gray',
+                        'Grandparent/Grandchild' => 'warning',
+                        'First Cousin' => 'info',
+                        default => 'gray',
                     }),
                 TextColumn::make('total_shared_cm')
                     ->label('Shared cM')
@@ -93,7 +93,7 @@ class DnaMatchingResource extends Resource
                     ->color(fn (?float $state): string => match (true) {
                         $state >= 80 => 'success',
                         $state >= 60 => 'warning',
-                        default      => 'danger',
+                        default => 'danger',
                     }),
                 TextColumn::make('largest_cm_segment')
                     ->label('Largest Segment')
@@ -113,13 +113,13 @@ class DnaMatchingResource extends Resource
             ->filters([
                 SelectFilter::make('predicted_relationship')
                     ->options([
-                        'Parent/Child'               => 'Parent/Child',
-                        'Full Sibling'               => 'Full Sibling',
-                        'Grandparent/Grandchild'     => 'Grandparent/Grandchild',
+                        'Parent/Child' => 'Parent/Child',
+                        'Full Sibling' => 'Full Sibling',
+                        'Grandparent/Grandchild' => 'Grandparent/Grandchild',
                         'Aunt/Uncle or Half Sibling' => 'Aunt/Uncle or Half Sibling',
-                        'First Cousin'               => 'First Cousin',
-                        'Second Cousin'              => 'Second Cousin',
-                        'Distant Cousin'             => 'Distant Cousin',
+                        'First Cousin' => 'First Cousin',
+                        'Second Cousin' => 'Second Cousin',
+                        'Distant Cousin' => 'Distant Cousin',
                     ])
                     ->label('Relationship'),
                 Filter::make('high_confidence')

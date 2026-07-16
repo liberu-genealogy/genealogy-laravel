@@ -4,38 +4,36 @@ declare(strict_types=1);
 
 namespace App\Filament\Admin\Resources;
 
-use Override;
-use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\Select;
-use Filament\Tables\Columns\TextColumn;
-use Filament\Actions\EditAction;
-use Filament\Actions\BulkActionGroup;
-use Filament\Actions\DeleteBulkAction;
-use App\Filament\Admin\Resources\MenuResource\Pages\ListMenus;
 use App\Filament\Admin\Resources\MenuResource\Pages\CreateMenu;
 use App\Filament\Admin\Resources\MenuResource\Pages\EditMenu;
-use App\Filament\Admin\Resources\MenuResource\Pages;
+use App\Filament\Admin\Resources\MenuResource\Pages\ListMenus;
 use App\Models\Menu;
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteBulkAction;
+use Filament\Actions\EditAction;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\TextInput;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
-use Filament\Tables;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use Override;
 
 class MenuResource extends Resource
 {
-    #[\Override]
+    #[Override]
     protected static ?string $model = Menu::class;
 
-    #[\Override]
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-bars-3';
+    #[Override]
+    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-bars-3';
 
-    #[\Override]
+    #[Override]
     protected static ?string $navigationLabel = 'Menus';
 
-    #[\Override]
-    protected static string | \UnitEnum | null $navigationGroup = '🛠️ System';
+    #[Override]
+    protected static string|\UnitEnum|null $navigationGroup = '🛠️ System';
 
-    #[\Override]
+    #[Override]
     protected static ?int $navigationSort = 20;
 
     #[Override]
@@ -104,13 +102,13 @@ class MenuResource extends Resource
         ];
     }
 
-    #[\Override]
+    #[Override]
     public static function getPages(): array
     {
         return [
-            'index'  => ListMenus::route('/'),
+            'index' => ListMenus::route('/'),
             'create' => CreateMenu::route('/create'),
-            'edit'   => EditMenu::route('/{record}/edit'),
+            'edit' => EditMenu::route('/{record}/edit'),
         ];
     }
 }

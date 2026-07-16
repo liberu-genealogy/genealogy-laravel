@@ -8,7 +8,7 @@ use FontLib\Table\Type\name;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\ForumPost>
+ * @extends Factory<ForumPost>
  */
 class ForumPostFactory extends Factory
 {

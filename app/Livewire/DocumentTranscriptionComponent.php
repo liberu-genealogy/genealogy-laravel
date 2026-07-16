@@ -3,24 +3,32 @@
 namespace App\Livewire;
 
 use App\Models\DocumentTranscription;
-use App\Models\User;
 use App\Services\HandwritingRecognitionService;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Auth;
+use Livewire\Attributes\On;
 use Livewire\Component;
 use Livewire\WithFileUploads;
-use Livewire\Attributes\On;
 
 class DocumentTranscriptionComponent extends Component
 {
     use WithFileUploads;
 
     public $document;
+
     public ?DocumentTranscription $currentTranscription = null;
+
     public string $transcriptionText = '';
+
     public array $transcriptions = [];
+
     public bool $isUploading = false;
+
     public bool $isEditing = false;
+
     public ?string $errorMessage = null;
+
     public ?string $successMessage = null;
 
     public function mount(): void
@@ -65,7 +73,7 @@ class DocumentTranscriptionComponent extends Component
             $user = Auth::user();
             $teamId = $user->currentTeam?->id ?? $user->latestTeam?->id;
 
-            if (!$teamId) {
+            if (! $teamId) {
                 throw new \Exception('No team selected');
             }
 
@@ -79,7 +87,7 @@ class DocumentTranscriptionComponent extends Component
             $this->document = null;
             $this->loadTranscriptions();
         } catch (\Exception $e) {
-            $this->errorMessage = 'Upload failed: ' . $e->getMessage();
+            $this->errorMessage = 'Upload failed: '.$e->getMessage();
         } finally {
             $this->isUploading = false;
         }
@@ -88,8 +96,8 @@ class DocumentTranscriptionComponent extends Component
     public function selectTranscription(int $transcriptionId): void
     {
         $this->currentTranscription = DocumentTranscription::find($transcriptionId);
-        
-        if ($this->currentTranscription instanceof \App\Models\DocumentTranscription) {
+
+        if ($this->currentTranscription instanceof DocumentTranscription) {
             $this->transcriptionText = $this->currentTranscription->getCurrentTranscription() ?? '';
             $this->isEditing = false;
             $this->errorMessage = null;
@@ -103,7 +111,7 @@ class DocumentTranscriptionComponent extends Component
 
     public function cancelEditing(): void
     {
-        if ($this->currentTranscription instanceof \App\Models\DocumentTranscription) {
+        if ($this->currentTranscription instanceof DocumentTranscription) {
             $this->transcriptionText = $this->currentTranscription->getCurrentTranscription() ?? '';
         }
         $this->isEditing = false;
@@ -114,8 +122,9 @@ class DocumentTranscriptionComponent extends Component
         $this->errorMessage = null;
         $this->successMessage = null;
 
-        if (!$this->currentTranscription instanceof \App\Models\DocumentTranscription) {
+        if (! $this->currentTranscription instanceof DocumentTranscription) {
             $this->errorMessage = 'No transcription selected';
+
             return;
         }
 
@@ -134,7 +143,7 @@ class DocumentTranscriptionComponent extends Component
             $this->successMessage = 'Correction saved successfully!';
             $this->loadTranscriptions();
         } catch (\Exception $e) {
-            $this->errorMessage = 'Failed to save correction: ' . $e->getMessage();
+            $this->errorMessage = 'Failed to save correction: '.$e->getMessage();
         }
     }
 
@@ -142,36 +151,36 @@ class DocumentTranscriptionComponent extends Component
     {
         try {
             $transcription = DocumentTranscription::find($transcriptionId);
-            
+
             if ($transcription && $transcription->team_id === (Auth::user()->currentTeam?->id ?? Auth::user()->latestTeam?->id)) {
                 $transcription->delete();
-                
+
                 if ($this->currentTranscription && $this->currentTranscription->id === $transcriptionId) {
                     $this->currentTranscription = null;
                     $this->transcriptionText = '';
                 }
-                
+
                 $this->successMessage = 'Transcription deleted successfully';
                 $this->loadTranscriptions();
             }
         } catch (\Exception $e) {
-            $this->errorMessage = 'Failed to delete transcription: ' . $e->getMessage();
+            $this->errorMessage = 'Failed to delete transcription: '.$e->getMessage();
         }
     }
 
     #[On('transcriptionUpdated')]
     public function refreshTranscription(): void
     {
-        if ($this->currentTranscription instanceof \App\Models\DocumentTranscription) {
+        if ($this->currentTranscription instanceof DocumentTranscription) {
             $this->currentTranscription->refresh();
-            if (!$this->isEditing) {
+            if (! $this->isEditing) {
                 $this->transcriptionText = $this->currentTranscription->getCurrentTranscription() ?? '';
             }
         }
         $this->loadTranscriptions();
     }
 
-    public function render(): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+    public function render(): Factory|View
     {
         return view('livewire.document-transcription-component', [
             'stats' => $this->getStats(),
@@ -183,7 +192,7 @@ class DocumentTranscriptionComponent extends Component
         $user = Auth::user();
         $teamId = $user->currentTeam?->id ?? $user->latestTeam?->id;
 
-        if (!$teamId) {
+        if (! $teamId) {
             return [
                 'total_transcriptions' => 0,
                 'completed_transcriptions' => 0,
@@ -195,6 +204,7 @@ class DocumentTranscriptionComponent extends Component
         }
 
         $service = app(HandwritingRecognitionService::class);
+
         return $service->getTeamStats($teamId);
     }
 }

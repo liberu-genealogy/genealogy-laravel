@@ -2,9 +2,9 @@
 
 namespace App\Modules\Family;
 
+use App\Modules\BaseModule;
 use App\Modules\Family\Services\FamilyService;
 use Artisan;
-use App\Modules\BaseModule;
 
 class FamilyModule extends BaseModule
 {
@@ -42,7 +42,7 @@ class FamilyModule extends BaseModule
      */
     protected function registerFamilyServices(): void
     {
-        app()->singleton('genealogy.family', fn($app) => new FamilyService());
+        app()->singleton('genealogy.family', fn ($app) => new FamilyService);
     }
 
     /**

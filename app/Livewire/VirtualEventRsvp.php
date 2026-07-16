@@ -5,6 +5,8 @@ namespace App\Livewire;
 use App\Models\Person;
 use App\Models\VirtualEvent;
 use App\Models\VirtualEventAttendee;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\Computed;
 use Livewire\Attributes\Rule;
@@ -65,7 +67,7 @@ class VirtualEventRsvp extends Component
         $this->loadDefaultInviteMessage();
     }
 
-    public function render(): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+    public function render(): Factory|View
     {
         $attendees = $this->getFilteredAttendees();
         $persons = Person::orderBy('name')->get();

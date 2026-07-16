@@ -25,7 +25,7 @@ class GedcomRoundTripTest extends TestCase
 
         // Export must round-trip through our own validator with zero errors.
         $errors = $service->validateGedcom($content);
-        $this->assertSame([], $errors, 'validateGedcom errors: ' . implode(' | ', $errors));
+        $this->assertSame([], $errors, 'validateGedcom errors: '.implode(' | ', $errors));
 
         // Envelope: a valid single-document GEDCOM opens at HEAD and closes at TRLR.
         $this->assertStringStartsWith('0 HEAD', $content);

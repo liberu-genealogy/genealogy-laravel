@@ -4,10 +4,9 @@ declare(strict_types=1);
 
 namespace App\Filament\App\Resources\GedcomResource\Pages;
 
-use Filament\Actions\ViewAction;
-use Filament\Actions\DeleteAction;
 use App\Filament\App\Resources\GedcomResource;
-use Filament\Actions;
+use Filament\Actions\DeleteAction;
+use Filament\Actions\ViewAction;
 use Filament\Resources\Pages\EditRecord;
 
 class EditGedcom extends EditRecord

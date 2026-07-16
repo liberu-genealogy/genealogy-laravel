@@ -2,10 +2,10 @@
 
 namespace App\Filament\App\Pages;
 
-use Filament\Facades\Filament;
-use Exception;
 use App\Services\SubscriptionService;
+use Exception;
 use Filament\Actions\Action;
+use Filament\Facades\Filament;
 use Filament\Notifications\Notification;
 use Filament\Pages\Page;
 use Illuminate\Support\Facades\Auth;
@@ -13,13 +13,13 @@ use Illuminate\Support\Facades\Auth;
 class PremiumDashboardPage extends Page
 {
     #[\Override]
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-star';
+    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-star';
 
     #[\Override]
     protected static ?string $navigationLabel = 'Premium Dashboard';
 
     #[\Override]
-    protected static string | \UnitEnum | null $navigationGroup = '👤 Account & Settings';
+    protected static string|\UnitEnum|null $navigationGroup = '👤 Account & Settings';
 
     #[\Override]
     protected static ?int $navigationSort = 1;
@@ -42,12 +42,14 @@ class PremiumDashboardPage extends Page
             // Trial expired – send to the card-details / trial-expired page
             if ($user->hasExpiredTrial()) {
                 $this->redirect(route('filament.app.pages.trial-expired', ['tenant' => auth()->user()->currentTeam]));
+
                 return;
             }
 
             // Not premium at all – send to subscription page
             if (! $user->isPremium()) {
                 $this->redirect(route('filament.app.pages.subscription', ['tenant' => auth()->user()->currentTeam]));
+
                 return;
             }
         }
@@ -99,7 +101,7 @@ class PremiumDashboardPage extends Page
                 ->warning()
                 ->send();
 
-            $this->redirect(Filament::getUrl() . '/subscription');
+            $this->redirect(Filament::getUrl().'/subscription');
 
         } catch (Exception) {
             Notification::make()
@@ -171,6 +173,7 @@ class PremiumDashboardPage extends Page
     public function getPremiumFeatures(): array
     {
         $subscriptionService = app(SubscriptionService::class);
+
         return $subscriptionService->getPremiumFeaturesStatus(Auth::user());
     }
 }

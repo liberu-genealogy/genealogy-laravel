@@ -4,44 +4,36 @@ declare(strict_types=1);
 
 namespace App\Filament\App\Resources;
 
-use Override;
-use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\Textarea;
-use Filament\Tables\Columns\TextColumn;
-use Filament\Actions\EditAction;
-use Filament\Actions\BulkActionGroup;
-use Filament\Actions\DeleteBulkAction;
-use App\Filament\App\Resources\SourceResource\RelationManagers\CitationsRelationManager;
-use App\Filament\App\Resources\SourceResource\Pages\ListSources;
 use App\Filament\App\Resources\SourceResource\Pages\CreateSource;
 use App\Filament\App\Resources\SourceResource\Pages\EditSource;
-use UnitEnum;
-use BackedEnum;
-use App\Filament\App\Resources\SourceResource\Pages;
+use App\Filament\App\Resources\SourceResource\Pages\ListSources;
+use App\Filament\App\Resources\SourceResource\RelationManagers\CitationsRelationManager;
 use App\Models\Source;
-use Filament\Forms;
-use Filament\Forms\Form;
-use App\Filament\App\Resources\AppResource;
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteBulkAction;
+use Filament\Actions\EditAction;
+use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Schema;
-use Filament\Tables;
-use Filament\Actions;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use Override;
 
 class SourceResource extends AppResource
 {
-    #[\Override]
+    #[Override]
     protected static ?string $model = Source::class;
 
-    #[\Override]
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-document-text';
+    #[Override]
+    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-document-text';
 
-    #[\Override]
+    #[Override]
     protected static ?string $navigationLabel = 'Sources';
 
-    #[\Override]
-    protected static string | \UnitEnum | null $navigationGroup = '🔍 Research & Analysis';
+    #[Override]
+    protected static string|\UnitEnum|null $navigationGroup = '🔍 Research & Analysis';
 
-    #[\Override]
+    #[Override]
     protected static ?int $navigationSort = 1;
 
     #[Override]
@@ -50,7 +42,7 @@ class SourceResource extends AppResource
         return $schema
             ->components([
                 TextInput::make('name')
-                ->maxLength(255),
+                    ->maxLength(255),
                 Textarea::make('description')
                     ->maxLength(65535)
                     ->columnSpanFull(),
@@ -105,7 +97,7 @@ class SourceResource extends AppResource
         return $table
             ->columns([
                 TextColumn::make('name')
-                ->searchable(),
+                    ->searchable(),
                 TextColumn::make('date')
                     ->searchable(),
                 TextColumn::make('is_active')
@@ -172,13 +164,13 @@ class SourceResource extends AppResource
         ];
     }
 
-    #[\Override]
+    #[Override]
     public static function getPages(): array
     {
         return [
-            'index'  => ListSources::route('/'),
+            'index' => ListSources::route('/'),
             'create' => CreateSource::route('/create'),
-            'edit'   => EditSource::route('/{record}/edit'),
+            'edit' => EditSource::route('/{record}/edit'),
         ];
     }
 }

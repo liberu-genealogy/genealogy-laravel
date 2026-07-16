@@ -8,7 +8,7 @@ use App\Models\Place;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Place>
+ * @extends Factory<Place>
  */
 class PlaceFactory extends Factory
 {
@@ -29,8 +29,8 @@ class PlaceFactory extends Factory
     {
         return [
             'description' => fake()->text(50),
-            'title'       => fake()->word(),
-            'date'        => fake()->date(),
+            'title' => fake()->word(),
+            'date' => fake()->date(),
         ];
     }
 }

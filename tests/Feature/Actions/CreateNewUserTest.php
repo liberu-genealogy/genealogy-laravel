@@ -17,7 +17,7 @@ class CreateNewUserTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
-        $this->action = new CreateNewUser();
+        $this->action = new CreateNewUser;
 
         // Deliberately does NOT create a panel_user role. It used to, which is
         // why this suite stayed green while every real registration returned
@@ -29,9 +29,9 @@ class CreateNewUserTest extends TestCase
     public function test_user_can_be_created_with_valid_data(): void
     {
         $user = $this->action->create([
-            'name'                  => 'John Doe',
-            'email'                 => 'john@example.com',
-            'password'              => 'Password1!',
+            'name' => 'John Doe',
+            'email' => 'john@example.com',
+            'password' => 'Password1!',
             'password_confirmation' => 'Password1!',
         ]);
 
@@ -44,14 +44,14 @@ class CreateNewUserTest extends TestCase
     public function test_user_is_persisted_to_database(): void
     {
         $this->action->create([
-            'name'                  => 'Jane Smith',
-            'email'                 => 'jane@example.com',
-            'password'              => 'Password1!',
+            'name' => 'Jane Smith',
+            'email' => 'jane@example.com',
+            'password' => 'Password1!',
             'password_confirmation' => 'Password1!',
         ]);
 
         $this->assertDatabaseHas('users', [
-            'name'  => 'Jane Smith',
+            'name' => 'Jane Smith',
             'email' => 'jane@example.com',
         ]);
     }
@@ -59,9 +59,9 @@ class CreateNewUserTest extends TestCase
     public function test_personal_team_is_created_for_new_user(): void
     {
         $user = $this->action->create([
-            'name'                  => 'John Doe',
-            'email'                 => 'john@example.com',
-            'password'              => 'Password1!',
+            'name' => 'John Doe',
+            'email' => 'john@example.com',
+            'password' => 'Password1!',
             'password_confirmation' => 'Password1!',
         ]);
 
@@ -72,9 +72,9 @@ class CreateNewUserTest extends TestCase
     public function test_personal_team_name_is_derived_from_user_name(): void
     {
         $user = $this->action->create([
-            'name'                  => 'John Doe',
-            'email'                 => 'john@example.com',
-            'password'              => 'Password1!',
+            'name' => 'John Doe',
+            'email' => 'john@example.com',
+            'password' => 'Password1!',
             'password_confirmation' => 'Password1!',
         ]);
 
@@ -84,9 +84,9 @@ class CreateNewUserTest extends TestCase
     public function test_user_is_switched_to_personal_team_after_creation(): void
     {
         $user = $this->action->create([
-            'name'                  => 'John Doe',
-            'email'                 => 'john@example.com',
-            'password'              => 'Password1!',
+            'name' => 'John Doe',
+            'email' => 'john@example.com',
+            'password' => 'Password1!',
             'password_confirmation' => 'Password1!',
         ]);
 
@@ -103,9 +103,9 @@ class CreateNewUserTest extends TestCase
     public function test_user_is_created_without_requiring_a_seeded_role(): void
     {
         $user = $this->action->create([
-            'name'                  => 'John Doe',
-            'email'                 => 'john@example.com',
-            'password'              => 'Password1!',
+            'name' => 'John Doe',
+            'email' => 'john@example.com',
+            'password' => 'Password1!',
             'password_confirmation' => 'Password1!',
         ]);
 
@@ -118,9 +118,9 @@ class CreateNewUserTest extends TestCase
         $this->expectException(ValidationException::class);
 
         $this->action->create([
-            'name'                  => '',
-            'email'                 => 'john@example.com',
-            'password'              => 'Password1!',
+            'name' => '',
+            'email' => 'john@example.com',
+            'password' => 'Password1!',
             'password_confirmation' => 'Password1!',
         ]);
     }
@@ -130,9 +130,9 @@ class CreateNewUserTest extends TestCase
         $this->expectException(ValidationException::class);
 
         $this->action->create([
-            'name'                  => 'John Doe',
-            'email'                 => '',
-            'password'              => 'Password1!',
+            'name' => 'John Doe',
+            'email' => '',
+            'password' => 'Password1!',
             'password_confirmation' => 'Password1!',
         ]);
     }
@@ -142,9 +142,9 @@ class CreateNewUserTest extends TestCase
         $this->expectException(ValidationException::class);
 
         $this->action->create([
-            'name'                  => 'John Doe',
-            'email'                 => 'not-an-email',
-            'password'              => 'Password1!',
+            'name' => 'John Doe',
+            'email' => 'not-an-email',
+            'password' => 'Password1!',
             'password_confirmation' => 'Password1!',
         ]);
     }
@@ -156,9 +156,9 @@ class CreateNewUserTest extends TestCase
         $this->expectException(ValidationException::class);
 
         $this->action->create([
-            'name'                  => 'John Doe',
-            'email'                 => 'existing@example.com',
-            'password'              => 'Password1!',
+            'name' => 'John Doe',
+            'email' => 'existing@example.com',
+            'password' => 'Password1!',
             'password_confirmation' => 'Password1!',
         ]);
     }
@@ -168,9 +168,9 @@ class CreateNewUserTest extends TestCase
         $this->expectException(ValidationException::class);
 
         $this->action->create([
-            'name'                  => 'John Doe',
-            'email'                 => 'john@example.com',
-            'password'              => '',
+            'name' => 'John Doe',
+            'email' => 'john@example.com',
+            'password' => '',
             'password_confirmation' => '',
         ]);
     }
@@ -180,9 +180,9 @@ class CreateNewUserTest extends TestCase
         $this->expectException(ValidationException::class);
 
         $this->action->create([
-            'name'                  => 'John Doe',
-            'email'                 => 'john@example.com',
-            'password'              => 'Password1!',
+            'name' => 'John Doe',
+            'email' => 'john@example.com',
+            'password' => 'Password1!',
             'password_confirmation' => 'DifferentPassword1!',
         ]);
     }
@@ -192,9 +192,9 @@ class CreateNewUserTest extends TestCase
         $this->expectException(ValidationException::class);
 
         $this->action->create([
-            'name'                  => str_repeat('a', 256),
-            'email'                 => 'john@example.com',
-            'password'              => 'Password1!',
+            'name' => str_repeat('a', 256),
+            'email' => 'john@example.com',
+            'password' => 'Password1!',
             'password_confirmation' => 'Password1!',
         ]);
     }
@@ -202,9 +202,9 @@ class CreateNewUserTest extends TestCase
     public function test_password_is_hashed_and_not_stored_in_plaintext(): void
     {
         $user = $this->action->create([
-            'name'                  => 'John Doe',
-            'email'                 => 'john@example.com',
-            'password'              => 'Password1!',
+            'name' => 'John Doe',
+            'email' => 'john@example.com',
+            'password' => 'Password1!',
             'password_confirmation' => 'Password1!',
         ]);
 
@@ -215,16 +215,16 @@ class CreateNewUserTest extends TestCase
     public function test_multiple_users_can_be_created_with_different_emails(): void
     {
         $user1 = $this->action->create([
-            'name'                  => 'User One',
-            'email'                 => 'user1@example.com',
-            'password'              => 'Password1!',
+            'name' => 'User One',
+            'email' => 'user1@example.com',
+            'password' => 'Password1!',
             'password_confirmation' => 'Password1!',
         ]);
 
         $user2 = $this->action->create([
-            'name'                  => 'User Two',
-            'email'                 => 'user2@example.com',
-            'password'              => 'Password1!',
+            'name' => 'User Two',
+            'email' => 'user2@example.com',
+            'password' => 'Password1!',
             'password_confirmation' => 'Password1!',
         ]);
 

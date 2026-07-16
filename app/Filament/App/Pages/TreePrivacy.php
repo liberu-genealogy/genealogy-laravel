@@ -15,7 +15,7 @@ class TreePrivacy extends Page
     protected string $view = 'filament.app.pages.tree-privacy';
 
     #[\Override]
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-lock-closed';
+    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-lock-closed';
 
     #[\Override]
     protected static ?string $navigationLabel = 'Tree Privacy';
@@ -24,7 +24,7 @@ class TreePrivacy extends Page
     protected static ?string $title = 'Tree Privacy';
 
     #[\Override]
-    protected static string | \UnitEnum | null $navigationGroup = '📋 Research Management';
+    protected static string|\UnitEnum|null $navigationGroup = '📋 Research Management';
 
     /**
      * The current tenant's trees (BelongsToTenant scopes this to the active team).

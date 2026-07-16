@@ -4,9 +4,8 @@ declare(strict_types=1);
 
 namespace App\Filament\App\Resources\RepositoryResource\Pages;
 
-use Filament\Actions\CreateAction;
 use App\Filament\App\Resources\RepositoryResource;
-use Filament\Actions;
+use Filament\Actions\CreateAction;
 use Filament\Resources\Pages\ListRecords;
 
 class ListRepositories extends ListRecords

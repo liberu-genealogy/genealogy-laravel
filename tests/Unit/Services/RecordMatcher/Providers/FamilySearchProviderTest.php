@@ -19,29 +19,29 @@ class FamilySearchProviderTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
-        
+
         Config::set('services.familysearch.api_key', 'test-api-key');
         Config::set('services.familysearch.base_url', 'https://api.familysearch.test/platform');
         Config::set('services.familysearch.timeout', 30);
-        
-        $this->provider = new FamilySearchProvider();
+
+        $this->provider = new FamilySearchProvider;
     }
 
-    public function testIsConfiguredReturnsTrueWhenApiKeySet(): void
+    public function test_is_configured_returns_true_when_api_key_set(): void
     {
         $this->assertTrue($this->provider->isConfigured());
     }
 
-    public function testGetNameReturnsFamilySearch(): void
+    public function test_get_name_returns_family_search(): void
     {
         $this->assertEquals('FamilySearch', $this->provider->getName());
     }
 
-    public function testSearchReturnsEmptyArrayWhenNotConfigured(): void
+    public function test_search_returns_empty_array_when_not_configured(): void
     {
         Config::set('services.familysearch.api_key', '');
-        $provider = new FamilySearchProvider();
-        
+        $provider = new FamilySearchProvider;
+
         $person = Person::factory()->create();
         $results = $provider->search($person);
 
@@ -49,7 +49,7 @@ class FamilySearchProviderTest extends TestCase
         $this->assertEmpty($results);
     }
 
-    public function testSearchParsesGedcomxFormatCorrectly(): void
+    public function test_search_parses_gedcomx_format_correctly(): void
     {
         Http::fake([
             'api.familysearch.test/*' => Http::response([

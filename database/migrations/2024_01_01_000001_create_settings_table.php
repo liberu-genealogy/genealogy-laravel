@@ -19,6 +19,6 @@ return new class extends SettingsMigration
         $this->migrator->add('general.twitter_url', null);
         $this->migrator->add('general.github_url', 'https://www.github.com/liberu-genealogy');
         $this->migrator->add('general.youtube_url', null);
-        $this->migrator->add('general.footer_copyright', '© ' . date('Y') . ' ' . config('app.name', 'Liberu Genealogy') . '. All rights reserved.');
+        $this->migrator->add('general.footer_copyright', '© '.date('Y').' '.config('app.name', 'Liberu Genealogy').'. All rights reserved.');
     }
 };

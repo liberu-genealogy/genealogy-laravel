@@ -5,10 +5,11 @@ namespace App\Livewire;
 use App\Models\Person;
 use App\Models\PhotoTag;
 use App\Services\FacialRecognitionService;
-use Filament\Forms\Components\Select;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Notifications\Notification;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Livewire\Component;
 
 class FacialRecognitionReview extends Component implements HasForms
@@ -16,8 +17,11 @@ class FacialRecognitionReview extends Component implements HasForms
     use InteractsWithForms;
 
     public ?int $currentTagIndex = 0;
+
     public $pendingTags = [];
+
     public ?int $selectedPersonId = null;
+
     public bool $createEncoding = true;
 
     protected FacialRecognitionService $facialRecognitionService;
@@ -36,8 +40,8 @@ class FacialRecognitionReview extends Component implements HasForms
     {
         $teamId = auth()->user()->currentTeam?->id;
         $tags = $this->facialRecognitionService->getPendingTags($teamId);
-        
-        $this->pendingTags = $tags->map(fn($tag) => [
+
+        $this->pendingTags = $tags->map(fn ($tag) => [
             'id' => $tag->id,
             'photo_url' => $tag->photo->url,
             'person_id' => $tag->person_id,
@@ -52,18 +56,19 @@ class FacialRecognitionReview extends Component implements HasForms
 
     public function confirmTag(): void
     {
-        if (empty($this->pendingTags) || !isset($this->pendingTags[$this->currentTagIndex])) {
+        if (empty($this->pendingTags) || ! isset($this->pendingTags[$this->currentTagIndex])) {
             return;
         }
 
         $tagData = $this->pendingTags[$this->currentTagIndex];
         $tag = PhotoTag::find($tagData['id']);
 
-        if (!$tag) {
+        if (! $tag) {
             Notification::make()
                 ->title('Tag not found')
                 ->danger()
                 ->send();
+
             return;
         }
 
@@ -91,18 +96,19 @@ class FacialRecognitionReview extends Component implements HasForms
 
     public function rejectTag(): void
     {
-        if (empty($this->pendingTags) || !isset($this->pendingTags[$this->currentTagIndex])) {
+        if (empty($this->pendingTags) || ! isset($this->pendingTags[$this->currentTagIndex])) {
             return;
         }
 
         $tagData = $this->pendingTags[$this->currentTagIndex];
         $tag = PhotoTag::find($tagData['id']);
 
-        if (!$tag) {
+        if (! $tag) {
             Notification::make()
                 ->title('Tag not found')
                 ->danger()
                 ->send();
+
             return;
         }
 
@@ -145,15 +151,15 @@ class FacialRecognitionReview extends Component implements HasForms
         return $this->pendingTags[$this->currentTagIndex] ?? null;
     }
 
-    public function render(): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+    public function render(): Factory|View
     {
         $currentTag = $this->getCurrentTag();
         $teamId = auth()->user()->currentTeam?->id;
-        
+
         $peopleOptions = Person::query()
-            ->when($teamId, fn($q) => $q->where('team_id', $teamId))
+            ->when($teamId, fn ($q) => $q->where('team_id', $teamId))
             ->get()
-            ->mapWithKeys(fn($person): array => [$person->id => $person->fullname()])
+            ->mapWithKeys(fn ($person): array => [$person->id => $person->fullname()])
             ->toArray();
 
         return view('livewire.facial-recognition-review', [

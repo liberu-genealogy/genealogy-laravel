@@ -2,10 +2,10 @@
 
 namespace App\Models;
 
-use Override;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Laravel\Jetstream\Jetstream;
 use Laravel\Jetstream\TeamInvitation as JetstreamTeamInvitation;
+use Override;
 
 class TeamInvitation extends JetstreamTeamInvitation
 {
@@ -14,7 +14,7 @@ class TeamInvitation extends JetstreamTeamInvitation
      *
      * @var array<int, string>
      */
-    #[\Override]
+    #[Override]
     protected $fillable = [
         'email',
         'role',

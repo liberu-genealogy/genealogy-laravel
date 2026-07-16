@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\ConnectedAccount>
+ * @extends Factory<ConnectedAccount>
  */
 class ConnectedAccountFactory extends Factory
 {
@@ -19,11 +19,11 @@ class ConnectedAccountFactory extends Factory
         $providers = ['github', 'google', 'facebook', 'twitter', 'linkedin'];
 
         return [
-            'provider'      => fake()->randomElement($providers),
-            'provider_id'   => fake()->numerify('########'),
-            'name'          => fake()->name(),
-            'email'         => fake()->safeEmail(),
-            'token'         => Str::random(432),
+            'provider' => fake()->randomElement($providers),
+            'provider_id' => fake()->numerify('########'),
+            'name' => fake()->name(),
+            'email' => fake()->safeEmail(),
+            'token' => Str::random(432),
             'refresh_token' => Str::random(432),
             'enable_family_matching' => false,
             'cached_profile_data' => null,

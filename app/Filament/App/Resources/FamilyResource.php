@@ -4,43 +4,39 @@ declare(strict_types=1);
 
 namespace App\Filament\App\Resources;
 
-use Override;
-use Filament\Schemas\Components\Section;
+use App\Filament\App\Resources\FamilyResource\Pages\CreateFamily;
+use App\Filament\App\Resources\FamilyResource\Pages\EditFamily;
+use App\Filament\App\Resources\FamilyResource\Pages\ListFamilies;
+use App\Models\Family;
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteBulkAction;
+use Filament\Actions\EditAction;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
-use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Columns\IconColumn;
-use Filament\Actions\EditAction;
-use Filament\Actions\BulkActionGroup;
-use Filament\Actions\DeleteBulkAction;
-use App\Filament\App\Resources\FamilyResource\Pages\ListFamilies;
-use App\Filament\App\Resources\FamilyResource\Pages\CreateFamily;
-use App\Filament\App\Resources\FamilyResource\Pages\EditFamily;
-use UnitEnum;
-use BackedEnum;
-use App\Filament\App\Resources\FamilyResource\Pages;
-use App\Models\Family;
-use Filament\Forms;
-use Filament\Forms\Form;
-use App\Filament\App\Resources\AppResource;
+use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
 use Filament\Tables;
-use Filament\Actions;
+use Filament\Tables\Columns\IconColumn;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use Override;
 
 class FamilyResource extends AppResource
 {
-    #[\Override]
+    #[Override]
     protected static ?string $model = Family::class;
 
-    #[\Override]
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-home';
-    #[\Override]
+    #[Override]
+    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-home';
+
+    #[Override]
     protected static ?string $navigationLabel = 'Families';
-    #[\Override]
-    protected static string | \UnitEnum | null $navigationGroup = '👥 Family Tree';
-    #[\Override]
+
+    #[Override]
+    protected static string|\UnitEnum|null $navigationGroup = '👥 Family Tree';
+
+    #[Override]
     protected static ?int $navigationSort = 2;
 
     #[Override]
@@ -148,13 +144,13 @@ class FamilyResource extends AppResource
         ];
     }
 
-    #[\Override]
+    #[Override]
     public static function getPages(): array
     {
         return [
-            'index'  => ListFamilies::route('/'),
+            'index' => ListFamilies::route('/'),
             'create' => CreateFamily::route('/create'),
-            'edit'   => EditFamily::route('/{record}/edit'),
+            'edit' => EditFamily::route('/{record}/edit'),
         ];
     }
 }

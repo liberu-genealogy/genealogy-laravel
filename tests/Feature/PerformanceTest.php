@@ -11,7 +11,7 @@ class PerformanceTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function testLargeDatasetRetrieval(): void
+    public function test_large_dataset_retrieval(): void
     {
         // Create a dataset (reduced size for CI stability)
         Person::factory()->count(100)->create();
@@ -35,7 +35,7 @@ class PerformanceTest extends TestCase
         $this->assertLessThan(0.5, $timeCached); // Cached retrieval should complete well under 0.5 seconds
     }
 
-    public function testQueryPerformance(): void
+    public function test_query_performance(): void
     {
         Person::factory()->count(10)->create();
 

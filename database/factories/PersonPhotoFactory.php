@@ -13,8 +13,8 @@ class PersonPhotoFactory extends Factory
     public function definition(): array
     {
         return [
-            'file_path' => 'person-photos/' . fake()->uuid() . '.jpg',
-            'file_name' => fake()->firstName() . '-' . fake()->lastName() . '.jpg',
+            'file_path' => 'person-photos/'.fake()->uuid().'.jpg',
+            'file_name' => fake()->firstName().'-'.fake()->lastName().'.jpg',
             'mime_type' => 'image/jpeg',
             'file_size' => fake()->numberBetween(50000, 5000000),
             'width' => fake()->numberBetween(400, 2000),

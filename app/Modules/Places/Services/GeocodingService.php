@@ -2,11 +2,11 @@
 
 namespace App\Modules\Places\Services;
 
-use Exception;
-use Log;
 use App\Models\Place;
-use Illuminate\Support\Facades\Http;
+use Exception;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Http;
+use Log;
 
 class GeocodingService
 {
@@ -15,9 +15,9 @@ class GeocodingService
      */
     public function geocodePlace(string $placeName): ?array
     {
-        $cacheKey = 'geocode_' . md5($placeName);
-        
-        return Cache::remember($cacheKey, 86400, fn() => $this->performGeocoding($placeName));
+        $cacheKey = 'geocode_'.md5($placeName);
+
+        return Cache::remember($cacheKey, 86400, fn () => $this->performGeocoding($placeName));
     }
 
     /**
@@ -25,9 +25,9 @@ class GeocodingService
      */
     public function reverseGeocode(float $latitude, float $longitude): ?array
     {
-        $cacheKey = 'reverse_geocode_' . md5("{$latitude},{$longitude}");
-        
-        return Cache::remember($cacheKey, 86400, fn() => $this->performReverseGeocoding($latitude, $longitude));
+        $cacheKey = 'reverse_geocode_'.md5("{$latitude},{$longitude}");
+
+        return Cache::remember($cacheKey, 86400, fn () => $this->performReverseGeocoding($latitude, $longitude));
     }
 
     /**
@@ -47,6 +47,7 @@ class GeocodingService
                 'latitude' => $coordinates['latitude'],
                 'longitude' => $coordinates['longitude'],
             ]);
+
             return true;
         }
 
@@ -59,14 +60,14 @@ class GeocodingService
     public function batchGeocodePlaces(array $places): array
     {
         $results = [];
-        
+
         foreach ($places as $place) {
             $results[$place->id] = $this->updatePlaceCoordinates($place);
 
             // Add delay to respect API rate limits
             usleep(100000); // 0.1 second delay
         }
-        
+
         return $results;
     }
 
@@ -84,9 +85,9 @@ class GeocodingService
                 'addressdetails' => 1,
             ]);
 
-            if ($response->successful() && !empty($response->json())) {
+            if ($response->successful() && ! empty($response->json())) {
                 $data = $response->json()[0];
-                
+
                 return [
                     'latitude' => (float) $data['lat'],
                     'longitude' => (float) $data['lon'],
@@ -95,8 +96,8 @@ class GeocodingService
                 ];
             }
         } catch (Exception $e) {
-            Log::warning('Geocoding failed for place: ' . $placeName, [
-                'error' => $e->getMessage()
+            Log::warning('Geocoding failed for place: '.$placeName, [
+                'error' => $e->getMessage(),
             ]);
         }
 
@@ -118,7 +119,7 @@ class GeocodingService
 
             if ($response->successful()) {
                 $data = $response->json();
-                
+
                 return [
                     'display_name' => $data['display_name'],
                     'address' => $data['address'] ?? [],
@@ -126,8 +127,8 @@ class GeocodingService
                 ];
             }
         } catch (Exception $e) {
-            Log::warning('Reverse geocoding failed for coordinates: ' . $latitude . ',' . $longitude, [
-                'error' => $e->getMessage()
+            Log::warning('Reverse geocoding failed for coordinates: '.$latitude.','.$longitude, [
+                'error' => $e->getMessage(),
             ]);
         }
 
@@ -145,7 +146,7 @@ class GeocodingService
             $place->state,
             $place->country,
         ]);
-        
+
         return implode(', ', $parts);
     }
 
@@ -154,7 +155,7 @@ class GeocodingService
      */
     public function validateCoordinates(float $latitude, float $longitude): bool
     {
-        return $latitude >= -90 && $latitude <= 90 && 
+        return $latitude >= -90 && $latitude <= 90 &&
                $longitude >= -180 && $longitude <= 180;
     }
 
@@ -163,8 +164,8 @@ class GeocodingService
      */
     public function calculateDistance(Place $place1, Place $place2): ?float
     {
-        if (!$place1->latitude || !$place1->longitude || 
-            !$place2->latitude || !$place2->longitude) {
+        if (! $place1->latitude || ! $place1->longitude ||
+            ! $place2->latitude || ! $place2->longitude) {
             return null;
         }
 

@@ -12,7 +12,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class UserChecklist extends Model
 {
-    use HasFactory, BelongsToTenant, SoftDeletes;
+    use BelongsToTenant, HasFactory, SoftDeletes;
 
     #[\Override]
     protected $fillable = [
@@ -38,13 +38,19 @@ class UserChecklist extends Model
     ];
 
     const STATUS_NOT_STARTED = 'not_started';
+
     const STATUS_IN_PROGRESS = 'in_progress';
+
     const STATUS_COMPLETED = 'completed';
+
     const STATUS_ON_HOLD = 'on_hold';
 
     const PRIORITY_LOW = 'low';
+
     const PRIORITY_MEDIUM = 'medium';
+
     const PRIORITY_HIGH = 'high';
+
     const PRIORITY_URGENT = 'urgent';
 
     /**
@@ -106,6 +112,7 @@ class UserChecklist extends Model
         }
 
         $completedItems = $this->completedItems()->count();
+
         return round(($completedItems / $totalItems) * 100, 2);
     }
 
@@ -177,7 +184,7 @@ class UserChecklist extends Model
     public function scopeOverdue($query)
     {
         return $query->where('due_date', '<', now())
-                    ->where('status', '!=', self::STATUS_COMPLETED);
+            ->where('status', '!=', self::STATUS_COMPLETED);
     }
 
     /**

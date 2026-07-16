@@ -2,9 +2,12 @@
 
 namespace App\Services;
 
-use Exception;
-use App\Models\Dna;
 use App\Jobs\DnaMatching;
+use App\Models\Dna;
+use App\Models\User;
+use App\Services\Dna\DnaFileVault;
+use App\Services\Dna\RawDnaParser;
+use Exception;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -12,15 +15,17 @@ use Illuminate\Support\Str;
 class DnaImportService
 {
     const VAR_NAME_PREFIX = 'var_';
+
     const VAR_NAME_LENGTH = 5;
+
     const EXPECTED_VAR_NAME_FULL_LENGTH = 9; // prefix (4) + random (5)
-    
+
     /**
      * Import multiple DNA kits from files
      *
-     * @param array $files Array of file paths to import
-     * @param int $userId User ID to associate kits with
-     * @param bool $autoMatch Whether to automatically match after import
+     * @param  array  $files  Array of file paths to import
+     * @param  int  $userId  User ID to associate kits with
+     * @param  bool  $autoMatch  Whether to automatically match after import
      * @return array Results of import operations
      */
     public function importMultipleKits(array $files, int $userId, bool $autoMatch = true): array
@@ -40,7 +45,7 @@ class DnaImportService
                     'file' => $file,
                     'error' => $e->getMessage(),
                 ];
-                Log::error("DNA kit import failed for file {$file}: " . $e->getMessage());
+                Log::error("DNA kit import failed for file {$file}: ".$e->getMessage());
             }
         }
 
@@ -50,34 +55,34 @@ class DnaImportService
     /**
      * Import a single DNA kit
      *
-     * @param string $filePath Path to DNA file
-     * @param int $userId User ID
-     * @param bool $autoMatch Whether to dispatch matching job
+     * @param  string  $filePath  Path to DNA file
+     * @param  int  $userId  User ID
+     * @param  bool  $autoMatch  Whether to dispatch matching job
      * @return array Import result
      */
     public function importSingleKit(string $filePath, int $userId, bool $autoMatch = true, bool $consentGiven = false): array
     {
         // Validate file exists
-        if (!Storage::disk('private')->exists($filePath)) {
+        if (! Storage::disk('private')->exists($filePath)) {
             throw new Exception("DNA file not found: {$filePath}");
         }
 
         // Validate file format (on the plaintext, before it is encrypted below)
         $validation = $this->validateDnaFile($filePath);
-        if (!$validation['valid']) {
-            throw new Exception("Invalid DNA file format: " . $validation['error']);
+        if (! $validation['valid']) {
+            throw new Exception('Invalid DNA file format: '.$validation['error']);
         }
 
         // Encrypt the raw DNA file at rest now that it is validated (SCOPE §20).
-        $vault = app(\App\Services\Dna\DnaFileVault::class);
+        $vault = app(DnaFileVault::class);
         $vault->store(Storage::disk('private')->get($filePath), $filePath);
 
         // Generate unique variable name
         $varName = $this->generateUniqueVarName();
 
         // Create DNA record
-        $dna = new Dna();
-        $dna->name = 'DNA Kit for user ' . $userId . ' (' . basename($filePath) . ')';
+        $dna = new Dna;
+        $dna->name = 'DNA Kit for user '.$userId.' ('.basename($filePath).')';
         $dna->user_id = $userId;
         $dna->variable_name = $varName;
         $dna->file_name = $filePath;
@@ -89,7 +94,7 @@ class DnaImportService
 
         // Dispatch matching only for a consented kit — never match DNA without consent.
         if ($autoMatch && $dna->hasConsent()) {
-            $user = \App\Models\User::find($userId);
+            $user = User::find($userId);
             if ($user) {
                 DnaMatching::dispatch($user, $varName, $filePath);
                 Log::info("DNA matching job dispatched for kit {$varName}");
@@ -108,7 +113,7 @@ class DnaImportService
     /**
      * Validate DNA file format and content
      *
-     * @param string $filePath Path to DNA file
+     * @param  string  $filePath  Path to DNA file
      * @return array Validation result
      */
     public function validateDnaFile(string $filePath): array
@@ -117,7 +122,7 @@ class DnaImportService
             $fullPath = Storage::disk('private')->path($filePath);
 
             // Check file exists and is readable
-            if (!file_exists($fullPath) || !is_readable($fullPath)) {
+            if (! file_exists($fullPath) || ! is_readable($fullPath)) {
                 return [
                     'valid' => false,
                     'error' => 'File is not readable',
@@ -160,13 +165,13 @@ class DnaImportService
             // class_exists(Snps::class) block that always left the count at 0.)
             $snpCount = 0;
             try {
-                foreach (app(\App\Services\Dna\RawDnaParser::class)->parse($fullPath) as $positions) {
+                foreach (app(RawDnaParser::class)->parse($fullPath) as $positions) {
                     $snpCount += count($positions);
                 }
             } catch (\Throwable $e) {
                 return [
                     'valid' => false,
-                    'error' => 'Could not parse DNA file: ' . $e->getMessage(),
+                    'error' => 'Could not parse DNA file: '.$e->getMessage(),
                 ];
             }
 
@@ -187,8 +192,8 @@ class DnaImportService
     /**
      * Detect DNA file format from header lines
      *
-     * @param string $firstLine First line of file
-     * @param string $secondLine Second line of file
+     * @param  string  $firstLine  First line of file
+     * @param  string  $secondLine  Second line of file
      * @return string Format identifier
      */
     protected function detectFileFormat(string $firstLine, string $secondLine): string
@@ -214,7 +219,7 @@ class DnaImportService
         }
 
         // Generic CSV/TSV format with rsid
-        if (preg_match('/rs\d+/', $firstLine . $secondLine)) {
+        if (preg_match('/rs\d+/', $firstLine.$secondLine)) {
             return 'generic';
         }
 
@@ -228,10 +233,10 @@ class DnaImportService
      */
     protected function generateUniqueVarName(): string
     {
-        $varName = self::VAR_NAME_PREFIX . Str::random(self::VAR_NAME_LENGTH);
-        
+        $varName = self::VAR_NAME_PREFIX.Str::random(self::VAR_NAME_LENGTH);
+
         while (Dna::where('variable_name', $varName)->exists()) {
-            $varName = self::VAR_NAME_PREFIX . Str::random(self::VAR_NAME_LENGTH);
+            $varName = self::VAR_NAME_PREFIX.Str::random(self::VAR_NAME_LENGTH);
         }
 
         return $varName;
@@ -240,7 +245,7 @@ class DnaImportService
     /**
      * Get import statistics for a user
      *
-     * @param int $userId User ID
+     * @param  int  $userId  User ID
      * @return array Statistics
      */
     public function getImportStatistics(int $userId): array

@@ -28,7 +28,7 @@ class CitationResourceTest extends TestCase
     public function test_crud_operations(): void
     {
         $citation = Citation::factory()->create([
-            'name'       => 'Test Citation',
+            'name' => 'Test Citation',
             'confidence' => 5,
         ]);
 

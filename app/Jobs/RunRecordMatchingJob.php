@@ -2,14 +2,13 @@
 
 namespace App\Jobs;
 
-use ReflectionClass;
 use App\Models\Person;
 use App\Models\Team;
 use App\Notifications\RecordSuggestionNotification;
-use App\Services\RecordMatcher\Providers\ExampleProvider;
-use App\Services\RecordMatcher\Providers\MyHeritageProvider;
 use App\Services\RecordMatcher\Providers\AncestryProvider;
+use App\Services\RecordMatcher\Providers\ExampleProvider;
 use App\Services\RecordMatcher\Providers\FamilySearchProvider;
+use App\Services\RecordMatcher\Providers\MyHeritageProvider;
 use App\Services\RecordMatcher\RecordMatcherService;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -17,6 +16,7 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Log;
+use ReflectionClass;
 
 class RunRecordMatchingJob implements ShouldQueue
 {
@@ -30,19 +30,19 @@ class RunRecordMatchingJob implements ShouldQueue
         $providers = [];
 
         // Add MyHeritage provider if configured
-        $myHeritage = new MyHeritageProvider();
+        $myHeritage = new MyHeritageProvider;
         if ($myHeritage->isConfigured()) {
             $providers[] = $myHeritage;
         }
 
         // Add Ancestry provider if configured
-        $ancestry = new AncestryProvider();
+        $ancestry = new AncestryProvider;
         if ($ancestry->isConfigured()) {
             $providers[] = $ancestry;
         }
 
         // Add FamilySearch provider if configured
-        $familySearch = new FamilySearchProvider();
+        $familySearch = new FamilySearchProvider;
         if ($familySearch->isConfigured()) {
             $providers[] = $familySearch;
         }
@@ -50,11 +50,11 @@ class RunRecordMatchingJob implements ShouldQueue
         // If no providers configured, use example provider for testing
         if ($providers === []) {
             Log::warning('No genealogy providers configured, using example provider');
-            $providers[] = new ExampleProvider();
+            $providers[] = new ExampleProvider;
         }
 
         Log::info('Record matching job started', [
-            'providers' => array_map(fn($p): string => new ReflectionClass($p)->getShortName(), $providers),
+            'providers' => array_map(fn ($p): string => new ReflectionClass($p)->getShortName(), $providers),
         ]);
 
         // Fetch a sample of persons to run against (could be queued per-person)

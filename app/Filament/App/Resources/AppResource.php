@@ -28,7 +28,7 @@ abstract class AppResource extends Resource
     }
 
     #[\Override]
-    public static function getAuthorizationResponse(string | UnitEnum $action, ?Model $record = null): Response
+    public static function getAuthorizationResponse(string|UnitEnum $action, ?Model $record = null): Response
     {
         if (! auth()->check()) {
             return Response::deny();

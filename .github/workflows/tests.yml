@@ -55,6 +55,20 @@ jobs:
       - name: Run tests
         run: php artisan test --coverage-clover=coverage.xml
 
+      - name: Enforce minimum line coverage
+        run: |
+          php -r '
+            $xml = simplexml_load_file("coverage.xml");
+            $m = $xml->project->metrics;
+            $pct = ((int) $m["coveredstatements"]) / max(1, (int) $m["statements"]) * 100;
+            printf("Line coverage: %.1f%%\n", $pct);
+            $floor = 25.0;
+            if ($pct < $floor) {
+                fwrite(STDERR, sprintf("Coverage %.1f%% is below the %.1f%% floor.\n", $pct, $floor));
+                exit(1);
+            }
+          '
+
       - name: Upload coverage report
         if: success()
         uses: actions/upload-artifact@v4

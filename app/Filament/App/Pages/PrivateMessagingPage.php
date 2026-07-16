@@ -52,7 +52,7 @@ class PrivateMessagingPage extends Page
 
         $conversation = $this->findConversation();
 
-        if (!$conversation instanceof \App\Models\Conversation) {
+        if (! $conversation instanceof Conversation) {
             $this->messages = collect();
 
             return;
