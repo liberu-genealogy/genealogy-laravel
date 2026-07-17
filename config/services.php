@@ -38,7 +38,12 @@ return [
     ],
 
     'facial_recognition' => [
-        'provider' => env('FACIAL_RECOGNITION_PROVIDER', 'mock'),
+        // Defaults to 'none': MockProvider invents faces and person matches, and it
+        // is the only provider that exists (aws/azure are commented out in
+        // FacialRecognitionService). Defaulting to 'mock' meant every install
+        // fabricated photo tags. Set FACIAL_RECOGNITION_PROVIDER=mock explicitly if
+        // you want simulated output for a demo.
+        'provider' => env('FACIAL_RECOGNITION_PROVIDER', 'none'),
         'aws' => [
             'key' => env('AWS_ACCESS_KEY_ID'),
             'secret' => env('AWS_SECRET_ACCESS_KEY'),

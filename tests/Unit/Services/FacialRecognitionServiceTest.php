@@ -30,6 +30,12 @@ class FacialRecognitionServiceTest extends TestCase
     {
         parent::setUp();
 
+        // These cover the tagging pipeline, which needs a provider to produce faces.
+        // The only implementation is MockProvider, and it is no longer the default —
+        // it fabricates detections, so an install without a real provider must not
+        // silently use it. Opt in explicitly here; that is what these tests exercise.
+        config(['services.facial_recognition.provider' => 'mock']);
+
         $this->service = new FacialRecognitionService;
 
         // Create test data

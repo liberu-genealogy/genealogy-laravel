@@ -28,6 +28,11 @@ class PhotoTaggingWorkflowTest extends TestCase
     {
         parent::setUp();
 
+        // The workflow needs a provider to detect faces at all. MockProvider is the
+        // only one and is no longer the default (it fabricates detections), so opt in
+        // explicitly rather than lean on a default that must not exist.
+        config(['services.facial_recognition.provider' => 'mock']);
+
         $this->user = User::factory()->create();
         $this->team = Team::factory()->create();
         $this->team->users()->attach($this->user, ['role' => 'admin']);
