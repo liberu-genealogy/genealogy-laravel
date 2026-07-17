@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Traits\BelongsToTenant;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Source extends \FamilyTree365\LaravelGedcom\Models\Source
@@ -41,6 +42,28 @@ class Source extends \FamilyTree365\LaravelGedcom\Models\Source
     public function citations(): HasMany
     {
         return $this->hasMany(Citation::class);
+    }
+
+    /**
+     * Every GEDCOM SOUR reference citing this source, whatever it evidences.
+     * `sour_id` carries no FK constraint.
+     */
+    public function sourceRefs(): HasMany
+    {
+        return $this->hasMany(SourceRef::class, 'sour_id');
+    }
+
+    /**
+     * The people this source evidences. `source_ref` acts as the pivot — gid is
+     * only people.id while group is 'indi', hence the pivot filter.
+     *
+     * Read-side only: attaching through this relation would write neither `group`
+     * nor `team_id`. Create person-level refs via Person::sourceRefs().
+     */
+    public function people(): BelongsToMany
+    {
+        return $this->belongsToMany(Person::class, 'source_ref', 'sour_id', 'gid')
+            ->wherePivot('group', SourceRef::GROUP_INDI);
     }
 
     /**

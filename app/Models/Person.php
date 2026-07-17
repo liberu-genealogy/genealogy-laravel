@@ -8,6 +8,7 @@ use App\Enums\PedigreeType;
 use App\Traits\BelongsToTenant;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Storage;
@@ -123,6 +124,51 @@ class Person extends Model
     public function events()
     {
         return $this->hasMany(PersonEvent::class)->select(['id', 'person_id', 'title', 'date', 'places_id']);
+    }
+
+    /**
+     * GEDCOM ASSO — links to people that no family record expresses: step-parents,
+     * guardians, godparents, witnesses. Family membership covers birth/adoptive
+     * parents (see PedigreeType); everything else lives here.
+     *
+     * `person_asso` is stringly-typed by GEDCOM convention: `group` names the kind
+     * of record the row hangs off ('indi' = a person) and `gid` is that record's id.
+     * withAttributes() both constrains reads to this group AND stamps it on create —
+     * a bare where() would filter reads and silently write group = null.
+     *
+     * The associated person is `indi`, a varchar: the importer first writes the raw
+     * GEDCOM xref ("@I5@") and a later pass resolves it to a person id, so rows with
+     * import_confirm = 0 may not resolve to a Person at all.
+     */
+    public function associations(): HasMany
+    {
+        return $this->hasMany(PersonAsso::class, 'gid')
+            ->withAttributes(['group' => PersonAsso::GROUP_INDI]);
+    }
+
+    /**
+     * Associations pointing AT this person. GEDCOM records an ASSO in one direction
+     * only, so a guardian has no row of their own — they are found by their ward's.
+     * Read-only in practice: create from the subject's side via associations().
+     */
+    public function associatedWith(): HasMany
+    {
+        return $this->hasMany(PersonAsso::class, 'indi')
+            ->withAttributes(['group' => PersonAsso::GROUP_INDI]);
+    }
+
+    /**
+     * GEDCOM SOUR references — the sources evidencing this person, with the page,
+     * quality and text of each citation. Same (group, gid) convention as above.
+     *
+     * Nothing wrote group = 'indi' before this: the importer only ever emits the
+     * finer-grained 'indi_name'/'indi_even'/'indi_asso'/'indi_lds' groups, which is
+     * why CompletenessService's person-source coverage always reported zero.
+     */
+    public function sourceRefs(): HasMany
+    {
+        return $this->hasMany(SourceRef::class, 'gid')
+            ->withAttributes(['group' => SourceRef::GROUP_INDI]);
     }
 
     public function childInFamily()

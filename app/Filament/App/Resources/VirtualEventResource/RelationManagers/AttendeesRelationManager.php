@@ -303,7 +303,7 @@ class AttendeesRelationManager extends RelationManager
                     ->action(fn (VirtualEventAttendee $record) => $record->decline())
                     ->visible(fn (VirtualEventAttendee $record): bool => $record->rsvp_status !== 'declined'),
                 Action::make('mark_attended')
-                    ->icon('heroicon-o-user-check')
+                    ->icon('heroicon-o-check-circle')
                     ->color('primary')
                     ->action(fn (VirtualEventAttendee $record) => $record->markAsAttended())
                     ->visible(fn (VirtualEventAttendee $record): bool => ! $record->attended && ($this->getOwnerRecord()->is_past || $this->getOwnerRecord()->is_active)),
@@ -328,7 +328,7 @@ class AttendeesRelationManager extends RelationManager
                         }),
                     BulkAction::make('mark_all_attended')
                         ->label('Mark All as Attended')
-                        ->icon('heroicon-o-user-check')
+                        ->icon('heroicon-o-check-circle')
                         ->color('primary')
                         ->action(function ($records): void {
                             foreach ($records as $record) {
