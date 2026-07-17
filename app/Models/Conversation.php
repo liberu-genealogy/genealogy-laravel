@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Collection;
 
 class Conversation extends Model
 {
@@ -31,8 +32,15 @@ class Conversation extends Model
         return $this->belongsTo(User::class, 'user_two');
     }
 
-    public function users()
+    /**
+     * Both participants. userOne/userTwo are belongsTo, so they resolve to single
+     * User models — merge() is a Collection method and User has none, so this threw
+     * BadMethodCallException for anyone who called it. Nothing did yet.
+     *
+     * @return Collection<int, User>
+     */
+    public function users(): Collection
     {
-        return $this->userOne->merge($this->userTwo());
+        return collect([$this->userOne, $this->userTwo])->filter()->values();
     }
 }

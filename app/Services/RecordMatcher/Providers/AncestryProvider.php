@@ -21,9 +21,14 @@ class AncestryProvider implements ExternalRecordProviderInterface
 
     public function __construct()
     {
-        $this->apiKey = config('services.ancestry.api_key', '');
-        $this->baseUrl = config('services.ancestry.base_url', 'https://api.ancestry.com/v1');
-        $this->timeout = config('services.ancestry.timeout', 30);
+        // config(key, default) only falls back when the key is ABSENT. These keys
+        // are declared in config/services.php as env(...) with no default, so an
+        // unset variable makes the key present-but-null, the default never fires,
+        // and null hits a typed string property — the provider cannot even be
+        // constructed. Cast instead of defaulting.
+        $this->apiKey = (string) config('services.ancestry.api_key');
+        $this->baseUrl = (string) (config('services.ancestry.base_url') ?: 'https://api.ancestry.com/v1');
+        $this->timeout = (int) (config('services.ancestry.timeout') ?: 30);
     }
 
     /**
@@ -81,8 +86,12 @@ class AncestryProvider implements ExternalRecordProviderInterface
             $params['birthYear'] = $person->birthday->format('Y');
         }
 
-        if ($person->birthplace) {
-            $params['birthLocation'] = $person->birthplace->place ?? null;
+        // GEDCOM names these birthday_plac/deathday_plac, and they are plain
+        // varchars. There are no birthplace/deathplace columns or relations, so
+        // these guards were always false and the location was never sent — every
+        // provider search ran without a place, silently returning weaker matches.
+        if ($person->birthday_plac) {
+            $params['birthLocation'] = $person->birthday_plac;
         }
 
         // Death information
@@ -90,8 +99,8 @@ class AncestryProvider implements ExternalRecordProviderInterface
             $params['deathYear'] = $person->deathday->format('Y');
         }
 
-        if ($person->deathplace) {
-            $params['deathLocation'] = $person->deathplace->place ?? null;
+        if ($person->deathday_plac) {
+            $params['deathLocation'] = $person->deathday_plac;
         }
 
         // Gender
