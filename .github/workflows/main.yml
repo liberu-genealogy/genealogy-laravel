@@ -49,9 +49,59 @@ jobs:
       - name: Run tests
         run: ./vendor/bin/phpunit --no-coverage
 
+  # The image is only built on push, and it pushes straight to Docker Hub — so a
+  # broken image was published before anyone could see it, and pull requests never
+  # exercised the Dockerfile at all. The image had never once booted: five separate
+  # faults stacked up behind each other (missing opcache.file_cache directory,
+  # route:cache tripping on duplicate route names, view:cache on module view paths
+  # that do not exist, supervisord including a root-only file it cannot read as the
+  # octane user, and no frontend build at all, so every @vite page returned 500).
+  # None of it is visible in dev, which caches nothing and runs as root.
+  #
+  # This runs on pull requests too, and it does not just build: it boots the image
+  # and asks it for a page. A green test suite says nothing about any of the above.
+  prod-image-smoke:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build the production image
+        run: docker build -f Dockerfile -t genalogy-prod:smoke .
+
+      - name: Boot it and serve a request
+        run: |
+          set -euo pipefail
+          docker run -d --name prod-smoke \
+            -e APP_KEY=base64:$(head -c 32 /dev/urandom | base64) \
+            -e APP_ENV=production -e APP_DEBUG=false \
+            -e DB_CONNECTION=sqlite -e DB_DATABASE=/tmp/smoke.sqlite \
+            -e CACHE_STORE=file -e SESSION_DRIVER=file -e QUEUE_CONNECTION=sync \
+            genalogy-prod:smoke
+          docker exec prod-smoke sh -c 'touch /tmp/smoke.sqlite && php artisan migrate --force'
+
+          # Octane needs a moment; fail loudly with logs rather than a bare timeout.
+          for i in $(seq 1 30); do
+            if docker exec prod-smoke sh -c 'wget -q -O /dev/null http://127.0.0.1:8000/' 2>/dev/null; then
+              echo "image serves /"
+              exit 0
+            fi
+            if [ "$(docker inspect -f '{{.State.Status}}' prod-smoke)" != "running" ]; then
+              echo "::error::the production image exited on boot"
+              docker logs prod-smoke
+              exit 1
+            fi
+            sleep 2
+          done
+
+          echo "::error::the production image booted but never served a request"
+          docker logs prod-smoke
+          docker exec prod-smoke sh -c 'tail -40 storage/logs/laravel.log' || true
+          exit 1
+
   docker:
     if: github.event_name == 'push'
-    needs: laravel-tests
+    needs: [laravel-tests, prod-image-smoke]
     runs-on: ubuntu-latest
     timeout-minutes: 30
     permissions:

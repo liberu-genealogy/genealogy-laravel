@@ -7,8 +7,6 @@ use App\Events\ModuleEnabled;
 use App\Events\ModuleInstalled;
 use App\Events\ModuleUninstalled;
 use App\Modules\Contracts\ModuleInterface;
-use App\Modules\Traits\Configurable;
-use App\Modules\Traits\HasModuleHooks;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Event;
@@ -17,13 +15,14 @@ use ReflectionClass;
 
 abstract class BaseModule implements ModuleInterface
 {
-    use Configurable;
-    use HasModuleHooks;
-
     protected string $name;
+
     protected string $version;
+
     protected string $description;
+
     protected array $dependencies = [];
+
     protected array $config = [];
 
     public function __construct()
@@ -97,19 +96,19 @@ abstract class BaseModule implements ModuleInterface
 
     protected function loadModuleInfo(): void
     {
-        $moduleInfoPath = $this->getModulePath() . '/module.json';
+        $moduleInfoPath = $this->getModulePath().'/module.json';
 
         if (File::exists($moduleInfoPath)) {
             $moduleInfo = json_decode(File::get($moduleInfoPath), true) ?? [];
 
-            $this->name        = $moduleInfo['name'] ?? class_basename($this);
-            $this->version     = $moduleInfo['version'] ?? '1.0.0';
+            $this->name = $moduleInfo['name'] ?? class_basename($this);
+            $this->version = $moduleInfo['version'] ?? '1.0.0';
             $this->description = $moduleInfo['description'] ?? '';
             $this->dependencies = $moduleInfo['dependencies'] ?? [];
-            $this->config      = $moduleInfo['config'] ?? [];
+            $this->config = $moduleInfo['config'] ?? [];
         } else {
-            $this->name        = $this->name ?? class_basename($this);
-            $this->version     = $this->version ?? '1.0.0';
+            $this->name = $this->name ?? class_basename($this);
+            $this->version = $this->version ?? '1.0.0';
             $this->description = $this->description ?? '';
         }
     }
@@ -117,15 +116,16 @@ abstract class BaseModule implements ModuleInterface
     protected function getModulePath(): string
     {
         $reflection = new ReflectionClass($this);
+
         return dirname($reflection->getFileName());
     }
 
     protected function runMigrations(): void
     {
-        $migrationsPath = $this->getModulePath() . '/database/migrations';
+        $migrationsPath = $this->getModulePath().'/database/migrations';
 
         if (File::exists($migrationsPath)) {
-            $relative = str_replace(base_path() . '/', '', $migrationsPath);
+            $relative = str_replace(base_path().'/', '', $migrationsPath);
             Artisan::call('migrate', ['--path' => $relative, '--force' => true]);
         }
     }
@@ -135,7 +135,7 @@ abstract class BaseModule implements ModuleInterface
     protected function publishAssets(): void
     {
         Artisan::call('vendor:publish', [
-            '--tag'   => strtolower($this->name) . '-assets',
+            '--tag' => strtolower($this->name).'-assets',
             '--force' => true,
         ]);
     }

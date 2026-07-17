@@ -30,10 +30,19 @@ class AdminServiceProvider extends ServiceProvider
         // $this->loadRoutesFrom(__DIR__ . '/../routes/api.php');
 
         // Load admin views
-        $this->loadViewsFrom(__DIR__.'/../resources/views', 'admin');
+        // Guarded because none of these module resource directories exist. An
+        // unguarded loadViewsFrom() is harmless at runtime but fatal to
+        // `php artisan view:cache`, which walks every registered path — so this
+        // passed in dev and broke the production image on boot. ModuleServiceProvider
+        // already guards the same call this way.
+        if (is_dir(__DIR__.'/../resources/views')) {
+            $this->loadViewsFrom(__DIR__.'/../resources/views', 'admin');
+        }
 
         // Load admin translations
-        $this->loadTranslationsFrom(__DIR__.'/../resources/lang', 'admin');
+        if (is_dir(__DIR__.'/../resources/lang')) {
+            $this->loadTranslationsFrom(__DIR__.'/../resources/lang', 'admin');
+        }
 
         // Publish admin assets
         $this->publishes([

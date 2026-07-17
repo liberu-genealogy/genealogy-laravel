@@ -36,6 +36,30 @@ RUN composer install \
 
 
 ###########################################
+# Frontend asset stage
+###########################################
+# Nothing built the frontend, and /public/build is gitignored, so the image had no
+# public/build/manifest.json and every page rendering @vite returned 500 — the
+# container booted, reported healthy, and could not serve a single request.
+#
+# vendor/ is copied in because the Filament theme entrypoints @import CSS out of
+# vendor/filament, and app/ because Tailwind 4 @source-scans it; without either the
+# build fails or silently emits stylesheets missing every Filament class.
+FROM node:22-alpine AS assets
+
+WORKDIR /app
+
+COPY package.json package-lock.json vite.config.js tailwind.config.js ./
+RUN npm ci --no-audit --no-fund
+
+COPY --from=composer-deps /app/vendor ./vendor
+COPY resources ./resources
+COPY app ./app
+
+RUN npm run build
+
+
+###########################################
 # Main application stage
 ###########################################
 FROM php:${PHP_VERSION}-cli-alpine
@@ -138,6 +162,10 @@ COPY --chown=${USER}:${USER} composer.json composer.lock ./
 # Copy application code first so autoloader can resolve all files
 COPY --chown=${USER}:${USER} . .
 
+# After the source copy, or `COPY . .` would clobber it. /public/build is gitignored,
+# so it is never in the build context and has to come from the assets stage.
+COPY --from=assets --chown=${USER}:${USER} /app/public/build ./public/build
+
 # Generate optimized autoloader now that all app files are present
 RUN composer dump-autoload --classmap-authoritative --no-dev && \
     composer clear-cache
@@ -151,6 +179,14 @@ RUN mkdir -p \
     storage/logs \
     bootstrap/cache && \
     chmod -R a+rw storage
+
+# .docker/php.ini sets opcache.file_cache to this path, and PHP refuses to start
+# at all if it does not exist: "Fatal Error opcache.file_cache must be a full path
+# of an accessible directory". Nothing created it, so the image built fine and then
+# exited 254 on every boot. It must be writable by ${USER}, which is who Octane runs
+# as — /tmp being world-writable is not enough once the directory is pre-created.
+RUN mkdir -p /tmp/opcache-file-cache && \
+    chown -R ${USER}:${USER} /tmp/opcache-file-cache
 
 # Copy configuration files
 COPY --chown=${USER}:${USER} .docker/supervisord.conf /etc/supervisor/

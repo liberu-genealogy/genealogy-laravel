@@ -37,10 +37,19 @@ class PersonServiceProvider extends ServiceProvider
         $this->loadRoutesFrom(__DIR__.'/../routes/api.php');
 
         // Load person views
-        $this->loadViewsFrom(__DIR__.'/../resources/views', 'person');
+        // Guarded because none of these module resource directories exist. An
+        // unguarded loadViewsFrom() is harmless at runtime but fatal to
+        // `php artisan view:cache`, which walks every registered path — so this
+        // passed in dev and broke the production image on boot. ModuleServiceProvider
+        // already guards the same call this way.
+        if (is_dir(__DIR__.'/../resources/views')) {
+            $this->loadViewsFrom(__DIR__.'/../resources/views', 'person');
+        }
 
         // Load person translations
-        $this->loadTranslationsFrom(__DIR__.'/../resources/lang', 'person');
+        if (is_dir(__DIR__.'/../resources/lang')) {
+            $this->loadTranslationsFrom(__DIR__.'/../resources/lang', 'person');
+        }
 
         // Publish person assets
         $this->publishes([
