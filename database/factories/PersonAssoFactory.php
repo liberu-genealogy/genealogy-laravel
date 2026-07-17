@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Database\Factories;
 
+use App\Enums\AssociationType;
+use App\Models\Person;
 use App\Models\PersonAsso;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -28,11 +30,13 @@ class PersonAssoFactory extends Factory
     public function definition()
     {
         return [
-            'group' => fake()->word(),
-            'gid' => fake()->randomDigit(),
-            'indi' => fake()->word(),
-            'rela' => fake()->word(),
-            'import_confirm' => fake()->randomDigit(),
+            'group' => PersonAsso::GROUP_INDI,
+            'gid' => Person::factory(),
+            // `indi` is a varchar: a resolved row holds the person id as a string,
+            // an unresolved import holds the raw GEDCOM xref ("@I5@") instead.
+            'indi' => fn (): string => (string) Person::factory()->create()->getKey(),
+            'rela' => fake()->randomElement(AssociationType::cases())->value,
+            'import_confirm' => 1,
         ];
     }
 }

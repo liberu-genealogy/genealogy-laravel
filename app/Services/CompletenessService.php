@@ -95,16 +95,19 @@ class CompletenessService
      */
     public function sourceCompleteness(): array
     {
+        // Passed as an Eloquent builder, not a raw closure: it keeps SourceRef's
+        // team scope inside the subquery, which a `from('source_ref')` closure
+        // would silently drop and count every team's refs.
         $personsTotal = Person::count();
         $personsWithSource = Person::whereIn(
             'id',
-            SourceRef::query()->where('group', 'indi')->pluck('gid')
+            SourceRef::query()->select('gid')->where('group', 'indi')
         )->count();
 
         $eventsTotal = PersonEvent::count();
         $eventsWithSource = PersonEvent::whereIn(
             'id',
-            SourceRef::query()->where('group', 'indi_even')->pluck('gid')
+            SourceRef::query()->select('gid')->where('group', 'indi_even')
         )->count();
 
         $total = $personsTotal + $eventsTotal;

@@ -8,6 +8,11 @@ use App\Enums\PedigreeType;
 use App\Filament\App\Resources\PersonResource\Pages\CreatePerson;
 use App\Filament\App\Resources\PersonResource\Pages\EditPerson;
 use App\Filament\App\Resources\PersonResource\Pages\ListPeople;
+// Namespace import: getRelations() refers to these as RelationManagers\Foo::class,
+// which without this resolves to App\Filament\App\Resources\RelationManagers\Foo —
+// a directory that does not exist. ::class does not autoload, so the bad name was
+// only discovered when Filament tried to instantiate it.
+use App\Filament\App\Resources\PersonResource\RelationManagers;
 use App\Models\Person;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
@@ -151,6 +156,8 @@ class PersonResource extends AppResource
     {
         return [
             RelationManagers\PhotosRelationManager::class,
+            RelationManagers\AssociationsRelationManager::class,
+            RelationManagers\SourcesRelationManager::class,
         ];
     }
 
