@@ -739,6 +739,12 @@ parameters:
 			path: app/Models/Conversation.php
 
 		-
+			message: '#^Access to an undefined property App\\Models\\Conversation\:\:\$userTwo\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Models/Conversation.php
+
+		-
 			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$id\.$#'
 			identifier: property.notFound
 			count: 1
@@ -1927,52 +1933,16 @@ parameters:
 			path: app/Services/PersonSearchService.php
 
 		-
-			message: '#^Access to an undefined property App\\Models\\Person\:\:\$birthplace\.$#'
-			identifier: property.notFound
-			count: 1
-			path: app/Services/RecordMatcher/Providers/AncestryProvider.php
-
-		-
-			message: '#^Access to an undefined property App\\Models\\Person\:\:\$deathplace\.$#'
-			identifier: property.notFound
-			count: 1
-			path: app/Services/RecordMatcher/Providers/AncestryProvider.php
-
-		-
 			message: '#^Cannot call method format\(\) on string\.$#'
 			identifier: method.nonObject
 			count: 2
 			path: app/Services/RecordMatcher/Providers/AncestryProvider.php
 
 		-
-			message: '#^Access to an undefined property App\\Models\\Person\:\:\$birthplace\.$#'
-			identifier: property.notFound
-			count: 1
-			path: app/Services/RecordMatcher/Providers/FamilySearchProvider.php
-
-		-
-			message: '#^Access to an undefined property App\\Models\\Person\:\:\$deathplace\.$#'
-			identifier: property.notFound
-			count: 1
-			path: app/Services/RecordMatcher/Providers/FamilySearchProvider.php
-
-		-
 			message: '#^Cannot call method format\(\) on string\.$#'
 			identifier: method.nonObject
 			count: 4
 			path: app/Services/RecordMatcher/Providers/FamilySearchProvider.php
-
-		-
-			message: '#^Access to an undefined property App\\Models\\Person\:\:\$birthplace\.$#'
-			identifier: property.notFound
-			count: 1
-			path: app/Services/RecordMatcher/Providers/MyHeritageProvider.php
-
-		-
-			message: '#^Access to an undefined property App\\Models\\Person\:\:\$deathplace\.$#'
-			identifier: property.notFound
-			count: 1
-			path: app/Services/RecordMatcher/Providers/MyHeritageProvider.php
 
 		-
 			message: '#^Cannot call method format\(\) on string\.$#'

@@ -21,9 +21,14 @@ class MyHeritageProvider implements ExternalRecordProviderInterface
 
     public function __construct()
     {
-        $this->apiKey = config('services.myheritage.api_key', '');
-        $this->baseUrl = config('services.myheritage.base_url', 'https://api.myheritage.com/v1');
-        $this->timeout = config('services.myheritage.timeout', 30);
+        // config(key, default) only falls back when the key is ABSENT. These keys
+        // are declared in config/services.php as env(...) with no default, so an
+        // unset variable makes the key present-but-null, the default never fires,
+        // and null hits a typed string property — the provider cannot even be
+        // constructed. Cast instead of defaulting.
+        $this->apiKey = (string) config('services.myheritage.api_key');
+        $this->baseUrl = (string) (config('services.myheritage.base_url') ?: 'https://api.myheritage.com/v1');
+        $this->timeout = (int) (config('services.myheritage.timeout') ?: 30);
     }
 
     /**
@@ -82,8 +87,11 @@ class MyHeritageProvider implements ExternalRecordProviderInterface
             $params['birth_date'] = $person->birthday->format('Y-m-d');
         }
 
-        if ($person->birthplace) {
-            $params['birth_place'] = $person->birthplace->place ?? null;
+        // See AncestryProvider: the columns are birthday_plac/deathday_plac
+        // (GEDCOM), plain varchars. birthplace/deathplace never existed, so this
+        // guard was always false and the place was never sent.
+        if ($person->birthday_plac) {
+            $params['birth_place'] = $person->birthday_plac;
         }
 
         // Death information
@@ -92,8 +100,8 @@ class MyHeritageProvider implements ExternalRecordProviderInterface
             $params['death_date'] = $person->deathday->format('Y-m-d');
         }
 
-        if ($person->deathplace) {
-            $params['death_place'] = $person->deathplace->place ?? null;
+        if ($person->deathday_plac) {
+            $params['death_place'] = $person->deathday_plac;
         }
 
         // Gender
