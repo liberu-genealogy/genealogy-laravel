@@ -161,7 +161,12 @@ class HandwritingRecognitionService
         // In a real application, you would use Tesseract or another OCR library
         return [
             'text' => "This is a placeholder transcription.\n\nTo enable real handwriting recognition, configure Google Cloud Vision API key in config/services.php:\n\n'google_vision' => [\n    'api_key' => env('GOOGLE_VISION_API_KEY'),\n],\n\nAnd set GOOGLE_VISION_API_KEY in your .env file.",
-            'confidence' => 0.75,
+            // Nothing was read, so there is nothing to be confident about. This
+            // claimed 0.75, which getTeamStats() averages into the team's
+            // "Avg. Confidence" tile — so an install with no OCR configured
+            // reported a three-quarters-accurate transcription rate off text that
+            // says, in as many words, that it is a placeholder.
+            'confidence' => 0.0,
             'language' => 'en',
         ];
     }
@@ -257,7 +262,11 @@ class HandwritingRecognitionService
             'pending_transcriptions' => (int) ($stats->pending ?? 0),
             'failed_transcriptions' => (int) ($stats->failed ?? 0),
             'total_corrections' => $totalCorrections,
-            'avg_confidence' => round((float) ($stats->avg_confidence ?? 0), 2),
+            // Stored confidence is Google Vision's 0-1 scale, but the only consumer
+            // renders this straight into a "%" tile — so 0.85 displayed as "0.9%"
+            // rather than 85%. Convert here, where the scale is known, instead of in
+            // the view.
+            'avg_confidence' => round((float) ($stats->avg_confidence ?? 0) * 100, 1),
         ];
     }
 }
