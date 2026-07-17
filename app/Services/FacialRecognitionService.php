@@ -13,28 +13,41 @@ use Illuminate\Support\Facades\Storage;
 
 class FacialRecognitionService
 {
-    protected FacialRecognitionProviderInterface $provider;
+    protected ?FacialRecognitionProviderInterface $provider;
 
     public function __construct()
     {
-        // Default to mock provider for development
-        // Can be configured to use AWS Rekognition or other providers via config
         $this->provider = $this->getProvider();
     }
 
     /**
-     * Get the configured facial recognition provider
+     * The configured provider, or null when none is available.
+     *
+     * MockProvider does not detect anything: it invents 1-3 faces at random bounding
+     * boxes, assigns a person on a 60% coin flip with a 70-95% "confidence", and
+     * returns random_bytes() as the face encoding. It was both the default and the
+     * only implementation — aws/azure below have never existed — so every install
+     * wrote fabricated PhotoTag and FaceEncoding rows and presented them for review
+     * as detections. It is now opt-in, and anything else yields no provider at all
+     * rather than silently falling back to it.
      */
-    protected function getProvider(): FacialRecognitionProviderInterface
+    protected function getProvider(): ?FacialRecognitionProviderInterface
     {
-        $provider = config('services.facial_recognition.provider', 'mock');
-
-        return match ($provider) {
+        return match (config('services.facial_recognition.provider', 'none')) {
             'mock' => new MockProvider,
             // 'aws' => new AwsRekognitionProvider(),
             // 'azure' => new AzureFaceApiProvider(),
-            default => new MockProvider,
+            default => null,
         };
+    }
+
+    /**
+     * Whether face detection can run at all. isAvailable() was declared on the
+     * provider interface but never called by anything — this is the gate it was for.
+     */
+    public function isAvailable(): bool
+    {
+        return $this->provider?->isAvailable() ?? false;
     }
 
     /**
@@ -44,6 +57,17 @@ class FacialRecognitionService
      */
     public function analyzePhoto(PersonPhoto $photo): array
     {
+        if (! $this->isAvailable()) {
+            Log::warning('No facial recognition provider configured; photo not analysed', [
+                'photo_id' => $photo->id,
+            ]);
+
+            return [
+                'success' => false,
+                'error' => 'Facial recognition is not configured.',
+            ];
+        }
+
         try {
             $imagePath = Storage::disk('public')->path($photo->file_path);
 
@@ -174,6 +198,18 @@ class FacialRecognitionService
     public function createFaceEncoding(PhotoTag $tag): ?FaceEncoding
     {
         if (! $tag->person_id || $tag->status !== 'confirmed') {
+            return null;
+        }
+
+        // Without a provider there is nothing to encode. MockProvider returned
+        // base64_encode(random_bytes(128)) here, so confirming a tag stored random
+        // noise as that person's face signature — which any later real matching
+        // would then compare against.
+        if (! $this->isAvailable()) {
+            Log::warning('No facial recognition provider configured; no encoding created', [
+                'tag_id' => $tag->id,
+            ]);
+
             return null;
         }
 
