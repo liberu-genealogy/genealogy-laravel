@@ -25,10 +25,12 @@ class DuplicateCheckerService
         ]);
 
         try {
-            // Get all people for this user's team
-            $people = Person::whereHas('user', function ($query) use ($user): void {
-                $query->where('current_team_id', $user->current_team_id);
-            })->get();
+            // Get all people for this user's team. Person has no `user` relation —
+            // people are owned by a team, not a user, and there is no user_id column —
+            // so whereHas('user') threw and every duplicate check died here. Filter on
+            // team_id directly; explicit rather than leaning on BelongsToTenant, which
+            // no-ops when this runs unauthenticated (queue/console).
+            $people = Person::where('team_id', $user->current_team_id)->get();
 
             $duplicates = $this->findDuplicates($people);
 

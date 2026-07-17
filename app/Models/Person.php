@@ -8,6 +8,7 @@ use App\Enums\PedigreeType;
 use App\Traits\BelongsToTenant;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Collection;
@@ -121,7 +122,7 @@ class Person extends Model
     //    //     error_log('Person-'.($this->connection).'-'.\Session::get('conn').'-'.\Session::get('db'));
     //     }
 
-    public function events()
+    public function events(): HasMany
     {
         return $this->hasMany(PersonEvent::class)->select(['id', 'person_id', 'title', 'date', 'places_id']);
     }
@@ -171,17 +172,17 @@ class Person extends Model
             ->withAttributes(['group' => SourceRef::GROUP_INDI]);
     }
 
-    public function childInFamily()
+    public function childInFamily(): BelongsTo
     {
         return $this->belongsTo(Family::class, 'child_in_family_id')->select(['id', 'husband_id', 'wife_id']);
     }
 
-    public function familiesAsHusband()
+    public function familiesAsHusband(): HasMany
     {
         return $this->hasMany(Family::class, 'husband_id');
     }
 
-    public function familiesAsWife()
+    public function familiesAsWife(): HasMany
     {
         return $this->hasMany(Family::class, 'wife_id');
     }

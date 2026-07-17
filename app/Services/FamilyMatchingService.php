@@ -80,13 +80,14 @@ class FamilyMatchingService
      */
     protected function getUserFamilySurnames(User $user): array
     {
-        // Get persons associated with user's teams
-        $surnames = Person::whereHas('gedcom', function ($query) use ($user): void {
-            $query->whereIn('team_id', $user->allTeams()->pluck('id'));
-        })
-            ->whereNotNull('surname')
+        // Persons in the user's teams. Person has no `gedcom` relation, so
+        // whereHas('gedcom') threw and this returned no surnames — it never
+        // matched anyone. team_id is on people itself, so no hop is needed.
+        // The column is `surn` (GEDCOM SURN); `surname` does not exist.
+        $surnames = Person::whereIn('team_id', $user->allTeams()->pluck('id'))
+            ->whereNotNull('surn')
             ->distinct()
-            ->pluck('surname')
+            ->pluck('surn')
             ->toArray();
 
         return array_filter($surnames);
