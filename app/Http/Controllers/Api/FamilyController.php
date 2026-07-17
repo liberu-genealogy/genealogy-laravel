@@ -20,7 +20,9 @@ class FamilyController extends Controller
 
     public function show(Family $family): JsonResponse
     {
-        return response()->json($family->load(['husband', 'wife', 'children', 'familyEvents']));
+        $family->load(['husband', 'wife', 'children', 'events']);
+
+        return response()->json($family);
     }
 
     public function store(Request $request): JsonResponse
@@ -63,6 +65,6 @@ class FamilyController extends Controller
 
     public function events(Family $family): JsonResponse
     {
-        return response()->json($family->familyEvents()->get());
+        return response()->json($family->events()->get());
     }
 }

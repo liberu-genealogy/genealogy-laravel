@@ -83,7 +83,7 @@ class PersonController extends Controller
 
     public function events(Person $person): JsonResponse
     {
-        return response()->json($person->personEvents()->get());
+        return response()->json($person->events()->get());
     }
 
     public function families(Person $person): JsonResponse

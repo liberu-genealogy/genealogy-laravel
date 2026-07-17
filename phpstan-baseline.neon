@@ -67,12 +67,6 @@ parameters:
 			path: app/Filament/App/Pages/DnaTriangulationPage.php
 
 		-
-			message: '#^Call to an undefined method Laravel\\Cashier\\Subscription\:\:cancelled\(\)\.$#'
-			identifier: method.notFound
-			count: 1
-			path: app/Filament/App/Pages/PremiumDashboardPage.php
-
-		-
 			message: '#^Access to an undefined property App\\Filament\\App\\Pages\\RelationshipCalculatorReport\:\:\$form\.$#'
 			identifier: property.notFound
 			count: 2
@@ -83,30 +77,6 @@ parameters:
 			identifier: property.notFound
 			count: 1
 			path: app/Filament/App/Pages/TrialExpiredPage.php
-
-		-
-			message: '#^Call to an undefined method App\\Models\\User\:\:disableTwoFactorAuthentication\(\)\.$#'
-			identifier: method.notFound
-			count: 1
-			path: app/Filament/App/Pages/TwoFactorAuthenticationPage.php
-
-		-
-			message: '#^Call to an undefined method App\\Models\\User\:\:enableTwoFactorAuthentication\(\)\.$#'
-			identifier: method.notFound
-			count: 1
-			path: app/Filament/App/Pages/TwoFactorAuthenticationPage.php
-
-		-
-			message: '#^Call to an undefined method App\\Models\\User\:\:regenerateRecoveryCodes\(\)\.$#'
-			identifier: method.notFound
-			count: 1
-			path: app/Filament/App/Pages/TwoFactorAuthenticationPage.php
-
-		-
-			message: '#^Call to an undefined method App\\Models\\User\:\:showRecoveryCodes\(\)\.$#'
-			identifier: method.notFound
-			count: 1
-			path: app/Filament/App/Pages/TwoFactorAuthenticationPage.php
 
 		-
 			message: '#^Access to an undefined property App\\Filament\\App\\Pages\\UpdatePasswordPage\:\:\$form\.$#'
@@ -385,24 +355,6 @@ parameters:
 			path: app/Filament/App/Widgets/PedigreeChartWidget.php
 
 		-
-			message: '#^Call to an undefined method App\\Models\\Family\:\:familyEvents\(\)\.$#'
-			identifier: method.notFound
-			count: 1
-			path: app/Http/Controllers/Api/FamilyController.php
-
-		-
-			message: '#^Call to an undefined method App\\Services\\DnaImportService\:\:queueImport\(\)\.$#'
-			identifier: method.notFound
-			count: 1
-			path: app/Http/Controllers/Api/ImportController.php
-
-		-
-			message: '#^Call to an undefined method App\\Models\\Person\:\:personEvents\(\)\.$#'
-			identifier: method.notFound
-			count: 1
-			path: app/Http/Controllers/Api/PersonController.php
-
-		-
 			message: '#^If condition is always true\.$#'
 			identifier: if.alwaysTrue
 			count: 2
@@ -413,30 +365,6 @@ parameters:
 			identifier: if.alwaysTrue
 			count: 1
 			path: app/Http/Controllers/Api/PlaceController.php
-
-		-
-			message: '#^Call to an undefined method App\\Models\\Team\|Illuminate\\Database\\Eloquent\\Collection\<int, App\\Models\\Team\>\:\:members\(\)\.$#'
-			identifier: method.notFound
-			count: 1
-			path: app/Http/Controllers/TeamInvitationController.php
-
-		-
-			message: '#^Call to an undefined method App\\Models\\User\:\:invitations\(\)\.$#'
-			identifier: method.notFound
-			count: 1
-			path: app/Http/Controllers/TeamInvitationController.php
-
-		-
-			message: '#^Call to static method where\(\) on an unknown class App\\Http\\Controllers\\Invitation\.$#'
-			identifier: class.notFound
-			count: 1
-			path: app/Http/Controllers/TeamInvitationController.php
-
-		-
-			message: '#^Instantiated class App\\Mail\\TeamInvitation not found\.$#'
-			identifier: class.notFound
-			count: 1
-			path: app/Http/Controllers/TeamInvitationController.php
 
 		-
 			message: '#^Access to an undefined property App\\Http\\Resources\\PersonResource\:\:\$birthday\.$#'
@@ -733,12 +661,6 @@ parameters:
 			path: app/Models/AISuggestedMatch.php
 
 		-
-			message: '#^Unsafe call to private method App\\Models\\AISuggestedMatch\:\:getTenantId\(\) through static\:\:\.$#'
-			identifier: staticClassAccess.privateMethod
-			count: 2
-			path: app/Models/AISuggestedMatch.php
-
-		-
 			message: '#^Method App\\Models\\Achievement\:\:getProgressFor\(\) should return App\\Models\\UserProgress\|null but returns Illuminate\\Database\\Eloquent\\Model\|null\.$#'
 			identifier: return.type
 			count: 1
@@ -757,21 +679,9 @@ parameters:
 			path: app/Models/Addr.php
 
 		-
-			message: '#^Unsafe call to private method App\\Models\\Addr\:\:getTenantId\(\) through static\:\:\.$#'
-			identifier: staticClassAccess.privateMethod
-			count: 2
-			path: app/Models/Addr.php
-
-		-
 			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$id\.$#'
 			identifier: property.notFound
 			count: 1
-			path: app/Models/Author.php
-
-		-
-			message: '#^Unsafe call to private method App\\Models\\Author\:\:getTenantId\(\) through static\:\:\.$#'
-			identifier: staticClassAccess.privateMethod
-			count: 2
 			path: app/Models/Author.php
 
 		-
@@ -805,33 +715,15 @@ parameters:
 			path: app/Models/Chan.php
 
 		-
-			message: '#^Unsafe call to private method App\\Models\\Chan\:\:getTenantId\(\) through static\:\:\.$#'
-			identifier: staticClassAccess.privateMethod
-			count: 2
-			path: app/Models/Chan.php
-
-		-
 			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$id\.$#'
 			identifier: property.notFound
 			count: 1
 			path: app/Models/ChecklistTemplate.php
 
 		-
-			message: '#^Unsafe call to private method App\\Models\\ChecklistTemplate\:\:getTenantId\(\) through static\:\:\.$#'
-			identifier: staticClassAccess.privateMethod
-			count: 2
-			path: app/Models/ChecklistTemplate.php
-
-		-
 			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$id\.$#'
 			identifier: property.notFound
 			count: 1
-			path: app/Models/Citation.php
-
-		-
-			message: '#^Unsafe call to private method App\\Models\\Citation\:\:getTenantId\(\) through static\:\:\.$#'
-			identifier: staticClassAccess.privateMethod
-			count: 2
 			path: app/Models/Citation.php
 
 		-
@@ -853,21 +745,9 @@ parameters:
 			path: app/Models/Dna.php
 
 		-
-			message: '#^Unsafe call to private method App\\Models\\Dna\:\:getTenantId\(\) through static\:\:\.$#'
-			identifier: staticClassAccess.privateMethod
-			count: 2
-			path: app/Models/Dna.php
-
-		-
 			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$id\.$#'
 			identifier: property.notFound
 			count: 1
-			path: app/Models/DnaMatching.php
-
-		-
-			message: '#^Unsafe call to private method App\\Models\\DnaMatching\:\:getTenantId\(\) through static\:\:\.$#'
-			identifier: staticClassAccess.privateMethod
-			count: 2
 			path: app/Models/DnaMatching.php
 
 		-
@@ -877,33 +757,15 @@ parameters:
 			path: app/Models/DuplicateCheck.php
 
 		-
-			message: '#^Unsafe call to private method App\\Models\\DuplicateCheck\:\:getTenantId\(\) through static\:\:\.$#'
-			identifier: staticClassAccess.privateMethod
-			count: 2
-			path: app/Models/DuplicateCheck.php
-
-		-
 			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$id\.$#'
 			identifier: property.notFound
 			count: 1
 			path: app/Models/DuplicateMatch.php
 
 		-
-			message: '#^Unsafe call to private method App\\Models\\DuplicateMatch\:\:getTenantId\(\) through static\:\:\.$#'
-			identifier: staticClassAccess.privateMethod
-			count: 2
-			path: app/Models/DuplicateMatch.php
-
-		-
 			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$id\.$#'
 			identifier: property.notFound
 			count: 1
-			path: app/Models/FaceEncoding.php
-
-		-
-			message: '#^Unsafe call to private method App\\Models\\FaceEncoding\:\:getTenantId\(\) through static\:\:\.$#'
-			identifier: staticClassAccess.privateMethod
-			count: 2
 			path: app/Models/FaceEncoding.php
 
 		-
@@ -931,12 +793,6 @@ parameters:
 			path: app/Models/Family.php
 
 		-
-			message: '#^Unsafe call to private method App\\Models\\Family\:\:getTenantId\(\) through static\:\:\.$#'
-			identifier: staticClassAccess.privateMethod
-			count: 2
-			path: app/Models/Family.php
-
-		-
 			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$id\.$#'
 			identifier: property.notFound
 			count: 1
@@ -949,21 +805,9 @@ parameters:
 			path: app/Models/FamilySlgs.php
 
 		-
-			message: '#^Unsafe call to private method App\\Models\\FamilySlgs\:\:getTenantId\(\) through static\:\:\.$#'
-			identifier: staticClassAccess.privateMethod
-			count: 2
-			path: app/Models/FamilySlgs.php
-
-		-
 			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$id\.$#'
 			identifier: property.notFound
 			count: 1
-			path: app/Models/ImportJob.php
-
-		-
-			message: '#^Unsafe call to private method App\\Models\\ImportJob\:\:getTenantId\(\) through static\:\:\.$#'
-			identifier: staticClassAccess.privateMethod
-			count: 2
 			path: app/Models/ImportJob.php
 
 		-
@@ -973,21 +817,9 @@ parameters:
 			path: app/Models/MediaObject.php
 
 		-
-			message: '#^Unsafe call to private method App\\Models\\MediaObject\:\:getTenantId\(\) through static\:\:\.$#'
-			identifier: staticClassAccess.privateMethod
-			count: 2
-			path: app/Models/MediaObject.php
-
-		-
 			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$id\.$#'
 			identifier: property.notFound
 			count: 1
-			path: app/Models/Note.php
-
-		-
-			message: '#^Unsafe call to private method App\\Models\\Note\:\:getTenantId\(\) through static\:\:\.$#'
-			identifier: staticClassAccess.privateMethod
-			count: 2
 			path: app/Models/Note.php
 
 		-
@@ -1021,21 +853,9 @@ parameters:
 			path: app/Models/Person.php
 
 		-
-			message: '#^Unsafe call to private method App\\Models\\Person\:\:getTenantId\(\) through static\:\:\.$#'
-			identifier: staticClassAccess.privateMethod
-			count: 2
-			path: app/Models/Person.php
-
-		-
 			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$id\.$#'
 			identifier: property.notFound
 			count: 1
-			path: app/Models/PersonAlia.php
-
-		-
-			message: '#^Unsafe call to private method App\\Models\\PersonAlia\:\:getTenantId\(\) through static\:\:\.$#'
-			identifier: staticClassAccess.privateMethod
-			count: 2
 			path: app/Models/PersonAlia.php
 
 		-
@@ -1045,21 +865,9 @@ parameters:
 			path: app/Models/PersonAnci.php
 
 		-
-			message: '#^Unsafe call to private method App\\Models\\PersonAnci\:\:getTenantId\(\) through static\:\:\.$#'
-			identifier: staticClassAccess.privateMethod
-			count: 2
-			path: app/Models/PersonAnci.php
-
-		-
 			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$id\.$#'
 			identifier: property.notFound
 			count: 1
-			path: app/Models/PersonAsso.php
-
-		-
-			message: '#^Unsafe call to private method App\\Models\\PersonAsso\:\:getTenantId\(\) through static\:\:\.$#'
-			identifier: staticClassAccess.privateMethod
-			count: 2
 			path: app/Models/PersonAsso.php
 
 		-
@@ -1075,21 +883,9 @@ parameters:
 			path: app/Models/PersonLds.php
 
 		-
-			message: '#^Unsafe call to private method App\\Models\\PersonLds\:\:getTenantId\(\) through static\:\:\.$#'
-			identifier: staticClassAccess.privateMethod
-			count: 2
-			path: app/Models/PersonLds.php
-
-		-
 			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$id\.$#'
 			identifier: property.notFound
 			count: 1
-			path: app/Models/PersonName.php
-
-		-
-			message: '#^Unsafe call to private method App\\Models\\PersonName\:\:getTenantId\(\) through static\:\:\.$#'
-			identifier: staticClassAccess.privateMethod
-			count: 2
 			path: app/Models/PersonName.php
 
 		-
@@ -1099,21 +895,9 @@ parameters:
 			path: app/Models/PersonNameFone.php
 
 		-
-			message: '#^Unsafe call to private method App\\Models\\PersonNameFone\:\:getTenantId\(\) through static\:\:\.$#'
-			identifier: staticClassAccess.privateMethod
-			count: 2
-			path: app/Models/PersonNameFone.php
-
-		-
 			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$id\.$#'
 			identifier: property.notFound
 			count: 1
-			path: app/Models/PersonNameRomn.php
-
-		-
-			message: '#^Unsafe call to private method App\\Models\\PersonNameRomn\:\:getTenantId\(\) through static\:\:\.$#'
-			identifier: staticClassAccess.privateMethod
-			count: 2
 			path: app/Models/PersonNameRomn.php
 
 		-
@@ -1123,21 +907,9 @@ parameters:
 			path: app/Models/PersonPhoto.php
 
 		-
-			message: '#^Unsafe call to private method App\\Models\\PersonPhoto\:\:getTenantId\(\) through static\:\:\.$#'
-			identifier: staticClassAccess.privateMethod
-			count: 2
-			path: app/Models/PersonPhoto.php
-
-		-
 			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$id\.$#'
 			identifier: property.notFound
 			count: 1
-			path: app/Models/PersonSubm.php
-
-		-
-			message: '#^Unsafe call to private method App\\Models\\PersonSubm\:\:getTenantId\(\) through static\:\:\.$#'
-			identifier: staticClassAccess.privateMethod
-			count: 2
 			path: app/Models/PersonSubm.php
 
 		-
@@ -1147,21 +919,9 @@ parameters:
 			path: app/Models/PhotoTag.php
 
 		-
-			message: '#^Unsafe call to private method App\\Models\\PhotoTag\:\:getTenantId\(\) through static\:\:\.$#'
-			identifier: staticClassAccess.privateMethod
-			count: 2
-			path: app/Models/PhotoTag.php
-
-		-
 			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$id\.$#'
 			identifier: property.notFound
 			count: 1
-			path: app/Models/Place.php
-
-		-
-			message: '#^Unsafe call to private method App\\Models\\Place\:\:getTenantId\(\) through static\:\:\.$#'
-			identifier: staticClassAccess.privateMethod
-			count: 2
 			path: app/Models/Place.php
 
 		-
@@ -1171,21 +931,9 @@ parameters:
 			path: app/Models/Publication.php
 
 		-
-			message: '#^Unsafe call to private method App\\Models\\Publication\:\:getTenantId\(\) through static\:\:\.$#'
-			identifier: staticClassAccess.privateMethod
-			count: 2
-			path: app/Models/Publication.php
-
-		-
 			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$id\.$#'
 			identifier: property.notFound
 			count: 1
-			path: app/Models/Refn.php
-
-		-
-			message: '#^Unsafe call to private method App\\Models\\Refn\:\:getTenantId\(\) through static\:\:\.$#'
-			identifier: staticClassAccess.privateMethod
-			count: 2
 			path: app/Models/Refn.php
 
 		-
@@ -1195,33 +943,15 @@ parameters:
 			path: app/Models/Repository.php
 
 		-
-			message: '#^Unsafe call to private method App\\Models\\Repository\:\:getTenantId\(\) through static\:\:\.$#'
-			identifier: staticClassAccess.privateMethod
-			count: 2
-			path: app/Models/Repository.php
-
-		-
 			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$id\.$#'
 			identifier: property.notFound
 			count: 1
 			path: app/Models/ResearchSpace.php
 
 		-
-			message: '#^Unsafe call to private method App\\Models\\ResearchSpace\:\:getTenantId\(\) through static\:\:\.$#'
-			identifier: staticClassAccess.privateMethod
-			count: 2
-			path: app/Models/ResearchSpace.php
-
-		-
 			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$id\.$#'
 			identifier: property.notFound
 			count: 1
-			path: app/Models/SmartMatch.php
-
-		-
-			message: '#^Unsafe call to private method App\\Models\\SmartMatch\:\:getTenantId\(\) through static\:\:\.$#'
-			identifier: staticClassAccess.privateMethod
-			count: 2
 			path: app/Models/SmartMatch.php
 
 		-
@@ -1255,21 +985,9 @@ parameters:
 			path: app/Models/Source.php
 
 		-
-			message: '#^Unsafe call to private method App\\Models\\Source\:\:getTenantId\(\) through static\:\:\.$#'
-			identifier: staticClassAccess.privateMethod
-			count: 2
-			path: app/Models/Source.php
-
-		-
 			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$id\.$#'
 			identifier: property.notFound
 			count: 1
-			path: app/Models/SourceData.php
-
-		-
-			message: '#^Unsafe call to private method App\\Models\\SourceData\:\:getTenantId\(\) through static\:\:\.$#'
-			identifier: staticClassAccess.privateMethod
-			count: 2
 			path: app/Models/SourceData.php
 
 		-
@@ -1279,21 +997,9 @@ parameters:
 			path: app/Models/SourceDataEven.php
 
 		-
-			message: '#^Unsafe call to private method App\\Models\\SourceDataEven\:\:getTenantId\(\) through static\:\:\.$#'
-			identifier: staticClassAccess.privateMethod
-			count: 2
-			path: app/Models/SourceDataEven.php
-
-		-
 			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$id\.$#'
 			identifier: property.notFound
 			count: 1
-			path: app/Models/SourceRef.php
-
-		-
-			message: '#^Unsafe call to private method App\\Models\\SourceRef\:\:getTenantId\(\) through static\:\:\.$#'
-			identifier: staticClassAccess.privateMethod
-			count: 2
 			path: app/Models/SourceRef.php
 
 		-
@@ -1303,21 +1009,9 @@ parameters:
 			path: app/Models/SourceRefEven.php
 
 		-
-			message: '#^Unsafe call to private method App\\Models\\SourceRefEven\:\:getTenantId\(\) through static\:\:\.$#'
-			identifier: staticClassAccess.privateMethod
-			count: 2
-			path: app/Models/SourceRefEven.php
-
-		-
 			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$id\.$#'
 			identifier: property.notFound
 			count: 1
-			path: app/Models/SourceRepo.php
-
-		-
-			message: '#^Unsafe call to private method App\\Models\\SourceRepo\:\:getTenantId\(\) through static\:\:\.$#'
-			identifier: staticClassAccess.privateMethod
-			count: 2
 			path: app/Models/SourceRepo.php
 
 		-
@@ -1327,21 +1021,9 @@ parameters:
 			path: app/Models/Subm.php
 
 		-
-			message: '#^Unsafe call to private method App\\Models\\Subm\:\:getTenantId\(\) through static\:\:\.$#'
-			identifier: staticClassAccess.privateMethod
-			count: 2
-			path: app/Models/Subm.php
-
-		-
 			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$id\.$#'
 			identifier: property.notFound
 			count: 1
-			path: app/Models/Subn.php
-
-		-
-			message: '#^Unsafe call to private method App\\Models\\Subn\:\:getTenantId\(\) through static\:\:\.$#'
-			identifier: staticClassAccess.privateMethod
-			count: 2
 			path: app/Models/Subn.php
 
 		-
@@ -1375,21 +1057,9 @@ parameters:
 			path: app/Models/Tree.php
 
 		-
-			message: '#^Unsafe call to private method App\\Models\\Tree\:\:getTenantId\(\) through static\:\:\.$#'
-			identifier: staticClassAccess.privateMethod
-			count: 2
-			path: app/Models/Tree.php
-
-		-
 			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$id\.$#'
 			identifier: property.notFound
 			count: 1
-			path: app/Models/Type.php
-
-		-
-			message: '#^Unsafe call to private method App\\Models\\Type\:\:getTenantId\(\) through static\:\:\.$#'
-			identifier: staticClassAccess.privateMethod
-			count: 2
 			path: app/Models/Type.php
 
 		-
@@ -1459,12 +1129,6 @@ parameters:
 			path: app/Models/UserChecklist.php
 
 		-
-			message: '#^Unsafe call to private method App\\Models\\UserChecklist\:\:getTenantId\(\) through static\:\:\.$#'
-			identifier: staticClassAccess.privateMethod
-			count: 2
-			path: app/Models/UserChecklist.php
-
-		-
 			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$status\.$#'
 			identifier: property.notFound
 			count: 2
@@ -1510,12 +1174,6 @@ parameters:
 			message: '#^Method App\\Models\\VirtualEvent\:\:getUserAttendee\(\) should return App\\Models\\VirtualEventAttendee\|null but returns Illuminate\\Database\\Eloquent\\Model\|null\.$#'
 			identifier: return.type
 			count: 1
-			path: app/Models/VirtualEvent.php
-
-		-
-			message: '#^Unsafe call to private method App\\Models\\VirtualEvent\:\:getTenantId\(\) through static\:\:\.$#'
-			identifier: staticClassAccess.privateMethod
-			count: 2
 			path: app/Models/VirtualEvent.php
 
 		-
@@ -2345,12 +2003,6 @@ parameters:
 			identifier: method.nonObject
 			count: 1
 			path: app/Services/SocialMediaConnectionService.php
-
-		-
-			message: '#^Call to an undefined method Laravel\\Cashier\\Subscription\:\:cancelled\(\)\.$#'
-			identifier: method.notFound
-			count: 2
-			path: app/Services/SubscriptionService.php
 
 		-
 			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$email\.$#'

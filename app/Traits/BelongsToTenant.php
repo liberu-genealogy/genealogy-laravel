@@ -49,7 +49,13 @@ trait BelongsToTenant
         return $this->belongsTo(Team::class);
     }
 
-    private static function getTenantId()
+    /**
+     * Protected, not private: booted() reaches this through static::, so late static
+     * binding resolves it against the model using the trait. A private method is
+     * bound to its declaring scope, which makes that call unsafe the moment a model
+     * using this trait is subclassed.
+     */
+    protected static function getTenantId(): ?int
     {
         return auth()->user()?->currentTeam?->id;
     }

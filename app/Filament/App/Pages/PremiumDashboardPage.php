@@ -61,7 +61,9 @@ class PremiumDashboardPage extends Page
         $user = Auth::user();
         $actions = [];
 
-        if ($user->subscription('premium')?->cancelled()) {
+        // Only offer Resume while the subscription is still within its grace period –
+        // that is the only state Cashier's resume() will accept.
+        if ($user->subscription('premium')?->onGracePeriod()) {
             $actions[] = Action::make('resume')
                 ->label('Resume Subscription')
                 ->icon('heroicon-o-play')

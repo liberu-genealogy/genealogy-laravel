@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Traits\BelongsToTenant;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Family extends \FamilyTree365\LaravelGedcom\Models\Family
@@ -50,6 +51,24 @@ class Family extends \FamilyTree365\LaravelGedcom\Models\Family
     public function setTypeIdAttribute(mixed $value): void
     {
         $this->attributes['type_id'] = ($value === 0 || $value === '0') ? null : $value;
+    }
+
+    /**
+     * Override the vendor's events relationship to use App\Models\FamilyEvent.
+     *
+     * The vendor's FamilyEvent cannot boot at all: its boot() calls
+     * static::observe(), which re-enters bootIfNotBooted and throws "may not be
+     * called on model ... while it is being booted". App\Models\FamilyEvent exists
+     * precisely to work around that (it moves observe() into booted()) and adds
+     * BelongsToTenant. Inheriting the vendor relation resolved FamilyEvent in the
+     * vendor namespace, so every $family->events() call was fatal — and untenanted
+     * had it worked. Person::events() only works because Person overrides it the
+     * same way; Family never did.
+     */
+    #[\Override]
+    public function events(): HasMany
+    {
+        return $this->hasMany(FamilyEvent::class);
     }
 
     /**

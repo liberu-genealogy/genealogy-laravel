@@ -6,7 +6,6 @@ use App\Http\Controllers\AIMatchController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\FanChartController;
 use App\Http\Controllers\PedigreeChartController;
-use App\Http\Controllers\TeamInvitationController;
 use App\Livewire\DocumentTranscriptionComponent;
 use App\Livewire\FamilyTreeBuilder;
 use App\Livewire\GamificationDashboard;
@@ -26,9 +25,6 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', fn (): Factory|\Illuminate\Contracts\View\View => view('home'));
-
-Route::post('/send-invitation', [TeamInvitationController::class, 'sendInvitation'])->name('send.invitation');
-Route::post('/accept-invitation/{token}', [TeamInvitationController::class, 'acceptInvitation'])->name('accept.invitation');
 
 Route::get('/register', fn (): Redirector|\Illuminate\Http\RedirectResponse => redirect('/app/register'))->name('register');
 Route::get('/login', fn (): Redirector|\Illuminate\Http\RedirectResponse => redirect('/app/login'))->name('login');
