@@ -22,7 +22,9 @@ class EditPerson extends EditRecord
             DeleteAction::make(),
             Action::make('selectMedia')
                 ->label('Select GEDCOM Media')
-                ->icon('heroicon-o-photograph')
+                // 'photograph' is a Heroicons v1 name; v2 renamed it to 'photo', and
+                // blade-icons throws SvgNotFound at render rather than degrading.
+                ->icon('heroicon-o-photo')
                 ->modalHeading('Select GEDCOM Media to Use as Profile Photo')
                 ->modalWidth('lg')
                 ->form([

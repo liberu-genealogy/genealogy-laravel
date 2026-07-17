@@ -793,16 +793,10 @@ parameters:
 			path: app/Filament/App/Resources/ImportJobResource.php
 
 		-
-			message: '#^Class App\\Filament\\App\\Resources\\RelationManagers\\PhotosRelationManager not found\.$#'
-			identifier: class.notFound
-			count: 1
-			path: app/Filament/App/Resources/PersonResource.php
-
-		-
-			message: '#^Method App\\Filament\\App\\Resources\\PersonResource\:\:getRelations\(\) should return array\<class\-string\<Filament\\Resources\\RelationManagers\\RelationManager\>\|Filament\\Resources\\RelationManagers\\RelationGroup\|Filament\\Resources\\RelationManagers\\RelationManagerConfiguration\> but returns array\{''App\\\\Filament\\\\App\\\\Resources\\\\RelationManagers\\\\PhotosRelationManager''\}\.$#'
-			identifier: return.type
-			count: 1
-			path: app/Filament/App/Resources/PersonResource.php
+			message: '#^Call to an undefined static method App\\Models\\Person\:\:find\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 2
+			path: app/Filament/App/Resources/PersonAssoResource.php
 
 		-
 			message: '#^Access to an undefined property App\\Models\\MediaObject\|Illuminate\\Database\\Eloquent\\Collection\<int, App\\Models\\MediaObject\>\:\:\$files\.$#'
@@ -841,6 +835,12 @@ parameters:
 			path: app/Filament/App/Resources/PersonResource/Pages/EditPerson.php
 
 		-
+			message: '#^Call to an undefined static method App\\Models\\Person\:\:find\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 1
+			path: app/Filament/App/Resources/PersonResource/RelationManagers/AssociationsRelationManager.php
+
+		-
 			message: '#^Access to an undefined property App\\Models\\PersonPhoto\:\:\$file_path\.$#'
 			identifier: property.notFound
 			count: 1
@@ -859,6 +859,12 @@ parameters:
 			path: app/Filament/App/Resources/PersonResource/RelationManagers/PhotosRelationManager.php
 
 		-
+			message: '#^Access to an undefined property App\\Models\\SourceRef\:\:\$source\.$#'
+			identifier: property.notFound
+			count: 2
+			path: app/Filament/App/Resources/PersonResource/RelationManagers/SourcesRelationManager.php
+
+		-
 			message: '#^Call to an undefined method Illuminate\\Contracts\\Auth\\Factory\:\:user\(\)\.$#'
 			identifier: method.notFound
 			count: 1
@@ -875,6 +881,24 @@ parameters:
 			identifier: method.notFound
 			count: 1
 			path: app/Filament/App/Resources/SmartMatchResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\Source\:\:\$id\.$#'
+			identifier: property.notFound
+			count: 2
+			path: app/Filament/App/Resources/SourceRefResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\Source\:\:\$name\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Filament/App/Resources/SourceRefResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\Source\:\:\$titl\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Filament/App/Resources/SourceRefResource.php
 
 		-
 			message: '#^Access to an undefined property App\\Models\\VirtualEvent\:\:\$platform\.$#'
@@ -2775,6 +2799,24 @@ parameters:
 		-
 			message: '#^Call to an undefined static method App\\Models\\PersonEvent\:\:updateOrCreate\(\)\.$#'
 			identifier: staticMethod.notFound
+			count: 1
+			path: app/Models/Person.php
+
+		-
+			message: '#^Method App\\Models\\Person\:\:associatedWith\(\) should return Illuminate\\Database\\Eloquent\\Relations\\HasMany but returns Illuminate\\Database\\Eloquent\\Builder\<App\\Models\\PersonAsso\>\.$#'
+			identifier: return.type
+			count: 1
+			path: app/Models/Person.php
+
+		-
+			message: '#^Method App\\Models\\Person\:\:associations\(\) should return Illuminate\\Database\\Eloquent\\Relations\\HasMany but returns Illuminate\\Database\\Eloquent\\Builder\<App\\Models\\PersonAsso\>\.$#'
+			identifier: return.type
+			count: 1
+			path: app/Models/Person.php
+
+		-
+			message: '#^Method App\\Models\\Person\:\:sourceRefs\(\) should return Illuminate\\Database\\Eloquent\\Relations\\HasMany but returns Illuminate\\Database\\Eloquent\\Builder\<App\\Models\\SourceRef\>\.$#'
+			identifier: return.type
 			count: 1
 			path: app/Models/Person.php
 
@@ -5551,6 +5593,12 @@ parameters:
 			path: app/Services/PersonMergeService.php
 
 		-
+			message: '#^Access to an undefined property App\\Models\\Person\:\:\$child_in_family_id\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Services/PersonMergeService.php
+
+		-
 			message: '#^Access to an undefined property App\\Models\\Person\:\:\$deathday\.$#'
 			identifier: property.notFound
 			count: 1
@@ -5629,7 +5677,13 @@ parameters:
 			path: app/Services/PersonMergeService.php
 
 		-
-			message: '#^Call to an undefined static method App\\Models\\Person\:\:where\(\)\.$#'
+			message: '#^Call to an undefined static method App\\Models\\PersonAlia\:\:where\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 1
+			path: app/Services/PersonMergeService.php
+
+		-
+			message: '#^Call to an undefined static method App\\Models\\PersonAsso\:\:where\(\)\.$#'
 			identifier: staticMethod.notFound
 			count: 1
 			path: app/Services/PersonMergeService.php
