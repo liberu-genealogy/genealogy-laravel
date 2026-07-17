@@ -64,7 +64,7 @@ class SubscriptionService
         // Only call cancel() on Stripe if the subscription isn't already cancelled –
         // preventing a redundant API call. Regardless of subscription state, always
         // clear the is_premium flag so the user's access is revoked.
-        if ($subscription && ! $subscription->cancelled()) {
+        if ($subscription && ! $subscription->canceled()) {
             $subscription->cancel();
         }
 
@@ -94,7 +94,10 @@ class SubscriptionService
     {
         $subscription = $user->subscription('premium');
 
-        if ($subscription && $subscription->cancelled()) {
+        // Cashier's resume() throws a LogicException unless the subscription is still
+        // within its grace period, so guard on onGracePeriod() rather than canceled():
+        // a cancelled subscription whose grace period has expired can never be resumed.
+        if ($subscription && $subscription->onGracePeriod()) {
             $subscription->resume();
 
             $user->update([

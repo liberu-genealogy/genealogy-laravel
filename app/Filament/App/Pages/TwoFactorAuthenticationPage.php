@@ -34,26 +34,20 @@ class TwoFactorAuthenticationPage extends Page
         $this->user = Auth::user();
     }
 
-    public function enableTwoFactorAuthentication(): void
-    {
-        $this->user->enableTwoFactorAuthentication();
-    }
-
-    public function disableTwoFactorAuthentication(): void
-    {
-        $this->user->disableTwoFactorAuthentication();
-    }
-
-    public function showRecoveryCodes(): void
-    {
-        $this->user->showRecoveryCodes();
-    }
-
-    public function regenerateRecoveryCodes(): void
-    {
-        $this->user->regenerateRecoveryCodes();
-    }
-
+    /*
+     * This page is a signpost: its view renders a static "manage two factor
+     * authentication from your profile" message and calls no actions. The real
+     * feature is Jetstream's profile.two-factor-authentication-form Livewire
+     * component, whose own class implements enable/disable/recovery-codes.
+     *
+     * Four methods here forwarded to $user->enableTwoFactorAuthentication() and
+     * friends, which are not User methods at all — Fortify's TwoFactorAuthenticatable
+     * trait provides hasEnabledTwoFactorAuthentication()/recoveryCodes()/
+     * twoFactorQrCodeSvg(), while enabling is the invokable action
+     * Laravel\Fortify\Actions\EnableTwoFactorAuthentication. Nothing called them, so
+     * they were dead code that would have fataled the moment a button was wired up.
+     * Removed rather than reimplemented: the working path already exists.
+     */
     #[Override]
     public function getHeading(): string
     {
