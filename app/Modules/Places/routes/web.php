@@ -14,7 +14,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware(['web'])->prefix('places')->name('places.')->group(function (): void {
+// Module-scoped name prefix — see Family/routes/web.php: 'places.' collided with
+// routes/api.php's apiResource('places') and broke route:cache in production.
+Route::middleware(['web'])->prefix('places')->name('modules.places.')->group(function (): void {
     Route::get('/', [PlacesController::class, 'index'])->name('index');
     Route::get('/create', [PlacesController::class, 'create'])->name('create');
     Route::post('/', [PlacesController::class, 'store'])->name('store');

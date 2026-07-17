@@ -57,10 +57,19 @@ class CoreServiceProvider extends ServiceProvider
     protected function bootCoreServices(): void
     {
         // Load core views
-        $this->loadViewsFrom(__DIR__.'/../resources/views', 'core');
+        // Guarded because none of these module resource directories exist. An
+        // unguarded loadViewsFrom() is harmless at runtime but fatal to
+        // `php artisan view:cache`, which walks every registered path — so this
+        // passed in dev and broke the production image on boot. ModuleServiceProvider
+        // already guards the same call this way.
+        if (is_dir(__DIR__.'/../resources/views')) {
+            $this->loadViewsFrom(__DIR__.'/../resources/views', 'core');
+        }
 
         // Load core translations
-        $this->loadTranslationsFrom(__DIR__.'/../resources/lang', 'core');
+        if (is_dir(__DIR__.'/../resources/lang')) {
+            $this->loadTranslationsFrom(__DIR__.'/../resources/lang', 'core');
+        }
 
         // Load core routes
         $this->loadRoutesFrom(__DIR__.'/../routes/web.php');
