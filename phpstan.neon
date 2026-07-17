@@ -1,4 +1,5 @@
 includes:
+    - vendor/larastan/larastan/extension.neon
     - phpstan-baseline.neon
 
 parameters:
@@ -8,9 +9,15 @@ parameters:
     excludePaths:
         analyse:
             - app/Modules/*/vendor/*
-    # No larastan: it isn't a committed dependency, so the gate runs plain
-    # PHPStan (already available transitively). The codebase carries pre-existing
-    # drift + Laravel magic PHPStan can't see without larastan; the baseline
-    # captures all of it so the gate is green today and fails only on NEW issues
-    # (undefined symbols, obvious type errors). Ratchet: add larastan + shrink
-    # the baseline / raise the level over time.
+    # larastan teaches PHPStan about Eloquent: without it, every Model::where(),
+    # ->find() and $model->column read as an undefined symbol, which drowned real
+    # findings ~60% noise (1568 -> 624). It also adds checks plain PHPStan cannot
+    # do at all — notably relationExistence, which resolves relation names inside
+    # with()/whereHas(). Eloquent only resolves those at query time, so a dead
+    # relation name is invisible until it throws in production; that check alone
+    # found three live fatals here.
+    #
+    # The baseline still covers pre-existing drift. It is a debt ledger, not a
+    # verdict: it once swallowed a genuine "class not found" that PHPStan had
+    # correctly reported. Shrink it rather than grow it, and prefer fixing a
+    # finding to re-baselining it. Ratchet: raise the level once it is thinner.

@@ -7,6 +7,7 @@ namespace App\Models;
 use App\Enums\MediaType;
 use App\Traits\BelongsToTenant;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class MediaObject extends \FamilyTree365\LaravelGedcom\Models\MediaObject
 {
@@ -38,7 +39,7 @@ class MediaObject extends \FamilyTree365\LaravelGedcom\Models\MediaObject
     /**
      * Files associated with this media object (from media_objects_file table).
      */
-    public function files()
+    public function files(): HasMany
     {
         return $this->hasMany(MediaObjeectFile::class, 'gid', 'id')->where('group', 'obje');
     }

@@ -15,7 +15,10 @@ class PedigreeChartWidget extends Widget
     public function getData(): array
     {
         return [
-            'people' => Person::with('parents')->get(),
+            // parents() is a helper that walks childInFamily->husband/wife, not a
+            // relation — with('parents') threw "Collection::addEagerConstraints does
+            // not exist" on every render. Eager-load what it actually reads.
+            'people' => Person::with(['childInFamily.husband', 'childInFamily.wife'])->get(),
         ];
     }
 
