@@ -1837,60 +1837,6 @@ parameters:
 			path: app/Services/FacialRecognitionService.php
 
 		-
-			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$husband\.$#'
-			identifier: property.notFound
-			count: 1
-			path: app/Services/FindMyPastMatchingProvider.php
-
-		-
-			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$wife\.$#'
-			identifier: property.notFound
-			count: 1
-			path: app/Services/FindMyPastMatchingProvider.php
-
-		-
-			message: '#^Cannot access property \$year on string\.$#'
-			identifier: property.nonObject
-			count: 14
-			path: app/Services/FindMyPastMatchingProvider.php
-
-		-
-			message: '#^Cannot call method addDays\(\) on string\.$#'
-			identifier: method.nonObject
-			count: 3
-			path: app/Services/FindMyPastMatchingProvider.php
-
-		-
-			message: '#^Cannot call method addMonths\(\) on string\.$#'
-			identifier: method.nonObject
-			count: 1
-			path: app/Services/FindMyPastMatchingProvider.php
-
-		-
-			message: '#^Cannot call method diffInYears\(\) on string\.$#'
-			identifier: method.nonObject
-			count: 1
-			path: app/Services/FindMyPastMatchingProvider.php
-
-		-
-			message: '#^Cannot call method format\(\) on string\.$#'
-			identifier: method.nonObject
-			count: 4
-			path: app/Services/FindMyPastMatchingProvider.php
-
-		-
-			message: '#^Using nullsafe method call on non\-nullable type string\. Use \-\> instead\.$#'
-			identifier: nullsafe.neverNull
-			count: 6
-			path: app/Services/FindMyPastMatchingProvider.php
-
-		-
-			message: '#^Using nullsafe property access "\?\-\>place" on left side of \?\? is unnecessary\. Use \-\> instead\.$#'
-			identifier: nullsafe.neverNull
-			count: 5
-			path: app/Services/FindMyPastMatchingProvider.php
-
-		-
 			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$id\.$#'
 			identifier: property.notFound
 			count: 3
@@ -1955,18 +1901,6 @@ parameters:
 			identifier: nullsafe.neverNull
 			count: 1
 			path: app/Services/RecordMatcher/RecordMatcherService.php
-
-		-
-			message: '#^Cannot call method format\(\) on string\.$#'
-			identifier: method.nonObject
-			count: 4
-			path: app/Services/SmartMatchingService.php
-
-		-
-			message: '#^Comparison operation "\>" between 0\.5\|0\.7000000000000001\|0\.7999999999999999\|0\.9999999999999999 and 0 is always true\.$#'
-			identifier: greater.alwaysTrue
-			count: 1
-			path: app/Services/SmartMatchingService.php
 
 		-
 			message: '#^Cannot call method diffInHours\(\) on string\.$#'

@@ -94,15 +94,21 @@ class SmartMatchingService
      */
     private function searchPublicTrees(Person $person): array
     {
-        $matches = [];
+        // With no provider configured this used to fall back to a simulation that
+        // invented matches — names, birth/death dates and places, parents, a spouse,
+        // children and a plausible-looking source_url — which findSmartMatches()
+        // then persisted as SmartMatch rows and the UI presented as real records
+        // from Ancestry/MyHeritage/FindMyPast. In a genealogy product that is
+        // fabricated ancestry, so an unconfigured install now returns nothing.
+        if ($this->providers === []) {
+            Log::warning('No genealogy providers configured; smart matching returns no matches', [
+                'person_id' => $person->id,
+            ]);
 
-        // If providers are configured, use them; otherwise fall back to simulation
-        if (count($this->providers) > 0) {
-            $matches = $this->searchUsingProviders($person);
-        } else {
-            Log::warning('No genealogy providers configured, using simulation mode');
-            $matches = $this->searchUsingSimulation($person);
+            return [];
         }
+
+        $matches = $this->searchUsingProviders($person);
 
         // Sort by confidence score
         usort($matches, fn (array $a, array $b) => $b['confidence_score'] <=> $a['confidence_score']);
@@ -147,160 +153,75 @@ class SmartMatchingService
     }
 
     /**
-     * Fallback simulation mode when no providers are configured
-     */
-    private function searchUsingSimulation(Person $person): array
-    {
-        $matches = [];
-
-        // Simulate searching different genealogy platforms
-        $sources = ['familysearch', 'ancestry', 'myheritage', 'findmypast'];
-
-        foreach ($sources as $source) {
-            $sourceMatches = $this->searchSource($person, $source);
-            $matches = array_merge($matches, $sourceMatches);
-        }
-
-        return $matches;
-    }
-
-    /**
-     * Search a specific source for matches
-     */
-    private function searchSource(Person $person, string $source): array
-    {
-        // Use specialized FindMyPast provider for findmypast source
-        if ($source === 'findmypast') {
-            return $this->searchFindMyPast($person);
-        }
-
-        // This would integrate with actual genealogy APIs
-        // For now, we'll simulate potential matches for other sources
-
-        $matches = [];
-
-        // Simulate finding matches based on name and dates
-        $searchTerms = [
-            'name' => $person->fullname(),
-            'birth_year' => $person->birthday?->format('Y'),
-            'death_year' => $person->deathday?->format('Y'),
-        ];
-
-        // Simulate API response
-        $simulatedMatches = $this->simulateApiResponse($person, $source);
-
-        foreach ($simulatedMatches as $match) {
-            $confidence = $this->calculateMatchConfidence($person, $match);
-
-            if ($confidence >= 0.6) { // 60% confidence threshold
-                $matches[] = [
-                    'tree_id' => $match['tree_id'],
-                    'person_id' => $match['person_id'],
-                    'source' => $source,
-                    'confidence_score' => $confidence,
-                    'data' => $match,
-                ];
-            }
-        }
-
-        return $matches;
-    }
-
-    /**
-     * Search FindMyPast using the specialized provider
-     */
-    private function searchFindMyPast(Person $person): array
-    {
-        $provider = new FindMyPastMatchingProvider;
-        $recordMatches = $provider->searchRecords($person);
-
-        $matches = [];
-        foreach ($recordMatches as $match) {
-            $matches[] = [
-                'tree_id' => $match['tree_id'],
-                'person_id' => $match['person_id'],
-                'source' => 'findmypast',
-                'record_type' => $match['record_type'] ?? null,
-                'record_category' => $match['record_category'] ?? ($match['record_type'] ?? null),
-                'confidence_score' => $match['confidence_score'],
-                'data' => $match['data'],
-                'search_criteria' => [
-                    'name' => $person->fullname(),
-                    'birth_year' => $person->birthday?->format('Y'),
-                    'death_year' => $person->deathday?->format('Y'),
-                    'record_types_searched' => ['newspaper', 'parish', 'census', 'electoral', 'gro_index', 'military', 'probate'],
-                ],
-            ];
-        }
-
-        return $matches;
-    }
-
-    /**
-     * Simulate API response from genealogy platforms
-     */
-    private function simulateApiResponse(Person $person, string $source): array
-    {
-        // This simulates what would come from real APIs
-        $matches = [];
-
-        // Generate some realistic-looking matches
-        for ($i = 0; $i < random_int(2, 8); $i++) {
-            $matches[] = [
-                'tree_id' => $source.'_tree_'.random_int(1000, 9999),
-                'person_id' => $source.'_person_'.random_int(10000, 99999),
-                'name' => $this->generateSimilarName($person->fullname()),
-                'birth_date' => $this->generateSimilarDate($person->birthday),
-                'death_date' => $this->generateSimilarDate($person->deathday),
-                'birth_place' => $this->generateRandomPlace(),
-                'death_place' => $this->generateRandomPlace(),
-                'parents' => [
-                    'father' => $this->generateRandomName('male'),
-                    'mother' => $this->generateRandomName('female'),
-                ],
-                'spouse' => $this->generateRandomName($person->sex === 'M' ? 'female' : 'male'),
-                'children' => array_map($this->generateRandomName(...), range(1, random_int(0, 4))),
-                'source_url' => "https://{$source}.com/tree/".random_int(1000, 9999),
-                'last_updated' => now()->subDays(random_int(1, 365))->format('Y-m-d'),
-            ];
-        }
-
-        return $matches;
-    }
-
-    /**
      * Calculate confidence score for a match
      */
     private function calculateMatchConfidence(Person $person, array $match): float
     {
-        $score = 0;
-        $factors = 0;
+        $score = 0.0;
+        $factors = 0.0;
+
+        // Providers return first_name/last_name (see ExternalRecordProviderInterface),
+        // never a composed 'name'. Reading $match['name'] raised an undefined-key
+        // warning and passed null into calculateNameSimilarity's string parameter,
+        // so every real candidate threw a TypeError that searchUsingProviders caught
+        // and logged as "Provider search failed" — the provider path could not score
+        // a single match. Only the simulation, which did emit 'name', ever worked.
+        $candidateName = trim(($match['first_name'] ?? '').' '.($match['last_name'] ?? ''));
+        if ($candidateName === '') {
+            $candidateName = (string) ($match['name'] ?? '');
+        }
 
         // Name similarity (40% weight)
-        $nameSimilarity = $this->calculateNameSimilarity($person->fullname(), $match['name']);
-        $score += $nameSimilarity * 0.4;
-        $factors += 0.4;
+        if ($candidateName !== '') {
+            $score += $this->calculateNameSimilarity($person->fullname(), $candidateName) * 0.4;
+            $factors += 0.4;
+        }
 
         // Birth date similarity (30% weight)
-        if ($person->birthday && $match['birth_date']) {
-            $birthSimilarity = $this->calculateDateSimilarity($person->birthday, new DateTime($match['birth_date']));
-            $score += $birthSimilarity * 0.3;
-            $factors += 0.3;
+        if ($person->birthday && ! empty($match['birth_date'])) {
+            $birthDate = $this->parseDate($match['birth_date']);
+            if ($birthDate instanceof DateTime) {
+                $score += $this->calculateDateSimilarity($person->birthday, $birthDate) * 0.3;
+                $factors += 0.3;
+            }
         }
 
         // Death date similarity (20% weight)
-        if ($person->deathday && $match['death_date']) {
-            $deathSimilarity = $this->calculateDateSimilarity($person->deathday, new DateTime($match['death_date']));
-            $score += $deathSimilarity * 0.2;
-            $factors += 0.2;
+        if ($person->deathday && ! empty($match['death_date'])) {
+            $deathDate = $this->parseDate($match['death_date']);
+            if ($deathDate instanceof DateTime) {
+                $score += $this->calculateDateSimilarity($person->deathday, $deathDate) * 0.2;
+                $factors += 0.2;
+            }
         }
 
-        // Additional context (10% weight)
-        $contextScore = $this->calculateContextSimilarity($person, $match);
-        $score += $contextScore * 0.1;
-        $factors += 0.1;
+        // Birth place (10% weight). This factor used to be calculateContextSimilarity(),
+        // which returned random_int(30, 90) / 100 — a random tenth of the confidence of
+        // every match, real ones included. Compare the places we actually hold instead,
+        // and skip the factor when either side is missing rather than invent a number.
+        if ($person->birthday_plac && ! empty($match['birth_place'])) {
+            $score += $this->calculateNameSimilarity($person->birthday_plac, (string) $match['birth_place']) * 0.1;
+            $factors += 0.1;
+        }
 
-        return $factors > 0 ? $score / $factors : 0;
+        return $factors > 0.0 ? $score / $factors : 0.0;
+    }
+
+    /**
+     * Provider dates are free text ("1879", "12 May 1879", ""), so a bare
+     * new DateTime() on them throws for anything it cannot parse.
+     */
+    private function parseDate(mixed $value): ?DateTime
+    {
+        if (! is_string($value) && ! is_int($value)) {
+            return null;
+        }
+
+        try {
+            return new DateTime((string) $value);
+        } catch (\Exception) {
+            return null;
+        }
     }
 
     /**
@@ -344,94 +265,5 @@ class SmartMatchingService
         }
 
         return 0.3;
-    }
-
-    /**
-     * Calculate context similarity (places, family members, etc.)
-     */
-    private function calculateContextSimilarity(Person $person, array $match): float
-    {
-        // This would compare places, family members, etc.
-        // For simulation, return a random score
-        return random_int(30, 90) / 100;
-    }
-
-    /**
-     * Helper methods for simulation
-     */
-    private function generateSimilarName(string $originalName): string
-    {
-        $names = explode(' ', $originalName);
-        $variations = [];
-
-        foreach ($names as $name) {
-            // Sometimes use the exact name, sometimes a variation
-            $variations[] = random_int(0, 100) < 70 ? $name : $this->getNameVariation($name);
-        }
-
-        return implode(' ', $variations);
-    }
-
-    private function getNameVariation(string $name): string
-    {
-        $variations = [
-            'John' => ['Jon', 'Johnny', 'Jonathan'],
-            'William' => ['Will', 'Bill', 'Billy'],
-            'Elizabeth' => ['Beth', 'Liz', 'Betty'],
-            'Mary' => ['Marie', 'Maria'],
-            'James' => ['Jim', 'Jimmy'],
-        ];
-
-        return $variations[$name][array_rand($variations[$name])] ?? $name;
-    }
-
-    private function generateSimilarDate(?DateTime $originalDate): ?string
-    {
-        if (! $originalDate instanceof DateTime) {
-            return null;
-        }
-
-        // Generate a date within 5 years of the original
-        $variation = random_int(-5, 5);
-
-        return $originalDate->modify("{$variation} years")->format('Y-m-d');
-    }
-
-    private function generateRandomPlace(): string
-    {
-        $places = [
-            'London, England',
-            'Manchester, England',
-            'Birmingham, England',
-            'Liverpool, England',
-            'Edinburgh, Scotland',
-            'Glasgow, Scotland',
-            'Cardiff, Wales',
-            'Belfast, Northern Ireland',
-            'Dublin, Ireland',
-            'Cork, Ireland',
-        ];
-
-        return $places[array_rand($places)];
-    }
-
-    private function generateRandomName(?string $gender = null): string
-    {
-        $maleNames = ['John', 'William', 'James', 'George', 'Thomas', 'Henry', 'Charles', 'Robert'];
-        $femaleNames = ['Mary', 'Elizabeth', 'Sarah', 'Margaret', 'Jane', 'Catherine', 'Anne', 'Emma'];
-        $surnames = ['Smith', 'Jones', 'Brown', 'Wilson', 'Taylor', 'Davies', 'Evans', 'Thomas'];
-
-        if ($gender === 'male') {
-            $firstName = $maleNames[array_rand($maleNames)];
-        } elseif ($gender === 'female') {
-            $firstName = $femaleNames[array_rand($femaleNames)];
-        } else {
-            $allNames = array_merge($maleNames, $femaleNames);
-            $firstName = $allNames[array_rand($allNames)];
-        }
-
-        $surname = $surnames[array_rand($surnames)];
-
-        return "{$firstName} {$surname}";
     }
 }
