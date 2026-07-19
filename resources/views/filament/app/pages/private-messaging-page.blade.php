@@ -18,7 +18,7 @@
             {{-- Messages --}}
             @if($selectedUserId)
                 <div class="border dark:border-gray-700 rounded-lg p-4 max-h-96 overflow-y-auto mb-4 space-y-3">
-                    @forelse($messages as $msg)
+                    @forelse($conversationMessages as $msg)
                         <div class="{{ $msg->user_id === auth()->id() ? 'text-right' : 'text-left' }}">
                             <div class="inline-block px-3 py-2 rounded-lg {{ $msg->user_id === auth()->id() ? 'bg-primary-100 dark:bg-primary-900' : 'bg-gray-100 dark:bg-gray-700' }}">
                                 <p class="text-sm">{{ $msg->message }}</p>

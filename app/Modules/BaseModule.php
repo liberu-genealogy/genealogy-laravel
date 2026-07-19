@@ -80,10 +80,22 @@ abstract class BaseModule implements ModuleInterface
         Event::dispatch(new ModuleInstalled($this));
     }
 
+    /**
+     * Uninstalling marks the module uninstalled and removes its assets. It
+     * deliberately does NOT touch the module's data.
+     *
+     * This used to call a rollbackMigrations() whose body was empty, so an
+     * administrator saw a success result and a ModuleUninstalled event while
+     * every table and row stayed exactly where it was. Accidentally safe, and
+     * an untruth: the signature advertised a rollback that never happened.
+     *
+     * Keeping the data is the decision, not an oversight — this is genealogical
+     * data, and losing it to a mis-clicked uninstall is unrecoverable. Dropping
+     * a module's tables is a separate, explicitly confirmed action.
+     */
     public function uninstall(): void
     {
         $this->disable();
-        $this->rollbackMigrations();
         $this->removeAssets();
         $this->onUninstall();
         Event::dispatch(new ModuleUninstalled($this));
@@ -129,8 +141,6 @@ abstract class BaseModule implements ModuleInterface
             Artisan::call('migrate', ['--path' => $relative, '--force' => true]);
         }
     }
-
-    protected function rollbackMigrations(): void {}
 
     protected function publishAssets(): void
     {

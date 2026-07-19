@@ -32,8 +32,7 @@ class NotesModule extends BaseModule
     #[\Override]
     protected function onUninstall(): void
     {
-        // Remove notes-related data
-        $this->removeNotesTables();
+        // Module data is deliberately retained. See BaseModule::uninstall().
     }
 
     /**
@@ -61,13 +60,5 @@ class NotesModule extends BaseModule
             '--path' => 'app/Modules/Notes/database/migrations',
             '--force' => true,
         ]);
-    }
-
-    /**
-     * Remove notes-related tables.
-     */
-    protected function removeNotesTables(): void
-    {
-        // Careful implementation needed
     }
 }

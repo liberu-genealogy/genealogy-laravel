@@ -34,8 +34,7 @@ class MediaModule extends BaseModule
     #[\Override]
     protected function onUninstall(): void
     {
-        // Remove media-related data
-        $this->removeMediaTables();
+        // Module data is deliberately retained. See BaseModule::uninstall().
     }
 
     /**
@@ -76,13 +75,5 @@ class MediaModule extends BaseModule
             '--tag' => 'media-assets',
             '--force' => true,
         ]);
-    }
-
-    /**
-     * Remove media-related tables.
-     */
-    protected function removeMediaTables(): void
-    {
-        // Careful implementation needed
     }
 }
