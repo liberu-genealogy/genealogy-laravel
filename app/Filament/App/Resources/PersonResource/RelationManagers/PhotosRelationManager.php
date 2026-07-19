@@ -94,12 +94,20 @@ class PhotosRelationManager extends AppRelationManager
                     }),
             ])
             ->actions([
+                // Analysing writes face-encoding data onto the photo — an edit.
+                // A relation-manager custom closure, so AppRelationManager's
+                // authorisation does not reach it (that covers the standard
+                // create/edit/delete actions, not hand-written ones) and the
+                // tier is asserted here. Filament does not enforce ->visible()
+                // on invocation, so the abort is the real guard.
                 Action::make('analyze')
                     ->label('Analyze')
                     ->icon('heroicon-o-camera')
                     ->color('primary')
-                    ->visible(fn (PersonPhoto $record): bool => ! $record->is_analyzed)
+                    ->visible(fn (PersonPhoto $record): bool => ! $record->is_analyzed && static::collaborationTierPermits('update'))
                     ->action(function (PersonPhoto $record): void {
+                        abort_unless(static::collaborationTierPermits('update'), 403);
+
                         $facialRecognitionService = app(FacialRecognitionService::class);
                         $result = $facialRecognitionService->analyzePhoto($record);
 

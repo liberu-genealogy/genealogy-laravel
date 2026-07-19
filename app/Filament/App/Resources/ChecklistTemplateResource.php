@@ -274,21 +274,11 @@ class ChecklistTemplateResource extends AppResource
                     EditAction::make(),
                     Action::make('duplicate')
                         ->icon('heroicon-o-document-duplicate')
-                        ->action(function (ChecklistTemplate $record) {
-                            $newTemplate = $record->replicate();
-                            $newTemplate->name = $record->name.' (Copy)';
-                            $newTemplate->is_default = false;
-                            $newTemplate->created_by = auth()->id();
-                            $newTemplate->save();
-
-                            foreach ($record->templateItems as $item) {
-                                $newItem = $item->replicate();
-                                $newItem->checklist_template_id = $newTemplate->id;
-                                $newItem->save();
-                            }
-
-                            return redirect()->route('filament.app.resources.checklist-templates.edit', $newTemplate);
-                        })
+                        ->visible(fn (): bool => static::collaborationTierPermits('create'))
+                        ->action(fn (ChecklistTemplate $record) => redirect()->route(
+                            'filament.app.resources.checklist-templates.edit',
+                            static::duplicateTemplate($record),
+                        ))
                         ->requiresConfirmation()
                         ->modalHeading('Duplicate Template')
                         ->modalDescription('This will create a copy of this template that you can modify.'),
@@ -305,6 +295,31 @@ class ChecklistTemplateResource extends AppResource
                 ]),
             ])
             ->defaultSort('created_at', 'desc');
+    }
+
+    /**
+     * The guarded body as a method so the tier check is testable — Filament
+     * does not enforce ->visible() on invocation, so abort_unless is the real
+     * guard. Duplicating creates a new template and its items, so it is gated at
+     * the create tier.
+     */
+    public static function duplicateTemplate(ChecklistTemplate $record): ChecklistTemplate
+    {
+        abort_unless(static::collaborationTierPermits('create'), 403);
+
+        $newTemplate = $record->replicate();
+        $newTemplate->name = $record->name.' (Copy)';
+        $newTemplate->is_default = false;
+        $newTemplate->created_by = auth()->id();
+        $newTemplate->save();
+
+        foreach ($record->templateItems as $item) {
+            $newItem = $item->replicate();
+            $newItem->checklist_template_id = $newTemplate->id;
+            $newItem->save();
+        }
+
+        return $newTemplate;
     }
 
     #[\Override]

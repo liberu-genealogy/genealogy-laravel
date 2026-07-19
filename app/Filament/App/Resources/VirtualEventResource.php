@@ -285,25 +285,8 @@ class VirtualEventResource extends AppResource
                 Action::make('create_meeting')
                     ->icon('heroicon-o-plus-circle')
                     ->color('primary')
-                    ->action(function (VirtualEvent $record): void {
-                        try {
-                            $service = app(VideoConferencingService::class);
-                            $service->createMeeting($record);
-
-                            Notification::make()
-                                ->title('Meeting Created')
-                                ->body('Video conference meeting has been created successfully.')
-                                ->success()
-                                ->send();
-                        } catch (Exception $e) {
-                            Notification::make()
-                                ->title('Meeting Creation Failed')
-                                ->body($e->getMessage())
-                                ->danger()
-                                ->send();
-                        }
-                    })
-                    ->visible(fn (VirtualEvent $record): bool => empty($record->meeting_id) && $record->platform !== 'custom'),
+                    ->action(fn (VirtualEvent $record) => static::createMeeting($record))
+                    ->visible(fn (VirtualEvent $record): bool => empty($record->meeting_id) && $record->platform !== 'custom' && static::collaborationTierPermits('update')),
                 EditAction::make(),
                 DeleteAction::make(),
             ])
@@ -313,6 +296,33 @@ class VirtualEventResource extends AppResource
                 ]),
             ])
             ->defaultSort('start_time', 'desc');
+    }
+
+    /**
+     * The guarded body as a method so the tier check is testable — Filament
+     * does not enforce ->visible() on invocation, so abort_unless is the real
+     * guard. Provisioning a meeting stamps the event and creates an external
+     * resource, a write on the event gated as an edit.
+     */
+    public static function createMeeting(VirtualEvent $record): void
+    {
+        abort_unless(static::collaborationTierPermits('update'), 403);
+
+        try {
+            app(VideoConferencingService::class)->createMeeting($record);
+
+            Notification::make()
+                ->title('Meeting Created')
+                ->body('Video conference meeting has been created successfully.')
+                ->success()
+                ->send();
+        } catch (Exception $e) {
+            Notification::make()
+                ->title('Meeting Creation Failed')
+                ->body($e->getMessage())
+                ->danger()
+                ->send();
+        }
     }
 
     #[\Override]

@@ -14,6 +14,7 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 
 class SmartMatchResource extends AppResource
@@ -153,23 +154,23 @@ class SmartMatchResource extends AppResource
                     ->label('Accept')
                     ->icon('heroicon-o-check')
                     ->color('success')
-                    ->action(fn (SmartMatch $record) => $record->update(['status' => 'accepted', 'reviewed_at' => now()]))
-                    ->visible(fn (SmartMatch $record): bool => $record->isPending()),
+                    ->action(fn (SmartMatch $record) => static::reviewMatch($record, 'accepted'))
+                    ->visible(fn (SmartMatch $record): bool => $record->isPending() && static::collaborationTierPermits('update')),
                 Action::make('reject')
                     ->label('Reject')
                     ->icon('heroicon-o-x-mark')
                     ->color('danger')
-                    ->action(fn (SmartMatch $record) => $record->update(['status' => 'rejected', 'reviewed_at' => now()]))
-                    ->visible(fn (SmartMatch $record): bool => $record->isPending()),
+                    ->action(fn (SmartMatch $record) => static::reviewMatch($record, 'rejected'))
+                    ->visible(fn (SmartMatch $record): bool => $record->isPending() && static::collaborationTierPermits('update')),
             ])
             ->headerActions([
                 Action::make('find_matches')
                     ->label('Find New Matches')
                     ->icon('heroicon-o-magnifying-glass')
                     ->color('primary')
+                    ->visible(fn (): bool => static::collaborationTierPermits('create'))
                     ->action(function () {
-                        $service = app(SmartMatchingService::class);
-                        $matches = $service->findSmartMatches(Auth::user());
+                        $matches = static::runMatchSearch();
 
                         Notification::make()
                             ->title('Smart Matching Complete')
@@ -186,6 +187,40 @@ class SmartMatchResource extends AppResource
             ])
             ->toolbarActions([])
             ->modifyQueryUsing(fn (Builder $query) => $query->where('user_id', Auth::id()));
+    }
+
+    /**
+     * The guarded action bodies live as methods, not inline closures, so the
+     * tier guard can be tested directly.
+     *
+     * This matters because Filament's ->visible() is not enforced when an
+     * action is invoked: mountAction checks isDisabled(), never isVisible(), so
+     * a crafted Livewire request reaches a hidden action's body. The
+     * abort_unless here is the real server-side guard, and inline it could only
+     * be reached through the full table-action machinery, which refuses hidden
+     * actions in tests — leaving the guard untestable and, as an earlier review
+     * found, untested. As a method it is called directly by
+     * ActionClosureTierEnforcementTest.
+     *
+     * Reviewing writes the match's status — an edit, gated at the update tier.
+     */
+    public static function reviewMatch(SmartMatch $record, string $status): void
+    {
+        abort_unless(static::collaborationTierPermits('update'), 403);
+
+        $record->update(['status' => $status, 'reviewed_at' => now()]);
+    }
+
+    /**
+     * Running a search writes SmartMatch records, so it is a create.
+     *
+     * @return Collection<int, SmartMatch>
+     */
+    public static function runMatchSearch(): Collection
+    {
+        abort_unless(static::collaborationTierPermits('create'), 403);
+
+        return app(SmartMatchingService::class)->findSmartMatches(Auth::user());
     }
 
     #[\Override]

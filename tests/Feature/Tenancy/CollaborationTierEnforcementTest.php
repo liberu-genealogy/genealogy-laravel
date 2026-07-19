@@ -97,16 +97,53 @@ class CollaborationTierEnforcementTest extends TestCase
     }
 
     /**
-     * Console commands and queued jobs have no tenant. Authorisation must not
-     * silently allow everything there.
+     * With no team to resolve — no panel tenant and no current team — nothing
+     * is authorised. This is the console-command and queued-job case, and the
+     * unauthenticated case, both of which must fail closed rather than fall
+     * through to allow.
+     *
+     * Note it is the absence of a *team*, not of a panel tenant, that denies.
+     * The tier resolves from the panel tenant where there is one and the user's
+     * current team otherwise, so that the Livewire components on plain web
+     * routes — which have a user and a current team but no panel tenant —
+     * authorise against the same team their records are scoped to. A user with
+     * a current team is therefore authorised even with no panel tenant set;
+     * only genuinely having no team denies.
      */
-    public function test_without_a_tenant_nothing_is_authorised(): void
+    public function test_with_no_team_at_all_nothing_is_authorised(): void
     {
-        $user = User::factory()->withPersonalTeam()->create();
+        $user = User::factory()->create();
+        $this->assertNull($user->currentTeam, 'Fixture is degenerate: the user has a team.');
+
         $this->actingAs($user);
         Filament::setTenant(null, isQuiet: true);
 
+        $this->assertFalse(PersonResource::canCreate(), 'A user with no team could create.');
+    }
+
+    public function test_an_unauthenticated_request_is_refused(): void
+    {
+        Filament::setTenant(null, isQuiet: true);
+
         $this->assertFalse(PersonResource::canCreate());
+    }
+
+    /**
+     * The web-route case the fallback exists for: a user with a current team
+     * and no panel tenant is authorised by that team's tier.
+     */
+    public function test_a_current_team_authorises_without_a_panel_tenant(): void
+    {
+        $owner = User::factory()->withPersonalTeam()->create();
+        $member = User::factory()->withPersonalTeam()->create();
+        $owner->currentTeam->users()->attach($member, ['role' => 'viewer']);
+        $member->forceFill(['current_team_id' => $owner->current_team_id])->save();
+
+        $this->actingAs($member->fresh());
+        Filament::setTenant(null, isQuiet: true);
+
+        $this->assertTrue(PersonResource::canViewAny(), 'A viewer with a current team could not read off-panel.');
+        $this->assertFalse(PersonResource::canDelete($this->person()), 'A viewer could delete off-panel.');
     }
 
     /**

@@ -2,14 +2,30 @@
 
 namespace App\Livewire;
 
+use App\Concerns\AuthorizesCollaborationTier;
 use App\Models\Person;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Livewire\Attributes\On;
 use Livewire\Component;
 
+/**
+ * Builds and edits the people a team records.
+ *
+ * These methods write the team's genealogy — creating, moving and deleting
+ * Person records — and they are Livewire methods on a plain web route, so they
+ * are addressable over the wire whether or not the interface offers them and
+ * nothing upstream authorises them. Each therefore guards itself against the
+ * collaboration tier the user holds in their current team: a viewer reads, a
+ * contributor adds and edits, an editor deletes.
+ *
+ * There is no panel tenant on this route, so the tier resolves against the
+ * user's current team — the same team BelongsToTenant scopes the records to.
+ */
 final class FamilyTreeBuilder extends Component
 {
+    use AuthorizesCollaborationTier;
+
     public array $treeData = [];
 
     public ?Person $selectedPerson = null;
@@ -44,6 +60,8 @@ final class FamilyTreeBuilder extends Component
     #[On('personMoved')]
     public function updatePersonPosition(int $personId, float $x, float $y): void
     {
+        $this->authorizeCollaborationTier('update');
+
         $person = Person::find($personId);
 
         if (! $person) {
@@ -63,6 +81,8 @@ final class FamilyTreeBuilder extends Component
     #[On('personAdded')]
     public function addPerson(array $data): void
     {
+        $this->authorizeCollaborationTier('create');
+
         // Validate required fields
         if (empty($data['givn']) && empty($data['surn'])) {
             $this->dispatch('error', message: 'Either given name or surname is required');
@@ -95,6 +115,8 @@ final class FamilyTreeBuilder extends Component
     #[On('personRemoved')]
     public function removePerson(int $personId): void
     {
+        $this->authorizeCollaborationTier('delete');
+
         $person = Person::find($personId);
 
         if (! $person) {

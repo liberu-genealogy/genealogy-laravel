@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Filament\App\Resources;
 
-use App\Filament\App\Concerns\AuthorizesCollaborationTier;
+use App\Concerns\AuthorizesCollaborationTier;
 use Filament\Resources\RelationManagers\RelationManager;
 use Illuminate\Auth\Access\Response;
 use Illuminate\Database\Eloquent\Model;
