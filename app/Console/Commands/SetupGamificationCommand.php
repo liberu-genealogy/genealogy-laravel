@@ -7,6 +7,12 @@ namespace App\Console\Commands;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Artisan;
 
+/**
+ * Seeds gamification reference data (achievements, levels) — global, no tenant.
+ *
+ * It touches no team-scoped records, so it establishes no team. Documented here
+ * so the absence is a decision, not an oversight.
+ */
 class SetupGamificationCommand extends Command
 {
     /**

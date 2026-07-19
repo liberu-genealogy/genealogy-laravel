@@ -20,6 +20,7 @@ use Throwable;
 
 class ImportGedcom implements ShouldQueue
 {
+    use Concerns\EstablishesTeam;
     use Dispatchable;
     use InteractsWithQueue;
     use Queueable;
@@ -31,7 +32,29 @@ class ImportGedcom implements ShouldQueue
 
     public function __construct(protected User $user, protected string $filePath, public ?string $slug = null) {}
 
+    /**
+     * Runs as a member of the importing user's team, so the ImportJob row the
+     * import creates carries that team.
+     *
+     * The tree records were already stamped — the vendor parser takes an
+     * explicit team_id below — but the ImportJob row itself was created in a
+     * worker with no authenticated user, so it landed team_id null and was
+     * invisible in the panel. Establishing the team makes its creating hook
+     * stamp it. If the user somehow has no current team the import still runs,
+     * unscoped, rather than failing.
+     */
     public function handle(): int
+    {
+        $team = $this->user->currentTeam;
+
+        if ($team === null) {
+            return $this->runImport();
+        }
+
+        return $this->asTeamMember($this->user, (int) $team->getKey(), fn (): int => $this->runImport());
+    }
+
+    private function runImport(): int
     {
         Log::info('ImportGedcom job started', [
             'file_path' => $this->filePath,

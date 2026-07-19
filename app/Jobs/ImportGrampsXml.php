@@ -20,6 +20,7 @@ use Throwable;
 
 class ImportGrampsXml implements ShouldQueue
 {
+    use Concerns\EstablishesTeam;
     use Dispatchable;
     use InteractsWithQueue;
     use Queueable;
@@ -31,7 +32,22 @@ class ImportGrampsXml implements ShouldQueue
 
     public function __construct(protected User $user, protected string $filePath, public ?string $slug = null) {}
 
+    /**
+     * Runs as a member of the importing user's team, so the ImportJob row lands
+     * with that team rather than null. Same shape as ImportGedcom.
+     */
     public function handle(): int
+    {
+        $team = $this->user->currentTeam;
+
+        if ($team === null) {
+            return $this->runImport();
+        }
+
+        return $this->asTeamMember($this->user, (int) $team->getKey(), fn (): int => $this->runImport());
+    }
+
+    private function runImport(): int
     {
         // Find or create the ImportJob record
         $slug = $this->slug ?? (string) Str::uuid();
