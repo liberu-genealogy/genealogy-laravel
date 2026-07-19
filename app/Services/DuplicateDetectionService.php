@@ -21,7 +21,14 @@ class DuplicateDetectionService
     {
         $created = collect();
 
-        $persons = Person::select(['id', 'givn', 'surn', 'name', 'email', 'phone', 'birthday'])->get();
+        // team_id is selected because duplicate detection must stay within a
+        // team. This scan runs as a scheduled job with no authenticated user,
+        // so the tenant scope is inactive and every team's people are loaded
+        // together — which is correct for one global pass, but means a pair
+        // must be rejected unless both people belong to the same team.
+        // Otherwise the scan would surface one team's person as a "duplicate" of
+        // another's: a cross-tenant disclosure, not merely an unstamped row.
+        $persons = Person::select(['id', 'givn', 'surn', 'name', 'email', 'phone', 'birthday', 'team_id'])->get();
 
         // Index persons by email and phone for cheap exact matches
         $emailIndex = $persons->filter(fn ($p) => $p->email)->groupBy(fn ($p) => Str::lower($p->email));
@@ -34,7 +41,7 @@ class DuplicateDetectionService
             if ($primary->email) {
                 $email = Str::lower($primary->email);
                 foreach ($emailIndex->get($email, []) as $p) {
-                    if ($p->id === $primary->id) {
+                    if ($p->id === $primary->id || empty($p->team_id) || $p->team_id !== $primary->team_id) {
                         continue;
                     }
                     $score = 0.95;
@@ -46,7 +53,7 @@ class DuplicateDetectionService
             if ($primary->phone) {
                 $phone = preg_replace('/\D+/', '', (string) $primary->phone);
                 foreach ($phoneIndex->get($phone, []) as $p) {
-                    if ($p->id === $primary->id) {
+                    if ($p->id === $primary->id || empty($p->team_id) || $p->team_id !== $primary->team_id) {
                         continue;
                     }
                     $score = 0.93;
@@ -56,7 +63,7 @@ class DuplicateDetectionService
 
             // naive pass comparing birthdays and name similarity (O(n^2) but acceptable for small/medium datasets)
             foreach ($persons as $other) {
-                if ($other->id === $primary->id) {
+                if ($other->id === $primary->id || empty($other->team_id) || $other->team_id !== $primary->team_id) {
                     continue;
                 }
 
@@ -97,6 +104,12 @@ class DuplicateDetectionService
                     'primary_person_id' => $primaryKey,
                     'duplicate_person_id' => $duplicateKey,
                 ]);
+
+                // Both people share a non-null team by the guards above (a null
+                // team is skipped rather than paired with another null), so the
+                // match belongs to that team. Set explicitly — the job is
+                // unauthenticated, so the tenant hook would leave it null.
+                $record->team_id = $primary->team_id;
 
                 // If new or confidence improved, store
                 $existing = $record->exists ? (float) $record->confidence_score : 0.0;

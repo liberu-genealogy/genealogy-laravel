@@ -90,6 +90,12 @@ class DnaMatching implements ShouldQueue
                 // Create DNA matching record for current user
                 $dm = new DM;
                 $dm->user_id = $user->id;
+                // Stamped per row from the owning user, not from an established
+                // tenant: this job reads DNA kits ACROSS every team on purpose —
+                // that is what matching is — so it must not run scoped. But the
+                // record it writes belongs to one team, the owner's, and in a
+                // worker with no auth the creating hook would leave it null.
+                $dm->team_id = $user->current_team_id;
                 $dm->match_id = $dna->user_id;
                 $dm->match_name = $match_name;
                 // ponytail: no plot/CSV output is generated yet (real php-dna export is TODO C7),
@@ -114,10 +120,14 @@ class DnaMatching implements ShouldQueue
 
                 // Create reciprocal record for the matched user (if different)
                 if ($dna->user_id !== $user->id) {
+                    $matchedUser = User::find($dna->user_id);
                     $current_name = User::find($user->id)?->name ?? 'Unknown';
 
                     $dm2 = new DM;
                     $dm2->user_id = $dna->user_id;
+                    // The reciprocal record belongs to the matched kit's owner,
+                    // so it carries THEIR team, not this user's.
+                    $dm2->team_id = $matchedUser?->current_team_id;
                     $dm2->match_id = $user->id;
                     $dm2->match_name = $current_name;
                     // ponytail: same as above - no output files generated yet (TODO C7).

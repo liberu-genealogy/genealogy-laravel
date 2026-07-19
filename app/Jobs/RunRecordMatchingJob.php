@@ -79,7 +79,8 @@ class RunRecordMatchingJob implements ShouldQueue
                                 $person->id,
                                 new ReflectionClass($provider)->getShortName(),
                                 $candidate,
-                                $score
+                                $score,
+                                $person->team_id,
                             );
                             $totalMatches++;
 

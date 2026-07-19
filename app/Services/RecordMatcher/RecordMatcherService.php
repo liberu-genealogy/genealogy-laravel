@@ -132,8 +132,12 @@ class RecordMatcherService
     /**
      * Persist suggestions into DB (upsert).
      */
-    public function persistSuggestion(int $localPersonId, string $provider, array $candidate, float $confidence): AISuggestedMatch
+    public function persistSuggestion(int $localPersonId, string $provider, array $candidate, float $confidence, ?int $teamId = null): AISuggestedMatch
     {
+        // team_id is passed in, not left to the tenant hook. Record matching is
+        // a scheduled job that reads people across every team by design, so it
+        // runs unauthenticated and the hook would stamp null. The suggestion
+        // belongs to the team of the person it is about; the caller passes that.
         return AISuggestedMatch::updateOrCreate(
             [
                 'provider' => $provider,
@@ -144,6 +148,7 @@ class RecordMatcherService
                 'candidate_data' => $candidate,
                 'confidence' => $confidence,
                 'status' => 'pending',
+                'team_id' => $teamId,
             ]
         );
     }

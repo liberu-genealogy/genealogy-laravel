@@ -7,6 +7,12 @@ use Exception;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\File;
 
+/**
+ * Scaffolds module boilerplate on disk — global, no tenant.
+ *
+ * A developer tool that writes files, not team-scoped records, so it needs no
+ * tenant context.
+ */
 class ModuleCommand extends Command
 {
     /**

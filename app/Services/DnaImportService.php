@@ -81,9 +81,17 @@ class DnaImportService
         $varName = $this->generateUniqueVarName();
 
         // Create DNA record
+        // Resolved up front: the kit needs the owner's team, and the dispatch
+        // below needs the user anyway. In a queued or CLI import there is no
+        // authenticated user, so the tenant hook would leave the kit team_id
+        // null — and this service is the shared path for the web import too, so
+        // stamping here fixes every caller.
+        $user = User::find($userId);
+
         $dna = new Dna;
         $dna->name = 'DNA Kit for user '.$userId.' ('.basename($filePath).')';
         $dna->user_id = $userId;
+        $dna->team_id = $user?->current_team_id;
         $dna->variable_name = $varName;
         $dna->file_name = $filePath;
         if ($consentGiven) {
@@ -94,7 +102,6 @@ class DnaImportService
 
         // Dispatch matching only for a consented kit — never match DNA without consent.
         if ($autoMatch && $dna->hasConsent()) {
-            $user = User::find($userId);
             if ($user) {
                 DnaMatching::dispatch($user, $varName, $filePath);
                 Log::info("DNA matching job dispatched for kit {$varName}");
