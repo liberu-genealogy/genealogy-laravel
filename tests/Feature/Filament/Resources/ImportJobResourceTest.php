@@ -5,6 +5,7 @@ namespace Tests\Feature\Filament\Resources;
 use App\Filament\App\Resources\ImportJobResource;
 use App\Models\ImportJob;
 use App\Models\User;
+use Filament\Facades\Filament;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Auth;
 use Tests\TestCase;
@@ -47,9 +48,18 @@ class ImportJobResourceTest extends TestCase
         $this->assertFalse(ImportJobResource::canCreate());
     }
 
-    public function test_can_view_any_returns_true_for_authenticated_user(): void
+    /**
+     * Being authenticated used to be the whole test, because the base resource
+     * answered every authorisation question with auth()->check(). It now asks
+     * whether the user's collaboration tier in the team being viewed carries
+     * read, so the fixture needs a team and a tenant — see
+     * CollaborationTierEnforcementTest for the tiers themselves.
+     */
+    public function test_can_view_any_returns_true_for_a_member_of_the_team_being_viewed(): void
     {
-        Auth::login($this->user);
+        $user = User::factory()->withPersonalTeam()->create();
+        Auth::login($user);
+        Filament::setTenant($user->currentTeam, isQuiet: true);
 
         $this->assertTrue(ImportJobResource::canViewAny());
     }
@@ -57,6 +67,19 @@ class ImportJobResourceTest extends TestCase
     public function test_can_view_any_returns_false_when_unauthenticated(): void
     {
         Auth::logout();
+
+        $this->assertFalse(ImportJobResource::canViewAny());
+    }
+
+    /**
+     * Authenticated is no longer sufficient. Without a team in view there is
+     * nothing to resolve a tier against, which is the state console commands
+     * and queued jobs are in.
+     */
+    public function test_can_view_any_returns_false_without_a_team_in_view(): void
+    {
+        Auth::login($this->user);
+        Filament::setTenant(null, isQuiet: true);
 
         $this->assertFalse(ImportJobResource::canViewAny());
     }
