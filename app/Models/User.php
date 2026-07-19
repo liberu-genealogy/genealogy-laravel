@@ -14,17 +14,20 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Storage;
 use JoelButcher\Socialstream\HasConnectedAccounts;
 use JoelButcher\Socialstream\SetsProfilePhotoFromUrl;
-use Laravel\Cashier\Billable;
 // use Laravel\Jetstream\HasProfilePhoto;
+use Laravel\Cashier\Billable;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasTeams;
 use Laravel\Sanctum\HasApiTokens;
+use Spatie\Permission\PermissionRegistrar;
+use Spatie\Permission\Support\Config;
 use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable implements FilamentUser, HasDefaultTenant, HasTenants
@@ -33,11 +36,11 @@ class User extends Authenticatable implements FilamentUser, HasDefaultTenant, Ha
     use HasApiTokens;
     use HasConnectedAccounts;
     use HasFactory;
-
     use HasRoles, HasTeams {
         HasTeams::teams insteadof HasRoles;
         HasRoles::teams as roleTeams;
     }
+
     //  use HasProfilePhoto {
     //    HasProfilePhoto::profilePhotoUrl as getPhotoUrl;
     //    }
@@ -190,14 +193,102 @@ class User extends Authenticatable implements FilamentUser, HasDefaultTenant, Ha
             return true;
         }
 
-        if ($this->hasRole('super_admin')) {
+        if ($this->hasGlobalRole('super_admin')) {
             return true;
         }
 
         return match ($panel->getId()) {
-            'admin' => $this->hasRole('admin'),
+            'admin' => $this->hasGlobalRole('admin'),
             default => true,
         };
+    }
+
+    /**
+     * Roles held in the current team, plus every role defined without one.
+     *
+     * The permission library filters this relation by the current team on both
+     * sides — the grant and the role — so a team-less role stopped applying the
+     * moment its holder worked in a team other than the one the grant was
+     * written in. That is right for a role scoped to a team and wrong for a
+     * role that has none, and the admin panel is where it showed: gating the
+     * door on a team-less role let an administrator in, and then all 53
+     * policies behind it resolved through here, found nothing, and refused
+     * every page. A panel that renders its navigation and 403s on all of it is
+     * worse than one that turns you away.
+     *
+     * So a role with no team applies everywhere, which is the whole meaning of
+     * defining one without a team. A role with a team applies in that team,
+     * unchanged. Both sides are still checked for the scoped case, so a grant
+     * cannot carry a role into a team the role does not belong to.
+     *
+     * This is a deliberate override of the vendor relation rather than a
+     * mirror of it; if the package changes its team filtering, this needs
+     * revisiting. It is tested in AdminPanelAuthorizationTest.
+     */
+    public function roles(): MorphToMany
+    {
+        $relation = $this->morphToMany(
+            Config::roleModel(),
+            'model',
+            Config::modelHasRolesTable(),
+            Config::morphKey(),
+            app(PermissionRegistrar::class)->pivotRole,
+        );
+
+        if (! Config::teamsEnabled()) {
+            return $relation;
+        }
+
+        $teamKey = Config::teamForeignKey();
+        $roleTeam = Config::rolesTable().'.'.$teamKey;
+        $grantTeam = Config::modelHasRolesTable().'.'.$teamKey;
+        $currentTeam = getPermissionsTeamId();
+
+        return $relation->withPivot($teamKey)->where(
+            fn ($query) => $query
+                ->whereNull($roleTeam)
+                ->orWhere(
+                    fn ($scoped) => $scoped
+                        ->where($grantTeam, $currentTeam)
+                        ->where($roleTeam, $currentTeam)
+                )
+        );
+    }
+
+    /**
+     * Whether this user holds a role that is defined globally rather than
+     * within a single team.
+     *
+     * Both checks above used hasRole(), which since roles became team-scoped
+     * resolves against one team — the tenant in the URL, or the stored team
+     * where there is none. The admin panel has no tenancy, so it would have
+     * resolved against whichever team the user last worked in: a super admin
+     * would keep or lose the admin panel depending on which family's tree they
+     * had open. Nothing would have failed; the panel would just come and go.
+     *
+     * The safe reading of "global" here is a role whose *definition* has no
+     * team, not an assignment held in any team. The permission library pins
+     * every assignment to a team, so "holds admin somewhere" would let anyone
+     * who can create a role inside their own team mint one named super_admin
+     * and take the admin panel with it. A team member cannot create a
+     * team-less role — anything created from inside a panel inherits that
+     * panel's team — so only the seeder can produce one. That is the boundary
+     * being relied on, and it is the reason this is not simply hasRole() with
+     * the team filter removed.
+     *
+     * Shield's role management lives on the admin panel, so today there is no
+     * route by which an app-panel user could create a role at all. This does
+     * not depend on that staying true.
+     */
+    public function hasGlobalRole(string $name): bool
+    {
+        $roleModel = config('permission.models.role');
+
+        return $roleModel::query()
+            ->whereNull(config('permission.column_names.team_foreign_key', 'team_id'))
+            ->where('name', $name)
+            ->whereHas('users', fn ($query) => $query->whereKey($this->getKey()))
+            ->exists();
     }
 
     /**

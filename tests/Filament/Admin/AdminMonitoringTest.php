@@ -37,14 +37,24 @@ class AdminMonitoringTest extends TestCase
         $this->actingAs($user);
 
         // The admin panel is authorization-gated (User::canAccessPanel requires
-        // super_admin or admin); grant super_admin so the panel + every Shield
-        // resource policy (Gate::before short-circuit) allow the mount. Roles are
-        // global here (config/permission.php teams => false). Clear the permission
-        // cache after creating the role in-test so hasRole() sees it.
+        // super_admin or admin); grant super_admin so the panel allows the mount.
+        //
+        // This used to say the resource policies were satisfied by a Shield
+        // Gate::before short-circuit. They are not: that hook only exists when
+        // super_admin.define_via_gate is true, and it defaults to false and is
+        // not overridden here. The policies are satisfied by the explicit
+        // Gate::before below, which this test installs itself.
+        //
+        // Roles are team-scoped now, which this had to be updated for. The role
+        // is created team-less, as the seeder creates it — that is what the
+        // admin gate tests for. The grant of it still needs a team, so the
+        // user's own is named; without one the assignment writes a null into a
+        // primary key column and fails outright.
         $role = Role::firstOrCreate([
             'name' => 'super_admin',
             'guard_name' => 'web',
         ]);
+        app(PermissionRegistrar::class)->setPermissionsTeamId($user->current_team_id);
         $user->assignRole($role);
         app(PermissionRegistrar::class)->forgetCachedPermissions();
 
