@@ -23,7 +23,14 @@
         </div>
         <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-4">
             <div class="text-sm font-medium text-gray-500 dark:text-gray-400">Avg. Confidence</div>
-            <div class="mt-1 text-2xl font-semibold text-purple-600">{{ number_format($stats['avg_confidence'] ?? 0, 1) }}%</div>
+            {{-- Null means no transcription has a measured confidence — typically
+                 an install with no OCR provider configured. Rendering "0.0%" there
+                 would state an accuracy the software never measured. --}}
+            @if (($stats['avg_confidence'] ?? null) === null)
+                <div class="mt-1 text-2xl font-semibold text-gray-400" title="No transcription has a measured confidence score">&mdash;</div>
+            @else
+                <div class="mt-1 text-2xl font-semibold text-purple-600">{{ number_format($stats['avg_confidence'], 1) }}%</div>
+            @endif
         </div>
     </div>
 
@@ -179,7 +186,12 @@
                                     class="w-full h-auto"
                                 />
                             </div>
-                            @if($currentTranscription->getConfidenceScore())
+                            {{-- Compared against null, not truthiness: a genuinely
+                                 measured 0.0 is falsy, and hiding it would read as
+                                 "no score available" when it actually means the OCR
+                                 is certain the text is wrong. Absent and zero are
+                                 different claims. --}}
+                            @if($currentTranscription->getConfidenceScore() !== null)
                                 <div class="mt-2 text-sm text-gray-600 dark:text-gray-400">
                                     Confidence: {{ number_format($currentTranscription->getConfidenceScore() * 100, 1) }}%
                                 </div>
