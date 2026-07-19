@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Models\Dna;
+use App\Services\Dna\SegmentMatcher;
 use App\Services\DnaTriangulationService;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Log;
@@ -52,6 +53,24 @@ class TriangulateDnaCommand extends Command
 
     protected function handleOneToManyTriangulation(int $baseKitId, array $compareKits, float $minCm, bool $store): int
     {
+        // A threshold of zero asks for every pair regardless of shared DNA,
+        // which is not a triangulation. Note this is an input-sanity rule, not
+        // a correctness fix: pairs that were never compared are already
+        // excluded by the comparison-performed guard in the service, whatever
+        // the threshold.
+        //
+        // The floor is the segment matcher's minimum because a *non-zero* total
+        // is a sum of segments that each cleared it, so it cannot be less than
+        // 7 cM. (Zero itself is of course reported, and is the case this rule
+        // exists to reject.) Any threshold in (0, 7] therefore behaves
+        // identically to 7, and offering finer values implies a precision the
+        // pipeline does not have.
+        if ($minCm < SegmentMatcher::MIN_CM) {
+            $this->error('Minimum cM threshold must be at least '.SegmentMatcher::MIN_CM.' — below that every value behaves the same.');
+
+            return Command::FAILURE;
+        }
+
         $this->info("Starting one-to-many triangulation for kit ID: {$baseKitId}");
         $this->info("Minimum cM threshold: {$minCm}");
         $this->newLine();

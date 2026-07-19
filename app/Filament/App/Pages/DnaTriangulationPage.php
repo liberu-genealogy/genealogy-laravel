@@ -3,6 +3,7 @@
 namespace App\Filament\App\Pages;
 
 use App\Models\Dna;
+use App\Services\Dna\SegmentMatcher;
 use App\Services\DnaTriangulationService;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
@@ -73,10 +74,20 @@ class DnaTriangulationPage extends Page implements HasForms
                 TextInput::make('min_cm')
                     ->label('Minimum cM Threshold')
                     ->numeric()
+                    ->required()
                     ->default(20)
-                    ->minValue(0)
+                    // Zero asks for every pair regardless of shared DNA, which is
+                    // not a triangulation. An input-sanity rule, not a correctness
+                    // one — the service's comparison-performed guard already
+                    // excludes uncompared pairs at any threshold.
+                    //
+                    // The floor is the segment matcher's minimum because a
+                    // *non-zero* total is a sum of segments that each cleared it.
+                    // Zero is of course reportable; it is the value being
+                    // rejected. So anything in (0, 7] behaves identically to 7.
+                    ->minValue(SegmentMatcher::MIN_CM)
                     ->maxValue(500)
-                    ->helperText('Only show matches with at least this many shared centiMorgans'),
+                    ->helperText('Only show matches with at least this many shared centiMorgans (minimum '.SegmentMatcher::MIN_CM.')'),
             ])
             ->statePath('data');
     }
@@ -90,8 +101,12 @@ class DnaTriangulationPage extends Page implements HasForms
 
             $this->results = $triangulationService->triangulateOneAgainstMany(
                 $data['base_kit_id'],
-                $data['compare_kit_ids'] ?? null,
-                $data['min_cm'] ?? 20.0
+                // An empty multi-select yields [], not null, and [] means
+                // whereIn('id', []) — comparing against nothing at all. The
+                // field's own helper text promises the opposite, so normalise
+                // it here rather than leave the promise false.
+                filled($data['compare_kit_ids'] ?? null) ? $data['compare_kit_ids'] : null,
+                $data['min_cm']
             );
 
             // Store results in database
