@@ -35,8 +35,7 @@ class SourcesModule extends BaseModule
     #[\Override]
     protected function onUninstall(): void
     {
-        // Remove sources-related data
-        $this->removeSourcesTables();
+        // Module data is deliberately retained. See BaseModule::uninstall().
     }
 
     /**
@@ -79,13 +78,5 @@ class SourcesModule extends BaseModule
             '--class' => 'App\\Modules\\Sources\\Database\\Seeders\\SourcesSeeder',
             '--force' => true,
         ]);
-    }
-
-    /**
-     * Remove sources-related tables.
-     */
-    protected function removeSourcesTables(): void
-    {
-        // Careful implementation needed
     }
 }

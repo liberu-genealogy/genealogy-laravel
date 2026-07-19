@@ -34,8 +34,7 @@ class EventsModule extends BaseModule
     #[\Override]
     protected function onUninstall(): void
     {
-        // Remove events-related data
-        $this->removeEventsTables();
+        // Module data is deliberately retained. See BaseModule::uninstall().
     }
 
     /**
@@ -76,13 +75,5 @@ class EventsModule extends BaseModule
             '--class' => 'App\\Modules\\Events\\Database\\Seeders\\EventsSeeder',
             '--force' => true,
         ]);
-    }
-
-    /**
-     * Remove events-related tables.
-     */
-    protected function removeEventsTables(): void
-    {
-        // Careful implementation needed
     }
 }

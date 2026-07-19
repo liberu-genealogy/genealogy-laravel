@@ -34,8 +34,7 @@ class ImportModule extends BaseModule
     #[\Override]
     protected function onUninstall(): void
     {
-        // Remove import-related data
-        $this->removeImportTables();
+        // Module data is deliberately retained. See BaseModule::uninstall().
     }
 
     /**
@@ -67,13 +66,5 @@ class ImportModule extends BaseModule
             '--path' => 'app/Modules/Import/database/migrations',
             '--force' => true,
         ]);
-    }
-
-    /**
-     * Remove import-related tables.
-     */
-    protected function removeImportTables(): void
-    {
-        // Careful implementation needed
     }
 }

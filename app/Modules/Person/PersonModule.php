@@ -33,8 +33,7 @@ class PersonModule extends BaseModule
     #[\Override]
     protected function onUninstall(): void
     {
-        // Remove person-related data (with confirmation)
-        $this->removePersonTables();
+        // Module data is deliberately retained. See BaseModule::uninstall().
     }
 
     /**
@@ -73,14 +72,5 @@ class PersonModule extends BaseModule
             '--class' => 'App\\Modules\\Person\\Database\\Seeders\\PersonSeeder',
             '--force' => true,
         ]);
-    }
-
-    /**
-     * Remove person-related tables.
-     */
-    protected function removePersonTables(): void
-    {
-        // This would require careful implementation to avoid data loss
-        // Should include confirmation and backup mechanisms
     }
 }

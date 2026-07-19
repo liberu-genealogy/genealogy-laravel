@@ -33,8 +33,7 @@ class FamilyModule extends BaseModule
     #[\Override]
     protected function onUninstall(): void
     {
-        // Remove family-related data
-        $this->removeFamilyTables();
+        // Module data is deliberately retained. See BaseModule::uninstall().
     }
 
     /**
@@ -73,13 +72,5 @@ class FamilyModule extends BaseModule
             '--class' => 'App\\Modules\\Family\\Database\\Seeders\\FamilySeeder',
             '--force' => true,
         ]);
-    }
-
-    /**
-     * Remove family-related tables.
-     */
-    protected function removeFamilyTables(): void
-    {
-        // Careful implementation needed to avoid data loss
     }
 }

@@ -34,8 +34,7 @@ class AdminModule extends BaseModule
     #[\Override]
     protected function onUninstall(): void
     {
-        // Remove admin-related data
-        $this->removeAdminTables();
+        // Module data is deliberately retained. See BaseModule::uninstall().
     }
 
     /**
@@ -67,13 +66,5 @@ class AdminModule extends BaseModule
             '--path' => 'app/Modules/Admin/database/migrations',
             '--force' => true,
         ]);
-    }
-
-    /**
-     * Remove admin-related tables.
-     */
-    protected function removeAdminTables(): void
-    {
-        // Careful implementation needed
     }
 }

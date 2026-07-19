@@ -33,8 +33,7 @@ class DNAModule extends BaseModule
     #[\Override]
     protected function onUninstall(): void
     {
-        // Remove DNA-related data
-        $this->removeDNATables();
+        // Module data is deliberately retained. See BaseModule::uninstall().
     }
 
     /**
@@ -64,13 +63,5 @@ class DNAModule extends BaseModule
             '--path' => 'app/Modules/DNA/database/migrations',
             '--force' => true,
         ]);
-    }
-
-    /**
-     * Remove DNA-related tables.
-     */
-    protected function removeDNATables(): void
-    {
-        // Careful implementation needed
     }
 }

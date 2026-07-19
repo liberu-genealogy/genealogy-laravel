@@ -34,8 +34,7 @@ class PlacesModule extends BaseModule
     #[\Override]
     protected function onUninstall(): void
     {
-        // Remove places-related data
-        $this->removePlacesTables();
+        // Module data is deliberately retained. See BaseModule::uninstall().
     }
 
     /**
@@ -76,13 +75,5 @@ class PlacesModule extends BaseModule
             '--class' => 'App\\Modules\\Places\\Database\\Seeders\\PlacesSeeder',
             '--force' => true,
         ]);
-    }
-
-    /**
-     * Remove places-related tables.
-     */
-    protected function removePlacesTables(): void
-    {
-        // Careful implementation needed
     }
 }
