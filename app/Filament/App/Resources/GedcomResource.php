@@ -163,10 +163,15 @@ class GedcomResource extends AppResource
     public static function exportGrampsXml(): void
     {
         $user = auth()->user();
-        if (! $user) {
+        $tenant = Filament::getTenant();
+
+        // Same requirement as the GEDCOM export above: without a team the file
+        // has nowhere of its own to go, and nothing to scope its contents to.
+        if (! $user || ! $tenant) {
             return;
         }
+
         $fileName = now()->format('Y-m-d_His').'_family_tree.gramps';
-        ExportGrampsXml::dispatch($fileName, $user);
+        ExportGrampsXml::dispatch($fileName, $user, (int) $tenant->getKey());
     }
 }

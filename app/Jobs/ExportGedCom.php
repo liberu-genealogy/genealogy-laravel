@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Jobs;
 
+use App\Jobs\Concerns\ExportsForTeam;
 use App\Models\Family;
 use App\Models\Person;
 use App\Models\User;
@@ -13,14 +14,13 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Throwable;
 
 final class ExportGedCom implements ShouldQueue
 {
-    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
+    use Dispatchable, ExportsForTeam, InteractsWithQueue, Queueable, SerializesModels;
 
     public function __construct(
         private readonly string $file,
@@ -56,26 +56,14 @@ final class ExportGedCom implements ShouldQueue
     public function handle(): void
     {
         try {
-            $previous = Auth::user();
-
-            Auth::login($this->exportingUser());
-
-            try {
+            $content = $this->asTeamMember($this->user, $this->teamId, function (): string {
                 $people = Person::count();
                 $families = Family::count();
 
                 Log::info("Exporting {$people} people and {$families} families for team {$this->teamId}.");
 
-                $content = (new GedcomService)->generateGedcomContent();
-            } finally {
-                // A worker serves many jobs in one process; leaving this set
-                // would scope the next job to whoever ran this one.
-                Auth::logout();
-
-                if ($previous) {
-                    Auth::login($previous);
-                }
-            }
+                return (new GedcomService)->generateGedcomContent();
+            });
 
             Storage::disk('private')->put($this->path(), $content);
 
@@ -86,36 +74,8 @@ final class ExportGedCom implements ShouldQueue
         }
     }
 
-    /**
-     * Where this team's exports live. Also the boundary the export page trusts,
-     * so it is defined here rather than assembled at each call site.
-     */
-    public static function directoryFor(int $teamId): string
-    {
-        return "exports/{$teamId}";
-    }
-
     private function path(): string
     {
         return self::directoryFor($this->teamId).'/'.$this->file;
-    }
-
-    /**
-     * The requesting user, with their current team pinned to the team being
-     * exported.
-     *
-     * The tenant scope reads the current team, and a user can belong to several
-     * — so exporting while they happen to be working elsewhere would otherwise
-     * produce a file full of the wrong family's records under this team's
-     * directory. The instance is not saved; only this job's copy is adjusted.
-     */
-    private function exportingUser(): User
-    {
-        $user = $this->user->replicate();
-        $user->id = $this->user->id;
-        $user->exists = true;
-        $user->current_team_id = $this->teamId;
-
-        return $user;
     }
 }
