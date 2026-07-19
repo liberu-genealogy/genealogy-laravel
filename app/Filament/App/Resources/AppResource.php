@@ -2,7 +2,7 @@
 
 namespace App\Filament\App\Resources;
 
-use Filament\Facades\Filament;
+use App\Filament\App\Concerns\AuthorizesCollaborationTier;
 use Filament\Resources\Resource;
 use Illuminate\Auth\Access\Response;
 use Illuminate\Database\Eloquent\Model;
@@ -34,79 +34,83 @@ use UnitEnum;
  * WHAT THIS DOES NOT COVER, because a base class for resources can only speak
  * for resources, and an unqualified claim here would be worse than none:
  *
- * - Relation managers. Filament routes their authorisation to the model's
- *   policy unless the manager names a related resource, and none of the six
- *   here do. A viewer who may open a record can still act on what hangs off it.
  * - Custom pages. Not resources, so nothing here applies; each needs its own
- *   check. TreePrivacy has one, since publishing a family tree is the most
- *   consequential thing in the application. The rest do not yet.
+ *   check. TreePrivacy has one, because publishing a family tree is the most
+ *   consequential thing in the application, and the GEDCOM export page is
+ *   confined to its own team's directory. The rest do not yet.
  * - Livewire components addressed directly, and bare ->action() closures on
  *   resources, which mutate records without consulting any of this.
  *
- * Those are older than this class's enforcement and are a separate ticket.
- * They are listed because "the app panel is authorised now" is the conclusion a
- * reader would otherwise draw, and it would be wrong.
+ * Relation managers used to head this list; AppRelationManager now answers for
+ * them, through the same shared trait, so the two cannot disagree about which
+ * actions write.
+ *
+ * The rest are older than this class's enforcement and remain open. They are
+ * listed because "the app panel is authorised now" is the conclusion a reader
+ * would otherwise draw, and it would still be wrong.
  */
 abstract class AppResource extends Resource
 {
+    use AuthorizesCollaborationTier;
+
     #[\Override]
     public static function canViewAny(): bool
     {
-        return static::tierPermits('read');
+        return static::collaborationTierPermits('read');
     }
 
     #[\Override]
     public static function canView(Model $record): bool
     {
-        return static::tierPermits('read');
+        return static::collaborationTierPermits('read');
     }
 
     #[\Override]
     public static function canCreate(): bool
     {
-        return static::tierPermits('create');
+        return static::collaborationTierPermits('create');
     }
 
     #[\Override]
     public static function canEdit(Model $record): bool
     {
-        return static::tierPermits('update');
+        return static::collaborationTierPermits('update');
     }
 
     #[\Override]
     public static function canDelete(Model $record): bool
     {
-        return static::tierPermits('delete');
+        return static::collaborationTierPermits('delete');
     }
 
     #[\Override]
     public static function canDeleteAny(): bool
     {
-        return static::tierPermits('delete');
+        return static::collaborationTierPermits('delete');
     }
 
     #[\Override]
     public static function canForceDelete(Model $record): bool
     {
-        return static::tierPermits('delete');
+        return static::collaborationTierPermits('delete');
     }
 
     #[\Override]
     public static function canForceDeleteAny(): bool
     {
-        return static::tierPermits('delete');
+        return static::collaborationTierPermits('delete');
     }
 
     #[\Override]
     public static function canRestore(Model $record): bool
     {
-        return static::tierPermits('update');
+        return static::collaborationTierPermits('update');
     }
 
     #[\Override]
     public static function canRestoreAny(): bool
     {
-        return static::tierPermits('update');
+        return static::collaborationTierPermits('update');
     }
 
     /**
@@ -117,65 +121,29 @@ abstract class AppResource extends Resource
     #[\Override]
     public static function canAccess(): bool
     {
-        return static::tierPermits('read');
+        return static::collaborationTierPermits('read');
     }
 
     /**
      * What Filament consults for actions that have no can* hook of their own.
      *
-     * Only reading is listed explicitly, and everything else needs a stated
-     * permission. An earlier version had it the other way round — a
-     * `default => 'read'` arm — which quietly handed a viewer every action
-     * nobody had thought to name. Filament passes replicate, reorder, attach,
-     * detach, associate and dissociate through here, so a viewer could
-     * duplicate records and pull relationships apart while holding read only.
-     *
-     * The default therefore denies. An unrecognised action is more likely to be
-     * one added later than one that is safe, and refusing it produces a visible
-     * failure and a line in this match, where allowing it produces neither.
+     * The mapping lives in the shared trait, because relation managers answer
+     * the same question through a different method and the two must not drift.
+     * An unrecognised action is refused there rather than treated as reading —
+     * an earlier version of this method did the latter and handed viewers
+     * replicate, reorder, attach, detach, associate and dissociate.
      */
     #[\Override]
     public static function getAuthorizationResponse(string|UnitEnum $action, ?Model $record = null): Response
     {
         $name = $action instanceof UnitEnum ? $action->name : (string) $action;
 
-        $permission = match ($name) {
-            'view', 'viewAny', 'read', 'access' => 'read',
-            'create', 'replicate' => 'create',
-            'update', 'edit', 'restore', 'restoreAny', 'reorder',
-            'attach', 'attachAny', 'detach', 'detachAny',
-            'associate', 'associateAny', 'dissociate', 'dissociateAny' => 'update',
-            'delete', 'deleteAny', 'forceDelete', 'forceDeleteAny' => 'delete',
-            default => null,
-        };
+        $permission = static::permissionForCollaborationAction($name);
 
         if ($permission === null) {
             return Response::deny();
         }
 
-        return static::tierPermits($permission) ? Response::allow() : Response::deny();
-    }
-
-    /**
-     * Whether the current user's tier in the team being viewed carries this
-     * permission.
-     *
-     * Denies when there is no authenticated user and when there is no tenant.
-     * The second is the one worth stating: console commands, queued jobs and
-     * any request outside the panel have no tenant, and a check that fell
-     * through to "allowed" there would leave all 44 resources open while every
-     * test still passed. Jetstream answers true for the team's owner, who holds
-     * no membership row and therefore no tier.
-     */
-    protected static function tierPermits(string $permission): bool
-    {
-        $user = auth()->user();
-        $team = Filament::getTenant();
-
-        if (! $user || ! $team) {
-            return false;
-        }
-
-        return $user->hasTeamPermission($team, $permission);
+        return static::collaborationTierPermits($permission) ? Response::allow() : Response::deny();
     }
 }

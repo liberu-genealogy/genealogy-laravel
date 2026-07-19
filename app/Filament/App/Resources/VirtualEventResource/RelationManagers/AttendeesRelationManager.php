@@ -2,6 +2,7 @@
 
 namespace App\Filament\App\Resources\VirtualEventResource\RelationManagers;
 
+use App\Filament\App\Resources\AppRelationManager;
 use App\Models\Person;
 use App\Models\User;
 use App\Models\VirtualEventAttendee;
@@ -19,7 +20,6 @@ use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Notifications\Notification;
-use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Schemas\Components\Grid;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
@@ -29,7 +29,7 @@ use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Filters\TernaryFilter;
 use Filament\Tables\Table;
 
-class AttendeesRelationManager extends RelationManager
+class AttendeesRelationManager extends AppRelationManager
 {
     #[\Override]
     protected static string $relationship = 'attendees';

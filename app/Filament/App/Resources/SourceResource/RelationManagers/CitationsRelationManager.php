@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Filament\App\Resources\SourceResource\RelationManagers;
 
+use App\Filament\App\Resources\AppRelationManager;
 use Filament\Actions\AssociateAction;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\CreateAction;
@@ -14,7 +15,6 @@ use Filament\Actions\DissociateBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
-use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Schemas\Schema;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
@@ -26,7 +26,7 @@ use Filament\Tables\Table;
  * Citation). There is no person_id/group-gid on the citations table, so
  * person↔citation cannot be expressed here; see EvidenceLinkingTest / report.
  */
-class CitationsRelationManager extends RelationManager
+class CitationsRelationManager extends AppRelationManager
 {
     #[\Override]
     protected static string $relationship = 'citations';

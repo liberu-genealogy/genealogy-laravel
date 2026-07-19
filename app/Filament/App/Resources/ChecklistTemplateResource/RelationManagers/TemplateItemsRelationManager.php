@@ -2,6 +2,7 @@
 
 namespace App\Filament\App\Resources\ChecklistTemplateResource\RelationManagers;
 
+use App\Filament\App\Resources\AppRelationManager;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\CreateAction;
 use Filament\Actions\DeleteAction;
@@ -12,7 +13,6 @@ use Filament\Forms\Components\TagsInput;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
-use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Schemas\Components\Grid;
 use Filament\Schemas\Schema;
 use Filament\Tables\Columns\IconColumn;
@@ -21,7 +21,7 @@ use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Filters\TernaryFilter;
 use Filament\Tables\Table;
 
-class TemplateItemsRelationManager extends RelationManager
+class TemplateItemsRelationManager extends AppRelationManager
 {
     #[\Override]
     protected static string $relationship = 'templateItems';
