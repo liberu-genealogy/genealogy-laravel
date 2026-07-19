@@ -131,29 +131,41 @@ class AppPanelProvider extends PanelProvider
                 NavigationGroup::make()
                     ->label('🏠 Dashboard'),
                 NavigationGroup::make()
-                    ->label('👥 Family Tree'),
+                    ->label('👥 Family Tree')
+                    ->collapsed(),
                 NavigationGroup::make()
-                    ->label('📊 Charts & Visualizations'),
+                    ->label('📊 Charts & Visualizations')
+                    ->collapsed(),
                 NavigationGroup::make()
-                    ->label('📄 Reports'),
+                    ->label('📄 Reports')
+                    ->collapsed(),
                 NavigationGroup::make()
-                    ->label('🔍 Research & Analysis'),
+                    ->label('🔍 Research & Analysis')
+                    ->collapsed(),
                 NavigationGroup::make()
-                    ->label('📋 Research Management'),
+                    ->label('📋 Research Management')
+                    ->collapsed(),
                 NavigationGroup::make()
-                    ->label('🧬 DNA & Genetics'),
+                    ->label('🧬 DNA & Genetics')
+                    ->collapsed(),
                 NavigationGroup::make()
-                    ->label('📁 Media & Documents'),
+                    ->label('📁 Media & Documents')
+                    ->collapsed(),
                 NavigationGroup::make()
-                    ->label('🛠️ Data Management'),
+                    ->label('🛠️ Data Management')
+                    ->collapsed(),
                 NavigationGroup::make()
-                    ->label('👥 Family Reunions'),
+                    ->label('👥 Family Reunions')
+                    ->collapsed(),
                 NavigationGroup::make()
-                    ->label('🎮 Gamification'),
+                    ->label('🎮 Gamification')
+                    ->collapsed(),
                 NavigationGroup::make()
-                    ->label('⚙️ System Settings'),
+                    ->label('⚙️ System Settings')
+                    ->collapsed(),
                 NavigationGroup::make()
-                    ->label('👤 Account & Settings'),
+                    ->label('👤 Account & Settings')
+                    ->collapsed(),
             ])
             ->userMenuItems([
                 Action::make('profile')
