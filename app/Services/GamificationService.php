@@ -173,6 +173,18 @@ class GamificationService
         array $metadata = []
     ): void {
         $currentProgress = $this->calculateCurrentProgress($user, $achievement);
+
+        // No logic behind this key. Report it to someone who can fix it rather
+        // than showing the researcher a goal that cannot move.
+        if ($currentProgress === null) {
+            Log::warning('Achievement has no progress logic and will not be tracked', [
+                'achievement_key' => $achievement->key,
+                'achievement_id' => $achievement->id,
+            ]);
+
+            return;
+        }
+
         $targetProgress = $this->getTargetProgress($achievement);
 
         if ($targetProgress > 0) {
@@ -197,19 +209,37 @@ class GamificationService
     /**
      * Calculate current progress for an achievement
      */
-    private function calculateCurrentProgress(User $user, Achievement $achievement): int
+    /**
+     * Progress for an achievement, or null when its key has no logic behind it.
+     *
+     * This used to fall through to 0, which is indistinguishable from a real
+     * "handled, nothing done yet". Combined with getTargetProgress()'s fallback
+     * of 1, an unrecognised key was presented to a researcher as a goal sitting
+     * permanently at 0 / 1 — a frozen numerator over an invented denominator,
+     * with nothing logged.
+     */
+    private function calculateCurrentProgress(User $user, Achievement $achievement): ?int
     {
         return match ($achievement->key) {
+            // These two were absent, so the requirement check knew how to award
+            // them while nothing knew how to track them: both sat at 0 / 1 for
+            // every researcher until the moment they unlocked.
+            'first_person_added' => $this->getPersonCount($user),
+            'first_family_created' => $this->getFamilyCount($user),
             'family_builder', 'genealogy_researcher', 'family_historian' => $this->getPersonCount($user),
             'family_connector', 'relationship_expert' => $this->getFamilyCount($user),
             'event_chronicler', 'life_documenter' => $this->getEventCount($user),
             'photo_archivist', 'memory_keeper' => $this->getPhotoCount($user),
-            'point_collector', 'high_achiever', 'legend' => $user->total_points,
-            'level_up', 'experienced_researcher' => $user->level,
+            // Cast: both columns are NOT NULL in the database, but Eloquent does
+            // not populate defaults on a freshly created model, so an unrefreshed
+            // instance reads null — which would be indistinguishable from a key
+            // that has no logic at all.
+            'point_collector', 'high_achiever', 'legend' => (int) $user->total_points,
+            'level_up', 'experienced_researcher' => (int) $user->level,
             'daily_researcher' => $this->getDailyActivityStreak($user),
             'dedicated_genealogist' => $this->getDailyActivityStreak($user),
             'achievement_hunter' => $user->achievements()->count(),
-            default => 0,
+            default => null,
         };
     }
 
