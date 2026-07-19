@@ -2,9 +2,8 @@
 
 namespace App\Console\Commands;
 
-use App\Jobs\DnaMatching;
 use App\Models\Dna;
-use App\Models\User;
+use App\Models\DnaMatching;
 use App\Services\AdvancedDnaMatchingService;
 use Exception;
 use Illuminate\Console\Command;
@@ -14,7 +13,7 @@ class ProcessLargeScaleDnaCommand extends Command
 {
     #[\Override]
     protected $signature = 'dna:process-large-scale
-                            {--batch-size=10 : Number of DNA kits to process in each batch}
+                            {--batch-size=10 : Kits between progress reports and GC sweeps}
                             {--memory-limit=512M : Memory limit for the process}
                             {--timeout=3600 : Timeout in seconds for each batch}';
 
@@ -40,65 +39,70 @@ class ProcessLargeScaleDnaCommand extends Command
         $this->info("Memory limit: {$memoryLimit}, Timeout: {$timeout}s");
 
         try {
-            // Get all DNA kits
-            $totalKits = Dna::count();
-            $this->info("Total DNA kits to process: {$totalKits}");
+            // Consent gate (SCOPE §20): only ever read kits whose owner agreed
+            // to matching. This used to chunk the whole table, so it compared
+            // the genetic data of people who had not consented — harmless only
+            // by the accident that it discarded everything it computed.
+            $totalKits = Dna::consented()->count();
+            $this->info("Consented DNA kits to process: {$totalKits}");
 
             if ($totalKits === 0) {
-                $this->warn('No DNA kits found to process.');
+                $this->warn('No consented DNA kits found to process.');
 
                 return Command::SUCCESS;
             }
 
-            // Process in chunks to manage memory
+            // Every consented kit's metadata — ids and file names only, so this
+            // is small even for large installations. The kit FILES are read and
+            // parsed per comparison inside the matching service, so memory is
+            // bounded by one pair at a time regardless of how many kits exist.
+            //
+            // That matters, because chunking used to bound the comparisons
+            // rather than the memory: kits were only ever compared against
+            // others in the same chunk of --batch-size. At the default of 10,
+            // 1000 kits had 0.9% of their pairs examined (4,500 of 499,500)
+            // while the command reported completion. Pairing now spans the
+            // whole consented set; --batch-size only controls how often
+            // progress is reported and garbage collected.
+            $kits = Dna::consented()->get()->values();
+            $kitCount = $kits->count();
+
             $processedCount = 0;
             $errorCount = 0;
+            $storedCount = 0;
             $startTime = microtime(true);
 
-            Dna::chunk($batchSize, function ($dnaKits) use (&$processedCount, &$errorCount): void {
-                $this->info("Processing batch of {$dnaKits->count()} DNA kits...");
-
-                try {
-                    // Convert to array format expected by the service
-                    $kitsArray = $dnaKits->map(fn ($kit) => [
-                        'id' => $kit->id,
-                        'variable_name' => $kit->variable_name,
-                        'file_name' => $kit->file_name,
-                        'user_id' => $kit->user_id,
-                    ])->toArray();
-
-                    // Process the batch
-                    $results = $this->advancedDnaMatchingService->processLargeScaleMatching($kitsArray);
-
-                    $this->info('Successfully processed batch. Generated '.count($results).' match results.');
-                    $processedCount += $dnaKits->count();
-
-                    // Store results in database
-                    $this->storeMatchResults($results);
-
-                } catch (Exception $e) {
-                    $this->error('Error processing batch: '.$e->getMessage());
-                    Log::error('Large-scale DNA processing batch error: '.$e->getMessage());
-                    $errorCount++;
+            for ($i = 0; $i < $kitCount; $i++) {
+                for ($j = $i + 1; $j < $kitCount; $j++) {
+                    try {
+                        $storedCount += $this->compareAndStore($kits[$i], $kits[$j]);
+                    } catch (Exception $e) {
+                        $this->error("Error comparing kits {$kits[$i]->id} and {$kits[$j]->id}: ".$e->getMessage());
+                        Log::error('Large-scale DNA processing pair error: '.$e->getMessage());
+                        $errorCount++;
+                    }
                 }
 
-                // Force garbage collection between batches
-                gc_collect_cycles();
+                $processedCount++;
 
-                // Show progress
-                $this->info("Progress: {$processedCount} kits processed");
-                $this->showMemoryUsage();
-            });
+                if ($processedCount % $batchSize === 0 || $processedCount === $kitCount) {
+                    gc_collect_cycles();
+                    $this->info("Progress: {$processedCount}/{$kitCount} kits, {$storedCount} match(es) stored");
+                    $this->showMemoryUsage();
+                }
+            }
 
             $endTime = microtime(true);
             $duration = round($endTime - $startTime, 2);
 
             $this->info('Large-scale DNA processing completed!');
-            $this->info("Total kits processed: {$processedCount}");
+            $this->info("Kits compared: {$processedCount} (all pairs)");
+            $this->info("Matches stored: {$storedCount}");
             $this->info("Errors encountered: {$errorCount}");
             $this->info("Total duration: {$duration} seconds");
 
-            return Command::SUCCESS;
+            // Report failure when any batch failed, so automation can see it.
+            return $errorCount > 0 ? Command::FAILURE : Command::SUCCESS;
 
         } catch (Exception $e) {
             $this->error('Large-scale DNA processing failed: '.$e->getMessage());
@@ -109,24 +113,70 @@ class ProcessLargeScaleDnaCommand extends Command
     }
 
     /**
-     * Store match results in the database
+     * Compare one pair and persist the result if a comparison actually ran.
+     *
+     * @return int 1 if a match row was written, 0 otherwise
      */
-    protected function storeMatchResults(array $results): void
+    protected function compareAndStore(Dna $kit1, Dna $kit2): int
     {
-        foreach ($results as $result) {
-            try {
-                // Here you would typically queue individual jobs to store results
-                // to avoid blocking the main process
-                DnaMatching::dispatch(
-                    User::find($result['kit1_id']),
-                    "kit_{$result['kit1_id']}",
-                    "file_{$result['kit1_id']}"
-                );
+        $match = $this->advancedDnaMatchingService->performAdvancedMatching(
+            $kit1->variable_name,
+            $kit1->file_name,
+            $kit2->variable_name,
+            $kit2->file_name,
+        );
 
-            } catch (Exception $e) {
-                Log::error('Failed to queue DNA matching job: '.$e->getMessage());
-            }
+        // A kit that could not be read yields a zeroed result. Recording it
+        // would claim a comparison that never happened.
+        if (! ($match['comparison_performed'] ?? false)) {
+            return 0;
         }
+
+        // dna_matchings has no unique constraint, so an unconditional create()
+        // would duplicate every row on a second run — and this is a command an
+        // operator is expected to run repeatedly. Keyed on the two kit files
+        // rather than just the two users, because a user may own several kits
+        // and a user-level key collapses them onto one row.
+        $this->storeDirection($kit1, $kit2, $match);
+
+        // The queued matching job writes a reciprocal row so the other party
+        // sees the match too. Do the same, or a cross-team match would be
+        // recorded only in the first kit owner's tenant.
+        if ($kit1->user_id !== $kit2->user_id) {
+            $this->storeDirection($kit2, $kit1, $match);
+        }
+
+        return 1;
+    }
+
+    /**
+     * @param  array<string, mixed>  $match
+     */
+    private function storeDirection(Dna $owner, Dna $other, array $match): void
+    {
+        DnaMatching::withoutGlobalScopes()->updateOrCreate(
+            [
+                'user_id' => $owner->user_id,
+                'match_id' => $other->user_id,
+                'file1' => $owner->file_name,
+                'file2' => $other->file_name,
+            ],
+            [
+                // Runs unauthenticated, so BelongsToTenant cannot assign the
+                // team; key the row to this kit owner's team, null if they have
+                // none (fail closed).
+                'team_id' => $owner->user?->current_team_id,
+                'match_name' => $other->user->name,
+                'total_shared_cm' => $match['total_cms'],
+                'largest_cm_segment' => $match['largest_cm'],
+                'confidence_level' => $match['confidence_level'] ?? null,
+                'predicted_relationship' => $match['predicted_relationship'] ?? null,
+                'shared_segments_count' => $match['shared_segments_count'] ?? null,
+                'match_quality_score' => $match['match_quality_score'] ?? null,
+                'chromosome_breakdown' => $match['chromosome_breakdown'] ?? null,
+                'analysis_date' => now(),
+            ]
+        );
     }
 
     /**

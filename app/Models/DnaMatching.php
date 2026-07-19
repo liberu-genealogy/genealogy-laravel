@@ -14,6 +14,13 @@ class DnaMatching extends Model
 
     #[\Override]
     protected $fillable = [
+        // Writers that run unauthenticated (console commands, queued jobs) must
+        // set this explicitly: BelongsToTenant's creating hook reads
+        // auth()->user() and bails when there is none. Without team_id here,
+        // mass assignment silently dropped it and every such row landed with a
+        // null tenant — invisible in the tenant-scoped App panel, visible only
+        // to Admin, which bypasses global scopes.
+        'team_id',
         'user_id',
         'file1',
         'file2',
