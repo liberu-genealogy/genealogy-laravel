@@ -2,7 +2,7 @@
 
 namespace App\Filament\App\Resources;
 
-use App\Filament\App\Concerns\AuthorizesCollaborationTier;
+use App\Concerns\AuthorizesCollaborationTier;
 use Filament\Resources\Resource;
 use Illuminate\Auth\Access\Response;
 use Illuminate\Database\Eloquent\Model;
@@ -31,23 +31,29 @@ use UnitEnum;
  * A resource needing different rules should override the specific method
  * rather than reinstating a blanket allow.
  *
+ * The tier check itself lives in AuthorizesCollaborationTier, shared with
+ * AppRelationManager and with the Livewire components that write records on
+ * plain web routes, so all three resolve the same team and the same rule.
+ *
  * WHAT THIS DOES NOT COVER, because a base class for resources can only speak
  * for resources, and an unqualified claim here would be worse than none:
  *
- * - Custom pages. Not resources, so nothing here applies; each needs its own
- *   check. TreePrivacy has one, because publishing a family tree is the most
- *   consequential thing in the application, and the GEDCOM export page is
- *   confined to its own team's directory. The rest do not yet.
- * - Livewire components addressed directly, and bare ->action() closures on
- *   resources, which mutate records without consulting any of this.
+ * - Some custom pages. Each is not a resource, so nothing here reaches it and
+ *   it needs its own check. The pages that write shared records have one now —
+ *   TreePrivacy gates publishing, the GEDCOM export is confined to its team's
+ *   directory. The pages that remain unguarded write the acting user's own
+ *   account (password, profile, tokens) or send messages between teammates,
+ *   neither of which a collaboration tier governs.
+ * - A few per-user surfaces with their own ownership rules rather than tiers —
+ *   the checklist manager and the event RSVP — tracked separately, including a
+ *   cross-user access gap in the former that is not a tier question.
  *
- * Relation managers used to head this list; AppRelationManager now answers for
- * them, through the same shared trait, so the two cannot disagree about which
- * actions write.
- *
- * The rest are older than this class's enforcement and remain open. They are
- * listed because "the app panel is authorised now" is the conclusion a reader
- * would otherwise draw, and it would still be wrong.
+ * Relation managers, the tree builder, the transcription component and the
+ * custom action closures — on resources and on the photos relation manager —
+ * used to head this list and are now covered, each guarding at the tier rather
+ * than trusting ->visible(), which Filament does not enforce on invocation.
+ * "The app panel is fully authorised" is still not quite the claim to make,
+ * which is why the exceptions above are named rather than waved at.
  */
 abstract class AppResource extends Resource
 {

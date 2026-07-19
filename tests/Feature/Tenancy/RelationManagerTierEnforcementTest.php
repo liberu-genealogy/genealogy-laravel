@@ -91,9 +91,16 @@ class RelationManagerTierEnforcementTest extends TestCase
         $this->assertTrue($manager->getAuthorizationResponse('delete')->allowed());
     }
 
-    public function test_without_a_tenant_nothing_is_authorised(): void
+    /**
+     * With no team to resolve — no panel tenant and no current team — nothing
+     * is authorised, the same fail-closed rule the resources hold. It is the
+     * absence of a team, not of a panel tenant, that denies; see
+     * CollaborationTierEnforcementTest for the full reasoning.
+     */
+    public function test_with_no_team_nothing_is_authorised(): void
     {
-        $user = User::factory()->withPersonalTeam()->create();
+        $user = User::factory()->create();
+        $this->assertNull($user->currentTeam);
         $this->actingAs($user);
         Filament::setTenant(null, isQuiet: true);
 

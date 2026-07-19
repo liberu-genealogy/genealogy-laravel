@@ -45,18 +45,29 @@ class AIRecordMatchResource extends AppResource
                 Action::make('confirm')
                     ->label('Confirm')
                     ->color('success')
-                    ->action(function (AISuggestedMatch $record): void {
-                        $record->update(['status' => 'confirmed']);
-                        Notification::make()->title('Match Confirmed')->success()->send();
-                    }),
+                    ->visible(fn (): bool => static::collaborationTierPermits('update'))
+                    ->action(fn (AISuggestedMatch $record) => static::reviewMatch($record, 'confirmed', 'Match Confirmed')),
                 Action::make('reject')
                     ->label('Reject')
                     ->color('danger')
-                    ->action(function (AISuggestedMatch $record): void {
-                        $record->update(['status' => 'rejected']);
-                        Notification::make()->title('Match Rejected')->success()->send();
-                    }),
+                    ->visible(fn (): bool => static::collaborationTierPermits('update'))
+                    ->action(fn (AISuggestedMatch $record) => static::reviewMatch($record, 'rejected', 'Match Rejected')),
             ]);
+    }
+
+    /**
+     * The guarded body as a method so the tier check is testable. Filament does
+     * not enforce ->visible() on invocation — mountAction checks only
+     * isDisabled() — so abort_unless is the real guard, and inline it cannot be
+     * reached by a test. Confirming or rejecting writes the suggestion's status,
+     * an edit gated at the update tier.
+     */
+    public static function reviewMatch(AISuggestedMatch $record, string $status, string $title): void
+    {
+        abort_unless(static::collaborationTierPermits('update'), 403);
+
+        $record->update(['status' => $status]);
+        Notification::make()->title($title)->success()->send();
     }
 
     #[\Override]

@@ -2,6 +2,7 @@
 
 namespace App\Livewire;
 
+use App\Concerns\AuthorizesCollaborationTier;
 use App\Models\DocumentTranscription;
 use App\Services\HandwritingRecognitionService;
 use Illuminate\Contracts\View\Factory;
@@ -11,8 +12,19 @@ use Livewire\Attributes\On;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 
+/**
+ * A team's document transcriptions, corrected by hand.
+ *
+ * Correcting a transcription and deleting one write the team's records, and
+ * this is a Livewire component on a plain web route, so the methods are
+ * reachable over the wire with nothing authorising them. Delete already checked
+ * that the record belongs to the current team, but not what the member may do
+ * to it — so a viewer could delete the team's transcriptions. Both writes now
+ * check the collaboration tier: correcting is an edit, deleting a delete.
+ */
 class DocumentTranscriptionComponent extends Component
 {
+    use AuthorizesCollaborationTier;
     use WithFileUploads;
 
     public $document;
@@ -60,6 +72,8 @@ class DocumentTranscriptionComponent extends Component
 
     public function uploadDocument(): void
     {
+        $this->authorizeCollaborationTier('create');
+
         $this->errorMessage = null;
         $this->successMessage = null;
 
@@ -119,6 +133,8 @@ class DocumentTranscriptionComponent extends Component
 
     public function saveCorrection(): void
     {
+        $this->authorizeCollaborationTier('update');
+
         $this->errorMessage = null;
         $this->successMessage = null;
 
@@ -149,6 +165,8 @@ class DocumentTranscriptionComponent extends Component
 
     public function deleteTranscription(int $transcriptionId): void
     {
+        $this->authorizeCollaborationTier('delete');
+
         try {
             $transcription = DocumentTranscription::find($transcriptionId);
 

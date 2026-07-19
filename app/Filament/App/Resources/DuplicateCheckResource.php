@@ -94,9 +94,9 @@ class DuplicateCheckResource extends AppResource
                     ->label('Run Duplicate Check')
                     ->icon('heroicon-o-play')
                     ->color('primary')
+                    ->visible(fn (): bool => static::collaborationTierPermits('create'))
                     ->action(function () {
-                        $service = app(DuplicateCheckerService::class);
-                        $service->runDuplicateCheck(Auth::user());
+                        static::runCheck();
 
                         return redirect()->back();
                     })
@@ -107,6 +107,19 @@ class DuplicateCheckResource extends AppResource
             ])
             ->toolbarActions([])
             ->modifyQueryUsing(fn (Builder $query) => $query->where('user_id', Auth::id()));
+    }
+
+    /**
+     * The guarded body as a method so the tier check is testable — Filament
+     * does not enforce ->visible() on invocation, so abort_unless is the real
+     * guard. Running a check writes DuplicateCheck records (through a service,
+     * which hides the write from a shallow read), so it is a create.
+     */
+    public static function runCheck(): void
+    {
+        abort_unless(static::collaborationTierPermits('create'), 403);
+
+        app(DuplicateCheckerService::class)->runDuplicateCheck(Auth::user());
     }
 
     #[\Override]
