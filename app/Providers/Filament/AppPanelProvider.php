@@ -238,8 +238,23 @@ class AppPanelProvider extends PanelProvider
             ])
             ->authMiddleware([
                 Authenticate::class,
+                // Stays in the auth group and resolves the tenant from the route
+                // itself, rather than being moved to the tenant group where it
+                // would run after IdentifyTenant.
+                //
+                // The reason is not Octane state: Spatie registers an
+                // OperationTerminated listener that nulls the permission team
+                // after every operation, so nothing survives between requests.
+                // An earlier version of this comment claimed otherwise.
+                //
+                // It is that tenant middleware does not run on the authenticated
+                // routes outside the tenant group — team creation, logout,
+                // profile, email verification — which would leave the permission
+                // team unset there. Registering in both groups does not work:
+                // Laravel de-duplicates middleware, so only the first occurrence
+                // runs, which silently reinstates the bug.
                 TeamsPermission::class,
-            ]);
+            ], isPersistent: true);
 
         // if (Features::hasApiFeatures()) {
         //     $panel->userMenuItems([
