@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Filament\App\Resources\PersonResource\RelationManagers;
 
+use App\Filament\App\Resources\AppRelationManager;
 use App\Filament\App\Resources\SourceRefResource;
 use App\Models\SourceRef;
 use Filament\Actions\BulkActionGroup;
@@ -11,7 +12,6 @@ use Filament\Actions\CreateAction;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
-use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Schemas\Schema;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
@@ -24,7 +24,7 @@ use Filament\Tables\Table;
  * the finer-grained indi_name/indi_even/indi_asso/indi_lds — so this is the only
  * thing that populates the person half of CompletenessService::sourceCompleteness().
  */
-class SourcesRelationManager extends RelationManager
+class SourcesRelationManager extends AppRelationManager
 {
     #[\Override]
     protected static string $relationship = 'sourceRefs';

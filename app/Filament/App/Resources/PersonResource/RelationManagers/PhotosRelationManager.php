@@ -2,6 +2,7 @@
 
 namespace App\Filament\App\Resources\PersonResource\RelationManagers;
 
+use App\Filament\App\Resources\AppRelationManager;
 use App\Models\PersonPhoto;
 use App\Services\FacialRecognitionService;
 use Filament\Actions\Action;
@@ -12,13 +13,12 @@ use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Forms\Components;
 use Filament\Notifications\Notification;
-use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Schemas\Schema;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Support\Facades\Storage;
 
-class PhotosRelationManager extends RelationManager
+class PhotosRelationManager extends AppRelationManager
 {
     #[\Override]
     protected static string $relationship = 'photos';
