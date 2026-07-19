@@ -3,6 +3,7 @@
 namespace App\Traits;
 
 use App\Models\Team;
+use Filament\Facades\Filament;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Schema;
 
@@ -57,6 +58,14 @@ trait BelongsToTenant
      */
     protected static function getTenantId(): ?int
     {
-        return auth()->user()?->currentTeam?->id;
+        // The tenant being viewed, falling back to the user's stored team where
+        // there is no panel context — console commands and queued jobs.
+        //
+        // This read the stored team alone, which agreed with the URL only
+        // because the SwitchTeam listener had already persisted it. That is an
+        // unnamed dependency between a global scope and an event listener: if
+        // the listener is removed, reordered, or fails to fire, scoping
+        // silently reverts to whatever team was last stored and nothing fails.
+        return Filament::getTenant()?->getKey() ?? auth()->user()?->currentTeam?->id;
     }
 }

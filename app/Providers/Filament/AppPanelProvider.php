@@ -238,6 +238,18 @@ class AppPanelProvider extends PanelProvider
             ])
             ->authMiddleware([
                 Authenticate::class,
+                // Stays in the auth group, and resolves the tenant from the
+                // route itself rather than waiting for IdentifyTenant.
+                //
+                // Registering it as tenant middleware would put it after tenant
+                // identification, which is the obvious fix — but then it never
+                // runs on the authenticated routes outside the tenant group
+                // (team creation, logout, profile, email verification).
+                // PermissionRegistrar is a singleton and production runs Octane,
+                // so those routes would inherit whichever team the previous
+                // request in that worker left behind. Registering in both groups
+                // does not work either: Laravel de-duplicates middleware, so only
+                // the first occurrence runs.
                 TeamsPermission::class,
             ]);
 
