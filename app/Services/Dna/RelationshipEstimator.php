@@ -38,6 +38,12 @@ class RelationshipEstimator
         [20.0, 'Distant Cousin', 'low'],
     ];
 
+    /**
+     * The label emitted when a real comparison found nothing significant.
+     * Distinct from the matching service's "no comparison ran" labels.
+     */
+    public const NO_MATCH_LABEL = 'Unrelated / No significant match';
+
     // cM below this is treated as noise / no genealogically significant match.
     private const NO_MATCH_THRESHOLD = 20.0;
 
@@ -47,11 +53,23 @@ class RelationshipEstimator
     /**
      * @return array{predicted_relationship: string, confidence_level: string, match_quality_score: float}
      */
+    /**
+     * Every relationship label this estimator can emit. Consumers that need to
+     * tell a stored row apart from one written by some other path — a prune, an
+     * audit — must be able to ask rather than hardcode the list.
+     *
+     * @return list<string>
+     */
+    public static function labels(): array
+    {
+        return [self::NO_MATCH_LABEL, ...array_column(self::BANDS, 1)];
+    }
+
     public function estimate(float $totalSharedCm): array
     {
         $cm = max(0.0, $totalSharedCm);
 
-        $relationship = 'Unrelated / No significant match';
+        $relationship = self::NO_MATCH_LABEL;
         $confidence = 'low';
 
         if ($cm >= self::NO_MATCH_THRESHOLD) {
