@@ -4,7 +4,6 @@ namespace App\Modules\Places;
 
 use App\Modules\BaseModule;
 use App\Modules\Places\Services\GeocodingService;
-use App\Modules\Places\Services\PlacesService;
 use Artisan;
 
 class PlacesModule extends BaseModule
@@ -43,8 +42,6 @@ class PlacesModule extends BaseModule
      */
     protected function registerPlacesServices(): void
     {
-        app()->singleton('genealogy.places', fn ($app) => new PlacesService);
-
         app()->singleton('genealogy.places.geocoder', fn ($app) => new GeocodingService);
     }
 

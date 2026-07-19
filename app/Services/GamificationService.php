@@ -7,6 +7,7 @@ use App\Models\Achievement;
 use App\Models\Family;
 use App\Models\Person;
 use App\Models\PersonEvent;
+use App\Models\PersonPhoto;
 use App\Models\User;
 use App\Models\UserAchievement;
 use App\Models\UserPoint;
@@ -244,7 +245,7 @@ class GamificationService
      */
     private function getPersonCount(User $user): int
     {
-        return Person::where('team_id', $user->current_team_id ?? $user->latestTeam?->id)->count();
+        return Person::where('team_id', $this->teamIdFor($user))->count();
     }
 
     /**
@@ -252,7 +253,7 @@ class GamificationService
      */
     private function getFamilyCount(User $user): int
     {
-        return Family::where('team_id', $user->current_team_id ?? $user->latestTeam?->id)->count();
+        return Family::where('team_id', $this->teamIdFor($user))->count();
     }
 
     /**
@@ -261,7 +262,7 @@ class GamificationService
     private function getEventCount(User $user): int
     {
         return PersonEvent::whereHas('person', function ($query) use ($user): void {
-            $query->where('team_id', $user->current_team_id ?? $user->latestTeam?->id);
+            $query->where('team_id', $this->teamIdFor($user));
         })->count();
     }
 
@@ -270,9 +271,36 @@ class GamificationService
      */
     private function getPhotoCount(User $user): int
     {
-        // Assuming there's a Photo model or similar
-        // Adjust this based on your actual photo storage implementation
-        return 0; // Placeholder - implement based on your photo system
+        // Returned a hardcoded 0, which made photo_archivist and memory_keeper
+        // permanently unearnable and pinned their progress bars at zero. Scoped
+        // like every other counter, so a researcher cannot unlock a photo
+        // achievement on the strength of another team's uploads.
+        return PersonPhoto::where('team_id', $this->teamIdFor($user))->count();
+    }
+
+    /**
+     * The team every achievement counter is scoped to. Extracted because the
+     * four counters repeated it verbatim, and each repetition was a separate
+     * baselined static-analysis entry.
+     *
+     * Note the counters must only ever be called for the *authenticated* user.
+     * All four models use BelongsToTenant, whose global scope filters on
+     * auth()->user()->currentTeam — not on the $user passed here. Every caller
+     * today satisfies that (the observers pass auth()->user() directly), but
+     * counting for a different user would AND the two team filters together and
+     * silently return 0 rather than erroring.
+     */
+    private function teamIdFor(User $user): ?int
+    {
+        // The previous fallback was `?? $user->latestTeam?->id`, repeated inline
+        // by each counter. latestTeam() is belongsTo(Team, 'current_team_id') —
+        // the same column the left side just tested — so the branch could never
+        // resolve. A user with no current_team_id got null, and
+        // where('team_id', null) compiles to `team_id is null`, counting orphan
+        // rows across tenants instead of theirs. Their achievements stayed as
+        // unearnable as the photo ones were. Falls back the way
+        // User::getDefaultTenant() does.
+        return $user->current_team_id ?? $user->ownedTeams()->first()?->id;
     }
 
     /**
