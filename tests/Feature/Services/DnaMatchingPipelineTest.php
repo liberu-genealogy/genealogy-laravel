@@ -34,6 +34,7 @@ class DnaMatchingPipelineTest extends TestCase
         $this->assertGreaterThanOrEqual(1, $result['shared_segments_count']);
         $this->assertNotEmpty($result['ibd_segments']);
         $this->assertSame('1', $result['ibd_segments'][0]['chromosome']);
+        $this->assertTrue($result['comparison_performed']);
     }
 
     public function test_missing_kit_files_degrade_to_basic_without_throwing(): void
@@ -45,6 +46,9 @@ class DnaMatchingPipelineTest extends TestCase
 
         $this->assertSame('Unknown (Basic Analysis)', $result['predicted_relationship']);
         $this->assertSame(0.0, $result['total_cms']);
+        // The zeros above are placeholders for "unknown", and callers rely on
+        // this flag to tell them apart from a measured absence of shared DNA.
+        $this->assertFalse($result['comparison_performed']);
     }
 
     /**

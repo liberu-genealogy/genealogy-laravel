@@ -51,7 +51,11 @@ class DnaTriangulationService
                     $compareKit->file_name
                 );
 
-                if ($matchResult['total_cms'] >= $minSharedCm) {
+                // A kit that could not be read reports 0.0 cM, which clears a
+                // threshold of 0 — reachable from the UI, where the minimum cM
+                // field allows 0. Require an actual comparison, not just a
+                // number that happens to pass the filter.
+                if (($matchResult['comparison_performed'] ?? false) && $matchResult['total_cms'] >= $minSharedCm) {
                     $results['matches'][] = [
                         'kit_id' => $compareKit->id,
                         'kit_name' => $compareKit->name,
@@ -127,16 +131,25 @@ class DnaTriangulationService
                 ['id' => $kit2->id, 'name' => $kit2->name],
                 ['id' => $kit3->id, 'name' => $kit3->name],
             ],
+            // True only when all three pairings were actually compared. A kit
+            // that could not be read yields 0.0 cM, which is indistinguishable
+            // from a real "shared nothing" result unless the caller is told.
+            'comparison_performed' => ($match12['comparison_performed'] ?? false)
+                && ($match13['comparison_performed'] ?? false)
+                && ($match23['comparison_performed'] ?? false),
             'pairwise_matches' => [
                 'kit1_kit2' => [
+                    'comparison_performed' => $match12['comparison_performed'] ?? false,
                     'total_cms' => $match12['total_cms'],
                     'relationship' => $match12['predicted_relationship'],
                 ],
                 'kit1_kit3' => [
+                    'comparison_performed' => $match13['comparison_performed'] ?? false,
                     'total_cms' => $match13['total_cms'],
                     'relationship' => $match13['predicted_relationship'],
                 ],
                 'kit2_kit3' => [
+                    'comparison_performed' => $match23['comparison_performed'] ?? false,
                     'total_cms' => $match23['total_cms'],
                     'relationship' => $match23['predicted_relationship'],
                 ],
@@ -170,7 +183,10 @@ class DnaTriangulationService
                             $kitIds[$k]
                         );
 
-                        if ($result['triangulation_score'] >= $minSharedCm) {
+                        // A group whose kits were never compared scores 0.0,
+                        // which clears a threshold of 0 — the same hole guarded
+                        // against in triangulateOneAgainstMany above.
+                        if ($result['comparison_performed'] && $result['triangulation_score'] >= $minSharedCm) {
                             $groups[] = [
                                 'kit_ids' => [$kitIds[$i], $kitIds[$j], $kitIds[$k]],
                                 'triangulation_score' => $result['triangulation_score'],

@@ -71,10 +71,10 @@ Located at: `app/Services/AdvancedDnaMatchingService.php`
 
 ### Console Commands
 
-**Enhanced MatchKitsCommand** (`app/Console/Commands/MatchKitsCommand.php`):
-- Integrated with AdvancedDnaMatchingService
-- Improved error handling with fallback mechanisms
-- Returns comprehensive JSON results
+**MatchKitsCommand — removed.** It never set `user_id`, which is NOT NULL, so
+every run threw on insert, fell into a fallback that invented centimorgan
+values, and threw again on the same constraint. It had no callers and never
+persisted a row. Queued matching (`App\Jobs\DnaMatching`) covers the same work.
 
 **New ProcessLargeScaleDnaCommand** (`app/Console/Commands/ProcessLargeScaleDnaCommand.php`):
 - Optimized for processing large DNA datasets
@@ -111,10 +111,8 @@ The system uses scientifically-based shared cM ranges to predict relationships:
 
 ### Running DNA Matches
 
-**Single Match:**
-```bash
-php artisan dna:match {varName1} {fileName1} {varName2} {fileName2}
-```
+**Single Match:** dispatch `App\Jobs\DnaMatching` for the kit owner. The
+`dna:match` console command was removed — see Console Commands above.
 
 **Large-Scale Processing:**
 ```bash

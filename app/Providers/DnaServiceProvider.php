@@ -3,7 +3,6 @@
 namespace App\Providers;
 
 use App\Console\Commands\BulkImportDnaCommand;
-use App\Console\Commands\MatchKitsCommand;
 use App\Console\Commands\ProcessLargeScaleDnaCommand;
 use App\Console\Commands\TriangulateDnaCommand;
 use App\Services\AdvancedDnaMatchingService;
@@ -41,7 +40,6 @@ class DnaServiceProvider extends ServiceProvider
         // Register console commands
         if ($this->app->runningInConsole()) {
             $this->commands([
-                MatchKitsCommand::class,
                 ProcessLargeScaleDnaCommand::class,
                 BulkImportDnaCommand::class,
                 TriangulateDnaCommand::class,

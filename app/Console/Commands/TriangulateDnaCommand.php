@@ -143,6 +143,22 @@ class TriangulateDnaCommand extends Command
         );
     }
 
+    /**
+     * A pairing that was never compared reports "not compared" rather than 0,
+     * which would read as a measured absence of shared DNA.
+     *
+     * @param  array<string, mixed>  $pair
+     * @return list<string>
+     */
+    protected function pairwiseRow(string $label, array $pair): array
+    {
+        if (! ($pair['comparison_performed'] ?? false)) {
+            return [$label, 'not compared', 'kit data unreadable'];
+        }
+
+        return [$label, (string) $pair['total_cms'], (string) $pair['relationship']];
+    }
+
     protected function displayThreeWayResults(array $results): void
     {
         $this->info('Three-Way Triangulation Results');
@@ -158,13 +174,20 @@ class TriangulateDnaCommand extends Command
         $this->table(
             ['Pair', 'Shared cM', 'Relationship'],
             [
-                ['Kit 1 <-> Kit 2', $results['pairwise_matches']['kit1_kit2']['total_cms'], $results['pairwise_matches']['kit1_kit2']['relationship']],
-                ['Kit 1 <-> Kit 3', $results['pairwise_matches']['kit1_kit3']['total_cms'], $results['pairwise_matches']['kit1_kit3']['relationship']],
-                ['Kit 2 <-> Kit 3', $results['pairwise_matches']['kit2_kit3']['total_cms'], $results['pairwise_matches']['kit2_kit3']['relationship']],
+                $this->pairwiseRow('Kit 1 <-> Kit 2', $results['pairwise_matches']['kit1_kit2']),
+                $this->pairwiseRow('Kit 1 <-> Kit 3', $results['pairwise_matches']['kit1_kit3']),
+                $this->pairwiseRow('Kit 2 <-> Kit 3', $results['pairwise_matches']['kit2_kit3']),
             ]
         );
 
         $this->newLine();
+
+        if (! $results['comparison_performed']) {
+            $this->warn('At least one pairing could not be compared — its kit data was unreadable.');
+            $this->warn('The triangulation score below is not a measurement.');
+            $this->newLine();
+        }
+
         $this->info('Triangulation Score: '.$results['triangulation_score']);
         $this->info('Triangulated Chromosomes: '.count($results['triangulated_chromosomes']));
 
