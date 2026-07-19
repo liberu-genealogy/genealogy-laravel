@@ -208,7 +208,7 @@ class DnaMatchingResource extends AppResource
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                 SelectFilter::make('predicted_relationship')
+                SelectFilter::make('predicted_relationship')
                     ->options([
                         'Parent/Child' => 'Parent/Child',
                         'Full Sibling' => 'Full Sibling',
@@ -221,22 +221,22 @@ class DnaMatchingResource extends AppResource
                         'Distant Cousin' => 'Distant Cousin',
                     ])
                     ->label('Relationship'),
-                 Filter::make('high_confidence')
+                Filter::make('high_confidence')
                     ->query(fn ($query) => $query->where('confidence_level', '>=', 80))
                     ->label('High Confidence (≥80%)'),
-                 Filter::make('close_matches')
+                Filter::make('close_matches')
                     ->query(fn ($query) => $query->where('total_shared_cm', '>=', 100))
                     ->label('Close Matches (≥100 cM)'),
-             ])
+            ])
             ->recordActions([
-                 ViewAction::make(),
-                 EditAction::make(),
-             ])
+                ViewAction::make(),
+                EditAction::make(),
+            ])
             ->toolbarActions([
-                 BulkActionGroup::make([
+                BulkActionGroup::make([
                     DeleteBulkAction::make(),
-                 ]),
-             ])
+                ]),
+            ])
             ->defaultSort('total_shared_cm', 'desc');
     }
 
