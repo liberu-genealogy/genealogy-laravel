@@ -47,6 +47,11 @@ class AdvancedDnaMatchingService
             $relationship = $this->estimator->estimate($match['total_shared_cm']);
 
             return [
+                // Both kits were read, parsed and compared. Callers that persist
+                // a result MUST check this before writing a row: a zeroed result
+                // from performBasicMatching() means no comparison happened, which
+                // is not the same claim as "compared, shared nothing".
+                'comparison_performed' => true,
                 'total_cms' => $match['total_shared_cm'],
                 'largest_cm' => $match['largest_cm_segment'],
                 // The dna_matchings.confidence_level column is a double, so map the
@@ -157,6 +162,9 @@ class AdvancedDnaMatchingService
     protected function performBasicMatching(): array
     {
         return [
+            // No comparison took place — the kits could not be read or parsed.
+            // The zeros below are placeholders for "unknown", not measurements.
+            'comparison_performed' => false,
             'total_cms' => 0.0,
             'largest_cm' => 0.0,
             'confidence_level' => 0.0,

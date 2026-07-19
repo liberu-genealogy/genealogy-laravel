@@ -68,6 +68,19 @@ class DnaMatching implements ShouldQueue
                     $dna->file_name
                 );
 
+                // No comparison took place (a kit could not be read or parsed).
+                // Persisting the zeroed result would record a finding for two
+                // kits that were never compared, and notify the user about it.
+                // Skip the pairing instead — "we could not look" is not a match.
+                if (! ($matchResult['comparison_performed'] ?? false)) {
+                    Log::warning(
+                        'DNA matching skipped for '.$this->var_name.' vs '.$dna->variable_name
+                        .': kit data could not be read for segment matching.'
+                    );
+
+                    continue;
+                }
+
                 // Get match name. User has no `person` relation (no user_id on
                 // people) — eager-loading it threw "undefined relationship" and
                 // the catch below silently killed every pairing, so DNA matching

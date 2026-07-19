@@ -50,6 +50,7 @@ class DnaTriangulationServiceTest extends TestCase
         $this->mockMatchingService->shouldReceive('performAdvancedMatching')
             ->with('var_kit1', $kit1->file_name, 'var_kit2', $kit2->file_name)
             ->andReturn([
+                'comparison_performed' => true,
                 'total_cms' => 150.0,
                 'largest_cm' => 45.0,
                 'confidence_level' => 70,
@@ -62,6 +63,7 @@ class DnaTriangulationServiceTest extends TestCase
         $this->mockMatchingService->shouldReceive('performAdvancedMatching')
             ->with('var_kit1', $kit1->file_name, 'var_kit3', $kit3->file_name)
             ->andReturn([
+                'comparison_performed' => true,
                 'total_cms' => 10.0,
                 'largest_cm' => 5.0,
                 'confidence_level' => 30,
@@ -98,6 +100,7 @@ class DnaTriangulationServiceTest extends TestCase
 
         $this->mockMatchingService->shouldReceive('performAdvancedMatching')
             ->andReturn([
+                'comparison_performed' => true,
                 'total_cms' => 150.0,
                 'largest_cm' => 45.0,
                 'confidence_level' => 70,
@@ -195,6 +198,7 @@ class DnaTriangulationServiceTest extends TestCase
                     'kit_id' => $kit2->id,
                     'kit_name' => 'Test Kit 2',
                     'user_id' => $user2->id,
+                    'comparison_performed' => true,
                     'total_cms' => 150.0,
                     'largest_cm' => 45.0,
                     'confidence_level' => 70,

@@ -37,6 +37,7 @@ class GenealogyNotificationsTest extends TestCase
         // Stub the heavy matching service so handle() creates a match deterministically.
         $service = Mockery::mock(AdvancedDnaMatchingService::class);
         $service->shouldReceive('performAdvancedMatching')->andReturn([
+            'comparison_performed' => true,
             'total_cms' => 1200.0,
             'largest_cm' => 80.0,
         ]);

@@ -37,12 +37,6 @@ parameters:
 			path: app/Actions/Socialstream/UpdateConnectedAccount.php
 
 		-
-			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$current_team_id\.$#'
-			identifier: property.notFound
-			count: 1
-			path: app/Console/Commands/MatchKitsCommand.php
-
-		-
 			message: '#^Cannot access property \$enabled on Illuminate\\Database\\Eloquent\\Model\|int\|string\.$#'
 			identifier: property.nonObject
 			count: 4
