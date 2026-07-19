@@ -451,12 +451,6 @@ parameters:
 			path: app/Jobs/ScanForDuplicatePersons.php
 
 		-
-			message: '#^Call to function method_exists\(\) with App\\Models\\User and ''assignRole'' will always evaluate to true\.$#'
-			identifier: function.alreadyNarrowedType
-			count: 1
-			path: app/Listeners/AssignDefaultRole.php
-
-		-
 			message: '#^Access to an undefined property App\\Livewire\\DabovilleReport\:\:\$form\.$#'
 			identifier: property.notFound
 			count: 2
