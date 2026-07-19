@@ -27,7 +27,14 @@ class UserSeeder extends Seeder
         ]);
 
         $team = Team::firstOrFail();
-        $adminUser->teams()->syncWithoutDetaching([$team->id]);
+
+        // With an explicit collaboration tier. This attached the admin with no
+        // tier at all, which was harmless while nothing read the column and is
+        // not any more: AppResource resolves every app-panel permission through
+        // it, and a membership carrying none is refused even reading. A fresh
+        // install would have seeded an administrator who could not open a
+        // single resource.
+        $adminUser->teams()->syncWithoutDetaching([$team->id => ['role' => 'admin']]);
         $adminUser->forceFill(['current_team_id' => $team->id])->save();
 
         // Role assignments carry a team now, and seeding has no request to take

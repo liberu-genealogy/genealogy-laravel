@@ -10,6 +10,7 @@ use App\Filament\App\Pages\GamificationPage;
 use App\Filament\App\Pages\PedigreeChartPage;
 use App\Filament\App\Pages\PremiumDashboardPage;
 use App\Filament\App\Pages\SubscriptionPage;
+use App\Filament\App\Pages\TeamMembers;
 use App\Filament\App\Pages\TrialExpiredPage;
 use App\Filament\App\Resources\AddrResource;
 use App\Filament\App\Resources\AIRecordMatchResource;
@@ -220,6 +221,7 @@ class AppPanelProvider extends PanelProvider
                 PremiumDashboardPage::class,
                 TrialExpiredPage::class,
                 EditProfile::class,
+                TeamMembers::class,
             ])
             ->discoverWidgets(in: app_path('Filament/App/Widgets'), for: 'App\\Filament\\App\\Widgets')
             ->widgets([
