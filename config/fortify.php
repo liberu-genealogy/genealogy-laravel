@@ -148,6 +148,16 @@ return [
     'features' => [
         Features::registration(),
         Features::resetPasswords(),
+        // Email verification is deliberately off. A commented-out
+        // hasVerifiedEmail() gate once lived in User (a dead method, removed),
+        // but enforcement never depended on it: User does not implement
+        // MustVerifyEmail, so the `verified` middleware on the web routes is
+        // inert, and User::canAccessPanel() never checks verification. The
+        // decision is to not gate a new researcher behind verification before
+        // they can act. Transport works (Mailpit) — this is a product choice,
+        // not a mail failure. To require verification, re-enable this feature
+        // AND implement MustVerifyEmail on User; doing one without the other
+        // is a no-op that reads as protection.
         // Features::emailVerification(),
         Features::updateProfileInformation(),
         Features::updatePasswords(),
