@@ -184,9 +184,42 @@ class UserChecklistManager extends Component
         session()->flash('message', 'Checklist created successfully!');
     }
 
+    /**
+     * A checklist the acting user owns, or a 404.
+     *
+     * Research checklists belong to a user. The checklist table is tenant-scoped
+     * so another team's rows are already invisible, but that left the cross-user
+     * case within one team open — every method below loaded straight from a
+     * request id with no owner check, so a member could edit or delete a
+     * teammate's private checklist by guessing its id. Ownership is the rule
+     * here, not a collaboration tier, so it is a where clause rather than the
+     * tier trait. Loading through here on every by-id path is what closes it;
+     * guarding only the edit entry point would miss updateChecklist, which acts
+     * on a hydrated property a crafted request controls.
+     */
+    private function ownedChecklist($checklistId): UserChecklist
+    {
+        return UserChecklist::where('user_id', Auth::id())->findOrFail($checklistId);
+    }
+
+    /**
+     * An item on a checklist the acting user owns, or a 404.
+     *
+     * Items carry no team and no user of their own — unlike the checklist, the
+     * item table is not tenant-scoped — so an item id was reachable across both
+     * team and user. Ownership is proven through the parent checklist.
+     */
+    private function ownedItem($itemId): UserChecklistItem
+    {
+        return UserChecklistItem::whereHas(
+            'userChecklist',
+            fn ($query) => $query->where('user_id', Auth::id()),
+        )->findOrFail($itemId);
+    }
+
     public function editChecklist($checklistId): void
     {
-        $this->selectedChecklist = UserChecklist::findOrFail($checklistId);
+        $this->selectedChecklist = $this->ownedChecklist($checklistId);
         $this->name = $this->selectedChecklist->name;
         $this->description = $this->selectedChecklist->description;
         $this->subject_type = $this->selectedChecklist->subject_type;
@@ -201,7 +234,13 @@ class UserChecklistManager extends Component
     {
         $this->validate();
 
-        $this->selectedChecklist->update([
+        // Re-resolved through the ownership check rather than trusting the
+        // hydrated property: Livewire re-queries selectedChecklist by key on
+        // every round-trip with no scope, so a crafted request could point it
+        // at a teammate's checklist between edit and update.
+        $checklist = $this->ownedChecklist($this->selectedChecklist->id);
+
+        $checklist->update([
             'name' => $this->name,
             'description' => $this->description,
             'subject_type' => $this->subject_type ?: null,
@@ -219,14 +258,14 @@ class UserChecklistManager extends Component
 
     public function deleteChecklist($checklistId): void
     {
-        UserChecklist::findOrFail($checklistId)->delete();
+        $this->ownedChecklist($checklistId)->delete();
         $this->dispatch('checklist-deleted');
         session()->flash('message', 'Checklist deleted successfully!');
     }
 
     public function toggleItemCompletion($itemId): void
     {
-        $item = UserChecklistItem::findOrFail($itemId);
+        $item = $this->ownedItem($itemId);
 
         if ($item->is_completed) {
             $item->markAsIncomplete();
@@ -239,7 +278,7 @@ class UserChecklistManager extends Component
 
     public function editItem($itemId): void
     {
-        $this->selectedItem = UserChecklistItem::findOrFail($itemId);
+        $this->selectedItem = $this->ownedItem($itemId);
         $this->item_title = $this->selectedItem->title;
         $this->item_description = $this->selectedItem->description;
         $this->item_notes = $this->selectedItem->notes;
@@ -252,7 +291,11 @@ class UserChecklistManager extends Component
     {
         $this->validate($this->itemRules);
 
-        $this->selectedItem->update([
+        // Re-resolved through ownership, not trusting the hydrated property —
+        // see updateChecklist.
+        $item = $this->ownedItem($this->selectedItem->id);
+
+        $item->update([
             'title' => $this->item_title,
             'description' => $this->item_description,
             'notes' => $this->item_notes,
@@ -268,7 +311,7 @@ class UserChecklistManager extends Component
 
     public function addCustomItem($checklistId): void
     {
-        $checklist = UserChecklist::findOrFail($checklistId);
+        $checklist = $this->ownedChecklist($checklistId);
         $maxOrder = $checklist->items()->max('order') ?? 0;
 
         UserChecklistItem::create([

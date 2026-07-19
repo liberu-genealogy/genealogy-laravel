@@ -247,6 +247,14 @@ class VirtualEventRsvp extends Component
 
     public function invitePerson(): void
     {
+        // Inviting is an organiser action, not the self-service RSVP the rest of
+        // this component handles. canInvite already models who may do it — the
+        // event's creator, host or moderator — but only drove the UI; the write
+        // ran for any member. It is a per-event rule (host/moderator on this
+        // event) rather than a team-wide tier, which is the finer of the two and
+        // the one already designed here.
+        abort_unless($this->canInvite(), 403);
+
         if (! $this->invite_person_id) {
             return;
         }
@@ -284,13 +292,11 @@ class VirtualEventRsvp extends Component
 
     public function sendInvitations(): void
     {
+        // Organiser-only, same as invitePerson — this created attendee rows for
+        // arbitrary emails on nothing more than being logged in.
+        abort_unless($this->canInvite(), 403);
+
         $this->validate($this->inviteRules);
-
-        if (! Auth::check()) {
-            session()->flash('error', 'You must be logged in to send invitations.');
-
-            return;
-        }
 
         $sent = 0;
         $errors = [];
