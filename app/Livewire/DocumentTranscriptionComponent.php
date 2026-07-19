@@ -199,7 +199,9 @@ class DocumentTranscriptionComponent extends Component
                 'pending_transcriptions' => 0,
                 'failed_transcriptions' => 0,
                 'total_corrections' => 0,
-                'avg_confidence' => 0,
+                // Null, not 0: with no team there is nothing measured, and 0
+                // would render as a "0.0%" accuracy claim.
+                'avg_confidence' => null,
             ];
         }
 

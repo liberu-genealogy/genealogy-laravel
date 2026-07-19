@@ -35,13 +35,31 @@ class HandwritingRecognitionService
             $result = $this->performOCR(Storage::disk('public')->path($path));
 
             // Update transcription with results
+            $metadata = [
+                'language' => $result['language'] ?? 'en',
+                'processing_time' => $result['processing_time'] ?? null,
+            ];
+
+            // Omitted entirely rather than stored as null, and the distinction is
+            // load-bearing. getTeamStats() averages JSON_EXTRACT(metadata,
+            // '$.confidence'), and the drivers disagree on a stored JSON null:
+            //
+            //   {"language":"en"}     -> SQL NULL on both -> excluded from AVG
+            //   {"confidence":null}   -> SQL NULL on SQLite, but a JSON null
+            //                            literal on MariaDB, where AVG counts it
+            //                            as 0 (measured: AVG over 1.0 + JSON null
+            //                            returns 0.5, not 1.0)
+            //
+            // So storing null would pass the suite on SQLite and quietly average
+            // zeros into every team's confidence in production. The test asserting
+            // this key is absent is what holds the invariant.
+            if ($result['confidence'] !== null) {
+                $metadata['confidence'] = $result['confidence'];
+            }
+
             $transcription->update([
                 'raw_transcription' => $result['text'],
-                'metadata' => [
-                    'confidence' => $result['confidence'],
-                    'language' => $result['language'] ?? 'en',
-                    'processing_time' => $result['processing_time'] ?? null,
-                ],
+                'metadata' => $metadata,
                 'status' => 'completed',
                 'processed_at' => now(),
             ]);
@@ -121,7 +139,10 @@ class HandwritingRecognitionService
         if (empty($textAnnotations)) {
             return [
                 'text' => '',
-                'confidence' => 0,
+                // No text was detected, so there is nothing to be confident
+                // about. Reporting 0 would read as "text found, certain it is
+                // wrong" and would drag the team average down as a measurement.
+                'confidence' => null,
                 'language' => 'en',
             ];
         }
@@ -137,9 +158,13 @@ class HandwritingRecognitionService
             }
         }
 
+        // Vision routinely returns annotations with no per-word confidence. That
+        // is an ordinary response shape, not an error — but substituting a value
+        // here reported an invented number as the API's own measurement, and it
+        // fed the team's "Avg. Confidence" tile. Absent means absent.
         $avgConfidence = $confidenceScores === []
-            ? 0.85
-            : round(array_sum($confidenceScores) / count($confidenceScores), 2); // Default confidence if not provided
+            ? null
+            : round(array_sum($confidenceScores) / count($confidenceScores), 2);
 
         // Detect language
         $language = $data['responses'][0]['fullTextAnnotation']['pages'][0]['property']['detectedLanguages'][0]['languageCode'] ?? 'en';
@@ -166,7 +191,11 @@ class HandwritingRecognitionService
             // "Avg. Confidence" tile — so an install with no OCR configured
             // reported a three-quarters-accurate transcription rate off text that
             // says, in as many words, that it is a placeholder.
-            'confidence' => 0.0,
+            //
+            // It was then corrected to 0.0, which is still a claim: zero is a
+            // measured value and SQL AVG counts it, so one placeholder halved a
+            // team's reported accuracy. Null is the only honest answer.
+            'confidence' => null,
             'language' => 'en',
         ];
     }
@@ -256,6 +285,10 @@ class HandwritingRecognitionService
             $query->where('team_id', $teamId);
         })->count();
 
+        // AVG ignores SQL NULL, so unmeasured transcriptions are already excluded
+        // from the mean; null here means none of them had a measurement at all.
+        $avgConfidence = $stats->avg_confidence ?? null;
+
         return [
             'total_transcriptions' => (int) ($stats->total ?? 0),
             'completed_transcriptions' => (int) ($stats->completed ?? 0),
@@ -266,7 +299,13 @@ class HandwritingRecognitionService
             // renders this straight into a "%" tile — so 0.85 displayed as "0.9%"
             // rather than 85%. Convert here, where the scale is known, instead of in
             // the view.
-            'avg_confidence' => round((float) ($stats->avg_confidence ?? 0) * 100, 1),
+            //
+            // Null when nothing was ever measured. Coercing that to 0 would report
+            // "0% average confidence", which is a claim about accuracy rather than
+            // an admission that no measurement exists.
+            'avg_confidence' => $avgConfidence === null
+                ? null
+                : round((float) $avgConfidence * 100, 1),
         ];
     }
 }
