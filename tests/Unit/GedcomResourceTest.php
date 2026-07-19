@@ -5,6 +5,7 @@ namespace Tests\Unit;
 use App\Filament\App\Resources\GedcomResource;
 use App\Jobs\ExportGedCom;
 use App\Models\User;
+use Filament\Facades\Filament;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Queue;
@@ -22,8 +23,9 @@ class GedcomResourceTest extends TestCase
 
     public function test_export_gedcom_dispatches_job_with_authenticated_user(): void
     {
-        $user = User::factory()->create();
+        $user = User::factory()->withPersonalTeam()->create();
         Auth::login($user);
+        Filament::setTenant($user->currentTeam, isQuiet: true);
 
         GedcomResource::exportGedcom();
 

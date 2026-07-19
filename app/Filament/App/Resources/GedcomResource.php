@@ -14,6 +14,7 @@ use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Actions\ViewAction;
+use Filament\Facades\Filament;
 use Filament\Forms\Components\FileUpload;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
@@ -145,11 +146,18 @@ class GedcomResource extends AppResource
     public static function exportGedcom(): void
     {
         $user = auth()->user();
-        if (! $user) {
+        $tenant = Filament::getTenant();
+
+        // The team is required, not optional. Exports are written into the
+        // exporting team's directory and the export page lists only that
+        // directory, so a file produced without one would be both unscoped and
+        // invisible. Refusing is better than either.
+        if (! $user || ! $tenant) {
             return;
         }
+
         $fileName = now()->format('Y-m-d_His').'_family_tree.ged'; // Generating a unique file name
-        ExportGedCom::dispatch($fileName, $user);
+        ExportGedCom::dispatch($fileName, $user, (int) $tenant->getKey());
     }
 
     public static function exportGrampsXml(): void
