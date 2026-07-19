@@ -31,7 +31,7 @@ class SourceResource extends AppResource
     protected static ?string $navigationLabel = 'Sources';
 
     #[Override]
-    protected static string|\UnitEnum|null $navigationGroup = '🔍 Research & Analysis';
+    protected static string|\UnitEnum|null $navigationGroup = '📚 Sources & Citations';
 
     #[Override]
     protected static ?int $navigationSort = 1;

@@ -29,7 +29,7 @@ class SourceDataResource extends AppResource
     protected static ?string $navigationLabel = 'Source Data';
 
     #[Override]
-    protected static string|\UnitEnum|null $navigationGroup = '🔍 Research & Analysis';
+    protected static string|\UnitEnum|null $navigationGroup = '📚 Sources & Citations';
 
     #[Override]
     public static function form(Schema $schema): Schema

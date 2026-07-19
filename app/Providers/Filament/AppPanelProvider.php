@@ -134,34 +134,25 @@ class AppPanelProvider extends PanelProvider
                     ->label('👥 Family Tree')
                     ->collapsed(),
                 NavigationGroup::make()
-                    ->label('📊 Charts & Visualizations')
+                    ->label('🗂️ GEDCOM Detail')
                     ->collapsed(),
                 NavigationGroup::make()
-                    ->label('📄 Reports')
+                    ->label('📚 Sources & Citations')
                     ->collapsed(),
                 NavigationGroup::make()
-                    ->label('🔍 Research & Analysis')
+                    ->label('🧬 DNA & Matching')
                     ->collapsed(),
                 NavigationGroup::make()
-                    ->label('📋 Research Management')
+                    ->label('📊 Charts & Reports')
                     ->collapsed(),
                 NavigationGroup::make()
-                    ->label('🧬 DNA & Genetics')
+                    ->label('📋 Research Workspace')
                     ->collapsed(),
                 NavigationGroup::make()
-                    ->label('📁 Media & Documents')
+                    ->label('🛠️ Data & Import')
                     ->collapsed(),
                 NavigationGroup::make()
-                    ->label('🛠️ Data Management')
-                    ->collapsed(),
-                NavigationGroup::make()
-                    ->label('👥 Family Reunions')
-                    ->collapsed(),
-                NavigationGroup::make()
-                    ->label('🎮 Gamification')
-                    ->collapsed(),
-                NavigationGroup::make()
-                    ->label('⚙️ System Settings')
+                    ->label('🎉 Community')
                     ->collapsed(),
                 NavigationGroup::make()
                     ->label('👤 Account & Settings')

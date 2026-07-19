@@ -15,7 +15,7 @@ class FanChartPage extends Page
     protected string $view = 'filament.app.pages.fan-chart-page';
 
     #[\Override]
-    protected static string|\UnitEnum|null $navigationGroup = '📊 Charts & Visualizations';
+    protected static string|\UnitEnum|null $navigationGroup = '📊 Charts & Reports';
 
     #[\Override]
     protected static ?string $title = 'Fan Chart';

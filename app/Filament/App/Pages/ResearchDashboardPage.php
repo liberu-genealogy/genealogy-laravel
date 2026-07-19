@@ -17,7 +17,7 @@ class ResearchDashboardPage extends Page
     protected static ?string $navigationLabel = 'Research Dashboard';
 
     #[\Override]
-    protected static string|\UnitEnum|null $navigationGroup = '📋 Research Management';
+    protected static string|\UnitEnum|null $navigationGroup = '📋 Research Workspace';
 
     #[\Override]
     protected static ?int $navigationSort = 3;

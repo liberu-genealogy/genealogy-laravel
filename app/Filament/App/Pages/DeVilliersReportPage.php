@@ -27,7 +27,7 @@ class DeVilliersReportPage extends Page
     protected static ?string $navigationLabel = 'De Villiers Report';
 
     #[\Override]
-    protected static string|\UnitEnum|null $navigationGroup = '📄 Reports';
+    protected static string|\UnitEnum|null $navigationGroup = '📊 Charts & Reports';
     // {
     //     Livewire::mount('DeVilliersReportWidget');
     // }

@@ -46,7 +46,7 @@ class VirtualEventResource extends AppResource
     protected static ?string $navigationLabel = 'Virtual Events';
 
     #[\Override]
-    protected static string|\UnitEnum|null $navigationGroup = '👥 Family Reunions';
+    protected static string|\UnitEnum|null $navigationGroup = '🎉 Community';
 
     #[\Override]
     protected static ?int $navigationSort = 1;

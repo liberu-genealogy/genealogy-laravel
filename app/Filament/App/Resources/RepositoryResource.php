@@ -29,7 +29,7 @@ final class RepositoryResource extends AppResource
     protected static ?string $navigationLabel = 'Repository';
 
     #[Override]
-    protected static string|\UnitEnum|null $navigationGroup = '🔍 Research & Analysis';
+    protected static string|\UnitEnum|null $navigationGroup = '📚 Sources & Citations';
 
     #[Override]
     protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-building-library';

@@ -50,7 +50,7 @@ class ChecklistTemplateResource extends AppResource
     protected static ?string $navigationLabel = 'Checklist Templates';
 
     #[\Override]
-    protected static string|\UnitEnum|null $navigationGroup = '📋 Research Management';
+    protected static string|\UnitEnum|null $navigationGroup = '📋 Research Workspace';
 
     #[\Override]
     protected static ?int $navigationSort = 1;

@@ -20,7 +20,7 @@ class GedcomExportPage extends Page
     protected static ?string $navigationLabel = 'GEDCOM Export';
 
     #[\Override]
-    protected static string|\UnitEnum|null $navigationGroup = '🛠️ Data Management';
+    protected static string|\UnitEnum|null $navigationGroup = '🛠️ Data & Import';
 
     #[\Override]
     protected static ?int $navigationSort = 2;

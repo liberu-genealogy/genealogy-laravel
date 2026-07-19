@@ -24,7 +24,7 @@ class ChanResource extends AppResource
     protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-clock';
 
     #[Override]
-    protected static string|\UnitEnum|null $navigationGroup = '👥 Family Tree';
+    protected static string|\UnitEnum|null $navigationGroup = '🗂️ GEDCOM Detail';
 
     #[Override]
     protected static ?string $navigationLabel = 'Chan';

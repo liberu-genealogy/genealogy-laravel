@@ -43,7 +43,7 @@ class GedcomResource extends AppResource
     protected static bool $shouldRegisterNavigation = true;
 
     #[Override]
-    protected static string|\UnitEnum|null $navigationGroup = '🛠️ Data Management';
+    protected static string|\UnitEnum|null $navigationGroup = '🛠️ Data & Import';
 
     #[Override]
     public static function canCreate(): bool

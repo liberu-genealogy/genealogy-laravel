@@ -15,7 +15,7 @@ class GamificationPage extends Page
     protected string $view = 'filament.app.pages.gamification-page';
 
     #[\Override]
-    protected static string|\UnitEnum|null $navigationGroup = '🎮 Gamification';
+    protected static string|\UnitEnum|null $navigationGroup = '🎉 Community';
 
     #[\Override]
     protected static ?string $title = 'Achievements & Progress';

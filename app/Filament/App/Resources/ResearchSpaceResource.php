@@ -25,7 +25,7 @@ class ResearchSpaceResource extends AppResource
     protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-users';
 
     #[\Override]
-    protected static string|\UnitEnum|null $navigationGroup = '📋 Research Management';
+    protected static string|\UnitEnum|null $navigationGroup = '📋 Research Workspace';
 
     #[\Override]
     protected static ?string $navigationLabel = 'Research Spaces';

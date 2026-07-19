@@ -29,7 +29,7 @@ class SubmResource extends AppResource
     protected static ?string $navigationLabel = 'Submitters';
 
     #[Override]
-    protected static string|\UnitEnum|null $navigationGroup = '🛠️ Data Management';
+    protected static string|\UnitEnum|null $navigationGroup = '🛠️ Data & Import';
 
     #[Override]
     public static function form(Schema $schema): Schema

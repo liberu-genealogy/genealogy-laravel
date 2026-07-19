@@ -14,7 +14,7 @@ class GlobalSearchPage extends Page
     protected string $view = 'filament.app.pages.global-search-page';
 
     #[\Override]
-    protected static string|\UnitEnum|null $navigationGroup = '🔍 Research & Analysis';
+    protected static string|\UnitEnum|null $navigationGroup = '👥 Family Tree';
 
     #[\Override]
     protected static ?string $navigationLabel = 'Global Search';

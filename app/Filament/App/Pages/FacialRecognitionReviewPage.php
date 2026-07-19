@@ -21,7 +21,7 @@ class FacialRecognitionReviewPage extends Page
     protected static ?string $title = 'Review Facial Recognition Tags';
 
     #[\Override]
-    protected static string|\UnitEnum|null $navigationGroup = '👥 Family Tree';
+    protected static string|\UnitEnum|null $navigationGroup = '📋 Research Workspace';
 
     #[\Override]
     protected static ?int $navigationSort = 5;

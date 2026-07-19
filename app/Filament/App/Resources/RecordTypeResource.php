@@ -35,7 +35,7 @@ class RecordTypeResource extends AppResource
     protected static ?string $navigationLabel = 'Record Types';
 
     #[\Override]
-    protected static string|\UnitEnum|null $navigationGroup = '⚙️ System Settings';
+    protected static string|\UnitEnum|null $navigationGroup = '🛠️ Data & Import';
 
     #[\Override]
     protected static ?int $navigationSort = 90;

@@ -29,7 +29,7 @@ class PersonNameRomnResource extends AppResource
     protected static ?string $navigationLabel = 'Romanized Names';
 
     #[Override]
-    protected static string|\UnitEnum|null $navigationGroup = '👥 Family Tree';
+    protected static string|\UnitEnum|null $navigationGroup = '🗂️ GEDCOM Detail';
 
     #[Override]
     public static function form(Schema $schema): Schema

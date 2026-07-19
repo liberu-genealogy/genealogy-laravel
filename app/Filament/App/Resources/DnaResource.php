@@ -32,7 +32,7 @@ class DnaResource extends AppResource
     protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-beaker';
 
     #[Override]
-    protected static string|\UnitEnum|null $navigationGroup = '🧬 DNA & Genetics';
+    protected static string|\UnitEnum|null $navigationGroup = '🧬 DNA & Matching';
 
     #[Override]
     protected static ?int $navigationSort = 1;

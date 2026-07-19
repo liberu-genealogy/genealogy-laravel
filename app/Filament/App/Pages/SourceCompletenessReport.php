@@ -22,7 +22,7 @@ class SourceCompletenessReport extends Page
     protected static ?string $navigationLabel = 'Source Completeness';
 
     #[\Override]
-    protected static string|\UnitEnum|null $navigationGroup = '📄 Reports';
+    protected static string|\UnitEnum|null $navigationGroup = '📊 Charts & Reports';
 
     /**
      * Source-coverage stats for the current tenant.

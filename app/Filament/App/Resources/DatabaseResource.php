@@ -32,7 +32,7 @@ class DatabaseResource extends AppResource
     protected static ?string $navigationLabel = 'Databases';
 
     #[Override]
-    protected static string|\UnitEnum|null $navigationGroup = '🛠️ Data Management';
+    protected static string|\UnitEnum|null $navigationGroup = '🛠️ Data & Import';
 
     #[Override]
     protected static ?int $navigationSort = 1;

@@ -25,7 +25,7 @@ class DnaTriangulationPage extends Page implements HasForms
     protected string $view = 'filament.app.pages.dna-triangulation-page';
 
     #[\Override]
-    protected static string|\UnitEnum|null $navigationGroup = '🧬 DNA & Genetics';
+    protected static string|\UnitEnum|null $navigationGroup = '🧬 DNA & Matching';
 
     #[\Override]
     protected static ?string $navigationLabel = 'DNA Triangulation';
