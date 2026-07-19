@@ -4,6 +4,7 @@ namespace Tests\Feature\Filament\Resources;
 
 use App\Filament\App\Resources\GedcomResource;
 use App\Filament\App\Resources\GedcomResource\Pages\CreateGedcom;
+use App\Filament\App\Resources\ImportJobResource;
 use App\Jobs\ExportGedCom;
 use App\Jobs\ImportGedcom;
 use App\Jobs\ImportGrampsXml;
@@ -13,14 +14,24 @@ use App\Models\User;
 use Filament\Facades\Filament;
 use Filament\Forms\Components\FileUpload;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Queue;
 use Illuminate\Support\Facades\Storage;
+use Livewire\Livewire;
+use PHPUnit\Framework\Attributes\DataProvider;
 use Tests\TestCase;
 
 class GedcomResourceTest extends TestCase
 {
     use RefreshDatabase;
+
+    /**
+     * A source header is what makes PHP report a GEDCOM as
+     * text/vnd.familysearch.gedcom rather than application/x-gedcom, and every
+     * real export has one.
+     */
+    private const GEDCOM = "0 HEAD\n1 SOUR PAF 2.2\n1 CHAR ANSEL\n0 TRLR\n";
 
     protected $user;
 
@@ -30,6 +41,123 @@ class GedcomResourceTest extends TestCase
         parent::setUp();
         Queue::fake();
         $this->user = User::factory()->withPersonalTeam()->create();
+    }
+
+    /**
+     * The upload as a user performs it, rather than afterCreate in isolation.
+     *
+     * Every other test here reaches afterCreate by reflection on a bare page
+     * object, which skips the form entirely — so all of them stayed green while
+     * no upload worked at all. The form rejected the file before a record was
+     * created, which is why nothing appeared in the table and the page never
+     * redirected: the redirect follows the record.
+     */
+    #[DataProvider('genealogyFileProvider')]
+    public function test_uploading_a_family_tree_file_creates_a_record(string $filename, string $contents): void
+    {
+        Storage::fake('private');
+        Queue::fake();
+
+        $this->actAsTeamMember();
+
+        Livewire::test(CreateGedcom::class)
+            ->set('data.filename', [UploadedFile::fake()->createWithContent($filename, $contents)])
+            ->call('create')
+            ->assertHasNoFormErrors();
+
+        $this->assertSame(1, Gedcom::count(), "Uploading {$filename} created no record.");
+    }
+
+    /**
+     * @return array<string, array{0: string, 1: string}>
+     */
+    public static function genealogyFileProvider(): array
+    {
+        return [
+            'gedcom' => ['tree.ged', self::GEDCOM],
+            'gramps' => ['tree.gramps', '<?xml version="1.0"?><database/>'],
+            'xml' => ['tree.xml', '<?xml version="1.0"?><database/>'],
+        ];
+    }
+
+    /**
+     * Why the upload is validated by extension and not by media type.
+     *
+     * This is the assertion that actually pins the bug, because it works on the
+     * bytes the way a real upload does. The media type PHP reports for a GEDCOM
+     * depends on what is in the file: a bare one comes back as
+     * application/x-gedcom, while anything carrying a source header — which
+     * every real export does — comes back as text/vnd.familysearch.gedcom. The
+     * form accepted neither, so no genuine GEDCOM could be uploaded at all.
+     *
+     * Adding those two names to the list would have fixed the examples in front
+     * of us and left the next exporter's output failing the same way. The
+     * extension is what CreateGedcom already switches on to choose an import
+     * job, so it is what gets validated.
+     */
+    public function test_a_real_gedcom_is_accepted_despite_its_reported_media_type(): void
+    {
+        $upload = $this->uploadOf('royal.ged', self::GEDCOM);
+
+        $this->assertSame(
+            'text/vnd.familysearch.gedcom',
+            $upload->getMimeType(),
+            'Fixture is degenerate: this content no longer reproduces the media type that broke uploads.',
+        );
+
+        $this->assertTrue(
+            validator(['file' => $upload], ['file' => ['extensions:ged,gramps,xml']])->passes(),
+            'A real GEDCOM was refused by the rule the form now uses.',
+        );
+    }
+
+    public function test_a_file_of_an_unsupported_kind_is_still_refused(): void
+    {
+        $this->assertFalse(
+            validator(
+                ['file' => $this->uploadOf('notes.txt', "just some notes\n")],
+                ['file' => ['extensions:ged,gramps,xml']],
+            )->passes(),
+            'Validating by extension must still refuse what is not a family tree file.',
+        );
+    }
+
+    /**
+     * The redirect the user noticed was missing. It follows from the record
+     * being created rather than being an independent step, so it is asserted
+     * rather than assumed.
+     */
+    public function test_a_successful_upload_redirects_to_the_import_log(): void
+    {
+        Storage::fake('private');
+        Queue::fake();
+
+        $this->actAsTeamMember();
+
+        Livewire::test(CreateGedcom::class)
+            ->set('data.filename', [UploadedFile::fake()->createWithContent('tree.ged', self::GEDCOM)])
+            ->call('create')
+            ->assertRedirect(ImportJobResource::getUrl('index'));
+    }
+
+    /**
+     * A genuine upload, backed by a real file on disk, so getMimeType() runs
+     * over the bytes as it does in production. UploadedFile::fake() guesses
+     * from the extension instead, which is exactly the difference that hid this.
+     */
+    private function uploadOf(string $name, string $contents): UploadedFile
+    {
+        $path = tempnam(sys_get_temp_dir(), 'upload');
+        file_put_contents($path, $contents);
+
+        return new UploadedFile($path, $name, null, null, true);
+    }
+
+    private function actAsTeamMember(): void
+    {
+        $user = User::factory()->withPersonalTeam()->create();
+        $this->actingAs($user);
+        Filament::setTenant($user->currentTeam, isQuiet: true);
     }
 
     public function test_resource_has_correct_model(): void

@@ -76,8 +76,28 @@ class GedcomResource extends AppResource
                         FileUpload::make('filename')
                             ->label('Family tree file')
                             ->required()
-                            ->acceptedFileTypes(['text/plain', 'application/xml', 'text/xml', 'application/octet-stream'])
-                            ->mimeTypeMap(['ged' => 'text/plain', 'gramps' => 'application/xml', 'xml' => 'application/xml'])
+                            // Validated by extension, not by media type.
+                            //
+                            // This used to accept a list of media types, and no
+                            // .ged or .gramps file matched any of them, so every
+                            // upload of either was rejected before a record was
+                            // created — which is why nothing appeared in the
+                            // table and the page never redirected. Only a plain
+                            // .xml got through.
+                            //
+                            // Enumerating the missing types is not the fix: what
+                            // PHP reports for a GEDCOM depends on the file. A
+                            // minimal one is application/x-gedcom, while a real
+                            // export carrying a FamilySearch header comes back as
+                            // text/vnd.familysearch.gedcom, and other tools
+                            // produce text/plain or application/octet-stream. A
+                            // list long enough to be safe would be so broad it
+                            // checked nothing.
+                            //
+                            // The extension is what the application acts on
+                            // anyway — CreateGedcom picks the import job by it —
+                            // so it is the honest thing to validate.
+                            ->rules(['extensions:ged,gramps,xml'])
                             ->maxSize(100000)
                             ->disk('private')
                             ->directory('gedcom-form-imports')
