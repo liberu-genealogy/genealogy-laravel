@@ -30,7 +30,7 @@ class RelationshipCalculatorReport extends Page implements HasForms
     protected static ?string $navigationLabel = 'Relationship Calculator';
 
     #[\Override]
-    protected static string|\UnitEnum|null $navigationGroup = '📄 Reports';
+    protected static string|\UnitEnum|null $navigationGroup = '📊 Charts & Reports';
 
     public ?array $data = [];
 

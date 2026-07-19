@@ -32,7 +32,7 @@ class MediaObjectResource extends AppResource
     protected static ?string $navigationLabel = 'Photos & Documents';
 
     #[Override]
-    protected static string|\UnitEnum|null $navigationGroup = '📁 Media & Documents';
+    protected static string|\UnitEnum|null $navigationGroup = '📋 Research Workspace';
 
     #[Override]
     protected static ?int $navigationSort = 1;

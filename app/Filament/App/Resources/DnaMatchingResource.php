@@ -38,7 +38,7 @@ class DnaMatchingResource extends AppResource
     protected static ?string $navigationLabel = 'DNA Matches';
 
     #[\Override]
-    protected static string|\UnitEnum|null $navigationGroup = '🧬 DNA & Genetics';
+    protected static string|\UnitEnum|null $navigationGroup = '🧬 DNA & Matching';
 
     #[\Override]
     protected static ?int $navigationSort = 2;

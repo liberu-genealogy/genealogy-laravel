@@ -25,7 +25,7 @@ class TreePrivacy extends Page
     protected static ?string $title = 'Tree Privacy';
 
     #[\Override]
-    protected static string|\UnitEnum|null $navigationGroup = '📋 Research Management';
+    protected static string|\UnitEnum|null $navigationGroup = '📋 Research Workspace';
 
     /**
      * The current tenant's trees (BelongsToTenant scopes this to the active team).

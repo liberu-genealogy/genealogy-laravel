@@ -20,7 +20,7 @@ class GrampsXmlExportPage extends Page
     protected static ?string $navigationLabel = 'GrampsXML Export';
 
     #[\Override]
-    protected static string|\UnitEnum|null $navigationGroup = '🛠️ Data Management';
+    protected static string|\UnitEnum|null $navigationGroup = '🛠️ Data & Import';
 
     #[\Override]
     protected static ?int $navigationSort = 3;

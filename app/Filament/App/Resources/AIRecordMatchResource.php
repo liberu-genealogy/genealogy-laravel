@@ -23,7 +23,7 @@ class AIRecordMatchResource extends AppResource
     protected static ?string $navigationLabel = 'AI Record Matches';
 
     #[\Override]
-    protected static string|\UnitEnum|null $navigationGroup = '🔍 Research & Analysis';
+    protected static string|\UnitEnum|null $navigationGroup = '🧬 DNA & Matching';
 
     #[\Override]
     public static function table(Table $table): Table

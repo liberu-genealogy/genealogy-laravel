@@ -22,7 +22,7 @@ class DabovilleReportPage extends Page
     protected static ?string $navigationLabel = 'DAboville Report';
 
     #[\Override]
-    protected static string|\UnitEnum|null $navigationGroup = '📄 Reports';
+    protected static string|\UnitEnum|null $navigationGroup = '📊 Charts & Reports';
 
     public function mount(): void
     {

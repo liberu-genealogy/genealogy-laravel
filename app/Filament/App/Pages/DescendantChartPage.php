@@ -15,7 +15,7 @@ class DescendantChartPage extends Page
     protected static ?string $navigationLabel = 'Descendant Chart';
 
     #[\Override]
-    protected static string|\UnitEnum|null $navigationGroup = '📊 Charts & Visualizations';
+    protected static string|\UnitEnum|null $navigationGroup = '📊 Charts & Reports';
 
     #[\Override]
     protected static ?int $navigationSort = 3;

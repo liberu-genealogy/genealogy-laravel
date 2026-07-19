@@ -23,7 +23,7 @@ class TreeCompletenessReport extends Page
     protected static ?string $navigationLabel = 'Tree Completeness';
 
     #[\Override]
-    protected static string|\UnitEnum|null $navigationGroup = '📄 Reports';
+    protected static string|\UnitEnum|null $navigationGroup = '📊 Charts & Reports';
 
     /**
      * Completeness stats for every tree in the current tenant.

@@ -29,7 +29,7 @@ class SmartMatchResource extends AppResource
     protected static ?string $navigationLabel = 'Smart Matches';
 
     #[\Override]
-    protected static string|\UnitEnum|null $navigationGroup = '🔍 Research & Analysis';
+    protected static string|\UnitEnum|null $navigationGroup = '🧬 DNA & Matching';
 
     #[\Override]
     protected static ?int $navigationSort = 4;

@@ -27,7 +27,7 @@ class AddrResource extends AppResource
     protected static ?string $navigationLabel = 'Address';
 
     #[Override]
-    protected static string|\UnitEnum|null $navigationGroup = '👥 Family Tree';
+    protected static string|\UnitEnum|null $navigationGroup = '🗂️ GEDCOM Detail';
 
     #[Override]
     public static function canCreate(): bool

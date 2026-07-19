@@ -100,9 +100,9 @@ class ImportJobResourceTest extends TestCase
         $this->assertEquals($this->user->id, $results->first()->user_id);
     }
 
-    public function test_navigation_group_is_data_management(): void
+    public function test_navigation_group_is_data_and_import(): void
     {
-        $this->assertStringContainsString('Data Management', ImportJobResource::getNavigationGroup());
+        $this->assertStringContainsString('Data & Import', ImportJobResource::getNavigationGroup());
     }
 
     public function test_list_page_class_resolves_correctly(): void

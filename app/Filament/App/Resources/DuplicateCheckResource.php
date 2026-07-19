@@ -26,7 +26,7 @@ class DuplicateCheckResource extends AppResource
     protected static ?string $navigationLabel = 'Duplicate Checker';
 
     #[\Override]
-    protected static string|\UnitEnum|null $navigationGroup = '🔍 Research & Analysis';
+    protected static string|\UnitEnum|null $navigationGroup = '🧬 DNA & Matching';
 
     #[\Override]
     protected static ?int $navigationSort = 3;
