@@ -1795,12 +1795,6 @@ parameters:
 			path: app/Services/Dna/SegmentMatcher.php
 
 		-
-			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$current_team_id\.$#'
-			identifier: property.notFound
-			count: 1
-			path: app/Services/DnaTriangulationService.php
-
-		-
 			message: '#^Comparison operation "\>" between 0\.5\|0\.7\|0\.8\|1\.0 and 0 is always true\.$#'
 			identifier: greater.alwaysTrue
 			count: 1
