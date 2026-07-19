@@ -4,6 +4,7 @@ namespace App\Filament\App\Pages;
 
 use App\Jobs\ExportGedCom;
 use Filament\Actions\Action;
+use Filament\Facades\Filament;
 use Filament\Notifications\Notification;
 use Filament\Pages\Page;
 use Illuminate\Support\Facades\Auth;
@@ -45,11 +46,28 @@ class GedcomExportPage extends Page
         ];
     }
 
+    /**
+     * Every path below is confined to the current team's export directory.
+     *
+     * This page used to list every file at the root of the shared private disk
+     * whose name ended in the export suffix, and hand out a signed download URL
+     * for each. Names were timestamps, so nothing distinguished one team's tree
+     * from another's: every member of every team was shown, and could download,
+     * every other team's exported family tree. Deleting worked the same way — a
+     * name matching the expected pattern was sufficient, whoever it belonged to.
+     *
+     * The team is read from the tenant rather than from the user's stored team,
+     * so it is the team on screen that is exported and listed.
+     */
     public function startExport(): void
     {
         $user = Auth::user();
+        $teamId = $this->teamId();
+
+        abort_unless($user && $teamId, 403);
+
         $fileName = now()->format('Y-m-d_His').'_family_tree.ged';
-        ExportGedCom::dispatch($fileName, $user);
+        ExportGedCom::dispatch($fileName, $user, $teamId);
 
         Notification::make()
             ->title('Export started')
@@ -60,12 +78,19 @@ class GedcomExportPage extends Page
 
     public function deleteFile(string $filename): void
     {
-        // Validate filename to prevent path traversal — only allow exact expected pattern
+        // The pattern check stays: it stops path traversal, which prefixing a
+        // directory would not. It is not, on its own, evidence of ownership —
+        // every team's exports match it, which is how this deleted other
+        // teams' files.
         if (! preg_match('/^\d{4}-\d{2}-\d{2}_\d{6}_family_tree\.ged$/', $filename)) {
             return;
         }
 
-        Storage::disk('private')->delete($filename);
+        $teamId = $this->teamId();
+
+        abort_unless((bool) $teamId, 403);
+
+        Storage::disk('private')->delete(ExportGedCom::directoryFor($teamId).'/'.$filename);
 
         Notification::make()
             ->title('File deleted')
@@ -76,9 +101,15 @@ class GedcomExportPage extends Page
     #[Computed]
     public function exportedFiles(): array
     {
+        $teamId = $this->teamId();
+
+        if (! $teamId) {
+            return [];
+        }
+
         $disk = Storage::disk('private');
 
-        return collect($disk->files('/'))
+        return collect($disk->files(ExportGedCom::directoryFor($teamId)))
             ->filter(fn (string $file): bool => str_ends_with($file, '_family_tree.ged'))
             ->map(fn (string $file) => [
                 'name' => basename($file),
@@ -90,6 +121,13 @@ class GedcomExportPage extends Page
             ->sortByDesc('timestamp')
             ->values()
             ->toArray();
+    }
+
+    private function teamId(): ?int
+    {
+        $tenant = Filament::getTenant();
+
+        return $tenant ? (int) $tenant->getKey() : null;
     }
 
     private function formatBytes(int $bytes): string

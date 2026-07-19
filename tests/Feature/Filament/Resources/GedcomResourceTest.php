@@ -10,6 +10,7 @@ use App\Jobs\ImportGrampsXml;
 use App\Models\Gedcom;
 use App\Models\ImportJob;
 use App\Models\User;
+use Filament\Facades\Filament;
 use Filament\Forms\Components\FileUpload;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Auth;
@@ -63,13 +64,34 @@ class GedcomResourceTest extends TestCase
         $this->assertFalse(GedcomResource::canCreate());
     }
 
-    public function test_export_gedcom_dispatches_job_with_authenticated_user(): void
+    /**
+     * A team is required as well as a user. Exports are written into the
+     * exporting team's directory and listed from there, so a job dispatched
+     * without one would produce a file belonging to nobody — which is how every
+     * team's exports came to sit in one shared directory.
+     */
+    public function test_export_gedcom_dispatches_job_with_the_team_being_viewed(): void
     {
-        Auth::login($this->user);
+        $user = User::factory()->withPersonalTeam()->create();
+        Auth::login($user);
+        Filament::setTenant($user->currentTeam, isQuiet: true);
 
         GedcomResource::exportGedcom();
 
-        Queue::assertPushed(ExportGedCom::class, fn ($job): bool => $job->user->id === $this->user->id);
+        Queue::assertPushed(
+            ExportGedCom::class,
+            fn ($job): bool => $job->user->id === $user->id && $job->teamId === $user->current_team_id,
+        );
+    }
+
+    public function test_export_gedcom_does_not_dispatch_without_a_team(): void
+    {
+        Auth::login($this->user);
+        Filament::setTenant(null, isQuiet: true);
+
+        GedcomResource::exportGedcom();
+
+        Queue::assertNotPushed(ExportGedCom::class);
     }
 
     public function test_export_gedcom_does_not_dispatch_without_authenticated_user(): void
