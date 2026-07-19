@@ -22,11 +22,13 @@ use Tests\TestCase;
  * right test, and the switcher needs the same widening or the fix is invisible
  * to exactly the users it should serve.
  *
- * What makes this survivable today is a second defect: the tenant in the URL
- * does not yet control which records are shown, so opening another team's URL
- * shows you your own data rather than theirs. That is why the scoping ticket is
- * blocked on this one — fixing scoping first would turn a confusing display
- * into a genuine cross-tenant leak.
+ * A note on what this did NOT mask, because an earlier version of this comment
+ * had it wrong. It claimed the URL did not control which records were shown, so
+ * opening another team's URL showed you your own data. That is false for anyone
+ * who legitimately belongs to the team: the SwitchTeam listener fires on
+ * TenantSet and persists current_team_id to the tenant in the URL, and the
+ * tenant scope reads that column — so data already follows the URL for them.
+ * The old behaviour was an access hole, plainly, not a half-open one.
  */
 class TenantAccessControlTest extends TestCase
 {
@@ -116,13 +118,15 @@ class TenantAccessControlTest extends TestCase
         $owner = User::factory()->withPersonalTeam()->create();
         $outsider = User::factory()->withPersonalTeam()->create();
 
-        $response = $this->actingAs($outsider)->get('/app/'.$owner->currentTeam->id);
-
-        $this->assertContains(
-            $response->getStatusCode(),
-            [403, 404],
-            'An outsider was served another team\'s panel URL.',
-        );
+        // 404 exactly, not "403 or 404": a loose assertion here would also pass
+        // if the panel route were removed altogether, which is a false green on
+        // the one test standing between a user and someone else's tenant.
+        // Filament's IdentifyTenant aborts 404 rather than 403, which also means
+        // an unauthorised team and a nonexistent one are indistinguishable — no
+        // existence disclosure.
+        $this->actingAs($outsider)
+            ->get('/app/'.$owner->currentTeam->id)
+            ->assertNotFound();
     }
 
     public function test_opening_your_own_teams_url_is_allowed(): void
@@ -143,6 +147,50 @@ class TenantAccessControlTest extends TestCase
         $this->actingAs($member->fresh())
             ->get('/app/'.$owner->current_team_id)
             ->assertSuccessful();
+    }
+
+    /**
+     * Guards a dead end this change introduced. current_team_id can outlive
+     * membership — removeUser() and a bare detach() both leave it set — and the
+     * default tenant used to be read straight off it. Once access stopped being
+     * unconditional, that meant login redirecting to a tenant the access check
+     * then refused: a 404 with no way out.
+     */
+    public function test_a_user_removed_from_their_current_team_still_lands_somewhere_reachable(): void
+    {
+        $owner = User::factory()->withPersonalTeam()->create();
+        $member = User::factory()->withPersonalTeam()->create();
+        $ownTeam = $member->currentTeam;
+
+        $owner->currentTeam->users()->attach($member, ['role' => 'editor']);
+        $member->forceFill(['current_team_id' => $owner->current_team_id])->save();
+
+        // Removed from that team, but the column still points at it.
+        $owner->currentTeam->users()->detach($member);
+
+        $default = $member->fresh()->getDefaultTenant(Filament::getPanel('app'));
+
+        $this->assertNotNull($default, 'A removed member was left with no default tenant.');
+        $this->assertSame($ownTeam->id, $default->id);
+        $this->assertTrue($member->fresh()->canAccessTenant($default));
+    }
+
+    /**
+     * A member who owns nothing — an invited account — used to get null here,
+     * because the fallback only considered owned teams. LoginResponse reads this
+     * directly, so they were sent to create a team despite belonging to one.
+     */
+    public function test_a_member_who_owns_no_team_still_has_a_default_tenant(): void
+    {
+        $owner = User::factory()->withPersonalTeam()->create();
+        $member = User::factory()->create();
+
+        $owner->currentTeam->users()->attach($member, ['role' => 'editor']);
+
+        $default = $member->fresh()->getDefaultTenant(Filament::getPanel('app'));
+
+        $this->assertNotNull($default, 'An invited member was left with no team to land on.');
+        $this->assertSame($owner->current_team_id, $default->id);
     }
 
     public function test_a_deleted_or_unknown_team_is_refused(): void
