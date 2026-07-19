@@ -28,8 +28,16 @@
             <div class="space-y-4">
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                     <x-filament::card>
-                        <div class="text-sm text-gray-500">Total Compared</div>
+                        <div class="text-sm text-gray-500">Kits Compared</div>
                         <div class="text-2xl font-bold">{{ $results['total_compared'] ?? 0 }}</div>
+                        {{-- Kits that could not be read are named rather than
+                             silently dropped from the count. Counting them as
+                             compared would assert work that never happened. --}}
+                        @if (($results['unreadable_kits'] ?? 0) > 0)
+                            <div class="mt-1 text-xs text-amber-600">
+                                {{ $results['unreadable_kits'] }} of {{ $results['total_attempted'] ?? 0 }} kit(s) could not be read
+                            </div>
+                        @endif
                     </x-filament::card>
 
                     <x-filament::card>

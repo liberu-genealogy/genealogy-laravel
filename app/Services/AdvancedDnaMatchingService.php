@@ -163,14 +163,32 @@ class AdvancedDnaMatchingService
     {
         return [
             // No comparison took place — the kits could not be read or parsed.
-            // The zeros below are placeholders for "unknown", not measurements.
             'comparison_performed' => false,
+
+            // Confidence and quality are null rather than 0.0 because they are
+            // the two figures a caller renders as a measurement: "0% confidence"
+            // and "0.00 quality" both read as findings. Null cannot be mistaken
+            // for one, so a consumer that forgets to check comparison_performed
+            // fails visibly instead of quietly displaying a score.
+            //
+            // A genuinely measured zero is still 0.0 — see the success path.
+            // Suppressing that would be the same conflation in reverse.
+            'confidence_level' => null,
+            'match_quality_score' => null,
+
+            // These stay numeric, and the reason is blast radius rather than
+            // principle: 0.0 shared cM for a kit nobody read is the same untruth
+            // as 0.0 confidence. Every consumer of all five is behind the
+            // comparison_performed guard, so nulling all of them would be
+            // equally defensible and equally invisible. The two above are picked
+            // out because they are the figures a caller renders directly as a
+            // score — "0% confidence", "0.00 quality" — whereas these are
+            // compared against thresholds and summed, where a null would change
+            // arithmetic rather than clarify it.
             'total_cms' => 0.0,
             'largest_cm' => 0.0,
-            'confidence_level' => 0.0,
-            'predicted_relationship' => 'Unknown (Basic Analysis)',
             'shared_segments_count' => 0,
-            'match_quality_score' => 0.0,
+            'predicted_relationship' => 'Unknown (Basic Analysis)',
             'detailed_report' => [
                 'analysis_date' => now()->toISOString(),
                 'analysis_notes' => ['Basic analysis: DNA kit data could not be read for segment matching.'],

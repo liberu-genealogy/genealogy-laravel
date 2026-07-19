@@ -37,7 +37,15 @@ class DnaTriangulationService
             ],
             'matches' => [],
             'triangulated_groups' => [],
-            'total_compared' => $compareKits->count(),
+            // total_compared used to be $compareKits->count() — the number of
+            // kits offered, counted before any of them were read — and the page
+            // labelled it "Total Compared". Ten kits of which four were
+            // unreadable reported ten comparisons: work attempted presented as
+            // work done. It now counts comparisons that actually ran, and the
+            // kits that could not be read are reported rather than dropped.
+            'total_attempted' => $compareKits->count(),
+            'total_compared' => 0,
+            'unreadable_kits' => 0,
             'significant_matches' => 0,
         ];
 
@@ -55,7 +63,15 @@ class DnaTriangulationService
                 // threshold of 0 — reachable from the UI, where the minimum cM
                 // field allows 0. Require an actual comparison, not just a
                 // number that happens to pass the filter.
-                if (($matchResult['comparison_performed'] ?? false) && $matchResult['total_cms'] >= $minSharedCm) {
+                if (! ($matchResult['comparison_performed'] ?? false)) {
+                    $results['unreadable_kits']++;
+
+                    continue;
+                }
+
+                $results['total_compared']++;
+
+                if ($matchResult['total_cms'] >= $minSharedCm) {
                     $results['matches'][] = [
                         'kit_id' => $compareKit->id,
                         'kit_name' => $compareKit->name,
