@@ -9,7 +9,6 @@ use Filament\Models\Contracts\HasDefaultTenant;
 use Filament\Models\Contracts\HasTenants;
 use Filament\Panel;
 use Illuminate\Database\Eloquent\Casts\Attribute;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -17,6 +16,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Storage;
 use JoelButcher\Socialstream\HasConnectedAccounts;
 use JoelButcher\Socialstream\SetsProfilePhotoFromUrl;
@@ -152,12 +152,27 @@ class User extends Authenticatable implements FilamentUser, HasDefaultTenant, Ha
      */
     public function getTenants(Panel $panel): array|Collection
     {
-        return $this->ownedTeams;
+        // Owned teams AND teams joined. Listing only owned teams left a member
+        // of someone else's team with no way to reach it, which is the mirror
+        // image of the access check below being too permissive.
+        return $this->allTeams();
     }
 
+    /**
+     * Filament calls this to authorise the tenant in the URL.
+     *
+     * This returned an unconditional true, with the real condition commented
+     * out on the same line, so any authenticated user could open any team by
+     * typing its URL. Nothing in the interface led there, because the switcher
+     * lists only reachable teams — it was reachable by editing the address bar.
+     *
+     * The commented-out condition tested ownership. Restoring it verbatim would
+     * have locked every member out of teams they legitimately belong to but do
+     * not own, so the test is membership: belongsToTeam() covers both.
+     */
     public function canAccessTenant(Model $tenant): bool
     {
-        return true; // $this->ownedTeams->contains($tenant);
+        return $this->belongsToTeam($tenant);
     }
 
     public function canAccessFilament(): bool
@@ -185,9 +200,35 @@ class User extends Authenticatable implements FilamentUser, HasDefaultTenant, Ha
         };
     }
 
+    /**
+     * The team to land on when no tenant is in the URL.
+     *
+     * Two things this has to get right, both of which it previously did not.
+     *
+     * latestTeam is an unguarded belongsTo on current_team_id, so it can point
+     * at a team the user no longer belongs to — removeUser() and a bare
+     * teams()->detach() both leave the column behind. Returning that team sends
+     * the user to a tenant the access check then refuses, which is a login
+     * followed immediately by a 404 and no way out. That became reachable the
+     * moment canAccessTenant stopped returning true unconditionally, so the
+     * membership test here is part of that same change rather than a tidy-up.
+     *
+     * And the fallback only considered owned teams, so a member who owns
+     * nothing — an invited account, or anyone whose own team was removed — got
+     * null and was redirected to create a team despite having one they could
+     * reach. LoginResponse calls this directly rather than going through
+     * Filament, which falls back to the tenant list on its own, so the gap
+     * showed up on the first screen after signing in.
+     */
     public function getDefaultTenant(Panel $panel): ?Model
     {
-        return $this->latestTeam ?? $this->ownedTeams()->first();
+        $current = $this->latestTeam;
+
+        if ($current && $this->belongsToTeam($current)) {
+            return $current;
+        }
+
+        return $this->allTeams()->first();
     }
 
     public function latestTeam(): BelongsTo
