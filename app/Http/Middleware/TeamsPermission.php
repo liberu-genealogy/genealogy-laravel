@@ -25,12 +25,12 @@ class TeamsPermission
      * user arrived on while the interface rendered the one they had navigated
      * to. Reading the route removes the ordering dependency entirely.
      *
-     * Worth knowing before relying on any of this: Spatie's team support is
-     * currently DISABLED (permission.teams is false) and the roles tables have
-     * no team_id column, so setPermissionsTeamId() writes somewhere nothing
-     * reads and every role in this application is global. Setting it correctly
-     * is a precondition for team-scoped roles, not a behaviour change on its
-     * own.
+     * This used to carry a warning that it did nothing: team support was off
+     * and the roles tables had no team_id column, so what it wrote was never
+     * read. That is no longer true — permission.teams is on and roles are
+     * scoped per team, so the value set here decides which roles a request
+     * resolves. Roles defined without a team are the exception and apply
+     * everywhere; see User::roles().
      *
      * @param  Closure(Request):Response  $next
      */

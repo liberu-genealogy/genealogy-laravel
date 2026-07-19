@@ -30,19 +30,18 @@ use Tests\TestCase;
  * switching anywhere else was refused. Widening it to teams a user belongs to
  * made cross-team navigation an ordinary path.
  *
- * READ THIS BEFORE TRUSTING WHAT THESE TESTS PROVE.
+ * WHAT THESE TESTS DO AND DO NOT PROVE.
  *
- * Spatie's team support is currently disabled — permission.teams is false, and
- * the roles tables carry no team_id column — so setPermissionsTeamId() writes
- * to a holder nothing reads. Every role in this application is global, and the
- * scenario these tests are named for (administrator of one team, viewer of
- * another) is not representable in the schema as it stands.
+ * They pin the team id being computed from the URL and set correctly. When
+ * they were written that was all they could prove: team support was disabled
+ * and the roles tables had no team_id column, so no permission check could
+ * honour what this wrote.
  *
- * So the assertions below pin the team id being computed and set correctly.
- * They do not, and cannot yet, demonstrate that a permission check honours it.
- * That is a precondition, not the fix; enabling team-scoped roles is separate
- * work. Stating it here because a green file named after roles invites exactly
- * the wrong conclusion.
+ * That precondition has since been met — see TeamScopedRolesTest, which covers
+ * a role check actually following the tenant, and AdminPanelAuthorizationTest
+ * for the tenancy-less admin panel. These tests still stop at the middleware
+ * deliberately: they are the ones that fail if the ordering regresses, and
+ * keeping them narrow is what makes that signal legible.
  */
 class PermissionsFollowTenantTest extends TestCase
 {
