@@ -427,12 +427,6 @@ parameters:
 			path: app/Jobs/DnaMatching.php
 
 		-
-			message: '#^Property App\\Jobs\\ExportGrampsXml\:\:\$user is never read, only written\.$#'
-			identifier: property.onlyWritten
-			count: 1
-			path: app/Jobs/ExportGrampsXml.php
-
-		-
 			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$id\.$#'
 			identifier: property.notFound
 			count: 1

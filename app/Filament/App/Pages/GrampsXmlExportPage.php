@@ -6,6 +6,7 @@ namespace App\Filament\App\Pages;
 
 use App\Jobs\ExportGrampsXml;
 use Filament\Actions\Action;
+use Filament\Facades\Filament;
 use Filament\Notifications\Notification;
 use Filament\Pages\Page;
 use Illuminate\Support\Facades\Auth;
@@ -45,11 +46,22 @@ class GrampsXmlExportPage extends Page
         ];
     }
 
+    /**
+     * The team is required, not optional: the export is written into that
+     * team's directory and built from that team's records. Dispatched without
+     * one, the job produced a file from every team's data — the tenant scope is
+     * a global scope that no-ops when nobody is authenticated, which is every
+     * queued job.
+     */
     public function startExport(): void
     {
         $user = Auth::user();
+        $tenant = Filament::getTenant();
+
+        abort_unless($user && $tenant, 403);
+
         $fileName = now()->format('Y-m-d_His').'_family_tree.gramps';
-        ExportGrampsXml::dispatch($fileName, $user);
+        ExportGrampsXml::dispatch($fileName, $user, (int) $tenant->getKey());
 
         Notification::make()
             ->title('Export started')

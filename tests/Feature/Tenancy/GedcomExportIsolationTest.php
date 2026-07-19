@@ -6,6 +6,7 @@ namespace Tests\Feature\Tenancy;
 
 use App\Filament\App\Pages\GedcomExportPage;
 use App\Jobs\ExportGedCom;
+use App\Jobs\ExportGrampsXml;
 use App\Models\Family;
 use App\Models\Person;
 use App\Models\User;
@@ -124,6 +125,49 @@ class GedcomExportIsolationTest extends TestCase
 
         $this->assertStringNotContainsString(
             "HUSB @{$theirs}@",
+            $content,
+            'The exported tree contained another team\'s people.',
+        );
+    }
+
+    /**
+     * The GrampsXML export had the same two faults as the GEDCOM one and was
+     * fixed alongside it, so it is pinned the same way. The leak was plainer
+     * here: Person::all() is handed straight to the generator, and in a job
+     * nothing is authenticated, so the tenant scope no-ops and returns every
+     * team's people.
+     *
+     * No page lists these files, which is the only reason this was not also a
+     * download of other teams' trees.
+     */
+    public function test_an_exported_gramps_tree_contains_only_its_own_teams_people(): void
+    {
+        Storage::fake('private');
+
+        $owner = $this->actAsOwnerOfTeam();
+        $ours = $this->treeFor($owner->current_team_id);
+        $theirs = $this->treeFor($this->otherTeamId());
+
+        $user = $owner->fresh();
+
+        Auth::logout();
+        Filament::setTenant(null, isQuiet: true);
+
+        (new ExportGrampsXml('export.gramps', $user, $owner->current_team_id))->handle();
+
+        $content = Storage::disk('private')->get($this->pathFor($owner->current_team_id, 'export.gramps'));
+
+        // The person handle, not the bare id: a lone digit turns up in the
+        // DTD version and the timestamps, so asserting on it would pass or fail
+        // for reasons having nothing to do with whose tree this is.
+        $this->assertStringContainsString(
+            "person_{$ours}",
+            $content,
+            'The export did not contain the team\'s own people, so it proves nothing about the rest.',
+        );
+
+        $this->assertStringNotContainsString(
+            "person_{$theirs}",
             $content,
             'The exported tree contained another team\'s people.',
         );
