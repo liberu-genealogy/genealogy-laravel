@@ -5,6 +5,7 @@ namespace App\Services\VideoConferencing;
 use Carbon\Carbon;
 use Exception;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Str;
 
 class ZoomService implements VideoConferencingInterface
 {
@@ -218,8 +219,28 @@ class ZoomService implements VideoConferencingInterface
         return $data['access_token'];
     }
 
+    /**
+     * This gates access to a real meeting, so it needs a cryptographically
+     * secure source. It was str_shuffle() over a fixed alphabet, taking the
+     * first eight characters.
+     *
+     * The defect that matters is predictability: str_shuffle draws from the
+     * Mt19937 generator, whose internal state is recoverable from observed
+     * output, so seeing enough passcodes lets you predict the next one.
+     *
+     * Permuting rather than sampling was the second, much smaller problem —
+     * every character was guaranteed distinct, giving 62P8 rather than 62^8.
+     * That is worth only 0.68 bits (46.95 -> 47.63), so it is not the reason
+     * for this change; it is simply the property a test can pin, since a
+     * repeated character is impossible under a permutation and commonplace
+     * under sampling.
+     *
+     * Str::random is backed by random_bytes. Its base64 alphabet has '+' and
+     * '/' removed, which is rejection sampling and preserves uniformity, so
+     * the result is uniform over the same 62 alphanumerics Zoom accepts.
+     */
     protected function generatePassword(): string
     {
-        return substr(str_shuffle('0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'), 0, 8);
+        return Str::random(8);
     }
 }
