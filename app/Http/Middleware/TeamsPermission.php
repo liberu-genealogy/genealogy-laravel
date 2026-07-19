@@ -18,13 +18,19 @@ class TeamsPermission
      * stored team where there is no tenant — the admin panel, which does not
      * use tenancy, and any non-panel route.
      *
-     * This used to read the stored team only, and ran in the panel's auth
-     * middleware. Filament nests the tenant middleware group inside the auth
-     * group, so it executed before the tenant was identified and before the
-     * SwitchTeam listener updated that column: every role and permission check
-     * in the request resolved against the team the user arrived on while the
-     * interface rendered the one they had navigated to. It is now registered as
-     * tenant middleware, which runs after IdentifyTenant.
+     * This used to read the stored team only. Filament nests the tenant
+     * middleware group inside the auth group, so this runs before the tenant is
+     * identified and before the SwitchTeam listener updates that column: every
+     * role and permission check in the request resolved against the team the
+     * user arrived on while the interface rendered the one they had navigated
+     * to. Reading the route removes the ordering dependency entirely.
+     *
+     * Worth knowing before relying on any of this: Spatie's team support is
+     * currently DISABLED (permission.teams is false) and the roles tables have
+     * no team_id column, so setPermissionsTeamId() writes somewhere nothing
+     * reads and every role in this application is global. Setting it correctly
+     * is a precondition for team-scoped roles, not a behaviour change on its
+     * own.
      *
      * @param  Closure(Request):Response  $next
      */

@@ -29,6 +29,20 @@ use Tests\TestCase;
  * Largely unreachable until recently: the switcher listed only owned teams and
  * switching anywhere else was refused. Widening it to teams a user belongs to
  * made cross-team navigation an ordinary path.
+ *
+ * READ THIS BEFORE TRUSTING WHAT THESE TESTS PROVE.
+ *
+ * Spatie's team support is currently disabled — permission.teams is false, and
+ * the roles tables carry no team_id column — so setPermissionsTeamId() writes
+ * to a holder nothing reads. Every role in this application is global, and the
+ * scenario these tests are named for (administrator of one team, viewer of
+ * another) is not representable in the schema as it stands.
+ *
+ * So the assertions below pin the team id being computed and set correctly.
+ * They do not, and cannot yet, demonstrate that a permission check honours it.
+ * That is a precondition, not the fix; enabling team-scoped roles is separate
+ * work. Stating it here because a green file named after roles invites exactly
+ * the wrong conclusion.
  */
 class PermissionsFollowTenantTest extends TestCase
 {
@@ -60,12 +74,15 @@ class PermissionsFollowTenantTest extends TestCase
     }
 
     /**
-     * PermissionRegistrar is a singleton and production runs Octane, so state
-     * survives between requests in a worker. Routes inside the panel's auth
-     * group but outside its tenant group — team creation, logout, profile,
-     * email verification — would otherwise inherit whichever team the previous
-     * request left set. The middleware is registered in both groups for this
-     * reason, not by accident.
+     * The authenticated routes outside the tenant group — team creation,
+     * logout, profile, email verification — still need a defined permission
+     * team. They get one because the middleware sits in the auth group and
+     * falls back to the stored team when the route names no tenant.
+     *
+     * An earlier version of this docblock justified that with Octane state
+     * surviving between requests. It does not: Spatie registers an
+     * OperationTerminated listener that nulls the team after every operation.
+     * The real reason is simply that tenant middleware does not run here.
      */
     public function test_a_route_without_a_tenant_still_resets_the_permission_team(): void
     {
@@ -84,6 +101,11 @@ class PermissionsFollowTenantTest extends TestCase
     }
 
     /**
+     * This one is a unit test wearing HTTP clothes, and it cannot be otherwise.
+     * A real request cannot distinguish the two sources: IdentifyTenant sets
+     * the tenant and SwitchTeam immediately syncs the column, so they always
+     * agree. The tenant is therefore set manually below to force them apart.
+     *
      * The tenant scope used to read the stored current team, which agreed with
      * the URL only because the SwitchTeam listener had already run. That is an
      * unnamed dependency between a global scope and an event listener: remove
