@@ -9,7 +9,7 @@ use Filament\Models\Contracts\HasDefaultTenant;
 use Filament\Models\Contracts\HasTenants;
 use Filament\Panel;
 use Illuminate\Database\Eloquent\Casts\Attribute;
-use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -152,12 +152,27 @@ class User extends Authenticatable implements FilamentUser, HasDefaultTenant, Ha
      */
     public function getTenants(Panel $panel): array|Collection
     {
-        return $this->ownedTeams;
+        // Owned teams AND teams joined. Listing only owned teams left a member
+        // of someone else's team with no way to reach it, which is the mirror
+        // image of the access check below being too permissive.
+        return $this->allTeams();
     }
 
+    /**
+     * Filament calls this to authorise the tenant in the URL.
+     *
+     * This returned an unconditional true, with the real condition commented
+     * out on the same line, so any authenticated user could open any team by
+     * typing its URL. Nothing in the interface led there, because the switcher
+     * lists only reachable teams — it was reachable by editing the address bar.
+     *
+     * The commented-out condition tested ownership. Restoring it verbatim would
+     * have locked every member out of teams they legitimately belong to but do
+     * not own, so the test is membership: belongsToTeam() covers both.
+     */
     public function canAccessTenant(Model $tenant): bool
     {
-        return true; // $this->ownedTeams->contains($tenant);
+        return $this->belongsToTeam($tenant);
     }
 
     public function canAccessFilament(): bool
