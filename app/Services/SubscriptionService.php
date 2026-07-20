@@ -155,6 +155,36 @@ class SubscriptionService
     }
 
     /**
+     * Pause the user's premium subscription (Stripe pause_collection). Billing
+     * stops and premium access is revoked while paused (ADR 0002). The local
+     * paused_at marker is set here for immediate effect; the webhook keeps it in
+     * sync if the pause is also changed from Stripe's side.
+     */
+    public function pausePremiumSubscription(User $user): void
+    {
+        $subscription = $user->subscription('premium');
+
+        if ($subscription && $subscription->paused_at === null) {
+            $subscription->updateStripeSubscription(['pause_collection' => ['behavior' => 'void']]);
+            $subscription->update(['paused_at' => now()]);
+        }
+    }
+
+    /**
+     * Resume a paused subscription: clear Stripe's pause_collection and the local
+     * marker, restoring billing and premium access.
+     */
+    public function unpausePremiumSubscription(User $user): void
+    {
+        $subscription = $user->subscription('premium');
+
+        if ($subscription && $subscription->paused_at !== null) {
+            $subscription->updateStripeSubscription(['pause_collection' => '']);
+            $subscription->update(['paused_at' => null]);
+        }
+    }
+
+    /**
      * Redirect the user to Stripe's hosted Billing portal to manage their card,
      * view invoices, and cancel (ADR 0001 — the app does not render these). Only
      * meaningful for a user who is already a Stripe customer.
