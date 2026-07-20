@@ -52,12 +52,11 @@ class PruneNoComparisonMatchesCommand extends Command
      * Labels that mark a row as recording something other than a real
      * comparison.
      *
-     * Caveat worth knowing before running this: predicted_relationship is a
-     * free-text TextInput on DnaMatchingResource, so a user with edit rights
-     * could in principle type one of these strings into a hand-curated row and
-     * have it pruned. Constraining that field to the estimator's own labels
-     * would close the gap; until then --dry-run and --export exist so nothing
-     * disappears unseen.
+     * predicted_relationship on DnaMatchingResource is now a Select over the
+     * estimator's own labels (RelationshipEstimator::labels()), which do not
+     * include either marker below — so a user can no longer type one of these
+     * strings into a hand-curated row and have it pruned. --dry-run and --export
+     * remain for auditing what a run would remove.
      *
      * 'Unknown (Basic Analysis)' — performBasicMatching(), when a kit could not
      * be read. This is the population this command exists for.
