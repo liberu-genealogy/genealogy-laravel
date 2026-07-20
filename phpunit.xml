@@ -42,5 +42,6 @@
         <env name="REVERB_APP_ID" value="test"/>
         <env name="REVERB_APP_KEY" value="test"/>
         <env name="REVERB_APP_SECRET" value="test"/>
+        <env name="STRIPE_WEBHOOK_SECRET" value="whsec_test_secret"/>
     </php>
 </phpunit>
