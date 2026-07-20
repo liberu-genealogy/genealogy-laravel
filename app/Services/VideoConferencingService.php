@@ -7,6 +7,7 @@ use App\Services\VideoConferencing\GoogleMeetService;
 use App\Services\VideoConferencing\TeamsService;
 use App\Services\VideoConferencing\VideoConferencingInterface;
 use App\Services\VideoConferencing\ZoomService;
+use App\Support\Unavailable;
 use Exception;
 use Illuminate\Support\Facades\Log;
 
@@ -26,8 +27,17 @@ class VideoConferencingService
     /**
      * Create a meeting for the given virtual event
      */
-    public function createMeeting(VirtualEvent $event): array
+    public function createMeeting(VirtualEvent $event): array|Unavailable
     {
+        if (! $this->isPlatformConfigured($event->platform)) {
+            Log::warning('Video conferencing platform not configured; meeting not created', [
+                'event_id' => $event->id,
+                'platform' => $event->platform,
+            ]);
+
+            return new Unavailable($this->platformLabel($event->platform).' is not configured.');
+        }
+
         try {
             $service = $this->getService($event->platform);
 
@@ -75,8 +85,17 @@ class VideoConferencingService
     /**
      * Update an existing meeting
      */
-    public function updateMeeting(VirtualEvent $event): array
+    public function updateMeeting(VirtualEvent $event): array|Unavailable
     {
+        if (! $this->isPlatformConfigured($event->platform)) {
+            Log::warning('Video conferencing platform not configured; meeting not updated', [
+                'event_id' => $event->id,
+                'platform' => $event->platform,
+            ]);
+
+            return new Unavailable($this->platformLabel($event->platform).' is not configured.');
+        }
+
         try {
             $service = $this->getService($event->platform);
 
@@ -302,5 +321,13 @@ class VideoConferencingService
         } catch (Exception) {
             return false;
         }
+    }
+
+    /**
+     * Human-readable name for a platform key, for a user-facing reason.
+     */
+    protected function platformLabel(string $platform): string
+    {
+        return $this->getAvailablePlatforms()[$platform]['name'] ?? ucfirst($platform);
     }
 }

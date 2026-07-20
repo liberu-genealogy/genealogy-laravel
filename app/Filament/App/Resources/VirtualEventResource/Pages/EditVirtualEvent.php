@@ -4,6 +4,7 @@ namespace App\Filament\App\Resources\VirtualEventResource\Pages;
 
 use App\Filament\App\Resources\VirtualEventResource;
 use App\Services\VideoConferencingService;
+use App\Support\Unavailable;
 use Exception;
 use Filament\Actions\Action;
 use Filament\Actions\DeleteAction;
@@ -26,7 +27,17 @@ class EditVirtualEvent extends EditRecord
                 ->action(function (): void {
                     try {
                         $service = app(VideoConferencingService::class);
-                        $service->createMeeting($this->getRecord());
+                        $result = $service->createMeeting($this->getRecord());
+
+                        if ($result instanceof Unavailable) {
+                            Notification::make()
+                                ->title('Meeting Not Created')
+                                ->body($result->reason)
+                                ->warning()
+                                ->send();
+
+                            return;
+                        }
 
                         Notification::make()
                             ->title('Meeting Created')
@@ -50,7 +61,17 @@ class EditVirtualEvent extends EditRecord
                 ->action(function (): void {
                     try {
                         $service = app(VideoConferencingService::class);
-                        $service->updateMeeting($this->getRecord());
+                        $result = $service->updateMeeting($this->getRecord());
+
+                        if ($result instanceof Unavailable) {
+                            Notification::make()
+                                ->title('Meeting Not Updated')
+                                ->body($result->reason)
+                                ->warning()
+                                ->send();
+
+                            return;
+                        }
 
                         Notification::make()
                             ->title('Meeting Updated')
@@ -87,7 +108,15 @@ class EditVirtualEvent extends EditRecord
         if (! empty($record->meeting_id) && $record->platform !== 'custom') {
             try {
                 $service = app(VideoConferencingService::class);
-                $service->updateMeeting($record);
+                $result = $service->updateMeeting($record);
+
+                if ($result instanceof Unavailable) {
+                    Notification::make()
+                        ->title('Meeting Not Updated')
+                        ->body('Event saved, but the meeting was not updated: '.$result->reason)
+                        ->warning()
+                        ->send();
+                }
             } catch (Exception $e) {
                 Notification::make()
                     ->title('Meeting Update Failed')

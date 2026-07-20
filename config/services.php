@@ -62,6 +62,10 @@ return [
         'client_id' => env('GOOGLE_CLIENT_ID'),
         'client_secret' => env('GOOGLE_CLIENT_SECRET'),
         'redirect' => env('GOOGLE_REDIRECT_URI', env('APP_URL').'/oauth/google/callback'),
+        // Google Meet conferencing (GoogleMeetService) — without these the
+        // platform stays disabled rather than unreachable.
+        'refresh_token' => env('GOOGLE_REFRESH_TOKEN'),
+        'enabled' => env('GOOGLE_MEET_ENABLED', false),
     ],
 
     'twitter' => [
@@ -72,6 +76,38 @@ return [
 
     'google_vision' => [
         'api_key' => env('GOOGLE_VISION_API_KEY'),
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Video Conferencing
+    |--------------------------------------------------------------------------
+    |
+    | ZoomService and TeamsService read these keys; they existed nowhere in the
+    | config, so those platforms could not be enabled at all without editing
+    | source. Declared here so an administrator can configure them via env. An
+    | unset key leaves the platform not-configured (it degrades to Unavailable),
+    | not unreachable.
+    |
+    */
+
+    // Credential keys default to '' (not null): ZoomService/TeamsService assign
+    // them to typed string properties via config(key, ''), whose default only
+    // fires when the key is ABSENT — now that the key is present, an unset env
+    // must resolve to '' rather than null or construction TypeErrors.
+    'zoom' => [
+        'enabled' => env('ZOOM_ENABLED', false),
+        'base_url' => env('ZOOM_BASE_URL', 'https://api.zoom.us/v2'),
+        'key' => env('ZOOM_KEY', ''),
+        'secret' => env('ZOOM_SECRET', ''),
+        'account_id' => env('ZOOM_ACCOUNT_ID', ''),
+    ],
+
+    'teams' => [
+        'enabled' => env('TEAMS_ENABLED', false),
+        'client_id' => env('TEAMS_CLIENT_ID', ''),
+        'client_secret' => env('TEAMS_CLIENT_SECRET', ''),
+        'tenant_id' => env('TEAMS_TENANT_ID', ''),
     ],
 
     /*

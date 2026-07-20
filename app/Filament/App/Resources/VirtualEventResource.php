@@ -9,6 +9,7 @@ use App\Filament\App\Resources\VirtualEventResource\Pages\ViewVirtualEvent;
 use App\Filament\App\Resources\VirtualEventResource\RelationManagers\AttendeesRelationManager;
 use App\Models\VirtualEvent;
 use App\Services\VideoConferencingService;
+use App\Support\Unavailable;
 use Carbon\Carbon;
 use Exception;
 use Filament\Actions\Action;
@@ -309,7 +310,17 @@ class VirtualEventResource extends AppResource
         abort_unless(static::collaborationTierPermits('update'), 403);
 
         try {
-            app(VideoConferencingService::class)->createMeeting($record);
+            $result = app(VideoConferencingService::class)->createMeeting($record);
+
+            if ($result instanceof Unavailable) {
+                Notification::make()
+                    ->title('Meeting Not Created')
+                    ->body($result->reason)
+                    ->warning()
+                    ->send();
+
+                return;
+            }
 
             Notification::make()
                 ->title('Meeting Created')
