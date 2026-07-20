@@ -97,6 +97,12 @@ class PhotosRelationManager extends AppRelationManager
                                 ->body("Found {$result['faces_detected']} face(s)")
                                 ->success()
                                 ->send();
+                        } else {
+                            Notification::make()
+                                ->title('Analysis failed')
+                                ->body($result['error'] ?? 'Unknown error')
+                                ->danger()
+                                ->send();
                         }
                     }),
             ])
