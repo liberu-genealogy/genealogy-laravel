@@ -78,6 +78,16 @@ class PremiumDashboardPage extends Page
                 ->action('cancelSubscription');
         }
 
+        // Only a real Stripe customer has a portal; a local-trial premium user
+        // has no stripe_id, so offering it would try to create a customer / fail.
+        if ($user->hasStripeId()) {
+            $actions[] = Action::make('manageBilling')
+                ->label('Manage Billing')
+                ->icon('heroicon-o-credit-card')
+                ->color('primary')
+                ->action('manageBilling');
+        }
+
         $actions[] = Action::make('downgrade')
             ->label('Downgrade to Free')
             ->icon('heroicon-o-arrow-down-circle')
@@ -89,6 +99,21 @@ class PremiumDashboardPage extends Page
             ->action('downgradeToFree');
 
         return $actions;
+    }
+
+    public function manageBilling(): void
+    {
+        try {
+            $portal = app(SubscriptionService::class)->createBillingPortalRedirect(Auth::user());
+
+            $this->redirect($portal->getTargetUrl());
+        } catch (Exception) {
+            Notification::make()
+                ->title('Billing Error')
+                ->body('Unable to open the billing portal. Please try again.')
+                ->danger()
+                ->send();
+        }
     }
 
     public function cancelSubscription(): void
