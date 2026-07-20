@@ -2,7 +2,6 @@
 
 namespace App\Modules\Places\Providers;
 
-use App\Modules\Places\Services\GeocodingService;
 use Illuminate\Support\ServiceProvider;
 
 class PlacesServiceProvider extends ServiceProvider
@@ -13,9 +12,6 @@ class PlacesServiceProvider extends ServiceProvider
     #[\Override]
     public function register(): void
     {
-        // Register places services
-        $this->app->singleton(GeocodingService::class, fn ($app) => new GeocodingService);
-
         // Register places configuration
         // $this->mergeConfigFrom(__DIR__ . '/../config/places.php', 'places');
     }

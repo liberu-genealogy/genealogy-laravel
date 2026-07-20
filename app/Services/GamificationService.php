@@ -346,20 +346,26 @@ class GamificationService
      */
     private function getDailyActivityStreak(User $user): int
     {
+        // One query for the distinct days this user earned points, newest first,
+        // instead of one existence query per day for up to a year. The streak is
+        // then walked in memory.
+        $activeDays = UserPoint::where('user_id', $user->id)
+            ->selectRaw('DATE(created_at) as activity_date')
+            ->distinct()
+            ->orderByDesc('activity_date')
+            ->pluck('activity_date')
+            ->all();
+
         $streak = 0;
-        $currentDate = now()->startOfDay();
+        $expected = now()->startOfDay();
 
-        for ($i = 0; $i < 365; $i++) { // Check up to a year
-            $hasActivity = UserPoint::where('user_id', $user->id)
-                ->whereDate('created_at', $currentDate)
-                ->exists();
-
-            if ($hasActivity) {
-                $streak++;
-                $currentDate->subDay();
-            } else {
+        foreach ($activeDays as $day) {
+            if ($day !== $expected->toDateString() || $streak >= 365) {
                 break;
             }
+
+            $streak++;
+            $expected->subDay();
         }
 
         return $streak;

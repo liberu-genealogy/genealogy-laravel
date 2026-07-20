@@ -1471,42 +1471,6 @@ parameters:
 			path: app/Modules/Places/Filament/Resources/PlaceResource.php
 
 		-
-			message: '#^Access to an undefined property App\\Models\\Place\:\:\$city\.$#'
-			identifier: property.notFound
-			count: 1
-			path: app/Modules/Places/Services/GeocodingService.php
-
-		-
-			message: '#^Access to an undefined property App\\Models\\Place\:\:\$country\.$#'
-			identifier: property.notFound
-			count: 1
-			path: app/Modules/Places/Services/GeocodingService.php
-
-		-
-			message: '#^Access to an undefined property App\\Models\\Place\:\:\$latitude\.$#'
-			identifier: property.notFound
-			count: 3
-			path: app/Modules/Places/Services/GeocodingService.php
-
-		-
-			message: '#^Access to an undefined property App\\Models\\Place\:\:\$longitude\.$#'
-			identifier: property.notFound
-			count: 3
-			path: app/Modules/Places/Services/GeocodingService.php
-
-		-
-			message: '#^Access to an undefined property App\\Models\\Place\:\:\$name\.$#'
-			identifier: property.notFound
-			count: 1
-			path: app/Modules/Places/Services/GeocodingService.php
-
-		-
-			message: '#^Access to an undefined property App\\Models\\Place\:\:\$state\.$#'
-			identifier: property.notFound
-			count: 1
-			path: app/Modules/Places/Services/GeocodingService.php
-
-		-
 			message: '#^Call to static method route\(\) on an unknown class App\\Modules\\Sources\\Filament\\Resources\\SourceResource\\Pages\\CreateSource\.$#'
 			identifier: class.notFound
 			count: 1

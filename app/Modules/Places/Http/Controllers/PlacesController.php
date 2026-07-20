@@ -54,11 +54,6 @@ class PlacesController extends Controller
         return response()->json(['message' => 'Places by country', 'country' => $country]);
     }
 
-    public function geocode(Request $request, $place)
-    {
-        return response()->json(['message' => 'Geocode place', 'place' => $place]);
-    }
-
     public function mapView()
     {
         return response()->json(['message' => 'Places map view']);
