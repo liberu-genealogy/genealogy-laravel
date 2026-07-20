@@ -2,6 +2,7 @@
 
 namespace App\Notifications;
 
+use Filament\Notifications\Notification as FilamentNotification;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
@@ -38,10 +39,15 @@ class DuplicatePersonDetectedNotification extends Notification implements Should
      */
     public function toArray(object $notifiable): array
     {
-        return [
-            'type' => 'duplicate_person_detected',
-            'count' => $this->count,
-            'message' => "{$this->count} possible duplicate person(s) detected.",
-        ];
+        $noun = $this->count === 1 ? 'a possible duplicate person' : "{$this->count} possible duplicate people";
+
+        return FilamentNotification::make()
+            ->title('Possible duplicate people detected')
+            ->icon('heroicon-o-users')
+            ->body("Our scan found {$noun} in your family tree.")
+            ->getDatabaseMessage() + [
+                'type' => 'duplicate_person_detected',
+                'count' => $this->count,
+            ];
     }
 }

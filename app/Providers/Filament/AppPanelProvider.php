@@ -118,6 +118,10 @@ class AppPanelProvider extends PanelProvider
             // and no contrast verification.
             ->darkMode(false)
             ->emailVerification()
+            // Renders the bell that reads the notifications table. The four
+            // database-channel notifications store a Filament-shaped payload
+            // (see their toArray) so they render here instead of as empty rows.
+            ->databaseNotifications()
             ->plugin(new SocialstreamPlugin)
             ->viteTheme('resources/css/filament/app/theme.css')
             ->colors([
