@@ -3,6 +3,7 @@
 namespace App\Filament\Admin\Resources;
 
 use App\Filament\Admin\Resources\ModuleResource\Pages\ListModules;
+use App\Models\Module;
 use App\Modules\ModuleManager;
 use Exception;
 use Filament\Actions\Action;
@@ -18,13 +19,16 @@ use Filament\Tables\Columns\TagsColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\TernaryFilter;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Str;
 
 class ModuleResource extends Resource
 {
+    // A placeholder model (no `modules` table) that is never queried — rows come
+    // from ModuleManager via ->records(). It exists only so Filament's table
+    // plumbing has a model to reference for labels, keys and authorization.
     #[\Override]
-    protected static ?string $model = null; // We don't use a traditional model
+    protected static ?string $model = Module::class;
 
     #[\Override]
     protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-puzzle-piece';
@@ -61,7 +65,9 @@ class ModuleResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
-            ->query(static::getEloquentQuery())
+            // Rows come from ModuleManager as arrays via the native records()
+            // data source; the placeholder model is never queried for them.
+            ->records(static::getModuleRecords(...))
             ->columns([
                 TextColumn::make('name')
                     ->label('Module Name')
@@ -141,6 +147,52 @@ class ModuleResource extends Resource
             ]);
     }
 
+    /**
+     * Build the table's array records from ModuleManager, applying the table's
+     * current filter/search/sort, and return a paginator (so Filament reads the
+     * count from total() rather than building an Eloquent query it has no model
+     * for). Keyed by module name so row actions resolve the right module.
+     *
+     * @param  array<string, array{value: mixed}>|null  $filters
+     * @return LengthAwarePaginator<int, array<string, mixed>>
+     */
+    public static function getModuleRecords(
+        ?string $sortColumn,
+        ?string $sortDirection,
+        ?array $filters,
+        ?string $search,
+        int $page,
+        int|string $recordsPerPage,
+    ): LengthAwarePaginator {
+        $modules = collect(app(ModuleManager::class)->getAllModulesInfo());
+
+        $enabled = $filters['enabled']['value'] ?? null;
+        if ($enabled !== null && $enabled !== '') {
+            $modules = $modules->where('enabled', filter_var($enabled, FILTER_VALIDATE_BOOLEAN));
+        }
+
+        if (filled($search)) {
+            $needle = Str::lower($search);
+            $modules = $modules->filter(
+                fn (array $module): bool => str_contains(Str::lower((string) $module['name']), $needle)
+            );
+        }
+
+        if (filled($sortColumn)) {
+            $modules = $modules->sortBy($sortColumn, SORT_REGULAR, $sortDirection === 'desc');
+        }
+
+        $perPage = is_numeric($recordsPerPage) ? (int) $recordsPerPage : max($modules->count(), 1);
+
+        return new LengthAwarePaginator(
+            $modules->forPage($page, $perPage),
+            $modules->count(),
+            $perPage,
+            $page,
+            ['path' => LengthAwarePaginator::resolveCurrentPath()],
+        );
+    }
+
     #[\Override]
     public static function getRelations(): array
     {
@@ -155,67 +207,6 @@ class ModuleResource extends Resource
         return [
             'index' => ListModules::route('/'),
         ];
-    }
-
-    /**
-     * Get the Eloquent query for modules.
-     */
-    #[\Override]
-    public static function getEloquentQuery(): Builder
-    {
-        // Create a fake query builder that returns module data
-        $moduleManager = app(ModuleManager::class);
-        $modules = $moduleManager->getAllModulesInfo();
-
-        // Convert to a collection and create a fake query
-        $collection = collect($modules)->map(fn ($module) => (object) $module);
-
-        // Return a custom query builder
-        return new class($collection) extends Builder
-        {
-            public function __construct(protected $modules) {}
-
-            public function get($columns = ['*'])
-            {
-                return $this->modules;
-            }
-
-            public function paginate($perPage = 15, $columns = ['*'], $pageName = 'page', $page = null, $total = null)
-            {
-                return new LengthAwarePaginator(
-                    $this->modules->forPage($page ?? 1, $perPage),
-                    $this->modules->count(),
-                    $perPage,
-                    $page ?? 1,
-                    [
-                        'path' => request()->url(),
-                        'pageName' => $pageName,
-                    ]
-                );
-            }
-
-            public function where($column, $operator = null, $value = null, $boolean = 'and')
-            {
-                if ($column === 'enabled' && $value !== null) {
-                    $this->modules = $this->modules->filter(fn ($module) => $module->enabled === (bool) $value);
-                }
-
-                return $this;
-            }
-
-            public function orderBy($column, $direction = 'asc'): self
-            {
-                $this->modules = $this->modules->sortBy($column, SORT_REGULAR, $direction === 'desc');
-
-                return $this;
-            }
-
-            // Add other necessary methods as needed
-            public function __call($method, $parameters)
-            {
-                return $this;
-            }
-        };
     }
 
     #[\Override]
