@@ -6,6 +6,7 @@ use App\Http\Controllers\AIMatchController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\FanChartController;
 use App\Http\Controllers\PedigreeChartController;
+use App\Http\Middleware\EnsureStripeWebhookIsVerifiable;
 use App\Livewire\DocumentTranscriptionComponent;
 use App\Livewire\FamilyTreeBuilder;
 use App\Livewire\GamificationDashboard;
@@ -61,5 +62,9 @@ Route::middleware(['auth', 'verified'])->group(function (): void {
     Route::post('/ai/matches/{suggestion}/reject', [AIMatchController::class, 'reject'])->name('ai.matches.reject');
 });
 
-// Stripe webhook endpoint used by Laravel Cashier
-Route::post('/stripe/webhook', '\\Laravel\\Cashier\\Http\\Controllers\\WebhookController@handleWebhook');
+// Stripe webhook endpoint used by Laravel Cashier. The guard middleware makes it
+// fail closed: with no configured webhook secret the endpoint rejects everything
+// rather than accepting unsigned (forgeable) events. Cashier verifies the
+// signature itself once a secret is present.
+Route::post('/stripe/webhook', '\\Laravel\\Cashier\\Http\\Controllers\\WebhookController@handleWebhook')
+    ->middleware(EnsureStripeWebhookIsVerifiable::class);
