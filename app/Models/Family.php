@@ -89,6 +89,20 @@ class Family extends \FamilyTree365\LaravelGedcom\Models\Family
         return $this->hasOne(Person::class, 'id', 'wife_id');
     }
 
+    /**
+     * Override the vendor's children relationship to use App\Models\Person.
+     *
+     * The vendor Family::children() points at the vendor Person, which extends
+     * plain Model — no SoftDeletes, no BelongsToTenant. So a family's children
+     * included soft-deleted people and ignored the tenant scope. App\Models\Person
+     * carries both, mirroring the husband()/wife()/events() overrides above.
+     */
+    #[\Override]
+    public function children(): HasMany
+    {
+        return $this->hasMany(Person::class, 'child_in_family_id');
+    }
+
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class, 'user_id', 'id');

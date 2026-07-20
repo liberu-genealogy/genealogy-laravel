@@ -1327,12 +1327,6 @@ parameters:
 			path: app/Modules/Family/Services/FamilyService.php
 
 		-
-			message: '#^Relation ''children'' is not found in App\\Models\\Family model\.$#'
-			identifier: larastan.relationExistence
-			count: 2
-			path: app/Modules/Family/Services/FamilyService.php
-
-		-
 			message: '#^Instantiated class App\\Modules\\Import\\Services\\ExportService not found\.$#'
 			identifier: class.notFound
 			count: 1
