@@ -7,12 +7,14 @@ use App\Filament\App\Resources\DnaMatchingResource\Pages\EditDnaMatching;
 use App\Filament\App\Resources\DnaMatchingResource\Pages\ListDnaMatchings;
 use App\Filament\App\Resources\DnaMatchingResource\Pages\ViewDnaMatching;
 use App\Models\DnaMatching;
+use App\Services\Dna\RelationshipEstimator;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Actions\ViewAction;
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Components\Section;
@@ -85,9 +87,25 @@ class DnaMatchingResource extends AppResource
                             ->numeric()
                             ->suffix('%')
                             ->label('Confidence Level'),
-                        TextInput::make('predicted_relationship')
-                            ->maxLength(255)
-                            ->label('Predicted Relationship'),
+                        // A Select over the estimator's own labels, not free text.
+                        // The prune command deletes rows whose predicted_relationship
+                        // matches its no-comparison marker; free text let a user forge
+                        // that marker into a hand-curated row and have it deleted.
+                        Select::make('predicted_relationship')
+                            ->label('Predicted Relationship')
+                            ->searchable()
+                            ->options(function (?DnaMatching $record): array {
+                                $labels = array_combine(RelationshipEstimator::labels(), RelationshipEstimator::labels());
+
+                                // Keep a legacy/out-of-set value selectable so editing an
+                                // old row does not blank it.
+                                $current = $record?->predicted_relationship;
+                                if ($current !== null && ! isset($labels[$current])) {
+                                    $labels[$current] = $current;
+                                }
+
+                                return $labels;
+                            }),
                         TextInput::make('shared_segments_count')
                             ->numeric()
                             ->label('Shared Segments Count'),
