@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\BelongsToTenant;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -10,6 +11,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class DocumentTranscription extends Model
 {
+    use BelongsToTenant;
     use HasFactory;
     use SoftDeletes;
 
@@ -31,11 +33,6 @@ class DocumentTranscription extends Model
         'metadata' => 'array',
         'processed_at' => 'datetime',
     ];
-
-    public function team(): BelongsTo
-    {
-        return $this->belongsTo(Team::class);
-    }
 
     public function user(): BelongsTo
     {
