@@ -8,7 +8,7 @@
     "devDependencies": {
         "@tailwindcss/forms": "^0.5.10",
         "@tailwindcss/typography": "^0.5.20",
-        "@tailwindcss/vite": "^4.1.12",
+        "@tailwindcss/vite": "^4.3.3",
         "axios": "^1.18.1",
         "concurrently": "^10.0.3",
         "laravel-vite-plugin": "3.1",
