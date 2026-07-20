@@ -69,7 +69,7 @@ final class FabricationGateTest extends TestCase
         ];
     }
 
-    public function test_the_application_source_generates_no_unexcused_randomness(): void
+    public function test_the_application_source_is_free_of_fabrication(): void
     {
         $scanner = new FabricationScanner($this->allowlist());
 
@@ -152,6 +152,52 @@ final class FabricationGateTest extends TestCase
         $scanner = new FabricationScanner;
 
         $this->assertSame([], $scanner->scanSource("<?php\n\$n = \$stats['people_count'] ?? 0;\n", 'Ok.php'));
+    }
+
+    public function test_it_flags_a_domain_value_constructed_in_a_catch_block(): void
+    {
+        $scanner = new FabricationScanner;
+
+        $source = "<?php\ntry {\n  compare();\n} catch (\\Exception \$e) {\n  return ['confidence' => 0.85];\n}\n";
+
+        $violations = $scanner->scanSource($source, 'Bad.php');
+
+        $this->assertCount(1, $violations);
+        $this->assertStringContainsString('error-handling', $violations[0]->reason);
+    }
+
+    public function test_it_flags_a_bracketed_field_assignment_in_a_catch_block(): void
+    {
+        $scanner = new FabricationScanner;
+
+        $source = "<?php\ntry {\n  compare();\n} catch (\\Exception \$e) {\n  \$result['confidence'] = 0.85;\n  return \$result;\n}\n";
+
+        $violations = $scanner->scanSource($source, 'Bad.php');
+
+        $this->assertCount(1, $violations);
+        $this->assertStringContainsString('error-handling', $violations[0]->reason);
+    }
+
+    public function test_an_honest_catch_block_passes(): void
+    {
+        $scanner = new FabricationScanner;
+
+        // Log, translate/rethrow, and return the typed unavailable result are all
+        // legitimate — none constructs a finding.
+        $source = "<?php\ntry {\n  compare();\n} catch (\\Exception \$e) {\n  log(\$e);\n  return new Unavailable(\$e->getMessage());\n}\n";
+
+        $this->assertSame([], $scanner->scanSource($source, 'Ok.php'));
+    }
+
+    public function test_a_domain_literal_outside_a_catch_block_is_not_flagged(): void
+    {
+        $scanner = new FabricationScanner;
+
+        // A confidence literal in ordinary code may be a legitimate rule output;
+        // only its construction inside an error-handling branch is banned here.
+        $source = "<?php\n\$row = ['confidence' => 0.95];\n";
+
+        $this->assertSame([], $scanner->scanSource($source, 'Ok.php'));
     }
 
     public function test_an_allowlist_entry_without_a_justification_is_rejected(): void

@@ -115,12 +115,14 @@ final class FabricationScanner
     {
         $tokens = token_get_all($source);
         $significant = $this->significantTokens($tokens);
+        $catchRanges = $this->catchBlockRanges($significant);
 
         $violations = [];
 
         foreach ($significant as $i => $token) {
             $violation = $this->randomnessViolation($significant, $i, $relativePath)
-                ?? $this->certaintyStandInViolation($significant, $i, $relativePath);
+                ?? $this->certaintyStandInViolation($significant, $i, $relativePath)
+                ?? $this->domainValueInCatchViolation($significant, $i, $relativePath, $catchRanges);
 
             if ($violation !== null && ! $this->isAllowed($violation)) {
                 $violations[] = $violation;
@@ -128,6 +130,134 @@ final class FabricationScanner
         }
 
         return $violations;
+    }
+
+    /**
+     * Index ranges (into the significant-token list) that lie inside a catch
+     * block body, so error-handling branches can be checked for the
+     * construction of a domain value.
+     *
+     * @param  list<array{0:int,1:string,2:int}>  $tokens
+     * @return list<array{0:int,1:int}>
+     */
+    private function catchBlockRanges(array $tokens): array
+    {
+        $ranges = [];
+        $n = count($tokens);
+
+        for ($i = 0; $i < $n; $i++) {
+            if ($tokens[$i][0] !== T_CATCH) {
+                continue;
+            }
+
+            $open = $i + 1;
+            while ($open < $n && $tokens[$open][1] !== '{') {
+                $open++;
+            }
+
+            if ($open >= $n) {
+                continue;
+            }
+
+            $depth = 0;
+            $close = $open;
+            for (; $close < $n; $close++) {
+                if ($tokens[$close][1] === '{') {
+                    $depth++;
+                } elseif ($tokens[$close][1] === '}') {
+                    $depth--;
+                    if ($depth === 0) {
+                        break;
+                    }
+                }
+            }
+
+            $ranges[] = [$open + 1, $close - 1];
+            $i = $close;
+        }
+
+        return $ranges;
+    }
+
+    /**
+     * A catch block may log, translate the exception, or rethrow. It may not
+     * assign a certainty/finding vocabulary key or variable to a hardcoded
+     * literal — that constructs a value the user reads as a finding, on the very
+     * path where nothing was measured.
+     *
+     * @param  list<array{0:int,1:string,2:int}>  $tokens
+     * @param  list<array{0:int,1:int}>  $catchRanges
+     */
+    private function domainValueInCatchViolation(array $tokens, int $i, string $file, array $catchRanges): ?Violation
+    {
+        $isArrow = $tokens[$i][0] === T_DOUBLE_ARROW;
+        $isAssign = $tokens[$i][0] === -1 && $tokens[$i][1] === '=';
+
+        if (! $isArrow && ! $isAssign) {
+            return null;
+        }
+
+        if (! $this->indexInRanges($i, $catchRanges)) {
+            return null;
+        }
+
+        $next = $tokens[$i + 1] ?? null;
+        if ($next !== null && ($next[1] === '-' || $next[1] === '+')) {
+            $next = $tokens[$i + 2] ?? null;
+        }
+        if ($next === null || ($next[0] !== T_LNUMBER && $next[0] !== T_DNUMBER)) {
+            return null;
+        }
+
+        // The key is the token before the operator — but for a bracketed field
+        // assignment ($result['confidence'] = 0.85) that token is ']', so step
+        // back over it to the key inside the brackets.
+        $prev = $tokens[$i - 1] ?? null;
+        if (($prev[1] ?? null) === ']') {
+            $prev = $tokens[$i - 2] ?? null;
+        }
+
+        $name = match ($prev[0] ?? null) {
+            T_VARIABLE => strtolower(ltrim($prev[1], '$')),
+            T_STRING => strtolower($prev[1]),
+            T_CONSTANT_ENCAPSED_STRING => strtolower(trim($prev[1], "'\"")),
+            default => null,
+        };
+
+        if ($name === null) {
+            return null;
+        }
+
+        foreach (self::CERTAINTY_VOCAB as $vocab) {
+            if (str_contains($name, $vocab)) {
+                return new Violation(
+                    file: $file,
+                    line: $tokens[$i][2],
+                    mechanism: "domain value '{$vocab}' constructed in an error-handling branch",
+                    reason: "A catch block assigns '{$vocab}' a hardcoded literal. An error-handling "
+                        .'branch may log, translate the exception, or rethrow — it may not produce a '
+                        .'value the user reads as a finding, because an error is visible and recoverable '
+                        .'while an invented finding may be recorded as family history that outlives the '
+                        .'software. Propagate the failure or return a typed Unavailable instead.',
+                );
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * @param  list<array{0:int,1:int}>  $ranges
+     */
+    private function indexInRanges(int $i, array $ranges): bool
+    {
+        foreach ($ranges as [$start, $end]) {
+            if ($i >= $start && $i <= $end) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /**
