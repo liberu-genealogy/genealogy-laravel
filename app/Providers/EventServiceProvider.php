@@ -8,6 +8,7 @@ use App\Events\AchievementUnlocked;
 use App\Events\UserLeveledUp;
 use App\Listeners\AchievementUnlockedListener;
 use App\Listeners\SendSubscriptionWebhookNotifications;
+use App\Listeners\SyncSubscriptionPauseState;
 use App\Listeners\UserLeveledUpListener;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
@@ -30,6 +31,7 @@ class EventServiceProvider extends ServiceProvider
         ],
         WebhookReceived::class => [
             SendSubscriptionWebhookNotifications::class,
+            SyncSubscriptionPauseState::class,
         ],
     ];
 

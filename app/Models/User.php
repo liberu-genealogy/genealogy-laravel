@@ -331,9 +331,11 @@ class User extends Authenticatable implements FilamentUser, HasDefaultTenant, Ha
             return true;
         }
 
-        // Active Stripe subscription (not cancelled / not expired)
+        // Active Stripe subscription (not cancelled / not expired). A paused
+        // subscription keeps Stripe status "active" but must not confer access
+        // (ADR 0002) — billing and access are held together while paused.
         if ($this->subscribed('premium')) {
-            return true;
+            return $this->subscription('premium')?->paused_at === null;
         }
 
         // Local trial still running

@@ -78,6 +78,27 @@ class PremiumDashboardPage extends Page
                 ->action('cancelSubscription');
         }
 
+        // Pause/resume: a paused subscription can be resumed; an active,
+        // unpaused one can be paused. Pausing stops billing AND access (ADR 0002).
+        $subscription = $user->subscription('premium');
+        if ($subscription && $subscription->paused_at !== null) {
+            $actions[] = Action::make('unpause')
+                ->label('Resume from Pause')
+                ->icon('heroicon-o-play')
+                ->color('success')
+                ->action('unpauseSubscription');
+        } elseif ($subscription && $subscription->stripe_status === 'active' && ! $subscription->canceled()) {
+            $actions[] = Action::make('pause')
+                ->label('Pause Subscription')
+                ->icon('heroicon-o-pause')
+                ->color('warning')
+                ->requiresConfirmation()
+                ->modalHeading('Pause Subscription')
+                ->modalDescription('Billing stops and premium access is paused until you resume. Your data is kept.')
+                ->modalSubmitActionLabel('Yes, pause')
+                ->action('pauseSubscription');
+        }
+
         // Only a real Stripe customer has a portal; a local-trial premium user
         // has no stripe_id, so offering it would try to create a customer / fail.
         if ($user->hasStripeId()) {
@@ -111,6 +132,44 @@ class PremiumDashboardPage extends Page
             Notification::make()
                 ->title('Billing Error')
                 ->body('Unable to open the billing portal. Please try again.')
+                ->danger()
+                ->send();
+        }
+    }
+
+    public function pauseSubscription(): void
+    {
+        try {
+            app(SubscriptionService::class)->pausePremiumSubscription(Auth::user());
+
+            Notification::make()
+                ->title('Subscription Paused')
+                ->body('Billing and premium access are paused until you resume.')
+                ->warning()
+                ->send();
+        } catch (Exception) {
+            Notification::make()
+                ->title('Pause Error')
+                ->body('There was an error pausing your subscription. Please try again.')
+                ->danger()
+                ->send();
+        }
+    }
+
+    public function unpauseSubscription(): void
+    {
+        try {
+            app(SubscriptionService::class)->unpausePremiumSubscription(Auth::user());
+
+            Notification::make()
+                ->title('Subscription Resumed')
+                ->body('Your subscription is active again and premium access is restored.')
+                ->success()
+                ->send();
+        } catch (Exception) {
+            Notification::make()
+                ->title('Resume Error')
+                ->body('There was an error resuming your subscription. Please try again.')
                 ->danger()
                 ->send();
         }
