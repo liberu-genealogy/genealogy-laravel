@@ -7,6 +7,7 @@ use App\Models\MediaObject;
 use Filament\Actions\Action;
 use Filament\Actions\DeleteAction;
 use Filament\Forms\Components\Select;
+use Filament\Notifications\Notification;
 use Filament\Resources\Pages\EditRecord;
 use Illuminate\Support\Facades\Storage;
 
@@ -37,14 +38,14 @@ class EditPerson extends EditRecord
                 ->action(function (array $data): void {
                     $mediaId = $data['media_id'] ?? null;
                     if (! $mediaId) {
-                        $this->notify('danger', 'No media selected.');
+                        Notification::make()->title('No media selected.')->danger()->send();
 
                         return;
                     }
 
                     $media = MediaObject::with('files')->find($mediaId);
                     if (! $media) {
-                        $this->notify('danger', 'Selected media not found.');
+                        Notification::make()->title('Selected media not found.')->danger()->send();
 
                         return;
                     }
@@ -54,7 +55,7 @@ class EditPerson extends EditRecord
                     $filePath = $file?->medi ?? null;
 
                     if (! $filePath) {
-                        $this->notify('danger', 'Selected media has no associated file path.');
+                        Notification::make()->title('Selected media has no associated file path.')->danger()->send();
 
                         return;
                     }
@@ -85,7 +86,7 @@ class EditPerson extends EditRecord
                     $record->photo_url = $url;
                     $record->save();
 
-                    $this->notify('success', 'Person photo updated from GEDCOM media.');
+                    Notification::make()->title('Person photo updated from GEDCOM media.')->success()->send();
                     // Refresh the page to show updated image in the form/table.
                     $this->redirect($this->getResource()::getUrl('edit', ['record' => $record]));
                 }),

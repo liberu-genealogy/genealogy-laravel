@@ -37,6 +37,7 @@ use Filament\Tables\Filters\TrashedFilter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Illuminate\Support\Str;
 
 class ChecklistTemplateResource extends AppResource
 {
@@ -205,7 +206,7 @@ class ChecklistTemplateResource extends AppResource
                         'dna' => 'purple',
                         default => 'gray',
                     })
-                    ->formatStateUsing(fn (string $state): string => str_replace('_', ' ', title_case($state))),
+                    ->formatStateUsing(fn (string $state): string => Str::title(str_replace('_', ' ', $state))),
                 TextColumn::make('difficulty_level')
                     ->badge()
                     ->color(fn (string $state): string => match ($state) {
