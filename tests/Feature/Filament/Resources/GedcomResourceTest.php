@@ -60,9 +60,9 @@ class GedcomResourceTest extends TestCase
 
         $this->actAsTeamMember();
 
+        // The upload itself submits (afterStateUpdated -> create), no button click.
         Livewire::test(CreateGedcom::class)
             ->set('data.filename', [UploadedFile::fake()->createWithContent($filename, $contents)])
-            ->call('create')
             ->assertHasNoFormErrors();
 
         $this->assertSame(1, Gedcom::count(), "Uploading {$filename} created no record.");
@@ -134,9 +134,9 @@ class GedcomResourceTest extends TestCase
 
         $this->actAsTeamMember();
 
+        // Redirect follows the upload directly — no "Create" click.
         Livewire::test(CreateGedcom::class)
             ->set('data.filename', [UploadedFile::fake()->createWithContent('tree.ged', self::GEDCOM)])
-            ->call('create')
             ->assertRedirect(ImportJobResource::getUrl('index'));
     }
 

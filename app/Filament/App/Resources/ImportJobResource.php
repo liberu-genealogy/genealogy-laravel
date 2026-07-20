@@ -96,6 +96,12 @@ class ImportJobResource extends AppResource
                     ->since(),
             ])
             ->defaultSort('created_at', 'desc')
+            // Live progress: re-query every few seconds so status (queue ->
+            // processing -> complete) and the progress % update on screen while
+            // the queued import job advances them, without a manual refresh.
+            // ponytail: polling, not push. A real-time channel already exists
+            // (GedComProgressSent) but needs Reverb, which is off by default.
+            ->poll('5s')
             ->filters([])
             ->recordActions([])
             ->toolbarActions([]);

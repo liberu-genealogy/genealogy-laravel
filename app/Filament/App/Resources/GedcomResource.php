@@ -70,7 +70,8 @@ class GedcomResource extends AppResource
                 Section::make('Import Family Tree')
                     ->description(
                         'Import your family tree data by uploading a GEDCOM (.ged) or GrampsXML (.gramps, .xml) file. '
-                        .'The file will be processed in the background and you will be redirected to the Import Logs page to monitor progress.'
+                        .'The import starts as soon as the upload finishes — no need to click a button — and you are '
+                        .'taken to the Import Logs page to monitor progress.'
                     )
                     ->schema([
                         FileUpload::make('filename')
@@ -103,13 +104,24 @@ class GedcomResource extends AppResource
                             ->directory('gedcom-form-imports')
                             ->visibility('private')
                             ->helperText('Supported formats: GEDCOM (.ged), GrampsXML (.gramps, .xml) — max 100 MB')
+                            // Submit as soon as the file finishes uploading — no
+                            // "Create" click. Reuses the create action, so the file
+                            // is stored and the import dispatched by the same path as
+                            // before, then getRedirectUrl() sends the user to the
+                            // Import Logs page. Only on the create page (this form is
+                            // shared with editing).
+                            ->afterStateUpdated(function ($state, $livewire): void {
+                                if (filled($state) && $livewire instanceof CreateGedcom) {
+                                    $livewire->create();
+                                }
+                            })
                             ->columnSpanFull(),
                     ])
                     ->columnSpanFull(),
 
                 Section::make('Processing note')
                     ->description(
-                        'After submitting, your file will be queued for processing and you will be redirected to the '
+                        'Once the upload finishes, your file is queued for processing and you are redirected to the '
                         .'Import Logs page where you can monitor the import progress in real time. '
                         .'Large files may take several minutes to process.'
                     )
