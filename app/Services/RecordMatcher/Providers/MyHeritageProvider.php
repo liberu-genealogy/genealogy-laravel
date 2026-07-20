@@ -74,11 +74,11 @@ class MyHeritageProvider implements ExternalRecordProviderInterface
         $params = [];
 
         // Name parameters
-        if ($person->first_name) {
-            $params['first_name'] = $person->first_name;
+        if ($person->givn) {
+            $params['first_name'] = $person->givn;
         }
-        if ($person->last_name) {
-            $params['last_name'] = $person->last_name;
+        if ($person->surn) {
+            $params['last_name'] = $person->surn;
         }
 
         // Birth information

@@ -74,11 +74,11 @@ class FamilySearchProvider implements ExternalRecordProviderInterface
         $params = [];
 
         // Name parameters
-        if ($person->first_name) {
-            $params['givenName'] = $person->first_name;
+        if ($person->givn) {
+            $params['givenName'] = $person->givn;
         }
-        if ($person->last_name) {
-            $params['surname'] = $person->last_name;
+        if ($person->surn) {
+            $params['surname'] = $person->surn;
         }
 
         // Birth information
