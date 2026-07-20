@@ -18,6 +18,11 @@ return Application::configure(basePath: dirname(__DIR__))
         commands: __DIR__.'/../routes/console.php',
         health: '/up',
     )
+    // Register the /broadcasting/auth route and load routes/channels.php so the
+    // private-channel authorization (e.g. research-space.{id}) actually runs.
+    // Enforcement still requires a real driver (BROADCAST_DRIVER=reverb — the env
+    // key config/broadcasting.php reads — plus a running Reverb server).
+    ->withBroadcasting(__DIR__.'/../routes/channels.php')
     ->withMiddleware(function (Middleware $middleware) {
         $middleware->append(SecurityHeaders::class);
         $middleware->validateCsrfTokens(except: [
