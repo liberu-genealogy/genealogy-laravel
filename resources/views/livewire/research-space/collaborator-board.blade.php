@@ -17,7 +17,7 @@
         // Example of initiating Echo presence/listening from the front-end if Echo is set up.
         // window.Echo.private(`research-space.{{ $space->id }}`)
         //     .listen('ResearchSpaceUpdated', (e) => {
-        //         Livewire.dispatch(`echo:research-space.{{ $space->id }},ResearchSpaceUpdated`, e);
+        //         Livewire.dispatch(`echo-private:research-space.{{ $space->id }},ResearchSpaceUpdated`, e);
         //     });
     </script>
 </div>

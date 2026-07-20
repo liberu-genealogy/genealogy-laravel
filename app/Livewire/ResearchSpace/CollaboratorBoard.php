@@ -47,7 +47,7 @@ class CollaboratorBoard extends Component
         event(new ResearchSpaceUpdated($this->space->id, ['content' => $this->content, 'user_id' => auth()->id()]));
     }
 
-    #[On('echo:research-space.{spaceId},ResearchSpaceUpdated')]
+    #[On('echo-private:research-space.{spaceId},ResearchSpaceUpdated')]
     public function onExternalUpdate($payload): void
     {
         // When we get an external broadcast, update local content
