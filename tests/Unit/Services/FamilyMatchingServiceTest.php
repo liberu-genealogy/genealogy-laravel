@@ -3,6 +3,7 @@
 namespace Tests\Unit\Services;
 
 use App\Models\ConnectedAccount;
+use App\Models\Person;
 use App\Models\SocialConnectionPrivacy;
 use App\Models\SocialFamilyConnection;
 use App\Models\User;
@@ -101,5 +102,53 @@ class FamilyMatchingServiceTest extends TestCase
         $count = $this->service->processMatches($user);
 
         $this->assertEquals(0, $count);
+    }
+
+    /**
+     * The happy path: when a real cross-account surname match exists,
+     * processMatches must actually create the connection. Guards the
+     * account_id tagging in findPotentialConnections — a by-value each()
+     * silently dropped it, so this always returned 0.
+     */
+    public function test_process_matches_creates_a_connection_for_a_real_match(): void
+    {
+        $searcher = User::factory()->withPersonalTeam()->create();
+        SocialConnectionPrivacy::factory()->create([
+            'user_id' => $searcher->id,
+            'allow_family_discovery' => true,
+        ]);
+        Person::factory()->create(['team_id' => $searcher->current_team_id, 'surn' => 'Shakespeare']);
+        ConnectedAccount::factory()->create([
+            'user_id' => $searcher->id,
+            'provider' => 'facebook',
+            'provider_id' => 'searcher-111',
+            'enable_family_matching' => true,
+            'cached_profile_data' => ['synced' => true],
+        ]);
+
+        // A different user on the same provider sharing a surname, discoverable.
+        $relative = User::factory()->withPersonalTeam()->create();
+        SocialConnectionPrivacy::factory()->create([
+            'user_id' => $relative->id,
+            'allow_family_discovery' => true,
+        ]);
+        Person::factory()->create(['team_id' => $relative->current_team_id, 'surn' => 'Shakespeare']);
+        ConnectedAccount::factory()->create([
+            'user_id' => $relative->id,
+            'provider' => 'facebook',
+            'provider_id' => 'relative-999',
+            'enable_family_matching' => true,
+            'cached_profile_data' => ['synced' => true],
+        ]);
+
+        $count = $this->service->processMatches($searcher);
+
+        $this->assertGreaterThan(0, $count, 'processMatches created no connection for a real match');
+        $this->assertTrue(
+            SocialFamilyConnection::where('user_id', $searcher->id)
+                ->where('matched_social_id', 'relative-999')
+                ->exists(),
+            'No SocialFamilyConnection was created for the matching relative'
+        );
     }
 }
