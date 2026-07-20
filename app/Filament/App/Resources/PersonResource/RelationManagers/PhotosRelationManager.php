@@ -5,6 +5,7 @@ namespace App\Filament\App\Resources\PersonResource\RelationManagers;
 use App\Filament\App\Resources\AppRelationManager;
 use App\Models\PersonPhoto;
 use App\Services\FacialRecognitionService;
+use App\Support\Unavailable;
 use Filament\Actions\Action;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\CreateAction;
@@ -84,7 +85,13 @@ class PhotosRelationManager extends AppRelationManager
                         $facialRecognitionService = app(FacialRecognitionService::class);
                         $result = $facialRecognitionService->analyzePhoto($record);
 
-                        if ($result['success']) {
+                        if ($result instanceof Unavailable) {
+                            Notification::make()
+                                ->title('Facial recognition unavailable')
+                                ->body($result->reason)
+                                ->warning()
+                                ->send();
+                        } elseif ($result['success']) {
                             Notification::make()
                                 ->title('Photo analyzed')
                                 ->body("Found {$result['faces_detected']} face(s)")
@@ -111,7 +118,13 @@ class PhotosRelationManager extends AppRelationManager
                         $facialRecognitionService = app(FacialRecognitionService::class);
                         $result = $facialRecognitionService->analyzePhoto($record);
 
-                        if ($result['success']) {
+                        if ($result instanceof Unavailable) {
+                            Notification::make()
+                                ->title('Facial recognition unavailable')
+                                ->body($result->reason)
+                                ->warning()
+                                ->send();
+                        } elseif ($result['success']) {
                             Notification::make()
                                 ->title('Photo analyzed')
                                 ->body("Found {$result['faces_detected']} face(s)")
