@@ -45,8 +45,9 @@ class AhnentafelReport extends Component
             'sex' => $person->sex,
             'birth_date' => $person->birthday?->format('d M Y'),
             'death_date' => $person->deathday?->format('d M Y'),
-            'birth_place' => $person->birth_place ?? '',
-            'death_place' => $person->death_place ?? '',
+            // GEDCOM columns; birth_place/death_place are not columns and read null.
+            'birth_place' => $person->birthday_plac ?? '',
+            'death_place' => $person->deathday_plac ?? '',
         ];
 
         // Build ancestors using Ahnentafel numbering system

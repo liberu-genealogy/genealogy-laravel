@@ -55,4 +55,22 @@ class AhnentafelReportTest extends TestCase
             ->call('generateReport', 99999)
             ->assertSet('reportData', []);
     }
+
+    public function test_report_carries_the_gedcom_birth_and_death_place(): void
+    {
+        // The report read $person->birth_place / ->death_place, which are not
+        // columns (GEDCOM import writes birthday_plac / deathday_plac), so the
+        // place always came back empty.
+        $person = Person::factory()->create([
+            'birthday_plac' => 'Manchester, England',
+            'deathday_plac' => 'Leeds, England',
+        ]);
+
+        $data = Livewire::test(AhnentafelReport::class)
+            ->call('generateReport', $person->id)
+            ->get('reportData');
+
+        $this->assertSame('Manchester, England', $data[1]['birth_place']);
+        $this->assertSame('Leeds, England', $data[1]['death_place']);
+    }
 }
