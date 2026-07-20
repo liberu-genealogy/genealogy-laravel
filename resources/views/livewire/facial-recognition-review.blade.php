@@ -46,7 +46,11 @@
                         {{ $currentTag['person_name'] }}
                     </p>
                     <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">
-                        Confidence: {{ number_format($currentTag['confidence'], 1) }}%
+                        @if($currentTag['confidence'] === null)
+                            Confidence: <span title="The provider reported no confidence for this match">not reported</span>
+                        @else
+                            Confidence: {{ number_format($currentTag['confidence'], 1) }}%
+                        @endif
                     </p>
                 @else
                     <p class="text-sm text-gray-600 dark:text-gray-400">

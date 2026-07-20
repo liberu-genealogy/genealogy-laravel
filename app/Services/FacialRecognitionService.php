@@ -166,7 +166,10 @@ class FacialRecognitionService
         foreach ($detectedFaces as $index => $face) {
             // Find if this face matches a known person
             $matchedPerson = null;
-            $confidence = $face['confidence'] ?? 0;
+            // A provider that reports no confidence has not measured one. Storing 0 would
+            // read as "certainly not this person" — a claim the provider never made. The
+            // column is nullable so absence can be recorded as absence.
+            $confidence = $face['confidence'] ?? null;
 
             foreach ($matches as $match) {
                 if (($match['face_index'] ?? null) === $index) {
