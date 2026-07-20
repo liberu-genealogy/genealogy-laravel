@@ -223,7 +223,18 @@ class Person extends Model
 
     public function children()
     {
-        return $this->hasManyThrough(Person::class, Family::class, 'husband_id', 'child_in_family_id')->union($this->hasManyThrough(Person::class, Family::class, 'wife_id', 'child_in_family_id'));
+        // Children link upward via child_in_family_id, so a person's children are
+        // the offspring of every family they head — as husband OR wife. Two
+        // hasManyThrough legs unioned. get() auto-appends `laravel_through_key`
+        // (people.*, families.husband_id) to the OUTER leg only; the inner union
+        // subquery must select the SAME column count or the UNION is invalid SQL,
+        // so mirror it explicitly with families.wife_id.
+        $wifeSide = $this->hasManyThrough(Person::class, Family::class, 'wife_id', 'child_in_family_id')
+            ->getQuery()
+            ->select(['people.*', 'families.wife_id as laravel_through_key']);
+
+        return $this->hasManyThrough(Person::class, Family::class, 'husband_id', 'child_in_family_id')
+            ->union($wifeSide);
     }
 
     public function fullname(): string
