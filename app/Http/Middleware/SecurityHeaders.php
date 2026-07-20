@@ -42,7 +42,7 @@ final class SecurityHeaders
 
         // Content Security Policy
         // Allow inline styles/scripts for Filament/Livewire compatibility; tighten per route if needed
-        $response->headers->set('Content-Security-Policy', implode('; ', [
+        $csp = [
             "default-src 'self'",
             "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://js.stripe.com",
             "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
@@ -53,8 +53,16 @@ final class SecurityHeaders
             "object-src 'none'",
             "base-uri 'self'",
             "form-action 'self'",
-            'upgrade-insecure-requests',
-        ]));
+        ];
+
+        // Only over HTTPS: on a plain-http host this directive makes the browser
+        // refetch http-served assets (Vite build output) over https, which the
+        // http dev environment does not serve — assets fail to load.
+        if ($request->isSecure()) {
+            $csp[] = 'upgrade-insecure-requests';
+        }
+
+        $response->headers->set('Content-Security-Policy', implode('; ', $csp));
 
         // HSTS — only set over HTTPS
         if ($request->isSecure()) {
