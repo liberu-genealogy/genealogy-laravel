@@ -8,11 +8,13 @@
         <script src="{{ asset('js/fan-chart.js') }}"></script>
         <script>
             document.addEventListener('DOMContentLoaded', function () {
-                const people = @json($people);
-                if (people && people.length > 0) {
-                    initializeFanChart(people);
+                // Single ancestor tree rooted at the selected person (d3.hierarchy
+                // expects one rooted node, not a flat list).
+                const tree = @json($tree);
+                if (tree && tree.id) {
+                    initializeFanChart(tree);
                 } else {
-                    console.warn('No data available to render the fan chart.');
+                    console.warn('No person selected to render the fan chart.');
                 }
             });
         </script>
