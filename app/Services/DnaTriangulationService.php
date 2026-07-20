@@ -303,7 +303,26 @@ class DnaTriangulationService
             $baseKitId = $results['base_kit']['id'];
             $baseKit = Dna::find($baseKitId);
 
+            if (! $baseKit) {
+                Log::warning('Triangulation base kit not found; skipping result storage', [
+                    'base_kit_id' => $baseKitId,
+                ]);
+
+                return;
+            }
+
             foreach ($results['matches'] as $match) {
+                // file1/file2 are NOT NULL, so a match whose kit row is gone can't
+                // be stored — skip it rather than dereferencing a null Dna::find.
+                $matchKit = Dna::find($match['kit_id']);
+                if (! $matchKit) {
+                    Log::warning('Triangulation match kit not found; skipping match', [
+                        'kit_id' => $match['kit_id'] ?? null,
+                    ]);
+
+                    continue;
+                }
+
                 // Check if match already exists
                 $existing = DnaMatching::where('user_id', $baseKit->user_id)
                     ->where('match_id', $match['user_id'])
@@ -331,7 +350,7 @@ class DnaTriangulationService
                         'match_id' => $match['user_id'],
                         'match_name' => $match['kit_name'],
                         'file1' => $baseKit->file_name,
-                        'file2' => Dna::find($match['kit_id'])->file_name,
+                        'file2' => $matchKit->file_name,
                         'total_shared_cm' => $match['total_cms'],
                         'largest_cm_segment' => $match['largest_cm'],
                         'confidence_level' => $match['confidence_level'],
