@@ -76,6 +76,16 @@ final class ZoomResponseGuardTest extends TestCase
         $this->assertNull($result['platform_data']['uuid']);
     }
 
+    public function test_a_missing_meeting_id_reads_as_null_not_empty_string(): void
+    {
+        // Never happens on a real 200, but null is honest absence; '' is a fake id.
+        $this->fakeZoom(['start_url' => 'https://zoom.us/s/x', 'join_url' => 'https://zoom.us/j/x']);
+
+        $result = (new ZoomService)->getMeetingDetails('x');
+
+        $this->assertNull($result['meeting_id']);
+    }
+
     public function test_the_update_path_survives_a_recurring_meeting(): void
     {
         $this->fakeZoom([

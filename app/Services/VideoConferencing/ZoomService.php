@@ -72,7 +72,7 @@ class ZoomService implements VideoConferencingInterface
         // The meeting already exists at Zoom by now; a missing field must not throw
         // here or it orphans the meeting. Read every optional field defensively.
         return [
-            'meeting_id' => (string) ($meeting['id'] ?? ''),
+            'meeting_id' => isset($meeting['id']) ? (string) $meeting['id'] : null,
             'password' => $meeting['password'] ?? null,
             'meeting_url' => $meeting['start_url'] ?? null,
             'join_url' => $meeting['join_url'] ?? null,
@@ -144,7 +144,7 @@ class ZoomService implements VideoConferencingInterface
         // duration); other platform fields can be absent too. Read them all
         // defensively so an ordinary response shape is not a fatal.
         return [
-            'meeting_id' => (string) ($meeting['id'] ?? ''),
+            'meeting_id' => isset($meeting['id']) ? (string) $meeting['id'] : null,
             'password' => $meeting['password'] ?? null,
             'meeting_url' => $meeting['start_url'] ?? null,
             'join_url' => $meeting['join_url'] ?? null,
