@@ -131,6 +131,26 @@ class AppPanelProvider extends PanelProvider
             ->brandName(fn () => app(GeneralSettings::class)->site_name)
             ->brandLogo(asset('build/images/logo.svg')) // vite-plugin-static-copy writes to build/images/; asset('images/..') was 404 on every panel page
             ->favicon(asset('favicon.ico')) // public/favicon.ico is the only .ico that exists; images/favicon.ico was 404
+            // The app-panel navigation taxonomy. Ten groups, in this order — the
+            // single source of truth for which groups exist; each resource/page
+            // names one in its own $navigationGroup. tests/Feature/Filament/
+            // AppNavigationGroupsTest pins this exact set (a stray string cannot
+            // silently add an eleventh group; a rename here cannot orphan a file).
+            //
+            // Decisions worth their own line, because they were judgement calls:
+            //   - Research is ONE group ('📋 Research Workspace'), not two. The
+            //     earlier split into '🔍 Research & Analysis' (evidence/tools) and
+            //     '📋 Research Management' (workflow) read to users as duplicates —
+            //     both are "research" and the distinction only made sense to
+            //     someone who already knew the data model. Collapsed into one;
+            //     ordering within it carries the evidence-then-workflow intent.
+            //   - No group holds one item except '🏠 Dashboard', which is the
+            //     landing group by convention and accepted as a deliberate
+            //     singleton. The former one-item '👥 Family Reunions' group was
+            //     folded into '🎉 Community'.
+            //   - Emoji prefixes are kept but each is now distinct; the old
+            //     duplicate '👥' (Family Tree and Family Reunions) is gone, which
+            //     is what made the duplication invisible when reading one file.
             ->navigationGroups([
                 NavigationGroup::make()
                     ->label('🏠 Dashboard'),

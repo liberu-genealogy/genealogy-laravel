@@ -60,6 +60,11 @@ class TeamMembers extends Page
     #[\Override]
     protected static ?string $navigationLabel = 'Members';
 
+    // Team membership is account/team administration — without this the page
+    // floated as an ungrouped nav item outside the ten-group taxonomy.
+    #[\Override]
+    protected static string|\UnitEnum|null $navigationGroup = '👤 Account & Settings';
+
     #[\Override]
     public static function canAccess(): bool
     {
