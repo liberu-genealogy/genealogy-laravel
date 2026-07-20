@@ -24,9 +24,12 @@ class DnaController extends Controller
     public function store(Request $request): JsonResponse
     {
         $data = $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'file_name' => ['required', 'string', 'max:255'],
             'variable_name' => ['required', 'string', 'max:20', 'unique:dnas,variable_name'],
-            'gedcom_id' => ['nullable', 'exists:gedcoms,id'],
         ]);
+
+        $data['user_id'] = $request->user()->id;
 
         return response()->json(Dna::create($data), 201);
     }
