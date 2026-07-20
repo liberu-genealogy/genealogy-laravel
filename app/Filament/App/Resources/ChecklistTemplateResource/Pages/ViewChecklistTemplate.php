@@ -12,6 +12,7 @@ use Filament\Resources\Pages\ViewRecord;
 use Filament\Schemas\Components\Grid;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
+use Illuminate\Support\Str;
 
 class ViewChecklistTemplate extends ViewRecord
 {
@@ -54,7 +55,7 @@ class ViewChecklistTemplate extends ViewRecord
                                         'dna' => 'purple',
                                         default => 'gray',
                                     })
-                                    ->formatStateUsing(fn (string $state): string => str_replace('_', ' ', title_case($state))),
+                                    ->formatStateUsing(fn (string $state): string => Str::title(str_replace('_', ' ', $state))),
                                 TextEntry::make('difficulty_level')
                                     ->badge()
                                     ->color(fn (string $state): string => match ($state) {

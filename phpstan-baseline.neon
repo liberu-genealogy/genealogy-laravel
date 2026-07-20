@@ -109,12 +109,6 @@ parameters:
 			path: app/Filament/App/Resources/ChecklistTemplateResource.php
 
 		-
-			message: '#^Function title_case not found\.$#'
-			identifier: function.notFound
-			count: 1
-			path: app/Filament/App/Resources/ChecklistTemplateResource.php
-
-		-
 			message: '#^Method App\\Filament\\App\\Resources\\ChecklistTemplateResource\:\:getNavigationBadge\(\) should return string\|null but returns int\<0, max\>\.$#'
 			identifier: return.type
 			count: 1
@@ -123,12 +117,6 @@ parameters:
 		-
 			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$id\.$#'
 			identifier: property.notFound
-			count: 1
-			path: app/Filament/App/Resources/ChecklistTemplateResource/Pages/ViewChecklistTemplate.php
-
-		-
-			message: '#^Function title_case not found\.$#'
-			identifier: function.notFound
 			count: 1
 			path: app/Filament/App/Resources/ChecklistTemplateResource/Pages/ViewChecklistTemplate.php
 
@@ -160,12 +148,6 @@ parameters:
 			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$photo_url\.$#'
 			identifier: property.notFound
 			count: 1
-			path: app/Filament/App/Resources/PersonResource/Pages/EditPerson.php
-
-		-
-			message: '#^Call to an undefined method App\\Filament\\App\\Resources\\PersonResource\\Pages\\EditPerson\:\:notify\(\)\.$#'
-			identifier: method.notFound
-			count: 4
 			path: app/Filament/App/Resources/PersonResource/Pages/EditPerson.php
 
 		-
@@ -286,12 +268,6 @@ parameters:
 			message: '#^Match expression does not handle remaining value\: string$#'
 			identifier: match.unhandled
 			count: 2
-			path: app/Filament/App/Resources/VirtualEventResource/Pages/ViewVirtualEvent.php
-
-		-
-			message: '#^Undefined variable\: \$infolist$#'
-			identifier: variable.undefined
-			count: 1
 			path: app/Filament/App/Resources/VirtualEventResource/Pages/ViewVirtualEvent.php
 
 		-

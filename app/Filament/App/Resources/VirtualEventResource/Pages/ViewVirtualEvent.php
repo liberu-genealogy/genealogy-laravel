@@ -34,8 +34,8 @@ class ViewVirtualEvent extends ViewRecord
     #[\Override]
     public function infolist(Schema $schema): Schema
     {
-        return $infolist
-            ->schema([
+        return $schema
+            ->components([
                 Section::make('Event Details')
                     ->schema([
                         Grid::make(2)
