@@ -9,6 +9,7 @@ use App\Models\PersonPhoto;
 use App\Models\PhotoTag;
 use App\Models\User;
 use App\Services\FacialRecognitionService;
+use App\Support\Unavailable;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
@@ -57,8 +58,8 @@ class FacialRecognitionGateTest extends TestCase
 
         $result = (new FacialRecognitionService)->analyzePhoto($photo);
 
-        $this->assertFalse($result['success']);
-        $this->assertSame('Facial recognition is not configured.', $result['error']);
+        $this->assertInstanceOf(Unavailable::class, $result);
+        $this->assertStringContainsString('not configured', $result->reason);
         $this->assertDatabaseCount('photo_tags', 0);
     }
 

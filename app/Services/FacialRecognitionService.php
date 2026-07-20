@@ -7,6 +7,7 @@ use App\Models\PersonPhoto;
 use App\Models\PhotoTag;
 use App\Services\FacialRecognition\FacialRecognitionProviderInterface;
 use App\Services\FacialRecognition\Providers\MockProvider;
+use App\Support\Unavailable;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
@@ -53,19 +54,16 @@ class FacialRecognitionService
     /**
      * Analyze a photo and create tags for detected faces
      *
-     * @return array Results of the analysis
+     * @return array|Unavailable Analysis results, or Unavailable when no provider is configured
      */
-    public function analyzePhoto(PersonPhoto $photo): array
+    public function analyzePhoto(PersonPhoto $photo): array|Unavailable
     {
         if (! $this->isAvailable()) {
             Log::warning('No facial recognition provider configured; photo not analysed', [
                 'photo_id' => $photo->id,
             ]);
 
-            return [
-                'success' => false,
-                'error' => 'Facial recognition is not configured.',
-            ];
+            return new Unavailable('Facial recognition is not configured.');
         }
 
         try {
