@@ -125,6 +125,44 @@ class VirtualEventRsvpInviteTest extends TestCase
         );
     }
 
+    /**
+     * The duplicate-invite check scoped attendees with
+     * ->where('guest_email', $email)->orWhereHas('user', ...). The unwrapped OR
+     * broke out of the event's attendees() constraint, so a user attending a
+     * DIFFERENT event under that email was treated as already invited here.
+     */
+    public function test_send_invitations_ignores_an_attendee_of_another_event(): void
+    {
+        $creator = $this->event->creator;
+
+        // A user attends a *different* event under the email we're inviting here.
+        $this->actingAs($creator);
+        $otherEvent = VirtualEvent::create([
+            'title' => 'Other Event',
+            'status' => 'published',
+            'start_time' => now()->addWeek(),
+            'end_time' => now()->addWeek()->addHours(2),
+            'created_by' => $creator->id,
+        ]);
+        $otherUser = User::factory()->create(['email' => 'invitee@example.com']);
+        VirtualEventAttendee::create([
+            'virtual_event_id' => $otherEvent->id,
+            'user_id' => $otherUser->id,
+            'rsvp_status' => 'accepted',
+        ]);
+
+        Livewire::actingAs($creator)
+            ->test(VirtualEventRsvp::class, ['event' => $this->event])
+            ->set('invite_emails', ['invitee@example.com'])
+            ->call('sendInvitations')
+            ->assertOk();
+
+        $this->assertDatabaseHas('virtual_event_attendees', [
+            'virtual_event_id' => $this->event->id,
+            'guest_email' => 'invitee@example.com',
+        ]);
+    }
+
     private function member(): User
     {
         $user = User::factory()->create(['current_team_id' => $this->team->id]);

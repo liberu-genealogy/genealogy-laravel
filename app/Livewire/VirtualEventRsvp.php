@@ -306,11 +306,15 @@ class VirtualEventRsvp extends Component
                 continue;
             }
 
-            // Check if email is already invited
+            // Check if email is already invited. Group the OR so it stays within
+            // this event's attendees — an unwrapped orWhereHas would match users
+            // attending other events under the same email.
             $existingAttendee = $this->event->attendees()
-                ->where('guest_email', $email)
-                ->orWhereHas('user', function ($query) use ($email): void {
-                    $query->where('email', $email);
+                ->where(function ($q) use ($email): void {
+                    $q->where('guest_email', $email)
+                        ->orWhereHas('user', function ($query) use ($email): void {
+                            $query->where('email', $email);
+                        });
                 })
                 ->first();
 

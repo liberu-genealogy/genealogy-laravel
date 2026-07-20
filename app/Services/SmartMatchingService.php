@@ -50,17 +50,32 @@ class SmartMatchingService
     }
 
     /**
+     * People in the user's current team who are missing at least one parent —
+     * no child_in_family link at all, or a family with a missing husband/wife.
+     *
+     * @return Collection<int, Person>
+     */
+    public function findPeopleWithMissingParents(User $user): Collection
+    {
+        return Person::where('team_id', $user->current_team_id)
+            // Group the OR so it can't break out of the team_id filter and pull
+            // in other teams' people.
+            ->where(function ($query): void {
+                $query->whereNull('child_in_family_id')
+                    ->orWhereHas('childInFamily', function ($q): void {
+                        $q->whereNull('husband_id')->orWhereNull('wife_id');
+                    });
+            })
+            ->get();
+    }
+
+    /**
      * Find smart matches for user's unknown ancestors
      */
     public function findSmartMatches(User $user): Collection
     {
         // Get people with missing parent information
-        $peopleWithMissingParents = Person::where('team_id', $user->current_team_id)
-            ->whereNull('child_in_family_id')
-            ->orWhereHas('childInFamily', function ($query): void {
-                $query->whereNull('husband_id')->orWhereNull('wife_id');
-            })
-            ->get();
+        $peopleWithMissingParents = $this->findPeopleWithMissingParents($user);
 
         $matches = collect();
 
