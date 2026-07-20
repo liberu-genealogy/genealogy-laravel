@@ -64,6 +64,45 @@ class RecordMatcherPlaceParamsTest extends TestCase
         $this->assertSame('Leeds, England', $params[$deathKey] ?? null);
     }
 
+    /**
+     * @return array<string, array{0: class-string, 1: string, 2: string}>
+     */
+    public static function nameCases(): array
+    {
+        return [
+            'ancestry' => [AncestryProvider::class, 'givenName', 'surname'],
+            'familysearch' => [FamilySearchProvider::class, 'givenName', 'surname'],
+            'myheritage' => [MyHeritageProvider::class, 'first_name', 'last_name'],
+        ];
+    }
+
+    /**
+     * The name guards read $person->first_name/last_name, which GEDCOM import
+     * never populates (the columns are givn/surn), so no provider ever sent a
+     * name to search — the same silent-null failure as the place params above.
+     */
+    #[DataProvider('nameCases')]
+    public function test_provider_sends_the_persons_given_and_surname(
+        string $providerClass,
+        string $givenKey,
+        string $surnameKey
+    ): void {
+        $this->actingAs(User::factory()->withPersonalTeam()->create());
+
+        $person = Person::factory()->create([
+            'givn' => 'Ada',
+            'surn' => 'Lovelace',
+        ]);
+
+        $method = new ReflectionMethod($providerClass, 'buildSearchParams');
+        $method->setAccessible(true);
+
+        $params = $method->invoke(new $providerClass, $person);
+
+        $this->assertSame('Ada', $params[$givenKey] ?? null);
+        $this->assertSame('Lovelace', $params[$surnameKey] ?? null);
+    }
+
     #[DataProvider('providerCases')]
     public function test_provider_omits_place_when_the_person_has_none(
         string $providerClass,

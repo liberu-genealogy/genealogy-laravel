@@ -57,8 +57,10 @@ class RunRecordMatchingJob implements ShouldQueue
             'providers' => array_map(fn ($p): string => new ReflectionClass($p)->getShortName(), $providers),
         ]);
 
-        // Fetch a sample of persons to run against (could be queued per-person)
-        $persons = Person::whereNotNull('last_name')->limit(200)->get();
+        // Fetch a sample of persons to run against (could be queued per-person).
+        // Filter on surn — the GEDCOM surname column import populates; last_name
+        // is never written, so filtering on it selected nobody.
+        $persons = Person::whereNotNull('surn')->limit(200)->get();
 
         $totalMatches = 0;
         $newByTeam = [];

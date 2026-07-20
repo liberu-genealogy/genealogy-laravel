@@ -9,6 +9,17 @@ use Illuminate\Support\Str;
 
 class RecordMatcherService
 {
+    /**
+     * Weight/candidate factor key => the Person column that actually holds it.
+     * GEDCOM import writes givn/surn/birthday_plac; the like-named columns
+     * (first_name/last_name/birth_place) are never populated.
+     */
+    private const PERSON_COLUMNS = [
+        'first_name' => 'givn',
+        'last_name' => 'surn',
+        'birth_place' => 'birthday_plac',
+    ];
+
     protected array $weights;
 
     public function __construct()
@@ -58,17 +69,18 @@ class RecordMatcherService
         $totalWeight = array_sum(array_values($this->weights));
         $score = 0.0;
 
-        // first name similarity
+        // first name similarity. The weight/candidate key is first_name, but the
+        // local person stores the given name under the GEDCOM column givn.
         if (! empty($this->weights['first_name'])) {
-            $firstPerson = Str::lower($person->first_name ?? '');
+            $firstPerson = Str::lower($person->givn ?? '');
             $firstCand = Str::lower($cand['first_name'] ?? '');
             $sim = $this->stringSimilarity($firstPerson, $firstCand);
             $score += $this->weights['first_name'] * $sim;
         }
 
-        // last name
+        // last name (GEDCOM column: surn)
         if (! empty($this->weights['last_name'])) {
-            $lastPerson = Str::lower($person->last_name ?? '');
+            $lastPerson = Str::lower($person->surn ?? '');
             $lastCand = Str::lower($cand['last_name'] ?? '');
             $sim = $this->stringSimilarity($lastPerson, $lastCand);
             $score += $this->weights['last_name'] * $sim;
@@ -92,9 +104,9 @@ class RecordMatcherService
             $score += $this->weights['birth_year'] * $sim;
         }
 
-        // birth place fuzzy match
+        // birth place fuzzy match (GEDCOM column: birthday_plac)
         if (! empty($this->weights['birth_place'])) {
-            $pp = Str::lower($person->birth_place ?? '');
+            $pp = Str::lower($person->birthday_plac ?? '');
             $cp = Str::lower($cand['birth_place'] ?? '');
             $sim = $this->stringSimilarity($pp, $cp);
             $score += $this->weights['birth_place'] * $sim;
@@ -103,9 +115,9 @@ class RecordMatcherService
         // parents - simplistic check if last names or parent names match
         if (! empty($this->weights['parents'])) {
             $sim = 0.0;
-            // example: check if candidate last name equals person last_name or matches parent last_name fields
-            if (! empty($cand['last_name']) && ! empty($person->last_name)) {
-                $sim = $this->stringSimilarity(Str::lower($person->last_name), Str::lower($cand['last_name']));
+            // example: check if candidate last name equals person surname or matches parent last_name fields
+            if (! empty($cand['last_name']) && ! empty($person->surn)) {
+                $sim = $this->stringSimilarity(Str::lower($person->surn), Str::lower($cand['last_name']));
             }
             $score += $this->weights['parents'] * $sim;
         }
@@ -177,7 +189,8 @@ class RecordMatcherService
         foreach ($fields as $field) {
             $sim = 0.0;
             if (in_array($field, ['first_name', 'last_name', 'birth_place', 'parents'])) {
-                $lv = strtolower((string) ($local->{$field} ?? ''));
+                $column = self::PERSON_COLUMNS[$field] ?? $field;
+                $lv = strtolower((string) ($local->{$column} ?? ''));
                 $cv = strtolower((string) ($candidate[$field] ?? ''));
                 $sim = $this->stringSimilarity($lv, $cv);
             } elseif ($field === 'birth_year') {
