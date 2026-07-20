@@ -11,12 +11,26 @@ use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\ListRecords;
-use Illuminate\Database\Eloquent\Builder;
+use Filament\Tables\Table;
 
 class ListModules extends ListRecords
 {
     #[\Override]
     protected static string $resource = ModuleResource::class;
+
+    /**
+     * Module rows are arrays (from ->records()), not Eloquent Models, so disable
+     * the framework's default row-click record action/URL — both are
+     * type-hinted Model and would fatal on an array record. The toggle/info row
+     * actions still work.
+     */
+    #[\Override]
+    protected function makeTable(): Table
+    {
+        return parent::makeTable()
+            ->recordAction(null)
+            ->recordUrl(null);
+    }
 
     #[\Override]
     protected function getHeaderActions(): array
@@ -68,14 +82,5 @@ class ListModules extends ListRecords
                     }
                 }),
         ];
-    }
-
-    /**
-     * Override to use custom data source.
-     */
-    #[\Override]
-    protected function getTableQuery(): Builder
-    {
-        return ModuleResource::getEloquentQuery();
     }
 }
