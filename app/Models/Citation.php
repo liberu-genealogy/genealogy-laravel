@@ -18,9 +18,14 @@ class Citation extends Model
     #[\Override]
     protected $attributes = ['is_active' => false];
 
-    public function sources()
+    /**
+     * The source this citation references. citations.source_id is a single FK
+     * (Source hasMany Citation), so this is a belongsTo — not the belongsToMany
+     * it used to be, which queried a citation_source pivot no migration creates.
+     */
+    public function source(): BelongsTo
     {
-        return $this->belongsToMany(Source::class);
+        return $this->belongsTo(Source::class);
     }
 
     public function user(): BelongsTo
