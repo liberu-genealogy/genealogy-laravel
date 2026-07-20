@@ -69,17 +69,19 @@ class ZoomService implements VideoConferencingInterface
 
         $meeting = $response->json();
 
+        // The meeting already exists at Zoom by now; a missing field must not throw
+        // here or it orphans the meeting. Read every optional field defensively.
         return [
-            'meeting_id' => (string) $meeting['id'],
+            'meeting_id' => (string) ($meeting['id'] ?? ''),
             'password' => $meeting['password'] ?? null,
-            'meeting_url' => $meeting['start_url'],
-            'join_url' => $meeting['join_url'],
+            'meeting_url' => $meeting['start_url'] ?? null,
+            'join_url' => $meeting['join_url'] ?? null,
             'platform_data' => [
-                'uuid' => $meeting['uuid'],
-                'host_id' => $meeting['host_id'],
-                'topic' => $meeting['topic'],
-                'status' => $meeting['status'],
-                'created_at' => $meeting['created_at'],
+                'uuid' => $meeting['uuid'] ?? null,
+                'host_id' => $meeting['host_id'] ?? null,
+                'topic' => $meeting['topic'] ?? null,
+                'status' => $meeting['status'] ?? null,
+                'created_at' => $meeting['created_at'] ?? null,
             ],
         ];
     }
@@ -138,18 +140,21 @@ class ZoomService implements VideoConferencingInterface
 
         $meeting = $response->json();
 
+        // A recurring meeting with no fixed time has no start_time (and often no
+        // duration); other platform fields can be absent too. Read them all
+        // defensively so an ordinary response shape is not a fatal.
         return [
-            'meeting_id' => (string) $meeting['id'],
+            'meeting_id' => (string) ($meeting['id'] ?? ''),
             'password' => $meeting['password'] ?? null,
-            'meeting_url' => $meeting['start_url'],
-            'join_url' => $meeting['join_url'],
+            'meeting_url' => $meeting['start_url'] ?? null,
+            'join_url' => $meeting['join_url'] ?? null,
             'platform_data' => [
-                'uuid' => $meeting['uuid'],
-                'host_id' => $meeting['host_id'],
-                'topic' => $meeting['topic'],
-                'status' => $meeting['status'],
-                'start_time' => $meeting['start_time'],
-                'duration' => $meeting['duration'],
+                'uuid' => $meeting['uuid'] ?? null,
+                'host_id' => $meeting['host_id'] ?? null,
+                'topic' => $meeting['topic'] ?? null,
+                'status' => $meeting['status'] ?? null,
+                'start_time' => $meeting['start_time'] ?? null,
+                'duration' => $meeting['duration'] ?? null,
             ],
         ];
     }
@@ -170,7 +175,7 @@ class ZoomService implements VideoConferencingInterface
         $participants = $data['participants'] ?? [];
 
         return array_map(fn (array $participant) => [
-            'name' => $participant['name'],
+            'name' => $participant['name'] ?? null,
             'email' => $participant['user_email'] ?? '',
             'joined_at' => $participant['join_time'] ?? null,
             'left_at' => $participant['leave_time'] ?? null,
