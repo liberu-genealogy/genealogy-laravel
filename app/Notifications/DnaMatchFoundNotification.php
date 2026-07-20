@@ -2,6 +2,7 @@
 
 namespace App\Notifications;
 
+use Filament\Notifications\Notification as FilamentNotification;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
@@ -38,10 +39,15 @@ class DnaMatchFoundNotification extends Notification implements ShouldQueue
      */
     public function toArray(object $notifiable): array
     {
-        return [
-            'type' => 'dna_match_found',
-            'count' => $this->matchCount,
-            'message' => "{$this->matchCount} new DNA match(es) found.",
-        ];
+        $noun = $this->matchCount === 1 ? 'match' : 'matches';
+
+        return FilamentNotification::make()
+            ->title('New DNA matches found')
+            ->icon('heroicon-o-puzzle-piece')
+            ->body("{$this->matchCount} new DNA {$noun} for your kit.")
+            ->getDatabaseMessage() + [
+                'type' => 'dna_match_found',
+                'count' => $this->matchCount,
+            ];
     }
 }

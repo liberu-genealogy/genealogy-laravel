@@ -2,6 +2,7 @@
 
 namespace App\Notifications;
 
+use Filament\Notifications\Notification as FilamentNotification;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
@@ -38,10 +39,15 @@ class RecordSuggestionNotification extends Notification implements ShouldQueue
      */
     public function toArray(object $notifiable): array
     {
-        return [
-            'type' => 'record_suggestion',
-            'count' => $this->count,
-            'message' => "{$this->count} new record suggestion(s) found.",
-        ];
+        $noun = $this->count === 1 ? 'a new record suggestion' : "{$this->count} new record suggestions";
+
+        return FilamentNotification::make()
+            ->title('New record suggestions')
+            ->icon('heroicon-o-document-magnifying-glass')
+            ->body("We found {$noun} for people in your tree.")
+            ->getDatabaseMessage() + [
+                'type' => 'record_suggestion',
+                'count' => $this->count,
+            ];
     }
 }

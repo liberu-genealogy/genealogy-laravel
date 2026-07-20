@@ -3,6 +3,7 @@
 namespace App\Notifications;
 
 use App\Models\Achievement;
+use Filament\Notifications\Notification as FilamentNotification;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
@@ -49,15 +50,18 @@ class AchievementUnlockedNotification extends Notification implements ShouldQueu
      */
     public function toArray(object $notifiable): array
     {
-        return [
-            'type' => 'achievement_unlocked',
-            'achievement_id' => $this->achievement->id,
-            'achievement_key' => $this->achievement->key,
-            'achievement_name' => $this->achievement->name,
-            'achievement_description' => $this->achievement->description,
-            'achievement_icon' => $this->achievement->icon,
-            'points_awarded' => $this->achievement->points,
-            'message' => "🎉 Achievement Unlocked: {$this->achievement->name}!",
-        ];
+        return FilamentNotification::make()
+            ->title("🎉 Achievement Unlocked: {$this->achievement->name}")
+            ->icon($this->achievement->icon)
+            ->body($this->achievement->description)
+            ->getDatabaseMessage() + [
+                'type' => 'achievement_unlocked',
+                'achievement_id' => $this->achievement->id,
+                'achievement_key' => $this->achievement->key,
+                'achievement_name' => $this->achievement->name,
+                'achievement_description' => $this->achievement->description,
+                'achievement_icon' => $this->achievement->icon,
+                'points_awarded' => $this->achievement->points,
+            ];
     }
 }
