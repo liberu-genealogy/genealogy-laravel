@@ -4,6 +4,7 @@ namespace Tests\Unit\Services\RecordMatcher\Providers;
 
 use App\Models\Person;
 use App\Services\RecordMatcher\Providers\AncestryProvider;
+use App\Support\Unavailable;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Http;
@@ -37,16 +38,16 @@ class AncestryProviderTest extends TestCase
         $this->assertEquals('Ancestry', $this->provider->getName());
     }
 
-    public function test_search_returns_empty_array_when_not_configured(): void
+    public function test_search_reports_unavailable_when_not_configured(): void
     {
         Config::set('services.ancestry.api_key', '');
         $provider = new AncestryProvider;
 
         $person = Person::factory()->create();
-        $results = $provider->search($person);
+        $result = $provider->search($person);
 
-        $this->assertIsArray($results);
-        $this->assertEmpty($results);
+        $this->assertInstanceOf(Unavailable::class, $result);
+        $this->assertStringContainsString('not configured', $result->reason);
     }
 
     public function test_search_parses_response_with_records_key(): void
