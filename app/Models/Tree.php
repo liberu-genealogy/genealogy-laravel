@@ -45,6 +45,29 @@ class Tree extends Model
     ];
 
     /**
+     * trees.user_id is NOT NULL with no database default. Stamp the
+     * authenticated owner when a create omits it — mirroring how
+     * BelongsToTenant stamps team_id — so an import or form that forgets
+     * user_id fails safe instead of throwing "Field 'user_id' doesn't have a
+     * default value" (issue #1548). An explicit user_id (e.g. an admin acting
+     * for another user) is left untouched.
+     *
+     * Overrides boot(), not booted(): BelongsToTenant owns booted() for the
+     * global scope + team_id stamping, and a class-level booted() would shadow
+     * the trait's copy. boot() is a separate hook, so both run.
+     */
+    protected static function boot(): void
+    {
+        parent::boot();
+
+        static::creating(function (self $tree): void {
+            if (empty($tree->user_id) && auth()->check()) {
+                $tree->user_id = auth()->id();
+            }
+        });
+    }
+
+    /**
      * Only trees the owner has opted to share publicly.
      */
     public function scopePublic(Builder $query): Builder
