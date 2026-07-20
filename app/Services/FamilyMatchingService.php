@@ -32,10 +32,11 @@ class FamilyMatchingService
 
         foreach ($connectedAccounts as $account) {
             $accountMatches = $this->findMatchesForAccount($user, $account);
-            // Add account_id to each match for later processing
-            $accountMatches->each(function (array $match) use ($account): void {
-                $match['account_id'] = $account->id;
-            });
+            // Tag each match with its account for processMatches(). map(), not each():
+            // $match is a by-value array, so mutating it inside each() is discarded.
+            $accountMatches = $accountMatches->map(
+                fn (array $match): array => [...$match, 'account_id' => $account->id]
+            );
             $matches = $matches->merge($accountMatches);
         }
 
