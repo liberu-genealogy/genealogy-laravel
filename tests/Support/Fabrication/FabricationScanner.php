@@ -209,7 +209,14 @@ final class FabricationScanner
             return null;
         }
 
+        // The key is the token before the operator — but for a bracketed field
+        // assignment ($result['confidence'] = 0.85) that token is ']', so step
+        // back over it to the key inside the brackets.
         $prev = $tokens[$i - 1] ?? null;
+        if (($prev[1] ?? null) === ']') {
+            $prev = $tokens[$i - 2] ?? null;
+        }
+
         $name = match ($prev[0] ?? null) {
             T_VARIABLE => strtolower(ltrim($prev[1], '$')),
             T_STRING => strtolower($prev[1]),

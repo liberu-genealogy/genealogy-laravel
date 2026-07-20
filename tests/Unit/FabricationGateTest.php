@@ -166,6 +166,18 @@ final class FabricationGateTest extends TestCase
         $this->assertStringContainsString('error-handling', $violations[0]->reason);
     }
 
+    public function test_it_flags_a_bracketed_field_assignment_in_a_catch_block(): void
+    {
+        $scanner = new FabricationScanner;
+
+        $source = "<?php\ntry {\n  compare();\n} catch (\\Exception \$e) {\n  \$result['confidence'] = 0.85;\n  return \$result;\n}\n";
+
+        $violations = $scanner->scanSource($source, 'Bad.php');
+
+        $this->assertCount(1, $violations);
+        $this->assertStringContainsString('error-handling', $violations[0]->reason);
+    }
+
     public function test_an_honest_catch_block_passes(): void
     {
         $scanner = new FabricationScanner;
