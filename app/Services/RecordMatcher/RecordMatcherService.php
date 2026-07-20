@@ -188,7 +188,14 @@ class RecordMatcherService
         $fields = array_keys($this->weights);
         foreach ($fields as $field) {
             $sim = 0.0;
-            if (in_array($field, ['first_name', 'last_name', 'birth_place', 'parents'])) {
+            if ($field === 'parents') {
+                // Mirror scoreSingle: the parents factor is a surname proxy.
+                // (There is no `parents` column — Person::parents() is a
+                // Collection, so reading it as an attribute would throw.)
+                if (! empty($candidate['last_name']) && ! empty($local->surn)) {
+                    $sim = $this->stringSimilarity(strtolower((string) $local->surn), strtolower((string) $candidate['last_name']));
+                }
+            } elseif (in_array($field, ['first_name', 'last_name', 'birth_place'])) {
                 $column = self::PERSON_COLUMNS[$field] ?? $field;
                 $lv = strtolower((string) ($local->{$column} ?? ''));
                 $cv = strtolower((string) ($candidate[$field] ?? ''));

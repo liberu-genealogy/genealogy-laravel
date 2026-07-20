@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Tests\Unit\Services\RecordMatcher;
 
 use App\Jobs\RunRecordMatchingJob;
+use App\Models\AIMatchModel;
+use App\Models\AISuggestedMatch;
 use App\Models\Person;
 use App\Services\RecordMatcher\RecordMatcherService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -62,5 +64,29 @@ class RecordMatcherServiceTest extends TestCase
             ->withArgs(fn (string $message, array $context = []): bool => $message === 'Record matching job completed'
                 && ($context['persons_processed'] ?? 0) === 1)
             ->once();
+    }
+
+    public function test_learn_from_feedback_does_not_crash_on_the_parents_factor(): void
+    {
+        $person = Person::factory()->create(['surn' => 'Lovelace']);
+
+        $match = AISuggestedMatch::create([
+            'local_person_id' => $person->id,
+            'provider' => 'Example',
+            'external_record_id' => 'ext-1',
+            'candidate_data' => ['id' => 'ext-1', 'first_name' => 'Ada', 'last_name' => 'Lovelace'],
+            'confidence' => 0.9,
+            'status' => 'pending',
+        ]);
+
+        $before = AIMatchModel::count();
+
+        // The 'parents' weight key read $local->parents, but Person::parents()
+        // returns a Collection, not a relation, so Eloquent threw a
+        // LogicException — the whole feedback loop crashed before persisting.
+        (new RecordMatcherService)->learnFromFeedback($match, 'confirm');
+
+        // Completing the loop persists exactly one new weight snapshot.
+        $this->assertSame($before + 1, AIMatchModel::count());
     }
 }
