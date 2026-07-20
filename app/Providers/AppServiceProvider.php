@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\Models\Family;
 use App\Models\Person;
+use App\Models\Source;
 use App\Modules\ModuleManager;
 use App\Modules\ModuleServiceProvider;
 use Exception;
@@ -26,6 +27,7 @@ class AppServiceProvider extends ServiceProvider
         // tables.
         $this->app->bind(\FamilyTree365\LaravelGedcom\Models\Person::class, Person::class);
         $this->app->bind(\FamilyTree365\LaravelGedcom\Models\Family::class, Family::class);
+        $this->app->bind(\FamilyTree365\LaravelGedcom\Models\Source::class, Source::class);
 
         // Register the module manager as a singleton
         $this->app->singleton(ModuleManager::class, fn ($app) => new ModuleManager);

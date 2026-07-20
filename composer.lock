@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "1c6b1311d2d7bdf72e058af627e390d9",
+    "content-hash": "ddc1b03e06db04fbcb27bb0f765df519",
     "packages": [
         {
             "name": "anourvalar/eloquent-serialize",
@@ -4979,11 +4979,11 @@
         },
         {
             "name": "liberu-genealogy/laravel-gedcom",
-            "version": "v8.5.0",
+            "version": "v8.6.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/liberu-genealogy/laravel-gedcom.git",
-                "reference": "v8.5.0"
+                "reference": "v8.6.0"
             },
             "require": {
                 "illuminate/database": "^11.0||^12.0||^13.0",
