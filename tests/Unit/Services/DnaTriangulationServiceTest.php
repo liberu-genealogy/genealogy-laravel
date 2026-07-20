@@ -219,4 +219,53 @@ class DnaTriangulationServiceTest extends TestCase
             'predicted_relationship' => 'Second Cousin',
         ]);
     }
+
+    public function test_store_skips_a_match_whose_kit_is_missing_instead_of_crashing(): void
+    {
+        $user1 = User::factory()->create();
+        $user2 = User::factory()->create();
+
+        $kit1 = Dna::factory()->create(['user_id' => $user1->id]);
+        $kit2 = Dna::factory()->create(['user_id' => $user2->id]);
+
+        $results = [
+            'base_kit' => ['id' => $kit1->id],
+            'matches' => [
+                $this->matchPayload(['kit_id' => $kit2->id, 'user_id' => $user2->id]),
+                // kit_id points at a kit that does not exist: Dna::find returns
+                // null, and reading ->file_name on it used to fatal the whole run.
+                $this->matchPayload(['kit_id' => 999999, 'user_id' => 424242]),
+            ],
+        ];
+
+        $this->service->storeTriangulationResults($results, 'one_to_many');
+
+        $this->assertDatabaseHas('dna_matchings', [
+            'user_id' => $user1->id,
+            'match_id' => $user2->id,
+            'file2' => $kit2->file_name,
+        ]);
+        $this->assertDatabaseMissing('dna_matchings', ['match_id' => 424242]);
+    }
+
+    /**
+     * @param  array<string, mixed>  $overrides
+     * @return array<string, mixed>
+     */
+    private function matchPayload(array $overrides): array
+    {
+        return array_merge([
+            'kit_id' => 0,
+            'kit_name' => 'Test Kit',
+            'user_id' => 0,
+            'comparison_performed' => true,
+            'total_cms' => 150.0,
+            'largest_cm' => 45.0,
+            'confidence_level' => 70,
+            'predicted_relationship' => 'Second Cousin',
+            'shared_segments_count' => 12,
+            'match_quality_score' => 75.0,
+            'chromosome_breakdown' => [],
+        ], $overrides);
+    }
 }
