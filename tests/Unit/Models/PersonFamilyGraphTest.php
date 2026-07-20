@@ -82,4 +82,26 @@ class PersonFamilyGraphTest extends TestCase
         $this->assertInstanceOf(Person::class, $family->wife);
         $this->assertTrue($family->wife->is($wife));
     }
+
+    public function test_family_children_use_app_person_and_exclude_soft_deleted(): void
+    {
+        $family = Family::factory()->create();
+        $child = Person::factory()->create(['child_in_family_id' => $family->id]);
+        $ghost = Person::factory()->create(['child_in_family_id' => $family->id]);
+
+        $family = Family::findOrFail($family->id);
+
+        // The override binds children to App\Models\Person (SoftDeletes + tenant
+        // scope); the vendor relation points at its own scopeless Person.
+        $this->assertInstanceOf(Person::class, $family->children->first());
+        $this->assertTrue($family->children->pluck('id')->contains($child->id));
+
+        // A soft-deleted child must drop out — proves the App model's SoftDeletes
+        // scope is in play (the vendor Person has none, so it would still appear).
+        $ghost->delete();
+        $this->assertFalse(
+            $family->fresh()->children->pluck('id')->contains($ghost->id),
+            'A soft-deleted person is still returned as a family child'
+        );
+    }
 }
