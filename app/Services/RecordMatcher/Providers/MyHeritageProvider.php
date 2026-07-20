@@ -3,6 +3,7 @@
 namespace App\Services\RecordMatcher\Providers;
 
 use App\Models\Person;
+use App\Support\Unavailable;
 use Exception;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
@@ -36,7 +37,7 @@ class MyHeritageProvider implements ExternalRecordProviderInterface
      *
      * @param  Person|int  $localPerson
      */
-    public function search($localPerson): array
+    public function search($localPerson): array|Unavailable
     {
         $person = is_int($localPerson) ? Person::find($localPerson) : $localPerson;
 
@@ -44,16 +45,21 @@ class MyHeritageProvider implements ExternalRecordProviderInterface
             return [];
         }
 
-        // If API key is not configured, return empty results
         if ($this->apiKey === '' || $this->apiKey === '0') {
             Log::warning('MyHeritage API key not configured');
 
-            return [];
+            return new Unavailable('MyHeritage is not configured.');
         }
 
         try {
             $searchParams = $this->buildSearchParams($person);
             $response = $this->performSearch($searchParams);
+
+            if (! is_array($response)) {
+                Log::error('MyHeritage returned an unreadable response', ['person_id' => $person->id]);
+
+                return new Unavailable('MyHeritage returned an unreadable response.');
+            }
 
             return $this->parseResponse($response);
         } catch (Exception $e) {
@@ -62,7 +68,7 @@ class MyHeritageProvider implements ExternalRecordProviderInterface
                 'error' => $e->getMessage(),
             ]);
 
-            return [];
+            return new Unavailable('MyHeritage request failed: '.$e->getMessage());
         }
     }
 
@@ -115,7 +121,7 @@ class MyHeritageProvider implements ExternalRecordProviderInterface
     /**
      * Perform the actual API search.
      */
-    protected function performSearch(array $searchParams): array
+    protected function performSearch(array $searchParams): mixed
     {
         $response = Http::timeout($this->timeout)
             ->withHeaders([
@@ -128,7 +134,7 @@ class MyHeritageProvider implements ExternalRecordProviderInterface
             throw new Exception('MyHeritage API request failed: '.$response->status());
         }
 
-        return $response->json() ?? [];
+        return $response->json();
     }
 
     /**

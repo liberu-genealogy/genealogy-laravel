@@ -8,6 +8,7 @@ use App\Models\User;
 use App\Services\RecordMatcher\Providers\AncestryProvider;
 use App\Services\RecordMatcher\Providers\FamilySearchProvider;
 use App\Services\RecordMatcher\Providers\MyHeritageProvider;
+use App\Support\Unavailable;
 use DateTime;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Log;
@@ -142,6 +143,15 @@ class SmartMatchingService
         foreach ($this->providers as $providerName => $provider) {
             try {
                 $candidates = $provider->search($person);
+
+                if ($candidates instanceof Unavailable) {
+                    Log::warning("Provider unavailable: {$providerName}", [
+                        'person_id' => $person->id,
+                        'reason' => $candidates->reason,
+                    ]);
+
+                    continue;
+                }
 
                 foreach ($candidates as $candidate) {
                     $confidence = $this->calculateMatchConfidence($person, $candidate);

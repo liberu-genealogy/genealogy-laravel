@@ -4,6 +4,7 @@ namespace Tests\Unit\Services\RecordMatcher\Providers;
 
 use App\Models\Person;
 use App\Services\RecordMatcher\Providers\MyHeritageProvider;
+use App\Support\Unavailable;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Http;
@@ -46,7 +47,7 @@ class MyHeritageProviderTest extends TestCase
         $this->assertEquals('MyHeritage', $this->provider->getName());
     }
 
-    public function test_search_returns_empty_array_when_api_key_not_configured(): void
+    public function test_search_reports_unavailable_when_api_key_not_configured(): void
     {
         Config::set('services.myheritage.api_key', '');
         $provider = new MyHeritageProvider;
@@ -56,10 +57,10 @@ class MyHeritageProviderTest extends TestCase
             'last_name' => 'Doe',
         ]);
 
-        $results = $provider->search($person);
+        $result = $provider->search($person);
 
-        $this->assertIsArray($results);
-        $this->assertEmpty($results);
+        $this->assertInstanceOf(Unavailable::class, $result);
+        $this->assertStringContainsString('not configured', $result->reason);
     }
 
     public function test_search_returns_empty_array_for_invalid_person(): void
@@ -142,7 +143,7 @@ class MyHeritageProviderTest extends TestCase
         $this->assertEquals('M', $results[0]['gender']);
     }
 
-    public function test_search_handles_api_errors(): void
+    public function test_search_reports_unavailable_on_a_failed_request(): void
     {
         Http::fake([
             'api.myheritage.test/*' => Http::response([], 500),
@@ -153,10 +154,10 @@ class MyHeritageProviderTest extends TestCase
             'last_name' => 'Doe',
         ]);
 
-        $results = $this->provider->search($person);
+        $result = $this->provider->search($person);
 
-        $this->assertIsArray($results);
-        $this->assertEmpty($results);
+        $this->assertInstanceOf(Unavailable::class, $result);
+        $this->assertStringContainsString('request failed', $result->reason);
     }
 
     public function test_search_accepts_person_model(): void

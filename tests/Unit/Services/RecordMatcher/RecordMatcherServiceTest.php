@@ -10,6 +10,8 @@ use App\Models\AISuggestedMatch;
 use App\Models\Person;
 use App\Services\RecordMatcher\RecordMatcherService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 use Tests\TestCase;
 
@@ -64,6 +66,27 @@ class RecordMatcherServiceTest extends TestCase
             ->withArgs(fn (string $message, array $context = []): bool => $message === 'Record matching job completed'
                 && ($context['persons_processed'] ?? 0) === 1)
             ->once();
+    }
+
+    public function test_the_job_skips_a_provider_that_reports_unavailable(): void
+    {
+        // A configured provider whose request fails returns Unavailable, not an
+        // array. The job must recognise that and log the reason, rather than feed
+        // it to the scorer (which would TypeError and read as a generic failure).
+        Config::set('services.ancestry.api_key', 'configured');
+        Config::set('services.myheritage.api_key', '');
+        Config::set('services.familysearch.api_key', '');
+        Http::fake(['*' => Http::response([], 500)]);
+        Person::factory()->create(['surn' => 'Lovelace']);
+        Log::spy();
+
+        (new RunRecordMatchingJob)->handle(new RecordMatcherService);
+
+        Log::shouldHaveReceived('warning')
+            ->withArgs(fn (string $message, array $context = []): bool => $message === 'Record matching provider unavailable; skipped'
+                && str_contains((string) ($context['reason'] ?? ''), 'request failed'))
+            ->atLeast()->once();
+        $this->assertDatabaseCount('ai_suggested_matches', 0);
     }
 
     public function test_learn_from_feedback_does_not_crash_on_the_parents_factor(): void

@@ -10,6 +10,7 @@ use App\Services\RecordMatcher\Providers\ExampleProvider;
 use App\Services\RecordMatcher\Providers\FamilySearchProvider;
 use App\Services\RecordMatcher\Providers\MyHeritageProvider;
 use App\Services\RecordMatcher\RecordMatcherService;
+use App\Support\Unavailable;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -70,6 +71,17 @@ class RunRecordMatchingJob implements ShouldQueue
             foreach ($providers as $provider) {
                 try {
                     $candidates = $provider->search($person);
+
+                    if ($candidates instanceof Unavailable) {
+                        Log::warning('Record matching provider unavailable; skipped', [
+                            'provider' => class_basename($provider),
+                            'person_id' => $person->id,
+                            'reason' => $candidates->reason,
+                        ]);
+
+                        continue;
+                    }
+
                     $scored = $matcher->scoreCandidates($person, $candidates);
 
                     foreach ($scored as $entry) {
