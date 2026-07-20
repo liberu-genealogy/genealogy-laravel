@@ -2,6 +2,7 @@
 
 namespace Tests\Unit\Services;
 
+use App\Models\Family;
 use App\Models\Person;
 use App\Models\Team;
 use App\Models\User;
@@ -90,6 +91,29 @@ class SmartMatchingServiceTest extends TestCase
         $matches = $service->findSmartMatches($user);
 
         $this->assertInstanceOf(Collection::class, $matches);
+    }
+
+    public function test_missing_parent_candidates_stay_within_the_users_team(): void
+    {
+        $team = Team::factory()->create();
+        $user = User::factory()->create(['current_team_id' => $team->id]);
+
+        // In-team candidate: no parent family at all — should be selected.
+        $ours = Person::factory()->create(['team_id' => $team->id, 'child_in_family_id' => null]);
+
+        // Another team's person whose family is missing a parent. The
+        // unparenthesised orWhereHas used to pull this across the team boundary.
+        $otherTeam = Team::factory()->create();
+        $family = Family::factory()->create(['husband_id' => null]);
+        $theirs = Person::factory()->create([
+            'team_id' => $otherTeam->id,
+            'child_in_family_id' => $family->id,
+        ]);
+
+        $found = $this->service->findPeopleWithMissingParents($user)->pluck('id');
+
+        $this->assertContains($ours->id, $found);
+        $this->assertNotContains($theirs->id, $found, 'A person from another team leaked into the candidates.');
     }
 
     public function test_service_creates_smart_match_records_for_found_matches(): void
