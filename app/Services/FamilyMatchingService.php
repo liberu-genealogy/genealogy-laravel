@@ -157,7 +157,10 @@ class FamilyMatchingService
             'matched_name' => $matchData['name'] ?? null,
             'matched_email' => $matchData['email'] ?? null,
             'relationship_type' => 'potential_relative',
-            'confidence_score' => $matchData['confidence_score'] ?? 0,
+            // findPotentialConnections always computes this from the shared surnames, so the
+            // key is present. The old `?? 0` was dead defensiveness that, if ever reached,
+            // would fabricate a certainty; without it an absent key fails loudly instead.
+            'confidence_score' => $matchData['confidence_score'],
             'matching_criteria' => [
                 'common_surnames' => $matchData['common_surnames'] ?? [],
             ],
