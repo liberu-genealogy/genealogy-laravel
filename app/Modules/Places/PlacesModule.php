@@ -3,7 +3,6 @@
 namespace App\Modules\Places;
 
 use App\Modules\BaseModule;
-use App\Modules\Places\Services\GeocodingService;
 use Artisan;
 
 class PlacesModule extends BaseModule
@@ -41,7 +40,9 @@ class PlacesModule extends BaseModule
      */
     protected function registerPlacesServices(): void
     {
-        app()->singleton('genealogy.places.geocoder', fn ($app) => new GeocodingService);
+        // Geocoding was removed: it read latitude/longitude/name columns the places
+        // table does not have, so it could not run. Reinstating it is a schema change
+        // and a feature, not a service registration.
     }
 
     /**

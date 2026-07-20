@@ -28,6 +28,5 @@ Route::middleware(['web'])->prefix('places')->name('modules.places.')->group(fun
     // Places-specific routes
     Route::get('/search/{query}', [PlacesController::class, 'search'])->name('search');
     Route::get('/country/{country}', [PlacesController::class, 'byCountry'])->name('by-country');
-    Route::post('/{place}/geocode', [PlacesController::class, 'geocode'])->name('geocode');
     Route::get('/map/view', [PlacesController::class, 'mapView'])->name('map');
 });
