@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\User;
+use Illuminate\Http\RedirectResponse;
 use Laravel\Cashier\Subscription;
 
 class SubscriptionService
@@ -151,6 +152,18 @@ class SubscriptionService
                 'success_url' => route('filament.app.pages.premium-dashboard'),
                 'cancel_url' => route('filament.app.pages.subscription'),
             ]);
+    }
+
+    /**
+     * Redirect the user to Stripe's hosted Billing portal to manage their card,
+     * view invoices, and cancel (ADR 0001 — the app does not render these). Only
+     * meaningful for a user who is already a Stripe customer.
+     */
+    public function createBillingPortalRedirect(User $user): RedirectResponse
+    {
+        return $user->redirectToBillingPortal(
+            route('filament.app.pages.premium-dashboard')
+        );
     }
 
     /**
