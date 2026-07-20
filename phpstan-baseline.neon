@@ -13,6 +13,12 @@ parameters:
 			path: app/Actions/Jetstream/RemoveTeamMember.php
 
 		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$id\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Models/DocumentTranscription.php
+
+		-
 			message: '#^Access to an undefined property Laravel\\Socialite\\Contracts\\User\:\:\$token\.$#'
 			identifier: property.notFound
 			count: 1
