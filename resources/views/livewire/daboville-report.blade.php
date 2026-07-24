@@ -1,25 +1,29 @@
 <div>
-    <form wire:submit.prevent="generateReport">
-        <div class="flex items-end">
-            <div class="flex-1 pr-2">{{ $this->form }}</div>
-            <div>{{ $this->generateAction }}</div>
-        </div>
-    </form>
+    <x-report-layout
+        title="d'Aboville Report"
+        :subject="!empty($reportData) ? 'Descendants of ' . ($reportData[0]['name'] ?? '') : null"
+    >
+        <x-slot:toolbar>
+            <form wire:submit.prevent="generateReport" class="flex items-end gap-3">
+                <div class="flex-1">{{ $this->form }}</div>
+                <div>{{ $this->generateAction }}</div>
+            </form>
+        </x-slot:toolbar>
 
-    <div class="flex justify-center text-center mt-3" wire:loading>
-        Generating report...
-    </div>
-
-    @if (!empty($reportData))
-    <div v-for="data in reportLevels">
-        <div :style="`margin: 8px 6px 8px ${data.level * 42}px; display: flex`">
-          <span :style="`width: ${(data.level * 5) + 20}px;`">{{data.label}}</span> 
-          <span>{{ data.person.firstNames }}</span>
-        </div>
-        <div v-if="data.person.spouse && data.person.children" :style="`margin: 8px 0px 16px ${(data.level * 42)}px; display: flex`">
-          <span :style="`padding: 0 8px 0px ${(data.level * 5) + 20}px`">sp</span> 
-          <span>{{ data.person.spouse.firstNames }}</span>
-        </div>
-      </div>
-    @endif
+        @if (! empty($reportData))
+            <div class="space-y-1">
+                @foreach ($reportData as $entry)
+                    <div class="report-node" style="--depth: {{ $entry['depth'] }}">
+                        <span class="report-number">{{ $entry['number'] }}</span>
+                        <span>{{ $entry['name'] }}</span>
+                        @if ($entry['birth'] || $entry['death'])
+                            <span class="text-gray-500 dark:text-gray-400">({{ $entry['birth'] ?? '?' }}–{{ $entry['death'] ?? '' }})</span>
+                        @endif
+                    </div>
+                @endforeach
+            </div>
+        @elseif ($selectedPersonId)
+            <div class="report-empty">No descendants found for the selected person.</div>
+        @endif
+    </x-report-layout>
 </div>

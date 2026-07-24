@@ -19,7 +19,7 @@
 
     <div id="descendant-chart-display" class="chart-display bg-white border rounded-lg p-4" style="min-height: 500px;">
         @if(!empty($descendantsData))
-            <div id="descendantChartSvg" class="w-full h-96"></div>
+            <div id="descendantChartSvg" class="w-full h-96" wire:ignore></div>
         @else
             <div class="text-center py-12">
                 <div class="text-gray-400 text-6xl mb-4">🌳</div>
@@ -82,7 +82,7 @@
     }
     </style>
 
-    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <script src="{{ asset('js/d3.v7.min.js') }}"></script>
     <script>
     document.addEventListener('livewire:init', () => {
         initializeDescendantChart();
@@ -176,10 +176,6 @@
                 if (birth) return `b.${birth}`;
                 return '';
             });
-    }
-
-    function setGenerations(generations) {
-        $wire.call('setGenerations', generations);
     }
     </script>
 </div>

@@ -415,30 +415,6 @@ parameters:
 			path: app/Jobs/ScanForDuplicatePersons.php
 
 		-
-			message: '#^Access to an undefined property App\\Livewire\\DabovilleReport\:\:\$form\.$#'
-			identifier: property.notFound
-			count: 2
-			path: app/Livewire/DabovilleReport.php
-
-		-
-			message: '#^Called ''pluck'' on Laravel collection, but could have been retrieved as a query\.$#'
-			identifier: larastan.noUnnecessaryCollectionCall
-			count: 1
-			path: app/Livewire/DabovilleReport.php
-
-		-
-			message: '#^Access to an undefined property App\\Livewire\\DevillierReport\:\:\$form\.$#'
-			identifier: property.notFound
-			count: 2
-			path: app/Livewire/DevillierReport.php
-
-		-
-			message: '#^Called ''pluck'' on Laravel collection, but could have been retrieved as a query\.$#'
-			identifier: larastan.noUnnecessaryCollectionCall
-			count: 1
-			path: app/Livewire/DevillierReport.php
-
-		-
 			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$id\.$#'
 			identifier: property.notFound
 			count: 8
