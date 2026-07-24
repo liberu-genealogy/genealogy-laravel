@@ -23,7 +23,9 @@ final class DnaMatchingRelationshipFieldTest extends TestCase
 
     private function actAsTeamMember(): User
     {
-        $user = User::factory()->withPersonalTeam()->create();
+        // DnaMatchingResource is premium-gated (canAccess); a premium user is
+        // needed to reach it.
+        $user = User::factory()->withPersonalTeam()->create(['is_premium' => true, 'trial_ends_at' => now()->addDays(5)]);
         $this->actingAs($user);
         Filament::setTenant($user->currentTeam, isQuiet: true);
 

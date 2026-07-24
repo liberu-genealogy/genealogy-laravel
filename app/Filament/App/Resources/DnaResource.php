@@ -49,6 +49,18 @@ class DnaResource extends AppResource
     }
 
     #[Override]
+    public static function canAccess(): bool
+    {
+        // Server-side premium gate: hiding the nav item is not enough, the
+        // resource URL must reject non-premium users directly.
+        if (config('premium.enabled')) {
+            return true;
+        }
+
+        return auth()->user()?->isPremium() ?? false;
+    }
+
+    #[Override]
     public static function canCreate(): bool
     {
         $user = auth()->user();

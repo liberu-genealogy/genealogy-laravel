@@ -47,6 +47,18 @@ class DnaTriangulationPage extends Page implements HasForms
         return auth()->user()?->isPremium() ?? false;
     }
 
+    #[\Override]
+    public static function canAccess(): bool
+    {
+        // Server-side premium gate: hiding the nav item is not enough, the
+        // page URL must reject non-premium users directly.
+        if (config('premium.enabled')) {
+            return true;
+        }
+
+        return auth()->user()?->isPremium() ?? false;
+    }
+
     public function mount(): void
     {
         $this->form->fill();

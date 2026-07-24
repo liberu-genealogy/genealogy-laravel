@@ -187,7 +187,7 @@ class PremiumDashboardPage extends Page
                 ->warning()
                 ->send();
 
-            $this->redirect(Filament::getUrl().'/subscription');
+            $this->redirect(route('filament.app.pages.subscription', ['tenant' => auth()->user()->currentTeam]));
 
         } catch (Exception) {
             Notification::make()

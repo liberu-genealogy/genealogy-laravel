@@ -100,6 +100,12 @@ class DnaImportService
         }
         $dna->save();
 
+        // Count the successful upload against the owner's quota. This is the
+        // shared import primitive (web + API import + CLI bulk), so incrementing
+        // here is what actually makes DnaResource::canCreate()'s standard-user
+        // limit bite — nothing else called incrementDnaUploads().
+        $user?->incrementDnaUploads();
+
         // Dispatch matching only for a consented kit — never match DNA without consent.
         if ($autoMatch && $dna->hasConsent()) {
             if ($user) {
