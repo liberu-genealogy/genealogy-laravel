@@ -15,13 +15,12 @@
             <button wire:click="setGenerations(4)" class="px-3 py-1 bg-blue-500 text-white rounded {{ $generations == 4 ? 'bg-blue-700' : '' }}">4 Gen</button>
             <button wire:click="setGenerations(5)" class="px-3 py-1 bg-blue-500 text-white rounded {{ $generations == 5 ? 'bg-blue-700' : '' }}">5 Gen</button>
             <button wire:click="toggleNames" class="px-3 py-1 bg-gray-500 text-white rounded {{ $showNames ? 'bg-gray-700' : '' }}">{{ $showNames ? 'Hide' : 'Show' }} Names</button>
-            <button wire:click="toggleDates" class="px-3 py-1 bg-gray-500 text-white rounded {{ $showDates ? 'bg-gray-700' : '' }}">{{ $showDates ? 'Hide' : 'Show' }} Dates</button>
         </div>
     </div>
 
     <div id="fan-chart-display" class="chart-display bg-white border rounded-lg p-4" style="min-height: 500px;">
         @if(!empty($fanData))
-            <div id="fanChartSvg" class="w-full h-96"></div>
+            <div id="fanChartSvg" class="w-full h-96" wire:ignore></div>
         @else
             <div class="text-center py-12">
                 <div class="text-gray-400 text-6xl mb-4">🌟</div>
@@ -78,7 +77,7 @@
 }
 </style>
 
-<script src="https://d3js.org/d3.v7.min.js"></script>
+<script src="{{ asset('js/d3.v7.min.js') }}"></script>
 <script>
 document.addEventListener('livewire:init', () => {
     initializeFanChart();
@@ -92,9 +91,7 @@ function initializeFanChart() {
     const fanData = @json($fanData ?? []);
     const config = {
         showNames: @json($showNames),
-        showDates: @json($showDates),
-        generations: @json($generations),
-        colorScheme: @json($colorScheme)
+        generations: @json($generations)
     };
 
     if (fanData && Object.keys(fanData).length > 0) {

@@ -67,6 +67,9 @@ final class DescendantChartComponent extends Component
         }
 
         foreach ($families as $family) {
+            // ponytail: one query per family per node (N+1). Fine for typical
+            // trees bounded by maxGenerations; batch-load descendants by
+            // child_in_family_id if this is ever profiled slow on deep trees.
             $children = Person::where('child_in_family_id', $family->id)
                 ->orderBy('birthday')
                 ->get();

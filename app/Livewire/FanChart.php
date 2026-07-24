@@ -16,10 +16,6 @@ class FanChart extends Component
 
     public bool $showNames = true;
 
-    public bool $showDates = false;
-
-    public string $colorScheme = 'generation';
-
     public function mount($rootPersonId = null, int $generations = 5): void
     {
         $this->rootPersonId = $rootPersonId ?? Person::first()?->id;
@@ -40,8 +36,6 @@ class FanChart extends Component
             'rootPerson' => $rootPerson,
             'generations' => $this->generations,
             'showNames' => $this->showNames,
-            'showDates' => $this->showDates,
-            'colorScheme' => $this->colorScheme,
         ];
     }
 
@@ -98,18 +92,6 @@ class FanChart extends Component
     public function toggleNames(): void
     {
         $this->showNames = ! $this->showNames;
-        $this->dispatch('refreshFanChart');
-    }
-
-    public function toggleDates(): void
-    {
-        $this->showDates = ! $this->showDates;
-        $this->dispatch('refreshFanChart');
-    }
-
-    public function setColorScheme(string $scheme): void
-    {
-        $this->colorScheme = $scheme;
         $this->dispatch('refreshFanChart');
     }
 
