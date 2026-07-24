@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Filament\App\Widgets;
 
+use App\Filament\App\Pages\PedigreeChartPage;
 use App\Filament\App\Resources\GedcomResource;
 use Filament\Facades\Filament;
 use Filament\Widgets\Widget;
@@ -41,7 +42,7 @@ class QuickActionsWidget extends Widget
                 [
                     'label' => 'View Pedigree',
                     'icon' => 'heroicon-o-chart-bar',
-                    'url' => Filament::getUrl().'/pedigree-chart',
+                    'url' => PedigreeChartPage::getUrl(),
                     'color' => 'warning',
                     'description' => 'Explore your family tree',
                 ],
