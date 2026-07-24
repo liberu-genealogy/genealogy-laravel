@@ -1,4 +1,8 @@
 <x-filament-panels::page>
+    @php
+        $pricing = $this->getPricingData()['premium'];
+        $selected = $pricing['intervals'][$this->interval] ?? $pricing['intervals']['month'];
+    @endphp
     <div class="space-y-8">
         <!-- Premium Features Overview -->
         <div class="bg-gradient-to-r from-purple-500 to-pink-500 rounded-lg p-8 text-white">
@@ -12,15 +16,17 @@
                 <p class="text-lg opacity-90 mb-6">Unlock powerful genealogy tools and unlimited features</p>
 
                 <div class="bg-white/10 rounded-lg p-4 inline-block">
-                    <div class="text-4xl font-bold">{{ $this->getPricingData()['premium']['price'] }}</div>
-                    <div class="text-sm opacity-75">per {{ $this->getPricingData()['premium']['interval'] }}</div>
+                    <div class="text-4xl font-bold">{{ $selected['price'] }}</div>
+                    <div class="text-sm opacity-75">per {{ $selected['interval'] }}</div>
                 </div>
 
-                <div class="mt-6">
-                    <div class="bg-yellow-400 text-yellow-900 px-4 py-2 rounded-full inline-block font-semibold">
-                        🎉 {{ $this->getPricingData()['premium']['trial_days'] }}-Day Free Trial
+                @if($pricing['trial_days'] > 0)
+                    <div class="mt-6">
+                        <div class="bg-yellow-400 text-yellow-900 px-4 py-2 rounded-full inline-block font-semibold">
+                            🎉 {{ $pricing['trial_days'] }}-Day Free Trial
+                        </div>
                     </div>
-                </div>
+                @endif
             </div>
         </div>
 
@@ -72,9 +78,39 @@
 
                 <div class="text-center mb-6">
                     <h3 class="text-xl font-semibold text-gray-900 dark:text-white">Premium</h3>
-                    <p class="text-gray-500 dark:text-gray-400">{{ $this->getPricingData()['premium']['trial_days'] }}-day free trial</p>
-                    <div class="text-3xl font-bold text-gray-900 dark:text-white mt-2">{{ $this->getPricingData()['premium']['price'] }}</div>
-                    <p class="text-sm text-gray-500 dark:text-gray-400">per {{ $this->getPricingData()['premium']['interval'] }}</p>
+                    @if($pricing['trial_days'] > 0)
+                        <p class="text-gray-500 dark:text-gray-400">{{ $pricing['trial_days'] }}-day free trial</p>
+                    @endif
+                    <div class="text-3xl font-bold text-gray-900 dark:text-white mt-2">{{ $selected['price'] }}</div>
+                    <p class="text-sm text-gray-500 dark:text-gray-400">per {{ $selected['interval'] }}</p>
+
+                    <!-- Billing interval toggle -->
+                    <div class="mt-4 inline-flex rounded-lg border border-purple-200 dark:border-purple-700 p-1" role="group" aria-label="Billing interval">
+                        <button
+                            type="button"
+                            wire:click="$set('interval', 'month')"
+                            @class([
+                                'px-4 py-1.5 text-sm font-medium rounded-md transition',
+                                'bg-purple-600 text-white' => $this->interval === 'month',
+                                'text-gray-600 dark:text-gray-300' => $this->interval !== 'month',
+                            ])
+                            aria-pressed="{{ $this->interval === 'month' ? 'true' : 'false' }}"
+                        >
+                            Monthly · {{ $pricing['intervals']['month']['price'] }}
+                        </button>
+                        <button
+                            type="button"
+                            wire:click="$set('interval', 'year')"
+                            @class([
+                                'px-4 py-1.5 text-sm font-medium rounded-md transition',
+                                'bg-purple-600 text-white' => $this->interval === 'year',
+                                'text-gray-600 dark:text-gray-300' => $this->interval !== 'year',
+                            ])
+                            aria-pressed="{{ $this->interval === 'year' ? 'true' : 'false' }}"
+                        >
+                            Yearly · {{ $pricing['intervals']['year']['price'] }}
+                        </button>
+                    </div>
                 </div>
 
                 <ul class="space-y-3">
@@ -91,25 +127,6 @@
                         color="primary"
                         size="lg"
                         class="w-full mb-2"
-                        wire:click="startTrial"
-                        wire:target="startTrial"
-                        wire:loading.attr="disabled"
-                        aria-label="Start {{ $this->getPricingData()['premium']['trial_days'] }}-day free trial"
-                    >
-                        <span class="inline-flex items-center justify-center">
-                            <svg wire:loading wire:target="startTrial" class="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"></path>
-                            </svg>
-                            <span wire:loading.remove wire:target="startTrial">Start Free Trial</span>
-                            <span wire:loading wire:target="startTrial">Starting…</span>
-                        </span>
-                    </x-filament::button>
-
-                    <x-filament::button
-                        color="secondary"
-                        size="lg"
-                        class="w-full"
                         wire:click="redirectToCheckout"
                         wire:target="redirectToCheckout"
                         wire:loading.attr="disabled"
@@ -120,12 +137,33 @@
                                 <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                                 <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"></path>
                             </svg>
-                            <span wire:loading.remove wire:target="redirectToCheckout">Subscribe with Card</span>
+                            <span wire:loading.remove wire:target="redirectToCheckout">Subscribe {{ ucfirst($selected['interval']) }}ly · {{ $selected['price'] }}</span>
                             <span wire:loading wire:target="redirectToCheckout">Redirecting…</span>
                         </span>
                     </x-filament::button>
 
-                    <p class="text-xs text-gray-500 dark:text-gray-400 mt-2 text-center">No credit card required for the trial</p>
+                    @if($this->showTrialButton())
+                        <x-filament::button
+                            color="secondary"
+                            size="lg"
+                            class="w-full"
+                            wire:click="startTrial"
+                            wire:target="startTrial"
+                            wire:loading.attr="disabled"
+                            aria-label="Start {{ $pricing['trial_days'] }}-day free trial"
+                        >
+                            <span class="inline-flex items-center justify-center">
+                                <svg wire:loading wire:target="startTrial" class="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"></path>
+                                </svg>
+                                <span wire:loading.remove wire:target="startTrial">Start Free Trial</span>
+                                <span wire:loading wire:target="startTrial">Starting…</span>
+                            </span>
+                        </x-filament::button>
+
+                        <p class="text-xs text-gray-500 dark:text-gray-400 mt-2 text-center">No credit card required for the trial</p>
+                    @endif
                 </div>
             </div>
         </div>

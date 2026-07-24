@@ -2,9 +2,10 @@
 
 @php
     $settings = app(\App\Settings\GeneralSettings::class);
-    $price = config('subscription.premium.price', '$2.99');
-    $interval = config('subscription.premium.interval', 'month');
+    $price = app(\App\Services\SubscriptionService::class)->formatPrice('month');
+    $interval = 'month';
     $trialDays = (int) config('subscription.premium.trial_days', 14);
+    $requiresCard = (bool) config('subscription.premium.require_card', true);
     $repo = 'https://github.com/liberu-genealogy/genealogy-laravel';
 
     // Every line below was checked against the code that enforces it.
@@ -41,7 +42,7 @@
     $faqs = [
         [
             'q' => 'What happens when the trial ends?',
-            'a' => "Nothing is taken from you. The DNA tools stop, and everything else — your tree, your sources, your media, your export — carries on working exactly as before. No card is required to start the trial, so nothing can be charged at the end of it.",
+            'a' => "Nothing is taken from you. The DNA tools stop, and everything else — your tree, your sources, your media, your export — carries on working exactly as before.".($requiresCard ? '' : ' No card is required to start the trial, so nothing can be charged at the end of it.'),
         ],
         [
             'q' => 'Can I cancel?',
@@ -129,7 +130,11 @@
             <div class="flex flex-col bg-surface p-8 lg:p-10">
                 <h3 class="text-title text-ink">Premium</h3>
                 <p class="mt-1 text-label text-ink-muted">
-                    <span class="tabular-nums">{{ $trialDays }}</span>-day trial. No card to start.
+                    @if($trialDays > 0)
+                        <span class="tabular-nums">{{ $trialDays }}</span>-day trial.@unless($requiresCard) No card to start.@endunless
+                    @else
+                        Billed at checkout.
+                    @endif
                 </p>
 
                 <p class="mt-6 flex items-baseline gap-2">
@@ -211,7 +216,7 @@
                 Start free. Add DNA when you need it.
             </h2>
             <p class="mt-4 max-w-[52ch] text-pretty text-body text-emerald-100">
-                The trial takes no card, and the free tier isn't a countdown. If premium turns out
+                @unless($requiresCard)The trial takes no card, and the free tier isn't a countdown.@else The free tier isn't a countdown.@endunless If premium turns out
                 not to be worth it, the tree you built is still yours and still exports.
             </p>
         </div>

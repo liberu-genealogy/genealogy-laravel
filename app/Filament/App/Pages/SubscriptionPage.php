@@ -4,7 +4,6 @@ namespace App\Filament\App\Pages;
 
 use App\Services\SubscriptionService;
 use Exception;
-use Filament\Actions\Action;
 use Filament\Notifications\Notification;
 use Filament\Pages\Page;
 use Illuminate\Http\RedirectResponse;
@@ -32,6 +31,9 @@ class SubscriptionPage extends Page
 
     #[\Override]
     protected static ?string $slug = 'subscription';
+
+    /** Chosen billing interval for checkout: 'month' or 'year'. */
+    public string $interval = 'month';
 
     public function mount(): void
     {
@@ -74,25 +76,33 @@ class SubscriptionPage extends Page
     #[\Override]
     protected function getHeaderActions(): array
     {
-        return [
-            Action::make('checkout')
-                ->label('Subscribe with Card')
-                ->icon('heroicon-o-credit-card')
-                ->color('success')
-                ->size('lg')
-                ->action('redirectToCheckout'),
+        // CTAs live in the page body (interval toggle + Subscribe, plus the
+        // optional no-card trial button); no header actions.
+        return [];
+    }
 
-            Action::make('subscribe')
-                ->label('Start Premium Trial')
-                ->icon('heroicon-o-star')
-                ->color('primary')
-                ->size('lg')
-                ->action('startTrial'),
-        ];
+    /** Whether the no-card trial button should be shown/allowed. */
+    public function showTrialButton(): bool
+    {
+        $service = app(SubscriptionService::class);
+
+        return ! $service->requiresCard() && $service->trialDays() > 0;
     }
 
     public function startTrial(): void
     {
+        // Server-side guard: even if the button is hidden, the Livewire action
+        // must not grant premium without a card when the deployment requires one.
+        if (! $this->showTrialButton()) {
+            Notification::make()
+                ->title('Card required')
+                ->body('A payment method is required to start Premium. Please subscribe with a card.')
+                ->danger()
+                ->send();
+
+            return;
+        }
+
         try {
             $subscriptionService = app(SubscriptionService::class);
             $user = Auth::user();
@@ -140,9 +150,13 @@ class SubscriptionPage extends Page
     {
         $user = Auth::user();
 
-        // delegate the heavy lifting to our service which already knows about
-        // configuration and the proper price identifier
-        $checkout = app(SubscriptionService::class)->createCheckoutRedirect($user);
+        $interval = in_array($this->interval, SubscriptionService::INTERVALS, true)
+            ? $this->interval
+            : 'month';
+
+        // delegate the heavy lifting to our service which resolves the managed
+        // price for the chosen interval
+        $checkout = app(SubscriptionService::class)->createCheckoutRedirect($user, $interval);
 
         if (is_object($checkout) && property_exists($checkout, 'url') && $checkout->url) {
             $this->redirect($checkout->url);

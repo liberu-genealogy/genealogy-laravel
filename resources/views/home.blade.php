@@ -4,9 +4,10 @@
     // Real values, not hardcoded. The old page claimed "£4.99" and a "7-day"
     // trial while config said $2.99 / 14 days.
     $settings = app(\App\Settings\GeneralSettings::class);
-    $price = config('subscription.premium.price', '$2.99');
-    $interval = config('subscription.premium.interval', 'month');
+    $price = app(\App\Services\SubscriptionService::class)->formatPrice('month');
+    $interval = 'month';
     $trialDays = (int) config('subscription.premium.trial_days', 14);
+    $requiresCard = (bool) config('subscription.premium.require_card', true);
 @endphp
 
 @section('content')
@@ -249,7 +250,11 @@
                 </p>
 
                 <p class="mt-3 text-label text-ink-muted">
-                    <span class="tabular-nums">{{ $trialDays }}</span>-day free trial. No card required to start.
+                    @if($trialDays > 0)
+                        <span class="tabular-nums">{{ $trialDays }}</span>-day free trial.@unless($requiresCard) No card required to start.@endunless
+                    @else
+                        Billed at checkout. Cancel anytime.
+                    @endif
                 </p>
 
                 @guest

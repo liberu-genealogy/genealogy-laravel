@@ -9,8 +9,8 @@
     // §6 stated "£4.99" and a "7-day" trial. Both were false — the app charges
     // $2.99 on a 14-day trial. Read from the same config as the pricing page and
     // Cashier so the terms cannot drift away from what is actually billed.
-    $price = config('subscription.premium.price', '$2.99');
-    $interval = config('subscription.premium.interval', 'month');
+    $price = app(\App\Services\SubscriptionService::class)->formatPrice('month');
+    $interval = 'month';
     $trialDays = (int) config('subscription.premium.trial_days', 14);
 @endphp
 
