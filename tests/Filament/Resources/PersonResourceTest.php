@@ -3,8 +3,13 @@
 namespace Tests\Filament\Resources;
 
 use App\Filament\App\Resources\PersonResource;
+use App\Filament\App\Resources\PersonResource\Pages\CreatePerson;
+use App\Models\Family;
 use App\Models\Person;
+use App\Models\User;
+use Filament\Facades\Filament;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Livewire\Livewire;
 use Tests\TestCase;
 
 class PersonResourceTest extends TestCase
@@ -42,5 +47,50 @@ class PersonResourceTest extends TestCase
 
         $person->delete();
         $this->assertSoftDeleted('people', ['id' => $person->id]);
+    }
+
+    private function actingAsTenantUser(): void
+    {
+        $user = User::factory()->withPersonalTeam()->create();
+        $this->actingAs($user);
+        Filament::setTenant($user->currentTeam, isQuiet: true);
+    }
+
+    /** child_in_family_id is a Family picker: a person saves linked to a chosen family. */
+    public function test_person_form_saves_with_family_picker(): void
+    {
+        $this->actingAsTenantUser();
+        $family = Family::factory()->create();
+
+        Livewire::test(CreatePerson::class)
+            ->fillForm(['givn' => 'Kid', 'surn' => 'Doe', 'child_in_family_id' => $family->id])
+            ->call('create')
+            ->assertHasNoFormErrors();
+
+        $this->assertDatabaseHas('people', ['givn' => 'Kid', 'child_in_family_id' => $family->id]);
+    }
+
+    /** A person with every name field empty is rejected, not silently saved blank. */
+    public function test_person_form_rejects_blank_name(): void
+    {
+        $this->actingAsTenantUser();
+
+        Livewire::test(CreatePerson::class)
+            ->fillForm(['givn' => '', 'surn' => '', 'name' => ''])
+            ->call('create')
+            ->assertHasFormErrors(['givn']);
+    }
+
+    /** Any single name field satisfies the "must have a name" rule — here, only surn. */
+    public function test_person_form_saves_with_only_one_name(): void
+    {
+        $this->actingAsTenantUser();
+
+        Livewire::test(CreatePerson::class)
+            ->fillForm(['givn' => '', 'surn' => 'Solo', 'name' => ''])
+            ->call('create')
+            ->assertHasNoFormErrors();
+
+        $this->assertDatabaseHas('people', ['surn' => 'Solo']);
     }
 }

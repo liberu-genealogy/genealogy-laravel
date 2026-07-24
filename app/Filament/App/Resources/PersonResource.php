@@ -13,6 +13,7 @@ use App\Filament\App\Resources\PersonResource\Pages\ListPeople;
 // a directory that does not exist. ::class does not autoload, so the bad name was
 // only discovered when Filament tried to instantiate it.
 use App\Filament\App\Resources\PersonResource\RelationManagers;
+use App\Models\Family;
 use App\Models\Person;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
@@ -48,6 +49,47 @@ class PersonResource extends AppResource
 
     // protected static ?string $tenantRelationshipName = 'People';
 
+    /** "Parent1 & Parent2 (#id)" for a family option, mirroring FamilyResource's parent labels. */
+    protected static function familyOptionLabel(Family $f): string
+    {
+        $names = array_filter([
+            $f->husband ? trim("{$f->husband->givn} {$f->husband->surn}") : null,
+            $f->wife ? trim("{$f->wife->givn} {$f->wife->surn}") : null,
+        ]);
+
+        return ($names === [] ? 'Unknown parents' : implode(' & ', $names))." (#{$f->id})";
+    }
+
+    /**
+     * Searchable picker for the child-in-family link, labelled by parent names (not a raw id).
+     * Optional — a person need not be a child in any family. Writes families.id to the
+     * people.child_in_family_id FK. Search matches either parent's name, or a bare family id.
+     */
+    protected static function childInFamilySelect(): Select
+    {
+        return Select::make('child_in_family_id')
+            ->label('Child in Family')
+            ->helperText('The family this person is a child of. Search by a parent\'s name.')
+            ->searchable()
+            ->getSearchResultsUsing(static fn (string $search): array => Family::query()
+                ->with(['husband', 'wife'])
+                ->where(function ($q) use ($search): void {
+                    $name = static fn ($sub) => $sub->where('givn', 'like', "%{$search}%")
+                        ->orWhere('surn', 'like', "%{$search}%");
+                    $q->whereHas('husband', $name)->orWhereHas('wife', $name);
+                    if (ctype_digit($search)) {
+                        $q->orWhere('id', (int) $search);
+                    }
+                })
+                ->limit(50)
+                ->get()
+                ->mapWithKeys(static fn (Family $f): array => [$f->id => self::familyOptionLabel($f)])
+                ->all())
+            ->getOptionLabelUsing(static fn ($value): ?string => ($f = Family::with(['husband', 'wife'])->find($value))
+                ? self::familyOptionLabel($f)
+                : null);
+    }
+
     #[Override]
     public static function form(Schema $schema): Schema
     {
@@ -64,7 +106,13 @@ class PersonResource extends AppResource
                             ->directory('persons')
                             ->disk('public')
                             ->columnSpanFull(),
-                        TextInput::make('givn')->label('First Name'),
+                        // A person must have at least one name. Enforced once, on givn: it is
+                        // required only when both surn and the legacy `name` are empty, so any
+                        // single populated name field satisfies the rule.
+                        TextInput::make('givn')
+                            ->label('First Name')
+                            ->requiredWithoutAll('surn,name')
+                            ->validationMessages(['required_without_all' => 'Enter at least a first name, last name, or full name.']),
                         TextInput::make('surn')->label('Last Name'),
                         TextInput::make('titl')->label('Title'),
                         TextInput::make('appellative')->label('Appellative'),
@@ -83,7 +131,7 @@ class PersonResource extends AppResource
                         DateTimePicker::make('birthday')->label('Date of Birth'),
                         DateTimePicker::make('deathday')->label('Date of Death'),
                         DateTimePicker::make('burial_day')->label('Burial Date'),
-                        TextInput::make('child_in_family_id')->label('Child in Family ID'),
+                        self::childInFamilySelect(),
                         Select::make('pedigree')
                             ->options(PedigreeType::options())
                             ->label('Pedigree')

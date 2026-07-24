@@ -239,7 +239,18 @@ class Person extends Model
 
     public function fullname(): string
     {
-        return $this->givn.' '.$this->surn;
+        // Falls back to the legacy `name` column when both GEDCOM name parts are empty.
+        return trim($this->givn.' '.$this->surn) ?: (string) ($this->name ?? '');
+    }
+
+    /**
+     * Attribute-style access so `$person->fullname` (Filament TextColumn::make('fullname'),
+     * Blade property access) resolves — otherwise Eloquent treats the bare property as a
+     * relationship and throws. The 60+ existing `->fullname()` method callers are unaffected.
+     */
+    public function getFullnameAttribute(): string
+    {
+        return $this->fullname();
     }
 
     public function getSex(): string

@@ -6,6 +6,7 @@ namespace App\Filament\App\Pages;
 
 use App\Filament\App\Widgets\FamilyStatsWidget;
 use App\Filament\App\Widgets\FamilyTreeOverviewWidget;
+use App\Filament\App\Widgets\PeopleWidget;
 use App\Filament\App\Widgets\QuickActionsWidget;
 use App\Filament\App\Widgets\RecentActivityWidget;
 use Filament\Pages\Dashboard as BaseDashboard;
@@ -29,6 +30,7 @@ class Dashboard extends BaseDashboard
     {
         return [
             FamilyStatsWidget::class,
+            PeopleWidget::class,
             RecentActivityWidget::class,
             QuickActionsWidget::class,
             FamilyTreeOverviewWidget::class,
