@@ -62,6 +62,21 @@ class DnaImportServiceTest extends TestCase
         return $content;
     }
 
+    public function test_import_increments_uploader_dna_upload_count(): void
+    {
+        $user = User::factory()->create(['is_premium' => false, 'dna_uploads_count' => 0]);
+        Storage::disk('private')->put('kit.txt', $this->make23andMeContent());
+
+        $this->assertTrue($user->canUploadDna());
+
+        $this->service->importSingleKit('kit.txt', $user->id, autoMatch: false);
+
+        // Without the increment the count stays 0 and the standard-user limit
+        // never bites; after it, a second upload is blocked by canUploadDna().
+        $this->assertSame(1, $user->fresh()->dna_uploads_count);
+        $this->assertFalse($user->fresh()->canUploadDna());
+    }
+
     public function test_validates_file_format_23andme(): void
     {
         Storage::disk('private')->put('test_23andme.txt', $this->make23andMeContent());
