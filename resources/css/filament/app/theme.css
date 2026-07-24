@@ -2,3 +2,15 @@
 
 @source '../../../../app/Filament/App/**/*';
 @source '../../../../resources/views/filament/app/**/*';
+
+/*
+ * The Profile page (EditProfile -> filament.pages.edit-profile) embeds Jetstream
+ * Livewire forms, whose Blade lives outside app/Filament/App. Filament's panel
+ * stylesheet only compiles utilities it finds in the sources above, so those
+ * forms' classes (md:grid-cols-3, col-span-6, bg-white, shadow...) were never
+ * generated and the profile layout collapsed. Scan the page views and the
+ * shared Jetstream components they render so the panel CSS carries them.
+ */
+@source '../../../../resources/views/filament/pages/**/*';
+@source '../../../../resources/views/profile/**/*';
+@source '../../../../resources/views/components/**/*';
