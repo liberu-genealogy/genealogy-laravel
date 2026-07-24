@@ -73,12 +73,6 @@ parameters:
 			path: app/Filament/App/Pages/RelationshipCalculatorReport.php
 
 		-
-			message: '#^Access to an undefined property Laravel\\Cashier\\Checkout\:\:\$url\.$#'
-			identifier: property.notFound
-			count: 1
-			path: app/Filament/App/Pages/TrialExpiredPage.php
-
-		-
 			message: '#^Access to an undefined property App\\Filament\\App\\Pages\\UpdatePasswordPage\:\:\$form\.$#'
 			identifier: property.notFound
 			count: 2
@@ -319,18 +313,6 @@ parameters:
 			path: app/Filament/App/Widgets/FamilyTreeOverviewWidget.php
 
 		-
-			message: '#^Static access to instance property App\\Filament\\App\\Widgets\\FanChart\:\:\$view\.$#'
-			identifier: property.staticAccess
-			count: 1
-			path: app/Filament/App/Widgets/FanChart.php
-
-		-
-			message: '#^Static access to instance property App\\Filament\\App\\Widgets\\PedigreeChartWidget\:\:\$view\.$#'
-			identifier: property.staticAccess
-			count: 1
-			path: app/Filament/App/Widgets/PedigreeChartWidget.php
-
-		-
 			message: '#^If condition is always true\.$#'
 			identifier: if.alwaysTrue
 			count: 2
@@ -445,18 +427,6 @@ parameters:
 			path: app/Livewire/DabovilleReport.php
 
 		-
-			message: '#^Offset ''children'' on array\{family_id\: mixed, spouse\: array\{id\: mixed, name\: mixed, givn\: mixed, surn\: mixed, sex\: mixed, birth_date\: mixed, death_date\: mixed, birth_year\: mixed, \.\.\.\}\|null, children\: list\<non\-empty\-array\>\} in isset\(\) always exists and is not nullable\.$#'
-			identifier: isset.offset
-			count: 1
-			path: app/Livewire/DescendantChartWidget.php
-
-		-
-			message: '#^Static access to instance property App\\Livewire\\DescendantChartWidget\:\:\$view\.$#'
-			identifier: property.staticAccess
-			count: 1
-			path: app/Livewire/DescendantChartWidget.php
-
-		-
 			message: '#^Access to an undefined property App\\Livewire\\DevillierReport\:\:\$form\.$#'
 			identifier: property.notFound
 			count: 2
@@ -557,12 +527,6 @@ parameters:
 			identifier: function.alreadyNarrowedType
 			count: 1
 			path: app/Livewire/PedigreeChart.php
-
-		-
-			message: '#^Static access to instance property App\\Livewire\\PedigreeChartWidget\:\:\$view\.$#'
-			identifier: property.staticAccess
-			count: 1
-			path: app/Livewire/PedigreeChartWidget.php
 
 		-
 			message: '#^Access to an undefined property App\\Models\\Family\:\:\$progress_percentage\.$#'

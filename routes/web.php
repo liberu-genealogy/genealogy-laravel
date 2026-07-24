@@ -4,11 +4,8 @@ declare(strict_types=1);
 
 use App\Http\Controllers\AIMatchController;
 use App\Http\Controllers\ContactController;
-use App\Http\Controllers\FanChartController;
-use App\Http\Controllers\PedigreeChartController;
 use App\Http\Middleware\EnsureStripeWebhookIsVerifiable;
 use App\Livewire\DocumentTranscriptionComponent;
-use App\Livewire\FamilyTreeBuilder;
 use App\Livewire\GamificationDashboard;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Routing\Redirector;
@@ -52,9 +49,6 @@ Route::middleware([
     Route::get('/dashboard', fn (): Factory|\Illuminate\Contracts\View\View => view('dashboard'))->name('dashboard');
     Route::get('/gamification', GamificationDashboard::class)->name('gamification');
     Route::get('/transcriptions', DocumentTranscriptionComponent::class)->name('transcriptions');
-    Route::get('/fan-chart', [FanChartController::class, 'show'])->name('fan-chart');
-    Route::get('/pedigree-chart', [PedigreeChartController::class, 'show'])->name('pedigree-chart');
-    Route::get('/family-tree', FamilyTreeBuilder::class)->name('family-tree');
 });
 
 Route::middleware(['auth', 'verified'])->group(function (): void {
