@@ -225,8 +225,8 @@ class SubscriptionService
         );
 
         return $builder->checkout([
-            'success_url' => route('filament.app.pages.premium-dashboard'),
-            'cancel_url' => route('filament.app.pages.subscription'),
+            'success_url' => route('filament.app.pages.premium-dashboard', ['tenant' => $user->currentTeam]),
+            'cancel_url' => route('filament.app.pages.subscription', ['tenant' => $user->currentTeam]),
         ]);
     }
 

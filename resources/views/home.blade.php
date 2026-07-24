@@ -263,7 +263,7 @@
                         Start the trial
                     </a>
                 @else
-                    <a href="{{ url('/app/subscription') }}"
+                    <a href="{{ route('filament.app.pages.subscription', ['tenant' => auth()->user()->currentTeam]) }}"
                        class="mt-7 inline-flex min-h-11 w-full items-center justify-center rounded-md bg-registry-green px-5 py-3 text-label text-paper transition-colors duration-150 ease-out-quart hover:bg-registry-green-deep focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-registry-green">
                         Upgrade to premium
                     </a>
