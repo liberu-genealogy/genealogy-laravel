@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Storage;
 
@@ -235,6 +236,58 @@ class Person extends Model
 
         return $this->hasManyThrough(Person::class, Family::class, 'husband_id', 'child_in_family_id')
             ->union($wifeSide);
+    }
+
+    /**
+     * Route queries through PersonBuilder so its upsert() decomposes slashed
+     * GEDCOM names on the vendor's BULK import path (Model::upsert bypasses model
+     * events, so a saving hook alone never sees imported rows).
+     *
+     * @param  Builder  $query
+     */
+    #[\Override]
+    public function newEloquentBuilder($query): PersonBuilder
+    {
+        return new PersonBuilder($query);
+    }
+
+    #[\Override]
+    protected static function boot(): void
+    {
+        parent::boot();
+
+        // Belt to the builder's braces: catch any single-model Eloquent save of a
+        // slashed name too. Guarded on the slash so ordinary UI saves (clean
+        // givn/surn) are untouched.
+        static::saving(function (self $person): void {
+            [$person->givn, $person->surn] = self::decomposeSlashedName($person->givn, $person->surn);
+        });
+    }
+
+    /**
+     * Split a GEDCOM-style slashed name ("Given /Surname/", as it arrives raw in
+     * `givn` on import) into [givn, surn]. Returns the inputs unchanged unless
+     * `givn` actually contains a slash, so clean data is never touched.
+     *
+     * @return array{0: ?string, 1: ?string}
+     */
+    public static function decomposeSlashedName(?string $givn, ?string $surn): array
+    {
+        $raw = (string) $givn;
+        if (! str_contains($raw, '/')) {
+            return [$givn, $surn];
+        }
+
+        // Surname is the text between the first pair of slashes; the given name is
+        // whatever is left once the slashed segment is removed.
+        preg_match('#/([^/]*)/#', $raw, $m);
+        $surname = trim($m[1] ?? '');
+        $given = trim(str_replace($m[0] ?? '', ' ', $raw));
+
+        return [
+            $given,
+            ($surname !== '' && (string) $surn === '') ? $surname : $surn,
+        ];
     }
 
     public function fullname(): string

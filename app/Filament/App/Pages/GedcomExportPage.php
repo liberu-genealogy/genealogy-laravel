@@ -5,6 +5,7 @@ namespace App\Filament\App\Pages;
 use App\Jobs\ExportGedCom;
 use Filament\Actions\Action;
 use Filament\Facades\Filament;
+use Filament\Forms\Components\Select;
 use Filament\Notifications\Notification;
 use Filament\Pages\Page;
 use Illuminate\Support\Facades\Auth;
@@ -42,7 +43,18 @@ class GedcomExportPage extends Page
                 ->label('Generate GEDCOM')
                 ->icon('heroicon-o-arrow-down-tray')
                 ->color('primary')
-                ->action('startExport'),
+                ->schema([
+                    Select::make('format')
+                        ->label('Format')
+                        ->options([
+                            '5.5.1' => 'GEDCOM 5.5.1',
+                            '7.0' => 'GEDCOM 7',
+                            'gedcomx' => 'GEDCOM X',
+                        ])
+                        ->default('5.5.1')
+                        ->required(),
+                ])
+                ->action(fn (array $data) => $this->startExport($data)),
         ];
     }
 
@@ -58,16 +70,24 @@ class GedcomExportPage extends Page
      *
      * The team is read from the tenant rather than from the user's stored team,
      * so it is the team on screen that is exported and listed.
+     *
+     * @param  array<string, mixed>  $data
      */
-    public function startExport(): void
+    public function startExport(array $data = []): void
     {
         $user = Auth::user();
         $teamId = $this->teamId();
 
         abort_unless($user && $teamId, 403);
 
-        $fileName = now()->format('Y-m-d_His').'_family_tree.ged';
-        ExportGedCom::dispatch($fileName, $user, $teamId);
+        $format = in_array($data['format'] ?? null, ['5.5.1', '7.0', 'gedcomx'], true)
+            ? $data['format']
+            : '5.5.1';
+
+        // GEDCOM X is JSON; 5.5.1 and 7 are GEDCOM text.
+        $extension = $format === 'gedcomx' ? 'json' : 'ged';
+        $fileName = now()->format('Y-m-d_His').'_family_tree.'.$extension;
+        ExportGedCom::dispatch($fileName, $user, $teamId, $format);
 
         Notification::make()
             ->title('Export started')
@@ -82,7 +102,7 @@ class GedcomExportPage extends Page
         // directory would not. It is not, on its own, evidence of ownership —
         // every team's exports match it, which is how this deleted other
         // teams' files.
-        if (! preg_match('/^\d{4}-\d{2}-\d{2}_\d{6}_family_tree\.ged$/', $filename)) {
+        if (! preg_match('/^\d{4}-\d{2}-\d{2}_\d{6}_family_tree\.(ged|json)$/', $filename)) {
             return;
         }
 
@@ -110,7 +130,7 @@ class GedcomExportPage extends Page
         $disk = Storage::disk('private');
 
         return collect($disk->files(ExportGedCom::directoryFor($teamId)))
-            ->filter(fn (string $file): bool => str_ends_with($file, '_family_tree.ged'))
+            ->filter(fn (string $file): bool => str_ends_with($file, '_family_tree.ged') || str_ends_with($file, '_family_tree.json'))
             ->map(fn (string $file) => [
                 'name' => basename($file),
                 'size' => $this->formatBytes($disk->size($file)),
