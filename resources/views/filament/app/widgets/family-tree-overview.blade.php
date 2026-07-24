@@ -44,15 +44,20 @@
                                 @svg('heroicon-o-plus', 'h-4 w-4')
                                 <span>Add Person</span>
                             </a>
-                            <a href="{{ \Filament\Facades\Filament::getUrl() }}/pedigree-chart"
+                            <a href="{{ \App\Filament\App\Pages\PedigreeChartPage::getUrl() }}"
                                class="flex items-center space-x-2 text-sm text-green-600 hover:text-green-800 dark:text-green-400 dark:hover:text-green-200">
                                 @svg('heroicon-o-chart-bar', 'h-4 w-4')
                                 <span>View Pedigree Chart</span>
                             </a>
-                            <a href="{{ \Filament\Facades\Filament::getUrl() }}/descendant-chart"
+                            <a href="{{ \App\Filament\App\Pages\DescendantChartPage::getUrl() }}"
                                class="flex items-center space-x-2 text-sm text-purple-600 hover:text-purple-800 dark:text-purple-400 dark:hover:text-purple-200">
                                 @svg('heroicon-o-chart-pie', 'h-4 w-4')
                                 <span>View Descendant Chart</span>
+                            </a>
+                            <a href="{{ \App\Filament\App\Pages\FanChartPage::getUrl() }}"
+                               class="flex items-center space-x-2 text-sm text-amber-600 hover:text-amber-800 dark:text-amber-400 dark:hover:text-amber-200">
+                                @svg('heroicon-o-chart-pie', 'h-4 w-4')
+                                <span>View Fan Chart</span>
                             </a>
                         </div>
                     </div>
@@ -94,7 +99,7 @@
                         </div>
 
                         <div class="mt-4 text-center">
-                            <a href="{{ \Filament\Facades\Filament::getUrl() }}/pedigree-chart"
+                            <a href="{{ \App\Filament\App\Pages\PedigreeChartPage::getUrl() }}"
                                class="inline-flex items-center space-x-2 text-sm text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-200">
                                 <span>View Full Tree</span>
                                 @svg('heroicon-o-arrow-right', 'h-4 w-4')
