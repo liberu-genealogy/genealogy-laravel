@@ -1,0 +1,16 @@
+0 HEAD
+1 SOUR TEST
+1 GEDC
+2 VERS 5.5.1
+2 FORM LINEAGE-LINKED
+1 CHAR UTF-8
+0 @I1@ INDI
+1 NAME Solo /Person/
+1 SEX U
+1 NOTE This is a long note that
+2 CONC  continues on the same logical line
+2 CONT and then wraps to a new line.
+1 BIRT
+2 DATE ABT 1850
+2 PLAC Springfield, Illinois, USA
+0 TRLR
