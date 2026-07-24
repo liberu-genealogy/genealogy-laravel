@@ -2,47 +2,76 @@
 
 namespace App\Services;
 
+use App\Models\SubscriptionPrice;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
-use Laravel\Cashier\Subscription;
+use InvalidArgumentException;
+use Laravel\Cashier\Cashier;
+use Laravel\Cashier\SubscriptionBuilder;
+use RuntimeException;
 
 class SubscriptionService
 {
-    // Price/product identifiers are stored in configuration/environment so they can
-    // be adjusted without changing code. Constants remain as fallbacks primarily for
-    // legacy usage.
-    public const PREMIUM_PRICE_ID = 'price_premium_monthly'; // default, override via env
-
-    public const PREMIUM_PRODUCT_ID = 'prod_premium'; // default, override via env
+    /** The billing intervals the premium tier is offered at. */
+    public const INTERVALS = ['month', 'year'];
 
     /**
-     * Create premium subscription with trial
-     *
-     * If a payment method is not provided, enable a local 14-day trial without
-     * contacting Stripe. This sets the user's generic trial and premium flag
-     * so premium checks work immediately. When a payment method is provided,
-     * defer to Cashier to create a real Stripe subscription.
+     * Whether a card must be taken before premium access is granted. When true,
+     * the no-card local-trial path is unavailable (issue #1614). Defaults on.
      */
-    public function createPremiumSubscription(User $user, ?string $paymentMethod = null)
+    public function requiresCard(): bool
     {
-        // Trial-only flow without requiring a payment method / Stripe setup
+        return (bool) config('subscription.premium.require_card', true);
+    }
+
+    /** Configured trial length in days; zero means no trial (immediate charge). */
+    public function trialDays(): int
+    {
+        return (int) config('subscription.premium.trial_days', 14);
+    }
+
+    /**
+     * Trial days to apply at checkout, or null to apply none. A configured length
+     * of zero yields null so Cashier never stamps a trial and Stripe charges
+     * immediately.
+     */
+    public function checkoutTrialDays(): ?int
+    {
+        $days = $this->trialDays();
+
+        return $days > 0 ? $days : null;
+    }
+
+    /**
+     * Create premium subscription.
+     *
+     * With no payment method this is the no-card local trial — granted only when
+     * the deployment does not require a card. With a payment method, defer to
+     * Cashier to create a real Stripe subscription on the managed monthly price.
+     */
+    public function createPremiumSubscription(User $user, ?string $paymentMethod = null, string $interval = 'month')
+    {
+        // No-card local trial.
         if (in_array($paymentMethod, [null, '', '0'], true)) {
-            $trialDays = config('subscription.premium.trial_days', 14);
+            if ($this->requiresCard()) {
+                // Server-side defense: the UI hides this path, but the Livewire
+                // action must not grant premium without a card either.
+                throw new RuntimeException('A payment method is required; the no-card trial is disabled.');
+            }
+
             $user->forceFill([
                 'is_premium' => true,
                 'premium_started_at' => now(),
                 // Generic trial used by Cashier's Billable::onTrial()
-                'trial_ends_at' => now()->addDays($trialDays),
+                'trial_ends_at' => now()->addDays($this->trialDays()),
             ])->save();
 
             return null;
         }
 
-        $priceId = config('subscription.premium.stripe_price_id', self::PREMIUM_PRICE_ID);
-        $trialDays = config('subscription.premium.trial_days', 14);
-
-        $subscriptionBuilder = $user->newSubscription('premium', $priceId)
-            ->trialDays($trialDays);
+        $subscriptionBuilder = $this->applyTrial(
+            $user->newSubscription('premium', $this->resolveManagedPrice($interval))
+        );
 
         $subscription = $subscriptionBuilder->create($paymentMethod);
 
@@ -53,6 +82,50 @@ class SubscriptionService
         ]);
 
         return $subscription;
+    }
+
+    /**
+     * Resolve the Stripe price id for a billing interval, creating and owning the
+     * Stripe Product/Price ourselves so no Dashboard setup is required (managed
+     * prices — ADR 0003). The (interval, livemode) record is reused across
+     * requests; because Stripe Prices are immutable, a changed configured amount
+     * auto-heals: a fresh Price is created, the stale one archived, record updated.
+     */
+    public function resolveManagedPrice(string $interval): string
+    {
+        $amount = $this->amountFor($interval);
+        $currency = $this->currency();
+        $livemode = $this->livemode();
+
+        $record = SubscriptionPrice::query()
+            ->where('interval', $interval)
+            ->where('livemode', $livemode)
+            ->first();
+
+        if ($record && $record->unit_amount === $amount && $record->currency === $currency) {
+            return $record->stripe_price_id;
+        }
+
+        // Reuse the Product across price changes; only the Price is recreated.
+        $productId = $record ? $record->stripe_product_id : $this->createStripeProduct($this->productName());
+        $priceId = $this->createStripePrice($productId, $amount, $currency, $interval);
+
+        if ($record) {
+            // Stripe Prices are immutable, so the superseded one is archived.
+            $this->archiveStripePrice($record->stripe_price_id);
+        }
+
+        SubscriptionPrice::updateOrCreate(
+            ['interval' => $interval, 'livemode' => $livemode],
+            [
+                'stripe_product_id' => $productId,
+                'stripe_price_id' => $priceId,
+                'unit_amount' => $amount,
+                'currency' => $currency,
+            ],
+        );
+
+        return $priceId;
     }
 
     /**
@@ -108,18 +181,26 @@ class SubscriptionService
     }
 
     /**
-     * Get subscription pricing information (display-only).
+     * Get subscription pricing information (display-only). Prices are derived from
+     * the configured amounts so the shown price can never drift from the charge.
      */
     public function getPricingInfo(): array
     {
-        $trialDays = config('subscription.premium.trial_days', 14);
+        $intervals = [];
+        foreach (self::INTERVALS as $interval) {
+            $intervals[$interval] = [
+                'interval' => $interval,
+                'amount' => $this->amountFor($interval),
+                'price' => $this->formatPrice($interval),
+            ];
+        }
 
         return [
             'premium' => [
                 'name' => 'Premium',
-                'price' => config('subscription.premium.price', '$2.99'),
-                'interval' => config('subscription.premium.interval', 'month'),
-                'trial_days' => $trialDays,
+                'trial_days' => $this->trialDays(),
+                'require_card' => $this->requiresCard(),
+                'intervals' => $intervals,
                 'features' => [
                     'Premium user badge',
                     'Unlimited DNA kit uploads',
@@ -128,30 +209,38 @@ class SubscriptionService
                     'Priority support',
                     'Advanced charts and reports',
                 ],
-                'stripe_price_id' => config('subscription.premium.stripe_price_id', self::PREMIUM_PRICE_ID),
             ],
         ];
     }
 
     /**
-     * Build a Stripe Checkout session redirect response.
-     *
-     * This helper is used by the Filament page to send the user straight to
-     * Stripe's hosted checkout form. The returned redirect response may be
-     * inspected or sent directly to the browser.
+     * Build a Stripe Checkout session redirect response for the chosen billing
+     * interval. Used by the Filament page to send the user to Stripe's hosted
+     * checkout form.
      */
-    public function createCheckoutRedirect($user)
+    public function createCheckoutRedirect($user, string $interval = 'month')
     {
-        $priceId = config('subscription.premium.stripe_price_id', self::PREMIUM_PRICE_ID);
-        $trialDays = config('subscription.premium.trial_days', 14);
+        $builder = $this->applyTrial(
+            $user->newSubscription('premium', $this->resolveManagedPrice($interval))
+        );
 
-        return $user
-            ->newSubscription('premium', $priceId)
-            ->trialDays($trialDays)
-            ->checkout([
-                'success_url' => route('filament.app.pages.premium-dashboard'),
-                'cancel_url' => route('filament.app.pages.subscription'),
-            ]);
+        return $builder->checkout([
+            'success_url' => route('filament.app.pages.premium-dashboard'),
+            'cancel_url' => route('filament.app.pages.subscription'),
+        ]);
+    }
+
+    /**
+     * Apply the configured trial to a subscription builder, or none when the
+     * trial length is zero (immediate charge).
+     */
+    private function applyTrial(SubscriptionBuilder $builder): SubscriptionBuilder
+    {
+        if (($trialDays = $this->checkoutTrialDays()) !== null) {
+            $builder->trialDays($trialDays);
+        }
+
+        return $builder;
     }
 
     /**
@@ -238,5 +327,70 @@ class SubscriptionService
                 'advanced_charts' => $isPremium,
             ],
         ];
+    }
+
+    /** Configured amount (minor units) for a billing interval. */
+    public function amountFor(string $interval): int
+    {
+        $this->assertInterval($interval);
+
+        return (int) config("subscription.premium.amounts.{$interval}");
+    }
+
+    /** Human-readable price string derived from amount + currency. */
+    public function formatPrice(string $interval): string
+    {
+        return Cashier::formatAmount($this->amountFor($interval), $this->currency());
+    }
+
+    private function assertInterval(string $interval): void
+    {
+        if (! in_array($interval, self::INTERVALS, true)) {
+            throw new InvalidArgumentException("Unsupported billing interval: {$interval}");
+        }
+    }
+
+    private function currency(): string
+    {
+        return strtolower((string) config('cashier.currency', 'usd'));
+    }
+
+    private function productName(): string
+    {
+        return (string) config('subscription.premium.product_name', 'Premium');
+    }
+
+    /**
+     * Whether we are operating against Stripe live mode, inferred from the secret
+     * key. Both secret (sk_) and restricted (rk_) keys carry a `_live_` / `_test_`
+     * segment, so match on that rather than an `sk_live_` prefix. Keeps test-mode
+     * and live-mode price records apart.
+     */
+    protected function livemode(): bool
+    {
+        return str_contains((string) config('cashier.secret'), '_live_');
+    }
+
+    // --- Stripe SDK seam (overridden in tests so managed-price logic runs without HTTP) ---
+
+    protected function createStripeProduct(string $name): string
+    {
+        return Cashier::stripe()->products->create(['name' => $name])->id;
+    }
+
+    protected function createStripePrice(string $productId, int $amount, string $currency, string $interval): string
+    {
+        return Cashier::stripe()->prices->create([
+            'product' => $productId,
+            'unit_amount' => $amount,
+            'currency' => $currency,
+            'recurring' => ['interval' => $interval],
+        ])->id;
+    }
+
+    protected function archiveStripePrice(string $priceId): void
+    {
+        // Stripe Prices are immutable; a superseded price is deactivated, not edited.
+        Cashier::stripe()->prices->update($priceId, ['active' => false]);
     }
 }

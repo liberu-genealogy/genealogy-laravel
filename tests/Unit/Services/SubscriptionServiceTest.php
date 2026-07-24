@@ -21,6 +21,9 @@ class SubscriptionServiceTest extends TestCase
 
     public function test_create_premium_subscription_without_payment_method(): void
     {
+        // The no-card local trial only exists when the deployment doesn't require a card.
+        config()->set('subscription.premium.require_card', false);
+
         $user = User::factory()->create();
         $this->subscriptionService->createPremiumSubscription($user);
 

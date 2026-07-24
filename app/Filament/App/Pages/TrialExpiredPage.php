@@ -61,7 +61,7 @@ class TrialExpiredPage extends Page
     {
         return [
             Action::make('subscribe')
-                ->label('Subscribe Now – $2.99/month')
+                ->label('Subscribe Now – '.app(SubscriptionService::class)->formatPrice('month').'/month')
                 ->icon('heroicon-o-credit-card')
                 ->color('primary')
                 ->size('lg')
@@ -83,19 +83,11 @@ class TrialExpiredPage extends Page
     {
         try {
             $user = Auth::user();
-            $priceId = config('subscription.premium.stripe_price_id', 'price_premium_monthly');
 
-            $successUrl = route('filament.app.pages.premium-dashboard', ['tenant' => auth()->user()->currentTeam]);
-            $cancelUrl = route('filament.app.pages.trial-expired', ['tenant' => auth()->user()->currentTeam]);
+            // Reuse the managed-price checkout (monthly); the service resolves the
+            // Stripe price and applies the trial rule.
+            $checkout = app(SubscriptionService::class)->createCheckoutRedirect($user, 'month');
 
-            // Use Cashier to create a Stripe Checkout Session for the subscription
-            $checkout = $user->newSubscription('premium', $priceId)
-                ->checkout([
-                    'success_url' => $successUrl,
-                    'cancel_url' => $cancelUrl,
-                ]);
-
-            // Mark as premium upon successful checkout (webhook will also handle this)
             $this->redirect($checkout->url);
         } catch (Exception) {
             Notification::make()

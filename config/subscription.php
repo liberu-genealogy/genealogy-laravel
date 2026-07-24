@@ -4,22 +4,24 @@ declare(strict_types=1);
 
 return [
     'premium' => [
-        // Display-only price string, e.g., "$2.99"
-        'price' => env('SUBSCRIPTION_PREMIUM_PRICE', '$2.99'),
+        // Require a card before granting premium access. When true, the no-card
+        // local-trial path is unavailable and the only route to premium is a
+        // Stripe checkout with a card on file. Default true for this platform.
+        'require_card' => (bool) env('SUBSCRIPTION_REQUIRE_CARD', true),
 
-        // Billing interval label, e.g., "month" or "year"
-        'interval' => env('SUBSCRIPTION_PREMIUM_INTERVAL', 'month'),
-
-        // Trial days for local trial (no payment method)
+        // Trial length in days. Zero is a first-class value meaning "no trial" —
+        // the subscriber is charged immediately at checkout.
         'trial_days' => (int) env('SUBSCRIPTION_PREMIUM_TRIAL_DAYS', 14),
 
-        // Stripe price id for real subscriptions created via Cashier
-        'stripe_price_id' => env(
-            'SUBSCRIPTION_PREMIUM_STRIPE_PRICE_ID',
-            // the `.env.example` file historically used STRIPE_PREMIUM_PRICE_ID; keep
-            // the old name around for backwards compatibility so deployments that
-            // haven't updated yet still work.
-            env('STRIPE_PREMIUM_PRICE_ID', env('CASHIER_STRIPE_SUBSCRIPTION_DEFAULT_PRICE_ID'))
-        ),
+        // Name of the Stripe Product the app auto-creates (managed price, ADR 0003).
+        'product_name' => env('SUBSCRIPTION_PREMIUM_PRODUCT_NAME', 'Premium'),
+
+        // Price amounts in minor units (cents), per billing interval. The app
+        // creates/owns the Stripe Price from these; the displayed price string is
+        // derived from the amount + currency so it can never drift from the charge.
+        'amounts' => [
+            'month' => (int) env('SUBSCRIPTION_PREMIUM_MONTHLY_AMOUNT', 299),
+            'year' => (int) env('SUBSCRIPTION_PREMIUM_YEARLY_AMOUNT', 2999),
+        ],
     ],
 ];
