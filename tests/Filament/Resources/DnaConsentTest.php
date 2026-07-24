@@ -18,7 +18,9 @@ class DnaConsentTest extends TestCase
 
     private function actingUser(): User
     {
-        $user = User::factory()->withPersonalTeam()->create();
+        // DnaResource is premium-gated (canAccess); a premium user is needed to
+        // reach the create page.
+        $user = User::factory()->withPersonalTeam()->create(['is_premium' => true, 'trial_ends_at' => now()->addDays(5)]);
         $this->actingAs($user);
         Filament::setTenant($user->currentTeam);
 

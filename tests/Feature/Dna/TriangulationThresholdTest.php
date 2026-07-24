@@ -76,7 +76,9 @@ class TriangulationThresholdTest extends TestCase
     {
         Storage::fake('private');
 
-        $user = User::factory()->withPersonalTeam()->create();
+        // DnaTriangulationPage is premium-gated (canAccess); a premium user is
+        // needed to reach it.
+        $user = User::factory()->withPersonalTeam()->create(['is_premium' => true, 'trial_ends_at' => now()->addDays(5)]);
         $this->actingAs($user);
 
         $base = $this->kit('a', 'kit_a.txt', $user, withFile: true);
@@ -102,7 +104,9 @@ class TriangulationThresholdTest extends TestCase
     {
         Storage::fake('private');
 
-        $user = User::factory()->withPersonalTeam()->create();
+        // DnaTriangulationPage is premium-gated (canAccess); a premium user is
+        // needed to reach it.
+        $user = User::factory()->withPersonalTeam()->create(['is_premium' => true, 'trial_ends_at' => now()->addDays(5)]);
         $this->actingAs($user);
 
         $base = $this->kit('a', 'kit_a.txt', $user, withFile: true);
@@ -128,7 +132,9 @@ class TriangulationThresholdTest extends TestCase
     {
         Storage::fake('private');
 
-        $user = User::factory()->withPersonalTeam()->create();
+        // DnaTriangulationPage is premium-gated (canAccess); a premium user is
+        // needed to reach it.
+        $user = User::factory()->withPersonalTeam()->create(['is_premium' => true, 'trial_ends_at' => now()->addDays(5)]);
         $this->actingAs($user);
 
         $base = $this->kit('a', 'kit_a.txt', $user, withFile: true);
