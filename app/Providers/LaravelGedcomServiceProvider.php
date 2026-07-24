@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\Models\Family;
 use App\Models\Person;
+use App\Models\PersonEvent;
 use FamilyTree365\LaravelGedcom\Commands\GedcomExporter;
 use FamilyTree365\LaravelGedcom\Commands\GedcomImporter;
 use FamilyTree365\LaravelGedcom\Commands\GedcomXImporter;
@@ -54,6 +55,15 @@ class LaravelGedcomServiceProvider extends ServiceProvider
         $this->app->bind(
             \FamilyTree365\LaravelGedcom\Models\Person::class,
             Person::class,
+        );
+        // The vendor PersonEvent::boot() calls static::observe() mid-boot, which
+        // re-enters bootIfNotBooted and throws once the model is first touched
+        // inside another operation (e.g. GedcomGenerator export after an import).
+        // App\Models\PersonEvent overrides boot() to register the observer in
+        // booted() instead, so route vendor app(PersonEvent::class) lookups to it.
+        $this->app->bind(
+            \FamilyTree365\LaravelGedcom\Models\PersonEvent::class,
+            PersonEvent::class,
         );
     }
 }

@@ -106,25 +106,23 @@ class GedcomExportIsolationTest extends TestCase
 
         $content = Storage::disk('private')->get($this->pathFor($owner->current_team_id, 'export.ged'));
 
-        // Asserted on the HUSB pointer rather than a name or an INDI record.
-        // Names live in person_name, not on the person, so a fixture setting
-        // one proves nothing — and the generator emits no INDI records at all,
-        // which makes the document invalid GEDCOM and is its own bug, filed
-        // separately. The family pointers are emitted, and they carry the
-        // person ids, which is enough to tell whose tree this is.
+        // Asserted on the HUSB pointer (@I{id}@) rather than a name: names live
+        // in person_name, not on the person, so a fixture setting one proves
+        // nothing. The family pointers carry the person ids, which is enough to
+        // tell whose tree this is.
         //
         // Both directions, too. Asserting only the other team's absence passes
         // on an empty file — which is what an earlier version of this test did,
         // since people reach the export through families and the fixture had
         // none. 105 bytes of envelope satisfied it.
         $this->assertStringContainsString(
-            "HUSB @{$ours}@",
+            "HUSB @I{$ours}@",
             $content,
             'The export did not contain the team\'s own people, so it proves nothing about the rest.',
         );
 
         $this->assertStringNotContainsString(
-            "HUSB @{$theirs}@",
+            "HUSB @I{$theirs}@",
             $content,
             'The exported tree contained another team\'s people.',
         );

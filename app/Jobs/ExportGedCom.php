@@ -26,6 +26,7 @@ final class ExportGedCom implements ShouldQueue
         private readonly string $file,
         public readonly User $user,
         public readonly int $teamId,
+        private readonly string $format = '5.5.1',
     ) {}
 
     /**
@@ -62,7 +63,11 @@ final class ExportGedCom implements ShouldQueue
 
                 Log::info("Exporting {$people} people and {$families} families for team {$this->teamId}.");
 
-                return (new GedcomService)->generateGedcomContent();
+                return match ($this->format) {
+                    '7.0' => (new GedcomService)->generateGedcom7Content(),
+                    'gedcomx' => (new GedcomService)->generateGedcomXContent(),
+                    default => (new GedcomService)->generateGedcomContent(),
+                };
             });
 
             Storage::disk('private')->put($this->path(), $content);
