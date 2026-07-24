@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\SubscriptionPortalConfig;
 use App\Models\SubscriptionPrice;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
@@ -281,8 +282,65 @@ class SubscriptionService
     public function createBillingPortalRedirect(User $user): RedirectResponse
     {
         return $user->redirectToBillingPortal(
-            route('filament.app.pages.premium-dashboard')
+            route('filament.app.pages.premium-dashboard', ['tenant' => $user->currentTeam]),
+            ['configuration' => $this->resolveBillingPortalConfiguration()],
         );
+    }
+
+    /**
+     * Resolve the app-owned Stripe billing-portal Configuration id, creating it
+     * on first use and reusing it thereafter (ADR 0003 managed-object pattern).
+     * The configuration enables monthly<->yearly plan switching over the two
+     * managed prices plus cancellation, so the hosted portal needs no Dashboard
+     * setup. If a managed price has changed since the configuration was built,
+     * the configuration is updated in place (a portal Configuration, unlike a
+     * Price, is mutable) so it never offers an archived price.
+     */
+    public function resolveBillingPortalConfiguration(): string
+    {
+        // Ensure both managed prices exist and are current before referencing them.
+        $this->resolveManagedPrice('month');
+        $this->resolveManagedPrice('year');
+        $livemode = $this->livemode();
+
+        $month = SubscriptionPrice::query()->where('interval', 'month')->where('livemode', $livemode)->first();
+        $year = SubscriptionPrice::query()->where('interval', 'year')->where('livemode', $livemode)->first();
+
+        $record = SubscriptionPortalConfig::query()->where('livemode', $livemode)->first();
+
+        if ($record
+            && $record->stripe_month_price_id === $month->stripe_price_id
+            && $record->stripe_year_price_id === $year->stripe_price_id) {
+            return $record->stripe_configuration_id;
+        }
+
+        $features = [
+            'subscription_update' => [
+                'enabled' => true,
+                'default_allowed_updates' => ['price'],
+                'proration_behavior' => (string) config('subscription.premium.portal_proration', 'create_prorations'),
+                'products' => [
+                    ['product' => $month->stripe_product_id, 'prices' => [$month->stripe_price_id]],
+                    ['product' => $year->stripe_product_id, 'prices' => [$year->stripe_price_id]],
+                ],
+            ],
+            'subscription_cancel' => ['enabled' => true],
+            'payment_method_update' => ['enabled' => true],
+            'invoice_history' => ['enabled' => true],
+        ];
+
+        $configId = $this->upsertStripePortalConfiguration($record?->stripe_configuration_id, $features);
+
+        SubscriptionPortalConfig::updateOrCreate(
+            ['livemode' => $livemode],
+            [
+                'stripe_configuration_id' => $configId,
+                'stripe_month_price_id' => $month->stripe_price_id,
+                'stripe_year_price_id' => $year->stripe_price_id,
+            ],
+        );
+
+        return $configId;
     }
 
     /**
@@ -392,5 +450,18 @@ class SubscriptionService
     {
         // Stripe Prices are immutable; a superseded price is deactivated, not edited.
         Cashier::stripe()->prices->update($priceId, ['active' => false]);
+    }
+
+    /**
+     * Create the billing-portal Configuration, or update it in place when it
+     * already exists (e.g. a managed price changed). Returns its Stripe id.
+     */
+    protected function upsertStripePortalConfiguration(?string $existingId, array $features): string
+    {
+        if ($existingId) {
+            return Cashier::stripe()->billingPortal->configurations->update($existingId, ['features' => $features])->id;
+        }
+
+        return Cashier::stripe()->billingPortal->configurations->create(['features' => $features])->id;
     }
 }
